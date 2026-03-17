@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/gmc-feed-analyzer/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  
+  <title>GMC Feed Analyzer — Validate Your Google Shopping Feed | MagsTags</title>
+    <meta name="description" content="Validate your Google Merchant Center product feed against Google's attribute requirements. Upload CSV, TSV, JSON, or XML — get a prioritised fix list, validation table, and exportable audit report. Client-side only: no data leaves your browser.">
+  <meta property="og:title" content="GMC Feed Analyzer — Validate Your Google Shopping Feed | MagsTags">
+  <meta property="og:description" content="Validate your GMC product feed against Google's attribute rules. Prioritised error list, fix guidance, and export. No data leaves your browser.">
+  <meta property="og:url" content="https://www.magstags.com/gmc-feed-analyzer/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "GMC Feed Analyzer",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.magstags.com/gmc-feed-analyzer/",
+    "description": "Validate your Google Merchant Center product feed against Google's attribute requirements. Upload CSV, TSV, JSON, or XML — get a prioritised fix list, validation table, and exportable audit report.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "SEO Tools", "item": "https://www.magstags.com/seo-tools/" },
+      { "@type": "ListItem", "position": 3, "name": "GMC Feed Analyzer", "item": "https://www.magstags.com/gmc-feed-analyzer/" }
+    ]
+  }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ─── Design tokens — warm editorial palette ─── */
+    :root {
+      --bg:            #f0eeec;
+      --bg2:           #F5EDE7;
+      --surface:       #fafaf7;
+      --surface-alt:   #f2efe9;
+      --surface-dark:  #1c1a18;
+      --border:        #ddd9d3;
+      --border-strong: #0E7490;
+      --text-1:        #111009;
+      --text-2:        #26221f;
+      --text-3:        #504c49;
+      --text-4:        #857f7a;
+      --teal:          #0E7490;
+      --mint:          #0891B2;
+      --mint-light:    #E0F2FE;
+      --shadow-sm:     0 1px 3px rgba(26,24,22,.07);
+      --shadow-md:     0 4px 16px rgba(26,24,22,.09);
+      --red:           #c0392b;
+      --red-light:     #fdf0ee;
+      --orange:        #D97706;
+      --orange-light:  #fdf4e7;
+      --yellow:        #8a6800;
+      --yellow-light:  #fdf8e1;
+      --green:         #0a7c5c;
+      --green-light:   #eaf7f2;
+      --scrollbar:     rgba(26,24,22,.12);
+    }
+    html.dark {
+      --bg:            #111110;
+      --bg2:           #191817;
+      --surface:       #1e1c1a;
+      --surface-alt:   #242220;
+      --surface-dark:  #0a0908;
+      --border:        rgba(255,255,255,.08);
+      --border-strong: rgba(255,255,255,.18);
+      --text-1:        #f5f2ee;
+      --text-2:        #c8c4be;
+      --text-3:        #857f79;
+      --text-4:        #4a4743;
+      --teal:          #22D3EE;
+      --mint:          #67E8F9;
+      --mint-light:    rgba(14,116,144,.14);
+      --shadow-sm:     0 1px 3px rgba(0,0,0,.5);
+      --shadow-md:     0 4px 16px rgba(0,0,0,.6);
+      --red-light:     rgba(192,57,43,.14);
+      --orange-light:  rgba(192,102,10,.14);
+      --yellow-light:  rgba(138,104,0,.14);
+      --green-light:   rgba(10,124,92,.14);
+      --scrollbar:     rgba(255,255,255,.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; transition: background .25s, color .25s; -webkit-font-smoothing: antialiased; font-size: 14px; }
+
+    /* ─── Header ─── */
+    .logo-sep { color: var(--text-4); margin: 0 5px; }
+    .logo-sub { color: var(--text-3); font-size: 13px; }
+    .logo-badge { display: none; }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .theme-btn { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 500; background: var(--bg2); border: 1px solid var(--border); color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
+    .theme-btn:hover { color: var(--text-1); border-color: var(--text-3); }
+
+    /* ─── Step progress — pill style ─── */
+    .progress-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 36px; display: flex; align-items: center; }
+    .progress-bar-inner { max-width: 1320px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 4px; padding: 10px 0; }
+    .step-item { display: flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 99px; cursor: default; transition: all .25s; }
+    .step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--bg2); border: 1px solid var(--border); color: var(--text-4); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all .25s; flex-shrink: 0; }
+    .step-label { font-size: 12px; font-weight: 500; color: var(--text-4); white-space: nowrap; transition: color .25s; }
+    @media (max-width: 480px) { .step-label { display: none; } .step-item { padding: 6px 10px; } }
+    .step-item.active { background: transparent; }
+    .step-item.active .step-num { background: var(--teal); border-color: var(--teal); color: white; }
+    .step-item.active .step-label { color: var(--text-1); font-weight: 600; }
+    .step-item.done .step-num { background: var(--mint); border-color: var(--mint); color: white; }
+    .step-item.done .step-label { color: var(--text-2); }
+    .step-divider { width: 20px; height: 1px; background: var(--border); flex-shrink: 0; }
+
+    /* ─── Main layout ─── */
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+
+    /* ─── Page hero (settings screen) ─── */
+    .page-hero { margin-bottom: 36px; }
+    .page-hero-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .page-hero-sub { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 560px; }
+
+    /* ─── Cards ─── */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px 32px; margin-bottom: 14px; transition: background .25s, border-color .25s; }
+    .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .card-sub { font-size: 13px; color: var(--text-3); margin-bottom: 24px; line-height: 1.6; }
+    .card-dark { background: var(--surface-dark); border-color: rgba(255,255,255,.06); }
+    .card-dark .card-title { color: #f5f2ee; }
+    .card-dark .card-sub { color: #857f79; }
+    .card-dark .form-label { color: #857f79; }
+    .card-dark .option-item { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.07); }
+    .card-dark .option-item:hover { border-color: var(--teal); background: rgba(14,116,144,.08); }
+    .card-dark .option-item.selected { border-color: var(--teal); background: rgba(14,116,144,.12); }
+    .card-dark .option-label { color: #f5f2ee; }
+    .card-dark .option-desc { color: #857f79; }
+    .card-dark code { background: rgba(255,255,255,.06); color: var(--mint); }
+    .card-dark select, .card-dark input[type="text"] { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); color: #f5f2ee; }
+    .card-dark .btn-primary { background: var(--teal); }
+    .card-dark .summary-box { background: rgba(255,255,255,.04); border-left-color: var(--mint); border-color: rgba(255,255,255,.08); color: #c8c4be; }
+    .card-dark .summary-box strong { color: var(--mint); }
+    .card-dark .table-wrapper { background: rgba(255,255,255,.02); border-color: rgba(255,255,255,.07); border-radius: 12px; }
+    .card-dark table { color: #c8c4be; }
+    .card-dark th { background: #111110; color: #5a5652; border-color: rgba(255,255,255,.07); font-size: 10px; padding: 10px 12px; }
+    .card-dark td { border-color: rgba(255,255,255,.06); color: #c8c4be; }
+    .card-dark tr:hover td { background: rgba(255,255,255,.03); }
+    .card-dark .fix-text { color: #a8a49e; font-size: 12px; line-height: 1.5; }
+    .card-dark .fix-text strong { color: var(--mint); }
+    .card-dark code { background: rgba(255,255,255,.08); color: var(--mint); }
+    .card-dark .section-header { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #a09890; margin-bottom: 6px; }
+    .card-dark .section-sub { color: #5a5652; }
+    .card-dark .alert-info { background: rgba(14,116,144,.1); color: var(--mint); border-color: rgba(14,116,144,.2); }
+    /* Severity badges inside dark card */
+    .card-dark .badge-red    { background: rgba(192,57,43,.22);  color: #e88878; }
+    .card-dark .badge-orange { background: rgba(192,102,10,.22); color: #e0a060; }
+    .card-dark .badge-yellow { background: rgba(180,140,0,.22);  color: #d4b840; }
+    .card-dark .badge-green  { background: rgba(10,124,92,.22);  color: #4dd4a0; }
+    .card-dark .badge-gray   { background: rgba(255,255,255,.06); color: #857f79; border-color: rgba(255,255,255,.1); }
+
+    /* ─── Form elements ─── */
+    .form-group { margin-bottom: 22px; }
+    .form-label { display: block; font-size: 11px; font-weight: 600; color: var(--text-3); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .06em; }
+    .form-hint { font-size: 12px; color: var(--text-3); margin-top: 5px; }
+    select, input[type="text"] { width: 100%; padding: 10px 13px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); color: var(--text-1); font-family: 'Inter', sans-serif; font-size: 13px; transition: border-color .15s, box-shadow .15s; outline: none; }
+    select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237a7570'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px; padding-right: 34px; }
+    select:focus, input[type="text"]:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); background: var(--surface); }
+
+    /* ─── Option groups ─── */
+    .option-group { display: flex; flex-direction: column; gap: 7px; }
+    .option-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all .15s; background: var(--bg2); }
+    .option-item:hover { border-color: var(--teal); background: rgba(14,116,144,.04); }
+    .option-item.selected { border-color: var(--teal); background: rgba(14,116,144,.06); }
+    .option-item input[type="checkbox"], .option-item input[type="radio"] { width: 15px; height: 15px; margin-top: 2px; accent-color: var(--teal); flex-shrink: 0; }
+    .option-label { font-weight: 500; font-size: 13px; color: var(--text-1); line-height: 1.35; }
+    .option-desc { font-size: 11px; color: var(--text-3); margin-top: 2px; line-height: 1.45; }
+
+    /* ─── Grid ─── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* ─── Buttons ─── */
+    .btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 22px; border-radius: 99px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .15s; border: none; text-decoration: none; letter-spacing: -.01em; }
+    .btn-primary { background: var(--text-1); color: var(--surface); }
+    .btn-primary:hover { background: var(--text-2); }
+    .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-2); }
+    .btn-ghost:hover { border-color: var(--text-3); color: var(--text-1); background: var(--bg2); }
+    .btn-teal { background: var(--teal); color: white; }
+    .btn-teal:hover { background: #0f766e; }
+    .btn-mint { background: var(--mint); color: #fff; }
+    .btn-mint:hover { background: var(--teal); }
+    .btn-actions { display: flex; gap: 10px; align-items: center; margin-top: 28px; flex-wrap: wrap; }
+
+    /* ─── Result Tabs — pill style ─── */
+    .results-tabs { display: flex; gap: 4px; margin-bottom: 24px; background: var(--bg2); border-radius: 99px; padding: 4px; width: fit-content; border: 1px solid var(--border); }
+    .tab-btn { background: none; border: none; border-radius: 99px; padding: 7px 18px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-3); cursor: pointer; transition: all .15s; white-space: nowrap; }
+    .tab-btn:hover { color: var(--text-1); }
+    .tab-btn.active { background: var(--surface); color: var(--text-1); font-weight: 600; box-shadow: 0 1px 3px rgba(26,24,22,.1); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ─── Settings summary ─── */
+    /* ─── Settings summary (step 2 compact bar) ─── */
+    .settings-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .settings-chips { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .settings-chip { font-size: 11px; font-weight: 500; color: var(--text-2); background: var(--bg2); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px; white-space: nowrap; }
+    .settings-chip strong { color: var(--text-1); font-weight: 600; }
+    .settings-edit-btn { font-size: 11px; font-weight: 600; color: var(--text-3); background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; padding: 3px 0; white-space: nowrap; }
+    .settings-edit-btn:hover { color: var(--teal); }
+    /* ─── Settings grid (inside popover) ─── */
+    .settings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+    .settings-item { font-size: 12px; }
+    .settings-item span { font-weight: 600; color: var(--text-3); }
+    .settings-item em { color: var(--text-1); font-style: normal; }
+    /* ─── Settings popover (on feed health card) ─── */
+    .settings-popover-wrap { position: relative; flex-shrink: 0; }
+    .settings-popover-btn { display: flex; align-items: center; gap: 5px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-3); background: var(--bg2); border: 1px solid var(--border); border-radius: 99px; padding: 5px 12px; cursor: pointer; transition: all .15s; }
+    .settings-popover-btn:hover { color: var(--text-1); border-color: var(--text-3); }
+    .settings-popover-btn svg { flex-shrink: 0; }
+    .settings-popover { display: none; position: absolute; top: calc(100% + 8px); right: 0; z-index: 300; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; min-width: 320px; max-width: 480px; box-shadow: var(--shadow-md); }
+    .settings-popover.open { display: block; }
+    .settings-popover-title { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+
+    /* ─── Feed input ─── */
+    .feed-textarea { width: 100%; min-height: 200px; padding: 14px; border: 1px dashed var(--border); border-radius: 12px; background: var(--bg2); color: var(--text-1); font-family: 'JetBrains Mono','Fira Code',monospace; font-size: 12px; line-height: 1.65; resize: vertical; outline: none; transition: border-color .15s; }
+    .feed-textarea:focus { border-color: var(--teal); border-style: solid; background: var(--surface); }
+    .feed-textarea::placeholder { color: var(--text-4); }
+    .drop-zone { border: 1px dashed var(--border); border-radius: 14px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all .15s; margin-bottom: 12px; background: var(--bg2); }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--teal); background: rgba(14,116,144,.04); }
+    .drop-zone.drag-over { border-color: var(--mint); background: var(--mint-light); }
+    .drop-zone-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 12px; }
+    .drop-zone-label { font-size: 14px; font-weight: 600; color: var(--text-2); margin-bottom: 4px; }
+    .drop-zone-sub { font-size: 12px; color: var(--text-3); }
+    .drop-zone-sub strong { color: var(--teal); cursor: pointer; font-weight: 600; }
+    .file-loaded { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; font-size: 13px; }
+    .file-loaded-name { font-weight: 600; color: var(--text-2); flex: 1; }
+    .file-loaded-size { color: var(--text-3); font-size: 11px; }
+    .file-clear { background: none; border: none; cursor: pointer; color: var(--text-4); font-size: 15px; padding: 0 4px; }
+    .file-clear:hover { color: var(--red); }
+    .input-divider { display: flex; align-items: center; gap: 10px; margin: 14px 0; color: var(--text-4); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .input-divider::before, .input-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    input[type="file"] { display: none; }
+    .format-detected { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 99px; background: var(--bg2); color: var(--text-2); border: 1px solid var(--border); margin-top: 10px; }
+
+    /* ─── Results ─── */
+    .results-section { margin-top: 8px; }
+    .section-header { font-size: 12px; font-weight: 700; color: var(--text-2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+    .section-sub { font-size: 12px; color: var(--text-3); margin-bottom: 14px; line-height: 1.5; }
+
+    /* ─── Badges — pill style ─── */
+    .badge { display: inline-flex; align-items: center; gap: 3px; padding: 3px 10px; border-radius: 99px; font-size: .7rem; font-weight: 600; white-space: nowrap; letter-spacing: .01em; }
+    .badge-red    { background: #fde8e6; color: #a83226; }
+    .badge-orange { background: #fdecd8; color: #9a4e00; }
+    .badge-yellow { background: #fdf3cc; color: #6b5000; }
+    .badge-green  { background: #d6f5eb; color: #0a5c43; }
+    .badge-gray   { background: var(--bg2); color: var(--text-3); border: 1px solid var(--border); }
+    html.dark .badge-red    { background: rgba(192,57,43,.2);  color: #e88070; }
+    html.dark .badge-orange { background: rgba(192,102,10,.2); color: #e8a050; }
+    html.dark .badge-yellow { background: rgba(138,104,0,.2);  color: #d4b840; }
+    html.dark .badge-green  { background: rgba(10,124,92,.2);  color: #4dd4a0; }
+
+    /* ─── Tables ─── */
+    .table-wrapper { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 16px; background: var(--surface); }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    th { background: var(--surface-alt); color: var(--text-3); font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; padding: 10px 14px; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); position: sticky; top: 0; }
+    td { padding: 7px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text-1); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(14,116,144,.025); }
+    html.dark th { background: var(--bg2); }
+    html.dark tr:hover td { background: rgba(255,255,255,.025); }
+    .cell-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 6px; }
+    /* ─── Cell status dots ─── */
+    .cell-dot { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; line-height: 1; font-weight: 700; }
+    .cell-dot-ok      { background: rgba(10,124,92,.1);  color: #0a7c5c; }
+    .cell-dot-error   { background: rgba(192,57,43,.1);  color: #c0392b; }
+    .cell-dot-warn    { background: rgba(192,102,10,.1); color: #D97706; }
+    .cell-dot-suggest { background: rgba(138,104,0,.1);  color: #8a6800; }
+    .cell-na { color: var(--text-4); font-size: 13px; }
+    /* keep legacy class names for any surviving refs */
+    .cell-ok .cell-icon, .cell-error .cell-icon, .cell-warn .cell-icon, .cell-suggest .cell-icon { display:none; }
+    .cell-value { font-size: 11px; color: var(--text-3); max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    td.cell-status { text-align: center; }
+    .tooltip-wrap { position: relative; cursor: help; }
+    .tooltip-wrap:hover .tooltip { display: block; }
+    .tooltip { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: var(--text-1); color: var(--surface); font-size: 11px; padding: 7px 11px; border-radius: 8px; z-index: 50; max-width: 260px; white-space: normal; text-align: left; line-height: 1.45; pointer-events: none; box-shadow: var(--shadow-md); }
+
+    /* ─── Priority table ─── */
+    .prio-table th:nth-child(1) { width: 50px; }
+    .prio-table td:nth-child(1) { text-align: center; font-weight: 700; }
+    .effort-badge { font-size: 11px; }
+    .fix-text { font-size: 12px; line-height: 1.5; color: var(--text-1); }
+    .fix-text strong { color: var(--teal); }
+
+    /* ─── Summary box ─── */
+    .summary-box { background: var(--surface-alt); border: 1px solid var(--border); border-left: 3px solid var(--teal); border-radius: 10px; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.6; color: var(--text-1); }
+    .summary-box strong { color: var(--teal); }
+
+    /* ─── Tips ─── */
+    .tip-item { display: flex; gap: 14px; padding: 18px; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 8px; background: var(--surface); }
+    .tip-num { width: 28px; height: 28px; background: var(--mint-light); color: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+    .tip-content { flex: 1; }
+    .tip-title { font-weight: 600; font-size: 13px; color: var(--text-1); margin-bottom: 3px; }
+    .tip-body { font-size: 12px; color: var(--text-2); line-height: 1.55; }
+
+    /* ─── Stats / Donut — editorial big numbers ─── */
+    .donut-wrap { margin-bottom: 20px; }
+    .donut-container { display: grid; grid-template-columns: 130px 1fr 1fr; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px 28px; width: 100%; }
+    .donut-svg-wrap { display: flex; align-items: center; justify-content: center; padding-right: 24px; border-right: 1px solid var(--border); }
+    .donut-svg { overflow: visible; }
+    .donut-center-total { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 400; fill: var(--text-1); }
+    .donut-center-label { font-size: 10px; fill: var(--text-3); }
+    .donut-col { display: flex; flex-direction: column; padding: 0 24px; }
+    .stat-block { display: flex; flex-direction: column; gap: 2px; padding: 10px 0; flex: 1; }
+    .stat-block + .stat-block { border-top: 1px solid var(--border); }
+    .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 44px; font-weight: 400; line-height: 1; letter-spacing: -.02em; }
+    .stat-pct { font-size: 12px; font-weight: 500; color: var(--text-3); margin-top: 2px; }
+    .stat-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+    .stat-label { font-size: 11px; color: var(--text-3); margin-top: 2px; line-height: 1.3; }
+    .donut-total-row { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 6px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .donut-total-num { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 400; color: var(--text-1); }
+    .donut-total-label { font-size: 12px; color: var(--text-3); }
+    @media (max-width: 640px) { .donut-container { grid-template-columns: 1fr 1fr; } .donut-svg-wrap { grid-column: 1 / -1; padding: 0 0 16px 0; border-right: none; border-bottom: 1px solid var(--border); } .donut-col { padding: 0 8px; } }
+
+    /* ─── Export dropdown ─── */
+    .export-btns { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .export-dropdown-wrap { position: relative; }
+    .export-menu { display: none; position: absolute; top: calc(100% + 6px); right: 0; z-index: 300; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 6px; min-width: 200px; box-shadow: var(--shadow-md); }
+    .export-menu.open { display: block; }
+    .export-menu-item { display: block; width: 100%; text-align: left; background: none; border: none; padding: 9px 14px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer; border-radius: 8px; transition: background .12s, color .12s; }
+    .export-menu-item:hover { background: var(--bg2); color: var(--text-1); }
+
+    /* ─── Screen management ─── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ─── Collapse ─── */
+    .collapse-toggle { background: none; border: none; cursor: pointer; color: var(--teal); font-size: 12px; font-weight: 600; padding: 4px 0; font-family: 'Inter', sans-serif; }
+    .collapsible { overflow: hidden; transition: max-height .3s; }
+
+    /* ─── Alerts ─── */
+    .alert { padding: 11px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 14px; line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; }
+    .alert-info { background: var(--mint-light); color: #0a7c5c; border: 1px solid rgba(14,116,144,.2); }
+    .alert-warn { background: var(--orange-light); color: var(--orange); border: 1px solid rgba(192,102,10,.2); }
+    .alert span { flex: 1; }
+
+    /* ─── Feed preview bar ─── */
+    .feed-preview-bar { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; color: var(--text-1); margin-top: 10px; }
+    .feed-preview-bar strong { font-weight: 600; color: var(--teal); }
+    .feed-preview-bar em { font-style: normal; color: var(--text-3); font-size: 12px; }
+    .feed-preview-cols { color: var(--text-3); font-size: 12px; }
+
+    /* ─── Column dropdown ─── */
+    .col-dropdown { position: relative; display: inline-block; margin-bottom: 14px; }
+    .col-dropdown-btn { font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); color: var(--text-2); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all .15s; font-family: 'Inter', sans-serif; }
+    .col-dropdown-btn:hover { border-color: var(--text-3); color: var(--text-1); }
+    .col-count-badge { background: var(--mint-light); color: var(--teal); border-radius: 99px; padding: 1px 7px; font-size: 11px; font-weight: 700; }
+    .col-popover { display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 200; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; min-width: 280px; max-width: 420px; box-shadow: var(--shadow-md); }
+    .col-popover.open { display: block; }
+    .col-popover-content { padding: 12px; }
+    .col-popover-title { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .07em; }
+    .col-reset-btn { font-size: 11px; color: var(--teal); background: none; border: none; cursor: pointer; font-weight: 600; padding: 0; font-family: 'Inter', sans-serif; }
+    .col-reset-btn:hover { text-decoration: underline; }
+    .col-check-list { display: flex; flex-wrap: wrap; gap: 5px; max-height: 260px; overflow-y: auto; }
+    .col-check-item { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; color: var(--text-2); padding: 4px 10px; border-radius: 99px; background: var(--bg); cursor: pointer; border: 1px solid var(--border); user-select: none; transition: border-color .12s; }
+    .col-check-item:hover { border-color: var(--teal); color: var(--teal); }
+    .col-check-item input { accent-color: var(--teal); cursor: pointer; margin: 0; }
+
+    /* ─── Loading ─── */
+    .loading { text-align: center; padding: 60px 20px; color: var(--text-3); }
+    .spinner { width: 30px; height: 30px; border: 2px solid var(--border); border-top-color: var(--teal); border-radius: 50%; animation: spin .6s linear infinite; margin: 0 auto 14px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
+
+    /* ─── Inline code ─── */
+    code { font-size: 11.5px; background: var(--bg2); color: var(--teal); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono','Fira Code',monospace; }
+    html.dark code { background: rgba(255,255,255,.06); }
+
+    /* ─── Divider ─── */
+    .divider { height: 1px; background: var(--border); }
+
+    /* ─── Gradient text ─── */
+    .grad { background: linear-gradient(135deg, var(--teal), var(--mint)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* ─── Feed health card ─── */
+    #feed-health-card .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 400; letter-spacing: -.01em; }
+
+    /* ─── Icon box (legacy compat) ─── */
+    .icon-box { display: none; }
+
+    /* ── Account dropdown ── */
+  
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+    footer a{color:var(--text-4);text-decoration:none;opacity:.8}
+    footer a:hover{color:var(--teal)}
+      @media(max-width:600px){main{padding:24px 16px 60px}.container{padding:0}}
+  </style>
+<script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+</head>
+<body>
+
+
+<!-- Auth gate — covers page until user is signed in -->
+
+<!-- Step Progress -->
+<div class="progress-bar" id="progressBar">
+  <div class="progress-bar-inner">
+    <div class="step-item active" id="step-indicator-1">
+      <div class="step-num">1</div>
+      <span class="step-label">Settings</span>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item" id="step-indicator-2">
+      <div class="step-num">2</div>
+      <span class="step-label">Feed Data</span>
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item" id="step-indicator-3">
+      <div class="step-num">3</div>
+      <span class="step-label">Results</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ── Auth gate ──────────────────────────────────────── -->
+  <div id="gmc-auth-gate" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:20px;padding:48px 24px;text-align:center">
+    <div style="width:52px;height:52px;border-radius:99px;background:var(--mint-light);display:flex;align-items:center;justify-content:center;font-size:24px">🔒</div>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:500;color:var(--text-1);margin:0">Restricted tool</h2>
+    <p id="gmc-gate-status" style="font-size:14px;color:var(--text-3);max-width:400px;line-height:1.6;margin:0"></p>
+    <button id="gmc-gate-btn" style="background:var(--teal);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"></button>
+  </div>
+
+  <!-- ── Tool content (hidden until auth passes) ──────── -->
+  <div id="gmc-tool-content" style="display:none">
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SCREEN 1: SETTINGS                                  -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="screen active" id="screen-settings">
+
+    <p style="font-size:12px;color:var(--text-4);margin-bottom:20px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> GMC Feed Analyzer</p>
+    <div class="page-hero">
+      <h1 class="page-hero-title">Validate your<br>GMC feed.</h1>
+      <p class="page-hero-sub">The tool that does what the GMC dashboard should.</p>
+    <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+    <p class="page-hero-sub">Upload your feed, get a prioritised list of what's broken, why it's broken, and what to fix first. No 'contact support.' No waiting 48 hours for a re-review. Just answers.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Configure your analysis</div>
+      <div class="card-sub">Before touching any feed data, confirm your settings. These determine which validation rules apply, which attributes are required, and what market-specific constraints to enforce.</div>
+
+      <div class="grid-2">
+        <!-- Feed Purpose -->
+        <div class="form-group">
+          <div class="form-label">1. Feed Purpose *</div>
+          <select id="feedPurpose" aria-label="Feed purpose">
+            <option value="">— Select purpose —</option>
+            <option value="organic">Free Listings (Organic / Shopping tab)</option>
+            <option value="paid">Performance Max / Shopping Ads (Paid)</option>
+            <option value="both">Both — Paid + Organic (strictest rules)</option>
+          </select>
+          <div class="form-hint">Determines which attribute rules and strictness level apply.</div>
+        </div>
+
+        <!-- Target Market -->
+        <div class="form-group">
+          <div class="form-label">2. Target Market *</div>
+          <select id="targetMarket" aria-label="Target market" onchange="updateMarketHint()">
+            <option value="">— Select market —</option>
+            <optgroup label="Most Common">
+              <option value="US">🇺🇸 United States (US)</option>
+              <option value="UK">🇬🇧 United Kingdom (UK)</option>
+              <option value="AU">🇦🇺 Australia (AU)</option>
+              <option value="DE">🇩🇪 Germany (DE)</option>
+              <option value="FR">🇫🇷 France (FR)</option>
+              <option value="CA">🇨🇦 Canada (CA)</option>
+            </optgroup>
+            <optgroup label="Europe">
+              <option value="AT">Austria (AT)</option>
+              <option value="BE">Belgium (BE)</option>
+              <option value="CZ">Czech Republic (CZ)</option>
+              <option value="IE">Ireland (IE)</option>
+              <option value="IT">Italy (IT)</option>
+              <option value="NL">Netherlands (NL)</option>
+              <option value="PL">Poland (PL)</option>
+              <option value="RO">Romania (RO)</option>
+              <option value="ES">Spain (ES)</option>
+              <option value="CH">Switzerland (CH)</option>
+              <option value="NO">Norway (NO)</option>
+            </optgroup>
+            <optgroup label="Middle East">
+              <option value="IL">Israel (IL)</option>
+            </optgroup>
+            <optgroup label="Asia Pacific">
+              <option value="JP">Japan (JP)</option>
+              <option value="IN">India (IN)</option>
+              <option value="KR">South Korea (KR)</option>
+              <option value="NZ">New Zealand (NZ)</option>
+            </optgroup>
+            <optgroup label="Americas">
+              <option value="BR">Brazil (BR)</option>
+              <option value="MX">Mexico (MX)</option>
+            </optgroup>
+          </select>
+          <div class="form-hint" id="market-hint"></div>
+        </div>
+
+        <!-- Product Category -->
+        <div class="form-group">
+          <div class="form-label">3. Product Category *</div>
+          <select id="productCategory" aria-label="Product category" onchange="updateCategoryHint()">
+            <option value="">— Select category —</option>
+            <option value="apparel">Apparel &amp; Accessories</option>
+            <option value="electronics">Electronics</option>
+            <option value="home_garden">Home &amp; Garden</option>
+            <option value="sports">Sports &amp; Outdoors</option>
+            <option value="toys">Toys &amp; Games</option>
+            <option value="health_beauty">Health &amp; Beauty</option>
+            <option value="food_beverage">Food &amp; Beverages</option>
+            <option value="automotive">Automotive</option>
+            <option value="books_media">Books, Music &amp; Media</option>
+            <option value="mobile">Mobile &amp; Wireless Devices</option>
+            <option value="gift_cards">Gift Cards</option>
+            <option value="other">Other / General Merchandise</option>
+          </select>
+          <div class="form-hint" id="category-hint"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Product Condition -->
+        <div class="form-group">
+          <div class="form-label">4. Product Condition</div>
+          <select id="productCondition" aria-label="Product condition">
+            <option value="new">New</option>
+            <option value="used">Used / Refurbished</option>
+            <option value="mixed">Mixed (varies per product)</option>
+          </select>
+          <div class="form-hint">If "Used" or "Mixed": <code>[condition]</code> attribute required per product.</div>
+        </div>
+
+        <!-- Validation Scope -->
+        <div class="form-group">
+          <div class="form-label">5. Validation Scope *</div>
+          <select id="validationScope" aria-label="Validation scope">
+            <option value="">— Select scope —</option>
+            <option value="required">Required Attributes Only — fastest, flags disapprovals</option>
+            <option value="required_recommended">Required + Recommended — covers performance gaps</option>
+            <option value="full">Full Audit — all attributes + optimisation tips</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Additional Options -->
+      <div class="form-group">
+        <div class="form-label">6. What does your feed contain?</div>
+        <div class="option-group">
+          <label class="option-item" onclick="toggleCheck(this, 'hasVariants')">
+            <input type="checkbox" name="hasVariants" id="hasVariants" aria-label="Has product variants">
+            <div>
+              <div class="option-label">Product variants (same product, different sizes/colours)</div>
+              <div class="option-desc">Triggers <code>item_group_id</code> and variant attribute checks</div>
+            </div>
+          </label>
+          <label class="option-item" onclick="toggleCheck(this, 'hasPromotions')">
+            <input type="checkbox" name="hasPromotions" id="hasPromotions" aria-label="Has promotions">
+            <div>
+              <div class="option-label">Promotions or sale prices</div>
+              <div class="option-desc">Validates <code>sale_price</code>, <code>promotion_id</code>, date format</div>
+            </div>
+          </label>
+          <label class="option-item" onclick="toggleCheck(this, 'hasMultipacks')">
+            <input type="checkbox" name="hasMultipacks" id="hasMultipacks" aria-label="Has multipacks">
+            <div>
+              <div class="option-label">Multipacks</div>
+              <div class="option-desc"><code>[multipack]</code> attribute required per product (value ≥ 2)</div>
+            </div>
+          </label>
+          <label class="option-item" onclick="toggleCheck(this, 'hasBundles')">
+            <input type="checkbox" name="hasBundles" id="hasBundles" aria-label="Has bundles">
+            <div>
+              <div class="option-label">Bundles</div>
+              <div class="option-desc"><code>[is_bundle]</code> attribute required per product</div>
+            </div>
+          </label>
+          <label class="option-item" onclick="toggleCheck(this, 'isMultiseller')">
+            <input type="checkbox" name="isMultiseller" id="isMultiseller" aria-label="Multi-seller marketplace">
+            <div>
+              <div class="option-label">Multi-seller / Marketplace account</div>
+              <div class="option-desc">Requires <code>external_seller_id</code> for all products</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="grid-2" style="align-items:start;">
+        <!-- Shipping -->
+        <div class="form-group" style="margin-bottom:0;">
+          <div class="form-label">7. Shipping Setup</div>
+          <div class="option-group">
+            <label class="option-item" onclick="selectOption(this, 'shippingSetup', 'account')">
+              <input type="radio" name="shippingSetup" value="account">
+              <div>
+                <div class="option-label">Account-level (GMC settings)</div>
+                <div class="option-desc">No <code>[shipping]</code> attribute needed in the feed</div>
+              </div>
+            </label>
+            <label class="option-item" onclick="selectOption(this, 'shippingSetup', 'feed')">
+              <input type="radio" name="shippingSetup" value="feed">
+              <div>
+                <div class="option-label">Product-level <code>[shipping]</code> in feed</div>
+                <div class="option-desc">Required for most markets (AU, UK, US, DE, FR…)</div>
+              </div>
+            </label>
+            <label class="option-item" onclick="selectOption(this, 'shippingSetup', 'carrier')">
+              <input type="radio" name="shippingSetup" value="carrier">
+              <div>
+                <div class="option-label">Carrier-calculated rates</div>
+                <div class="option-desc">Requires shipping weight + dimensions per product</div>
+              </div>
+            </label>
+          </div>
+          <div class="option-group" style="margin-top:8px;">
+            <label class="option-item" onclick="toggleCheck(this, 'hasFreeShipping')">
+              <input type="checkbox" id="hasFreeShipping" aria-label="Has free shipping">
+              <div><div class="option-label">Free shipping offered</div></div>
+            </label>
+            <label class="option-item" onclick="toggleCheck(this, 'hasHandlingTime')">
+              <input type="checkbox" id="hasHandlingTime" aria-label="Has handling time">
+              <div><div class="option-label">Handling / transit time in feed</div></div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Returns -->
+        <div class="form-group" style="margin-bottom:0;">
+          <div class="form-label">8. Returns Policy</div>
+          <div class="option-group">
+            <label class="option-item" onclick="selectOption(this, 'returnsSetup', 'account')">
+              <input type="radio" name="returnsSetup" value="account">
+              <div>
+                <div class="option-label">Account-level (GMC settings)</div>
+                <div class="option-desc">Single policy set in GMC — no feed attribute needed</div>
+              </div>
+            </label>
+            <label class="option-item" onclick="selectOption(this, 'returnsSetup', 'feed')">
+              <input type="radio" name="returnsSetup" value="feed">
+              <div>
+                <div class="option-label"><code>return_policy_label</code> in feed</div>
+                <div class="option-desc">Maps products to different return policies in GMC</div>
+              </div>
+            </label>
+            <label class="option-item" onclick="selectOption(this, 'returnsSetup', 'none')">
+              <input type="radio" name="returnsSetup" value="none">
+              <div>
+                <div class="option-label">Not configured yet</div>
+                <div class="option-desc">Will flag as a warning — required for some Shopping features</div>
+              </div>
+            </label>
+          </div>
+          <div class="option-group" style="margin-top:8px;">
+            <label class="option-item" onclick="toggleCheck(this, 'hasFreeReturns')">
+              <input type="checkbox" id="hasFreeReturns" aria-label="Has free returns">
+              <div><div class="option-label">Free returns offered</div></div>
+            </label>
+            <label class="option-item" onclick="toggleCheck(this, 'hasExtendedReturns')">
+              <input type="checkbox" id="hasExtendedReturns" aria-label="Has extended returns">
+              <div><div class="option-label">Extended return window (30+ days)</div></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-actions">
+        <button class="btn btn-primary" onclick="confirmSettings()">Confirm Settings &amp; Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SCREEN 2: FEED INPUT                                -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="screen" id="screen-feed">
+
+    <div id="settings-summary-feed" class="settings-summary"></div>
+
+    <div class="card">
+      <div class="card-title">Upload or paste your feed data</div>
+      <div class="card-sub">Drop a file, click to browse, or paste directly below. Accepted formats are auto-detected: CSV, TSV, JSON, XML, or a Google Sheets table (copy &amp; paste). You'll see a format confirmation before analysis runs.</div>
+
+      <div class="form-group">
+        <!-- Drop zone -->
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+          <div class="drop-zone-icon">📂</div>
+          <div class="drop-zone-label">Drag &amp; drop your feed file here</div>
+          <div class="drop-zone-sub">CSV, TSV, JSON, XML — or <strong onclick="event.stopPropagation(); document.getElementById('fileInput').click()">browse to upload</strong></div>
+        </div>
+        <input type="file" id="fileInput" aria-label="Upload feed file" accept=".csv,.tsv,.json,.xml,.txt" onchange="handleFileSelect(event)">
+
+        <!-- File loaded indicator -->
+        <div id="fileLoaded" class="file-loaded" style="display:none;">
+          <span>📄</span>
+          <span class="file-loaded-name" id="fileName"></span>
+          <span class="file-loaded-size" id="fileSize"></span>
+          <button class="file-clear" onclick="clearFile()" title="Remove file">✕</button>
+        </div>
+
+        <div class="input-divider">or paste directly</div>
+
+        <textarea class="feed-textarea" id="feedInput" placeholder="Paste your feed data here...
+
+Examples accepted:
+• CSV:  id,title,price,availability&#10;  SKU001,Blue T-Shirt,29.99 GBP,in_stock
+• TSV:  id[tab]title[tab]price...
+• JSON: [{&quot;id&quot;:&quot;SKU001&quot;,&quot;title&quot;:&quot;Blue T-Shirt&quot;,...}]
+• XML:  &lt;item&gt;&lt;id&gt;SKU001&lt;/id&gt;...&lt;/item&gt;" oninput="detectFormat(this.value)"></textarea>
+        <div id="format-badge" style="margin-top: 8px;"></div>
+        <div id="format-preview" style="margin-top: 12px;"></div>
+      </div>
+
+      <div class="btn-actions">
+        <button class="btn btn-ghost" onclick="goToStep(1)">← Back to Settings</button>
+        <button class="btn btn-primary" id="analyzeBtn" onclick="runAnalysis()" disabled>Analyze Feed →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SCREEN 3–5: RESULTS                                 -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="screen" id="screen-results">
+
+    <div id="settings-summary-results"></div>
+
+    <div class="loading" id="loading-indicator">
+      <div class="spinner"></div>
+      <div>Analyzing your feed against GMC attribute requirements…</div>
+    </div>
+
+    <div id="results-content" style="display:none;">
+
+      <!-- Feed Health Card -->
+      <div id="feed-health-card"></div>
+
+      <!-- Stats + Donut (combined) -->
+      <div class="donut-wrap">
+        <div class="donut-container">
+          <div class="donut-svg-wrap">
+            <svg class="donut-svg" id="donut-svg" width="140" height="140" viewBox="0 0 140 140" aria-hidden="true"></svg>
+          </div>
+          <div class="donut-col" id="donut-col-a"></div>
+          <div class="donut-col" id="donut-col-b"></div>
+          <div class="donut-total-row" id="donut-total-row"></div>
+        </div>
+      </div>
+
+      <!-- Tabs + Export row -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;">
+        <div class="results-tabs" style="margin-bottom:0;">
+          <button class="tab-btn active" id="tab-btn-validation" onclick="switchTab('validation')">Validation Table</button>
+          <button class="tab-btn" id="tab-btn-fixlist" onclick="switchTab('fixlist')">Fix List</button>
+          <button class="tab-btn" id="tab-btn-tips" onclick="switchTab('tips')">Optimisation Tips</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+          <div class="export-dropdown-wrap" id="exportDropdownWrap">
+            <button class="btn btn-ghost" style="gap:6px;" onclick="toggleExportMenu(event)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export
+            </button>
+            <div class="export-menu" id="exportMenu">
+              <button class="export-menu-item" onclick="exportCSV(); closeExportMenu()">Validation Table (CSV)</button>
+              <button class="export-menu-item" onclick="exportPriority(); closeExportMenu()">Fix List (CSV)</button>
+              <button class="export-menu-item" onclick="exportMarkdownReport(); closeExportMenu()">Audit Report (MD)</button>
+            </div>
+          </div>
+          <button class="btn btn-ghost" onclick="goToStep(1)" style="font-size:12px;">← New Analysis</button>
+        </div>
+      </div>
+
+      <!-- Tab: Validation Table -->
+      <div class="tab-panel active" id="tab-validation">
+        <div class="card" style="padding-bottom:20px;">
+          <div class="section-sub" style="margin-bottom:14px;">Every product row validated against every applicable attribute. Hover cell icons for details.</div>
+          <div id="col-toggles"></div>
+          <div class="table-wrapper"><div id="validation-table"></div></div>
+        </div>
+      </div>
+
+      <!-- Tab: Fix List -->
+      <div class="tab-panel" id="tab-fixlist">
+        <div class="card">
+          <div class="section-sub" style="margin-bottom:14px;">Issues ranked by severity × volume × ease of fix. Hand this directly to your feed manager or developer.</div>
+          <div id="summary-box"></div>
+          <div id="priority-table"></div>
+        </div>
+      </div>
+
+      <!-- Tab: Optimisation Tips -->
+      <div class="tab-panel" id="tab-tips">
+        <div class="card">
+          <div class="section-sub" style="margin-bottom:14px;">Strategic recommendations specific to your confirmed settings — beyond basic validation.</div>
+          <div id="tips-content"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div><!-- /gmc-tool-content -->
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════════
+let settings = {};
+let parsedFeed = [];
+let analysisResults = [];
+let priorityIssues = [];
+let visibleCols = new Set();
+let detectedFmt = null;
+let duplicateIds = new Set(); // populated before row validation
+
+// ════════════════════════════════════════════════════════════════════
+// GMC ATTRIBUTE SPEC
+// ════════════════════════════════════════════════════════════════════
+const SPEC = {
+  id:                    { label: 'ID',                    tier: 'required',    maxLen: 50,   note: 'Must be unique. Max 50 chars. Keep stable. No special chars beyond . _ - /' },
+  title:                 { label: 'Title',                 tier: 'required',    maxLen: 150,  note: 'Max 150 chars. No promo text, ALL CAPS, or gimmick characters. Must match landing page. Use [structured_title] instead for AI-generated titles.' },
+  structured_title:      { label: 'Structured Title',      tier: 'optional',    maxLen: 150,  note: 'Use INSTEAD of [title] for AI-generated titles only. Must include digital_source_type sub-attr: "default" or "trained_algorithmic_media". Do not submit both [title] and [structured_title] for the same product.' },
+  description:           { label: 'Description',           tier: 'required',    maxLen: 5000, note: 'Max 5,000 chars. No promo text or competitor mentions. Must match landing page. Use [structured_description] instead for AI-generated copy.' },
+  structured_description:{ label: 'Structured Description',tier: 'optional',    maxLen: 5000, note: 'Use INSTEAD of [description] for AI-generated copy only. Must include digital_source_type sub-attr: "default" or "trained_algorithmic_media". Do not submit both [description] and [structured_description] for the same product.' },
+  link:                  { label: 'Link',                  tier: 'required',    isUrl: true,  note: 'Must start with http/https. Verified domain. No interstitial pages.' },
+  image_link:            { label: 'Image Link',            tier: 'required',    isUrl: true,  note: 'Must accurately show the product. No watermarks or placeholders. JPEG/WebP/PNG/GIF/BMP/TIFF.' },
+  availability:          { label: 'Availability',          tier: 'required',    values: ['in_stock','out_of_stock','preorder','backorder'], note: 'Must be one of: in_stock, out_of_stock, preorder, backorder. Must match landing page.' },
+  price:                 { label: 'Price',                 tier: 'required',    isPrice: true, note: 'Format: number + currency code (e.g. 29.99 GBP). Must match landing page and checkout.' },
+  brand:                 { label: 'Brand',                 tier: 'required',    maxLen: 70,   note: 'Required for all new products except books, movies, music. Do not submit "Generic", "N/A", or "Unknown".' },
+  condition:             { label: 'Condition',             tier: 'conditional', values: ['new','refurbished','used'], note: 'Required if product is used or refurbished. Values: new | refurbished | used.' },
+  gtin:                  { label: 'GTIN',                  tier: 'recommended', isGtin: true, note: 'Required when product has a known GTIN. Must pass GS1 checksum. No dashes/spaces.' },
+  mpn:                   { label: 'MPN',                   tier: 'conditional', maxLen: 70,   note: 'Required only if product has no GTIN. Max 70 alphanumeric chars.' },
+  identifier_exists:     { label: 'Identifier Exists',     tier: 'optional',    values: ['yes','no','true','false','1','0'], note: 'Set to "no" only if product genuinely has no brand, GTIN, or MPN.' },
+  google_product_category:{ label: 'Google Product Cat.',  tier: 'recommended', note: 'Strongly recommended. Submit numerical ID (preferred) or full path — not both.' },
+  product_type:          { label: 'Product Type',          tier: 'optional',    maxLen: 750,  note: 'Your own taxonomy. Include full path. Max 750 chars.' },
+  item_group_id:         { label: 'Item Group ID',         tier: 'conditional', maxLen: 50,   note: 'Required for variants in BR, FR, DE, JP, UK, US. Use parent SKU.' },
+  color:                 { label: 'Color',                 tier: 'conditional', maxLen: 100,  note: 'Required for apparel in BR, FR, DE, JP, UK, US. No hex codes or numbers. Primary colour first.' },
+  size:                  { label: 'Size',                  tier: 'conditional', maxLen: 100,  note: 'Required for Clothing and Shoes in BR, FR, DE, JP, UK, US.' },
+  gender:                { label: 'Gender',                tier: 'conditional', values: ['male','female','unisex'], note: 'Required for apparel in BR, FR, DE, JP, UK, US. Values: male | female | unisex.' },
+  age_group:             { label: 'Age Group',             tier: 'conditional', values: ['newborn','infant','toddler','kids','adult'], note: 'Required for apparel in BR, FR, DE, JP, UK, US.' },
+  material:              { label: 'Material',              tier: 'conditional', maxLen: 200,  note: 'Required if needed to distinguish variants. Separate multiple with /.' },
+  pattern:               { label: 'Pattern',               tier: 'conditional', maxLen: 100,  note: 'Required if needed to distinguish variants.' },
+  size_type:             { label: 'Size Type',             tier: 'optional',    values: ['regular','petite','plus','big','tall','maternity'], note: 'Apparel only. Up to 2 values. Valid values: regular, petite, plus, big, tall, maternity.' },
+  size_system:           { label: 'Size System',           tier: 'optional',    values: ['US','UK','EU','DE','FR','JP','CN','IT','BR','MEX','AU'], note: 'Apparel only.' },
+  additional_image_link: { label: 'Additional Image',      tier: 'optional',    isUrl: true,  note: 'Up to 10 additional images.' },
+  mobile_link:           { label: 'Mobile Link',           tier: 'optional',    isUrl: true,  note: 'Only needed if mobile URL differs from desktop.' },
+  sale_price:            { label: 'Sale Price',            tier: 'optional',    isPrice: true, note: 'Submit alongside non-sale price. Do NOT use for loyalty prices.' },
+  sale_price_effective_date:{ label: 'Sale Price Effective Date', tier: 'optional', note: 'ISO 8601 date range separated by /. If omitted, sale price applies indefinitely. Pair with sale_price.' },
+  availability_date:     { label: 'Availability Date',     tier: 'conditional', isDate: true, note: 'Required if availability = preorder or backorder. ISO 8601 format.' },
+  shipping:              { label: 'Shipping',              tier: 'conditional', note: 'Required for AU, AT, BE, CA, CZ, FR, DE, IN, IE, IL, IT, NZ, JP, NL, PL, RO, KR, ES, CH, UK, US.' },
+  shipping_label:        { label: 'Shipping Label',        tier: 'optional',    maxLen: 100,  note: 'Internal label to map products to shipping settings.' },
+  shipping_weight:       { label: 'Shipping Weight',       tier: 'optional',    note: 'Required for carrier-calculated rates.' },
+  tax:                   { label: 'Tax',                   tier: 'conditional', note: 'Required for US paid ads if not configured at account level.' },
+  promotion_id:          { label: 'Promotion ID',          tier: 'conditional', note: 'Required for promotions in AU, FR, DE, IN, UK, US.' },
+  custom_label_0:        { label: 'Custom Label 0',        tier: 'optional',    maxLen: 100,  note: 'Paid campaigns only. Max 100 chars each. Max 1,000 unique values per label across account.' },
+  custom_label_1:        { label: 'Custom Label 1',        tier: 'optional',    maxLen: 100,  note: 'Paid campaigns only. Max 100 chars each.' },
+  custom_label_2:        { label: 'Custom Label 2',        tier: 'optional',    maxLen: 100,  note: 'Paid campaigns only. Max 100 chars each.' },
+  custom_label_3:        { label: 'Custom Label 3',        tier: 'optional',    maxLen: 100,  note: 'Paid campaigns only. Max 100 chars each.' },
+  custom_label_4:        { label: 'Custom Label 4',        tier: 'optional',    maxLen: 100,  note: 'Paid campaigns only. Max 100 chars each.' },
+  ads_redirect:          { label: 'Ads Redirect',          tier: 'optional',    isUrl: true,  note: 'Paid ads only. Must share same domain as [link].' },
+  excluded_destination:  { label: 'Excluded Destination',  tier: 'optional',    note: 'Controls where product appears.' },
+  included_destination:  { label: 'Included Destination',  tier: 'optional',    note: 'Controls where product appears.' },
+  certification:         { label: 'Certification',         tier: 'conditional', note: 'Required for EU/EFTA products needing energy efficiency labels (appliances, displays, lighting, tyres, and smartphones from June 2025). Format: certification_authority:certification_name:certification_code — e.g. EC:EPREL:123456.' },
+  multipack:             { label: 'Multipack',             tier: 'conditional', note: 'Required for merchant-defined multipacks in AU, BR, CZ, FR, DE, IT, JP, NL, ES, CH, UK, US.' },
+  is_bundle:             { label: 'Is Bundle',             tier: 'conditional', values: ['yes','no','true','false'], note: 'Required for merchant-defined bundles in specific markets.' },
+  adult:                 { label: 'Adult',                 tier: 'conditional', values: ['yes','no'], note: 'Required if product contains adult content.' },
+  product_detail:        { label: 'Product Detail',        tier: 'optional',    note: 'Technical specs. Sub-attrs: section_name + attribute_name + attribute_value.' },
+  product_highlight:     { label: 'Product Highlight',     tier: 'optional',    note: '2–100 highlights. Max 150 chars each.' },
+  expiration_date:       { label: 'Expiration Date',       tier: 'optional',    isDate: true, note: 'Must be < 30 days in future.' },
+  short_title:           { label: 'Short Title',           tier: 'optional',    maxLen: 150,  note: 'Demand Gen campaigns only. Recommended 5–65 chars.' },
+  lifestyle_image_link:  { label: 'Lifestyle Image',       tier: 'optional',    isUrl: true,  note: 'Browsy surfaces only. Lifestyle/in-context image.' },
+  external_seller_id:    { label: 'External Seller ID',    tier: 'conditional', maxLen: 50,   note: 'Required for multi-seller accounts only.' },
+  unit_pricing_measure:  { label: 'Unit Pricing Measure',  tier: 'optional',    note: 'Required by local law in some markets (e.g. EU).' },
+  unit_pricing_base_measure:{ label: 'Unit Pricing Base',  tier: 'optional',    note: 'Required when unit pricing measure is submitted.' },
+  return_policy_label:      { label: 'Return Policy Label',        tier: 'conditional', maxLen: 50,   note: 'Maps product to a return policy defined in GMC. Case-sensitive. Must exactly match the label set up in your GMC return policy settings.' },
+  // Shipping dimensions (required for carrier-calculated)
+  shipping_length:          { label: 'Shipping Length',            tier: 'conditional', note: 'Required for carrier-calculated rates. Units: in (1–150) or cm (1–400). Submit length, width, height together.' },
+  shipping_width:           { label: 'Shipping Width',             tier: 'conditional', note: 'Required for carrier-calculated rates (with length and height). Same unit as shipping_length.' },
+  shipping_height:          { label: 'Shipping Height',            tier: 'conditional', note: 'Required for carrier-calculated rates (with length and width). Same unit as shipping_length.' },
+  free_shipping_threshold:  { label: 'Free Shipping Threshold',    tier: 'optional',    isPrice: true, note: 'Sub-attrs: country (ISO 3166) + price_threshold. Currency must match offer price currency. ISO 4217. Decimal point only (e.g. 10.00 USD).' },
+  min_handling_time:        { label: 'Min Handling Time',          tier: 'optional',    note: 'Integer ≥ 0 (business days). 0 = same-day dispatch. Pair with max_handling_time.' },
+  max_handling_time:        { label: 'Max Handling Time',          tier: 'optional',    note: 'Integer ≥ 0 (business days). Must be ≥ min_handling_time.' },
+  shipping_transit_business_days: { label: 'Shipping Transit Days', tier: 'optional',  note: 'Country (ISO 3166) + business_days. E.g. Mon-Fri;Sun. Max 10 configs.' },
+  shipping_handling_business_days: { label: 'Shipping Handling Days', tier: 'optional', note: 'Semicolon-separated days or day ranges. Defaults to Mon-Sat.' },
+  carrier_shipping:         { label: 'Carrier Shipping',           tier: 'optional',    note: 'Use as last resort — prefer account-level settings. Requires origin_postal_code.' },
+  ships_from_country:       { label: 'Ships From Country',         tier: 'optional',    note: 'ISO 3166-1 alpha-2. Indicate typical ship-from country only.' },
+  transit_time_label:       { label: 'Transit Time Label',         tier: 'optional',    maxLen: 100,  note: 'Internal label to assign transit times in GMC settings. E.g. "From Warsaw".' },
+  // Product dimensions & weight
+  product_length:           { label: 'Product Length',             tier: 'optional',    note: 'Number + unit (cm or in). Range 1–3,000. Must use same unit as product_width and product_height.' },
+  product_width:            { label: 'Product Width',              tier: 'optional',    note: 'Same unit requirements as product_length.' },
+  product_height:           { label: 'Product Height',             tier: 'optional',    note: 'Same unit requirements as product_length.' },
+  product_weight:           { label: 'Product Weight',             tier: 'optional',    note: 'Use assembled weight. For bundles, total weight of all pieces. Units: lb, oz, g, kg. Range 0–2,000.' },
+  // Pricing extras
+  cost_of_goods_sold:       { label: 'Cost of Goods Sold',         tier: 'optional',    isPrice: true, note: 'Enables gross margin reporting in GMC. ISO 4217 currency + decimal point (not comma). E.g. 23.00 USD.' },
+  auto_pricing_min_price:   { label: 'Min Price (Auto Pricing)',   tier: 'optional',    isPrice: true, note: 'Sets floor price Google cannot go below. Use for automated discounts or MAP compliance. Paid ads only. ISO 4217 format.' },
+  maximum_retail_price:     { label: 'Maximum Retail Price',       tier: 'optional',    isPrice: true, note: 'India (IN) only. Must match landing page. Include GST. ISO 4217. Do not submit 0.' },
+  installment:              { label: 'Installment',                tier: 'optional',    note: 'Sub-attrs: months (int) + amount (ISO 4217 per month) + downpayment (optional) + credit_type (finance|lease). Latin America: all categories. Other countries: wireless only.' },
+  subscription_cost:        { label: 'Subscription Cost',         tier: 'optional',    note: 'Sub-attrs: period (week|month|year) + period_length (int) + amount (ISO 4217 per period). Physical Goods Subscriptions (US Shopping ads only): set product [price] to 0 (customer pays via subscription, not per-unit) and submit [subscription_cost] with the recurring charge details. Eligible categories: Personal Care, Health Care, Home & Garden, Pet Supplies, Toys, Prepared Foods, Apparel, Coffee. Week period supported for Physical Goods Subscriptions.' },
+  loyalty_program:          { label: 'Loyalty Program',            tier: 'optional',    note: '7 sub-attrs: program_label + tier_label + price + cashback_for_future_use + loyalty_points + member_price_effective_date + shipping_label. Available: US, AU, BR, MX, CA, FR, DE, IN, IT, NL, KR, ES, UK, JP.' },
+  // Energy labels (non-EU only from April 2025)
+  energy_efficiency_class:  { label: 'Energy Efficiency Class',   tier: 'optional',    values: ['A+++','A++','A+','A','B','C','D','E','F','G'], note: '⚠️ Valid for CH, NO, UK ONLY (not EU). Use [certification] for all EU countries from April 2025.' },
+  min_energy_efficiency_class:{ label: 'Min Energy Efficiency',   tier: 'optional',    note: 'CH, NO, UK only. Combine with energy_efficiency_class and max_energy_efficiency_class.' },
+  max_energy_efficiency_class:{ label: 'Max Energy Efficiency',   tier: 'optional',    note: 'CH, NO, UK only. Combine with energy_efficiency_class and min_energy_efficiency_class.' },
+  // Campaign / destination controls
+  virtual_model_link:       { label: '3D Model Link',             tier: 'optional',    isUrl: true,  note: 'US only. Points to .gltf or .glb file. Max 15 MB; textures up to 2K. Validate with Google\'s tool.' },
+  shopping_ads_excluded_country:{ label: 'Excluded Countries (Ads)', tier: 'optional', note: 'ISO 3166-1 alpha-2. Shopping ads only. E.g. DE. Excludes product from ads in specified countries.' },
+  pause:                    { label: 'Pause',                     tier: 'optional',    values: ['ads'], note: 'Pauses ads only. Max 14 days or product is disapproved. Remove attribute to re-approve.' },
+};
+
+// Apparel markets requiring color/size/gender/age_group
+const APPAREL_MARKETS = ['BR','FR','DE','JP','UK','US'];
+// Shipping-required markets
+const SHIPPING_MARKETS = ['AU','AT','BE','CA','CZ','FR','DE','IN','IE','IL','IT','NZ','JP','NL','PL','RO','KR','ES','CH','UK','US'];
+
+// Header aliases for auto-mapping
+const ALIASES = {
+  'product id': 'id', 'item id': 'id', 'sku': 'id', 'item_id': 'id', 'product_id': 'id',
+  'product title': 'title', 'name': 'title', 'product name': 'title',
+  'structured title': 'structured_title',
+  'product description': 'description', 'desc': 'description', 'body': 'description',
+  'structured description': 'structured_description',
+  'url': 'link', 'product url': 'link', 'landing page': 'link', 'product_url': 'link',
+  'image': 'image_link', 'image url': 'image_link', 'main image': 'image_link', 'image_url': 'image_link',
+  'stock': 'availability', 'stock status': 'availability', 'in stock': 'availability',
+  'regular price': 'price', 'product price': 'price',
+  'manufacturer': 'brand', 'vendor': 'brand', 'maker': 'brand',
+  'ean': 'gtin', 'upc': 'gtin', 'isbn': 'gtin', 'barcode': 'gtin',
+  'manufacturer part number': 'mpn', 'part number': 'mpn', 'model': 'mpn',
+  'category': 'google_product_category', 'gpc': 'google_product_category', 'google category': 'google_product_category',
+  'type': 'product_type', 'product category': 'product_type',
+  'group id': 'item_group_id', 'variant id': 'item_group_id', 'parent sku': 'item_group_id',
+  'colour': 'color', 'colors': 'color', 'colour_variant': 'color',
+  'sizes': 'size', 'shoe size': 'size',
+  'sex': 'gender', 'target gender': 'gender',
+  'age': 'age_group', 'target age': 'age_group',
+  'sale': 'sale_price', 'discounted price': 'sale_price', 'promo price': 'sale_price',
+  'shipping cost': 'shipping', 'delivery': 'shipping',
+  'return policy': 'return_policy_label', 'returns label': 'return_policy_label', 'return label': 'return_policy_label',
+  'handling time': 'min_handling_time', 'dispatch time': 'min_handling_time',
+  'free shipping threshold': 'free_shipping_threshold', 'free shipping': 'free_shipping_threshold',
+};
+
+// ════════════════════════════════════════════════════════════════════
+// UI HELPERS
+// ════════════════════════════════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-btn-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function toggleExportMenu(e) {
+  e.stopPropagation();
+  document.getElementById('exportMenu').classList.toggle('open');
+}
+function closeExportMenu() {
+  const el = document.getElementById('exportMenu');
+  if (el) el.classList.remove('open');
+}
+function toggleSettingsPopover(e) {
+  e.stopPropagation();
+  document.getElementById('settingsPopover').classList.toggle('open');
+}
+document.addEventListener('click', function() {
+  closeExportMenu();
+  const sp = document.getElementById('settingsPopover');
+  if (sp) sp.classList.remove('open');
+});
+
+function selectOption(el, group, val) {
+  document.querySelectorAll(`.option-item input[name="${group}"]`).forEach(r => r.closest('.option-item').classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleCheck(el, id) {
+  const cb = document.getElementById(id);
+  // the click propagates to the checkbox, so just update visual
+  setTimeout(() => {
+    el.classList.toggle('selected', cb.checked);
+  }, 0);
+}
+
+function goToStep(n) {
+  if (n === 1) clearFile();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const stepN = n > 3 ? 3 : n; // collapse 4/5 onto step 3 in the progress bar
+  document.querySelectorAll('.step-item').forEach((s, i) => {
+    s.classList.toggle('active', i + 1 === stepN);
+    s.classList.toggle('done', i + 1 < stepN);
+  });
+  const screens = { 1: 'settings', 2: 'feed', 3: 'results', 4: 'results', 5: 'results' };
+  document.getElementById('screen-' + screens[n]).classList.add('active');
+  if (n === 4) switchTab('fixlist');
+  else if (n === 5) switchTab('tips');
+  else if (n === 3) switchTab('validation');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateMarketHint() {
+  const market = document.getElementById('targetMarket').value;
+  const hints = {
+    UK: '⚠️ UK requires shipping attribute. Price must include VAT. Energy labels: use [energy_efficiency_class] (not [certification]).',
+    US: '🇺🇸 US: Price excludes tax. Shipping required. [tax] attribute or account-level settings needed.',
+    DE: '🇩🇪 DE: Price includes VAT. Shipping required. EU [certification] needed for energy products (from April 2025).',
+    FR: '🇫🇷 FR: Price includes VAT. Shipping required. Apparel needs color/size/gender.',
+    AU: '🇦🇺 AU: Shipping required. GST included in price.',
+    IN: '🇮🇳 IN: Use [maximum_retail_price] (MRP) including GST. Shipping required.',
+    JP: '🇯🇵 JP: Price includes consumption tax. Shipping required.',
+  };
+  document.getElementById('market-hint').textContent = hints[market] || '';
+}
+
+function updateCategoryHint() {
+  const cat = document.getElementById('productCategory').value;
+  const hints = {
+    apparel: 'Apparel: color, size, gender, age_group required for key markets. item_group_id required for variants.',
+    electronics: 'Electronics: GTIN strongly recommended. EU energy-labelled products (appliances, displays, lighting, tyres) require [certification] with EC:EPREL:<id> format (not [energy_efficiency_class]). ⚠️ Smartphones added to certification requirement from June 2025.',
+    mobile: 'Mobile: [condition] required. Carrier/contract attributes may apply. Use Google Product Category 267 (Mobile Phones).',
+    food_beverage: 'Food & Beverages: [google_product_category] required for alcoholic beverages.',
+    gift_cards: 'Gift Cards: [google_product_category] required (use specific ID).',
+  };
+  document.getElementById('category-hint').textContent = hints[cat] || '';
+}
+
+// ════════════════════════════════════════════════════════════════════
+// STEP 1: CONFIRM SETTINGS
+// ════════════════════════════════════════════════════════════════════
+function confirmSettings() {
+  const purpose = document.getElementById('feedPurpose').value;
+  const market = document.getElementById('targetMarket').value;
+  const category = document.getElementById('productCategory').value;
+  const scope = document.getElementById('validationScope').value;
+  const condition = document.getElementById('productCondition').value;
+
+  if (!purpose) return alert('Please select a Feed Purpose.');
+  if (!market) return alert('Please select a Target Market.');
+  if (!category) return alert('Please select a Product Category.');
+  if (!scope) return alert('Please select a Validation Scope.');
+
+  const shippingSetup = document.querySelector('input[name="shippingSetup"]:checked');
+  const returnsSetup = document.querySelector('input[name="returnsSetup"]:checked');
+
+  if (!shippingSetup) return alert('Please select a Shipping Setup (section 7).');
+  if (!returnsSetup) return alert('Please select a Returns Policy (section 8).');
+
+  settings = {
+    purpose,
+    market,
+    category,
+    scope,
+    condition,
+    isMultiseller: document.getElementById('isMultiseller').checked,
+    hasVariants: document.getElementById('hasVariants').checked,
+    hasPromotions: document.getElementById('hasPromotions').checked,
+    shippingSetup: shippingSetup.value,
+    returnsSetup: returnsSetup.value,
+    hasFreeShipping: document.getElementById('hasFreeShipping').checked,
+    hasHandlingTime: document.getElementById('hasHandlingTime').checked,
+    hasFreeReturns: document.getElementById('hasFreeReturns').checked,
+    hasExtendedReturns: document.getElementById('hasExtendedReturns').checked,
+    hasMultipacks: document.getElementById('hasMultipacks').checked,
+    hasBundles: document.getElementById('hasBundles').checked,
+    hasUsedProducts: condition === 'used' || condition === 'mixed',
+  };
+
+  const summary = buildSettingsSummary();
+  document.getElementById('settings-summary-feed').innerHTML = summary.compactHtml;
+  document.getElementById('settings-summary-results').innerHTML = '';
+  goToStep(2);
+}
+
+function buildSettingsSummary() {
+  const purposeLabel = { organic: 'Free Listings', paid: 'Shopping Ads', both: 'Paid + Organic' }[settings.purpose];
+  const scopeLabel = { full: 'Full Audit', required: 'Required Only', required_recommended: 'Required + Recommended' }[settings.scope];
+  const catLabel = document.getElementById('productCategory').options[document.getElementById('productCategory').selectedIndex]?.text || settings.category;
+  const mktLabel = document.getElementById('targetMarket').options[document.getElementById('targetMarket').selectedIndex]?.text || settings.market;
+
+  // Compact chips for Step 2 bar
+  const compactHtml = `
+    <div class="settings-chips">
+      <span class="settings-chip"><strong>${mktLabel}</strong></span>
+      <span class="settings-chip"><strong>${purposeLabel}</strong></span>
+      <span class="settings-chip">${catLabel}</span>
+      <span class="settings-chip">${scopeLabel}</span>
+      ${settings.hasVariants ? '<span class="settings-chip">Variants</span>' : ''}
+      ${settings.hasPromotions ? '<span class="settings-chip">Promotions</span>' : ''}
+      ${settings.hasMultipacks ? '<span class="settings-chip">Multipacks</span>' : ''}
+      ${settings.hasBundles ? '<span class="settings-chip">Bundles</span>' : ''}
+    </div>
+    <button class="settings-edit-btn" onclick="goToStep(1)">← Edit settings</button>`;
+
+  // Full grid for popover
+  const gridHtml = `
+    <div class="settings-grid">
+      <div class="settings-item"><span>Purpose:</span> <em>${purposeLabel}</em></div>
+      <div class="settings-item"><span>Market:</span> <em>${mktLabel}</em></div>
+      <div class="settings-item"><span>Category:</span> <em>${catLabel}</em></div>
+      <div class="settings-item"><span>Scope:</span> <em>${scopeLabel}</em></div>
+      <div class="settings-item"><span>Condition:</span> <em>${settings.condition}</em></div>
+      ${settings.hasVariants ? '<div class="settings-item"><span>Variants:</span> <em>Yes</em></div>' : ''}
+      ${settings.isMultiseller ? '<div class="settings-item"><span>Multi-seller:</span> <em>Yes</em></div>' : ''}
+      ${settings.hasPromotions ? '<div class="settings-item"><span>Promotions:</span> <em>Yes</em></div>' : ''}
+      ${settings.hasMultipacks ? '<div class="settings-item"><span>Multipacks:</span> <em>Yes</em></div>' : ''}
+      ${settings.hasBundles ? '<div class="settings-item"><span>Bundles:</span> <em>Yes</em></div>' : ''}
+      <div class="settings-item"><span>Shipping:</span> <em>${{account:'Account-level',feed:'Feed attribute',carrier:'Carrier-calculated'}[settings.shippingSetup]}</em></div>
+      <div class="settings-item"><span>Returns:</span> <em>${{account:'Account-level',feed:'Feed label',none:'Not configured'}[settings.returnsSetup]}${settings.hasFreeReturns?' · Free returns':''}</em></div>
+    </div>`;
+
+  return { compactHtml, gridHtml };
+}
+
+// ════════════════════════════════════════════════════════════════════
+// STEP 2: FEED PARSING
+// ════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════
+// FILE UPLOAD & DRAG AND DROP
+// ════════════════════════════════════════════════════════════════════
+function handleDragOver(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  document.getElementById('dropZone').classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) loadFile(file);
+}
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) loadFile(file);
+}
+
+function loadFile(file) {
+  const allowedTypes = ['text/csv','text/tab-separated-values','application/json','text/xml','application/xml','text/plain',''];
+  const ext = file.name.split('.').pop().toLowerCase();
+  const allowedExts = ['csv','tsv','json','xml','txt'];
+
+  if (!allowedExts.includes(ext)) {
+    document.getElementById('format-badge').innerHTML = `<div class="alert alert-warn"><span>Unsupported file type: <strong>.${ext}</strong>. Please upload a CSV, TSV, JSON, or XML file.</span></div>`;
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const text = e.target.result;
+    // Show file info
+    const kb = (file.size / 1024).toFixed(1);
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileSize').textContent = `${kb} KB`;
+    document.getElementById('fileLoaded').style.display = 'flex';
+    // Load into textarea
+    document.getElementById('feedInput').value = text;
+    detectFormat(text);
+    // Scroll to textarea
+    document.getElementById('feedInput').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+  reader.onerror = () => {
+    document.getElementById('format-badge').innerHTML = `<div class="alert alert-warn"><span>Could not read file. Please try again or paste the contents manually.</span></div>`;
+  };
+  reader.readAsText(file);
+}
+
+function clearFile() {
+  document.getElementById('fileInput').value = '';
+  document.getElementById('fileLoaded').style.display = 'none';
+  document.getElementById('feedInput').value = '';
+  document.getElementById('format-badge').innerHTML = '';
+  document.getElementById('format-preview').innerHTML = '';
+  document.getElementById('analyzeBtn').disabled = true;
+}
+
+function detectFormat(text) {
+  text = text.trim();
+  const btn = document.getElementById('analyzeBtn');
+  const badge = document.getElementById('format-badge');
+  const preview = document.getElementById('format-preview');
+
+  if (!text) { btn.disabled = true; badge.innerHTML = ''; preview.innerHTML = ''; return; }
+
+  let fmt = 'Unknown';
+  try {
+    if (text.startsWith('[') || text.startsWith('{')) { JSON.parse(text); fmt = 'JSON'; }
+    else if (text.includes('<?xml') || text.includes('<item') || text.includes('<entry') || text.includes('<product')) fmt = 'XML';
+    else {
+      // Count delimiters in the header row for reliable detection
+      const firstLine = text.split(/\r?\n|\r/)[0];
+      const tabCount   = (firstLine.match(/\t/g)  || []).length;
+      const semiCount  = (firstLine.match(/;/g)   || []).length;
+      const pipeCount  = (firstLine.match(/\|/g)  || []).length;
+      const commaCount = (firstLine.match(/,/g)   || []).length;
+      const hasLines   = text.split(/\r?\n|\r/).filter(l => l.trim()).length > 1;
+      if (!hasLines) { fmt = 'Unknown'; }
+      else if (tabCount   >= semiCount && tabCount   >= commaCount && tabCount   >= pipeCount && tabCount   > 0) fmt = 'TSV';
+      else if (semiCount  >= commaCount && semiCount  >= pipeCount  && semiCount  > 0) fmt = 'TSV (semicolon)';
+      else if (pipeCount  >= commaCount && pipeCount  > 0) fmt = 'TSV (pipe)';
+      else if (commaCount > 0) fmt = 'CSV';
+      else fmt = 'Unknown';
+    }
+  } catch(e) { fmt = text.includes(',') ? 'CSV' : 'TSV'; }
+
+  if (fmt === 'Unknown') { btn.disabled = true; detectedFmt = null; badge.innerHTML = `<div class="alert alert-warn"><span>Format not recognized. Please paste CSV, TSV, JSON, or XML feed data.</span></div>`; preview.innerHTML=''; return; }
+
+  detectedFmt = fmt;
+  badge.innerHTML = `<div class="format-detected">✓ Detected format: <strong>${fmt}</strong></div>`;
+
+  try {
+    const rows = parseFeed(text, fmt);
+    if (rows.length > 0) {
+      const cols = Object.keys(rows[0]);
+      preview.innerHTML = `<div class="feed-preview-bar"><strong>${rows.length} product${rows.length>1?'s':''} detected.</strong> <span class="feed-preview-cols">Columns: ${cols.slice(0,8).map(c=>`<code>${c}</code>`).join(', ')}${cols.length>8?` <em>+${cols.length-8} more</em>`:''}</span></div>`;
+      btn.disabled = false;
+    }
+  } catch(e) {
+    preview.innerHTML = `<div class="alert alert-warn"><span>Parse error: ${e.message}</span></div>`;
+    btn.disabled = true;
+  }
+}
+
+function parseFeed(text, fmt) {
+  text = text.trim().replace(/^\ufeff/, ''); // strip UTF-8 BOM if present
+  if (!fmt) {
+    if (text.startsWith('[') || text.startsWith('{')) fmt = 'JSON';
+    else if (text.includes('<?xml') || text.includes('<item') || text.includes('<entry') || text.includes('<product')) fmt = 'XML';
+    else if (text.includes('\t')) fmt = 'TSV';
+    else if (text.includes('|') && text.split('\n').length > 1) fmt = 'TSV (pipe)';
+    else fmt = 'CSV';
+  }
+
+  if (fmt === 'JSON') {
+    const parsed = JSON.parse(text);
+    return Array.isArray(parsed) ? parsed : [parsed];
+  }
+
+  if (fmt === 'XML') return parseXML(text);
+
+  // CSV / TSV
+  const delimiter = fmt === 'TSV' ? '\t' : fmt === 'TSV (pipe)' ? '|' : fmt === 'TSV (semicolon)' ? ';' : ',';
+  const lines = text.split('\n').filter(l => l.trim());
+  if (lines.length < 2) throw new Error('Need at least a header row and one data row.');
+  const headers = parseCSVLine(lines[0], delimiter);
+  return lines.slice(1).filter(l => l.trim()).map(line => {
+    const vals = parseCSVLine(line, delimiter);
+    const obj = {};
+    headers.forEach((h, i) => { if (h) obj[h.trim()] = (vals[i] || '').trim(); });
+    return obj;
+  });
+}
+
+function parseCSVLine(line, delimiter) {
+  const result = [];
+  let field = '', inQuote = false;
+  const useQuoting = delimiter !== '\t'; // TSV files don't use quote-enclosure; " is literal
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (useQuoting && c === '"') { if (inQuote && line[i+1] === '"') { field += '"'; i++; } else { inQuote = !inQuote; } }
+    else if (c === delimiter && !inQuote) { result.push(field); field = ''; }
+    else { field += c; }
+  }
+  result.push(field);
+  return result;
+}
+
+function parseXML(text) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, 'text/xml');
+  const items = doc.querySelectorAll('item, entry, product');
+  return Array.from(items).map(item => {
+    const obj = {};
+    item.childNodes.forEach(node => {
+      if (node.nodeType === 1) {
+        const localName = node.localName || node.nodeName.replace(/^[^:]+:/, '');
+        obj[localName] = node.textContent.trim();
+      }
+    });
+    return obj;
+  });
+}
+
+// Normalize column headers to GMC attribute names
+function normalizeHeaders(row) {
+  const normalized = {};
+  for (const [key, val] of Object.entries(row)) {
+    const lower = key.toLowerCase().trim().replace(/[_\s-]+/g, '_');
+    const bare = key.toLowerCase().trim().replace(/[_\s-]+/g, ' ');
+    // Direct match
+    if (SPEC[lower]) { normalized[lower] = val; continue; }
+    // Alias match
+    const aliasKey = ALIASES[lower] || ALIASES[bare];
+    if (aliasKey) { normalized[aliasKey] = val; continue; }
+    // Keep as-is for unknown columns
+    normalized[lower || key] = val;
+  }
+  return normalized;
+}
+
+// ════════════════════════════════════════════════════════════════════
+// STEP 3: VALIDATION ENGINE
+// ════════════════════════════════════════════════════════════════════
+function runAnalysis() {
+  const text = document.getElementById('feedInput').value.trim();
+  if (!text) return;
+
+  goToStep(3);
+  document.getElementById('loading-indicator').style.display = 'block';
+  document.getElementById('results-content').style.display = 'none';
+
+  // Defer so DOM updates
+  setTimeout(() => {
+    try {
+      parsedFeed = parseFeed(text, detectedFmt).map(normalizeHeaders);
+      // Pre-compute duplicate IDs for row-level flagging
+      const idCounts = {};
+      parsedFeed.forEach(r => { const id = (r.id || '').trim(); if (id) idCounts[id] = (idCounts[id] || 0) + 1; });
+      duplicateIds = new Set(Object.keys(idCounts).filter(id => idCounts[id] > 1));
+      analysisResults = parsedFeed.map(row => validateRow(row));
+      priorityIssues = buildPriorityIssues(analysisResults);
+      renderResults();
+    } catch(e) {
+      document.getElementById('loading-indicator').innerHTML = `<div class="alert alert-warn"><span>Analysis error: ${e.message}</span></div>`;
+    }
+  }, 80);
+}
+
+function getRequiredFields() {
+  const { purpose, market, category, hasVariants, isMultiseller } = settings;
+  // brand is required for all new products EXCEPT books, movies, and musical recordings
+  const fields = ['id','title','description','link','image_link','availability','price'];
+  if (category !== 'books_media') fields.push('brand');
+  const isPaid = purpose === 'paid' || purpose === 'both';
+
+  // Shipping: only flag as required in feed if user chose feed-level or carrier
+  if (SHIPPING_MARKETS.includes(market) && (settings.shippingSetup === 'feed' || settings.shippingSetup === 'carrier')) {
+    fields.push('shipping');
+  }
+  // Carrier-calculated requires dimensions + weight
+  if (settings.shippingSetup === 'carrier') {
+    fields.push('shipping_weight','shipping_length','shipping_width','shipping_height');
+  }
+  // Return policy label if feed-based
+  if (settings.returnsSetup === 'feed') fields.push('return_policy_label');
+
+  // Apparel required
+  if (category === 'apparel' && APPAREL_MARKETS.includes(market)) {
+    fields.push('color','size','gender','age_group');
+  }
+  // item_group_id required for ALL variant feeds in BR, FR, DE, JP, UK, US — not just apparel
+  if (hasVariants && APPAREL_MARKETS.includes(market)) fields.push('item_group_id');
+
+  // condition required only for used/refurbished products (handled by hasUsedProducts above)
+
+  // Paid extras
+  if (isPaid && market === 'US') fields.push('tax');
+  if (isMultiseller) fields.push('external_seller_id');
+  if (settings.hasMultipacks) fields.push('multipack');
+  if (settings.hasBundles) fields.push('is_bundle');
+  if (settings.hasUsedProducts) fields.push('condition');
+
+  return fields;
+}
+
+function getRecommendedFields() {
+  return ['gtin','mpn','google_product_category','condition','size_type','size_system','product_type'];
+}
+
+function validateRow(row) {
+  const cells = {};
+  const rowIssues = [];
+
+  const required = getRequiredFields();
+  const recommended = getRecommendedFields();
+  const { scope, market, category, purpose, hasPromotions, hasVariants } = settings;
+
+  // Determine which fields to check
+  let fieldsToCheck = new Set([...required]);
+  if (scope !== 'required') fieldsToCheck = new Set([...required, ...recommended]);
+  if (scope === 'full') Object.keys(SPEC).forEach(k => fieldsToCheck.add(k));
+
+  // Also check any columns actually present in the feed
+  Object.keys(row).filter(k => SPEC[k]).forEach(k => fieldsToCheck.add(k));
+
+  for (const attr of fieldsToCheck) {
+    const spec = SPEC[attr];
+    if (!spec) continue;
+    const val = (row[attr] || '').trim();
+    const isReq = required.includes(attr);
+    const isRec = recommended.includes(attr);
+
+    const result = validateField(attr, val, row, isReq, isRec);
+    cells[attr] = result;
+    if (result.status !== 'ok' && result.status !== 'na') rowIssues.push({ attr, ...result, isReq, isRec });
+  }
+
+  // Row-level overall status
+  let rowStatus = 'healthy';
+  const hasErrors = rowIssues.some(i => i.status === 'error');
+  const hasWarns = rowIssues.some(i => i.status === 'warn');
+  const hasSuggests = rowIssues.some(i => i.status === 'suggest');
+  if (hasErrors) rowStatus = 'disapproved';
+  else if (hasWarns) rowStatus = 'at_risk';
+  else if (hasSuggests) rowStatus = 'suboptimal';
+
+  return { row, cells, rowStatus, rowIssues };
+}
+
+function validateField(attr, val, row, isReq, isRec) {
+  const spec = SPEC[attr];
+  const empty = !val || val === '' || val === '-' || val === 'N/A' || val === 'n/a';
+
+  // Special case: brand can legitimately be blank for unbranded products when identifier_exists=no
+  if (attr === 'brand' && empty) {
+    const idEx = (row['identifier_exists'] || '').trim().toLowerCase();
+    if (['no','false','0'].includes(idEx)) {
+      return { status: 'ok', msg: 'Brand intentionally blank for unbranded product — identifier_exists=no correctly declared.' };
+    }
+  }
+
+  // Missing required
+  if (empty && isReq) return { status: 'error', msg: `Required field missing. ${spec.note}` };
+
+  // ─── Attr-specific overrides for empty values ──────────────────────────────
+  // MUST run before the generic isRec warn — otherwise these are unreachable.
+  if (empty) {
+    // mpn: only a warning when gtin is ALSO missing; otherwise just a suggestion
+    if (attr === 'mpn') {
+      const hasGtin = (row['gtin'] || '').trim();
+      return hasGtin
+        ? { status: 'suggest', msg: 'MPN not provided. If a manufacturer part number exists, adding it improves match quality and Shopping auction eligibility.' }
+        : { status: 'warn', msg: 'Both GTIN and MPN are missing. Google requires at least one product identifier. Source the GTIN from your manufacturer or GS1, or add the MPN. If neither exists, set identifier_exists=no and ensure brand is submitted.' };
+    }
+    // size_type, size_system, product_type: suggestions, not hard recommendations
+    if (attr === 'size_type') return { status: 'suggest', msg: 'size_type not provided. For apparel, adding size_type (regular, petite, plus, big, tall, maternity) improves targeting and filter matching in Shopping. Up to 2 values per product.' };
+    if (attr === 'size_system') return { status: 'suggest', msg: 'size_system not provided. For apparel, adding size_system (US, UK, EU, DE, FR, JP etc.) helps buyers filter by their sizing standard.' };
+    if (attr === 'product_type') return { status: 'suggest', msg: 'product_type not provided. Adding your own category taxonomy (e.g. "Jeans > Skinny > High Waist") improves Shopping campaign structure and bid control.' };
+    // google_product_category: context-specific handling
+    if (attr === 'google_product_category') {
+      if (['mobile','gift_cards'].includes(settings.category)) return { status: 'error', msg: 'google_product_category is required for mobile devices and gift cards. Submit the numeric GMC category ID (Mobile Phones = 267, Gift Cards = 53).' };
+      if (settings.category === 'food_beverage') return { status: 'warn', msg: 'google_product_category is required for alcoholic beverages. If your feed includes alcohol, this is mandatory. Strongly recommended for all food/beverage products — omitting it reduces match accuracy.' };
+      return { status: 'suggest', msg: 'Strongly recommended. Provide numeric GMC category ID for best match accuracy.' };
+    }
+    // condition: optional for new products — do not warn when not required
+    if (attr === 'condition' && !settings.hasUsedProducts) return { status: 'na', msg: 'Not provided (optional for new products — GMC assumes new when omitted).' };
+  }
+  // ──────────────────────────────────────────────────────────────────────────
+
+  // Missing recommended (generic fallback — only fires if no attr-specific override above)
+  if (empty && isRec) return { status: 'warn', msg: `Recommended field missing. ${spec.note}` };
+
+  // Present but empty for optional → skip
+  if (empty) return { status: 'na', msg: 'Not provided' };
+
+  // Value validation
+  // Normalize enum values: lowercase, trim, replace spaces/hyphens with underscores
+  // Accepts "out of stock", "Out Of Stock", "out-of-stock" etc.
+  const normalizedVal = val.toLowerCase().trim().replace(/[\s\-]+/g, '_');
+  if (spec.values) {
+    const normalizedAllowed = spec.values.map(v => v.toLowerCase().replace(/[\s\-]+/g, '_'));
+    if (!normalizedAllowed.includes(normalizedVal)) {
+      return { status: 'error', msg: `Invalid value "${val}". Allowed: ${spec.values.join(', ')}. ${spec.note}` };
+    }
+  }
+
+  if (spec.maxLen && val.length > spec.maxLen) {
+    return { status: 'error', msg: `Too long: ${val.length} chars (max ${spec.maxLen}). ${spec.note}` };
+  }
+
+  if (spec.isUrl) {
+    if (!/^https?:\/\/.+\..+/i.test(val)) return { status: 'error', msg: `Invalid URL format. Must start with http:// or https://. Value: "${val.slice(0,60)}"` };
+    if (/\s/.test(val)) return { status: 'error', msg: `URL contains spaces — this will cause a crawl error. Encode spaces as %20 or remove them. Value: "${val.slice(0,60)}"` };
+  }
+
+  if (spec.isPrice) {
+    // Accept formats: "29.99 GBP", "29.99GBP", "GBP 29.99", "29.99"
+    const bareNumber = /^\d+(\.\d{1,2})?$/.test(val.trim());
+    if (bareNumber) return { status: 'warn', msg: `Price "${val}" has no currency code. GMC requires ISO 4217 format: "29.99 GBP". Without a currency code, Google may reject or incorrectly interpret the price.` };
+    const priceTest = /^\d+(\.\d{1,2})?\s?[A-Z]{3}$|^[A-Z]{3}\s?\d+(\.\d{1,2})?$/.test(val.trim());
+    if (!priceTest) return { status: 'error', msg: `Invalid price format. Use: "29.99 GBP" (number + ISO 4217 currency). Got: "${val}"` };
+    if (/^0(\.0+)?\s?[A-Z]*$/.test(val.trim())) {
+      if ((row['subscription_cost'] || '').trim()) return { status: 'ok', msg: 'Price is 0 for subscription product — valid when subscription_cost is submitted.' };
+      return { status: 'warn', msg: 'Price is 0 — only valid for mobile-with-contract products or products sold via subscription_cost. If this is intentional, also submit the subscription_cost attribute.' };
+    }
+  }
+
+  if (spec.isGtin) {
+    const cleaned = val.replace(/[-\s]/g, '');
+    if (!/^\d{8,14}$/.test(cleaned)) return { status: 'error', msg: `GTIN must be 8–14 digits (no dashes/spaces). Got: "${val}"` };
+    const gtinLen = cleaned.length;
+    if (![8, 12, 13, 14].includes(gtinLen)) {
+      return { status: 'error', msg: `GTIN length ${gtinLen} is not valid. GTINs must be exactly 8 (GTIN-8), 12 (UPC), 13 (EAN), or 14 (GTIN-14) digits. Lengths 9, 10, 11 do not exist in the GS1 standard.` };
+    }
+    if (!validateGtinChecksum(cleaned)) return { status: 'error', msg: `GTIN checksum invalid — this GTIN will cause disapproval. Verify with GS1. Got: "${val}"` };
+    const prefix2 = cleaned.slice(0, 2);
+    const prefix1 = cleaned.slice(0, 1);
+    if (prefix1 === '2') return { status: 'error', msg: `GTIN has restricted prefix "2" — this is a GS1 restricted range used for internal/store use only. Google will disapprove this product. Source the correct product GTIN from your manufacturer or GS1 database.` };
+    if (['02','04'].includes(prefix2)) return { status: 'error', msg: `GTIN has restricted prefix "${prefix2}" — GS1 restricted ranges 02 (internal/loose-produce) and 04 (in-house use) cause disapproval and must not be submitted to Google. Source the correct product GTIN from your manufacturer or GS1 database.` };
+  }
+
+  if (spec.isDate) {
+    if (!/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(Z|[+-]\d{2}:?\d{2})?)?$/.test(val)) return { status: 'error', msg: `Invalid date format. Use ISO 8601: YYYY-MM-DDThh:mm+hhmm. Got: "${val}"` };
+    if (attr === 'availability_date') {
+      const avDate = new Date(val);
+      const oneYearOut = new Date();
+      oneYearOut.setFullYear(oneYearOut.getFullYear() + 1);
+      if (!isNaN(avDate.getTime()) && avDate > oneYearOut) {
+        return { status: 'error', msg: `availability_date is more than 1 year in the future — GMC spec requires the date be within 1 year from today. Got: "${val}"` };
+      }
+    }
+    if (attr === 'expiration_date') {
+      const expDate = new Date(val);
+      const now = new Date();
+      const thirtyDaysOut = new Date();
+      thirtyDaysOut.setDate(thirtyDaysOut.getDate() + 30);
+      if (!isNaN(expDate.getTime())) {
+        if (expDate < now) return { status: 'error', msg: `expiration_date "${val}" is in the past — this product has already expired and will be disapproved. Update or remove the attribute.` };
+        if (expDate > thirtyDaysOut) return { status: 'warn', msg: `expiration_date "${val}" is more than 30 days in the future. GMC spec requires expiration_date to be within 30 days of today.` };
+      }
+    }
+  }
+
+  // Attribute-specific logic
+  if (attr === 'color' && !empty) {
+    const colors = val.split('/').map(c => c.trim());
+    for (const c of colors) {
+      if (/^#[0-9a-f]{3,6}$/i.test(c)) return { status: 'error', msg: `Color contains a hex code ("${c}") — not allowed. Use a descriptive color name (e.g. "Navy Blue", "Crimson Red").` };
+      if (/^\d+$/.test(c)) return { status: 'error', msg: `Color "${c}" is a number — not allowed. Use a descriptive color name.` };
+      if (c.length === 1) return { status: 'error', msg: `Color "${c}" is a single letter — not allowed. Use a full color name (e.g. "Red", not "R").` };
+      if (c.length > 40) return { status: 'warn', msg: `Color "${c.slice(0, 20)}…" exceeds 40 chars per color. Truncate or simplify.` };
+    }
+    if (colors.length > 3) return { status: 'warn', msg: `${colors.length} colors submitted — max 3 allowed (primary/secondary/tertiary separated by /). Remove extras.` };
+  }
+
+  if (attr === 'size' && !empty) {
+    if (/^#[0-9a-f]{3,6}$/i.test(val)) return { status: 'error', msg: `Size contains a hex code ("${val}") — not allowed. Use a descriptive size value (e.g. "M", "42", "XL").` };
+    if (/^(n\/?a|none|unknown|null|undefined)$/i.test(val)) return { status: 'warn', msg: `Size "${val}" is a placeholder — use a real size value or leave the field blank.` };
+  }
+
+  if (attr === 'size_type') {
+    const validTypes = ['regular','petite','plus','big','tall','maternity'];
+    if (!empty) {
+      // Support up to 2 values submitted separated by comma or space
+      const parts = val.toLowerCase().split(/[,\/]/).map(s => s.trim()).filter(Boolean);
+      const invalid = parts.filter(p => !validTypes.includes(p));
+      if (invalid.length) return { status: 'warn', msg: `Invalid size_type value(s): "${invalid.join(', ')}". Accepted values: regular, petite, plus, big, tall, maternity. Submit up to 2 values.` };
+      if (parts.length > 2) return { status: 'warn', msg: `Too many size_type values (${parts.length}). GMC allows a maximum of 2 values per product.` };
+    }
+  }
+
+  if (attr === 'size_system') {
+    const validSystems = ['US','UK','EU','DE','FR','JP','CN','IT','BR','MEX','AU'];
+    if (!empty && !validSystems.includes(val.toUpperCase())) return { status: 'warn', msg: `Unknown size_system "${val}". Expected one of: US, UK, EU, DE, FR, JP, CN, IT, BR, MEX, AU.` };
+  }
+
+  if (attr === 'brand') {
+    const lower = val.toLowerCase();
+    if (['generic','n/a','unknown','na','none','unbranded','no brand','noname'].includes(lower)) {
+      return { status: 'warn', msg: `Brand "${val}" is a placeholder — Google rejects generic brand names. If unbranded, leave blank and set identifier_exists=no.` };
+    }
+    if (val.length > 70) return { status: 'error', msg: `Brand exceeds 70 chars (${val.length}). Truncate.` };
+    // Brand present but no GTIN and no MPN — requires identifier_exists=no
+    if (!empty) {
+      const hasGtin = (row['gtin'] || '').trim();
+      const hasMpn  = (row['mpn']  || '').trim();
+      const hasIdEx = (row['identifier_exists'] || '').trim().toLowerCase();
+      if (!hasGtin && !hasMpn && !['no','false','0'].includes(hasIdEx)) {
+        return { status: 'error', msg: `Brand is set but neither GTIN nor MPN is provided. Google requires at least one unique identifier alongside brand. Either add a GTIN/MPN, or set identifier_exists=no to explicitly declare the product has none.` };
+      }
+    }
+  }
+
+  if (attr === 'id') {
+    if (/[\s"'<>]/.test(val)) return { status: 'error', msg: `ID contains invalid characters (spaces, quotes, or angle brackets). Use only letters, numbers, hyphens, underscores, and dots. Got: "${val.slice(0,40)}"` };
+    if (duplicateIds.has(val)) return { status: 'error', msg: `Duplicate ID "${val}" — this ID appears on multiple products. Every product must have a unique ID. Duplicates cause products to overwrite each other in GMC.` };
+  }
+
+  if (attr === 'title') {
+    // ALL CAPS check — must come before other checks
+    if (val.length > 10 && val === val.toUpperCase() && /[A-Z]/.test(val)) {
+      return { status: 'error', msg: 'Title is ALL CAPS — not permitted by GMC policy. Use standard title case.' };
+    }
+    // Promo text anywhere in title → error
+    if (/free\s*shipping|buy\s*now|[!]{2,}|\d+\s*%\s*off/i.test(val)) {
+      return { status: 'error', msg: 'Promotional text detected in title — not allowed. Remove phrases like "Free shipping", "Buy now", "% off".' };
+    }
+    // Title starts with a promo trigger word → warn (v1 pattern)
+    if (/^(buy|cheap|best|free|save|new|sale|hot|top)\b/i.test(val)) {
+      return { status: 'warn', msg: `Title starts with a promotional word ("${val.split(' ')[0]}") — Google may flag this. Start with Brand or Product Name instead.` };
+    }
+    const issues = [];
+    if (val.length < 20) issues.push(`Very short (${val.length} chars) — add brand, product name, key attributes`);
+    if (settings.category === 'apparel' && !/\b(S|M|L|XL|XXL|\d+["\s]cm|size)/i.test(val) && !/\b(black|white|red|blue|green|grey|gray|pink|yellow|navy|purple|beige|brown|orange)\b/i.test(val)) {
+      issues.push('Apparel tip: add color and size to title for better visibility');
+    }
+    if (issues.length) return { status: 'suggest', msg: issues.join(' | ') };
+  }
+
+  if (attr === 'description') {
+    if (/<[a-z][\s\S]*?>/i.test(val)) {
+      return { status: 'error', msg: 'Description contains HTML tags — not allowed. Strip all HTML and submit plain text only. HTML in descriptions causes disapprovals.' };
+    }
+    if (/buy now|click here|free shipping|\d+\s*%\s*off|discount code|save \d+%|use code|promo code/i.test(val)) {
+      return { status: 'warn', msg: 'Promotional text detected in description — not allowed per GMC policy. Remove phrases like "Buy now", "Free shipping", "% off".' };
+    }
+    if (val.length < 50) {
+      return { status: 'warn', msg: `Description is very short (${val.length} chars). Minimum recommended: 500 chars. Short descriptions reduce match quality and visibility in Google Shopping.` };
+    }
+    if (val.length < 150) {
+      return { status: 'suggest', msg: `Description is short (${val.length} chars). Aim for 500–1,000 chars — more detail improves query matching and Shopping tab performance.` };
+    }
+  }
+
+  if (attr === 'structured_title' && !empty) {
+    if (val.length > 150) return { status: 'error', msg: `structured_title exceeds 150 chars (${val.length}). Truncate.` };
+    if (row['title'] && (row['title'] || '').trim()) {
+      return { status: 'error', msg: 'Both [title] and [structured_title] are present — submit one or the other, not both. Use [structured_title] only for AI-generated titles; use [title] for all others.' };
+    }
+    // Note: digital_source_type is a sub-attribute column in the feed, not a substring of the structured_title value — cannot be validated from cell content alone.
+    return { status: 'ok', msg: 'structured_title present. Ensure the companion digital_source_type column is also submitted with value \"default\" or \"trained_algorithmic_media\".' };
+  }
+
+  if (attr === 'structured_description' && !empty) {
+    if (val.length > 5000) return { status: 'error', msg: `structured_description exceeds 5,000 chars (${val.length}). Truncate.` };
+    if (row['description'] && (row['description'] || '').trim()) {
+      return { status: 'error', msg: 'Both [description] and [structured_description] are present — submit one or the other, not both. Use [structured_description] only for AI-generated copy; use [description] for all others.' };
+    }
+    return { status: 'ok', msg: 'structured_description present. Ensure the companion digital_source_type column is also submitted with value \"default\" or \"trained_algorithmic_media\".' };
+  }
+
+  if (attr === 'availability' && normalizedVal === 'out_of_stock') {
+    return { status: 'warn', msg: 'Availability is out_of_stock — product will not appear in Shopping results until restocked. Keep availability in sync with your site; stale out-of-stock values affect account health scores.' };
+  }
+
+  if (attr === 'availability' && normalizedVal === 'preorder') {
+    if (!row['availability_date']) return { status: 'error', msg: 'availability=preorder requires availability_date (ISO 8601). Products in preorder without a date are disapproved by Google. Add an expected restock date.' };
+  }
+
+  if (attr === 'availability' && normalizedVal === 'backorder') {
+    if (!row['availability_date']) return { status: 'suggest', msg: 'availability=backorder should have an availability_date set to show customers an expected date.' };
+  }
+
+  if (attr === 'image_link') {
+    if (/placeholder|no.?image|default|blank|missing|no_selection/i.test(val)) return { status: 'error', msg: 'Image URL appears to be a placeholder or default image — GMC will disapprove this.' };
+    if (/\.(gif)(\?.*)?$/i.test(val)) return { status: 'suggest', msg: 'Animated GIFs are not allowed. Static GIF is accepted but JPEG or WebP gives better quality and compression.' };
+    if (!/\.(jpg|jpeg|png|gif|webp|bmp|tiff?)(\?.*)?$/i.test(val)) return { status: 'warn', msg: `Image URL doesn't end in a recognised format (.jpg, .jpeg, .png, .webp, .gif). Verify the URL serves a valid image — GMC accepts JPEG, WebP, PNG, GIF, BMP, TIFF.` };
+  }
+
+  if (attr === 'gtin') {
+    // Check for same GTIN across multiple rows (done at feed level — see buildPriorityIssues)
+  }
+
+
+
+  if (attr === 'condition' && settings.condition === 'new' && normalizedVal !== 'new') {
+    return { status: 'warn', msg: `Condition "${val}" set to non-new but settings indicate new products. Verify.` };
+  }
+
+  // Suggest missing optimization fields
+  // google_product_category: required for specific categories
+  if (attr === 'google_product_category') {
+    if (!empty) {
+      // warn if it looks like a path submitted alongside a numeric ID, or vice versa
+      if (/^\d+$/.test(val) && val.length < 3) return { status: 'warn', msg: `Category ID "${val}" looks too short to be a valid GMC numeric ID. Verify against the taxonomy.` };
+    }
+  }
+
+  // certification: validate format (authority:name:code) and presence
+  if (attr === 'certification' && !empty) {
+    const parts = val.split(':');
+    if (parts.length < 3 || parts.some(p => !p.trim())) {
+      return { status: 'error', msg: `certification format is invalid. Required format: authority:name:code — e.g. "EC:EPREL:123456". Got: "${val}". Incorrect format will cause data quality issues in GMC.` };
+    }
+    const authority = parts[0].trim().toUpperCase();
+    if (!['EC','EUROPEAN_COMMISSION'].includes(authority)) {
+      return { status: 'warn', msg: `certification_authority "${parts[0].trim()}" is unrecognised. Expected "EC" or "European_Commission" for EU EPREL energy labels.` };
+    }
+  }
+
+  // energy_efficiency_class: warn if used for EU market
+  if (['energy_efficiency_class','min_energy_efficiency_class','max_energy_efficiency_class'].includes(attr)) {
+    const euMarkets = ['DE','FR','AT','IT','NL','ES','BE','CZ','PL','RO','IE','FI','SE','DK','PT','GR','HU','SK','SI','LT','LV','EE'];
+    if (euMarkets.includes(settings.market)) {
+      return { status: 'error', msg: `⚠️ ${attr} is no longer valid for EU markets (from April 2025). Use [certification] with EC:EPREL:<id> format instead. Products using this attribute for EU will have data quality issues.` };
+    }
+  }
+
+  // maximum_retail_price: only relevant for India
+  if (attr === 'maximum_retail_price' && !empty && settings.market !== 'IN') {
+    return { status: 'warn', msg: 'maximum_retail_price is only applicable for India (IN). If your target market is not IN, remove this attribute.' };
+  }
+
+  // sale_price_effective_date should pair with sale_price
+  if (attr === 'sale_price_effective_date' && !empty) {
+    if (!(row['sale_price'] || '').trim()) return { status: 'warn', msg: 'sale_price_effective_date submitted without a sale_price — the date range has no effect without a corresponding sale price.' };
+    if (!/^\d{4}-\d{2}-\d{2}.*\/.*\d{4}-\d{2}-\d{2}/.test(val)) return { status: 'warn', msg: `sale_price_effective_date should be an ISO 8601 date range: "YYYY-MM-DDThh:mm+hhmm/YYYY-MM-DDThh:mm+hhmm". Got: "${val}"` };
+  }
+
+  // Paid-only attributes: flag when channel is Free Listings
+  const PAID_ONLY_ATTRS = {
+    auto_pricing_min_price: '[auto_pricing_min_price] is not applicable to Free Listings — it only affects automated pricing for paid Shopping Ads.',
+    ads_redirect: '[ads_redirect] is only used for paid Shopping Ads. It has no effect on Free Listings.',
+    custom_label_0: '[custom_label_0] is only used for paid campaign bidding/reporting. It is not applicable to Free Listings.',
+    custom_label_1: '[custom_label_1] is only used for paid campaign bidding/reporting. It is not applicable to Free Listings.',
+    custom_label_2: '[custom_label_2] is only used for paid campaign bidding/reporting. It is not applicable to Free Listings.',
+    custom_label_3: '[custom_label_3] is only used for paid campaign bidding/reporting. It is not applicable to Free Listings.',
+    custom_label_4: '[custom_label_4] is only used for paid campaign bidding/reporting. It is not applicable to Free Listings.',
+    short_title: '[short_title] is only used for Demand Gen (paid) campaigns — YouTube, Gmail, Discover etc. Not applicable to Free Listings.',
+    pause: '[pause] only pauses paid ads. It has no effect on Free Listings.',
+    shopping_ads_excluded_country: '[shopping_ads_excluded_country] only excludes countries from paid Shopping Ads. Not applicable to Free Listings.',
+  };
+  if (settings.purpose === 'organic' && !empty && PAID_ONLY_ATTRS[attr]) {
+    return { status: 'suggest', msg: `Free Listings: ${PAID_ONLY_ATTRS[attr]}` };
+  }
+
+  // multipack: must be a positive integer ≥ 2
+  if (attr === 'multipack' && !empty) {
+    const n = parseInt(val, 10);
+    if (!/^\d+$/.test(val.trim()) || n < 1) {
+      return { status: 'error', msg: `multipack must be a positive integer (count of identical items bundled). Got: "${val}"` };
+    }
+    if (n === 1) {
+      return { status: 'warn', msg: 'multipack=1 means a single product — only submit multipack for bundles of 2 or more identical items. Remove this attribute or correct the count.' };
+    }
+  }
+
+  // promotion_id: case-sensitive, no spaces or special characters
+  if (attr === 'promotion_id' && !empty) {
+    if (/[^a-zA-Z0-9\-_]/.test(val)) {
+      return { status: 'error', msg: `promotion_id must not contain spaces or special characters. Use only letters, numbers, hyphens, and underscores. Got: "${val}"` };
+    }
+  }
+
+  // pause: max 14 days warning
+  if (attr === 'pause' && !empty) {
+    if (normalizedVal !== 'ads') return { status: 'error', msg: `Invalid pause value: "${val}". Only supported value is "ads".` };
+    return { status: 'warn', msg: 'Product is paused (pause=ads). Products paused for more than 14 days will be disapproved. Remove this attribute when ready to re-enable.' };
+  }
+
+  // product dimensions: unit consistency check
+  if (['product_length','product_width','product_height'].includes(attr) && !empty) {
+    if (!/^\d+(\.\d+)?\s?(cm|in)$/i.test(val)) return { status: 'warn', msg: `Format should be: number + unit (cm or in). E.g. "45 cm" or "18 in". Got: "${val}"` };
+  }
+
+  // shipping dimensions: unit consistency
+  if (['shipping_length','shipping_width','shipping_height'].includes(attr) && !empty) {
+    if (!/^\d+(\.\d+)?\s?(cm|in)$/i.test(val)) return { status: 'warn', msg: `Format should be: number + unit (cm or in). E.g. "30 cm" or "12 in". Got: "${val}"` };
+  }
+
+  // handling time: integer check
+  if (['min_handling_time','max_handling_time'].includes(attr) && !empty) {
+    if (!/^\d+$/.test(val.trim())) return { status: 'error', msg: `Handling time must be a whole number (business days). Got: "${val}"` };
+    if (parseInt(val) > 30) return { status: 'warn', msg: `Handling time of ${val} days seems unusually high. Verify this is correct — long handling times negatively impact Shopping ranking.` };
+  }
+
+  return { status: 'ok', msg: 'Passes validation' };
+}
+
+// GS1 Luhn checksum for GTIN
+function validateGtinChecksum(gtin) {
+  const digits = gtin.split('').map(Number);
+  const check = digits.pop();
+  const sum = digits.reverse().reduce((acc, d, i) => acc + (i % 2 === 0 ? d * 3 : d), 0);
+  return (10 - (sum % 10)) % 10 === check;
+}
+
+// ════════════════════════════════════════════════════════════════════
+// STEP 4: PRIORITY ISSUE BUILDER
+// ════════════════════════════════════════════════════════════════════
+function buildPriorityIssues(results) {
+  const issueMap = {};
+
+  results.forEach((res, rowIdx) => {
+    res.rowIssues.forEach(issue => {
+      const key = `${issue.attr}:${issue.status}`;
+      if (!issueMap[key]) {
+        issueMap[key] = { attr: issue.attr, status: issue.status, count: 0, example: issue.msg, isReq: issue.isReq, isRec: issue.isRec, rows: [] };
+      }
+      issueMap[key].count++;
+      issueMap[key].rows.push(rowIdx + 1);
+    });
+  });
+
+  // GTIN+MPN combined: warn if both are missing across the feed
+  const bothMissingCount = results.filter(res => {
+    const gtin = (res.row.gtin || '').trim();
+    const mpn = (res.row.mpn || '').trim();
+    return !gtin && !mpn;
+  }).length;
+  if (bothMissingCount > 0) {
+    issueMap['gtin_mpn:warn'] = {
+      attr: 'gtin_mpn', status: 'warn', count: bothMissingCount,
+      example: `${bothMissingCount} product${bothMissingCount>1?'s have':' has'} neither GTIN nor MPN. Products without either identifier have significantly lower match quality and may be excluded from Shopping auctions. Source GTINs from GS1 or your manufacturer. If genuinely no GTIN exists, set identifier_exists=no and provide MPN + brand.`,
+      isReq: false, isRec: true, rows: []
+    };
+  }
+
+  // Check for duplicate GTINs
+  const gtins = {};
+  results.forEach((res, i) => {
+    const g = (res.row.gtin || '').trim();
+    if (g) { gtins[g] = (gtins[g] || []); gtins[g].push(i + 1); }
+  });
+  const dupGtins = Object.entries(gtins).filter(([, rows]) => rows.length > 1);
+  if (dupGtins.length) {
+    issueMap['gtin:duplicate'] = {
+      attr: 'gtin', status: 'error', count: dupGtins.reduce((a, [,r]) => a + r.length, 0),
+      example: `Duplicate GTINs found: ${dupGtins.slice(0,3).map(([g]) => g).join(', ')}${dupGtins.length>3?' …':''}. Each product variant must have a unique GTIN.`,
+      isReq: true, rows: dupGtins.flatMap(([,r]) => r)
+    };
+  }
+
+  const total = results.length;
+  const issues = Object.values(issueMap).map(iss => {
+    const pct = ((iss.count / total) * 100).toFixed(0);
+    const severity = iss.status === 'error' ? 3 : iss.status === 'warn' ? 2 : 1;
+    const priority = severity * 100 + iss.count;
+    return { ...iss, pct, priority };
+  });
+
+  issues.sort((a, b) => b.priority - a.priority);
+  return issues.map((iss, i) => ({ ...iss, rank: i + 1 }));
+}
+
+function buildFixText(iss) {
+  const spec = SPEC[iss.attr];
+  const label = spec ? spec.label : iss.attr;
+  const fixes = {
+    'id': 'Ensure every product has a unique, stable ID. Max 50 chars. Use your SKU. Do not change IDs after submission.',
+    'title': 'Reformat titles to: [Brand] + [Product Name] + [Key Attribute (colour/size/material)]. Max 150 chars. No promo text.',
+    'description': 'Write product-specific descriptions matching the landing page. Aim for 500–1000 chars. No "Buy now", "% off", or competitor mentions.',
+    'link': 'Ensure all URLs start with https://, resolve without redirect loops, and match your verified domain in GMC.',
+    'image_link': 'Submit high-quality product images (JPEG/WebP recommended). No watermarks, overlays, or placeholder images. Minimum 100×100px; recommended 800×800px.',
+    'availability': 'Use only: in_stock | out_of_stock | preorder | backorder. Value must match your landing page in real-time.',
+    'price': 'Format as number + ISO 4217 currency code (e.g. "29.99 GBP"). Must match checkout price. UK/EU: include VAT. US/CA: exclude tax.',
+    'brand': 'Use the brand consumers search for. Do not submit "Generic", "N/A", or "Unknown". If truly unbranded, leave blank and set identifier_exists=no.',
+    'gtin_mpn': 'Neither GTIN nor MPN is present. First priority: source the GTIN (EAN/UPC/JAN) from your manufacturer or gs1.org. If no GTIN exists, add the manufacturer-assigned MPN instead. If both are genuinely unavailable, set identifier_exists=no and ensure brand is submitted.',
+    'gtin': 'Source 13-digit EAN (or UPC/JAN) from your manufacturer or GS1 database. If no GTIN exists, set identifier_exists=FALSE and provide brand + MPN.',
+    'color': 'Add primary colour first. Separate multiple colours with /. No hex codes (#fff), numbers, or non-colour words. Max 40 chars per colour.',
+    'size': 'Add size using standard notation for your market. Multi-dimension: "16/34 Tall". One-size: OS or OSFA.',
+    'gender': 'Use only: male | female | unisex. Assign the same value to all variants within an item_group_id.',
+    'age_group': 'Use only: newborn | infant | toddler | kids | adult. One value per product. Must be consistent across variants.',
+    'item_group_id': 'Assign the parent SKU as item_group_id to all variants of the same product. All variants sharing this ID must submit the same variant attributes.',
+    'google_product_category': 'Provide the numeric GMC category ID for your products. Use the most specific category available. See: https://www.google.com/basepages/producttype/taxonomy-with-ids.en-US.txt',
+    'condition': 'Set to: new | refurbished | used. Required for all non-new products.',
+    'mpn': 'Add the manufacturer-assigned part number. Do not invent MPNs. Max 70 alphanumeric chars.',
+    'availability_date': 'Add availability_date in ISO 8601 format (e.g. 2025-06-01T00:00+0100) when availability = preorder or backorder.',
+    'sale_price': 'Submit sale_price alongside the original [price] attribute. Add sale_price_effective_date to control when discount is shown.',
+    'tax': 'For US paid ads: add [tax] sub-attributes (country + rate) or configure tax settings at account level in GMC.',
+    'external_seller_id': 'Add a unique external_seller_id for each seller. Must be stable — do not change after submission.',
+    'certification': 'For EU products requiring energy labels (appliances, displays, lighting, tyres, and smartphones from June 2025): use [certification] with format EC:EPREL:<id> (e.g. "EC:EPREL:123456"). The old [energy_efficiency_class] is no longer valid for EU from April 2025.',
+    'structured_title': 'Use [structured_title] only for AI-generated titles. Include digital_source_type sub-attribute ("default" or "trained_algorithmic_media"). Do not submit both [title] and [structured_title].',
+    'structured_description': 'Use [structured_description] only for AI-generated descriptions. Include digital_source_type sub-attribute ("default" or "trained_algorithmic_media"). Do not submit both [description] and [structured_description].',
+    'shipping': 'Add shipping sub-attributes per product: country + service + price (inc. VAT for UK/EU). Alternatively, configure shipping at account level in GMC to avoid submitting per product. Ensure price in feed matches what customers see at checkout.',
+    'shipping_weight': 'Required for carrier-calculated rates. Submit as number + unit (e.g. "1.2 kg" or "2.5 lb"). All three shipping dimensions (length, width, height) must also be submitted.',
+    'shipping_length': 'Submit shipping_length, shipping_width, and shipping_height together — all three are required for carrier-calculated rates. Units: in (1–150) or cm (1–400).',
+    'shipping_width': 'Submit alongside shipping_length and shipping_height. Same unit must be used across all three dimensions.',
+    'shipping_height': 'Submit alongside shipping_length and shipping_width. Same unit must be used across all three dimensions.',
+    'return_policy_label': 'Ensure the label value exactly matches a return policy label defined in GMC Settings > Returns. Case-sensitive. Use this when different products have different return conditions (e.g. "no-returns-electronics", "30-day-apparel").',
+    'free_shipping_threshold': 'Format: country code + price_threshold (e.g. GB:25.00 GBP). Currency must match your product price currency. This unlocks the free shipping badge on listings above the threshold.',
+    'min_handling_time': 'Submit as integer (business days). 0 = same-day dispatch. Must be ≤ max_handling_time. Accurate handling times improve your estimated delivery date display on Shopping listings.',
+    'max_handling_time': 'Submit as integer (business days). Must be ≥ min_handling_time. Google uses this alongside transit time to calculate and display estimated delivery dates.',
+  };
+  return fixes[iss.attr] || iss.example;
+}
+
+function getEffortLabel(iss) {
+  const quick = ['shipping','price','availability','condition','gender','age_group','sale_price','identifier_exists','sale_price_effective_date','auto_pricing_min_price','pause','min_handling_time','max_handling_time','return_policy_label','free_shipping_threshold'];
+  const medium = ['title','description','color','size','item_group_id','google_product_category','mpn','availability_date','brand','product_type','energy_efficiency_class','maximum_retail_price','shipping_label','ships_from_country'];
+  const complex = ['gtin','link','image_link','certification','external_seller_id','shipping_length','shipping_width','shipping_height','shipping_weight','product_length','product_width','product_height','product_weight','cost_of_goods_sold','loyalty_program','installment','subscription_cost'];
+  if (quick.includes(iss.attr)) return 'Quick win — feed rule or supplemental feed; no dev required';
+  if (complex.includes(iss.attr)) return 'Complex — source external data or site changes; 1+ week';
+  return 'Medium — feed update or template change; 1–3 days';
+}
+
+// ════════════════════════════════════════════════════════════════════
+// RENDER RESULTS
+// ════════════════════════════════════════════════════════════════════
+function renderResults() {
+  document.getElementById('loading-indicator').style.display = 'none';
+  document.getElementById('results-content').style.display = 'block';
+
+  renderDonutChart();
+  renderFeedHealthCard();
+  renderValidationTable();
+  renderPriorityTable();
+  renderTips();
+}
+
+function renderFeedHealthCard() {
+  const total = analysisResults.length;
+  if (!total) return;
+  const failCount = analysisResults.filter(r => r.rowIssues.some(i => i.status === 'error')).length;
+  const passCount = total - failCount;
+  const warnCount = analysisResults.filter(r => r.rowIssues.some(i => i.status === 'warn') && !r.rowIssues.some(i => i.status === 'error')).length;
+  const passRate = Math.round((passCount / total) * 100);
+  const barColor = passRate > 90 ? 'var(--green)' : passRate >= 70 ? 'var(--orange)' : 'var(--red)';
+
+  const container = document.getElementById('feed-health-card');
+  if (!container) return;
+  const summary = buildSettingsSummary();
+  container.innerHTML = `
+    <div class="card" style="margin-bottom:20px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;">
+        <div>
+          <div class="card-title" style="margin-bottom:2px;">Feed Health — <span style="color:${barColor}">${passRate}%</span></div>
+          <div style="font-size:12px;color:var(--text-3);">${passCount} of ${total} products passing &nbsp;·&nbsp; <span style="color:var(--red);">${failCount} critical</span> &nbsp;·&nbsp; <span style="color:var(--orange);">${warnCount} warnings</span></div>
+        </div>
+        <div class="settings-popover-wrap">
+          <button class="settings-popover-btn" onclick="toggleSettingsPopover(event)" title="View analysis settings">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Settings
+          </button>
+          <div class="settings-popover" id="settingsPopover">
+            <div class="settings-popover-title">Analysis settings</div>
+            ${summary.gridHtml}
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><button class="settings-edit-btn" onclick="goToStep(1)">← Edit settings</button></div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--border);border-radius:99px;height:6px;overflow:hidden;">
+        <div style="width:${passRate}%;height:100%;background:${barColor};border-radius:99px;transition:width .6s;"></div>
+      </div>
+    </div>`;
+}
+
+function renderDonutChart() {
+  const total = analysisResults.length;
+  if (!total) return;
+
+  const disapproved = analysisResults.filter(r => r.rowStatus === 'disapproved').length;
+  const atRisk      = analysisResults.filter(r => r.rowStatus === 'at_risk').length;
+  const suboptimal  = analysisResults.filter(r => r.rowStatus === 'suboptimal').length;
+  const healthy     = analysisResults.filter(r => r.rowStatus === 'healthy').length;
+
+  const cx = 70, cy = 70, r = 48, sw = 20;
+  const C = 2 * Math.PI * r;
+
+  const segments = [
+    { count: disapproved, color: '#ef4444', label: 'Not Eligible' },
+    { count: atRisk,      color: '#f97316', label: 'Eligible · At Risk' },
+    { count: suboptimal,  color: '#eab308', label: 'Eligible · To Optimise' },
+    { count: healthy,     color: '#22c55e', label: 'Eligible · Optimised' },
+  ];
+
+  let circles = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--border)" stroke-width="${sw}" />`;
+  let cumulAngle = 0;
+
+  for (const seg of segments) {
+    if (seg.count === 0) continue;
+    const frac = seg.count / total;
+    const dash = frac * C;
+    const gap  = C - dash;
+    const rot  = -90 + cumulAngle;
+    circles += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${seg.color}" stroke-width="${sw}" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" transform="rotate(${rot.toFixed(2)},${cx},${cy})" />`;
+    cumulAngle += frac * 360;
+  }
+
+  const eligiblePct = Math.round(((total - disapproved) / total) * 100);
+  circles += `
+    <text x="${cx}" y="${cy - 6}" text-anchor="middle" class="donut-center-total">${eligiblePct}%</text>
+    <text x="${cx}" y="${cy + 11}" text-anchor="middle" class="donut-center-label">eligible</text>`;
+
+  document.getElementById('donut-svg').innerHTML = circles;
+
+  function statBlock(seg) {
+    const pct = total ? Math.round((seg.count / total) * 100) : 0;
+    return `<div class="stat-block">
+      <span class="stat-num" style="color:${seg.color}">${seg.count}</span>
+      <span class="stat-pct">${pct}%</span>
+      <span class="stat-label"><span class="stat-dot" style="background:${seg.color}"></span>${seg.label}</span>
+    </div>`;
+  }
+
+  // Col A: Not Eligible (disapproved) + Eligible · Optimised (healthy)
+  document.getElementById('donut-col-a').innerHTML =
+    statBlock(segments[0]) + statBlock(segments[3]);
+
+  // Col B: Eligible · At Risk + Eligible · To Optimise
+  document.getElementById('donut-col-b').innerHTML =
+    statBlock(segments[1]) + statBlock(segments[2]);
+
+  document.getElementById('donut-total-row').innerHTML =
+    `<span class="donut-total-num">${total}</span><span class="donut-total-label">products analysed</span>`;
+}
+
+function renderValidationTable() {
+  const results = analysisResults;
+  if (!results.length) return;
+
+  // Determine columns to show: all attrs with any result
+  const allAttrs = new Set();
+  results.forEach(r => Object.keys(r.cells).forEach(k => allAttrs.add(k)));
+  const attrList = ['id','title','description','link','image_link','price','availability','brand','condition','gtin','mpn','google_product_category','item_group_id','color','size','gender','age_group','shipping','sale_price']
+    .filter(a => allAttrs.has(a));
+  [...allAttrs].forEach(a => { if (!attrList.includes(a) && SPEC[a]) attrList.push(a); });
+
+  // Default visible: hardcoded core set + all required fields for current settings
+  // This ensures fields like tax, certification, return_policy_label, external_seller_id etc.
+  // are always visible when they're required — preventing "NOT ELIGIBLE but all green" false negatives.
+  const requiredForSettings = getRequiredFields();
+  const defaultVisible = new Set([
+    'id','title','description','link','image_link','price','availability','brand',
+    'gtin','condition','color','size','gender','age_group','shipping','item_group_id',
+    ...requiredForSettings
+  ]);
+  visibleCols = new Set(attrList.filter(a => defaultVisible.has(a)));
+
+  // Column dropdown
+  const totalCols = attrList.length;
+  const checkItems = attrList.map(a => {
+    const spec = SPEC[a];
+    const label = spec ? spec.label : a;
+    const checked = visibleCols.has(a) ? 'checked' : '';
+    return `<label class="col-check-item"><input type="checkbox" data-attr="${a}" ${checked} onchange="toggleColCheck(this)">${escHtml(label)}</label>`;
+  }).join('');
+  const el = document.getElementById('col-toggles');
+  el.className = 'col-dropdown';
+  el.innerHTML = `
+    <button class="col-dropdown-btn" onclick="toggleColPopover(event)">
+      Columns <span class="col-count-badge" id="col-count-badge">${visibleCols.size}/${totalCols}</span> ▾
+    </button>
+    <div class="col-popover" id="col-popover">
+      <div class="col-popover-header">
+        <span class="col-popover-title">Show / Hide Columns</span>
+        <button class="col-reset-btn" onclick="resetColsToDefault()">Reset to default</button>
+      </div>
+      <div class="col-check-list">${checkItems}</div>
+    </div>`;
+
+  rebuildTable(results, attrList);
+}
+
+function toggleColPopover(e) {
+  e.stopPropagation();
+  document.getElementById('col-popover').classList.toggle('open');
+}
+
+function toggleColCheck(el) {
+  const attr = el.dataset.attr;
+  if (el.checked) visibleCols.add(attr); else visibleCols.delete(attr);
+  const total = document.querySelectorAll('#col-toggles input').length;
+  document.getElementById('col-count-badge').textContent = `${visibleCols.size}/${total}`;
+  rebuildTable(analysisResults, [...visibleCols]);
+}
+
+function resetColsToDefault() {
+  const defaultVisible = new Set([
+    'id','title','description','link','image_link','price','availability','brand',
+    'gtin','condition','color','size','gender','age_group','shipping','item_group_id',
+    ...getRequiredFields()
+  ]);
+  document.querySelectorAll('#col-toggles input').forEach(inp => {
+    const attr = inp.dataset.attr;
+    inp.checked = defaultVisible.has(attr);
+    if (defaultVisible.has(attr)) visibleCols.add(attr); else visibleCols.delete(attr);
+  });
+  const total = document.querySelectorAll('#col-toggles input').length;
+  document.getElementById('col-count-badge').textContent = `${visibleCols.size}/${total}`;
+  rebuildTable(analysisResults, [...visibleCols]);
+}
+
+function rebuildTable(results, attrList) {
+  const cols = attrList.filter(a => visibleCols.has(a));
+  const statusLabel = { disapproved: 'Not eligible', at_risk: 'At risk', suboptimal: 'To optimise', healthy: 'Optimised' };
+  const statusClass = { disapproved: 'badge-red', at_risk: 'badge-orange', suboptimal: 'badge-yellow', healthy: 'badge-green' };
+
+  const cellSvgIcons = {
+    ok:      `<span class="cell-dot cell-dot-ok">✓</span>`,
+    error:   `<span class="cell-dot cell-dot-error">✕</span>`,
+    warn:    `<span class="cell-dot cell-dot-warn">!</span>`,
+    suggest: `<span class="cell-dot cell-dot-suggest">·</span>`,
+    na:      `<span class="cell-na">—</span>`
+  };
+
+  const thead = `<tr><th>#</th><th>Pass/Fail</th><th>Status</th>${cols.map(a => `<th>${SPEC[a]?.label || a}</th>`).join('')}</tr>`;
+  const tbody = results.map((res, i) => {
+    const hasError = res.rowIssues.some(iss => iss.status === 'error');
+    const passFail = hasError
+      ? `<td style="text-align:center;white-space:nowrap;"><span class="badge badge-red">FAIL</span></td>`
+      : `<td style="text-align:center;white-space:nowrap;"><span class="badge badge-green">PASS</span></td>`;
+    const rowCells = cols.map(a => {
+      const cell = res.cells[a];
+      if (!cell) return `<td class="cell-status"><span class="cell-na" title="Not in feed">—</span></td>`;
+      const icon = cellSvgIcons[cell.status] || cellSvgIcons.na;
+      const preview = (res.row[a] || '').slice(0, 40);
+      return `<td class="cell-status"><div class="tooltip-wrap">${icon}<div class="tooltip">${escHtml(cell.msg)}${preview ? '<br><em>' + escHtml(preview) + '…</em>' : ''}</div></div></td>`;
+    }).join('');
+    const productId = (res.row['id'] || res.row['ID'] || '').toString().trim() || String(i+1);
+    return `<tr><td style="color:var(--text-3);font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escHtml(productId)}">${escHtml(productId)}</td>${passFail}<td><span class="badge ${statusClass[res.rowStatus]}">${statusLabel[res.rowStatus]}</span></td>${rowCells}</tr>`;
+  }).join('');
+
+  document.getElementById('validation-table').innerHTML = `<table><thead>${thead}</thead><tbody>${tbody}</tbody></table>`;
+}
+
+function renderPriorityTable() {
+  const total = analysisResults.length;
+  if (!priorityIssues.length) {
+    document.getElementById('priority-table').innerHTML = '<div class="alert alert-info">No issues found in your feed — all checks passed.</div>';
+    return;
+  }
+
+  const severityLabel = { error: 'CRITICAL', warn: 'WARNING', suggest: 'SUGGESTION' };
+  const severityClass = { error: 'badge-red', warn: 'badge-orange', suggest: 'badge-yellow' };
+
+  const SHOW_MAX = 50;
+  const shownIssues = priorityIssues.slice(0, SHOW_MAX);
+  const truncated = priorityIssues.length > SHOW_MAX;
+  const rows = shownIssues.map(iss => {
+    const spec = SPEC[iss.attr];
+    const FRIENDLY_LABELS = { 'gtin_mpn': 'GTIN / MPN (Missing Identifier)' };
+    const label = FRIENDLY_LABELS[iss.attr] || (spec ? spec.label : iss.attr);
+    const pct = ((iss.count / total) * 100).toFixed(0);
+    const fix = buildFixText(iss);
+    const effort = getEffortLabel(iss);
+    return `<tr>
+      <td>${iss.rank}</td>
+      <td><strong>${label}</strong><br><code style="font-size:10px;">${iss.attr}</code></td>
+      <td><span class="badge ${severityClass[iss.status]}">${severityLabel[iss.status]}</span></td>
+      <td style="text-align:center"><strong>${iss.count}</strong></td>
+      <td style="text-align:center">${pct}%</td>
+      <td class="fix-text">${escHtml(fix)}</td>
+      <td class="effort-badge" style="font-size:11px;line-height:1.5">${effort}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('priority-table').innerHTML = `
+    <div class="table-wrapper">
+      <table class="prio-table">
+        <thead><tr><th>#</th><th>Issue / Attribute</th><th>Severity</th><th>Products Affected</th><th>% of Feed</th><th>What Must Be Done to Pass Validation</th><th>Estimated Effort</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>${truncated ? `<p style="font-size:11px;color:var(--text-4);margin-top:8px">Showing top ${SHOW_MAX} of ${priorityIssues.length} issue types by priority.</p>` : ''}`;
+
+  // Summary
+  const criticals = priorityIssues.filter(i => i.status === 'error');
+  const affected = [...new Set(criticals.flatMap(i => i.rows))].length;
+  const top3 = criticals.slice(0, 3).map(i => (SPEC[i.attr]?.label || i.attr));
+
+  // Count distinct critical issue types per product row
+  const rowCriticalCount = {};
+  criticals.forEach(iss => {
+    iss.rows.forEach(r => { rowCriticalCount[r] = (rowCriticalCount[r] || 0) + 1; });
+  });
+  // "Quick wins": products blocked by exactly 1 critical issue — fixing it makes them eligible
+  const quickWinRows = Object.values(rowCriticalCount).filter(c => c === 1).length;
+  // Multi-blocker products need more than one fix before they clear
+  const multiBlockerRows = Object.values(rowCriticalCount).filter(c => c > 1).length;
+
+  let summaryText = '';
+  if (criticals.length === 0) {
+    summaryText = 'No critical disapproval issues found — focus on the warnings and suggestions below to maximise reach.';
+  } else {
+    summaryText = `Your feed has <strong>${criticals.length} critical issue type${criticals.length !== 1 ? 's' : ''}</strong> affecting <strong>${affected} of ${total} products</strong>.`;
+    if (top3.length) {
+      summaryText += ` The most widespread: <strong>${top3.join(', ')}</strong>.`;
+    }
+    if (quickWinRows > 0) {
+      summaryText += ` <strong>${quickWinRows} product${quickWinRows !== 1 ? 's have' : ' has'} only 1 blocking issue</strong> — resolving it immediately restores eligibility for ${quickWinRows !== 1 ? 'those products' : 'that product'}.`;
+    }
+    if (multiBlockerRows > 0) {
+      summaryText += ` The remaining <strong>${multiBlockerRows} product${multiBlockerRows !== 1 ? 's' : ''}</strong> ${multiBlockerRows !== 1 ? 'have' : 'has'} multiple critical issues — ${multiBlockerRows !== 1 ? 'they need' : 'it needs'} all resolved before becoming eligible.`;
+    }
+  }
+  document.getElementById('summary-box').innerHTML = `<div class="summary-box">${summaryText}</div>`;
+}
+
+function renderTips() {
+  const tips = buildTips();
+  document.getElementById('tips-content').innerHTML = tips.map((tip, i) => `
+    <div class="tip-item">
+      <div class="tip-num">${i+1}</div>
+      <div class="tip-content">
+        <div class="tip-title">${tip.title}</div>
+        <div class="tip-body">${tip.body}</div>
+      </div>
+    </div>`).join('');
+}
+
+function buildTips() {
+  const { purpose, market, category, hasVariants, scope } = settings;
+  const isPaid = purpose === 'paid' || purpose === 'both';
+  const tips = [];
+
+  if (market === 'UK') tips.push({
+    title: '🇬🇧 UK: Price Mismatch Is the #1 Cause of UK Feed Disapprovals',
+    body: 'Ensure your feed price includes VAT and matches the checkout price exactly. Google crawls your landing pages and will disapprove any product where the feed price differs from the page price. Enable Automatic Item Updates in GMC to allow Google to auto-correct price and availability discrepancies within ±5%.'
+  });
+
+  if (market === 'US' && isPaid) tips.push({
+    title: '🇺🇸 US Paid Ads: Tax Configuration Required',
+    body: 'US Shopping Ads require tax configuration — either submit the [tax] attribute per product or configure tax settings at account level in GMC (recommended). Products missing tax configuration may be disapproved or show incorrect total prices in ads.'
+  });
+
+  if (category === 'apparel') tips.push({
+    title: 'Apparel: Variant Attributes Drive Visibility',
+    body: 'Adding color, size, and gender increases eligibility for filter-based queries on the Shopping tab. Products missing these see on average 30–40% lower impressions in apparel categories. Ensure all apparel variants share the same item_group_id and each submits its own unique GTIN.'
+  });
+
+  if (!isPaid) tips.push({
+    title: 'Free Listings: Complete Attribute Coverage Wins More Filters',
+    body: 'For organic listings, completeness matters more than it does for paid. Products with more attributes (color, size, material, product_highlight) are matched to more user queries and appear in more filter panels. Even optional attributes improve discoverability.'
+  });
+
+  if (isPaid && priorityIssues.some(i => i.attr === 'gtin')) tips.push({
+    title: '🔑 GTINs: Missing GTINs Exclude You From Shopping Auctions',
+    body: 'Products without a GTIN or a valid identifier_exists=no flag risk being excluded from Google Shopping auctions entirely. Prioritise sourcing GTINs from your supplier or the GS1 database (barcodelookup.com, gs1.org/services/verified-by-gs1). If a GTIN genuinely doesn\'t exist, set identifier_exists=FALSE and provide brand + MPN instead.'
+  });
+
+  if (hasVariants) tips.push({
+    title: '🔄 Variants: Consolidate With item_group_id for Better Performance',
+    body: 'Products sharing an item_group_id are displayed together as a single product unit with size/colour swatches. This improves CTR vs. showing every variant separately. Ensure all variants in a group submit the same title structure, brand, and Google Product Category — only the variant attribute (color/size) should differ.'
+  });
+
+  tips.push({
+    title: '🚀 Performance Max: Feed Quality Is Your Creative',
+    body: 'For Performance Max campaigns, your product data IS your ad creative. High-quality titles (with brand + key attributes), comprehensive descriptions, and multiple image angles (use additional_image_link) give Google more to work with when building ad combinations. Products with lifestyle_image_link also get better placements on Discover and YouTube.'
+  });
+
+  if (settings.returnsSetup === 'none') tips.push({
+    title: '⚠️ Returns Policy: Missing Configuration Will Limit Visibility',
+    body: 'A return policy is strongly recommended across all markets and required to unlock certain Shopping features (e.g. the "Free returns" badge, promotions eligibility). Set up your policy in GMC Settings → Returns, then either apply it at account level or use <code>return_policy_label</code> in your feed to map different products to different policies.'
+  });
+
+  if (settings.hasFreeReturns) tips.push({
+    title: '✅ Free Returns: Maximise Your Badge Visibility',
+    body: 'Free returns are a positive ranking signal and unlock the "Free returns" badge on Shopping listings. Ensure your GMC return policy is configured with free_returns = true for the relevant markets. For UK and DE in particular, free returns significantly improve CTR — ensure the return window and method are explicitly stated in your policy.'
+  });
+
+  if (!settings.hasFreeReturns && (market === 'UK' || market === 'DE' || market === 'US')) tips.push({
+    title: `💡 ${market}: Free Returns Drive Higher CTR`,
+    body: `Competitors offering free returns in ${market} show consistently higher click-through rates on Shopping. If your margins allow it, consider offering free returns and configuring this in GMC — it unlocks a visible badge on your listings and is a ranking signal for Shopping ads.`
+  });
+
+  if (settings.shippingSetup === 'carrier') tips.push({
+    title: '🚚 Carrier-Calculated Shipping: Dimensions Must Be Accurate',
+    body: 'All three shipping dimensions (length, width, height) plus shipping_weight must be submitted for every product. Use the packed/boxed dimensions, not the bare product. Inaccurate dimensions result in incorrect rate calculations and potential disapprovals. Google recommends account-level carrier settings as a fallback.'
+  });
+
+  if (settings.hasFreeShipping) tips.push({
+    title: '🎁 Free Shipping Threshold: Unlock the Free Shipping Badge',
+    body: 'Submit <code>free_shipping_threshold</code> with country + price_threshold to display a "Free shipping" badge on eligible products. Format: country code + ISO 4217 amount (e.g. GB:25.00 GBP). The currency must match your product price currency exactly. This is one of the highest-impact visibility improvements for competitive categories.'
+  });
+
+  if (settings.hasHandlingTime) tips.push({
+    title: '📦 Handling & Transit Times: Accurate Delivery Estimates Win Clicks',
+    body: 'Google displays estimated delivery dates on Shopping listings — products with faster, more accurate estimates see higher CTR. Submit min/max_handling_time per product (or configure at account level), and use shipping_transit_business_days to reflect your actual carrier SLAs. 0-day handling = same-day dispatch badge eligibility.'
+  });
+
+  tips.push({
+    title: '🔁 Feed Freshness: Price & Availability Must Be Near Real-Time',
+    body: 'Google crawls feeds and landing pages independently. If your feed price or availability is out of sync with your website, products will be disapproved. Submit price/availability updates within 30 minutes of any site change. Use the Content API or scheduled feeds with at minimum daily refresh. Enable Automatic Item Updates as a safety net.'
+  });
+
+  if (['DE','FR','AT','IT','NL','ES','BE','CZ','PL','RO'].includes(market)) tips.push({
+    title: `⚠️ EU Market (${market}): Energy Labels Now Require [certification]`,
+    body: 'As of April 2025, EU products requiring energy efficiency labels (appliances, displays, lighting, smartphones, tyres) must use the [certification] attribute with EU EPREL database references (format: EC:EPREL:<id>). The legacy [energy_efficiency_class] attribute is no longer valid for EU countries and will cause data quality issues.'
+  });
+
+  return tips;  // show all contextual tips
+}
+
+// ════════════════════════════════════════════════════════════════════
+// EXPORT
+// ════════════════════════════════════════════════════════════════════
+function exportCSV() {
+  const results = analysisResults;
+  if (!results.length) return;
+  const attrs = [...visibleCols];
+  const header = ['Row','Status','Hidden Issues (debug)',...attrs.map(a => SPEC[a]?.label || a)].join(',');
+  const statusText = { disapproved: 'NOT ELIGIBLE', at_risk: 'ELIGIBLE - AT RISK', suboptimal: 'ELIGIBLE - TO OPTIMISE', healthy: 'ELIGIBLE - OPTIMISED' };
+  const statusIcon = { ok: '✓', error: '✗', warn: '!', suggest: '?', na: '-' };
+  const rows = results.map((res, i) => {
+    const cells = attrs.map(a => {
+      const c = res.cells[a];
+      return c ? `"${statusIcon[c.status]} ${c.msg.replace(/"/g, '""')}"` : '"—"';
+    });
+    // Hidden Issues: any warn/error in cells NOT in visibleCols
+    const hiddenIssues = Object.entries(res.cells)
+      .filter(([a, c]) => !attrs.includes(a) && (c.status === 'warn' || c.status === 'error'))
+      .map(([a, c]) => `[${a}] ${c.status.toUpperCase()}: ${c.msg.replace(/"/g, "'")}`)
+      .join(' | ');
+    return [`${i+1}`, `"${statusText[res.rowStatus]}"`, `"${hiddenIssues}"`, ...cells].join(',');
+  });
+  download([header, ...rows].join('\n'), 'gmc-validation.csv', 'text/csv');
+}
+
+function exportPriority() {
+  const header = 'Rank,Attribute,Severity,Products Affected,% of Feed,Fix,Estimated Effort';
+  const statusText = { error: 'CRITICAL', warn: 'WARNING', suggest: 'SUGGESTION' };
+  const rows = priorityIssues.map(iss => {
+    const total = analysisResults.length;
+    const fix = buildFixText(iss).replace(/"/g, '""');
+    const effort = getEffortLabel(iss).replace(/"/g, '""');
+    return `${iss.rank},"${SPEC[iss.attr]?.label || iss.attr}","${statusText[iss.status]}",${iss.count},${((iss.count/total)*100).toFixed(0)}%,"${fix}","${effort}"`;
+  });
+  download([header, ...rows].join('\n'), 'gmc-fix-list.csv', 'text/csv');
+}
+
+function download(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Close column popover when clicking outside
+document.addEventListener('click', () => {
+  const pop = document.getElementById('col-popover');
+  if (pop) pop.classList.remove('open');
+});
+
+function exportMarkdownReport() {
+  const total = analysisResults.length;
+  const date = new Date().toISOString().split('T')[0];
+  const criticals = priorityIssues.filter(i => i.status === 'error');
+  const warnings  = priorityIssues.filter(i => i.status === 'warn');
+  const suggestions = priorityIssues.filter(i => i.status === 'suggest');
+  const affectedRows = [...new Set(criticals.flatMap(i => i.rows))].length;
+
+  const priorityLabel = { error: '🔴 High (Critical)', warn: '🟠 Medium (Warning)', suggest: '🟡 Low (Suggestion)' };
+  const whyItMatters = {
+    error: 'This is a critical feed error. Products affected are disapproved or excluded from Shopping auctions until fixed.',
+    warn:  'This warning degrades feed quality and limits ad reach. Products may lose impressions or Shopping eligibility over time.',
+    suggest: 'This is an optimisation opportunity. Fixing it improves data quality, auction match rate, and long-term campaign performance.'
+  };
+
+  let md = `# GMC Feed Audit Report\n\n`;
+  md += `**Date:** ${date}  \n`;
+  md += `**Total products analysed:** ${total}  \n\n`;
+  md += `---\n\n`;
+  md += `## Summary\n\n`;
+  md += `| Category | Issues found | Products affected |\n`;
+  md += `|----------|-------------|-------------------|\n`;
+  md += `| 🔴 Critical | ${criticals.length} | ${affectedRows} (${total > 0 ? ((affectedRows/total)*100).toFixed(0) : 0}% of feed) |\n`;
+  md += `| 🟠 Warnings | ${warnings.length} | — |\n`;
+  md += `| 🟡 Suggestions | ${suggestions.length} | — |\n\n`;
+
+  if (criticals.length) {
+    const top3 = criticals.slice(0, 3).map(i => SPEC[i.attr]?.label || i.attr);
+    md += `> **Priority action:** Resolve ${top3.join(', ')} first — these will recover the most products to Eligible status.\n\n`;
+  }
+
+  md += `---\n\n`;
+  md += `## Issues by Priority\n\n`;
+
+  priorityIssues.forEach(iss => {
+    const label = SPEC[iss.attr]?.label || iss.attr;
+    const pct = ((iss.count / total) * 100).toFixed(0);
+    const fix = buildFixText(iss);
+    const effort = getEffortLabel(iss).replace(/[⚡🔧🏗️]/gu, '').trim();
+
+    md += `### ${iss.rank}. ${label} (\`${iss.attr}\`)\n\n`;
+    md += `| Field | Value |\n`;
+    md += `|-------|-------|\n`;
+    md += `| **Priority** | ${priorityLabel[iss.status]} |\n`;
+    md += `| **Products affected** | ${iss.count} of ${total} (${pct}%) |\n`;
+    md += `| **Estimated effort** | ${effort} |\n\n`;
+    md += `**Why it matters:**  \n${whyItMatters[iss.status]}\n\n`;
+    md += `**Recommendation:**  \n${fix}\n\n`;
+    md += `---\n\n`;
+  });
+
+  download(md, 'gmc-feed-audit.md', 'text/markdown');
+}
+</script>
+
+<script>
+  
+</script>
+<footer>
+  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script src="/header.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" data-clerk-publishable-key="pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA" crossorigin="anonymous"></script>
+  <script src="/gmc-auth.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function(){ if(window.GmcAuth) GmcAuth.runToolMode(); });</script>
+</body>
+</html>
