@@ -1,0 +1,44 @@
+[build]
+  publish = "."
+
+# Redirect apex → www
+[[redirects]]
+  from   = "https://magstags.com/*"
+  to     = "https://www.magstags.com/:splat"
+  status = 301
+  force  = true
+
+# Keep lab subdomain working (no redirect)
+[[redirects]]
+  from   = "https://lab.magstags.com/*"
+  to     = "https://lab.magstags.com/:splat"
+  status = 200
+  force  = false
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Redirect old tool URL
+[[redirects]]
+  from   = "/gsc-regex-builder/*"
+  to     = "/gsc-regex-generator/:splat"
+  status = 301
+  force  = true
+
+# Redirect old blog URL
+[[redirects]]
+  from   = "/blog/hreflang-2025/"
+  to     = "/blog/hreflang-mistakes/"
+  status = 301
+  force  = true
+
+# Rename /blog/ to /notes/
+[[redirects]]
+  from   = "/blog/*"
+  to     = "/notes/:splat"
+  status = 301
+  force  = true

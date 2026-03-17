@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="6" fill="#ffffff"/>
+  <!-- large star centred at 13,16 — slightly bigger/bolder for legibility at 16px -->
+  <path d="M13 5 L15 11.5 L22 14 L15 16.5 L13 23 L11 16.5 L4 14 L11 11.5 Z" fill="#0E7490"/>
+  <!-- small star centred at 23,10 -->
+  <path d="M23 7 L24.1 10.7 L28 12 L24.1 13.3 L23 17 L21.9 13.3 L18 12 L21.9 10.7 Z" fill="#0E7490" opacity="0.85"/>
+</svg>

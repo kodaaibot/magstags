@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive / non-website files
+*.pickle
+*.env
+credentials.json
+token.json
+
+# Editor
+.vscode/
+.idea/

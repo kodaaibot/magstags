@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/robots-txt-mistakes/">
+  <meta name="description" content="Most robots.txt problems aren't caused by bad intentions; they're caused by good intentions applied at the wrong layer. What breaks at scale and why it matters.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Robots.txt Mistakes | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+    .gate-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;max-width:400px;width:100%;margin:24px}
+    .gate-icon{font-size:36px;margin-bottom:20px}
+
+    /* ── Post layout ── */
+    #blog-content{display:block}
+    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+
+    /* ── Breadcrumb ── */
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+
+    /* ── Post header ── */
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+
+    /* ── Body ── */
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:20px;line-height:1.7;color:var(--text-2);margin-bottom:36px;font-weight:400}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;background:var(--mint-light);color:var(--teal);padding:2px 6px;border-radius:4px;word-break:break-all}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+
+    /* ── Author bio ── */
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+
+    /* ── Back link ── */
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+      main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+  </style>
+  <meta property="og:title" content="Robots.txt Mistakes | MagsTags">
+  <meta property="og:description" content="Most robots.txt problems aren't caused by bad intentions; they're caused by good intentions applied at the wrong layer. What breaks at scale and why it matters.">
+  <meta property="og:url" content="https://www.magstags.com/notes/robots-txt-mistakes/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Robots.txt Mistakes | MagsTags">
+  <meta name="twitter:description" content="Most robots.txt problems aren't caused by bad intentions; they're caused by good intentions applied at the wrong layer. What breaks at scale and why it matters.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Robots.txt Mistakes",
+    "description": "Most robots.txt problems aren't caused by bad intentions; they're caused by good intentions applied at the wrong layer. What breaks at scale and why it matters.",
+    "url": "https://www.magstags.com/notes/robots-txt-mistakes/",
+    "datePublished": "2026-03-03",
+    "dateModified": "2026-03-03",
+    "image": "https://www.magstags.com/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com"
+    }
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
+  })();
+</script>
+
+<!-- Post content -->
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Robots.txt Mistakes</span>
+    </nav>
+
+    <span class="post-category">Technical SEO</span>
+    <h1 class="post-h1">Robots.txt Mistakes</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>10 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>5 min read</span>
+    </div>
+
+    <div class="post-body">
+
+      <p class="post-lead">Most robots.txt problems aren't caused by bad intentions; they're caused by good intentions applied at the wrong layer. As sites scale, configuration drift turns a tidy file into a minefield. Here's what breaks and why it matters more than most teams realise.</p>
+
+      <p>I've audited hundreds of sites over the years, and robots.txt is consistently one of the most underestimated files in the technical SEO stack. It's short, plain text, and sits in one place. What could go wrong?</p>
+
+      <p>Quite a lot, as it turns out.</p>
+
+      <h2>Mistake 1: Treating robots.txt as an access control mechanism</h2>
+
+      <p>The robots.txt spec is advisory. That's not a caveat buried in the documentation — it's the central point of the entire protocol. When you add <code>Disallow: /admin/</code>, you are politely asking crawlers not to go there. You are not blocking them.</p>
+
+      <p>In practice:</p>
+
+      <ul>
+        <li>Malicious bots and scrapers ignore it entirely</li>
+        <li>Any URL in a disallowed path can still be indexed if it receives inbound links</li>
+        <li>Google may show a disallowed URL in search results with no snippet (visible, but content-free)</li>
+      </ul>
+
+      <p>For anything that genuinely needs protecting (staging environments, admin panels, internal tools), robots.txt is a useful additional signal, but never a substitute for authentication. Treat them as complementary, not equivalent.</p>
+
+      <div class="post-callout">
+        Use robots.txt to manage crawl budget and signal intent. Use authentication to enforce access. Never confuse the two.
+      </div>
+
+      <h2>Mistake 2: The accidental full block</h2>
+
+      <p>This one causes real damage and happens more often than it should. A developer deploys a staging config to production. A migration leaves the wrong robots.txt in the root directory. Someone adds <code>Disallow: /</code> to test something and forgets to remove it.</p>
+
+      <pre>User-agent: *
+Disallow: /</pre>
+
+      <p>Two lines. Every search engine stops crawling your entire site. The damage compounds slowly; Google won't immediately de-index everything, but fresh content stops being crawled, rankings begin to erode, and by the time the problem surfaces in your visibility data it's weeks old.</p>
+
+      <div class="post-callout-warn">
+        <strong>After any deployment that touches the root directory:</strong> verify that <code>https://yourdomain.com/robots.txt</code> returns what you expect. Make it part of your post-deploy checklist without exception.
+      </div>
+
+      <h2>Mistake 3: Blocking CSS and JavaScript</h2>
+
+      <p>This was common advice in the early 2010s. Block <code>/wp-content/</code>, block <code>/assets/</code>, reduce crawl overhead. The logic made a kind of sense when Googlebot was text-only.</p>
+
+      <p>Google has rendered JavaScript since 2015. When you block the CSS and JS that build your page, Google sees something closer to raw HTML stripped of structure, not the same experience a user gets. Googlebot's rendering evaluation directly informs how it understands and ranks content. Blocking render assets hurts that process.</p>
+
+      <p>If you inherited a site with these rules and the rankings look fine, that may mean the blocks aren't actually having a measurable effect. Or it may mean you're leaving performance on the table. Either way, the rules have no legitimate modern justification; remove them.</p>
+
+      <h2>Mistake 4: Using it to hide pages from search results</h2>
+
+      <p>This is the most persistent misconception in technical SEO. Disallowing a URL stops Googlebot from crawling it. It does not stop Google from indexing it.</p>
+
+      <p>If a disallowed page receives a single inbound link from anywhere on the web, Google can discover the URL and index it without ever visiting the page. The result is an indexed URL with no snippet, no title, and no content context. Not hidden. Just empty.</p>
+
+      <p>To prevent a page from appearing in search results, you need a <code>noindex</code> meta tag in the HTML head — and you need Google to be able to crawl the page in order to read it. Disallow and noindex are not interchangeable; they work at different stages of the pipeline.</p>
+
+      <h2>Mistake 5: Not including the sitemap</h2>
+
+      <p>The <code>Sitemap:</code> directive in robots.txt is one of the most reliable ways to make sure all major crawlers know where your content is. It's not only Googlebot — Bing, Yandex, and others all read robots.txt and follow the sitemap reference.</p>
+
+      <p>A robots.txt without a sitemap URL is a missed opportunity, particularly for large sites where discovery is a real crawl budget consideration.</p>
+
+      <pre>Sitemap: https://example.com/sitemap.xml</pre>
+
+      <p>One line. No excuse not to have it.</p>
+
+      <h2>The common thread</h2>
+
+      <p>Every mistake on this list shares the same root cause: misunderstanding what robots.txt actually does versus what it appears to do. It's a lightweight convention that most legitimate crawlers follow most of the time. Nothing more, and nothing less.</p>
+
+      <p>Used correctly, to manage crawl budget, direct resources away from low-value paths, and signal intent to search engines, it's a clean and effective tool. Used as a security mechanism or an indexing blocker, it fails, quietly and at scale.</p>
+
+      <p>If you are revisiting your robots.txt to make decisions about AI crawlers specifically, <a href="/notes/agentic-search/">What Agentic Search Changes and What It Doesn't</a> covers which bots matter and what a deliberate policy looks like. To rebuild your robots.txt from scratch, use the <a href="/robots-txt-generator/">Robots.txt Generator</a>.</p>
+
+      <a href="/notes/" class="post-back">← Back to Notes</a>
+
+      <!-- Author bio -->
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+</div>
+<script src="/header.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+</body>
+</html>

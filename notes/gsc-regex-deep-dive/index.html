@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/gsc-regex-deep-dive/">
+  <meta name="description" content="A practical guide to RE2 regex in Google Search Console — URL filtering, query segmentation, and the patterns that actually save time in day-to-day SEO work.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>GSC Regex: Moving Past the Basics | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
+    .gate-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;max-width:400px;width:100%;margin:24px}
+    .gate-icon{font-size:36px;margin-bottom:20px}
+    #blog-content{display:block}
+    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:#F3E8FF;color:#6D28D9;margin-bottom:16px}
+    html.dark .post-category{background:#2e1065;color:#c4b5fd}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:20px;line-height:1.7;color:var(--text-2);margin-bottom:36px}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;background:var(--mint-light);color:var(--teal);padding:2px 6px;border-radius:4px;word-break:break-all}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .regex-table{width:100%;border-collapse:collapse;font-size:15px;margin:28px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+    .regex-table th{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);background:var(--bg2);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border)}
+    .regex-table td{padding:11px 14px;border-bottom:1px solid var(--border);line-height:1.5;vertical-align:top}
+    .regex-table tr:last-child td{border-bottom:none}
+    .regex-table tr:hover td{background:var(--bg2)}
+    .regex-table td code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13px;background:var(--mint-light);color:var(--teal);padding:1px 5px;border-radius:3px}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+      main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+  </style>
+  <meta property="og:title" content="GSC Regex: Moving Past the Basics | MagsTags">
+  <meta property="og:description" content="A practical guide to RE2 regex in Google Search Console — URL filtering, query segmentation, and the patterns that actually save time in day-to-day SEO work.">
+  <meta property="og:url" content="https://www.magstags.com/notes/gsc-regex-deep-dive/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GSC Regex: Moving Past the Basics | MagsTags">
+  <meta name="twitter:description" content="A practical guide to RE2 regex in Google Search Console — URL filtering, query segmentation, and the patterns that actually save time in day-to-day SEO work.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "GSC Regex: Moving Past the Basics",
+    "description": "A practical guide to RE2 regex in Google Search Console — URL filtering, query segmentation, and the patterns that actually save time in day-to-day SEO work.",
+    "url": "https://www.magstags.com/notes/gsc-regex-deep-dive/",
+    "datePublished": "2026-03-01",
+    "dateModified": "2026-03-01",
+    "image": "https://www.magstags.com/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com"
+    }
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>GSC Regex: Moving Past the Basics</span>
+    </nav>
+
+    <span class="post-category">Analytics</span>
+    <h1 class="post-h1">GSC Regex: Moving Past the Basics</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>15 February 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>6 min read</span>
+    </div>
+
+    <div class="post-body">
+
+      <p class="post-lead">Most SEOs use Google Search Console regex for a handful of simple contains filters and leave it there. That's understandable, the regex field in GSC is small and the documentation is thin. But RE2 gives you considerably more power than that, and learning to use it changes how you read organic data.</p>
+
+      <p>This post assumes you're already using GSC and have seen the regex option in the filter bar. It's for people who want to go further: segmenting queries by intent, identifying patterns across URL structures, and building filters that actually reflect how your site is organised.</p>
+
+      <h2>RE2: what you can and cannot do</h2>
+
+      <p>Google Search Console uses RE2, Google's own regex engine. It's fast and safe, but it deliberately excludes some features you might know from PCRE or JavaScript regex:</p>
+
+      <ul>
+        <li><strong>No lookaheads or lookbehinds</strong>: <code>(?=...)</code> and <code>(?&lt;=...)</code> don't work</li>
+        <li><strong>No backreferences</strong>: <code>\1</code>, <code>\2</code> etc. aren't supported</li>
+        <li><strong>No atomic groups</strong></li>
+        <li>Anchors (<code>^</code> and <code>$</code>), character classes, alternation (<code>|</code>), and quantifiers all work normally</li>
+      </ul>
+
+      <div class="post-callout-warn">
+        <strong>RE2 limitation:</strong> GSC regex does not support negative lookaheads, which means true "exclude" logic inside a single pattern isn't possible. Use the <em>Does not match regex</em> filter option instead.
+      </div>
+
+      <h2>Beyond contains: building intent-based query filters</h2>
+
+      <p>The most useful thing regex gives you in GSC is the ability to define what a query segment actually means, rather than just filtering by keyword string.</p>
+
+      <h3>Informational vs transactional</h3>
+
+      <p>Informational queries typically contain certain trigger words. You can filter for these across the entire query dataset:</p>
+
+      <pre>how|what|why|when|where|who|guide|tutorial|vs|versus|difference</pre>
+
+      <p>This gives you a clean view of your informational traffic. Combine it with the <em>Does not match regex</em> version to isolate your transactional and commercial segments. The split is never perfect, but it's a significant improvement over eyeballing page by page.</p>
+
+      <h3>Question queries</h3>
+
+      <pre>^(how|what|why|when|where|who|is|are|can|does|do|should)\s</pre>
+
+      <p>The anchor (<code>^</code>) and trailing space (<code>\s</code>) tighten this considerably — you're catching queries that start with these words rather than just containing them anywhere. Useful for identifying featured snippet and PAA opportunities.</p>
+
+      <h3>Long-tail filtering by word count</h3>
+
+      <p>GSC doesn't have a word count field, but regex can approximate it. To find queries with at least four words:</p>
+
+      <pre>\w.+\s\w.+\s\w.+\s\w.+</pre>
+
+      <p>Not elegant, but effective. Each <code>\w.+\s</code> unit roughly matches a word followed by a space. Adjust the number of units for different minimum lengths.</p>
+
+      <h2>Filtering by URL structure</h2>
+
+      <p>Query filters get most of the attention, but page filters are where regex genuinely earns its place on large sites.</p>
+
+      <table class="regex-table">
+        <thead>
+          <tr><th>Pattern</th><th>What it matches</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/blog/</code></td><td>All blog URLs (contains match)</td></tr>
+          <tr><td><code>^https://example\.com/blog/[^/]+/$</code></td><td>Only top-level blog posts, not subcategories</td></tr>
+          <tr><td><code>/category/|/tag/|/author/</code></td><td>All taxonomy pages</td></tr>
+          <tr><td><code>\?</code></td><td>Any URL with query parameters</td></tr>
+          <tr><td><code>/en/|/en-gb/|/en-us/</code></td><td>English-language sections (international sites)</td></tr>
+          <tr><td><code>/product/[^/]+/$</code></td><td>Product detail pages (one level deep)</td></tr>
+        </tbody>
+      </table>
+
+      <p>For international sites especially, being able to isolate a single language segment in GSC and filter queries within it is dramatically more useful than looking at global data. You can see which markets are driving which query types, where content gaps exist, and where cannibalism is occurring between regional variants.</p>
+
+      <h2>The negative match: your most underused filter</h2>
+
+      <p>The <em>Does not match regex</em> option is where the real segmentation power lives. It lets you build exclusion filters that clean up your data in ways the basic interface simply can't do.</p>
+
+      <p>Some practical examples:</p>
+
+      <ul>
+        <li><strong>Exclude brand queries:</strong> <code>your brand|yourbrand|brand variant</code>, giving you clean non-brand performance</li>
+        <li><strong>Exclude navigational queries:</strong> <code>login|sign in|account|dashboard|contact</code></li>
+        <li><strong>Exclude known low-value query types:</strong> <code>\d{4,}</code> (queries containing 4+ digit numbers — often order IDs, tracking codes, or low-intent lookups)</li>
+      </ul>
+
+      <div class="post-callout">
+        <strong>Practical workflow:</strong> create a saved filter set in GSC with your brand exclusion regex applied. This becomes your default view for all organic performance analysis. Revisit branded queries separately when you need to track brand health.
+      </div>
+
+      <h2>Combining filters</h2>
+
+      <p>GSC allows multiple filters simultaneously. A filter combination I use regularly on e-commerce sites:</p>
+
+      <ul>
+        <li>Page <em>matches regex:</em> <code>/product/</code></li>
+        <li>Query <em>does not match regex:</em> <code>brand name|product SKU patterns</code></li>
+        <li>Country: target market</li>
+      </ul>
+
+      <p>This gives you non-brand, non-navigational organic performance for your product range in a specific market. The data that's left is the meaningful stuff: actual discovery traffic, comparison queries, and purchase-intent terms. Considerably smaller and more actionable than the raw aggregate.</p>
+
+      <p>Regex in GSC isn't a workaround. At the scale most enterprise sites operate at, it's the only practical way to make the data legible.</p>
+
+      <p>To build and test GSC regex filters without writing from scratch, the <a href="/gsc-regex-generator/">GSC Regex Builder</a> generates RE2-safe patterns for the most common use cases.</p>
+
+      <a href="/notes/" class="post-back">← Back to Notes</a>
+
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+</div>
+<script src="/header.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+</body>
+</html>

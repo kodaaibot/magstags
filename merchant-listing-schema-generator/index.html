@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Merchant Listing — Schema Generator | MagsTags</title>
+  <meta name="description" content="The markup that enables Shopping features in Google: Popular Products, price drops, returns. Generate Merchant Listing JSON-LD with pricing, GTIN, shipping, and returns. Free, no account needed.">
+  <link rel="canonical" href="https://www.magstags.com/merchant-listing-schema-generator/">
+  <meta property="og:title" content="Merchant Listing — Schema Generator | MagsTags">
+  <meta property="og:description" content="The markup that enables Shopping features in Google: Popular Products, price drops, returns. Generate Merchant Listing JSON-LD with pricing, GTIN, shipping, and returns.">
+  <meta property="og:url" content="https://www.magstags.com/merchant-listing-schema-generator/">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "Merchant Listing — Schema Generator",
+    "description": "Free tool to generate Merchant Listing JSON-LD structured data for Google Shopping, Popular Products, price drop alerts, shipping and returns.",
+    "url": "https://www.magstags.com/merchant-listing-schema-generator/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "SEO Tools", "item": "https://www.magstags.com/seo-tools/" },
+      { "@type": "ListItem", "position": 3, "name": "E-commerce — Product Schema Generators", "item": "https://www.magstags.com/ecommerce-schema-generator/" },
+      { "@type": "ListItem", "position": 4, "name": "Merchant Listing — Schema Generator", "item": "https://www.magstags.com/merchant-listing-schema-generator/" }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
+      --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #857f7a;
+      --teal: #0E7490; --mint: #0891B2;
+      --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09);
+      --red: #c0392b; --red-light: #fdf0ee; --green: #0a7c5c; --amber: #92400e;
+    }
+    html.dark {
+      --bg: #111110; --bg2: #191817; --surface: #1e1c1a; --surface-alt: #242220;
+      --border: rgba(255,255,255,.08); --text-1: #f5f2ee; --text-2: #c8c4be;
+      --text-3: #857f79; --text-4: #4a4743; --teal: #22D3EE; --mint: #67E8F9;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
+      --red-light: rgba(192,57,43,.14);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; font-size: 14px; }
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
+
+    .page-hero { margin-bottom: 32px; }
+    .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .page-hero p { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 620px; }
+    .page-hero code { font-family: monospace; font-size: 12px; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; }
+
+    /* Tabs */
+    .schema-tabs { display: flex; gap: 4px; margin-bottom: 28px; background: var(--surface); border-radius: 99px; padding: 4px; width: fit-content; border: 1px solid var(--border); flex-wrap: wrap; }
+    .schema-tab { background: none; border: none; border-radius: 99px; padding: 7px 22px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-3); cursor: pointer; transition: all .15s; white-space: nowrap; text-decoration: none; display: inline-block; }
+    .schema-tab:hover { color: var(--text-1); }
+    .schema-tab.active { background: var(--teal); color: #fff; font-weight: 600; }
+
+    /* Layout */
+    .tool-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    @media (max-width: 960px) { .tool-layout { grid-template-columns: 1fr; } }
+
+    /* Cards */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 14px; }
+    .card:last-child { margin-bottom: 0; }
+
+    /* Form sections */
+    .form-section + .form-section { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); }
+    .form-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); }
+    .form-section-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+    .form-section.collapsible .form-section-body { display: none; margin-top: 0; }
+    .form-section.collapsible.open .form-section-body { display: block; margin-top: 16px; }
+    .chevron { transition: transform .2s; color: var(--text-4); flex-shrink: 0; }
+    .form-section.collapsible.open .chevron { transform: rotate(180deg); }
+
+    /* Fields */
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label { display: block; font-size: 11px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .06em; }
+    .form-label .req { color: var(--teal); }
+    .form-hint { font-size: 11px; color: var(--text-4); margin-top: 5px; line-height: 1.5; }
+
+    input[type="text"], input[type="url"], input[type="number"], input[type="date"], select, textarea {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 10px;
+      background: var(--bg2); color: var(--text-1); font-family: 'Inter', sans-serif; font-size: 13px;
+      transition: border-color .15s, box-shadow .15s; outline: none;
+    }
+    textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+    input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); background: var(--surface); }
+    html.dark input:focus, html.dark select:focus, html.dark textarea:focus { box-shadow: 0 0 0 3px rgba(34,211,238,.1); }
+    select {
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237a7570'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center; background-size: 14px; padding-right: 34px;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    /* Offer type toggle */
+    .offer-toggle { display: flex; gap: 4px; margin-bottom: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 99px; padding: 3px; width: fit-content; }
+    .offer-toggle-btn { border: none; background: none; border-radius: 99px; padding: 5px 14px; font-size: 12px; font-weight: 500; color: var(--text-3); cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; }
+    .offer-toggle-btn.active { background: var(--teal); color: #fff; font-weight: 600; }
+    .offer-section { display: none; }
+    .offer-section.active { display: block; }
+
+    /* Validation */
+    .v-msg { font-size: 11px; margin-top: 4px; padding: 4px 8px; border-radius: 6px; }
+    .v-msg.error { color: var(--red); background: var(--red-light); }
+    .v-msg.warn  { color: var(--amber); background: rgba(146,64,14,.08); }
+    .v-msg.ok    { color: var(--green); }
+    input.v-error { border-color: var(--red) !important; }
+
+    /* Pros/cons notice */
+    .pros-cons-notice { font-size: 11px; color: var(--amber); background: rgba(146,64,14,.08); border-radius: 6px; padding: 6px 10px; margin-top: 8px; display: none; }
+    .pros-cons-notice.show { display: block; }
+
+    /* Dynamic rows */
+    .dyn-row { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+    .dyn-row-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .dyn-row-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); }
+    .btn-add { background: none; border: 1.5px dashed var(--border); border-radius: 10px; color: var(--text-3); font-size: 12px; font-weight: 600; cursor: pointer; padding: 7px 14px; width: 100%; font-family: 'Inter', sans-serif; transition: all .15s; }
+    .btn-add:hover { border-color: var(--teal); color: var(--teal); background: rgba(14,116,144,.04); }
+    .btn-remove { background: none; border: none; cursor: pointer; color: var(--text-4); padding: 2px; border-radius: 6px; transition: color .15s; }
+    .btn-remove:hover { color: var(--red); }
+    .note-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .note-row input { flex: 1; }
+
+    /* Pills */
+    .pill-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill-check { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border: 1.5px solid var(--border); border-radius: 99px; font-size: 12px; font-weight: 500; color: var(--text-3); cursor: pointer; user-select: none; transition: all .15s; }
+    .pill-check input { display: none; }
+    .pill-check:hover { border-color: var(--teal); color: var(--teal); }
+    .pill-check.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+    /* Output */
+    .output-sticky { position: sticky; top: 20px; }
+    .output-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 14px; }
+    .output-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .output-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); }
+    .output-actions { display: flex; gap: 6px; }
+    .output-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: 99px; font-size: 11px; font-weight: 600; color: var(--text-2); cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none; transition: all .15s; }
+    .output-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .output-btn.copied { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .output-code { font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.7; padding: 18px; max-height: 440px; overflow-y: auto; color: var(--text-2); }
+    .output-empty { color: var(--text-4); font-family: 'Inter', sans-serif; font-size: 13px; }
+    .jk { color: #9b599a; } .js { color: #0a7c5c; } .jn { color: #2563eb; }
+    .jb { color: #d97706; } .jl { color: var(--text-4); } .jt { color: var(--text-4); }
+    html.dark .jk { color: #c084fc; } html.dark .js { color: #6ee7b7; }
+    html.dark .jn { color: #93c5fd; } html.dark .jb { color: #fbbf24; }
+
+    /* Benefit card */
+    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; }
+    .tc-inner { display: flex; gap: 16px; align-items: flex-start; }
+    .tc-serp { flex-shrink: 0; width: 220px; font-family: Arial, sans-serif; font-size: 11px; }
+    .tc-serp-title { color: #1a0dab; font-size: 13px; margin-bottom: 1px; }
+    html.dark .tc-serp-title { color: #8ab4f8; }
+    .tc-serp-url { color: #006621; font-size: 10px; margin-bottom: 2px; }
+    html.dark .tc-serp-url { color: #70c087; }
+    .tc-serp-stars { color: #e37400; font-size: 11px; margin-bottom: 1px; }
+    .tc-serp-snippet { color: #4d5156; font-size: 11px; line-height: 1.4; }
+    html.dark .tc-serp-snippet { color: #9aa0a6; }
+    .tc-info { flex: 1; min-width: 0; }
+    .tc-name { font-size: 12px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
+    .tc-benefits { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+    .tc-benefits li { font-size: 12px; color: var(--text-3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+    .tc-benefits li::before { content: ''; width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    @media (max-width: 600px) { .tc-inner { flex-direction: column; } .tc-serp { width: 100%; } }
+
+    /* Variant rows */
+    .pg-variant + .pg-variant { margin-top: 10px; }
+
+    /* Form type indicator */
+    .tab-intro { font-size: 13px; color: var(--text-3); background: rgba(14,116,144,.06); border: 1px solid rgba(14,116,144,.15); border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.5; }
+    .tab-intro a { color: var(--teal); }
+
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+      @media(max-width:600px){main{padding:24px 16px 60px}}
+  </style>
+</head>
+<body>
+
+<script src="/header.js"></script>
+
+<div class="tool-content">
+<main>
+
+  <div class="page-hero">
+    <p style="font-size:12px;color:var(--text-4);margin-bottom:14px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> <a href="/ecommerce-schema-generator/" style="color:var(--text-4);text-decoration:none">E-commerce — Product Schema Generators</a> <span style="opacity:.5">›</span> Merchant Listing</p>
+    <h1>Merchant Listing — Schema Generator</h1>
+    <p style="font-size:16px;color:var(--text-2);font-weight:500;margin-bottom:8px">The markup that enables Shopping features in Google: Popular Products, price drops, returns.</p>
+    <p>Turns out Google has been saving you a spot in Shopping this whole time — you just needed to tell it you're the one actually selling it. It rewards that kind of honesty.</p>
+    <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+  </div>
+
+  <div class="schema-tabs">
+    <a class="schema-tab" href="/product-snippet-schema-generator/">Product Snippet</a>
+    <a class="schema-tab active" href="/merchant-listing-schema-generator/">Merchant Listing</a>
+    <a class="schema-tab" href="/product-variants-schema-generator/">Product Variants</a>
+  </div>
+
+  <div class="tool-layout">
+
+    <!-- ═══ LEFT: FORMS ═══ -->
+    <div>
+
+      <!-- ══════════════════════════════════════
+           PRODUCT SNIPPET FORM
+           ══════════════════════════════════════ -->
+      <div id="form-snippet">
+        <div class="tab-intro">
+          <strong>Product Snippet</strong> — for any page that describes a product (review sites, editorial pages, shopping aggregators, or merchant pages). Required: <code>name</code> + at least one of <code>review</code>, <code>aggregateRating</code>, or <code>offers</code>.
+          <a href="/product-snippet-schema/" target="_blank">Learn more →</a>
+        </div>
+
+        <div class="card">
+          <!-- Basic info -->
+          <div class="form-section">
+            <div class="form-section-title">Basic Info</div>
+            <div class="form-section-body" style="margin-top:16px">
+              <div class="form-group">
+                <label class="form-label">Product Name <span class="req">*</span></label>
+                <input type="text" id="ps-name" placeholder="e.g. Executive Anvil" oninput="generate()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="ps-desc" placeholder="Short product description..." oninput="generate()"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Image URL</label>
+                <input type="url" id="ps-image" data-vtype="url" onblur="validateField(this)" placeholder="https://example.com/product.jpg" oninput="generate()">
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Brand</label>
+                  <input type="text" id="ps-brand" placeholder="e.g. ACME" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">SKU</label>
+                  <input type="text" id="ps-sku" placeholder="PROD-001" oninput="generate()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">MPN <span style="font-weight:400;text-transform:none;font-size:10px">(Manufacturer Part Number)</span></label>
+                <input type="text" id="ps-mpn" placeholder="e.g. 925872" oninput="generate()">
+              </div>
+            </div>
+          </div>
+
+          <!-- Aggregate Rating -->
+          <div class="form-section collapsible" id="sec-ps-rating">
+            <div class="form-section-header" onclick="toggleSection('sec-ps-rating')">
+              <span class="form-section-title">Aggregate Rating</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Rating Value</label>
+                  <input type="number" id="ps-ar-value" data-vtype="rating" onblur="validateField(this)" placeholder="4.4" min="0" max="5" step="0.1" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Review Count</label>
+                  <input type="number" id="ps-ar-count" placeholder="89" min="1" oninput="generate()">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Best Rating</label>
+                  <input type="number" id="ps-ar-best" placeholder="5" value="5" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Worst Rating</label>
+                  <input type="number" id="ps-ar-worst" placeholder="1" value="1" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review -->
+          <div class="form-section collapsible" id="sec-ps-review">
+            <div class="form-section-header" onclick="toggleSection('sec-ps-review')">
+              <span class="form-section-title">Review</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <p class="form-hint" style="margin-bottom:12px">Pros and cons only appear in Google Search for <strong>editorial review pages</strong> — not merchant pages or customer reviews. Minimum 2 statements total required.</p>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Reviewer Name</label>
+                  <input type="text" id="ps-rv-author" placeholder="e.g. James Smith" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Author Type</label>
+                  <select id="ps-rv-author-type" onchange="generate()">
+                    <option value="Person">Person</option>
+                    <option value="Organization">Organization / Team</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Review Rating</label>
+                  <input type="number" id="ps-rv-rating" placeholder="4" min="1" max="5" step="0.5" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Best Rating</label>
+                  <input type="number" id="ps-rv-best" placeholder="5" value="5" oninput="generate()">
+                </div>
+              </div>
+              <!-- Pros -->
+              <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+                <div class="form-section-title" style="margin-bottom:10px">Pros (positiveNotes)</div>
+                <div id="ps-pros"></div>
+                <button class="btn-add" onclick="addNote('pro')" style="margin-top:6px">+ Add Pro</button>
+              </div>
+              <!-- Cons -->
+              <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+                <div class="form-section-title" style="margin-bottom:10px">Cons (negativeNotes)</div>
+                <div id="ps-cons"></div>
+                <button class="btn-add" onclick="addNote('con')" style="margin-top:6px">+ Add Con</button>
+              </div>
+              <div id="pros-cons-notice" class="pros-cons-notice">At least 2 statements total (pros + cons) are required for Google to display pros/cons in search results.</div>
+            </div>
+          </div>
+
+          <!-- Offer -->
+          <div class="form-section collapsible" id="sec-ps-offer">
+            <div class="form-section-header" onclick="toggleSection('sec-ps-offer')">
+              <span class="form-section-title">Offer / Price</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <p class="form-hint" style="margin-bottom:12px">Use <strong>Single offer</strong> for one seller (enables price drop alerts). Use <strong>Aggregate offer</strong> for shopping aggregator pages listing multiple sellers.</p>
+              <div class="offer-toggle">
+                <button class="offer-toggle-btn active" id="ps-ot-single" onclick="setOfferType('single')">Single Offer</button>
+                <button class="offer-toggle-btn" id="ps-ot-agg" onclick="setOfferType('agg')">Aggregate Offer</button>
+              </div>
+              <!-- Single offer fields -->
+              <div class="offer-section active" id="ps-offer-single">
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Price <span class="req">*</span></label>
+                    <input type="number" id="ps-price" data-vtype="price" onblur="validateField(this)" placeholder="29.99" step="0.01" min="0" oninput="generate()">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Currency</label>
+                    <select id="ps-currency" onchange="generate()">
+                      <option value="GBP">GBP — British Pound</option>
+                      <option value="USD">USD — US Dollar</option>
+                      <option value="EUR">EUR — Euro</option>
+                      <option value="AUD">AUD — Australian Dollar</option>
+                      <option value="CAD">CAD — Canadian Dollar</option>
+                      <option value="PLN">PLN — Polish Zloty</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Availability</label>
+                    <select id="ps-avail" onchange="generate()">
+                      <option value="">— not specified —</option>
+                      <option value="InStock" selected>In Stock</option>
+                      <option value="OutOfStock">Out of Stock</option>
+                      <option value="BackOrder">Back Order</option>
+                      <option value="PreOrder">Pre-Order</option>
+                      
+                      <option value="LimitedAvailability">Limited Availability</option>
+                      <option value="OnlineOnly">Online Only</option>
+                      <option value="InStoreOnly">In Store Only</option>
+                      <option value="Discontinued">Discontinued</option>
+                      <option value="SoldOut">Sold Out</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Price Valid Until</label>
+                    <input type="date" id="ps-price-until" data-vtype="date" onblur="validateField(this)" oninput="generate()">
+                  </div>
+                </div>
+              </div>
+              <!-- Aggregate offer fields -->
+              <div class="offer-section" id="ps-offer-agg">
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Low Price <span class="req">*</span></label>
+                    <input type="number" id="ps-agg-low" data-vtype="price" onblur="validateField(this)" placeholder="119.99" step="0.01" min="0" oninput="generate()">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">High Price</label>
+                    <input type="number" id="ps-agg-high" data-vtype="price" onblur="validateField(this)" placeholder="199.99" step="0.01" min="0" oninput="generate()">
+                  </div>
+                </div>
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Currency <span class="req">*</span></label>
+                    <select id="ps-agg-currency" onchange="generate()">
+                      <option value="GBP">GBP — British Pound</option>
+                      <option value="USD">USD — US Dollar</option>
+                      <option value="EUR">EUR — Euro</option>
+                      <option value="AUD">AUD — Australian Dollar</option>
+                      <option value="CAD">CAD — Canadian Dollar</option>
+                      <option value="PLN">PLN — Polish Zloty</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Offer Count</label>
+                    <input type="number" id="ps-agg-count" placeholder="5" min="1" oninput="generate()">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- end snippet form -->
+
+      <!-- ══════════════════════════════════════
+           MERCHANT LISTING FORM
+           ══════════════════════════════════════ -->
+      <div id="form-merchant" style="display:none">
+        <div class="tab-intro">
+          <strong>Merchant Listing</strong> — for pages where customers can purchase the product from you. Required: <code>name</code> + <code>offers.price</code> + <code>offers.priceCurrency</code>. Enables Shopping panel, Popular products, and price drop alerts.
+          <a href="/merchant-listing-schema/" target="_blank">Learn more →</a>
+        </div>
+
+        <div class="card">
+          <!-- Basic info -->
+          <div class="form-section">
+            <div class="form-section-title">Basic Info</div>
+            <div class="form-section-body" style="margin-top:16px">
+              <div class="form-group">
+                <label class="form-label">Product Name <span class="req">*</span></label>
+                <input type="text" id="ml-name" placeholder="e.g. Running Trainers — Black" oninput="generate()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="ml-desc" placeholder="Product description..." oninput="generate()"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Image URL</label>
+                <input type="url" id="ml-image" data-vtype="url" onblur="validateField(this)" placeholder="https://example.com/product.jpg" oninput="generate()">
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Brand</label>
+                  <input type="text" id="ml-brand" placeholder="e.g. Nike" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Product URL</label>
+                  <input type="url" id="ml-url" data-vtype="url" onblur="validateField(this)" placeholder="https://example.com/product" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Identifiers -->
+          <div class="form-section collapsible open" id="sec-ml-ids">
+            <div class="form-section-header" onclick="toggleSection('sec-ml-ids')">
+              <span class="form-section-title">Identifiers (SKU, GTIN, MPN)</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <p class="form-hint" style="margin-bottom:12px">Products without a GTIN may have limited Shopping eligibility. Include GTIN (EAN/UPC) or MPN wherever possible.</p>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">SKU</label>
+                  <input type="text" id="ml-sku" placeholder="PROD-001" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">MPN</label>
+                  <input type="text" id="ml-mpn" placeholder="Manufacturer Part No." oninput="generate()">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">GTIN Type</label>
+                  <select id="ml-gtin-type" onchange="onGtinTypeChange(this)">
+                    <option value="gtin13">GTIN-13 (EAN)</option>
+                    <option value="gtin12">GTIN-12 (UPC)</option>
+                    <option value="gtin8">GTIN-8</option>
+                    <option value="gtin14">GTIN-14</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">GTIN Value</label>
+                  <input type="text" id="ml-gtin" data-vtype="gtin" onblur="validateField(this)" placeholder="0123456789012" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Offer / Pricing -->
+          <div class="form-section collapsible open" id="sec-ml-offer">
+            <div class="form-section-header" onclick="toggleSection('sec-ml-offer')">
+              <span class="form-section-title">Offer / Pricing <span class="req">*</span></span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Price <span class="req">*</span></label>
+                  <input type="number" id="ml-price" data-vtype="price" onblur="validateField(this)" placeholder="29.99" step="0.01" min="0" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Currency <span class="req">*</span></label>
+                  <select id="ml-currency" onchange="generate()">
+                    <option value="GBP">GBP — British Pound</option>
+                    <option value="USD">USD — US Dollar</option>
+                    <option value="EUR">EUR — Euro</option>
+                    <option value="AUD">AUD — Australian Dollar</option>
+                    <option value="CAD">CAD — Canadian Dollar</option>
+                    <option value="PLN">PLN — Polish Zloty</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Availability</label>
+                  <select id="ml-avail" onchange="generate()">
+                    <option value="">— not specified —</option>
+                    <option value="InStock" selected>In Stock</option>
+                    <option value="OutOfStock">Out of Stock</option>
+                    <option value="BackOrder">Back Order</option>
+                    <option value="PreOrder">Pre-Order</option>
+                    
+                    <option value="LimitedAvailability">Limited Availability</option>
+                    <option value="OnlineOnly">Online Only</option>
+                    <option value="InStoreOnly">In Store Only</option>
+                    <option value="Discontinued">Discontinued</option>
+                    <option value="SoldOut">Sold Out</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Item Condition</label>
+                  <select id="ml-condition" onchange="generate()">
+                    <option value="">— not specified —</option>
+                    <option value="NewCondition">New</option>
+                    <option value="RefurbishedCondition">Refurbished</option>
+                    <option value="UsedCondition">Used</option>
+                    
+                  </select>
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Price Valid Until</label>
+                  <input type="date" id="ml-price-until" data-vtype="date" onblur="validateField(this)" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Seller / Store Name</label>
+                  <input type="text" id="ml-seller" placeholder="e.g. ACME Store" oninput="generate()">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Sale Price <span style="font-weight:400;text-transform:none;font-size:10px">(StrikethroughPrice)</span></label>
+                  <input type="number" id="ml-sale-price" data-vtype="price" onblur="validateField(this)" placeholder="e.g. 39.99 (original price)" step="0.01" min="0" oninput="generate()">
+                  <p class="form-hint">Enter the <strong>original (crossed-out)</strong> price. The Price field above becomes the active sale price. Enables strikethrough pricing in Shopping results.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Part of Product Group <span style="font-weight:400;text-transform:none;font-size:10px">(inProductGroupWithID)</span></label>
+                  <input type="text" id="ml-group-id" placeholder="e.g. TRAINERS-2024" oninput="generate()">
+                  <p class="form-hint">ID of the ProductGroup this variant belongs to. Links individual variant pages back to the product group.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shipping -->
+          <div class="form-section collapsible" id="sec-ml-shipping">
+            <div class="form-section-header" onclick="toggleSection('sec-ml-shipping')">
+              <span class="form-section-title">Shipping Details</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <p class="form-hint" style="margin-bottom:12px">Shipping details can appear in Shopping results and search snippets. Leave blank to omit. Both handling and transit time are recommended by Google.</p>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Shipping Cost</label>
+                  <input type="number" id="ml-ship-price" data-vtype="price" onblur="validateField(this)" placeholder="0 for free shipping" step="0.01" min="0" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Shipping Currency</label>
+                  <select id="ml-ship-currency" onchange="generate()">
+                    <option value="GBP">GBP</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="AUD">AUD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="PLN">PLN</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid-3">
+                <div class="form-group">
+                  <label class="form-label">Destination Country</label>
+                  <input type="text" id="ml-ship-country" placeholder="GB" maxlength="2" oninput="generate()">
+                  <p class="form-hint">ISO 2-letter code (e.g. GB, US)</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Min Handling Days</label>
+                  <input type="number" id="ml-ship-handle-min" placeholder="0" min="0" oninput="generate()">
+                  <p class="form-hint">Days to dispatch (0 = same day)</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Max Handling Days</label>
+                  <input type="number" id="ml-ship-handle-max" placeholder="1" min="0" oninput="generate()">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Min Transit Days</label>
+                  <input type="number" id="ml-ship-min" placeholder="1" min="0" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Max Transit Days</label>
+                  <input type="number" id="ml-ship-max" placeholder="3" min="0" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Returns -->
+          <div class="form-section collapsible" id="sec-ml-returns">
+            <div class="form-section-header" onclick="toggleSection('sec-ml-returns')">
+              <span class="form-section-title">Return Policy</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Return Policy Type</label>
+                  <select id="ml-return-type" onchange="generate()">
+                    <option value="">— not specified —</option>
+                    <option value="MerchantReturnFiniteReturnWindow">Returns within X days</option>
+                    <option value="MerchantReturnUnlimitedWindow">Unlimited returns</option>
+                    <option value="MerchantReturnNotPermitted">No returns</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Return Window (days)</label>
+                  <input type="number" id="ml-return-days" placeholder="30" min="0" oninput="generate()">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Return Method</label>
+                  <select id="ml-return-method" onchange="generate()">
+                    <option value="">— not specified —</option>
+                    <option value="ReturnByMail">Return by mail</option>
+                    <option value="ReturnInStore">Return in store</option>
+                    <option value="ReturnAtKiosk">Return at kiosk</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Return Fees</label>
+                  <select id="ml-return-fees" onchange="generate()">
+                    <option value="">— not specified —</option>
+                    <option value="FreeReturn">Free return</option>
+                    <option value="ReturnShippingFees">Customer pays shipping</option>
+                    <option value="ReturnFeesCustomerResponsibility">Customer handles &amp; pays return shipping</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Applicable Country</label>
+                <input type="text" id="ml-return-country" placeholder="GB" maxlength="2" oninput="generate()">
+                <p class="form-hint">ISO 2-letter country code (e.g. GB, US)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aggregate Rating -->
+          <div class="form-section collapsible" id="sec-ml-rating">
+            <div class="form-section-header" onclick="toggleSection('sec-ml-rating')">
+              <span class="form-section-title">Aggregate Rating</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Rating Value</label>
+                  <input type="number" id="ml-ar-value" data-vtype="rating" onblur="validateField(this)" placeholder="4.5" min="0" max="5" step="0.1" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Review Count</label>
+                  <input type="number" id="ml-ar-count" placeholder="128" min="1" oninput="generate()">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Best Rating</label>
+                  <input type="number" id="ml-ar-best" placeholder="5" value="5" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Worst Rating</label>
+                  <input type="number" id="ml-ar-worst" placeholder="1" value="1" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- end merchant form -->
+
+      <!-- ══════════════════════════════════════
+           PRODUCT VARIANTS FORM
+           ══════════════════════════════════════ -->
+      <div id="form-variants" style="display:none">
+        <div class="tab-intro">
+          <strong>Product Variants</strong> — for products with colour, size, material, or other options. Uses <code>ProductGroup</code> with <code>hasVariant</code>. Enables colour swatches and variant pricing in Google Shopping.
+          <a href="/product-variants-schema/" target="_blank">Learn more →</a>
+        </div>
+
+        <!-- Structure toggle -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">Structure:</span>
+          <div class="schema-tabs" style="margin-bottom:0">
+            <button class="schema-tab active" id="pg-mode-nested" onclick="setPgMode('nested')" style="padding:5px 14px;font-size:12px">Nested (hasVariant)</button>
+            <button class="schema-tab" id="pg-mode-flat" onclick="setPgMode('flat')" style="padding:5px 14px;font-size:12px">Flat (isVariantOf)</button>
+          </div>
+          <span style="font-size:11px;color:var(--text-4)" id="pg-mode-hint">Variants nested inside ProductGroup — Google's recommended approach.</span>
+        </div>
+
+        <div class="card">
+          <div class="form-section">
+            <div class="form-section-title">Basic Info</div>
+            <div class="form-section-body" style="margin-top:16px">
+              <div class="form-group">
+                <label class="form-label">Group Name <span class="req">*</span></label>
+                <input type="text" id="pg-name" placeholder="e.g. Running Trainers" oninput="generate()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="pg-desc" placeholder="Describe the product group..." oninput="generate()"></textarea>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Group URL</label>
+                  <input type="url" id="pg-url" data-vtype="url" onblur="validateField(this)" placeholder="https://example.com/trainers" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Brand</label>
+                  <input type="text" id="pg-brand" placeholder="e.g. Nike" oninput="generate()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Product Group ID <span class="req">*</span></label>
+                <input type="text" id="pg-id" placeholder="e.g. TRAINERS-2024" oninput="generate()">
+                <p class="form-hint">Your internal identifier for this group. Must be unique per product group.</p>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Pattern</label>
+                  <input type="text" id="pg-pattern" placeholder="e.g. Striped" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Material</label>
+                  <input type="text" id="pg-material" placeholder="e.g. Cotton" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aggregate Rating -->
+          <div class="form-section collapsible" id="sec-pg-rating">
+            <div class="form-section-header" onclick="toggleSection('sec-pg-rating')">
+              <span class="form-section-title">Aggregate Rating (group level)</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <p class="form-hint" style="margin-bottom:12px">Place the rating on the ProductGroup — it applies to all variants.</p>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Rating Value</label>
+                  <input type="number" id="pg-rating" placeholder="4.5" min="0" max="5" step="0.1" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Review Count</label>
+                  <input type="number" id="pg-review-count" placeholder="128" min="1" oninput="generate()">
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Best Rating</label>
+                  <input type="number" id="pg-best" placeholder="5" value="5" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Worst Rating</label>
+                  <input type="number" id="pg-worst" placeholder="1" value="1" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Audience -->
+          <div class="form-section collapsible" id="sec-pg-audience">
+            <div class="form-section-header" onclick="toggleSection('sec-pg-audience')">
+              <span class="form-section-title">Audience</span>
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="form-section-body">
+              <p class="form-hint" style="margin-bottom:12px">Useful for apparel, toys, and other age/gender-targeted products.</p>
+              <div class="form-group">
+                <label class="form-label">Suggested Gender</label>
+                <select id="pg-gender" onchange="generate()">
+                  <option value="">— not specified —</option>
+                  <option value="unisex">Unisex</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Min Age (years)</label>
+                  <input type="number" id="pg-age-min" placeholder="e.g. 13" min="0" oninput="generate()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Max Age (years)</label>
+                  <input type="number" id="pg-age-max" placeholder="e.g. 18 (optional)" min="0" oninput="generate()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Varies By -->
+          <div class="form-section">
+            <div class="form-section-title">Varies By</div>
+            <div class="form-section-body" style="margin-top:16px">
+              <p class="form-hint" style="margin-bottom:10px">Select the dimensions that distinguish variants. Google uses full schema.org URIs — output is formatted correctly.</p>
+              <div class="pill-group" id="varies-by-pills"></div>
+            </div>
+          </div>
+
+          <!-- Variants -->
+          <div class="form-section">
+            <div class="form-section-title">Variants (hasVariant)</div>
+            <div class="form-section-body" style="margin-top:16px">
+              <p class="form-hint" style="margin-bottom:10px">Include GTIN or MPN on every variant for best Shopping eligibility.</p>
+              <div id="pg-variants"></div>
+              <button class="btn-add" onclick="addVariant()">+ Add Variant</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- end variants form -->
+
+    </div>
+    <!-- end left col -->
+
+    <!-- ═══ RIGHT: OUTPUT + BENEFIT CARD ═══ -->
+    <div class="output-sticky">
+      <div class="output-card">
+        <div class="output-toolbar">
+          <span class="output-label">JSON-LD Output</span>
+          <div class="output-actions">
+            <button class="output-btn" id="copy-btn" onclick="copyOutput()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy
+            </button>
+            <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener" class="output-btn">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              Test in Google
+            </a>
+          </div>
+        </div>
+        <div class="output-code" id="output-code">
+          <div class="output-empty">Fill in the form to generate schema markup</div>
+        </div>
+      </div>
+      <div id="benefit-card" class="benefit-card"></div>
+    </div>
+
+  </div><!-- end tool-layout -->
+
+  <p style="font-size:13px;color:var(--text-3);line-height:1.6;max-width:640px;margin-top:32px">Generate Merchant Listing JSON-LD with pricing, GTIN, availability, shipping, and returns. Google verifies price against your page — keep them in sync or risk Shopping disapprovals. Switch tabs to generate <a href="/product-snippet-schema-generator/" style="color:var(--teal)">Product Snippet</a> or <a href="/product-variants-schema-generator/" style="color:var(--teal)">Product Variants</a> schema instead.</p>
+
+</main>
+</div><!-- end tool-content -->
+
+<footer>
+  <div style="max-width:1320px;margin:0 auto;padding:0 36px">
+    <p style="font-size:12px;color:var(--text-4)">© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>
+  </div>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+
+<script>
+  /* ─── Clerk auth (staff tools only — this tool is public) ─── */
+
+  /* ─── State ─── */
+  var currentSchema = 'snippet';
+  var variantCount  = 0;
+  var pgMode        = 'nested';
+  var offerType     = 'single'; // 'single' | 'agg'
+
+  /* ─── Offer type toggle ─── */
+  function setOfferType(type) {
+    offerType = type;
+    document.getElementById('ps-ot-single').classList.toggle('active', type === 'single');
+    document.getElementById('ps-ot-agg').classList.toggle('active', type === 'agg');
+    document.getElementById('ps-offer-single').classList.toggle('active', type === 'single');
+    document.getElementById('ps-offer-agg').classList.toggle('active', type === 'agg');
+    generate();
+  }
+
+  /* ─── ProductGroup mode ─── */
+  function setPgMode(mode) {
+    pgMode = mode;
+    document.getElementById('pg-mode-nested').classList.toggle('active', mode === 'nested');
+    document.getElementById('pg-mode-flat').classList.toggle('active', mode === 'flat');
+    document.getElementById('pg-mode-hint').textContent = mode === 'nested'
+      ? 'Variants nested inside ProductGroup — Google\'s recommended approach.'
+      : 'Flat JSON-LD array — variants reference group via isVariantOf. Easier for some CMSes.';
+    generate();
+  }
+
+  /* ─── Switch tab ─── */
+  function switchSchema(type) {
+    currentSchema = type;
+    ['snippet','merchant','variants'].forEach(function(t) {
+      document.getElementById('form-' + t).style.display = t === type ? '' : 'none';
+    });
+    document.querySelectorAll('.schema-tab[data-s]').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.s === type);
+    });
+    updateBenefitCard(type);
+    generate();
+  }
+
+  /* ─── Toggle collapsible ─── */
+  function toggleSection(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* ─── Generate (dispatcher) ─── */
+  function generate() {
+    if (currentSchema === 'snippet')  genProductSnippet();
+    else if (currentSchema === 'merchant') genMerchantListing();
+    else                               genProductVariants();
+  }
+
+  /* ─── Helper ─── */
+  function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  /* ─── Product Snippet ─── */
+  function genProductSnippet() {
+    var name = v('ps-name');
+    if (!name) { showEmpty(); return; }
+
+    var schema = { '@context': 'https://schema.org/', '@type': 'Product', 'name': name };
+    if (v('ps-desc'))  schema.description = v('ps-desc');
+    if (v('ps-image')) schema.image = v('ps-image');
+    if (v('ps-brand')) schema.brand = { '@type': 'Brand', 'name': v('ps-brand') };
+    if (v('ps-sku'))   schema.sku   = v('ps-sku');
+    if (v('ps-mpn'))   schema.mpn   = v('ps-mpn');
+
+    // aggregateRating
+    var arVal = v('ps-ar-value'), arCount = v('ps-ar-count');
+    if (arVal || arCount) {
+      schema.aggregateRating = { '@type': 'AggregateRating' };
+      if (arVal)   schema.aggregateRating.ratingValue  = parseFloat(arVal);
+      if (arCount) schema.aggregateRating.reviewCount  = parseInt(arCount);
+      var arBest = v('ps-ar-best'), arWorst = v('ps-ar-worst');
+      if (arBest)  schema.aggregateRating.bestRating   = parseFloat(arBest);
+      if (arWorst) schema.aggregateRating.worstRating  = parseFloat(arWorst);
+    }
+
+    // review
+    var rvAuthor = v('ps-rv-author'), rvRating = v('ps-rv-rating');
+    if (rvAuthor || rvRating) {
+      var rev = { '@type': 'Review' };
+      if (rvAuthor) rev.author = { '@type': v('ps-rv-author-type') || 'Person', 'name': rvAuthor };
+      if (rvRating) {
+        rev.reviewRating = { '@type': 'Rating', 'ratingValue': parseFloat(rvRating) };
+        var rvBest = v('ps-rv-best');
+        if (rvBest) rev.reviewRating.bestRating = parseFloat(rvBest);
+      }
+      // pros/cons
+      var pros = [], cons = [];
+      document.querySelectorAll('[data-note="pro"]').forEach(function(el, i) {
+        var t = el.value.trim(); if (t) pros.push({ '@type': 'ListItem', 'position': i+1, 'name': t });
+      });
+      document.querySelectorAll('[data-note="con"]').forEach(function(el, i) {
+        var t = el.value.trim(); if (t) cons.push({ '@type': 'ListItem', 'position': i+1, 'name': t });
+      });
+      if (pros.length) rev.positiveNotes = { '@type': 'ItemList', 'itemListElement': pros };
+      if (cons.length) rev.negativeNotes = { '@type': 'ItemList', 'itemListElement': cons };
+
+      // Pros/cons validation notice
+      var total = pros.length + cons.length;
+      var notice = document.getElementById('pros-cons-notice');
+      if (notice) {
+        if ((pros.length || cons.length) && total < 2) {
+          notice.classList.add('show');
+        } else {
+          notice.classList.remove('show');
+        }
+      }
+      schema.review = rev;
+    }
+
+    // offers
+    if (offerType === 'single') {
+      var price = v('ps-price');
+      if (price) {
+        var offer = { '@type': 'Offer', 'price': parseFloat(price), 'priceCurrency': v('ps-currency') || 'GBP' };
+        var avail = v('ps-avail');
+        if (avail) offer.availability = 'https://schema.org/' + avail;
+        var puntil = v('ps-price-until');
+        if (puntil) offer.priceValidUntil = puntil;
+        schema.offers = offer;
+      }
+    } else {
+      var lowPrice = v('ps-agg-low');
+      if (lowPrice) {
+        var aggOffer = { '@type': 'AggregateOffer', 'lowPrice': parseFloat(lowPrice), 'priceCurrency': v('ps-agg-currency') || 'GBP' };
+        var highPrice = v('ps-agg-high');
+        if (highPrice) aggOffer.highPrice = parseFloat(highPrice);
+        var offerCount = v('ps-agg-count');
+        if (offerCount) aggOffer.offerCount = parseInt(offerCount);
+        schema.offers = aggOffer;
+      }
+    }
+
+    showSchema(schema);
+  }
+
+  /* ─── Merchant Listing ─── */
+  function genMerchantListing() {
+    var name = v('ml-name');
+    if (!name) { showEmpty(); return; }
+
+    var schema = { '@context': 'https://schema.org/', '@type': 'Product', 'name': name };
+    if (v('ml-desc'))  schema.description = v('ml-desc');
+    if (v('ml-image')) schema.image = v('ml-image');
+    if (v('ml-brand')) schema.brand = { '@type': 'Brand', 'name': v('ml-brand') };
+    if (v('ml-sku'))   schema.sku   = v('ml-sku');
+    if (v('ml-mpn'))   schema.mpn   = v('ml-mpn');
+    if (v('ml-group-id')) schema.inProductGroupWithID = v('ml-group-id');
+    var gtinVal = v('ml-gtin');
+    if (gtinVal) schema[v('ml-gtin-type')] = gtinVal;
+
+    // Aggregate Rating
+    var mlArVal = v('ml-ar-value'), mlArCount = v('ml-ar-count');
+    if (mlArVal || mlArCount) {
+      schema.aggregateRating = { '@type': 'AggregateRating' };
+      if (mlArVal)   schema.aggregateRating.ratingValue = parseFloat(mlArVal);
+      if (mlArCount) schema.aggregateRating.reviewCount = parseInt(mlArCount);
+      var mlArBest = v('ml-ar-best'), mlArWorst = v('ml-ar-worst');
+      if (mlArBest)  schema.aggregateRating.bestRating  = parseFloat(mlArBest);
+      if (mlArWorst) schema.aggregateRating.worstRating = parseFloat(mlArWorst);
+    }
+
+    // Offer
+    var price = v('ml-price');
+    var offer = { '@type': 'Offer', 'priceCurrency': v('ml-currency') || 'GBP' };
+    if (v('ml-url'))  offer.url = v('ml-url');
+    if (price) offer.price = parseFloat(price);
+    var mlAvail = v('ml-avail');
+    if (mlAvail) offer.availability = 'https://schema.org/' + mlAvail;
+    var mlCond = v('ml-condition');
+    if (mlCond)  offer.itemCondition = 'https://schema.org/' + mlCond;
+    var mlPuntil = v('ml-price-until');
+    if (mlPuntil) offer.priceValidUntil = mlPuntil;
+    var mlSeller = v('ml-seller');
+    if (mlSeller) offer.seller = { '@type': 'Organization', 'name': mlSeller };
+    // Sale / strikethrough price
+    var salePrice = v('ml-sale-price');
+    if (salePrice && price) {
+      offer.priceSpecification = [
+        { '@type': 'UnitPriceSpecification', 'price': parseFloat(price), 'priceCurrency': v('ml-currency') || 'GBP' },
+        { '@type': 'UnitPriceSpecification', 'price': parseFloat(price), 'priceCurrency': v('ml-currency') || 'GBP', 'priceType': 'https://schema.org/SalePrice' },
+        { '@type': 'UnitPriceSpecification', 'price': parseFloat(salePrice), 'priceCurrency': v('ml-currency') || 'GBP', 'priceType': 'https://schema.org/StrikethroughPrice' }
+      ];
+      offer.price = parseFloat(price);
+    }
+
+    // Shipping
+    var shipPrice = v('ml-ship-price');
+    if (shipPrice !== '') {
+      var shipping = {
+        '@type': 'OfferShippingDetails',
+        'shippingRate': { '@type': 'MonetaryAmount', 'value': parseFloat(shipPrice), 'currency': v('ml-ship-currency') || 'GBP' }
+      };
+      var shipCountry = v('ml-ship-country');
+      if (shipCountry) shipping.shippingDestination = { '@type': 'DefinedRegion', 'addressCountry': shipCountry.toUpperCase() };
+      var shipMin = v('ml-ship-min'), shipMax = v('ml-ship-max');
+      var shipHandleMin = v('ml-ship-handle-min'), shipHandleMax = v('ml-ship-handle-max');
+      if (shipMin || shipMax || shipHandleMin || shipHandleMax) {
+        var deliveryTime = { '@type': 'ShippingDeliveryTime' };
+        if (shipHandleMin !== '' || shipHandleMax !== '') {
+          deliveryTime.handlingTime = { '@type': 'QuantitativeValue', 'minValue': parseInt(shipHandleMin) || 0, 'maxValue': parseInt(shipHandleMax) || 0, 'unitCode': 'DAY' };
+        }
+        if (shipMin || shipMax) {
+          deliveryTime.transitTime = { '@type': 'QuantitativeValue', 'minValue': parseInt(shipMin) || 0, 'maxValue': parseInt(shipMax) || 0, 'unitCode': 'DAY' };
+        }
+        shipping.deliveryTime = deliveryTime;
+      }
+      offer.shippingDetails = shipping;
+    }
+
+    schema.offers = offer;
+
+    // Return policy
+    var retType = v('ml-return-type');
+    if (retType) {
+      var ret = { '@type': 'MerchantReturnPolicy', 'returnPolicyCategory': 'https://schema.org/' + retType };
+      var retDays = v('ml-return-days');
+      if (retDays) ret.merchantReturnDays = parseInt(retDays);
+      var retMethod = v('ml-return-method');
+      if (retMethod) ret.returnMethod = 'https://schema.org/' + retMethod;
+      var retFees = v('ml-return-fees');
+      if (retFees)   ret.returnFees   = 'https://schema.org/' + retFees;
+      var retCountry = v('ml-return-country');
+      if (retCountry) ret.applicableCountry = retCountry.toUpperCase();
+      schema.hasMerchantReturnPolicy = ret;
+    }
+
+    showSchema(schema);
+  }
+
+  /* ─── Product Variants (ProductGroup) ─── */
+  function genProductVariants() {
+    var name = v('pg-name');
+    if (!name) { showEmpty(); return; }
+
+    var schema = { '@context': 'https://schema.org/', '@type': 'ProductGroup', 'name': name };
+    if (v('pg-desc'))     schema.description    = v('pg-desc');
+    if (v('pg-url'))      schema.url            = v('pg-url');
+    if (v('pg-id'))       schema.productGroupID = v('pg-id');
+    if (v('pg-brand'))    schema.brand          = { '@type': 'Brand', 'name': v('pg-brand') };
+    if (v('pg-pattern'))  schema.pattern        = v('pg-pattern');
+    if (v('pg-material')) schema.material       = v('pg-material');
+
+    // Audience
+    var gender = v('pg-gender'), ageMin = v('pg-age-min');
+    if (gender || ageMin) {
+      var aud = { '@type': 'PeopleAudience' };
+      if (gender) aud.suggestedGender = gender;
+      if (ageMin) {
+        aud.suggestedAge = { '@type': 'QuantitativeValue', 'minValue': parseFloat(ageMin), 'unitCode': 'ANN' };
+        var ageMax = v('pg-age-max');
+        if (ageMax) aud.suggestedAge.maxValue = parseFloat(ageMax);
+      }
+      schema.audience = aud;
+    }
+
+    // Group-level rating
+    var pgRating = v('pg-rating'), pgRcount = v('pg-review-count');
+    if (pgRating && pgRcount) {
+      schema.aggregateRating = {
+        '@type': 'AggregateRating',
+        'ratingValue': pgRating, 'reviewCount': pgRcount,
+        'bestRating': v('pg-best') || '5', 'worstRating': v('pg-worst') || '1'
+      };
+    }
+
+    // variesBy
+    var variesBy = [];
+    document.querySelectorAll('#varies-by-pills .pill-check.on').forEach(function(p) { variesBy.push(p.dataset.val); });
+    if (variesBy.length) schema.variesBy = variesBy;
+
+    // Variants
+    var variants = [];
+    document.querySelectorAll('.pg-variant').forEach(function(row) {
+      var vname = row.querySelector('[data-f="vname"]').value.trim();
+      if (!vname) return;
+      var variant = { '@type': 'Product', 'name': vname };
+      var fld = function(f) { var el = row.querySelector('[data-f="'+f+'"]'); return el ? el.value.trim() : ''; };
+      if (fld('vdesc'))  variant.description = fld('vdesc');
+      if (fld('vurl'))   variant.url         = fld('vurl');
+      if (fld('vsku'))   variant.sku         = fld('vsku');
+      if (fld('vimage')) variant.image       = fld('vimage');
+      if (fld('vcolor')) variant.color       = fld('vcolor');
+      if (fld('vsize'))  variant.size        = fld('vsize');
+      if (fld('vmat'))   variant.material    = fld('vmat');
+      if (fld('vmpn'))   variant.mpn         = fld('vmpn');
+      var vgtin = fld('vgtin');
+      if (vgtin) variant[fld('vgtin-type')] = vgtin;
+      var vprice = fld('vprice');
+      if (vprice) {
+        var voffer = { '@type': 'Offer', 'priceCurrency': fld('vcur'), 'price': parseFloat(vprice) };
+        if (fld('vavail'))  voffer.availability    = 'https://schema.org/' + fld('vavail');
+        if (fld('vcond'))   voffer.itemCondition   = 'https://schema.org/' + fld('vcond');
+        if (fld('vpuntil')) voffer.priceValidUntil = fld('vpuntil');
+        variant.offers = voffer;
+      }
+      variants.push(variant);
+    });
+
+    if (pgMode === 'nested') {
+      if (variants.length) schema.hasVariant = variants;
+      showSchema(schema);
+    } else {
+      var pgBaseUrl = v('pg-url') || 'https://example.com/product';
+      var groupId = pgBaseUrl.replace(/#.*$/, '') + '#' + (v('pg-id') || 'product_group').replace(/\s+/g, '_');
+      schema['@id'] = groupId;
+      var output = [schema];
+      variants.forEach(function(prd) {
+        var flat = { '@context': 'https://schema.org/', '@type': 'Product', 'isVariantOf': { '@id': groupId } };
+        Object.keys(prd).forEach(function(k) { if (k !== '@type') flat[k] = prd[k]; });
+        output.push(flat);
+      });
+      showSchema(output);
+    }
+  }
+
+  /* ─── Display ─── */
+  function showSchema(obj) {
+    var json    = JSON.stringify(obj, null, 2);
+    var wrapped = '<script type="application\/ld+json">\n' + json + '\n<\/script>';
+    document.getElementById('output-code').innerHTML = highlight(wrapped);
+  }
+  function showEmpty() {
+    document.getElementById('output-code').innerHTML = '<div class="output-empty">Fill in the form to generate schema markup</div>';
+  }
+  function highlight(raw) {
+    var esc = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    esc = esc.replace(/(&lt;script[^&]*&gt;|&lt;\/script&gt;)/g,'<span class="jt">$1</span>');
+    esc = esc.replace(/("(?:\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(?:true|false)\b|\bnull\b|-?\d+(?:\.\d+)?(?:[eE][+\-]?\d+)?)/g,function(m){
+      if(/^"/.test(m)) return /:$/.test(m)?'<span class="jk">'+m+'</span>':'<span class="js">'+m+'</span>';
+      if(/true|false/.test(m)) return '<span class="jb">'+m+'</span>';
+      if(/null/.test(m)) return '<span class="jl">'+m+'</span>';
+      return '<span class="jn">'+m+'</span>';
+    });
+    return esc;
+  }
+
+  /* ─── Copy ─── */
+  function copyOutput() {
+    var text = document.getElementById('output-code').textContent.trim();
+    if (!text || text === 'Fill in the form to generate schema markup') return;
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.getElementById('copy-btn');
+      btn.classList.add('copied'); btn.textContent = 'Copied!';
+      setTimeout(function() {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy';
+      }, 2000);
+    });
+  }
+
+  /* ─── Varies By pills ─── */
+  var VARIES = [
+    { label: 'Color',            val: 'https://schema.org/color'           },
+    { label: 'Size',             val: 'https://schema.org/size'            },
+    { label: 'Material',         val: 'https://schema.org/material'        },
+    { label: 'Pattern',          val: 'https://schema.org/pattern'         },
+    { label: 'Suggested Age',    val: 'https://schema.org/suggestedAge'    },
+    { label: 'Suggested Gender', val: 'https://schema.org/suggestedGender' }
+  ];
+  (function initPills() {
+    var c = document.getElementById('varies-by-pills');
+    if (!c) return;
+    VARIES.forEach(function(item) {
+      var lbl = document.createElement('label');
+      lbl.className = 'pill-check'; lbl.dataset.val = item.val;
+      lbl.innerHTML = '<input type="checkbox" onchange="pillToggle(this)"> ' + item.label;
+      c.appendChild(lbl);
+    });
+  })();
+  function pillToggle(input) { input.parentElement.classList.toggle('on', input.checked); generate(); }
+
+  /* ─── Add pros/cons note ─── */
+  function addNote(type) {
+    var container = document.getElementById('ps-' + (type === 'pro' ? 'pros' : 'cons'));
+    var div = document.createElement('div');
+    div.className = 'note-row';
+    div.innerHTML =
+      '<input type="text" data-note="' + type + '" placeholder="' + (type === 'pro' ? 'e.g. Consistent results' : 'e.g. No child protection') + '" oninput="generate()">' +
+      '<button class="btn-remove" onclick="this.parentElement.remove();generate()" title="Remove">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+      '</button>';
+    container.appendChild(div);
+    generate();
+  }
+
+  /* ─── Add Variant ─── */
+  function addVariant() {
+    variantCount++;
+    var n = variantCount;
+    var div = document.createElement('div');
+    div.className = 'dyn-row pg-variant';
+    div.innerHTML =
+      '<div class="dyn-row-header">' +
+        '<span class="dyn-row-label">Variant ' + n + '</span>' +
+        '<button class="btn-remove" onclick="this.closest(\'.dyn-row\').remove();generate()" title="Remove">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="grid-2" style="margin-bottom:12px">' +
+        '<div class="form-group"><label class="form-label">Name</label><input type="text" data-f="vname" placeholder="Trainers — Red / M" oninput="generate()"></div>' +
+        '<div class="form-group"><label class="form-label">URL</label><input type="url" data-f="vurl" data-vtype="url" onblur="validateField(this)" placeholder="https://example.com/product?color=red" oninput="generate()"></div>' +
+      '</div>' +
+      '<div class="form-group" style="margin-bottom:12px"><label class="form-label">Description</label><textarea data-f="vdesc" rows="2" placeholder="Variant-specific description (optional)" oninput="generate()"></textarea></div>' +
+      '<div class="grid-2" style="margin-bottom:12px">' +
+        '<div class="form-group"><label class="form-label">SKU</label><input type="text" data-f="vsku" placeholder="PROD-001-RED-M" oninput="generate()"></div>' +
+        '<div class="form-group"><label class="form-label">Image URL</label><input type="url" data-f="vimage" data-vtype="url" onblur="validateField(this)" placeholder="https://example.com/red.jpg" oninput="generate()"></div>' +
+      '</div>' +
+      '<div class="grid-3" style="margin-bottom:12px">' +
+        '<div class="form-group"><label class="form-label">Color</label><input type="text" data-f="vcolor" placeholder="Red" oninput="generate()"></div>' +
+        '<div class="form-group"><label class="form-label">Size</label><input type="text" data-f="vsize" placeholder="M" oninput="generate()"></div>' +
+        '<div class="form-group"><label class="form-label">Material</label><input type="text" data-f="vmat" placeholder="Cotton" oninput="generate()"></div>' +
+      '</div>' +
+      '<div class="grid-3" style="margin-bottom:12px">' +
+        '<div class="form-group"><label class="form-label">MPN</label><input type="text" data-f="vmpn" placeholder="Part No." oninput="generate()"></div>' +
+        '<div class="form-group"><label class="form-label">GTIN Type</label><select data-f="vgtin-type" onchange="onGtinTypeChange(this)"><option value="gtin13">GTIN-13</option><option value="gtin12">GTIN-12</option><option value="gtin8">GTIN-8</option><option value="gtin14">GTIN-14</option></select></div>' +
+        '<div class="form-group"><label class="form-label">GTIN Value</label><input type="text" data-f="vgtin" data-vtype="gtin" onblur="validateField(this)" placeholder="0123456789012" oninput="generate()"></div>' +
+      '</div>' +
+      '<div class="grid-3" style="margin-bottom:4px">' +
+        '<div class="form-group"><label class="form-label">Price</label><input type="number" data-f="vprice" data-vtype="price" onblur="validateField(this)" placeholder="29.99" step="0.01" oninput="generate()"></div>' +
+        '<div class="form-group"><label class="form-label">Currency</label><select data-f="vcur" onchange="generate()"><option value="GBP">GBP</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="AUD">AUD</option><option value="PLN">PLN</option></select></div>' +
+        '<div class="form-group"><label class="form-label">Availability</label><select data-f="vavail" onchange="generate()"><option value="InStock">In Stock</option><option value="OutOfStock">Out of Stock</option><option value="BackOrder">Back Order</option><option value="PreOrder">Pre-Order</option><option value="LimitedAvailability">Limited</option><option value="SoldOut">Sold Out</option></select></div>' +
+      '</div>' +
+      '<div class="grid-2" style="margin-bottom:4px">' +
+        '<div class="form-group"><label class="form-label">Item Condition</label><select data-f="vcond" onchange="generate()"><option value="">— not specified —</option><option value="NewCondition">New</option><option value="RefurbishedCondition">Refurbished</option><option value="UsedCondition">Used</option></select></div>' +
+        '<div class="form-group"><label class="form-label">Price Valid Until</label><input type="date" data-f="vpuntil" data-vtype="date" onblur="validateField(this)" oninput="generate()"></div>' +
+      '</div>';
+    document.getElementById('pg-variants').appendChild(div);
+    generate();
+  }
+
+  /* ─── GTIN type change ─── */
+  function onGtinTypeChange(sel) {
+    var row = sel.closest('.dyn-row') || document;
+    var gtinInput = row.querySelector('[data-f="vgtin"], #ml-gtin');
+    if (gtinInput && gtinInput.value.trim()) validateField(gtinInput);
+  }
+
+  /* ─── Field validation ─── */
+  var VR = {
+    url: function(val) {
+      if (!val) return null;
+      try { var u = new URL(val); if (u.protocol !== 'http:' && u.protocol !== 'https:') return { t:'error', msg:'URL must start with https://' }; return { t:'ok', msg:'Valid URL' }; }
+      catch(e) { return { t:'error', msg:'Enter a valid URL (e.g. https://example.com/...)' }; }
+    },
+    price: function(val, el) {
+      if (!val) return null;
+      var n = parseFloat(val);
+      if (isNaN(n) || n < 0) return { t:'error', msg:'Enter a valid price (0 or above)' };
+      if (n === 0 && el && (el.id === 'ml-price' || (el.closest && el.closest('#form-merchant')))) {
+        return { t:'warn', msg:'Merchant Listing requires a price greater than zero' };
+      }
+      return null;
+    },
+    rating: function(val) {
+      if (!val) return null;
+      var n = parseFloat(val);
+      if (isNaN(n) || n < 0 || n > 5) return { t:'error', msg:'Rating must be between 0 and 5' };
+      return null;
+    },
+    gtin: function(val, el) {
+      if (!val) return null;
+      if (!/^\d+$/.test(val)) return { t:'error', msg:'GTIN must contain digits only' };
+      var row = el ? (el.closest('.dyn-row') || document) : document;
+      var gtinSel = row.querySelector('[data-f="vgtin-type"]') || document.getElementById('ml-gtin-type');
+      var lengths = { gtin8: 8, gtin12: 12, gtin13: 13, gtin14: 14 };
+      if (gtinSel) {
+        var expected = lengths[gtinSel.value];
+        if (expected && val.length !== expected) return { t:'error', msg: gtinSel.value.toUpperCase() + ' must be ' + expected + ' digits (got ' + val.length + ')' };
+      }
+      // GS1 checksum (Luhn-style for GTIN)
+      var digits = val.split('').map(Number);
+      var len = digits.length;
+      var sum = 0;
+      for (var i = 0; i < len - 1; i++) {
+        sum += digits[i] * ((len - 1 - i) % 2 === 0 ? 3 : 1);
+      }
+      var check = (10 - (sum % 10)) % 10;
+      if (check !== digits[len - 1]) return { t:'error', msg:'Invalid GTIN — checksum digit is incorrect (expected ' + check + ')' };
+      return { t:'ok', msg:'Valid GTIN ✓' };
+    },
+    date: function(val) {
+      if (!val) return null;
+      var d = new Date(val);
+      if (isNaN(d.getTime())) return { t:'error', msg:'Enter a valid date' };
+      if (d < new Date()) return { t:'warn', msg:'This date is in the past — the snippet may not display' };
+      return null;
+    }
+  };
+  function validateField(el) {
+    var existing = el.nextElementSibling;
+    if (existing && existing.classList.contains('v-msg')) existing.remove();
+    el.classList.remove('v-error');
+    var result = VR[el.dataset.vtype] ? VR[el.dataset.vtype](el.value.trim(), el) : null;
+    if (!result) return;
+    el.classList.toggle('v-error', result.t === 'error');
+    var msg = document.createElement('div');
+    msg.className = 'v-msg ' + result.t;
+    msg.textContent = result.msg;
+    el.parentNode.insertBefore(msg, el.nextSibling);
+  }
+
+  /* ─── Benefit card data ─── */
+  var BENEFIT_DATA = {
+    snippet: {
+      name: 'Product Snippet',
+      desc: 'Rich result for any product page',
+      serp:
+        '<div style="font-family:Arial,sans-serif;background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:12px 14px;max-width:400px">' +
+        '  <div style="font-size:11px;color:#4d5156;margin-bottom:2px">example.com › products › anvil</div>' +
+        '  <div style="font-size:16px;color:#1a0dab;margin-bottom:3px">Executive Anvil — ACME Store</div>' +
+        '  <div style="font-size:12px;color:#e37400;margin-bottom:2px">★★★★☆ <span style="color:#4d5156;font-size:11px">4.4 (89 reviews)</span></div>' +
+        '  <div style="font-size:12px;color:#0d652d;font-weight:600;margin-bottom:4px">£29.99 · In stock</div>' +
+        '  <div style="font-size:12px;color:#4d5156;line-height:1.4">Sleeker than ACME\'s Classic Anvil, perfect for the business traveler looking for something to drop from a height.</div>' +
+        '</div>',
+      benefits: [
+        'Star ratings shown in organic search results',
+        'Price and availability in the snippet',
+        'Pros/cons for editorial review pages',
+        'Single offer or aggregate offer (price range)',
+        'Works for any page describing a product'
+      ],
+      link: '/product-snippet-schema/'
+    },
+    merchant: {
+      name: 'Merchant Listing',
+      desc: 'Shopping panel and rich merchant features',
+      serp:
+        '<div style="font-family:Arial,sans-serif;background:#f8f9fa;border-radius:10px;border:1px solid #dadce0;padding:10px;position:relative">' +
+        '  <div style="font-size:10px;font-weight:600;color:#202124;margin-bottom:8px;display:flex;align-items:center;gap:5px">' +
+        '    <svg width="13" height="13" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" rx="2" fill="#4285F4"/><rect x="13" y="1" width="10" height="10" rx="2" fill="#EA4335"/><rect x="1" y="13" width="10" height="10" rx="2" fill="#34A853"/><rect x="13" y="13" width="10" height="10" rx="2" fill="#FBBC05"/></svg>' +
+        '    Popular products' +
+        '  </div>' +
+        '  <div style="display:flex;gap:7px">' +
+        '    <div style="background:#fff;border-radius:10px;border:2px solid #4285f4;padding:8px;width:110px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.12)">' +
+        '      <div style="background:#edecea;border-radius:6px;height:64px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:6px">👟</div>' +
+        '      <div style="height:7px;background:#d8d8d8;border-radius:3px;margin-bottom:3px;width:88%"></div>' +
+        '      <div style="font-size:10px;font-weight:600;color:#0d652d;margin-bottom:3px">£29.99 · Free delivery</div>' +
+        '      <div style="font-size:9px;color:#4d5156">In stock · example.com</div>' +
+        '    </div>' +
+        '    <div style="background:#fff;border-radius:10px;border:1px solid #dadce0;padding:8px;width:80px;opacity:.35">' +
+        '      <div style="background:#edecea;border-radius:6px;height:64px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:6px">👟</div>' +
+        '      <div style="height:7px;background:#d8d8d8;border-radius:3px;margin-bottom:3px;width:88%"></div>' +
+        '      <div style="height:6px;background:#d8d8d8;border-radius:3px;width:60%"></div>' +
+        '    </div>' +
+        '  </div>' +
+        '  <div style="margin-top:8px;font-size:9px;color:#70757a">Source: Google — Merchant Listing</div>' +
+        '</div>',
+      benefits: [
+        'Appears in Google Shopping / Popular products',
+        'Price drop alerts when your price decreases',
+        'Shipping info shown directly in results',
+        'Return policy visible in Shopping panel',
+        'Eligible for Shopping knowledge panel'
+      ],
+      link: '/merchant-listing-schema/'
+    },
+    variants: {
+      name: 'Product Variants',
+      desc: 'Products with colour, size, or material options',
+      serp:
+        '<div style="font-family:Arial,sans-serif;background:#f8f9fa;border-radius:10px;border:1px solid #dadce0;padding:10px">' +
+        '  <div style="font-size:10px;font-weight:600;color:#202124;margin-bottom:8px;display:flex;align-items:center;gap:5px">' +
+        '    <svg width="13" height="13" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" rx="2" fill="#4285F4"/><rect x="13" y="1" width="10" height="10" rx="2" fill="#EA4335"/><rect x="1" y="13" width="10" height="10" rx="2" fill="#34A853"/><rect x="13" y="13" width="10" height="10" rx="2" fill="#FBBC05"/></svg>' +
+        '    Popular products' +
+        '  </div>' +
+        '  <div style="background:#fff;border-radius:10px;border:2px solid #4285f4;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.12)">' +
+        '    <div style="background:#edecea;border-radius:6px;height:64px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:8px">👟</div>' +
+        '    <div style="height:7px;background:#d8d8d8;border-radius:3px;margin-bottom:4px;width:85%"></div>' +
+        '    <div style="color:#e37400;font-size:10px;margin-bottom:8px">★★★★<span style="opacity:.35">★</span> <span style="color:#70757a;font-size:9px">4.6</span></div>' +
+        '    <div style="border-top:1px solid #f0f0f0;padding-top:7px;margin-bottom:6px">' +
+        '      <div style="font-size:10px;color:#202124;font-weight:500;margin-bottom:5px">Color</div>' +
+        '      <div style="display:flex;gap:4px">' +
+        '        <div style="width:30px;height:30px;border-radius:4px;background:#dbeafe;border:2px solid #1a73e8;display:flex;align-items:center;justify-content:center;font-size:14px">👟</div>' +
+        '        <div style="width:30px;height:30px;border-radius:4px;background:#fee2e2;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-size:14px">👟</div>' +
+        '        <div style="width:30px;height:30px;border-radius:4px;background:#fef9c3;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-size:14px">👟</div>' +
+        '        <div style="width:30px;height:30px;border-radius:4px;background:#dcfce7;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-size:14px">👟</div>' +
+        '        <div style="width:30px;height:30px;border-radius:4px;background:#cffafe;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-size:14px">👟</div>' +
+        '        <div style="width:30px;height:30px;border-radius:4px;background:#f3e8ff;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-size:14px">👟</div>' +
+        '      </div>' +
+        '    </div>' +
+        '    <div style="border-top:1px solid #f0f0f0;padding-top:6px">' +
+        '      <div style="font-size:10px;color:#202124;font-weight:500;margin-bottom:5px">Size</div>' +
+        '      <div style="display:flex;gap:4px">' +
+        '        <div style="border:2px solid #1a73e8;border-radius:4px;padding:3px 7px;font-size:10px;color:#1a73e8;font-weight:600;background:#e8f0fe">UK 7</div>' +
+        '        <div style="border:1px solid #dadce0;border-radius:4px;padding:3px 7px;font-size:10px;color:#202124">UK 8</div>' +
+        '        <div style="border:1px solid #dadce0;border-radius:4px;padding:3px 7px;font-size:10px;color:#202124">UK 9</div>' +
+        '      </div>' +
+        '    </div>' +
+        '  </div>' +
+        '  <div style="margin-top:8px;font-size:9px;color:#70757a">Source: Google — schema.org/ProductGroup</div>' +
+        '</div>',
+      benefits: [
+        'Colour/size swatches in Google Shopping cards',
+        'Variant-specific price and availability',
+        'Nested (hasVariant) or flat (isVariantOf) output',
+        'Works for apparel, shoes, furniture, and more'
+      ],
+      link: '/product-variants-schema/'
+    }
+  };
+
+  function updateBenefitCard(type) {
+    var d = BENEFIT_DATA[type];
+    if (!d) return;
+    var bItems = d.benefits.map(function(b) { return '<li>' + b + '</li>'; }).join('');
+    var learnMore = d.link ? '<a href="' + d.link + '" target="_blank" style="display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--teal);text-decoration:none;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">Learn more about ' + d.name + ' schema →</a>' : '';
+    document.getElementById('benefit-card').innerHTML =
+      '<div class="tc-inner">' +
+        '<div class="tc-serp">' + d.serp + '</div>' +
+        '<div class="tc-info">' +
+          '<div class="tc-name">' + d.name + ' <span style="font-size:11px;font-weight:500;color:var(--text-4)">— ' + d.desc + '</span></div>' +
+          '<ul class="tc-benefits">' + bItems + '</ul>' +
+          learnMore +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ─── Init: default tab = merchant ─── */
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var tab = params.get('tab');
+    if (tab && ['snippet','merchant','variants'].indexOf(tab) !== -1) {
+      switchSchema(tab);
+    } else {
+      switchSchema('merchant');
+    }
+  })();
+</script>
+
+</body>
+</html>

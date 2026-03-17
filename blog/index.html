@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/">
+  <meta name="description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Blog | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+    .gate-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;max-width:400px;width:100%;margin:24px}
+    .gate-icon{font-size:36px;margin-bottom:20px}
+
+    /* ── Layout ── */
+    #blog-content{display:block}
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+
+    /* ── Page header ── */
+    .blog-hero{margin-bottom:48px;border-bottom:1px solid var(--border);padding-bottom:32px}
+    .blog-hero h1{font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:700;color:var(--text-1);margin-bottom:8px}
+    .blog-hero p{font-size:15px;color:var(--text-3);line-height:1.6}
+    .blog-hero-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:16px}
+    .post-count{font-size:13px;color:var(--text-4)}
+    .signout-btn{font-size:12px;color:var(--text-4);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;padding:0;text-decoration:underline;display:none}
+    .signout-btn:hover{color:var(--teal)}
+
+    /* ── Post grid ── */
+    .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+
+    /* ── Post card ── */
+    .post-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:border-color .15s, transform .15s; position: relative; cursor: pointer; }
+    .post-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+    .post-title a { color: inherit; text-decoration: none; }
+    .post-title a::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
+    .post-card-body{padding:24px 24px 20px;flex:1;display:flex;flex-direction:column}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;margin-bottom:14px}
+    .cat-technical{background:var(--mint-light);color:var(--teal)}
+    .cat-international{background:#FEF3C7;color:#92400E}
+    html.dark .cat-international{background:#422006;color:#fde68a}
+    .cat-analytics{background:#F3E8FF;color:#6D28D9}
+    html.dark .cat-analytics{background:#2e1065;color:#c4b5fd}
+    .post-title{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;color:var(--text-1);line-height:1.35;margin-bottom:12px}
+    .post-card:hover .post-title{color:var(--teal)}
+    .post-excerpt{font-size:14px;color:var(--text-3);line-height:1.65;flex:1;margin-bottom:20px}
+    .post-card-footer{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-4)}
+    .post-meta-left{display:flex;align-items:center;gap:12px}
+    .post-read-more{font-size:12px;font-weight:600;color:var(--teal)}
+
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+  </style>
+  <meta property="og:title" content="Blog | MagsTags">
+  <meta property="og:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+  <meta property="og:url" content="https://www.magstags.com/notes/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blog | MagsTags">
+  <meta name="twitter:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
+  })();
+</script>
+
+<!-- Blog content -->
+<div id="blog-content">
+  <main>
+    <div class="blog-hero">
+      <h1>Notes</h1>
+      <p>Thoughts on technical SEO, international search, and e-commerce — from the field.</p>
+      <div class="blog-hero-meta">
+        <span class="post-count">3 posts</span>
+        <button class="signout-btn" id="blog-signout">Sign out</button>
+      </div>
+    </div>
+
+    <div class="post-grid">
+
+      <div class="post-card">
+        <div class="post-card-body">
+          <span class="post-category cat-international">International SEO</span>
+          <div class="post-title"><a href="/blog/hreflang-canonical-conflict/" style="color:inherit;text-decoration:none;">When Hreflang and Canonicals Conflict<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+          <p class="post-excerpt">When hreflang and canonicals point in different directions, Google picks one and ignores the other. Here's what breaks, why it cascades, and how to find it.</p>
+        </div>
+        <div class="post-card-footer">
+          <div class="post-meta-left">
+            <span>16 Mar 2026</span>
+            <span>7 min read</span>
+          </div>
+          <span class="post-read-more">Read →</span>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-card-body">
+          <span class="post-category cat-technical">Technical SEO</span>
+          <div class="post-title"><a href="/blog/robots-txt-mistakes/" style="color:inherit;text-decoration:none;">Robots.txt Mistakes<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+          <p class="post-excerpt">Most robots.txt problems aren't from bad intentions — they're from good intentions applied at the wrong layer. Here's what breaks at scale and why it matters more than you think.</p>
+        </div>
+        <div class="post-card-footer">
+          <div class="post-meta-left">
+            <span>10 Mar 2026</span>
+            <span>5 min read</span>
+          </div>
+          <span class="post-read-more">Read →</span>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-card-body">
+          <span class="post-category cat-international">International SEO</span>
+          <div class="post-title"><a href="/blog/hreflang-mistakes/" style="color:inherit;text-decoration:none;">Hreflang in 2026: The Mistakes That Keep Coming Back<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+          <p class="post-excerpt">After auditing hreflang implementations across dozens of enterprise sites, the same errors keep appearing. This is a frank look at what breaks, and why the spec is only half the problem.</p>
+        </div>
+        <div class="post-card-footer">
+          <div class="post-meta-left">
+            <span>28 Feb 2026</span>
+            <span>7 min read</span>
+          </div>
+          <span class="post-read-more">Read →</span>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-card-body">
+          <span class="post-category cat-analytics">Analytics</span>
+          <div class="post-title"><a href="/blog/gsc-regex-deep-dive/" style="color:inherit;text-decoration:none;">GSC Regex: Moving Past the Basics<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+          <p class="post-excerpt">Most SEOs use Google Search Console regex for a few simple filters and leave it at that. Here's how to go further — segmenting by intent, language, and URL structure — without breaking RE2.</p>
+        </div>
+        <div class="post-card-footer">
+          <div class="post-meta-left">
+            <span>15 Feb 2026</span>
+            <span>6 min read</span>
+          </div>
+          <span class="post-read-more">Read →</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+</div>
+<script src="/header.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    BlogAuth.run();
+  });
+</script>
+</body>
+</html>

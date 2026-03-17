@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/">
+  <meta name="description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Notes | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+    .gate-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;max-width:400px;width:100%;margin:24px}
+    .gate-icon{font-size:36px;margin-bottom:20px}
+
+    /* ── Layout ── */
+    #blog-content{display:block}
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+
+    /* ── Page header ── */
+    .blog-hero{margin-bottom:32px;padding-bottom:0}
+    .blog-hero h1{font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:700;color:var(--text-1);margin-bottom:8px}
+    .blog-hero p{font-size:15px;color:var(--text-3);line-height:1.6}
+    .blog-hero-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:16px}
+    .post-count{font-size:13px;color:var(--text-4)}
+    .signout-btn{font-size:12px;color:var(--text-4);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;padding:0;text-decoration:underline;display:none}
+    .signout-btn:hover{color:var(--teal)}
+
+    /* ── Post grid ── */
+    .post-grid{display:block}
+
+    /* ── Post card ── */
+    .notes-list { border-top: 1px solid var(--border); }
+    .notes-row { display: flex; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--border); position: relative; cursor: pointer; }
+    .notes-row:last-child { border-bottom: none; }
+    .notes-row:hover .notes-row-title a { color: var(--teal); }
+    .notes-row-date { font-size: 12px; color: var(--text-4); min-width: 96px; padding-top: 3px; flex-shrink: 0; line-height: 1.4; }
+    .notes-row-body { flex: 1; min-width: 0; }
+    .notes-row-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 6px; }
+    .notes-row-title { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; line-height: 1.3; }
+    .notes-row-title a { color: inherit; text-decoration: none; transition: color .15s; }
+    .notes-stretch { position: absolute; inset: 0; }
+    .notes-row-excerpt { font-size: 14px; color: var(--text-3); line-height: 1.6; margin-bottom: 10px; }
+    .notes-row-meta { font-size: 11px; color: var(--text-4); }
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;margin-bottom:14px}
+    @media (max-width: 560px) {
+      .notes-row { flex-direction: column; gap: 6px; }
+      .notes-row-date { min-width: unset; }
+    }
+    .cat-technical{background:var(--mint-light);color:var(--teal)}
+    .cat-international{background:#FEF3C7;color:#92400E}
+    html.dark .cat-international{background:#422006;color:#fde68a}
+    .cat-analytics{background:#F3E8FF;color:#6D28D9}
+    html.dark .cat-analytics{background:#2e1065;color:#c4b5fd}
+    .post-title{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;color:var(--text-1);line-height:1.35;margin-bottom:12px}
+    .post-card:hover .post-title{color:var(--teal)}
+    .post-excerpt{font-size:14px;color:var(--text-3);line-height:1.65;flex:1;margin-bottom:20px}
+    .post-card-footer{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-4)}
+    .post-meta-left{display:flex;align-items:center;gap:12px}
+    .post-read-more{font-size:12px;font-weight:600;color:var(--teal)}
+
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+  </style>
+  <meta property="og:title" content="Notes | MagsTags">
+  <meta property="og:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+  <meta property="og:url" content="https://www.magstags.com/notes/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Notes | MagsTags">
+  <meta name="twitter:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
+  })();
+</script>
+
+<!-- Blog content -->
+<div id="blog-content">
+  <main>
+    <nav style="font-size:13px;color:var(--text-4);margin-bottom:24px;display:flex;align-items:center;gap:6px">
+      <a href="/" style="color:var(--text-4);text-decoration:none">Home</a>
+      <span style="opacity:.5">›</span>
+      <span>Notes</span>
+    </nav>
+    <div class="blog-hero">
+      <h1>Notes</h1>
+      <p>Thoughts on technical SEO, international search, and e-commerce. Written to share what I know, so I do not forget it. There is a stage of life where a woman opens the fridge twice just to remind herself what she came for. I am that woman. (If you are a woman, 44+: solidarity. We are in this together.)</p>
+      <div class="blog-hero-meta">
+        <span class="post-count">6 posts</span>
+        <button class="signout-btn" id="blog-signout">Sign out</button>
+      </div>
+    </div>
+
+    <div class="notes-list">
+
+            <div class="notes-row">
+        <div class="notes-row-date">16 Mar 2026</div>
+        <div class="notes-row-body">
+          <div class="notes-row-cat">SEO Strategy</div>
+          <div class="notes-row-title"><a href="/notes/agentic-search/">What Agentic Search Changes and What It Doesn't<span class="notes-stretch"></span></a></div>
+          <div class="notes-row-excerpt">Agentic search is real, but the fundamentals have not moved as much as the LinkedIn posts would have you believe. An honest breakdown of what changed and what didn't.</div>
+          <div class="notes-row-meta">7 min read</div>
+        </div>
+      </div>
+
+      <div class="notes-row">
+        <div class="notes-row-date">16 Mar 2026</div>
+        <div class="notes-row-body">
+          <div class="notes-row-cat">Personal</div>
+          <div class="notes-row-title"><a href="/notes/bill-slawski/">Bill Slawski<span class="notes-stretch"></span></a></div>
+          <div class="notes-row-excerpt">There is a feeling you get when a film you have been waiting for is finally about to start. That is what it felt like to open a new Bill Slawski post.</div>
+          <div class="notes-row-meta">3 min read</div>
+        </div>
+      </div>
+
+      <div class="notes-row">
+        <div class="notes-row-date">16 Mar 2026</div>
+        <div class="notes-row-body">
+          <div class="notes-row-cat">International SEO</div>
+          <div class="notes-row-title"><a href="/notes/hreflang-canonical-conflict/">When Hreflang and Canonicals Conflict<span class="notes-stretch"></span></a></div>
+          <div class="notes-row-excerpt">When hreflang and canonicals point in different directions, Google picks one and ignores the other. Here's what breaks, why it cascades, and how to find it.</div>
+          <div class="notes-row-meta">7 min read</div>
+        </div>
+      </div>
+
+      <div class="notes-row">
+        <div class="notes-row-date">10 Mar 2026</div>
+        <div class="notes-row-body">
+          <div class="notes-row-cat">Technical SEO</div>
+          <div class="notes-row-title"><a href="/notes/robots-txt-mistakes/">Robots.txt Mistakes<span class="notes-stretch"></span></a></div>
+          <div class="notes-row-excerpt">Most robots.txt problems aren't from bad intentions — they're from good intentions applied at the wrong layer. Here's what breaks at scale and why it matters more than you think.</div>
+          <div class="notes-row-meta">5 min read</div>
+        </div>
+      </div>
+
+      <div class="notes-row">
+        <div class="notes-row-date">28 Feb 2026</div>
+        <div class="notes-row-body">
+          <div class="notes-row-cat">International SEO</div>
+          <div class="notes-row-title"><a href="/notes/hreflang-mistakes/">Hreflang in 2026: The Mistakes That Keep Coming Back<span class="notes-stretch"></span></a></div>
+          <div class="notes-row-excerpt">After auditing hreflang implementations across dozens of enterprise sites, the same errors keep appearing. This is a frank look at what breaks, and why the spec is only half the problem.</div>
+          <div class="notes-row-meta">7 min read</div>
+        </div>
+      </div>
+
+      <div class="notes-row">
+        <div class="notes-row-date">15 Feb 2026</div>
+        <div class="notes-row-body">
+          <div class="notes-row-cat">Google Search Console</div>
+          <div class="notes-row-title"><a href="/notes/gsc-regex-deep-dive/">GSC Regex: Moving Past the Basics<span class="notes-stretch"></span></a></div>
+          <div class="notes-row-excerpt">Most SEOs use Google Search Console regex for a few simple filters and leave it at that. Here's how to go further — segmenting by intent, language, and URL structure — without breaking RE2.</div>
+          <div class="notes-row-meta">6 min read</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+</div>
+<script src="/header.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    BlogAuth.run();
+  });
+</script>
+</body>
+</html>

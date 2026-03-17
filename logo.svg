@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- "AI" — white, no background, transparent -->
+  <text x="62" y="340"
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-size="238" font-weight="900" fill="white">AI</text>
+  <!-- Large sparkle -->
+  <path d="M358,88 L371,127 L410,140 L371,153 L358,192 L345,153 L306,140 L345,127 Z" fill="white"/>
+  <!-- Small sparkle -->
+  <path d="M416,52 L422,70 L440,76 L422,82 L416,100 L410,82 L392,76 L410,70 Z" fill="white"/>
+</svg>

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/hreflang-generator/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  
+  <title>Hreflang Tag Generator | MagsTags</title>
+  <meta name="description" content="Generate correct hreflang tags in seconds. HTML, XML sitemap, and HTTP header formats. Each output block contains the full set of tags for every page — paste it onto each page to get bidirectionality right. Free, no signup.">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg:#f0eeec; --bg2:#F5EDE7; --surface:#fafaf7; --border:#ddd9d3;
+      --text-1:#111009; --text-2:#26221f; --text-3:#504c49; --text-4:#857f7a;
+      --teal:#0E7490; --mint:#0891B2; --mint-light:#E0F2FE;
+      --shadow-sm:0 1px 3px rgba(26,24,22,.07); --shadow-md:0 4px 16px rgba(26,24,22,.09);
+    }
+    html.dark {
+      --bg:#111110; --bg2:#191817; --surface:#1e1c1a; --border:rgba(255,255,255,.08);
+      --text-1:#f5f2ee; --text-2:#c8c4be; --text-3:#857f79; --text-4:#4a4743;
+      --teal:#22D3EE; --mint:#67E8F9; --mint-light:rgba(14,116,144),.14);
+      --shadow-sm:0 1px 3px rgba(0,0,0,.5); --shadow-md:0 4px 16px rgba(0,0,0,.6);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;transition:background .25s,color .25s;-webkit-font-smoothing:antialiased}
+
+    /* Auth gate */
+    .auth-btns{display:flex;gap:10px}
+    .btn-primary{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:10px 22px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s}
+    .btn-primary:hover{opacity:.85}
+    .btn-ghost{background:transparent;color:#857f79;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 22px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}
+    .btn-ghost:hover{border-color:rgba(255,255,255,.25);color:#f5f2ee}
+
+    /* Header */
+    #auth-user{font-size:12px;color:var(--text-4)}
+    .theme-btn{background:none;border:1px solid var(--border);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-3);transition:all .15s}
+    .theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+
+    /* Layout */
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .tool-header{margin-bottom:32px}
+    .tool-badge-free{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;font-weight:600;background:var(--mint-light);color:var(--teal);margin-bottom:12px}
+    .tool-title{font-family:'DM Serif Display',Georgia,serif;font-size:36px;font-weight:400;color:var(--text-1);margin-bottom:8px}
+    .tool-subtitle{font-size:15px;color:var(--text-3);max-width:640px;line-height:1.6}
+    .tool-subtitle code{font-size:13px;background:var(--bg2);padding:2px 6px;border-radius:4px;font-family:monospace}
+
+    /* Two-column */
+    .tool-body{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+    @media(max-width:900px){.tool-body{grid-template-columns:1fr}}
+
+    /* Panel */
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .panel-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .panel-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1)}
+    .panel-hint{font-size:11px;color:var(--text-4)}
+    .panel-body{padding:20px}
+
+    /* Group card */
+    .group-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+    .group-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    .group-label-input{flex:1;font-size:13px;font-weight:600;color:var(--text-1);background:transparent;border:none;outline:none;font-family:inherit}
+    .group-label-input::placeholder{color:var(--text-4);font-weight:400}
+    .remove-group-btn{background:none;border:none;cursor:pointer;color:var(--text-4);font-size:18px;line-height:1;padding:2px;transition:color .15s;flex-shrink:0}
+    .remove-group-btn:hover{color:#ef4444}
+
+    /* Row headers */
+    .url-row-header{display:grid;grid-template-columns:1fr 100px 80px auto auto;gap:6px;margin-bottom:6px}
+    .url-row-header span{font-size:10px;font-weight:600;color:var(--text-4);text-transform:uppercase;letter-spacing:.05em;padding-left:2px}
+
+    /* URL rows */
+    .url-rows{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+    .url-row{display:grid;grid-template-columns:1fr 100px 80px auto auto;gap:6px;align-items:center} @media(max-width:600px){.url-row-header{display:none} .url-row{grid-template-columns:1fr auto auto;gap:5px} .url-row .url-input{grid-column:1/-1;width:100%} .url-row .lang-sel{grid-column:1/2} .url-row .reg-sel{grid-column:2/3} .url-row .xd-label{grid-column:3/4}}
+    .url-input{width:100%;font-size:12px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-1);font-family:'Menlo','Monaco','Courier New',monospace;transition:border-color .15s;outline:none}
+    .url-input:focus{border-color:var(--teal)}
+    .url-input::placeholder{color:var(--text-4);font-family:'Inter',sans-serif}
+    select.lang-sel,select.reg-sel{font-size:11px;padding:7px 5px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-1);font-family:inherit;outline:none;cursor:pointer;transition:border-color .15s;width:100%}
+    select.lang-sel:focus,select.reg-sel:focus{border-color:var(--teal)}
+    .xd-label{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-3);cursor:pointer;white-space:nowrap;user-select:none}
+    .xd-label input[type=radio]{accent-color:var(--teal);cursor:pointer}
+    .remove-url-btn{background:none;border:none;cursor:pointer;color:var(--text-4);padding:4px;transition:color .15s;line-height:1;display:flex;align-items:center}
+    .remove-url-btn:hover{color:#ef4444}
+
+    /* Validation */
+    .val-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+    .val-item{font-size:11px;display:flex;align-items:center;gap:3px;font-weight:500}
+    .val-ok{color:#16a34a} .val-warn{color:#d97706} .val-err{color:#dc2626}
+
+    /* Buttons */
+    .add-url-btn{font-size:12px;color:var(--teal);background:none;border:1px dashed var(--teal);border-radius:8px;padding:6px 12px;cursor:pointer;font-family:inherit;transition:all .15s;width:100%}
+    .add-url-btn:hover{background:var(--mint-light)}
+
+
+    /* Output */
+    .fmt-tabs{display:flex;gap:4px;padding:12px 20px;border-bottom:1px solid var(--border);align-items:center}
+    .fmt-label{font-size:11px;color:var(--text-4);font-weight:600;margin-right:6px}
+    .fmt-tab{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;border:none;font-family:inherit;background:transparent;color:var(--text-3);transition:all .15s}
+    .fmt-tab.active{background:var(--mint-light);color:var(--teal)}
+    .fmt-tab:hover:not(.active){background:var(--bg2);color:var(--text-2)}
+
+    .output-body{padding:20px;max-height:680px;overflow-y:auto}
+    .output-empty{text-align:center;padding:48px 20px;color:var(--text-4);font-size:13px;line-height:1.6}
+
+    .output-group-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin:16px 0 8px}
+    .output-group-label:first-child{margin-top:0}
+
+    .out-block{background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden}
+    .out-block-hd{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);gap:10px}
+    .out-block-label{font-size:11px;font-family:'Menlo','Monaco','Courier New',monospace;color:var(--text-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+    .out-block-label strong{color:var(--teal)}
+    .copy-btn{font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text-3);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;flex-shrink:0}
+    .copy-btn:hover{border-color:var(--teal);color:var(--teal)}
+    .copy-btn.copied{background:var(--mint-light);color:var(--teal);border-color:var(--teal)}
+    pre.out-code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;line-height:1.75;padding:14px;color:var(--text-2);white-space:pre-wrap;word-break:break-all}
+
+    .copy-all-btn{display:block;width:100%;font-size:12px;font-weight:600;padding:9px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-3);cursor:pointer;font-family:inherit;transition:all .15s;text-align:center;margin-bottom:14px}
+    .copy-all-btn:hover{border-color:var(--teal);color:var(--teal)}
+
+    .info-note{font-size:12px;color:var(--text-3);background:var(--bg2);border-radius:8px;padding:10px 14px;margin-top:14px;line-height:1.6}
+    .info-note code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;background:var(--surface);padding:1px 4px;border-radius:4px;color:var(--teal)}
+
+
+    /* ── Content sections ─────────────────────────────────────────────────── */
+    .ct-wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+    .ct-section{padding:72px 0;border-top:1px solid var(--border)}
+    .ct-section-h{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:400;letter-spacing:-.02em;color:var(--text-1);margin-bottom:16px}
+    .ct-section-sub{font-size:15px;color:var(--text-3);line-height:1.7;max-width:680px;margin-bottom:40px}
+    .ct-section-sub code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13px;background:var(--bg2);padding:2px 6px;border-radius:4px;color:var(--teal)}
+    .ct-h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:500;color:var(--text-1);margin-bottom:10px}
+    .ct-body{font-size:14px;color:var(--text-2);line-height:1.75}
+    .ct-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 6px;border-radius:4px;color:var(--teal)}
+    .ct-callout{background:var(--mint-light);border:1px solid rgba(14,116,144,.2);border-radius:12px;padding:16px 20px;font-size:14px;color:var(--text-2);line-height:1.7;margin-top:24px}
+    .ct-callout strong{color:var(--teal)}
+    .ct-callout code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:rgba(14,116,144,.1);padding:2px 5px;border-radius:4px;color:var(--teal)}
+
+    /* Steps */
+    .ct-steps{display:flex;flex-direction:column;gap:20px;margin-bottom:32px}
+    .ct-step{display:flex;gap:20px;align-items:flex-start}
+    .ct-step-num{width:32px;height:32px;border-radius:99px;background:var(--teal);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+    .ct-step-body strong{display:block;font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:4px}
+    .ct-step-body p{font-size:14px;color:var(--text-2);line-height:1.65}
+    .ct-step-body p code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 5px;border-radius:4px;color:var(--teal)}
+
+    /* Three cols */
+    .ct-cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    @media(max-width:900px){.ct-cols-3{grid-template-columns:1fr}}
+    .ct-col-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px}
+    .ct-col-card-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:10px}
+    .ct-col-card h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:500;color:var(--text-1);margin-bottom:10px}
+    .ct-col-card p{font-size:14px;color:var(--text-2);line-height:1.65}
+    .ct-col-card p code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 5px;border-radius:4px;color:var(--teal)}
+    .ct-col-card pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px;color:var(--text-2);line-height:1.7;overflow-x:auto;white-space:pre}
+
+    /* Diagram */
+    .ct-diagram{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:32px 0}
+    @media(max-width:700px){.ct-diagram{grid-template-columns:1fr}}
+    .ct-diagram-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px}
+    .ct-diagram-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:16px}
+    .ct-diagram-label.bad{color:#dc2626}
+    .ct-diagram-label.good{color:#16a34a}
+    .ct-diagram-caption{font-size:12px;color:var(--text-3);margin-top:14px;line-height:1.5}
+
+    /* Table */
+    .ct-table-wrap{overflow-x:auto}
+    .ct-table{width:100%;border-collapse:collapse;font-size:14px}
+    .ct-table th{text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-4);padding:10px 16px;border-bottom:2px solid var(--border)}
+    .ct-table td{padding:16px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text-2);line-height:1.65}
+    .ct-table td:first-child{font-weight:600;color:var(--text-1);white-space:nowrap;width:220px}
+    .ct-table td code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 5px;border-radius:4px;color:var(--teal)}
+    .ct-table tr:last-child td{border-bottom:none}
+
+    /* Bullets */
+    .ct-bullets{list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:14px}
+    .ct-bullets li{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--text-2);line-height:1.65}
+    .ct-bullets li::before{content:'';width:6px;height:6px;border-radius:99px;background:var(--teal);flex-shrink:0;margin-top:8px}
+    .ct-bullets li strong{color:var(--text-1)}
+    .ct-bullets li code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 5px;border-radius:4px;color:var(--teal)}
+
+    /* FAQ */
+    .ct-faq{display:flex;flex-direction:column;gap:2px}
+    .ct-faq details{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    .ct-faq details+details{margin-top:6px}
+    .ct-faq summary{padding:18px 20px;font-size:15px;font-weight:500;color:var(--text-1);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;user-select:none}
+    .ct-faq summary::-webkit-details-marker{display:none}
+    .ct-faq summary::after{content:'+';font-size:20px;color:var(--teal);flex-shrink:0;font-weight:300;transition:transform .2s}
+    .ct-faq details[open] summary::after{transform:rotate(45deg)}
+    .ct-faq details[open]{background:var(--surface)}
+    .ct-faq .ct-faq-body{padding:0 20px 20px;font-size:14px;color:var(--text-2);line-height:1.75}
+    .ct-faq .ct-faq-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 5px;border-radius:4px;color:var(--teal)}
+
+    /* CTA banner */
+    .ct-cta{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center;margin:72px 0 0}
+    .ct-cta h2{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:400;color:var(--text-1);letter-spacing:-.02em;margin-bottom:12px}
+    .ct-cta p{font-size:15px;color:var(--text-3);max-width:560px;margin:0 auto 28px;line-height:1.7}
+    .ct-cta-links{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+    .ct-cta-link-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;transition:opacity .15s}
+    .ct-cta-link-primary:hover{opacity:.85}
+    .ct-cta-link-secondary{display:inline-flex;align-items:center;gap:6px;color:var(--teal);text-decoration:none;font-size:14px;font-weight:500;transition:opacity .15s}
+    .ct-cta-link-secondary:hover{opacity:.7}
+
+    footer{border-top:1px solid var(--border);text-align:center;padding:24px;font-size:12px;color:var(--text-4)}
+      @media(max-width:600px){main{padding:24px 16px 60px}}
+      @media(max-width:640px){
+        .ct-table thead{display:none}
+        .ct-table,.ct-table tbody,.ct-table tr,.ct-table td{display:block;width:100%}
+        .ct-table tr{border-bottom:1px solid var(--border);padding:12px 0;margin-bottom:4px}
+        .ct-table td:first-child{white-space:normal;font-weight:700;color:var(--teal);padding:4px 12px;font-size:14px}
+        .ct-table td{padding:4px 12px;font-size:13px;border:none}
+        .ct-table td:first-child::before{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-4);margin-bottom:2px;content:"Mistake"}
+        .ct-table td:last-child::before{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-4);margin-bottom:2px;content:"How to fix"}
+      }
+  </style>
+<script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Hreflang Tag Generator","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":"HTML hreflang tags, XML sitemap format, HTTP header format, x-default support, full tag set per page, real-time validation"}
+  </script>
+  <meta property="og:title" content="Hreflang Tag Generator | MagsTags">
+  <meta property="og:description" content="Generate correct hreflang tags in seconds. HTML, XML sitemap, and HTTP header formats. Each output block contains the full set of tags for every page — paste it onto each page to get bidirectionality right. Free, no signup.">
+  <meta property="og:url" content="https://www.magstags.com/hreflang-generator/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hreflang Tag Generator | MagsTags">
+  <meta name="twitter:description" content="Generate correct hreflang tags in seconds. HTML, XML sitemap, and HTTP header formats. Each output block contains the full set of tags for every page — paste it onto each page to get bidirectionality right. Free, no signup.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+
+  <div class="auth-btns">
+  </div>
+</div>
+
+
+<main>
+  <p style="font-size:12px;color:var(--text-4);margin-bottom:20px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> Hreflang Generator</p>
+  <div class="tool-header">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
+      <h1 class="tool-title" style="margin-bottom:0">Hreflang Tag Generator</h1>
+      <span class="tool-badge-free">Free</span>
+    </div>
+    <p class="tool-subtitle">Because "just add hreflang" is never just adding hreflang. Technically simple, practically painful.</p>
+    <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+    <p class="tool-subtitle">Supports HTML, XML sitemap, and HTTP header formats. Each output gives you the full reciprocal set for every page in the group. Paste it on those pages and you're done. Also works beautifully for showing engineering and product teams exactly how it should be implemented — then kindly asking them to automate it.</p>
+  </div>
+
+  <div class="tool-body">
+    <!-- Input panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">URL Groups</span>
+        <span class="panel-hint">One group = one page in multiple languages</span>
+      </div>
+      <div class="panel-body">
+        <div id="groups-container"></div>
+      </div>
+    </div>
+
+    <!-- Output panel -->
+    <div class="panel">
+      <div class="fmt-tabs">
+        <span class="fmt-label">Output:</span>
+        <button class="fmt-tab active" onclick="setFormat('html',this)">HTML &lt;link&gt;</button>
+        <button class="fmt-tab" onclick="setFormat('sitemap',this)">XML Sitemap</button>
+        <button class="fmt-tab" onclick="setFormat('http',this)">HTTP Headers</button>
+      </div>
+      <div class="output-body" id="output-body">
+        <div class="output-empty">Fill in at least one URL and language above<br>to see your hreflang markup here.</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<div class="ct-wrap">
+
+  <!-- Section 3: How to use -->
+  <section class="ct-section" id="how-to-use">
+    <h2 class="ct-section-h">How to use this generator</h2>
+    <div class="ct-steps">
+      <div class="ct-step">
+        <div class="ct-step-num">1</div>
+        <div class="ct-step-body">
+          <strong>Create a URL group.</strong>
+          <p>One group = one logical page. If you're generating tags for your homepage and your about page, that's two groups.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">2</div>
+        <div class="ct-step-body">
+          <strong>Add a row for each language version.</strong>
+          <p>Enter the full URL (e.g. <code>https://example.com/fr/</code>), then pick a language and, if needed, a region.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">3</div>
+        <div class="ct-step-body">
+          <strong>Set one row as x-default.</strong>
+          <p>This is the fallback for users whose language isn't matched. Usually your main English URL or a language-selector page.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">4</div>
+        <div class="ct-step-body">
+          <strong>Choose your output format.</strong>
+          <p>HTML <code>&lt;link&gt;</code> tags go in your page <code>&lt;head&gt;</code>. XML sitemap entries go in your sitemap file. HTTP headers are for server-level delivery.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">5</div>
+        <div class="ct-step-body">
+          <strong>Copy the code for each page.</strong>
+          <p>Each output block is labelled with its destination URL. Paste the full block onto the corresponding page — every block already contains the complete set of tags for that page.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ct-callout">
+      <strong>Important:</strong> paste the full code block onto each page listed — not just the tag pointing to that page. Each block contains the complete set of tags for that page, covering all alternates and x-default. Pasting the full block onto every respective page is what makes your hreflang network bidirectional.
+    </div>
+  </section>
+
+  <!-- Section 4: What makes hreflang hard -->
+  <section class="ct-section" id="hreflang-requirements">
+    <h2 class="ct-section-h">What makes correct hreflang hard — and how this tool handles it</h2>
+    <p class="ct-section-sub">Hreflang is one of the most commonly broken international SEO signals. The rules are precise, and a mistake anywhere in the network can cause Google to ignore all your tags. Here are the three requirements that trip people up most often — and what this generator does about each one.</p>
+
+    <div style="margin-bottom:40px">
+      <h3 class="ct-h3">1. Bidirectional linking</h3>
+      <p class="ct-body">If your English page points to your French page, the French page must also point back to the English page — and to every other language version. This has to be true for every page in the group. Miss one direction and Google can reject the entire set.</p>
+      <p class="ct-body" style="margin-top:12px">This generator produces the correct full tag set for each page in a group — every output block includes tags pointing to all sibling pages, not just the one you're generating for. When you paste each block onto its respective page, the bidirectional network is complete. The work of making it bidirectional is yours — pasting the right block onto the right page — but the generator makes sure every block already contains everything it needs.</p>
+    </div>
+
+    <div style="margin-bottom:40px">
+      <h3 class="ct-h3">2. Self-referencing</h3>
+      <p class="ct-body">Each page must include a <code>hreflang</code> tag pointing to itself, alongside the tags pointing to its alternates. It sounds redundant but it's required — Google uses self-references to confirm the page belongs in the group.</p>
+      <p class="ct-body" style="margin-top:12px">Each output block in this generator includes the self-referencing tag for that page. You don't need to add it manually — it's already in the code you copy.</p>
+    </div>
+
+    <div>
+      <h3 class="ct-h3">3. The x-default attribute</h3>
+      <p class="ct-body">The <code>x-default</code> tag tells Google which version of your page to show to users whose language or region isn't covered by your other tags. It's not technically required, but Google strongly recommends it — and without it, users in unmatched regions may see the wrong page.</p>
+      <p class="ct-body" style="margin-top:12px">Set the x-default flag on any row in a group and the generator includes <code>hreflang="x-default"</code> in every output block for that group. The validation bar warns you if a group has no x-default set.</p>
+    </div>
+  </section>
+
+  <!-- Section 5: Three ways to implement -->
+  <section class="ct-section" id="implementation-methods">
+    <h2 class="ct-section-h">Three ways to implement hreflang</h2>
+    <p class="ct-section-sub">Hreflang tags can be delivered to Google in three ways. This generator produces all three formats — switch between them using the tabs in the output panel.</p>
+    <div class="ct-cols-3">
+      <div class="ct-col-card">
+        <div class="ct-col-card-tag">Most common</div>
+        <h3>HTML &lt;link&gt; tags</h3>
+        <p>Place the generated tags inside the <code>&lt;head&gt;</code> section of every page in the group. Works for any standard HTML page.</p>
+        <pre>&lt;head&gt;
+  &lt;link rel="alternate"
+    hreflang="en"
+    href="https://example.com/en/" /&gt;
+  &lt;link rel="alternate"
+    hreflang="fr"
+    href="https://example.com/fr/" /&gt;
+  &lt;link rel="alternate"
+    hreflang="x-default"
+    href="https://example.com/en/" /&gt;
+&lt;/head&gt;</pre>
+      </div>
+      <div class="ct-col-card">
+        <div class="ct-col-card-tag">Large sites</div>
+        <h3>XML Sitemap</h3>
+        <p>Add annotations inside each <code>&lt;url&gt;</code> element. Keeps HTML clean and gives you a single place to manage all alternate URLs. Add <code>xmlns:xhtml</code> to your <code>&lt;urlset&gt;</code> tag.</p>
+        <pre>&lt;urlset
+  xmlns:xhtml="..."&gt;
+  &lt;url&gt;
+    &lt;loc&gt;.../en/&lt;/loc&gt;
+    &lt;xhtml:link
+      hreflang="en"
+      href=".../en/" /&gt;
+    &lt;xhtml:link
+      hreflang="fr"
+      href=".../fr/" /&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;</pre>
+      </div>
+      <div class="ct-col-card">
+        <div class="ct-col-card-tag">Server-level</div>
+        <h3>HTTP Response Headers</h3>
+        <p>The only option for non-HTML files like PDFs. Also useful for JavaScript-rendered pages where modifying the HTML head is impractical.</p>
+        <pre># Apache
+Header add Link
+  '&lt;.../en/&gt;;
+   rel="alternate";
+   hreflang="en"'
+
+# Nginx
+add_header Link
+  '&lt;.../en/&gt;;
+   rel="alternate";
+   hreflang="en"';</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Common mistakes -->
+  <section class="ct-section" id="common-mistakes">
+    <h2 class="ct-section-h">Common hreflang mistakes — and how to fix them</h2>
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead>
+          <tr><th>Mistake</th><th>How to fix it</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Missing bidirectional tags</td>
+            <td>Every page in a group must reference every other page. If page A points to page B but page B doesn't point back, Google may ignore all tags in the group. This generator produces the correct full tag set for each page — every output block contains all alternates. Paste each block onto its respective page and the network is complete.</td>
+          </tr>
+          <tr>
+            <td>Relative URLs</td>
+            <td>Hreflang <code>href</code> values must be absolute URLs including the protocol (<code>https://</code>). A relative URL like <code>/fr/</code> will be ignored. The URL input in this generator requires a full URL.</td>
+          </tr>
+          <tr>
+            <td>Wrong language or region codes</td>
+            <td>Language codes follow ISO 639-1 (e.g. <code>en</code>, <code>fr</code>, <code>de</code>). Region codes follow ISO 3166-1 alpha-2 (e.g. <code>GB</code>, <code>US</code>). Case doesn't matter — Google accepts <code>en-GB</code> and <code>en-gb</code> equally — but mixing up language and region codes does. Common examples: using <code>uk</code> when you mean the United Kingdom (the correct region code is <code>GB</code>; <code>uk</code> is actually the language code for Ukrainian), or using <code>eng</code> instead of <code>en</code>. This generator's dropdowns use correct codes only.</td>
+          </tr>
+          <tr>
+            <td>Missing x-default</td>
+            <td>Omitting <code>x-default</code> means Google has no fallback for users in unmatched regions. It's not a breaking error, but strongly recommended — especially if you have significant traffic from countries not explicitly targeted. The validation bar flags groups missing x-default.</td>
+          </tr>
+          <tr>
+            <td>Duplicate lang/region combinations</td>
+            <td>Each language + region combination must appear only once per group. If you have two rows for <code>en-GB</code>, Google won't know which URL to use. The generator shows a red validation error if a duplicate is detected.</td>
+          </tr>
+          <tr>
+            <td>Mixed implementations</td>
+            <td>If you implement hreflang in both the HTML <code>&lt;head&gt;</code> and your XML sitemap for the same pages, make sure both are consistent. Mixed or partial implementations can confuse crawlers. Pick one method and use it for all pages in a group.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 7: When do you need hreflang -->
+  <section class="ct-section" id="when-to-use">
+    <h2 class="ct-section-h">When do you need hreflang tags?</h2>
+    <p class="ct-section-sub">Hreflang tags should be added to any page that has a language or regional variant — a version of the same page for a different audience. The three main scenarios are:</p>
+    <ul class="ct-bullets">
+      <li><strong>Different languages.</strong> You have an English version and a French version of the same page. Without hreflang, Google may treat them as duplicate content or show the wrong version to French-speaking users.</li>
+      <li><strong>Same language, different regions.</strong> You have an <code>en-US</code> and an <code>en-GB</code> version of a pricing page with different currencies and phone numbers. Hreflang tells Google both pages exist and which to show based on the user's region.</li>
+      <li><strong>Global fallback.</strong> You have localised versions for some markets but not all. The <code>x-default</code> tag handles users in unmatched regions — you can point it to your main English page or a language-selector page.</li>
+    </ul>
+    <p class="ct-body">Hreflang is not needed for pages that only exist in one language and don't have regional variants. Adding it unnecessarily creates maintenance overhead without any SEO benefit.</p>
+  </section>
+
+  <!-- Section 8: FAQ -->
+  <section class="ct-section" id="faq">
+    <h2 class="ct-section-h">Frequently asked questions</h2>
+    <div class="ct-faq">
+      <details>
+        <summary>Does every page on my website need hreflang tags?</summary>
+        <div class="ct-faq-body">Only pages that have language or regional variants need hreflang tags. If a page exists in only one language and has no regional versions, skip it. Adding hreflang to single-language pages with no alternates doesn't improve SEO and adds unnecessary markup.</div>
+      </details>
+      <details>
+        <summary>What is x-default and do I need it?</summary>
+        <div class="ct-faq-body">The <code>x-default</code> attribute identifies the fallback page to show users whose language or region isn't covered by your other hreflang tags. Google doesn't require it, but strongly recommends it. If your site has significant traffic from regions you haven't explicitly targeted — or if you have a language-selector page — x-default is important. Set the x-default flag on one row per group in this generator. The <code>hreflang="x-default"</code> tag is included in every output block for that group.</div>
+      </details>
+      <details>
+        <summary>Do hreflang tags have to be bidirectional?</summary>
+        <div class="ct-faq-body">Yes. If page A lists page B as an alternate, page B must also list page A as an alternate. This rule applies to every page in a group — all pages must reference all other pages. Google validates the entire network before acting on hreflang tags. A broken bidirectional structure is the most common reason hreflang stops working. This generator produces the correct full tag set for each page — every output block includes all alternates.</div>
+      </details>
+      <details>
+        <summary>Can I use an XML sitemap instead of putting tags in the HTML &lt;head&gt;?</summary>
+        <div class="ct-faq-body">Yes. Hreflang can be implemented in the HTML <code>&lt;head&gt;</code>, in an XML sitemap, or via HTTP response headers. All three methods are supported by Google. XML sitemaps are often preferable for large sites — they're easier to manage and keep HTML cleaner. The output panel in this generator includes all three formats; switch between them using the format tabs.</div>
+      </details>
+      <details>
+        <summary>How many URL groups can I create?</summary>
+        <div class="ct-faq-body">There's no limit on the number of groups. Each group represents one logical page (e.g. your homepage, your pricing page, your contact page) with all its language and region variants. Add as many groups as you need in one session.</div>
+      </details>
+      <details>
+        <summary>What happens if my hreflang tags are wrong?</summary>
+        <div class="ct-faq-body">Google may ignore the tags entirely, show the wrong language version to users, or — in cases of conflicting signals — treat the pages as duplicate content. The most common issues are missing bidirectional links, incorrect language or region codes, and missing self-references. This generator's real-time validation flags duplicate lang/region combinations and missing x-default before you copy the output.</div>
+      </details>
+      <details>
+        <summary>Does this tool validate my hreflang tags?</summary>
+        <div class="ct-faq-body">The generator validates your input in real time. It checks for: fewer than two URLs in a group (you need at least two for a valid hreflang set), missing x-default (amber warning), and duplicate language/region combinations within the same group (red error). URL reachability is not checked — the tool doesn't make network requests.</div>
+      </details>
+      <details>
+        <summary>Do I need to include a tag for every language on every page?</summary>
+        <div class="ct-faq-body">Yes. Every page in a hreflang group must carry the full set of alternate tags — including a tag pointing to itself. This is what makes the network valid. This generator's output blocks already include the complete set for each page — just paste the entire block into the relevant page.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Section 10: CTA -->
+  <div class="ct-cta">
+    <h2>Go beyond hreflang tags</h2>
+    <p>Hreflang tells search engines which page to show. Geo Redirect tells your website which page to actually send visitors to — automatically, based on their country, state, or city. Use both together for a complete international targeting strategy.</p>
+    <div class="ct-cta-links">
+      <a href="/free-seo-tools/" class="ct-cta-link-primary">Explore all SEO tools →</a>
+      <a href="https://developers.google.com/search/docs/specialty/international/localization-with-hreflang" target="_blank" rel="noopener" class="ct-cta-link-secondary">Google's hreflang documentation ↗</a>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+    <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:10px">Sources</p>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
+      <li><a href="https://developers.google.com/search/docs/specialty/international/localized-versions" target="_blank" rel="noopener" style="font-size:13px;color:var(--teal);text-decoration:none;font-family:'Menlo','Monaco','Courier New',monospace">developers.google.com — Localized versions of your site ↗</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+
+<script>
+// ── Theme ──────────────────────────────────────────────────────────────────
+
+// ── Auth ───────────────────────────────────────────────────────────────────
+
+
+// ── Data ───────────────────────────────────────────────────────────────────
+const LANGS = [
+  {c:'en',n:'English'},{c:'de',n:'German'},{c:'fr',n:'French'},{c:'it',n:'Italian'},
+  {c:'es',n:'Spanish'},{c:'pt',n:'Portuguese'},{c:'nl',n:'Dutch'},{c:'pl',n:'Polish'},
+  {c:'ru',n:'Russian'},{c:'sv',n:'Swedish'},{c:'da',n:'Danish'},{c:'no',n:'Norwegian'},
+  {c:'fi',n:'Finnish'},{c:'cs',n:'Czech'},{c:'sk',n:'Slovak'},{c:'hu',n:'Hungarian'},
+  {c:'ro',n:'Romanian'},{c:'tr',n:'Turkish'},{c:'zh',n:'Chinese'},{c:'ja',n:'Japanese'},
+  {c:'ko',n:'Korean'},{c:'ar',n:'Arabic'},{c:'he',n:'Hebrew'},{c:'uk',n:'Ukrainian'},
+  {c:'el',n:'Greek'},{c:'bg',n:'Bulgarian'},{c:'hr',n:'Croatian'},{c:'id',n:'Indonesian'},
+  {c:'th',n:'Thai'},{c:'vi',n:'Vietnamese'},{c:'ms',n:'Malay'},{c:'hi',n:'Hindi'},
+  {c:'ca',n:'Catalan'},{c:'lt',n:'Lithuanian'},{c:'lv',n:'Latvian'},{c:'et',n:'Estonian'},
+  {c:'sl',n:'Slovenian'},{c:'sr',n:'Serbian'},{c:'fa',n:'Persian'},{c:'nb',n:'Norwegian Bokmål'},
+];
+
+const REGIONS = [
+  {c:'',n:'— none'},
+  {c:'US',n:'United States'},{c:'GB',n:'United Kingdom'},{c:'CA',n:'Canada'},{c:'AU',n:'Australia'},
+  {c:'DE',n:'Germany'},{c:'FR',n:'France'},{c:'IT',n:'Italy'},{c:'ES',n:'Spain'},
+  {c:'PT',n:'Portugal'},{c:'BR',n:'Brazil'},{c:'MX',n:'Mexico'},{c:'PL',n:'Poland'},
+  {c:'NL',n:'Netherlands'},{c:'SE',n:'Sweden'},{c:'DK',n:'Denmark'},{c:'NO',n:'Norway'},
+  {c:'FI',n:'Finland'},{c:'CH',n:'Switzerland'},{c:'AT',n:'Austria'},{c:'BE',n:'Belgium'},
+  {c:'NZ',n:'New Zealand'},{c:'ZA',n:'South Africa'},{c:'IN',n:'India'},{c:'SG',n:'Singapore'},
+  {c:'JP',n:'Japan'},{c:'CN',n:'China'},{c:'TW',n:'Taiwan'},{c:'HK',n:'Hong Kong'},
+  {c:'KR',n:'South Korea'},{c:'AE',n:'United Arab Emirates'},{c:'SA',n:'Saudi Arabia'},{c:'IL',n:'Israel'},
+  {c:'RU',n:'Russia'},{c:'UA',n:'Ukraine'},{c:'CZ',n:'Czech Republic'},{c:'IE',n:'Ireland'},
+  {c:'AR',n:'Argentina'},{c:'CL',n:'Chile'},{c:'CO',n:'Colombia'},{c:'TR',n:'Turkey'},
+  {c:'PH',n:'Philippines'},{c:'VN',n:'Vietnam'},{c:'ID',n:'Indonesia'},{c:'MY',n:'Malaysia'},
+];
+
+function langOpts(sel='en') {
+  return LANGS.map(l => `<option value="${l.c}"${l.c===sel?' selected':''}>${l.c} – ${l.n}</option>`).join('');
+}
+function regOpts(sel='') {
+  return REGIONS.map(r => `<option value="${r.c}"${r.c===sel?' selected':''}>${r.c||'— none'}${r.c?' – '+r.n:''}</option>`).join('');
+}
+
+// ── State ──────────────────────────────────────────────────────────────────
+let gid = 0, rid = 0;
+const newRow  = (groupId) => ({ id:++rid, gid:groupId, url:'', lang:'en', region:'', xd:false });
+const newGroup = ()       => { const id=++gid; return { id, name:'', rows:[newRow(id)] }; };
+
+let state = { groups:[newGroup()], format:'html' };
+
+// ── UI actions ─────────────────────────────────────────────────────────────
+
+function addUrl(gid)        { const g=state.groups.find(g=>g.id===gid); if(g){g.rows.push(newRow(gid)); renderGroups(); renderOutput();} }
+function removeUrl(gid,rid) { const g=state.groups.find(g=>g.id===gid); if(g&&g.rows.length>1){g.rows=g.rows.filter(r=>r.id!==rid); renderGroups(); renderOutput();} }
+function setFormat(f,btn)   { state.format=f; document.querySelectorAll('.fmt-tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); renderOutput(); }
+
+function syncState() {
+  state.groups.forEach(g => {
+    const el = id => document.getElementById(id);
+    const ne = el(`gn-${g.id}`); if(ne) g.name = ne.value;
+    g.rows.forEach(r => {
+      const u=el(`ru-${r.id}`),l=el(`rl-${r.id}`),re=el(`rr-${r.id}`),x=el(`rx-${r.id}`);
+      if(u) r.url = u.value.trim();
+      if(l) r.lang = l.value;
+      if(re) r.region = re.value;
+      if(x) r.xd = x.checked;
+    });
+  });
+}
+
+function handleChange() { syncState(); renderOutput(); }
+
+// ── Render inputs ──────────────────────────────────────────────────────────
+function renderGroups() {
+  const c = document.getElementById('groups-container');
+  c.innerHTML = state.groups.map(renderGroup).join('');
+  c.querySelectorAll('input,select').forEach(el => {
+    el.addEventListener('input', handleChange);
+    el.addEventListener('change', handleChange);
+  });
+}
+
+function renderGroup(g) {
+  const rows = g.rows.map(r => renderRow(g,r)).join('');
+  const val = validateGroup(g);
+  const valHtml = val.length ? `<div class="val-bar">${val.map(v=>`<span class="val-item ${v.cls}">${v.icon} ${v.txt}</span>`).join('')}</div>` : '';
+  return `
+    <div class="group-card">
+      <div class="url-row-header">
+        <span>URL</span><span>Language</span><span>Region</span><span title="x-default fallback">x-def</span><span></span>
+      </div>
+      <div class="url-rows">${rows}</div>
+      <button class="add-url-btn" onclick="addUrl(${g.id})">+ Add URL</button>
+      ${valHtml}
+    </div>`;
+}
+
+function renderRow(g, r) {
+  return `
+    <div class="url-row">
+      <input id="ru-${r.id}" class="url-input" type="url" placeholder="https://example.com/en/" value="${eh(r.url)}">
+      <select id="rl-${r.id}" class="lang-sel">${langOpts(r.lang)}</select>
+      <select id="rr-${r.id}" class="reg-sel">${regOpts(r.region)}</select>
+      <label class="xd-label" title="Set as x-default — the fallback shown to users whose language isn't matched">
+        <input type="radio" name="xd-${g.id}" id="rx-${r.id}" ${r.xd?'checked':''}>
+        x-def
+      </label>
+      <button class="remove-url-btn" onclick="removeUrl(${g.id},${r.id})" title="Remove row">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>`;
+}
+
+function validateGroup(g) {
+  const filled = g.rows.filter(r => r.url && r.lang);
+  const vals = [];
+  if (filled.length >= 2) {
+    vals.push({cls:'val-ok', icon:'✓', txt:'Bidirectional'});
+    vals.push({cls:'val-ok', icon:'✓', txt:'Self-reference'});
+  } else if (filled.length === 1) {
+    vals.push({cls:'val-warn', icon:'⚠', txt:'Add at least 2 URLs'});
+  }
+  const hasXd = g.rows.some(r => r.xd && r.url);
+  vals.push(hasXd
+    ? {cls:'val-ok',  icon:'✓', txt:'x-default set'}
+    : {cls:'val-warn',icon:'⚠', txt:'No x-default — recommended'});
+  const keys = filled.map(r => (r.lang + (r.region?'-'+r.region:'')).toLowerCase());
+  if (keys.length !== new Set(keys).size)
+    vals.push({cls:'val-err', icon:'✕', txt:'Duplicate lang/region'});
+  return vals;
+}
+
+// ── Render output ──────────────────────────────────────────────────────────
+function hval(r) { return r.lang + (r.region ? '-' + r.region.toUpperCase() : ''); }
+
+function buildTags(g, fmt) {
+  const rows = g.rows.filter(r => r.url && r.lang);
+  const xd   = g.rows.find(r => r.xd && r.url);
+  if (fmt === 'html') {
+    const lines = rows.map(r => `<link rel="alternate" hreflang="${ea(hval(r))}" href="${ea(r.url)}" />`);
+    if (xd) lines.push(`<link rel="alternate" hreflang="x-default" href="${ea(xd.url)}" />`);
+    return lines.join('\n');
+  }
+  if (fmt === 'sitemap') {
+    const lines = rows.map(r =>
+      `  <xhtml:link\n     rel="alternate"\n     hreflang="${ea(hval(r))}"\n     href="${ea(r.url)}" />`);
+    if (xd) lines.push(`  <xhtml:link\n     rel="alternate"\n     hreflang="x-default"\n     href="${ea(xd.url)}" />`);
+    return lines.join('\n');
+  }
+  if (fmt === 'http') {
+    const lines = rows.map(r => `Link: <${r.url}>; rel="alternate"; hreflang="${hval(r)}"`);
+    if (xd) lines.push(`Link: <${xd.url}>; rel="alternate"; hreflang="x-default"`);
+    return lines.join('\n');
+  }
+  return '';
+}
+
+function renderOutput() {
+  const body = document.getElementById('output-body');
+  const fmt  = state.format;
+  const hasContent = state.groups.some(g => g.rows.some(r => r.url && r.lang));
+  if (!hasContent) {
+    body.innerHTML = '<div class="output-empty">Fill in at least one URL and language above<br>to see your hreflang markup here.</div>';
+    return;
+  }
+
+  let allText = '';
+  let html = '';
+
+  state.groups.forEach((g, gi) => {
+    const filled = g.rows.filter(r => r.url && r.lang);
+    if (!filled.length) return;
+    const tags = buildTags(g, fmt);
+
+    filled.forEach(r => {
+      const bid = `blk-${g.id}-${r.id}`;
+      const short = r.url.length > 55 ? '…' + r.url.slice(-52) : r.url;
+      const label = fmt === 'sitemap'
+        ? `&lt;url&gt; block for: <strong>${eh(short)}</strong>`
+        : fmt === 'http'
+        ? `Server config for: <strong>${eh(short)}</strong>`
+        : `Place in &lt;head&gt; of: <strong>${eh(short)}</strong>`;
+      allText += `/* ${r.url} */\n${tags}\n\n`;
+      html += `
+        <div class="out-block">
+          <div class="out-block-hd">
+            <div class="out-block-label">${label}</div>
+            <button class="copy-btn" onclick="copyBlock('${bid}',this)">Copy</button>
+          </div>
+          <pre class="out-code" id="${bid}">${eh(tags)}</pre>
+        </div>`;
+    });
+  });
+
+  const totalBlocks = state.groups.reduce((s,g) => s + g.rows.filter(r=>r.url&&r.lang).length, 0);
+  if (totalBlocks > 1) html = `<button class="copy-all-btn" onclick="copyAll()">Copy all blocks</button>` + html;
+
+  const notes = {
+    html: 'Paste inside the <code>&lt;head&gt;</code> of each page listed above. Every page in the group carries the full set — that\'s what makes it bidirectional.',
+    sitemap: 'Place inside each <code>&lt;url&gt;</code> element. Add <code>xmlns:xhtml="http://www.w3.org/1999/xhtml"</code> to your root <code>&lt;urlset&gt;</code> tag.',
+    http: 'Send as HTTP response headers. Shown in generic format — adapt for Apache (<code>Header add Link "…"</code>) or Nginx (<code>add_header Link "…"</code>).'
+  };
+  html += `<div class="info-note">${notes[fmt]}</div>`;
+  body.innerHTML = html;
+  window._allOut = allText;
+}
+
+function copyBlock(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+function copyAll() {
+  navigator.clipboard.writeText(window._allOut || '').then(() => {
+    const btn = document.querySelector('.copy-all-btn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy all blocks', 2000); }
+  });
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function eh(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function ea(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+// ── Init ───────────────────────────────────────────────────────────────────
+renderGroups();
+renderOutput();
+</script>
+<script src="/header.js"></script>
+</body>
+</html>

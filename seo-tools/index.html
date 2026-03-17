@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/seo-tools/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  
+  <title>SEO Tools | MagsTags</title>
+  <meta name="description" content="Free SEO tools for technical SEO and e-commerce professionals. Schema generators, hreflang builder, GSC regex, robots.txt generator, and SERP previewer.">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg:           #f0eeec;
+      --bg2:          #F5EDE7;
+      --surface:      #fafaf7;
+      --border:       #ddd9d3;
+      --text-1:       #111009;
+      --text-2:       #26221f;
+      --text-3:       #504c49;
+      --text-4:       #857f7a;
+      --teal:         #0E7490;
+      --mint:         #0891B2;
+      --mint-light:   #E0F2FE;
+      --shadow-sm:    0 1px 3px rgba(26,24,22,.07);
+      --shadow-md:    0 4px 16px rgba(26,24,22,.09);
+    }
+    html.dark {
+      --bg:           #111110;
+      --bg2:          #191817;
+      --surface:      #1e1c1a;
+      --border:       rgba(255,255,255,.08);
+      --text-1:       #f5f2ee;
+      --text-2:       #c8c4be;
+      --text-3:       #857f79;
+      --text-4:       #4a4743;
+      --teal:         #22D3EE;
+      --mint:         #67E8F9;
+      --mint-light:   rgba(14,116,144),.14);
+      --shadow-sm:    0 1px 3px rgba(0,0,0,.5);
+      --shadow-md:    0 4px 16px rgba(0,0,0,.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; transition: background .25s, color .25s; -webkit-font-smoothing: antialiased; }
+
+    .page-wrap { width: 100%; }
+
+    .page-hero { margin-bottom: 48px; }
+    .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; background: var(--mint-light); padding: 4px 12px; border-radius: 99px; }
+    .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; line-height: 1.15; color: var(--text-1); margin-bottom: 14px; }
+    .page-hero p { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 480px; }
+
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-3); text-decoration: none; margin-bottom: 40px; transition: color .15s; }
+    .back-link:hover { color: var(--teal); }
+
+    .section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 20px; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+
+    .tool-card { border: 1px solid var(--border); border-radius: 20px; padding: 28px 32px; background: var(--surface); text-decoration: none; display: block; transition: all .2s; position: relative; cursor: pointer; }
+    .tool-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .tool-name a { color: inherit; text-decoration: none; }
+    .tool-name a::after { content: ''; position: absolute; inset: 0; border-radius: 20px; }
+    .tool-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .tool-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--bg2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .tool-badge { font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 600; }
+    .tool-badge-free { background: var(--mint-light); color: var(--teal); }
+    .tool-badge-ext { background: #FEF3C7; color: #D97706; }
+    html.dark .tool-badge-ext { background: rgba(225,29,72,.12); color: #E11D48; }
+    .tool-name { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; letter-spacing: -.01em; }
+    .tool-card:hover .tool-name { color: var(--teal); }
+    .tool-desc { font-size: 13px; color: var(--text-3); line-height: 1.6; margin-bottom: 20px; }
+    .tool-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .tool-tag { font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 500; background: var(--bg2); color: var(--text-3); border: 1px solid var(--border); }
+
+    footer { border-top: 1px solid var(--border); padding: 24px 36px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+      main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+      @media(max-width:600px){main{padding:24px 16px 60px}}
+  </style>
+  <script>(function(){ if(localStorage.getItem('gmc-theme')==='dark') document.documentElement.classList.add('dark'); })();</script>
+  <meta property="og:title" content="SEO Tools | MagsTags">
+  <meta property="og:description" content="Free SEO tools for technical SEO and e-commerce professionals. Schema generators, hreflang builder, GSC regex, robots.txt generator, and SERP previewer.">
+  <meta property="og:url" content="https://www.magstags.com/seo-tools/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SEO Tools | MagsTags">
+  <meta name="twitter:description" content="Free SEO tools for technical SEO and e-commerce professionals. Schema generators, hreflang builder, GSC regex, robots.txt generator, and SERP previewer.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+  </div>
+</div>
+
+<main id="main-content">
+
+<div class="page-wrap">
+
+  <p style="font-size:12px;color:var(--text-4);margin-bottom:24px"><a href="/" style="color:var(--text-4)">Home</a> <span style="opacity:.5">›</span> SEO Tools</p>
+
+  <div class="page-hero">
+    <div class="page-hero-eyebrow">SEO tools</div>
+    <h1 class="page-hero-h1">SEO Tools</h1>
+    <p>SEO tools for the SEO problems that should take 30 seconds… but never do.</p>
+    <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+    <p>Schema markup, hreflang, robots.txt, GSC regex, SERP preview and more. No logins. No "SEO guru wisdom." No "it depends." Now, enjoy that coffee!</p>
+  </div>
+
+  <p class="section-label">SEO tools</p>
+  <div class="tools-grid">
+
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <span class="tool-badge tool-badge-free">Free</span>
+      </div>
+      <div class="tool-name"><a href="/ecommerce-schema-generator/" style="color:inherit;text-decoration:none;">E-commerce — Product Schema Generators<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">Generate Product Snippet, Merchant Listing, and ProductGroup structured data (JSON-LD) for Google rich results and Shopping.</div>
+      <div class="tool-tags">
+        <span class="tool-tag">JSON-LD</span>
+        <span class="tool-tag">Product</span>
+        <span class="tool-tag">Merchant Listing</span>
+        <span class="tool-tag">Rich results</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <span class="tool-badge tool-badge-free">Free</span>
+      </div>
+      <div class="tool-name"><a href="/hreflang-generator/" style="color:inherit;text-decoration:none;">Hreflang Generator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">Generate correct bidirectional hreflang markup for multilingual sites.</div>
+      <div class="tool-tags">
+        <span class="tool-tag">HTML</span>
+        <span class="tool-tag">XML Sitemap</span>
+        <span class="tool-tag">HTTP Headers</span>
+        <span class="tool-tag">Multilingual</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+        </div>
+        <span class="tool-badge tool-badge-free">Free</span>
+      </div>
+      <div class="tool-name"><a href="/gsc-regex-generator/" style="color:inherit;text-decoration:none;">GSC Regex Builder<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">Generate validated RE2 regex for Google Search Console URL and query filtering. 22 templates, live tester, plain-English explanations.</div>
+      <div class="tool-tags">
+        <span class="tool-tag">URL filters</span>
+        <span class="tool-tag">Query filters</span>
+        <span class="tool-tag">RE2</span>
+        <span class="tool-tag">Client-side</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
+          </svg>
+        </div>
+        <span class="tool-badge tool-badge-free">Free</span>
+      </div>
+      <div class="tool-name"><a href="/serp-preview/" style="color:inherit;text-decoration:none;">SERP Snippet Previewer<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">See your Google snippet before you publish.</div>
+      <div class="tool-tags">
+        <span class="tool-tag">Title</span>
+        <span class="tool-tag">Meta description</span>
+        <span class="tool-tag">Desktop</span>
+        <span class="tool-tag">Mobile</span>
+      </div>
+    </div>
+
+    <div class="tool-card" target="_blank" rel="noopener noreferrer">>
+      <div class="tool-card-top">
+        <div class="tool-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <span class="tool-badge tool-badge-ext">External · Free trial</span>
+      </div>
+      <div class="tool-name"><a href="https://invuai.com/" style="color:inherit;text-decoration:none;">InvuAI<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">Find out if ChatGPT is talking about your brand.</div>
+      <div class="tool-tags">
+        <span class="tool-tag">AI visibility</span>
+        <span class="tool-tag">Brand monitoring</span>
+        <span class="tool-tag">ChatGPT</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <span class="tool-badge tool-badge-free">Free</span>
+      </div>
+      <div class="tool-name"><a href="/robots-txt-generator/" style="color:inherit;text-decoration:none;">Robots.txt Generator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">Build your robots.txt file visually. Add crawlers, allow/disallow rules, and sitemaps.</div>
+      <div class="tool-tags">
+        <span class="tool-tag">Crawl control</span>
+        <span class="tool-tag">Technical SEO</span>
+        <span class="tool-tag">Download</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <span class="tool-badge tool-badge-paid">Paid</span>
+      </div>
+      <div class="tool-name"><a href="/gmc-feed-analyzer/" style="color:inherit;text-decoration:none;">GMC Feed Analyzer<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">Catch feed errors before Google does.</div>
+      <div class="tool-tags">
+        <span class="tool-tag">CSV</span>
+        <span class="tool-tag">TSV</span>
+        <span class="tool-tag">JSON</span>
+        <span class="tool-tag">XML</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+
+<script>
+</script>
+
+<script>
+  
+</script>
+
+</main>
+<script src="/header.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" crossorigin="anonymous"></script>
+  <script src="/gmc-auth.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function(){ if(window.GmcAuth) GmcAuth.runListingMode(); });</script>
+</body>
+</html>

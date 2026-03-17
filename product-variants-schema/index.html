@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Variants Schema Markup — ProductGroup Structured Data | MagsTags</title>
+  <meta name="description" content="Learn how to implement Product Variants structured data using ProductGroup schema to show colour swatches, size options, and variant pricing in Google Shopping. Free generator included.">
+  <link rel="canonical" href="https://www.magstags.com/product-variants-schema/">
+  <meta property="og:title" content="Product Variants Schema Markup — ProductGroup Structured Data">
+  <meta property="og:description" content="Implement ProductGroup structured data to show colour swatches and variant pricing in Google Shopping. For products with colour, size, or material options. Free generator.">
+  <meta property="og:url" content="https://www.magstags.com/product-variants-schema/">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "WebPage",
+    "name": "Product Variants Schema Markup — ProductGroup Structured Data",
+    "description": "Learn how to implement Product Variants structured data using ProductGroup schema for colour swatches and variant pricing in Google Shopping.",
+    "url": "https://www.magstags.com/product-variants-schema/",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Learn SEO", "item": "https://www.magstags.com/learn-seo/" },
+        { "@type": "ListItem", "position": 3, "name": "Product Schema", "item": "https://www.magstags.com/product-schema/" },
+        { "@type": "ListItem", "position": 4, "name": "Product Variants Schema", "item": "https://www.magstags.com/product-variants-schema/" }
+      ]
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need a separate URL for each product variant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. ProductGroup schema supports both a single page with all variants selectable and separate pages per variant. For separate pages, each variant Product should have its own url property. For a single page, the ProductGroup and all variants can share the same URL."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which values does Google support in the variesBy property for ProductGroup schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Google officially supports these schema.org URIs: https://schema.org/color, https://schema.org/size, https://schema.org/suggestedAge, https://schema.org/suggestedGender, https://schema.org/material, and https://schema.org/pattern. These must be full URIs — plain text values like 'Color' are valid JSON-LD but will not trigger Shopping swatches."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between nested and flat ProductGroup structure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In nested structure, variant Products sit inside ProductGroup via hasVariant. In flat structure, the ProductGroup and each variant Product are separate JSON-LD objects, with each variant linking back via isVariantOf. Both are valid — our generator supports both with a toggle switch."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does ProductGroup schema work for Shopify products?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. For Shopify products with variants, add ProductGroup JSON-LD to your product.liquid template. Each Shopify variant maps to a Product object inside hasVariant. Use the variant URL (with ?variant= parameter) as the url for each variant, and the main product URL for the ProductGroup."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where should aggregateRating go — on ProductGroup or each variant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Google recommends placing aggregateRating at the ProductGroup level when the rating applies to the product as a whole. Only add variant-level ratings if individual variants have genuinely distinct review sets, which is rare."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I remove out-of-stock variants from my ProductGroup schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Keep it in the markup. Set availability to https://schema.org/OutOfStock and Google will display the correct status in Shopping results. Removing out-of-stock variants causes your schema to go stale whenever stock levels change, and means Google cannot show out-of-stock status to shoppers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does ProductGroup schema on my website affect my Google Merchant Center feed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. ProductGroup schema on your website is one of the signals Google uses for automatic item updates and feed supplementation in Merchant Center. SKUs and GTINs at the variant level are particularly important, as they allow Google to match your schema to your feed and correct pricing discrepancies automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if my variesBy values don't match the properties on my variant objects?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The markup will be technically valid but Google cannot parse the variant relationships correctly, and no swatches will appear. Every dimension listed in variesBy must be present as a property on every variant. This is one of the most common silent failures in ProductGroup implementations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is inProductGroupWithID and how is it different from isVariantOf?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "inProductGroupWithID is used on individual variant pages that have their own URL — for example /trainers/red-size-10/ as a distinct Merchant Listing page. Set it to the productGroupID of the parent ProductGroup. This is different from isVariantOf, which links by @id reference within a flat JSON-LD structure on a single page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can individual product variants have different sale prices in ProductGroup schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — sale pricing is set at the variant's offers level, so individual variants can have different sale states. Use priceSpecification with UnitPriceSpecification objects — priceType https://schema.org/StrikethroughPrice for the original price and https://schema.org/SalePrice for the discounted price. The main price field must equal the active sale price."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3; --teal: #0E7490; --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888; --green: #16a34a; --radius: 20px; }
+    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
+    a { color: var(--teal); text-decoration: none; } a:hover { text-decoration: underline; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--text-4); } .breadcrumb a:hover { color: var(--teal); text-decoration: none; } .breadcrumb-sep { opacity: .5; }
+    .hero { padding: 48px 0 40px; }
+    .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+    .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
+    .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s, transform .1s; }
+    .hero-cta:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
+    .hero-secondary { margin-top: 14px; font-size: 13px; color: var(--text-4); }
+    .hero-secondary a { color: var(--text-4); text-decoration: underline; text-underline-offset: 3px; }
+    .shopping-demo { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin: 40px 0; }
+    .demo-label { font-size: 11px; font-weight: 600; color: var(--text-4); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+    .shopping-panel { background: #f8f9fa; border-radius: 10px; padding: 14px; font-family: Arial, sans-serif; max-width: 380px; border: 1px solid #dadce0; }
+    html.dark .shopping-panel { background: #1a1a1a; border-color: #333; }
+    .shopping-header { font-size: 11px; font-weight: 600; color: #202124; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+    html.dark .shopping-header { color: #e8eaed; }
+    .shopping-cards { display: flex; gap: 8px; }
+    .shop-card { background: #fff; border-radius: 8px; border: 1px solid #c6c6c6; padding: 8px; flex: 1; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    html.dark .shop-card { background: #2a2a2a; border-color: #444; }
+    .shop-card-img { background: linear-gradient(135deg,#edecea,#e0ddd8); border-radius: 6px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 6px; }
+    .shop-card-bar { height: 6px; background: #d8d8d8; border-radius: 3px; margin-bottom: 3px; }
+    .shop-card-stars { color: #f4b400; font-size: 9px; letter-spacing: 1px; margin-bottom: 5px; }
+    .shop-card-swatches { display: inline-flex; align-items: center; gap: 3px; border-radius: 99px; padding: 2px 6px; background: #fff; border: 2px solid #34a853; }
+    .shop-card.secondary .shop-card-swatches { border: 1px solid #dadce0; opacity: .5; }
+    .swatch { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .shop-card-swatches span { font-size: 8px; color: #202124; font-weight: 500; }
+    .shopping-callout { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .shopping-callout-item { font-size: 11px; color: var(--teal); background: rgba(14,116,144,.08); border-radius: 99px; padding: 4px 12px; font-weight: 600; }
+    .section { margin-top: 56px; }
+    .section-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 24px; font-weight: 400; margin-bottom: 20px; }
+    .section-lead { font-size: 15px; color: var(--text-3); margin-bottom: 24px; line-height: 1.7; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .benefit-icon { width: 36px; height: 36px; background: rgba(14,116,144,.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .benefit-icon svg { color: var(--teal); }
+    .benefit-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+    .benefit-desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+    .fields-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .fields-table th { text-align: left; padding: 10px 12px; font-weight: 600; color: var(--text-2); border-bottom: 2px solid var(--border); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+    .fields-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+    .fields-table tr:last-child td { border-bottom: none; }
+    .fields-table td:first-child { font-family: 'Courier New', monospace; font-size: 12px; color: var(--teal); font-weight: 600; }
+    .badge-req { display: inline-block; background: rgba(220,38,38,.08); color: #dc2626; border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    .badge-rec { display: inline-block; background: rgba(14,116,144,.08); color: var(--teal); border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    .badge-opt { display: inline-block; background: rgba(0,0,0,.05); color: var(--text-4); border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    html.dark .badge-opt { background: rgba(255,255,255,.08); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .faq-item { background: var(--surface); }
+    .faq-q { width: 100%; text-align: left; padding: 18px 20px; background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'Inter', sans-serif; line-height: 1.4; }
+    .faq-q:hover { color: var(--teal); }
+    .faq-q svg { flex-shrink: 0; color: var(--text-4); transition: transform .2s; }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+    .faq-a { display: none; padding: 14px 20px 18px; font-size: 14px; color: var(--text-3); line-height: 1.7; border-top: 1px solid var(--border); }
+    .faq-item.open .faq-a { display: block; }
+    .nav-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .nav-pill { font-size: 12px; font-weight: 600; color: var(--text-3); border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; text-decoration: none; transition: all .15s; }
+    .nav-pill:hover { border-color: var(--teal); color: var(--teal); text-decoration: none; }
+    .cta-section { margin-top: 56px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; text-align: center; }
+    .cta-section h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 26px; font-weight: 400; margin-bottom: 12px; }
+    .cta-section p { font-size: 15px; color: var(--text-3); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s; }
+    .cta-btn:hover { opacity: .88; text-decoration: none; }
+    .cta-btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: none; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all .15s; }
+    .cta-btn-outline:hover { background: rgba(14,116,144,.06); text-decoration: none; }
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+
+    /* Series sidebar */
+    .page-layout { display: flex; gap: 48px; align-items: flex-start; }
+    .series-sidebar { width: 200px; flex-shrink: 0; position: sticky; top: 88px; }
+    .series-sidebar-inner { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; }
+    .series-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 12px; }
+    .series-item { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border-radius: 8px; margin-bottom: 2px; text-decoration: none; transition: background .12s; }
+    .series-item:hover { background: var(--bg); }
+    .series-item.active { background: rgba(14,116,144,.07); pointer-events: none; }
+    .series-item-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); }
+    .series-item.active .series-item-type { color: var(--teal); }
+    .series-item-name { font-size: 12px; font-weight: 600; color: var(--text-2); line-height: 1.3; }
+    .series-item.active .series-item-name { color: var(--teal); }
+    .page-content { flex: 1; min-width: 0; }
+    @media (max-width: 860px) { .series-sidebar { display: none; } }
+
+      @media(max-width:600px){main{padding:24px 16px 60px}.container{padding:0}}
+    .cta-badge { background: rgba(255,255,255,.25); border-radius: 99px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-left: 2px; }
+    /* Code blocks */
+    .code-wrap { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .code-lang { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-4); }
+    .code-copy { font-size: 11px; font-weight: 600; color: var(--teal); cursor: pointer; border: none; background: none; padding: 4px 10px; border-radius: 99px; transition: background .12s; font-family: 'Inter', sans-serif; }
+    .code-copy:hover { background: rgba(14,116,144,.08); }
+    .code-block { margin: 0; padding: 20px; background: #1e1e1e; overflow-x: auto; font-size: 12px; line-height: 1.8; }
+    .code-block code { color: #d4d0c8; font-family: 'Courier New', monospace; white-space: pre; }
+    /* Steps */
+    .steps-list { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
+    .step-item { display: flex; gap: 18px; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .step-content h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--text-1); }
+    .step-content p { font-size: 14px; color: var(--text-3); line-height: 1.7; }
+    .step-content p + p { margin-top: 8px; }
+    /* Challenges */
+    .challenges-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+    .challenge-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+    .challenge-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+    .challenge-title::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 5px; }
+    .challenge-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; }
+    .challenge-fix { margin-top: 12px; font-size: 12px; color: var(--text-2); background: rgba(14,116,144,.05); border-left: 3px solid var(--teal); padding: 10px 14px; border-radius: 0 8px 8px 0; line-height: 1.6; }
+    .challenge-fix strong { color: var(--teal); }
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+<main>
+<div class="page-layout">
+
+<aside class="series-sidebar">
+  <div class="series-sidebar-inner">
+    <div class="series-label">Also in this series</div>
+    <a href="/product-schema/" class="series-item"><span class="series-item-type">Overview</span><span class="series-item-name">Product structured data</span></a>
+    <a href="/product-snippet-schema/" class="series-item"><span class="series-item-type">Type 1</span><span class="series-item-name">Product Snippet schema</span></a>
+    <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Type 2</span><span class="series-item-name">Merchant Listing schema</span></a>
+    <div class="series-item active"><span class="series-item-type">Type 3</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></div>
+  </div>
+</aside>
+<div class="page-content">
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/learn-seo/">Learn SEO</a><span class="breadcrumb-sep">›</span>
+    <a href="/product-schema/">Product Schema</a><span class="breadcrumb-sep">›</span>
+    <span>Product Variants</span>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-label">Product Structured Data</p>
+    <h1>ProductGroup &amp; Variants Schema Markup</h1>
+    <p class="hero-lead">Colours, sizes, materials. Groups all variants under one ProductGroup so Google can show swatches and per-variant pricing in Shopping. The most complex of the three. Worth doing properly.</p>
+    <a href="/product-variants-schema-generator/" class="hero-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Generate Product Variants Schema <span class="cta-badge">Free</span>
+    </a>
+    <p class="hero-secondary">Single product, no variants? <a href="/product-snippet-schema/">Use Product Snippet schema</a> instead.</p>
+  </section>
+
+  <!-- Shopping demo -->
+  <div class="shopping-demo">
+    <p class="demo-label">Product Variants in Google Shopping</p>
+    <div class="shopping-panel">
+      <div class="shopping-header">
+        <svg width="13" height="13" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" rx="2" fill="#4285F4"/><rect x="13" y="1" width="10" height="10" rx="2" fill="#EA4335"/><rect x="1" y="13" width="10" height="10" rx="2" fill="#34A853"/><rect x="13" y="13" width="10" height="10" rx="2" fill="#FBBC05"/></svg>
+        Popular products
+      </div>
+      <div class="shopping-cards">
+        <div class="shop-card">
+          <div class="shop-card-img">🧥</div>
+          <div class="shop-card-bar" style="width:88%"></div>
+          <div class="shop-card-bar" style="width:52%;margin-bottom:5px"></div>
+          <div class="shop-card-stars">★★★★☆</div>
+          <div class="shop-card-swatches">
+            <div class="swatch" style="background:#555"></div>
+            <div class="swatch" style="background:#4285f4"></div>
+            <div class="swatch" style="background:#ea4335"></div>
+            <span>+more</span>
+          </div>
+        </div>
+        <div class="shop-card secondary" style="opacity:.35">
+          <div class="shop-card-img">🧥</div>
+          <div class="shop-card-bar" style="width:88%"></div>
+          <div class="shop-card-bar" style="width:52%;margin-bottom:5px"></div>
+          <div class="shop-card-stars">★★★★★</div>
+          <div class="shop-card-swatches">
+            <div class="swatch" style="background:#555"></div>
+            <div class="swatch" style="background:#4285f4"></div>
+            <span>+more</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="shopping-callout">
+      <span class="shopping-callout-item">Colour swatches</span>
+      <span class="shopping-callout-item">Variant pricing</span>
+      <span class="shopping-callout-item">Per-variant stock</span>
+      <span class="shopping-callout-item">Size options</span>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <section class="section">
+    <h2 class="section-title">What Product Variants schema unlocks</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="benefit-title">Colour swatches in Shopping</div>
+        <div class="benefit-desc">Google shows colour dots on the Shopping card, so shoppers can filter by colour before clicking through.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="benefit-title">Variant-specific pricing</div>
+        <div class="benefit-desc">Each variant shows its own price and availability, so sold-out variants and price ranges display correctly.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="benefit-title">Reduced duplicate markup</div>
+        <div class="benefit-desc">Shared attributes (brand, description, pattern) live on the ProductGroup — variants only specify what differs.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <div class="benefit-title">Apparel, footwear, furniture and more</div>
+        <div class="benefit-desc">Any product with selectable options (colour, size, material, pattern) benefits from ProductGroup schema.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Required fields -->
+  <section class="section">
+    <h2 class="section-title">Key properties for Product Variants schema</h2>
+    <p class="section-lead">ProductGroup holds shared attributes. Each variant is a Product nested inside <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code> — or linked back via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">isVariantOf</code> in flat mode. The <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code> array must contain at least one valid variant — each variant must have an <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">offers</code> object or the ProductGroup can fail validation entirely.</p>
+    <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
+      <table class="fields-table">
+        <thead><tr><th>Property</th><th>Level</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>name</td><td>Group</td><td><span class="badge-req">Required</span></td><td>Product family name (e.g. "Wool Winter Coat"). Must match the h1 on the page.</td></tr>
+          <tr><td>url</td><td>Group</td><td><span class="badge-req">Required</span></td><td>Canonical URL for the product family page.</td></tr>
+          <tr><td>variesBy</td><td>Group</td><td><span class="badge-req">Required</span></td><td>Dimensions that vary — must be full schema.org URIs: <code>https://schema.org/color</code>, <code>https://schema.org/size</code>, <code>https://schema.org/material</code>, <code>https://schema.org/pattern</code>, <code>https://schema.org/suggestedAge</code>, <code>https://schema.org/suggestedGender</code>. Plain text values like <code>"Color"</code> are valid JSON-LD but <strong>will not</strong> trigger Shopping colour swatches.</td></tr>
+          <tr><td>hasVariant</td><td>Group</td><td><span class="badge-req">Required</span></td><td>Array of Product objects, one per variant. Every variant must have an <code>offers</code> object — one missing offer can fail the whole group. Keep out-of-stock variants with <code>OutOfStock</code> availability rather than removing them.</td></tr>
+          <tr><td>productGroupID</td><td>Group</td><td><span class="badge-rec">Recommended</span></td><td>Your unique identifier for this product group. Should match the <code>item_group_id</code> in your Google Merchant Center feed — this is how Google correlates your schema with your feed.</td></tr>
+          <tr><td>brand</td><td>Group</td><td><span class="badge-rec">Recommended</span></td><td>Brand as a nested <code>Brand</code> object: <code>{"@type": "Brand", "name": "Acme"}</code>. Required for apparel Shopping eligibility.</td></tr>
+          <tr><td>description</td><td>Group</td><td><span class="badge-rec">Recommended</span></td><td>Product family description. Helps Google understand the product and improves Shopping matching accuracy.</td></tr>
+          <tr><td>image</td><td>Group</td><td><span class="badge-rec">Recommended</span></td><td>Hero image for the product family. Must be crawlable and indexable.</td></tr>
+          <tr><td>aggregateRating</td><td>Group</td><td><span class="badge-rec">Recommended</span></td><td>Group-level rating — requires <code>ratingValue</code> and <code>reviewCount</code>. Place at ProductGroup level when rating applies across all variants. Enables star ratings in both organic search results and Shopping.</td></tr>
+          <tr><td>name</td><td>Variant</td><td><span class="badge-req">Required</span></td><td>Variant-specific name (e.g. "Wool Coat — Red, M").</td></tr>
+          <tr><td>offers</td><td>Variant</td><td><span class="badge-req">Required</span></td><td>Offer with <code>price</code> (numeric, greater than zero for Merchant Listing eligibility), <code>priceCurrency</code>, and <code>availability</code>. Add <code>offers.url</code> pointing to the variant purchase URL — this is distinct from <code>Product.url</code> and is used for Merchant Listing matching.</td></tr>
+          <tr><td>color / size / material</td><td>Variant</td><td><span class="badge-rec">Recommended</span></td><td>The attribute values that differentiate this variant. Every dimension declared in <code>variesBy</code> must appear as a property on every variant — if they don't match, swatches fail silently.</td></tr>
+          <tr><td>url</td><td>Variant</td><td><span class="badge-rec">Recommended</span></td><td>Canonical URL for this specific variant page. For Shopify, use the <code>?variant=ID</code> URL. Note: <code>Product.url</code> is the canonical product URL; <code>offers.url</code> is the purchase URL — they are typically the same for ecommerce, but both should be set.</td></tr>
+          <tr><td>image</td><td>Variant</td><td><span class="badge-rec">Recommended</span></td><td>Variant-specific image (e.g. the red colourway). Directly influences which image appears in Shopping for this variant.</td></tr>
+          <tr><td>sku / gtin13</td><td>Variant</td><td><span class="badge-rec">Recommended</span></td><td>Variant-level identifiers. GTIN must pass GS1 Luhn checksum validation. If using SKU instead of GTIN, use it as the item ID in your Merchant Center feed too. GTINs are how Google matches your schema to the Shopping knowledge graph.</td></tr>
+          <tr><td>inProductGroupWithID</td><td>Variant</td><td><span class="badge-rec">Recommended</span></td><td>Used when each variant is a <strong>separate Merchant Listing page</strong> — set to the <code>productGroupID</code> of the parent group. This links the individual variant page back to its group for colour swatch eligibility. Different from <code>isVariantOf</code>, which links by <code>@id</code> reference in flat JSON-LD structures on the same page.</td></tr>
+          <tr><td>offers.shippingDetails</td><td>Variant</td><td><span class="badge-opt">Optional</span></td><td>Required for Merchant Listing eligibility on variant purchase pages. Include handling time and transit time. Define at Organisation level if shipping policy is the same across all products.</td></tr>
+          <tr><td>hasMerchantReturnPolicy</td><td>Variant</td><td><span class="badge-opt">Optional</span></td><td>Required for Merchant Listing eligibility on variant purchase pages. <code>returnPolicyCategory</code> and <code>applicableCountry</code> are required within the object. Define at Organisation level to avoid repetition.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:20px;background:rgba(14,116,144,.06);border:1px solid rgba(14,116,144,.18);border-radius:14px;padding:16px 20px;font-size:13px;color:var(--text-2);line-height:1.6;">
+      <strong style="color:var(--teal)">Apparel and footwear:</strong> For apparel products in Google Shopping, <code>color</code>, <code>size</code>, and <code>brand</code> are required at the variant level. <code>suggestedGender</code> is strongly recommended. These requirements apply to the UK, US, Brazil, France, Germany, and Japan markets.
+    </div>
+
+    <div style="margin-top:14px;background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.18);border-radius:14px;padding:16px 20px;font-size:13px;color:var(--text-2);line-height:1.6;">
+      <strong style="color:#dc2626">ProductGroup page vs. Merchant Listing variant pages:</strong> These are two different scenarios. <strong>ProductGroup on a product family page</strong> uses <code>hasVariant</code> to group variants for swatch eligibility. <strong>Individual variant as a separate purchase page</strong> needs full Merchant Listing markup (price, shipping, returns) plus <code>inProductGroupWithID</code> to link back to the group. Many sites need both: ProductGroup on the product page, Merchant Listing on each variant URL.
+    </div>
+  </section>
+
+  <!-- How to implement -->
+  <section class="section">
+    <h2 class="section-title">How to implement ProductVariant schema</h2>
+    <p class="section-lead">Google's official documentation explains what ProductVariant schema is well enough. What it skips is the CMS that doesn't store things the way schema.org expects, the variant with a missing price that breaks the entire group, and the part where you validate it three months later and find it was never rendering correctly. Here's how to do it properly from the start.</p>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Mark up the ProductGroup first</h3>
+          <p>The ProductGroup holds everything your variants share: name, description, brand, hero image, aggregate rating. The most important property here is <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">variesBy</code> — it tells Google which dimensions differ across variants.</p>
+          <p>Use the full schema.org URI, not plain text. <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">"https://schema.org/color"</code> works. <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">"Color"</code> does not trigger Shopping swatches.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Choose your structure: nested or flat</h3>
+          <p><strong>Nested</strong>: all variant Products live inside <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">hasVariant</code> in a single JSON-LD block. Recommended for most implementations.</p>
+          <p><strong>Flat</strong>: ProductGroup and each variant are separate JSON-LD objects. Each variant links back via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">isVariantOf</code> with a shared <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">@id</code>. Better for headless setups or very large catalogues where variants render independently. Both are valid.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Add variant-level detail, including GTINs</h3>
+          <p>Each variant needs at minimum: <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">name</code> and <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers</code> (price + currency + availability). Also add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">sku</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">gtin13</code>, the differentiating attributes (color/size), a variant-specific URL, and a variant image where available.</p>
+          <p>Get the GTIN if you can; it's how Google matches your schema to its product database for Shopping. If you're using SKU instead, use it as the item ID in your Merchant Center feed too, so the two stay in sync.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Validate before you deploy</h3>
+          <p>Run every implementation through <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google's Rich Results Test</a>. Common errors: missing <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers</code> on a variant, incorrect <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">variesBy</code> values (text vs URI), and variant URLs that don't resolve. Fix those before you move on.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Monitor in Search Console</h3>
+          <p>After deployment, check two places: <strong>Enhancements → Merchant listings</strong> (Shopping eligibility and errors — this is where variant/swatch issues appear) and <strong>Enhancements → Product snippets</strong> (organic rich results — star ratings, review counts). They are different reports for different features. Also filter <strong>Performance → Search type: Shopping</strong> to see whether variant impressions are growing. Expect indexing signals within a few weeks. Set a reminder — variant schema problems fail silently and often go unnoticed for months.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JSON-LD examples -->
+  <section class="section">
+    <h2 class="section-title">JSON-LD examples</h2>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:32px">Nested structure (recommended)</h3>
+    <p class="section-lead" style="margin-bottom:0">All variants inside one <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">hasVariant</code> array. Simplest to implement, easiest to validate. Both <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">Product.url</code> and <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers.url</code> point to the variant URL — <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">Product.url</code> is the canonical page URL; <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers.url</code> is the purchase URL used for Merchant Listing matching. For ecommerce these are the same, but both should be set.</p>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">JSON-LD</span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre class="code-block"><code>{
+  "@context": "https://schema.org/",
+  "@type": "ProductGroup",
+  "name": "Wool Winter Coat",
+  "description": "A classic wool coat available in multiple colours and sizes.",
+  "url": "https://example.com/products/wool-winter-coat",
+  "brand": { "@type": "Brand", "name": "Example Brand" },
+  "productGroupID": "WC-001",
+  "variesBy": [
+    "https://schema.org/color",
+    "https://schema.org/size"
+  ],
+  "image": "https://example.com/images/wool-coat-hero.jpg",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.7,
+    "reviewCount": 89
+  },
+  "hasVariant": [
+    {
+      "@type": "Product",
+      "name": "Wool Winter Coat — Camel, S",
+      "color": "Camel",
+      "size": "S",
+      "sku": "WC-001-CAM-S",
+      "gtin13": "5901234123457",
+      "url": "https://example.com/products/wool-winter-coat?variant=camel-s",
+      "image": "https://example.com/images/wool-coat-camel.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": 189.00,
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock",
+        "url": "https://example.com/products/wool-winter-coat?variant=camel-s"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Wool Winter Coat — Black, M",
+      "color": "Black",
+      "size": "M",
+      "sku": "WC-001-BLK-M",
+      "gtin13": "5901234123464",
+      "url": "https://example.com/products/wool-winter-coat?variant=black-m",
+      "image": "https://example.com/images/wool-coat-black.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": 189.00,
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/OutOfStock",
+        "url": "https://example.com/products/wool-winter-coat?variant=black-m"
+      }
+    }
+  ]
+}</code></pre>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Flat structure (isVariantOf)</h3>
+    <p class="section-lead" style="margin-bottom:0">ProductGroup and each variant are separate JSON-LD objects on the same page. Variants link back via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">isVariantOf</code> referencing the ProductGroup's <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">@id</code>. Better for headless setups or large catalogues where variants render independently. Note: if each variant has its own separate URL (its own page), use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">inProductGroupWithID</code> on each variant's Merchant Listing markup instead.</p>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">JSON-LD</span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre class="code-block"><code>[
+  {
+    "@context": "https://schema.org/",
+    "@type": "ProductGroup",
+    "@id": "https://example.com/products/wool-winter-coat#product-group",
+    "name": "Wool Winter Coat",
+    "url": "https://example.com/products/wool-winter-coat",
+    "brand": { "@type": "Brand", "name": "Example Brand" },
+    "productGroupID": "WC-001",
+    "variesBy": [
+      "https://schema.org/color",
+      "https://schema.org/size"
+    ]
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Wool Winter Coat — Camel, S",
+    "color": "Camel",
+    "size": "S",
+    "sku": "WC-001-CAM-S",
+    "gtin13": "5901234123457",
+    "isVariantOf": {
+      "@id": "https://example.com/products/wool-winter-coat#product-group"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": 189.00,
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock",
+      "url": "https://example.com/products/wool-winter-coat?variant=camel-s"
+    }
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Wool Winter Coat — Black, M",
+    "color": "Black",
+    "size": "M",
+    "sku": "WC-001-BLK-M",
+    "gtin13": "5901234123464",
+    "isVariantOf": {
+      "@id": "https://example.com/products/wool-winter-coat#product-group"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": 189.00,
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock",
+      "url": "https://example.com/products/wool-winter-coat?variant=black-m"
+    }
+  }
+]</code></pre>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Shopify: product.liquid</h3>
+    <p class="section-lead" style="margin-bottom:0">Generates ProductGroup schema dynamically from Shopify's native variant data. Add to your <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">product.liquid</code> template inside a <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">{% if product.variants.size > 1 %}</code> check. Include <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">variant.barcode</code> if you have GTINs stored in Shopify. <strong>Requires Shopify Online Store 2.0</strong> — uses the <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">image_url</code> filter. For legacy themes using Dawn 1.x or older, replace <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">image_url: width: 800</code> with <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">img_url: '800x'</code>. Note: if your product options don't include Color, Size, or Material (e.g. "Style", "Scent", "Finish"), the <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">variesBy</code> array will output empty — add a case for your custom options or the ProductGroup won't be eligible for Shopping swatches.</p>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">Liquid</span>
+        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre class="code-block"><code>{% if product.variants.size > 1 %}
+&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org/",
+  "@type": "ProductGroup",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncatewords: 50 | json }},
+  "url": {{ canonical_url | json }},
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | json }}
+  },
+  "productGroupID": {{ product.id | json }},
+  "image": {{ product.featured_image | image_url: width: 1200 | prepend: "https:" | json }},
+  "variesBy": [
+    {% assign first = true %}
+    {% for option in product.options %}
+      {% case option %}
+        {% when "Color", "Colour" %}
+          {% unless first %},{% endunless %}"https://schema.org/color"
+          {% assign first = false %}
+        {% when "Size" %}
+          {% unless first %},{% endunless %}"https://schema.org/size"
+          {% assign first = false %}
+        {% when "Material" %}
+          {% unless first %},{% endunless %}"https://schema.org/material"
+          {% assign first = false %}
+      {% endcase %}
+    {% endfor %}
+  ],
+  "hasVariant": [
+    {% for variant in product.variants %}
+    {
+      "@type": "Product",
+      "name": {{ product.title | append: " — " | append: variant.title | json }},
+      "sku": {{ variant.sku | json }},
+      "url": {{ canonical_url | append: "?variant=" | append: variant.id | json }},
+      "image": {{ variant.image.src | default: product.featured_image.src | image_url: width: 800 | prepend: "https:" | json }},
+      {% for i in (0..2) %}
+        {% assign opt = product.options[i] %}
+        {% case opt %}
+          {% when "Color", "Colour" %}"color": {{ variant.options[i] | json }},
+          {% when "Size" %}"size": {{ variant.options[i] | json }},
+          {% when "Material" %}"material": {{ variant.options[i] | json }},
+        {% endcase %}
+      {% endfor %}
+      "offers": {
+        "@type": "Offer",
+        "price": {{ variant.price | divided_by: 100.0 | json }},
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url": {{ canonical_url | append: "?variant=" | append: variant.id | json }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+&lt;/script&gt;
+{% endif %}</code></pre>
+    </div>
+  </section>
+
+  <!-- Challenges -->
+  <section class="section">
+    <h2 class="section-title">Common implementation challenges</h2>
+    <p class="section-lead">ProductVariant schema is technically optional the same way that QA testing is technically optional. What follows is a list of things that will happen to you if you skip the hard parts.</p>
+    <div class="challenges-list">
+      <div class="challenge-item">
+        <div class="challenge-title">Your CMS doesn't store variesBy as schema.org URIs</div>
+        <div class="challenge-desc">Most platforms store variant options as plain text — Shopify uses <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">option1</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">option2</code>, WooCommerce uses attribute slugs. None of them produce <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/color</code> automatically. Sending <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">"Color"</code> is technically valid schema — it just won't trigger Shopping swatches.</div>
+        <div class="challenge-fix"><strong>Fix:</strong> Build a mapping layer in your template that converts platform option names to schema.org URIs. See the Shopify Liquid example above for exactly how.</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-title">One incomplete variant breaks the whole group</div>
+        <div class="challenge-desc">If any variant in your <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">hasVariant</code> array is missing a required property — usually <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers</code> — the ProductGroup can fail validation entirely. Discontinued variants, draft products, and seasonal items are the usual culprits.</div>
+        <div class="challenge-fix"><strong>Fix:</strong> Filter out variants with incomplete data before generating schema. A sold-out variant with <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">OutOfStock</code> availability is valid. A variant with no <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers</code> object at all is not.</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-title">Hardcoded schema goes stale</div>
+        <div class="challenge-desc">Prices change. Variants sell out. New colours launch. Hardcoded JSON-LD was accurate on day one and wrong by week two. Stale schema is worse than no schema — Google can surface incorrect pricing from your markup in Shopping results. That is the kind of thing that ends up as a screenshot in your inbox.</div>
+        <div class="challenge-fix"><strong>Fix:</strong> Generate schema dynamically at render time. Pull live variant data from your platform's template variables or API, not from a hardcoded block.</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-title">variesBy doesn't match your actual variant properties</div>
+        <div class="challenge-desc">If you declare <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">"variesBy": ["https://schema.org/color"]</code> but none of your variant objects have a <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">"color"</code> property, Google can't parse the variant relationships correctly. This fails silently — no validator error, no swatches.</div>
+        <div class="challenge-fix"><strong>Fix:</strong> Every dimension in <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">variesBy</code> must appear as a property on every variant. Check this as part of your QA process, not as an afterthought.</div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-title">URL strategy decided after implementation</div>
+        <div class="challenge-desc">ProductGroup schema works differently depending on whether variants have their own URLs or share a parent URL. Mixing strategies — or switching strategy after go-live — means restructuring all your markup.</div>
+        <div class="challenge-fix"><strong>Fix:</strong> Decide your URL strategy before you write a single line of schema. Document it so the next person doesn't undo it quietly six months later.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Does each product variant need its own URL for ProductGroup schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">No. ProductGroup schema supports both a single page with all variants selectable and separate pages per variant. For separate pages, each variant Product should have its own url property. For a single page, the ProductGroup and all variants can share the same URL.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Which values does Google support in the variesBy property for ProductGroup schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Google officially supports these full schema.org URIs: <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/color</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/size</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/suggestedAge</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/suggestedGender</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/material</code>, and <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/pattern</code>. These must be full URIs — plain text values like <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">"Color"</code> are valid JSON-LD but <strong>will not</strong> trigger Shopping colour swatches.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What's the difference between nested and flat ProductGroup schema structure?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">In nested structure, variant Products sit inside ProductGroup via hasVariant. In flat structure, the ProductGroup and each variant Product are separate JSON-LD objects, with each variant linking back via isVariantOf. Both are valid — our generator supports both with a toggle.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I implement ProductGroup schema in a Shopify product.liquid template?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes. Add ProductGroup JSON-LD to your product.liquid template. Each Shopify variant maps to a Product object inside hasVariant. Use the variant URL (with ?variant= parameter) as the url for each variant, and the main product URL for the ProductGroup.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Should aggregateRating go on the ProductGroup or on each individual variant?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Google recommends placing aggregateRating at the ProductGroup level when the rating applies to the product as a whole. Only add variant-level ratings if individual variants have genuinely distinct review sets, which is rare.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Should I remove out-of-stock variants from my ProductGroup schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Keep it in. Remove it and your schema goes stale the moment stock levels change. Set <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">availability</code> to <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/OutOfStock</code> and Google will display the correct status in Shopping results — which is genuinely useful to a shopper deciding whether to click. Dynamic schema generation handles this automatically.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Does ProductGroup schema on my website affect my Google Merchant Center feed?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes. ProductGroup schema on your website is one of the signals Google uses for automatic item updates and feed supplementation in Merchant Center. SKUs and GTINs at the variant level are particularly important — they allow Google to match your schema data to your feed and correct pricing discrepancies automatically. If you run a Merchant Center feed alongside ProductGroup schema, GTINs are worth the effort.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What happens if my variesBy values don't match the properties on my variant objects?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">The markup will be technically valid but Google can't parse the variant relationships correctly — and no swatches will appear. If you declare <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">variesBy: [color]</code> but your variant objects have no <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">color</code> property, the mismatch fails silently. Every dimension listed in <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">variesBy</code> must be present as a property on every variant.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is inProductGroupWithID and how is it different from isVariantOf?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a"><code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">inProductGroupWithID</code> is used on individual variant pages that have their own URL — for example <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">/trainers/red-size-10/</code> as a distinct product page with its own Merchant Listing schema. Set it to the <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">productGroupID</code> of the parent ProductGroup to link them. This is different from <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">isVariantOf</code>, which links by <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">@id</code> reference within a flat JSON-LD structure on a single page.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can individual product variants have different sale prices in ProductGroup schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes — sale pricing is set at the variant's <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers</code> level, so individual variants can have different sale states. Use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">priceSpecification</code> with a <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">UnitPriceSpecification</code> of type <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/StrikethroughPrice</code> for the original price and <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">https://schema.org/SalePrice</code> for the discounted price. The main <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">price</code> field must equal the active (sale) price. See the <a href="/merchant-listing-schema/">Merchant Listing guide</a> for a full sale pricing example.</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Also in this series</h2>
+    <div class="nav-pills">
+      <a href="/product-schema/" class="nav-pill">Overview: Product structured data</a>
+      <a href="/product-snippet-schema/" class="nav-pill">Product Snippet schema</a>
+      <a href="/merchant-listing-schema/" class="nav-pill">Merchant Listing schema</a>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <h2>Generate valid Product Variants schema</h2>
+    <p>Add variants, choose nested or flat output, and get clean JSON-LD in seconds. No account needed.</p>
+    <div class="cta-links">
+      <a href="/product-variants-schema-generator/" class="cta-btn">Open Schema Generator →</a>
+      <a href="/merchant-listing-schema/" class="cta-btn-outline">Merchant Listing schema →</a>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+</main>
+<footer><p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-schema/" style="color:inherit;opacity:.7">Product Schema</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a></p>  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script>
+function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!open)item.classList.add('open');}
+function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');navigator.clipboard.writeText(code.textContent).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);});}
+</script>
+</body>
+</html>

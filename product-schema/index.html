@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Schema Markup — Product Structured Data Intro | MagsTags</title>
+  <meta name="description" content="An introduction to Product structured data for Google Search. Learn the three types — Product Snippet, Merchant Listing, and Product Variants — and when to use each.">
+  <link rel="canonical" href="https://www.magstags.com/product-schema/">
+  <meta property="og:title" content="Product Schema Markup — Introduction to Product Structured Data">
+  <meta property="og:description" content="Learn the three types of Product structured data — Product Snippet, Merchant Listing, and Product Variants — and when to use each for Google rich results.">
+  <meta property="og:url" content="https://www.magstags.com/product-schema/">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "WebPage",
+    "@id": "https://www.magstags.com/product-schema/",
+    "name": "Product Schema Markup — Introduction to Product Structured Data",
+    "description": "An introduction to Product structured data for Google Search. Learn the three types — Product Snippet, Merchant Listing, and Product Variants.",
+    "url": "https://www.magstags.com/product-schema/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Learn SEO", "item": "https://www.magstags.com/learn-seo/" },
+      { "@type": "ListItem", "position": 3, "name": "Product Schema Markup", "item": "https://www.magstags.com/product-schema/" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Product schema markup?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Product schema markup is structured data — added to a web page as JSON-LD — that tells Google about the product on that page. It enables different Google features depending on the type: star ratings and pricing in organic search (Product Snippet), Shopping panel appearances and price drop alerts (Merchant Listing), and colour swatches in Google Shopping (Product Variants)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the three types of Product structured data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Google recognises three main types: Product Snippet (for any page describing a product: reviews, editorial, aggregators, and merchant pages), Merchant Listing (for merchant pages where customers can buy the product), and Product Variants (for products with options like colour, size, or material, using ProductGroup schema)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can a page be eligible for both Product Snippet and Merchant Listing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. A merchant product page can qualify for both. Adding the required properties for Merchant Listings also makes the page eligible for Product Snippets. Google recommends providing as much product information as possible to maximise eligibility across different surfaces."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a different schema type for product variants?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. If your product comes in multiple colours, sizes, or materials, use ProductGroup schema with hasVariant. This groups all variants under a parent entity, enabling colour swatches and variant-specific pricing in Google Shopping."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does adding schema guarantee a rich result?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Schema markup makes your page eligible for rich results; Google decides whether to show them based on content quality, markup accuracy, and its own policies. A page that passes the Rich Results Test and accurately reflects the page content will be considered, but Google does not guarantee any particular appearance in search results."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if my schema doesn't match the page content?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Google may ignore the markup, or in cases of deliberate misleading data, apply a manual action that removes rich results from the site. Your structured data must accurately describe the product on the page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need Google Merchant Center to use Merchant Listing schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not for free Shopping appearances driven by structured data. Google can surface Merchant Listing pages in free listings without a GMC account. However, GMC is required for Shopping Ads (paid), and having an active GMC feed significantly improves coverage of free listings."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I know if my schema is working?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use Google's Rich Results Test (search.google.com/test/rich-results) to validate your markup before publishing. After deploying, check the Search Console Enhancements report under Appearance in GSC, which shows which pages Google has indexed with structured data, any errors found, and impression data for rich results. Allow 1–2 weeks after deployment for GSC data to populate."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3;
+      --teal: #0E7490; --teal-light: #14b8a6;
+      --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888;
+      --green: #16a34a; --radius: 20px;
+    }
+    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+
+    .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--text-4); }
+    .breadcrumb a:hover { color: var(--teal); text-decoration: none; }
+    .breadcrumb-sep { opacity: .5; }
+
+    .hero { padding: 48px 0 40px; }
+    .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+    .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
+    .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s, transform .1s; }
+    .hero-cta:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
+
+    .section { margin-top: 56px; }
+    .section-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 24px; font-weight: 400; margin-bottom: 20px; }
+    .section-lead { font-size: 15px; color: var(--text-3); margin-bottom: 24px; line-height: 1.7; }
+
+    /* Type cards */
+    .type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .type-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; transition: border-color .15s, transform .1s; position: relative; cursor: pointer; }
+    .type-card:hover { border-color: var(--teal); transform: translateY(-2px); text-decoration: none; }
+    .type-card-name a { color: inherit; text-decoration: none; }
+    .type-card-name a::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
+    .type-card-num { font-size: 11px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; }
+    .type-card-name { font-family: 'DM Serif Display', Georgia, serif; font-size: 20px; font-weight: 400; color: var(--text-1); }
+    .type-card-for { font-size: 12px; color: var(--text-4); font-style: italic; }
+    .type-card-desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+    .type-card-link { font-size: 12px; font-weight: 600; color: var(--teal); margin-top: auto; }
+
+    /* Comparison table */
+    .compare-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 16px; }
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .compare-table th { padding: 12px 16px; background: var(--surface); border-bottom: 2px solid var(--border); font-size: 11px; font-weight: 700; color: var(--text-2); text-align: left; white-space: nowrap; }
+    .compare-table th:not(:first-child) { text-align: center; }
+    .compare-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text-2); font-size: 13px; }
+    .compare-table td:not(:first-child) { text-align: center; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .tick { color: var(--green); font-size: 15px; }
+    .dash { color: var(--text-4); font-size: 14px; }
+
+    /* How it appears */
+    .surfaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .surface-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+    .surface-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 6px; }
+    .surface-name { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+    .surface-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .faq-item { background: var(--surface); }
+    .faq-q { width: 100%; text-align: left; padding: 18px 20px; background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'Inter', sans-serif; line-height: 1.4; }
+    .faq-q:hover { color: var(--teal); }
+    .faq-q svg { flex-shrink: 0; color: var(--text-4); transition: transform .2s; }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+    .faq-a { display: none; padding: 0 20px 18px; font-size: 14px; color: var(--text-3); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 14px; }
+    .faq-item.open .faq-a { display: block; }
+
+    .cta-section { margin-top: 56px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; text-align: center; }
+    .cta-section h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 26px; font-weight: 400; margin-bottom: 12px; }
+    .cta-section p { font-size: 15px; color: var(--text-3); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s; }
+    .cta-btn:hover { opacity: .88; text-decoration: none; }
+    .cta-badge { background: rgba(255,255,255,.22); border-radius: 99px; padding: 2px 9px; font-size: 11px; font-weight: 700; letter-spacing: .03em; }
+
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+
+    /* Series sidebar */
+    .page-layout { display: flex; gap: 48px; align-items: flex-start; }
+    .series-sidebar { width: 200px; flex-shrink: 0; position: sticky; top: 88px; }
+    .series-sidebar-inner { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; }
+    .series-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 12px; }
+    .series-item { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border-radius: 8px; margin-bottom: 2px; text-decoration: none; transition: background .12s; }
+    .series-item:hover { background: var(--bg); }
+    .series-item.active { background: rgba(14,116,144,.07); pointer-events: none; }
+    .series-item-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); }
+    .series-item.active .series-item-type { color: var(--teal); }
+    .series-item-name { font-size: 12px; font-weight: 600; color: var(--text-2); line-height: 1.3; }
+    .series-item.active .series-item-name { color: var(--teal); }
+    .page-content { flex: 1; min-width: 0; }
+    @media (max-width: 860px) { .series-sidebar { display: none; } }
+
+      @media(max-width:600px){main{padding:24px 16px 60px}.container{padding:0}}
+  </style>
+</head>
+<body>
+
+<script src="/header.js"></script>
+
+<main>
+<div class="page-layout">
+
+<aside class="series-sidebar">
+  <div class="series-sidebar-inner">
+    <div class="series-label">In this series</div>
+    <div class="series-item active"><span class="series-item-type">Overview</span><span class="series-item-name">Product structured data</span></div>
+    <a href="/product-snippet-schema/" class="series-item"><span class="series-item-type">Type 1</span><span class="series-item-name">Product Snippet schema</span></a>
+    <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Type 2</span><span class="series-item-name">Merchant Listing schema</span></a>
+    <a href="/product-variants-schema/" class="series-item"><span class="series-item-type">Type 3</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></a>
+  </div>
+</aside>
+<div class="page-content">
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/learn-seo/">Learn SEO</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Product Schema</span>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-label">Structured Data Guide</p>
+    <h1>Product Schema Markup</h1>
+    <p style="font-size:12px;color:var(--text-4);margin-bottom:16px;margin-top:-10px">Last updated: March 2026</p>
+    <p class="hero-lead">Product structured data tells Google about the products on your pages. There are three types, each unlocking different Google features, and a merchant PDP with variants can qualify for all three at once. The difference is in what each type enables and what your page needs to be eligible.</p>
+    <a href="/ecommerce-schema-generator/" class="hero-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Generate Product Schema <span class="cta-badge">Free</span>
+    </a>
+  </section>
+
+  <!-- Three types -->
+  <section class="section">
+    <h2 class="section-title">The three types of Product structured data</h2>
+    <p class="section-lead">Product Snippet and Merchant Listing both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/Product</code> as their base type. Product Variants uses <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/ProductGroup</code> as a parent entity, with individual <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">Product</code> items nested inside via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code>. The difference in all cases is which properties you include and which Google features become available.</p>
+    <p style="font-size:13px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:-8px;margin-bottom:24px">ℹ️ <strong>Product Snippet</strong> and <strong>Merchant Listing</strong> are Google's names for the features they unlock, not different schema types. A merchant product page can qualify for both simultaneously.</p>
+    <div class="type-grid">
+      <div class="type-card">
+        <div class="type-card-num">Type 1</div>
+        <div class="type-card-name"><a href="/product-snippet-schema/" style="color:inherit;text-decoration:none;">Product Snippet<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+        <div class="type-card-for">For: any page describing a product</div>
+        <div class="type-card-desc">Editorial reviews, shopping aggregators, and merchant pages. Enables star ratings, review information, and pricing in organic search results.</div>
+        <div class="type-card-link">Product Snippet guide →</div>
+      </div>
+      <div class="type-card">
+        <div class="type-card-num">Type 2</div>
+        <div class="type-card-name"><a href="/merchant-listing-schema/" style="color:inherit;text-decoration:none;">Merchant Listing<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+        <div class="type-card-for">For: pages where you sell the product</div>
+        <div class="type-card-desc">Merchant and retailer pages. Enables the Shopping panel, Popular products, price drop alerts, and shipping and return details.</div>
+        <div class="type-card-link">Merchant Listing guide →</div>
+      </div>
+      <div class="type-card">
+        <div class="type-card-num">Type 3</div>
+        <div class="type-card-name"><a href="/product-variants-schema/" style="color:inherit;text-decoration:none;">Product Variants<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+        <div class="type-card-for">For: products with colour, size, or material options</div>
+        <div class="type-card-desc">Uses ProductGroup with hasVariant. Groups all variants under a parent, enabling colour swatches and variant pricing in Shopping.</div>
+        <div class="type-card-link">Product Variants guide →</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Minimal example -->
+  <section class="section">
+    <h2 class="section-title">What Product schema looks like</h2>
+    <p class="section-lead">All Product structured data is added as JSON-LD inside a <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">&lt;script type="application/ld+json"&gt;</code> tag in your page HTML. Here is a minimal valid Product schema:</p>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:4px">
+      <div style="background:rgba(0,0,0,.03);border-bottom:1px solid var(--border);padding:10px 16px;font-size:11px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.07em;display:flex;justify-content:space-between;align-items:center">
+        <span>JSON-LD — Minimal Product schema</span>
+        <button onclick="this.closest('div').nextElementSibling.querySelector('code')&&navigator.clipboard.writeText(this.closest('div').nextElementSibling.querySelector('code').textContent).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)})" style="background:var(--teal);color:#fff;border:none;border-radius:99px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer">Copy</button>
+      </div>
+      <pre style="margin:0;padding:16px 20px;overflow-x:auto;font-size:13px;line-height:1.7"><code>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Running Shoe Pro X",
+  "description": "Lightweight road running shoe with carbon-fibre plate and responsive foam.",
+  "brand": {
+    "@type": "Brand",
+    "name": "Acme"
+  },
+  "image": "https://example.com/images/running-shoe-pro-x.jpg",
+  "offers": {
+    "@type": "Offer",
+    "price": 89.99,
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock",
+    "url": "https://example.com/running-shoe-pro-x"
+  }
+}</code></pre>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--text-4)">This qualifies for <strong>Product Snippet</strong> features (price, availability in organic results). To add <strong>Merchant Listing</strong> features (Shopping panel, price drop alerts, shipping/returns), add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasMerchantReturnPolicy</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">shippingDetails</code>, and other required properties. Use the generators below to build the full version.</p>
+  </section>
+
+  <!-- Comparison -->
+  <section class="section">
+    <h2 class="section-title">Which type is right for your page?</h2>
+    <p class="section-lead">Two separate questions: which types your page is eligible for, and what features each type unlocks.</p>
+
+    <p style="font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:10px">Page eligibility</p>
+    <div class="compare-wrap" style="margin-bottom:24px">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Page type</th>
+            <th>Product Snippet</th>
+            <th>Merchant Listing</th>
+            <th>Product Variants</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Editorial review / blog</td><td><span class="tick">✓</span></td><td><span class="dash">—</span></td><td><span class="dash">—</span></td></tr>
+          <tr><td>Shopping aggregator</td><td><span class="tick">✓</span></td><td><span class="dash">—</span></td><td><span class="dash">—</span></td></tr>
+          <tr><td>Merchant PDP — single product</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="dash">—</span></td></tr>
+          <tr><td>Merchant PDP — with colour/size variants</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:-12px;margin-bottom:24px;font-size:12px;color:var(--text-4);line-height:1.6">A merchant PDP with variants can qualify for all three simultaneously; Google recommends adding as many properties as possible to maximise eligibility across surfaces.</p>
+
+    <p style="font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:10px">Features unlocked</p>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Product Snippet</th>
+            <th>Merchant Listing</th>
+            <th>Product Variants</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Star ratings in organic search</td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>Pros and cons in search results <sup>*</sup></td><td><span class="tick">✓</span></td><td><span class="dash">—</span></td><td><span class="dash">—</span></td></tr>
+          <tr><td>Popular Products carousel (Shopping)</td><td><span class="dash">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>Shopping Knowledge Panel</td><td><span class="dash">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>Price drop alerts <sup>†</sup></td><td><span class="dash">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>Colour swatches in Shopping</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>Shipping &amp; returns in results</td><td><span class="dash">—</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px;font-size:12px;color:var(--text-4);line-height:1.6"><sup>*</sup> Pros and cons are only eligible on editorial and third-party review pages, not merchant PDPs.<br><sup>†</sup> Price drop alerts are Google-managed notifications triggered automatically by price changes over time, not a property you set directly in schema.</p>
+  </section>
+
+  <!-- How it appears -->
+  <section class="section">
+    <h2 class="section-title">How Product structured data appears in Google</h2>
+    <div class="surfaces-grid">
+      <div class="surface-card">
+        <div class="surface-label">Organic search</div>
+        <div class="surface-name">Product Snippet</div>
+        <div class="surface-desc">Text result enriched with star ratings, price, and availability directly in the search snippet.</div>
+      </div>
+      <div class="surface-card">
+        <div class="surface-label">Shopping</div>
+        <div class="surface-name">Popular Products</div>
+        <div class="surface-desc">Visually rich product cards shown in a carousel above organic results, with price, image, and seller.</div>
+      </div>
+      <div class="surface-card">
+        <div class="surface-label">Shopping</div>
+        <div class="surface-name">Shopping Knowledge Panel</div>
+        <div class="surface-desc">A dedicated product page aggregating sellers, prices, reviews, and specs, matched across the web using structured data and product identifiers.</div>
+      </div>
+      <div class="surface-card">
+        <div class="surface-label">Shopping</div>
+        <div class="surface-name">Shopping Tab</div>
+        <div class="surface-desc">Products listed in the dedicated Shopping tab in Google Search, separate from the main results page and driven by Merchant Listing schema and GMC data.</div>
+      </div>
+      <div class="surface-card">
+        <div class="surface-label">Images</div>
+        <div class="surface-name">Google Images</div>
+        <div class="surface-desc">Annotated product images with price and availability overlaid when available for sale.</div>
+      </div>
+      <div class="surface-card">
+        <div class="surface-label">Lens</div>
+        <div class="surface-name">Google Lens</div>
+        <div class="surface-desc">When users photograph a product, Lens surfaces matching listings; structured data and product identifiers improve your chances of appearing.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What is Product schema markup?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Product schema markup is structured data — added to a web page as JSON-LD — that tells Google about the product on that page. It enables different Google features depending on the type: star ratings and pricing in organic search (Product Snippet), Shopping panel appearances and price drop alerts (Merchant Listing), and colour swatches in Google Shopping (Product Variants).</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What are the three types of Product structured data?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Google recognises three main types: <strong>Product Snippet</strong> (for any page describing a product — reviews, editorial, aggregators, and merchant pages), <strong>Merchant Listing</strong> (for merchant pages where customers can buy the product directly), and <strong>Product Variants</strong> (for products with options like colour, size, or material, using <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">schema.org/ProductGroup</code>).</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can a page be eligible for both Product Snippet and Merchant Listing?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Yes. A merchant product page can qualify for both simultaneously. Product Snippet and Merchant Listing are Google's names for the features each page is eligible for, not separate schema types. Implement the properties required for both and Google will assess eligibility for each feature independently. Google recommends providing as much product information as possible to maximise reach across surfaces.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need a different schema type for product variants?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Yes. If your product comes in multiple colours, sizes, or materials, use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">ProductGroup</code> schema with <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">hasVariant</code>. This groups all variants under a parent entity, enabling colour swatches and variant-specific pricing in Google Shopping. Both Product Snippet and Merchant Listing pages support product variants.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Does adding schema guarantee a rich result?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">No. Schema markup makes your page <em>eligible</em> for rich results; Google decides whether to show them based on content quality, markup accuracy, and its own policies. A page that passes the Rich Results Test and accurately reflects the page content will be considered, but Google does not guarantee any particular appearance in search results.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What happens if my schema doesn't match the page content?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Google may ignore the markup, or in cases of deliberate misleading data, apply a manual action that removes rich results from the site. Your structured data must accurately describe the product on the page — do not add schema for products not shown, prices that differ from the page, or features the product does not have.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need Google Merchant Center to use Merchant Listing schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Not for free Shopping appearances driven by structured data. Google can surface Merchant Listing pages in free listings without a GMC account. However, Google Merchant Center is required if you want to run Shopping Ads (paid), and having an active GMC feed significantly improves the coverage and accuracy of free listings. For most merchants, connecting GMC is strongly recommended.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How do I know if my schema is working?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Use <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google's Rich Results Test</a> to validate your markup before publishing. After deploying, check the <strong>Search Console Enhancements report</strong> (under Appearance in GSC) — it shows which pages Google has indexed with structured data, any errors found, and impression data for rich results. Allow 1–2 weeks after deployment for GSC data to populate.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <h2>Generate valid Product schema in seconds</h2>
+    <p>Pick your schema type, fill in your product details, and get clean JSON-LD ready to copy. No account needed.</p>
+    <a href="/ecommerce-schema-generator/" class="cta-btn">Open E-commerce — Product Schema Generators →</a>
+  </div>
+
+</div>
+</div>
+</div>
+</main>
+
+<footer>
+  <p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/ecommerce-schema-generator/" style="color:inherit;opacity:.7">Schema Generator</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+    if (!open) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merchant Listing Schema — Google Shopping Structured Data | MagsTags</title>
+  <meta name="description" content="Learn how to implement Merchant Listing structured data (JSON-LD) to appear in Google Shopping, Popular Products, and get price drop alerts. Free generator included.">
+  <link rel="canonical" href="https://www.magstags.com/merchant-listing-schema/">
+  <meta property="og:title" content="Merchant Listing Schema — Google Shopping Structured Data">
+  <meta property="og:description" content="Implement Merchant Listing structured data to appear in Google Shopping, Popular Products, and unlock price drop alerts. Free JSON-LD generator.">
+  <meta property="og:url" content="https://www.magstags.com/merchant-listing-schema/">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "WebPage",
+    "name": "Merchant Listing Schema — Google Shopping Structured Data",
+    "description": "Learn how to implement Merchant Listing structured data to appear in Google Shopping, Popular Products, and unlock price drop alerts.",
+    "url": "https://www.magstags.com/merchant-listing-schema/",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Learn SEO", "item": "https://www.magstags.com/learn-seo/" },
+        { "@type": "ListItem", "position": 3, "name": "Product Schema", "item": "https://www.magstags.com/product-schema/" },
+        { "@type": "ListItem", "position": 4, "name": "Merchant Listing Schema", "item": "https://www.magstags.com/merchant-listing-schema/" }
+      ]
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I use Merchant Listing schema on a category page or product listing page?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Merchant Listing only qualifies on pages where a customer can purchase that specific product directly. Category pages, PLPs, editorial pages, and aggregators are not eligible. Use Product Snippet schema for those."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Merchant Listing schema require a price?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. An offer price greater than zero and a priceCurrency are required. A page with no price, or a price of zero, will not qualify. Availability and image are strongly recommended but not strictly required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between Merchant Listing and Product Snippet schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Product Snippet can be used by any page describing a product, and focuses on reviews and ratings. Merchant Listing is only for merchant pages selling the product, and focuses on offer details: price, availability, shipping, and returns. A merchant page can qualify for both."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does adding shippingDetails to Merchant Listing schema improve Shopping ranking?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Shipping details do not directly affect organic rankings, but they can appear in Shopping results and snippets, which improves click-through rate. Free shipping information is particularly effective at increasing Shopping conversions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a GTIN for every product in Merchant Listing schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GTIN is not strictly required, but products without a GTIN may have limited eligibility in Google Shopping. Google uses GTINs to match your product to its Shopping knowledge graph. If your product has a barcode (EAN or UPC), include it. If not, include MPN and brand as a fallback."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I show a sale or strikethrough price in Merchant Listing schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Use priceSpecification with UnitPriceSpecification objects. Set priceType to https://schema.org/StrikethroughPrice for the original (crossed-out) price and https://schema.org/SalePrice for the discounted price. The main offer price should match the active price on the page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if my schema price does not match the price on the page?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Google actively crawls the page to verify that the schema price matches the displayed and checkout price. If there is a mismatch, your page will fail validation in Rich Results Test and may be excluded from Shopping features. Always keep schema price in sync with the visible price."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use Merchant Listing schema on product variant pages?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — and you should. Each variant URL (for example /trainers/red-size-10/) should have its own Merchant Listing schema with the specific price, availability, color, and size for that variant. Use inProductGroupWithID to link it back to the parent ProductGroup."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3; --teal: #0E7490; --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888; --green: #16a34a; --radius: 20px; }
+    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
+    a { color: var(--teal); text-decoration: none; } a:hover { text-decoration: underline; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--text-4); } .breadcrumb a:hover { color: var(--teal); text-decoration: none; } .breadcrumb-sep { opacity: .5; }
+    .hero { padding: 48px 0 40px; }
+    .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+    .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
+    .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s, transform .1s; }
+    .hero-cta:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
+    .hero-secondary { margin-top: 14px; font-size: 13px; color: var(--text-4); }
+    .hero-secondary a { color: var(--text-4); text-decoration: underline; text-underline-offset: 3px; }
+    .shopping-demo { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin: 40px 0; }
+    .demo-label { font-size: 11px; font-weight: 600; color: var(--text-4); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+    .shopping-panel { background: #f8f9fa; border-radius: 10px; padding: 14px; font-family: Arial, sans-serif; max-width: 340px; border: 1px solid #dadce0; }
+    html.dark .shopping-panel { background: #1a1a1a; border-color: #333; }
+    .shopping-header { font-size: 11px; font-weight: 600; color: #202124; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+    html.dark .shopping-header { color: #e8eaed; }
+    .shopping-cards { display: flex; gap: 8px; }
+    .shop-card { background: #fff; border-radius: 8px; padding: 8px; flex: 1; border: 2px solid #4285f4; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    html.dark .shop-card { background: #2a2a2a; }
+    .shop-card-img { background: linear-gradient(135deg,#edecea,#e0ddd8); border-radius: 6px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 6px; }
+    .shop-card-price { font-size: 11px; font-weight: 700; color: #0d652d; margin-bottom: 2px; }
+    .shop-card-meta { font-size: 9px; color: #4d5156; margin-bottom: 3px; }
+    html.dark .shop-card-meta { color: #9aa0a6; }
+    .shop-card-shipping { font-size: 9px; color: #0d652d; }
+    .shop-card-faded { background: #fff; border-radius: 8px; padding: 8px; flex: 1; border: 1px solid #dadce0; opacity: .3; }
+    html.dark .shop-card-faded { background: #2a2a2a; border-color: #444; }
+    .shopping-callout { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .shopping-callout-item { font-size: 11px; color: var(--teal); background: rgba(14,116,144,.08); border-radius: 99px; padding: 4px 12px; font-weight: 600; }
+    .section { margin-top: 56px; }
+    .section-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 24px; font-weight: 400; margin-bottom: 20px; }
+    .section-lead { font-size: 15px; color: var(--text-3); margin-bottom: 24px; line-height: 1.7; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .benefit-icon { width: 36px; height: 36px; background: rgba(14,116,144,.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .benefit-icon svg { color: var(--teal); }
+    .benefit-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+    .benefit-desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+    .fields-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .fields-table th { text-align: left; padding: 10px 12px; font-weight: 600; color: var(--text-2); border-bottom: 2px solid var(--border); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+    .fields-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+    .fields-table tr:last-child td { border-bottom: none; }
+    .fields-table td:first-child { font-family: 'Courier New', monospace; font-size: 12px; color: var(--teal); font-weight: 600; }
+    .badge-req { display: inline-block; background: rgba(220,38,38,.08); color: #dc2626; border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    .badge-rec { display: inline-block; background: rgba(14,116,144,.08); color: var(--teal); border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    .badge-opt { display: inline-block; background: rgba(0,0,0,.05); color: var(--text-4); border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    html.dark .badge-opt { background: rgba(255,255,255,.08); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .faq-item { background: var(--surface); }
+    .faq-q { width: 100%; text-align: left; padding: 18px 20px; background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'Inter', sans-serif; line-height: 1.4; }
+    .faq-q:hover { color: var(--teal); }
+    .faq-q svg { flex-shrink: 0; color: var(--text-4); transition: transform .2s; }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+    .faq-a { display: none; padding: 14px 20px 18px; font-size: 14px; color: var(--text-3); line-height: 1.7; border-top: 1px solid var(--border); }
+    .faq-item.open .faq-a { display: block; }
+    .nav-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .nav-pill { font-size: 12px; font-weight: 600; color: var(--text-3); border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; text-decoration: none; transition: all .15s; }
+    .nav-pill:hover { border-color: var(--teal); color: var(--teal); text-decoration: none; }
+    .cta-section { margin-top: 56px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; text-align: center; }
+    .cta-section h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 26px; font-weight: 400; margin-bottom: 12px; }
+    .cta-section p { font-size: 15px; color: var(--text-3); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s; }
+    .cta-btn:hover { opacity: .88; text-decoration: none; }
+    .cta-btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: none; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all .15s; }
+    .cta-btn-outline:hover { background: rgba(14,116,144,.06); text-decoration: none; }
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+
+    /* Series sidebar */
+    .page-layout { display: flex; gap: 48px; align-items: flex-start; }
+    .series-sidebar { width: 200px; flex-shrink: 0; position: sticky; top: 88px; }
+    .series-sidebar-inner { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; }
+    .series-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 12px; }
+    .series-item { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border-radius: 8px; margin-bottom: 2px; text-decoration: none; transition: background .12s; }
+    .series-item:hover { background: var(--bg); }
+    .series-item.active { background: rgba(14,116,144,.07); pointer-events: none; }
+    .series-item-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); }
+    .series-item.active .series-item-type { color: var(--teal); }
+    .series-item-name { font-size: 12px; font-weight: 600; color: var(--text-2); line-height: 1.3; }
+    .series-item.active .series-item-name { color: var(--teal); }
+    .page-content { flex: 1; min-width: 0; }
+    @media (max-width: 860px) { .series-sidebar { display: none; } }
+
+      @media(max-width:600px){main{padding:24px 16px 60px}.container{padding:0}}
+
+    .cta-badge { background: rgba(255,255,255,.25); border-radius: 99px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-left: 2px; }
+    .code-wrap { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .code-lang { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); }
+    .code-copy { font-size: 11px; font-weight: 600; color: var(--teal); background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: background .12s; }
+    .code-copy:hover { background: rgba(14,116,144,.07); }
+    .code-block { margin: 0; padding: 20px; background: #1e1e1e; overflow-x: auto; font-size: 12px; line-height: 1.8; }
+    .code-block code { color: #d4d0c8; font-family: 'Courier New', monospace; white-space: pre; }
+    .eligibility-box { background: rgba(220,38,38,.06); border: 1px solid rgba(220,38,38,.18); border-radius: 14px; padding: 16px 20px; margin-bottom: 24px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .eligibility-box strong { color: #dc2626; }
+    html.dark .eligibility-box { background: rgba(220,38,38,.1); }
+    .steps-list { display: flex; flex-direction: column; gap: 0; counter-reset: steps; }
+    .step { display: flex; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step-num { width: 32px; height: 32px; flex-shrink: 0; background: var(--teal); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: font-size; font-size: 13px; font-weight: 700; align-items: center; justify-content: center; }
+    .step-body h4 { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+    .step-body p { font-size: 13px; color: var(--text-3); line-height: 1.65; }
+    .step-body p + p { margin-top: 6px; }
+    .challenge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .challenge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+    .challenge-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #dc2626; margin-bottom: 6px; }
+    .challenge-title { font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+    .challenge-desc { font-size: 12px; color: var(--text-3); line-height: 1.55; }
+    .tip-box { background: rgba(14,116,144,.06); border: 1px solid rgba(14,116,144,.18); border-radius: 14px; padding: 14px 18px; font-size: 13px; color: var(--text-2); line-height: 1.6; margin-top: 20px; }
+    .tip-box strong { color: var(--teal); }
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+<main>
+<div class="page-layout">
+
+<aside class="series-sidebar">
+  <div class="series-sidebar-inner">
+    <div class="series-label">Also in this series</div>
+    <a href="/product-schema/" class="series-item"><span class="series-item-type">Overview</span><span class="series-item-name">Product structured data</span></a>
+    <a href="/product-snippet-schema/" class="series-item"><span class="series-item-type">Type 1</span><span class="series-item-name">Product Snippet schema</span></a>
+    <div class="series-item active"><span class="series-item-type">Type 2</span><span class="series-item-name">Merchant Listing schema</span></div>
+    <a href="/product-variants-schema/" class="series-item"><span class="series-item-type">Type 3</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></a>
+  </div>
+</aside>
+<div class="page-content">
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/learn-seo/">Learn SEO</a><span class="breadcrumb-sep">›</span>
+    <a href="/product-schema/">Product Schema</a><span class="breadcrumb-sep">›</span>
+    <span>Merchant Listing Schema</span>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-label">Product Structured Data</p>
+    <h1>Merchant Listing Schema Markup</h1>
+    <p class="hero-lead">The one that gets you into Google Shopping. Direct merchant pages only — tells Google you're the seller, not just describing the product. Unlocks Popular Products, price drops, and shipping details in search.</p>
+    <a href="/merchant-listing-schema-generator/" class="hero-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Generate Merchant Listing Schema <span class="cta-badge">Free</span>
+    </a>
+    <p class="hero-secondary">Selling products with variants? <a href="/product-variants-schema/">Add ProductGroup schema</a> for colour swatches in Shopping.</p>
+  </section>
+
+  <!-- Shopping demo -->
+  <div class="shopping-demo">
+    <p class="demo-label">Merchant Listing in Google Shopping</p>
+    <div class="shopping-panel">
+      <div class="shopping-header">
+        <svg width="13" height="13" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" rx="2" fill="#4285F4"/><rect x="13" y="1" width="10" height="10" rx="2" fill="#EA4335"/><rect x="1" y="13" width="10" height="10" rx="2" fill="#34A853"/><rect x="13" y="13" width="10" height="10" rx="2" fill="#FBBC05"/></svg>
+        Popular products
+      </div>
+      <div class="shopping-cards">
+        <div class="shop-card">
+          <div class="shop-card-img">👟</div>
+          <div class="shop-card-price">£29.99</div>
+          <div class="shop-card-meta">In stock · example.com</div>
+          <div class="shop-card-shipping">Free delivery</div>
+        </div>
+        <div class="shop-card-faded">
+          <div class="shop-card-img" style="height:56px;background:linear-gradient(135deg,#edecea,#e0ddd8);border-radius:6px;margin-bottom:6px"></div>
+          <div style="height:6px;background:#d8d8d8;border-radius:3px;margin-bottom:3px;width:88%"></div>
+          <div style="height:5px;background:#d8d8d8;border-radius:3px;width:60%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="shopping-callout">
+      <span class="shopping-callout-item">Shopping panel</span>
+      <span class="shopping-callout-item">Free shipping label</span>
+      <span class="shopping-callout-item">Price drop alerts</span>
+      <span class="shopping-callout-item">Returns info</span>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <section class="section">
+    <h2 class="section-title">What Merchant Listing schema unlocks</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="m16 8 5 5-5 5"/></svg></div>
+        <div class="benefit-title">Google Shopping panel</div>
+        <div class="benefit-desc">Eligible for the Popular Products panel and Shopping knowledge panel alongside other sellers.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="benefit-title">Price drop alerts</div>
+        <div class="benefit-desc">Google can notify users when your price drops — driving return traffic without ad spend. Requires a single Offer, not AggregateOffer.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="22" height="18" rx="2"/><path d="M1 9h22"/></svg></div>
+        <div class="benefit-title">Shipping in results</div>
+        <div class="benefit-desc">Free shipping information can appear directly in Shopping cards and search snippets, a strong conversion signal.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.65"/></svg></div>
+        <div class="benefit-title">Return policy visibility</div>
+        <div class="benefit-desc">hasMerchantReturnPolicy can show return window, method, and fees in Shopping results, building buyer confidence.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Required fields -->
+  <section class="section">
+    <h2 class="section-title">Required and recommended properties</h2>
+    <p class="section-lead">Merchant Listing has stricter requirements than Product Snippet: price greater than zero and currency are required at the offer level.</p>
+
+    <div class="eligibility-box">
+      <strong>Page eligibility:</strong> Merchant Listing schema only qualifies on pages where a shopper can directly purchase the product. Category pages, product listing pages, review sites, and editorial pages are not eligible; use <a href="/product-snippet-schema/">Product Snippet schema</a> for those. One URL per currency is required; use separate URLs if you sell in multiple currencies.
+    </div>
+
+    <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
+      <table class="fields-table">
+        <thead><tr><th>Property</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>name</td><td><span class="badge-req">Required</span></td><td>Product name — must match the product name visible on the page.</td></tr>
+          <tr><td>offers.price</td><td><span class="badge-req">Required</span></td><td>Numeric price — must be greater than zero. Must match the price displayed and charged on the page. Free products (price = 0) are not eligible for Merchant Listing.</td></tr>
+          <tr><td>offers.priceCurrency</td><td><span class="badge-req">Required</span></td><td>Three-letter ISO 4217 code (GBP, USD, EUR…). One currency per URL — use separate URLs for different currencies.</td></tr>
+          <tr><td>offers.availability</td><td><span class="badge-rec">Recommended</span></td><td>Full schema.org URI: <code>https://schema.org/InStock</code>, <code>OutOfStock</code>, <code>PreOrder</code>, <code>BackOrder</code>, <code>Discontinued</code>, <code>LimitedAvailability</code>.</td></tr>
+          <tr><td>image</td><td><span class="badge-rec">Recommended</span></td><td>Product image URL. Must be crawlable and indexable. Required for Shopping panel eligibility in practice.</td></tr>
+          <tr><td>description</td><td><span class="badge-rec">Recommended</span></td><td>Product description. Helps Google understand the product and improves Shopping matching accuracy.</td></tr>
+          <tr><td>gtin13 / gtin12 / gtin8 / gtin14</td><td><span class="badge-rec">Recommended</span></td><td>EAN-13, UPC, EAN-8, or ITF-14 barcode. Strong Shopping eligibility signal — Google uses it to match your product in its Shopping knowledge graph. Validate with GS1 checksum before including.</td></tr>
+          <tr><td>mpn</td><td><span class="badge-rec">Recommended</span></td><td>Manufacturer Part Number. Use alongside brand as a fallback when no GTIN exists.</td></tr>
+          <tr><td>sku</td><td><span class="badge-rec">Recommended</span></td><td>Your internal product identifier. If you don't have a GTIN, use this as the item ID in Merchant Center as well.</td></tr>
+          <tr><td>brand</td><td><span class="badge-rec">Recommended</span></td><td>Brand as a nested <code>Brand</code> object: <code>{"@type": "Brand", "name": "Acme"}</code>.</td></tr>
+          <tr><td>offers.url</td><td><span class="badge-rec">Recommended</span></td><td>Canonical URL of the product page. Should be the same as the page's canonical tag.</td></tr>
+          <tr><td>offers.shippingDetails</td><td><span class="badge-rec">Recommended</span></td><td><code>OfferShippingDetails</code> with shippingRate, shippingDestination, and deliveryTime. Include both <code>handlingTime</code> and <code>transitTime</code> within deliveryTime for full shipping annotations. Define at Organisation level if policy applies to all products.</td></tr>
+          <tr><td>hasMerchantReturnPolicy</td><td><span class="badge-rec">Recommended</span></td><td><code>MerchantReturnPolicy</code>. Required properties within it: <code>returnPolicyCategory</code> (e.g. <code>MerchantReturnFiniteReturnWindow</code>) and <code>applicableCountry</code>. Recommended: <code>merchantReturnDays</code>, <code>returnMethod</code>, <code>returnFees</code>. Define at Organisation level to avoid repeating on every product page.</td></tr>
+          <tr><td>inProductGroupWithID</td><td><span class="badge-rec">Recommended</span></td><td>On variant pages — the <code>productGroupID</code> of the parent <code>ProductGroup</code>. Links this variant to the group for colour swatch eligibility in Shopping.</td></tr>
+          <tr><td>offers.priceSpecification</td><td><span class="badge-opt">Optional</span></td><td>For sale / strikethrough pricing: array of <code>UnitPriceSpecification</code> objects. Use <code>priceType: "https://schema.org/StrikethroughPrice"</code> for the original price and <code>"https://schema.org/SalePrice"</code> for the discount. Member pricing uses <code>validForMemberTier</code>.</td></tr>
+          <tr><td>aggregateRating</td><td><span class="badge-opt">Optional</span></td><td>Enables star ratings in search. Requires <code>ratingValue</code> and <code>reviewCount</code>. Works alongside Merchant Listing — adding reviews also qualifies the page for Product Snippet features.</td></tr>
+          <tr><td>offers.itemCondition</td><td><span class="badge-opt">Optional</span></td><td>Full schema.org URI: <code>https://schema.org/NewCondition</code>, <code>RefurbishedCondition</code>, or <code>UsedCondition</code>.</td></tr>
+          <tr><td>offers.priceValidUntil</td><td><span class="badge-opt">Optional</span></td><td>ISO 8601 date string. The offer may stop showing in search if this date has passed — keep it current or remove it.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Implementation guide -->
+  <section class="section">
+    <h2 class="section-title">How to implement Merchant Listing schema</h2>
+    <p class="section-lead">Google recommends putting Merchant Listing structured data in the initial HTML of your product pages, not injected by JavaScript after load. Shopping crawls JS-rendered schema less frequently, which means delayed or missed eligibility.</p>
+    <div class="steps-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Mark up core product data</h4>
+          <p>Start with the product <code>name</code>, <code>image</code>, <code>description</code>, and <code>brand</code>. Add identifiers — <code>gtin13</code> (EAN barcode) or <code>gtin12</code> (UPC) if you have them, validated with GS1 checksum. Use <code>mpn</code> + <code>brand</code> as fallback if no GTIN exists.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Add an Offer with price and currency</h4>
+          <p>The <code>Offer</code> must include a <code>price</code> greater than zero and a <code>priceCurrency</code> (ISO 4217 code — GBP, USD, EUR). The price must exactly match what the customer sees on the page and at checkout. Use one URL per currency — do not put multiple currencies on the same page.</p>
+          <p>Add <code>availability</code> using the full schema.org URI (<code>https://schema.org/InStock</code>), <code>priceValidUntil</code> if the price is time-limited, and <code>url</code> pointing to the page's canonical URL.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Add shipping details</h4>
+          <p>Use <code>OfferShippingDetails</code> with <code>shippingRate</code>, <code>shippingDestination</code> (destination country), and <code>deliveryTime</code>. Include both <code>handlingTime</code> (processing before dispatch) and <code>transitTime</code> (carrier transit days) for the best shipping annotation eligibility.</p>
+          <p>If the same shipping policy applies across all products, define it once at Organisation level using <code>shippingDetails</code> on your <code>Organization</code> schema — then reference it from each offer. This avoids repetition across thousands of pages.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Add a return policy</h4>
+          <p>Use <code>hasMerchantReturnPolicy</code> with a <code>MerchantReturnPolicy</code> object. Required properties within it: <code>returnPolicyCategory</code> and <code>applicableCountry</code>. Recommended: <code>merchantReturnDays</code>, <code>returnMethod</code>, <code>returnFees</code>. Like shipping, define this at Organisation level if possible.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Validate and monitor</h4>
+          <p>Test with <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google's Rich Results Test</a> and the <a href="https://search.google.com/search-console/enhancement-tools/merchant-listing" target="_blank" rel="noopener">Merchant Listings report</a> in Search Console. Google will flag price mismatches between schema and page; resolve these immediately to avoid Shopping disapprovals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JSON-LD examples -->
+  <section class="section">
+    <h2 class="section-title">JSON-LD examples</h2>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:4px;color:var(--text-1)">Basic Merchant Listing</h3>
+    <p style="font-size:13px;color:var(--text-3);margin-bottom:0">Minimum required fields plus strong recommendations — name, offer with price/currency, availability, image, and GTIN.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <pre class="code-block"><code>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Classic Leather Trainer — White",
+  "image": "https://example.com/images/trainer-white.jpg",
+  "description": "Full-grain leather upper, rubber sole, available in sizes 4–13.",
+  "brand": { "@type": "Brand", "name": "Acme Footwear" },
+  "gtin13": "5901234123457",
+  "sku": "TRN-WHT-001",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://example.com/trainers/classic-white/",
+    "price": 89.99,
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+    "priceValidUntil": "2026-12-31"
+  }
+}</code></pre>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin-top:32px;margin-bottom:4px;color:var(--text-1)">Full Merchant Listing with shipping and returns</h3>
+    <p style="font-size:13px;color:var(--text-3);margin-bottom:0">Adds shipping details (handling + transit time) and a return policy — unlocks shipping annotations and return window in Shopping results.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <pre class="code-block"><code>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Classic Leather Trainer — White",
+  "image": "https://example.com/images/trainer-white.jpg",
+  "description": "Full-grain leather upper, rubber sole, available in sizes 4–13.",
+  "brand": { "@type": "Brand", "name": "Acme Footwear" },
+  "gtin13": "5901234123457",
+  "sku": "TRN-WHT-001",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://example.com/trainers/classic-white/",
+    "price": 89.99,
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+    "priceValidUntil": "2026-12-31",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": 0,
+        "currency": "GBP"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "GB"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0,
+          "maxValue": 1,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 3,
+          "unitCode": "DAY"
+        }
+      }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "GB",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 30,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    }
+  }
+}</code></pre>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin-top:32px;margin-bottom:4px;color:var(--text-1)">Sale / strikethrough pricing</h3>
+    <p style="font-size:13px;color:var(--text-3);margin-bottom:0">Shows a crossed-out original price alongside the discounted sale price in Shopping results.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <pre class="code-block"><code>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Classic Leather Trainer — White",
+  "image": "https://example.com/images/trainer-white.jpg",
+  "brand": { "@type": "Brand", "name": "Acme Footwear" },
+  "gtin13": "5901234123457",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://example.com/trainers/classic-white/",
+    "price": 59.99,
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock",
+    "priceSpecification": [
+      {
+        "@type": "UnitPriceSpecification",
+        "price": 59.99,
+        "priceCurrency": "GBP",
+        "priceType": "https://schema.org/SalePrice"
+      },
+      {
+        "@type": "UnitPriceSpecification",
+        "price": 89.99,
+        "priceCurrency": "GBP",
+        "priceType": "https://schema.org/StrikethroughPrice"
+      }
+    ]
+  }
+}</code></pre>
+    </div>
+    <div class="tip-box"><strong>Note:</strong> The <code>price</code> on the Offer must equal the active sale price and must match exactly what the customer sees. Google verifies both — a mismatch causes disapproval.</div>
+  </section>
+
+  <!-- Implementation challenges -->
+  <section class="section">
+    <h2 class="section-title">Common implementation pitfalls</h2>
+    <p class="section-lead">Merchant Listing is actively verified by Google, and these are the issues that most frequently cause Shopping disapprovals or lost eligibility.</p>
+    <div class="challenge-grid">
+      <div class="challenge-card">
+        <div class="challenge-label">Disapproval risk</div>
+        <div class="challenge-title">Price mismatch</div>
+        <div class="challenge-desc">Google crawls your page and checkout to verify the schema price matches. Dynamic prices (flash sales, user-specific discounts) that aren't reflected in the schema cause immediate disapproval. Keep schema price in sync.</div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-label">Lost eligibility</div>
+        <div class="challenge-title">JS-injected schema</div>
+        <div class="challenge-desc">Merchant Listing schema added via client-side JavaScript is crawled less frequently than schema in initial HTML. Put the <code>&lt;script type="application/ld+json"&gt;</code> block in the page's initial HTML response — not injected after load.</div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-label">Won't qualify</div>
+        <div class="challenge-title">Price = 0</div>
+        <div class="challenge-desc">Unlike Product Snippets, Merchant Listing requires a price greater than zero. Free products, samples, and inquiry-only items (contact-for-price) cannot use Merchant Listing. They can still use Product Snippet schema.</div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-label">GTIN invalid</div>
+        <div class="challenge-title">Unvalidated GTINs</div>
+        <div class="challenge-desc">GTINs with incorrect check digits or restricted prefixes (02, 04, 2) are rejected by Google's Shopping graph. Validate using the GS1 checksum before including. Our <a href="/merchant-listing-schema-generator/">generator</a> validates GTINs automatically.</div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-label">Stale data</div>
+        <div class="challenge-title">Expired priceValidUntil</div>
+        <div class="challenge-desc">If <code>priceValidUntil</code> has passed, the offer may stop appearing in search. Either remove it (price stands indefinitely) or update it with each price change.</div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-label">Missing context</div>
+        <div class="challenge-title">Incomplete return policy</div>
+        <div class="challenge-desc"><code>MerchantReturnPolicy</code> requires both <code>returnPolicyCategory</code> and <code>applicableCountry</code>. Omitting either causes validation errors. Define it once at Organisation level rather than repeating it on every product page.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I use Merchant Listing schema on a category page or product listing page?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">No. Merchant Listing only qualifies on pages where a customer can purchase that specific product directly. Category pages, PLPs, editorial pages, and aggregators are not eligible. Use Product Snippet schema for those.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Does Merchant Listing schema require a price?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes. An offer price greater than zero and a priceCurrency are required. A page with no price, or a price of zero, will not qualify. Availability and image are strongly recommended but not strictly required.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What's the difference between Merchant Listing and Product Snippet schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Product Snippet works on any page describing a product and focuses on ratings and reviews. Merchant Listing is for seller pages only and unlocks Shopping features: Popular Products, price drop alerts, shipping and returns in results. A merchant PDP can qualify for both.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Does adding shippingDetails to Merchant Listing schema improve Shopping ranking?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Not directly. Shipping details can appear in Shopping cards and snippets, which improves click-through. Free shipping in particular moves conversion rates. Google's ranking is separate from whether your markup is complete, but incomplete markup means fewer surfaces to appear on.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need a GTIN for every product in Merchant Listing schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Not strictly required, but products without a GTIN may have limited eligibility in Google Shopping. Google uses GTINs to match your listing to its product graph. If your product has a barcode, include it. If not, provide MPN and brand.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I show a sale or strikethrough price?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes. Add a <code>priceSpecification</code> array to the Offer with two <code>UnitPriceSpecification</code> objects: one with <code>priceType: "https://schema.org/SalePrice"</code> (the active discounted price) and one with <code>priceType: "https://schema.org/StrikethroughPrice"</code> (the original price). The main <code>price</code> field must equal the active sale price. Both must match what the customer sees on the page.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What happens if my schema price doesn't match the page price?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Google actively crawls your page and checkout flow to verify prices match. A mismatch between schema and page results in a validation error in Search Console and can disqualify the page from Shopping features. This is the most common cause of Merchant Listing disapprovals. Keep schema price in sync — especially during sales and price changes.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I use Merchant Listing schema on variant pages?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes — and you should. Each variant URL should have its own Merchant Listing schema with the specific price, availability, colour, and size for that variant. Use <code>inProductGroupWithID</code> to link each variant back to the parent <code>ProductGroup</code>, which enables colour swatch eligibility in Shopping results. See the <a href="/product-variants-schema/">Product Variants schema guide</a> for full implementation detail.</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Also in this series</h2>
+    <div class="nav-pills">
+      <a href="/product-schema/" class="nav-pill">Overview: Product structured data</a>
+      <a href="/product-snippet-schema/" class="nav-pill">Product Snippet schema</a>
+      <a href="/product-variants-schema/" class="nav-pill">Product Variants schema →</a>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <h2>Generate valid Merchant Listing schema</h2>
+    <p>Add pricing, shipping, returns, and identifiers — get clean JSON-LD in seconds. No account needed.</p>
+    <div class="cta-links">
+      <a href="/merchant-listing-schema-generator/" class="cta-btn">Open Schema Generator →</a>
+      <a href="/product-variants-schema/" class="cta-btn-outline">Product Variants schema →</a>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+</main>
+<footer><p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-schema/" style="color:inherit;opacity:.7">Product Schema</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script>
+function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!open)item.classList.add('open');}
+function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');navigator.clipboard.writeText(code.textContent).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);});}
+</script>
+</body>
+</html>

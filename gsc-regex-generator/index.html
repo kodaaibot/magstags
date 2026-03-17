@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/gsc-regex-generator/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  
+  <title>GSC Regex Generator, Builder | MagsTags</title>
+  <meta name="description" content="Build GSC regex filters without Googling the syntax. RE2-safe patterns for URL and query filtering in Google Search Console. Free, client-side.">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg:          #f0eeec;
+      --bg2:         #F5EDE7;
+      --surface:     #fafaf7;
+      --border:      #ddd9d3;
+      --text-1:      #111009;
+      --text-2:      #26221f;
+      --text-3:      #504c49;
+      --text-4:      #857f7a;
+      --teal:        #0E7490;
+      --mint:        #0891B2;
+      --mint-light:  #E0F2FE;
+      --red:         #dc2626;
+      --orange:      #D97706;
+      --orange-light:#FEF3C7;
+      --green:       #16a34a;
+      --green-light: #dcfce7;
+      --shadow-sm:   0 1px 3px rgba(26,24,22,.07);
+      --shadow-md:   0 4px 16px rgba(26,24,22,.09);
+    }
+    html.dark {
+      --bg:          #111110;
+      --bg2:         #191817;
+      --surface:     #1e1c1a;
+      --border:      rgba(255,255,255,.08);
+      --text-1:      #f5f2ee;
+      --text-2:      #c8c4be;
+      --text-3:      #857f79;
+      --text-4:      #4a4743;
+      --teal:        #22D3EE;
+      --mint:        #67E8F9;
+      --mint-light:  rgba(14,116,144),.14);
+      --red:         #f87171;
+      --orange:      #E11D48;
+      --orange-light:rgba(225,29,72,.12);
+      --green:       #4ade80;
+      --green-light: rgba(74,222,128,.12);
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.5);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.6);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* Auth gate */
+
+    /* Header */
+
+    /* Layout */
+    .page-wrap { width: 100%; }
+    .tool-hero { margin-bottom: 24px; }
+    .tool-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; line-height: 1.15; margin-bottom: 10px; }
+    .tool-hero p { font-size: 15px; color: var(--text-3); line-height: 1.6; max-width: 520px; }
+    .two-col { display: grid; grid-template-columns: 1fr 360px; gap: 20px; align-items: start; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+    
+
+    /* RE2 notice */
+    .re2-notice { background: var(--orange-light); border: 1px solid rgba(192,102,10,.2); border-radius: 12px; padding: 11px 14px; font-size: 12px; color: var(--orange); line-height: 1.6; margin-bottom: 20px; }
+    .re2-notice details summary { cursor: pointer; font-weight: 600; user-select: none; }
+    .re2-notice ul { padding-left: 16px; margin-top: 8px; }
+    .re2-notice li { margin-bottom: 3px; }
+    .re2-notice code { background: rgba(192,102,10,.12); border-radius: 4px; padding: 1px 4px; font-size: 11px; }
+
+    /* Section headings */
+    .section-heading { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+
+    /* Cards */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; }
+
+    /* Radio pills */
+    .radio-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .radio-pill { display: flex; align-items: center; gap: 7px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 99px; font-size: 12px; font-weight: 500; color: var(--text-2); cursor: pointer; transition: all .15s; user-select: none; }
+    .radio-pill input[type=radio] { display: none; }
+    .radio-pill.selected { background: var(--teal); border-color: var(--teal); color: white; font-weight: 600; }
+    .radio-pill:hover:not(.selected) { border-color: var(--teal); color: var(--teal); }
+
+    /* Values builder */
+    .values-list { margin-bottom: 10px; }
+    .value-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .or-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .06em; width: 20px; text-align: center; flex-shrink: 0; }
+    .value-input { flex: 1; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 12px; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s; }
+    .value-input:focus { border-color: var(--teal); }
+    .value-input::placeholder { font-family: 'Inter',sans-serif; color: var(--text-4); }
+    .remove-btn { width: 26px; height: 26px; border-radius: 99px; border: 1px solid var(--border); background: none; color: var(--text-4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 1; transition: all .15s; flex-shrink: 0; }
+    .remove-btn:hover { background: var(--red); border-color: var(--red); color: white; }
+    .add-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px dashed var(--border); border-radius: 99px; background: none; font-family: 'Inter',sans-serif; font-size: 12px; font-weight: 500; color: var(--text-3); cursor: pointer; transition: all .15s; }
+    .add-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+    .toggle-label { font-size: 12px; color: var(--text-2); }
+    .toggle-switch { position: relative; width: 34px; height: 18px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; inset: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 99px; cursor: pointer; transition: .15s; }
+    .toggle-slider:before { content:''; position: absolute; width: 12px; height: 12px; left: 2px; top: 2px; background: var(--text-4); border-radius: 50%; transition: .15s; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--teal); border-color: var(--teal); }
+    .toggle-switch input:checked + .toggle-slider:before { background: white; transform: translateX(16px); }
+
+    /* Template library */
+    .template-library { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); overflow: hidden; margin-bottom: 14px; }
+    .template-library summary { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; cursor: pointer; user-select: none; list-style: none; font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .template-library summary::-webkit-details-marker { display: none; }
+    .template-library summary .chevron { color: var(--text-4); transition: transform .2s; font-size: 11px; }
+    .template-library[open] summary .chevron { transform: rotate(180deg); }
+    .template-library summary:hover { background: var(--bg2); }
+    .template-library-inner { padding: 0 12px 12px; border-top: 1px solid var(--border); }
+    .tmpl-sub-tabs { display: flex; gap: 6px; padding: 10px 0 8px; }
+    .tmpl-sub-tab { padding: 4px 12px; border-radius: 99px; border: 1px solid var(--border); background: none; font-family: 'Inter',sans-serif; font-size: 11px; font-weight: 600; color: var(--text-3); cursor: pointer; transition: all .15s; }
+    .tmpl-sub-tab.active { background: var(--teal); border-color: var(--teal); color: white; }
+    .tmpl-group-label { font-size: 9px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; padding: 8px 4px 4px; }
+    .tmpl-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 9px; cursor: pointer; transition: background .12s; gap: 10px; }
+    .tmpl-item:hover { background: var(--bg2); }
+    .tmpl-item.selected { background: var(--mint-light); }
+    html.dark .tmpl-item.selected { background: rgba(14,116,144),.15); }
+    .tmpl-name { font-size: 12px; font-weight: 500; color: var(--text-1); }
+    .tmpl-desc { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+    .tmpl-preview { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 10px; color: var(--text-3); background: var(--bg2); border: 1px solid var(--border); border-radius: 5px; padding: 2px 7px; white-space: nowrap; max-width: 130px; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
+    .selected .tmpl-preview { background: rgba(14,116,144),.1); border-color: rgba(14,116,144),.2); color: var(--teal); }
+
+    /* Template params */
+    .tmpl-params { background: var(--mint-light); border: 1px solid rgba(14,116,144),.2); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; }
+    html.dark .tmpl-params { background: rgba(14,116,144),.1); }
+    .tmpl-params-title { font-size: 11px; font-weight: 700; color: var(--teal); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+    .tmpl-param { margin-bottom: 10px; }
+    .tmpl-param:last-child { margin-bottom: 0; }
+    .tmpl-param label { display: block; font-size: 11px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .tmpl-param input { width: 100%; padding: 8px 12px; border: 1px solid rgba(14,116,144),.3); border-radius: 8px; font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 12px; background: var(--surface); color: var(--text-1); outline: none; transition: border-color .15s; }
+    .tmpl-param input:focus { border-color: var(--teal); }
+    .clear-tmpl-btn { font-family: 'Inter',sans-serif; font-size: 11px; font-weight: 500; color: var(--text-3); background: none; border: none; cursor: pointer; text-decoration: underline; }
+    .clear-tmpl-btn:hover { color: var(--teal); }
+
+    /* Output panel */
+    .output-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 22px; position: sticky; top: 72px; }
+    @media (max-width: 900px) { .output-panel { position: static; } }
+    .out-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 10px; }
+    .regex-display { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 12px; color: var(--text-1); word-break: break-all; line-height: 1.7; min-height: 46px; }
+    .regex-empty { color: var(--text-4); font-family: 'Inter',sans-serif; font-size: 12px; font-style: italic; }
+    .copy-btn { display: flex; align-items: center; gap: 6px; width: 100%; margin-top: 8px; padding: 9px 16px; background: var(--text-1); color: var(--surface); border: none; border-radius: 99px; font-family: 'Inter',sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; justify-content: center; }
+    .copy-btn:hover { background: var(--teal); }
+    .copy-btn.copied { background: var(--green); }
+    .out-divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .re2-status { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px; margin-bottom: 10px; }
+    .re2-status.valid { background: var(--green-light); color: var(--green); }
+    .re2-status.invalid { background: rgba(220,38,38,.1); color: var(--red); }
+    .re2-status.warn-state { background: var(--orange-light); color: var(--orange); }
+    .re2-status.empty { background: var(--bg2); color: var(--text-4); }
+    .explanation { font-size: 12px; color: var(--text-2); line-height: 1.6; }
+    .explanation.empty { font-size: 12px; color: var(--text-4); font-style: italic; }
+    .tester-textarea { width: 100%; height: 72px; padding: 9px 11px; border: 1px solid var(--border); border-radius: 9px; font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; line-height: 1.6; background: var(--bg); color: var(--text-1); outline: none; resize: vertical; transition: border-color .15s; }
+    .tester-textarea:focus { border-color: var(--teal); }
+    .tester-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--border); font-size: 11px; font-family: 'Menlo','Monaco','Courier New',monospace; }
+    .tester-row:last-child { border-bottom: none; }
+    .tester-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .tester-dot.match { background: var(--green); }
+    .tester-dot.no-match { background: var(--red); opacity: .45; }
+    .tester-val { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-3); }
+    .tester-val.match { color: var(--text-1); }
+    .tester-summary { font-size: 11px; color: var(--text-3); margin-top: 6px; text-align: right; }
+    .usage-box { background: var(--bg2); border-radius: 9px; padding: 10px 12px; font-size: 11px; color: var(--text-3); line-height: 1.6; }
+    .usage-box strong { color: var(--text-2); font-weight: 600; }
+    .usage-path { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 10px; color: var(--text-3); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 9px; margin-top: 5px; }
+    .validation-msg { display: flex; align-items: flex-start; gap: 6px; font-size: 11px; padding: 7px 10px; border-radius: 8px; margin-bottom: 5px; }
+    .validation-msg.error { background: rgba(220,38,38,.08); color: var(--red); }
+    .validation-msg.warn { background: var(--orange-light); color: var(--orange); }
+
+    /* Builder tabs */
+    .builder-tabs { display: flex; gap: 2px; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .builder-tab { padding: 6px 14px; border: none; background: none; font-family: 'Inter',sans-serif; font-size: 12px; font-weight: 600; color: var(--text-3); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; }
+    .builder-tab:hover { color: var(--text-1); }
+    .builder-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    /* URL picker — segments */
+    .url-picker-input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 12px; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s; margin-bottom: 8px; }
+    .url-picker-input:focus { border-color: var(--teal); }
+    .url-picker-input::placeholder { font-family: 'Inter',sans-serif; color: var(--text-4); }
+    .url-segments { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; min-height: 26px; margin-bottom: 4px; }
+    .url-seg { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 6px; font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; border: 1px solid transparent; line-height: 1.4; transition: all .12s; white-space: nowrap; user-select: none; }
+    .url-seg.clickable { cursor: pointer; }
+    .url-seg.protocol { color: var(--text-4); }
+    .url-seg.separator { color: var(--text-4); padding: 3px 2px; font-size: 12px; }
+    .url-seg.domain { color: var(--text-2); background: var(--bg2); border-color: var(--border); }
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .url-seg.domain.clickable:hover:not(.selected) { border-color: var(--teal); color: var(--teal); }
+    .url-seg.path { color: var(--teal); background: var(--mint-light); border-color: rgba(14,116,144),.25); }
+    html.dark .url-seg.path { background: rgba(14,116,144),.12); }
+    .url-seg.path.clickable:hover:not(.selected) { background: rgba(14,116,144),.2); border-color: var(--teal); }
+    .url-seg.query { color: var(--orange); background: var(--orange-light); border-color: rgba(192,102,10,.25); }
+    html.dark .url-seg.query { background: rgba(225,29,72,.12); }
+    .url-seg.query.clickable:hover:not(.selected) { border-color: var(--orange); }
+    .url-seg.fragment { color: var(--text-3); background: var(--bg2); border-color: var(--border); }
+    .url-seg.raw { color: var(--red); font-size: 11px; }
+    .url-seg.selected        { background: var(--teal) !important; border-color: var(--teal) !important; color: white !important; }
+    .url-seg.selected-length { background: #7c3aed    !important; border-color: #7c3aed    !important; color: white !important; }
+    .picker-url-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 7px; display: flex; align-items: center; justify-content: space-between; }
+
+    /* URL picker — options panel */
+    .picker-options { background: var(--mint-light); border: 1px solid rgba(14,116,144),.2); border-radius: 12px; padding: 12px 14px; margin-top: 10px; }
+    html.dark .picker-options { background: rgba(14,116,144),.08); }
+    .picker-options-title { font-size: 11px; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
+    .picker-option-btn { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 11px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; font-family: 'Inter',sans-serif; font-size: 12px; color: var(--text-1); cursor: pointer; text-align: left; transition: all .12s; margin-bottom: 6px; }
+    .picker-option-btn:last-child { margin-bottom: 0; }
+    .picker-option-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .picker-option-btn:hover .picker-opt-code { border-color: rgba(14,116,144),.3); color: var(--teal); }
+    .picker-opt-code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 5px; padding: 2px 7px; color: var(--text-3); flex-shrink: 0; margin-left: auto; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .picker-option-btn.picker-opt-active { border-color: var(--teal); background: var(--mint-light); color: var(--teal); }
+    .picker-option-btn.picker-opt-active .picker-opt-code { border-color: rgba(14,116,144),.3); color: var(--teal); }
+    html.dark .picker-option-btn.picker-opt-active { background: rgba(14,116,144),.12); }
+    .picker-prefix-card { display: flex; flex-direction: column; gap: 6px; padding: 8px 11px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; margin-top: 6px; transition: border-color .12s, background .12s; }
+    .picker-prefix-card.picker-opt-active { border-color: var(--teal); background: var(--mint-light); }
+    html.dark .picker-prefix-card.picker-opt-active { background: rgba(14,116,144),.12); }
+    .picker-prefix-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .picker-prefix-lbl { font-size: 12px; font-family: 'Inter',sans-serif; color: var(--text-2); }
+    .picker-prefix-card.picker-opt-active .picker-prefix-lbl { color: var(--teal); }
+    .picker-prefix-input { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 12px; color: var(--text-1); background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; width: 100%; box-sizing: border-box; outline: none; }
+    .picker-prefix-input:focus { border-color: var(--teal); }
+    .picker-hint { font-size: 11px; color: var(--text-4); line-height: 1.6; margin-bottom: 12px; }
+
+    /* URL picker — multi-URL chrome */
+    .picker-url-block { margin-bottom: 4px; }
+    .picker-type-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 99px; font-size: 10px; font-weight: 600; font-family: 'Inter',sans-serif; cursor: pointer; border: none; transition: all .15s; vertical-align: middle; margin-right: 6px; }
+    .picker-type-pill.include { background: var(--mint-light); color: var(--teal); outline: 1px solid rgba(14,116,144),.25); }
+    .picker-type-pill.reject  { background: rgba(220,38,38,.08); color: var(--red); outline: 1px solid rgba(220,38,38,.22); }
+    .picker-type-pill:hover { opacity: .8; }
+    .picker-op-sep { display: flex; align-items: center; gap: 10px; margin: 14px 0 12px; }
+    .picker-op-sep::before, .picker-op-sep::after { content:''; flex:1; height:1px; background: var(--border); }
+    .picker-op-badge { font-size: 10px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .08em; background: var(--bg2); border: 1px solid var(--border); border-radius: 99px; padding: 2px 10px; white-space: nowrap; }
+    .picker-operator-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding: 9px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; }
+    .picker-operator-bar > span { font-size: 11px; color: var(--text-3); white-space: nowrap; }
+
+    /* Secondary output (AND / reject) */
+    .secondary-out-block { margin-bottom: 8px; }
+    .secondary-out-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; }
+    .secondary-out-label.include { color: var(--teal); }
+    .secondary-out-label.reject  { color: var(--red); }
+    .secondary-out-row { display: flex; gap: 6px; align-items: center; }
+    .secondary-out-code { flex:1; padding: 7px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; color: var(--text-1); overflow-x: auto; white-space: nowrap; word-break: break-all; }
+    .secondary-out-code.reject { border-color: rgba(220,38,38,.25); background: rgba(220,38,38,.04); color: var(--red); }
+    .secondary-out-copy { padding: 5px 11px; border: 1px solid var(--border); border-radius: 99px; background: none; font-family: 'Inter',sans-serif; font-size: 11px; font-weight: 500; color: var(--text-3); cursor: pointer; transition: all .15s; flex-shrink: 0; }
+    .secondary-out-copy:hover { border-color: var(--teal); color: var(--teal); }
+  
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+    footer a{color:var(--text-4);text-decoration:none;opacity:.8}
+    footer a:hover{color:var(--teal)}
+      @media(max-width:600px){main{padding:24px 16px 60px}}
+  </style>
+  <script>(function(){ if(localStorage.getItem('gmc-theme')==='dark') document.documentElement.classList.add('dark'); })();</script>
+  <meta property="og:title" content="GSC Regex Generator, Builder | MagsTags">
+  <meta property="og:description" content="Build GSC regex filters without Googling the syntax. RE2-safe patterns for URL and query filtering in Google Search Console. Free, client-side.">
+  <meta property="og:url" content="https://www.magstags.com/gsc-regex-generator/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GSC Regex Generator, Builder | MagsTags">
+  <meta name="twitter:description" content="Build GSC regex filters without Googling the syntax. RE2-safe patterns for URL and query filtering in Google Search Console. Free, client-side.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+
+
+<!-- Auth gate -->
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+  </div>
+</div>
+
+<!-- Header -->
+<main id="main-content">
+
+<div class="page-wrap">
+  <p style="font-size:12px;color:var(--text-4);margin-bottom:20px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> GSC Regex Builder</p>
+  <div class="tool-hero">
+    <h1 class="tool-title">GSC Regex Builder</h1>
+    <p>The part of GSC where you type something that looks like a password and hope it works.</p>
+    <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+    <p>RE2 regex for URL and query filtering — 22 ready-made templates, live validation, and explanations in actual English. No regex trauma (or googling) required.</p>
+  </div>
+
+  <div class="re2-notice">
+    <details>
+      <summary>RE2 syntax note — GSC does not support all regex features</summary>
+      <ul>
+        <li><strong>No negative lookaheads</strong> <code>(?!...)</code> — you cannot "exclude" a pattern in one regex</li>
+        <li><strong>No backreferences</strong> <code>\1</code> <code>\2</code></li>
+        <li><strong>Partial match by default</strong> — GSC applies as "contains". Use <code>^</code> / <code>$</code> to anchor.</li>
+        <li><strong>URLs are case-sensitive. Queries are case-insensitive.</strong></li>
+        <li><strong>Max ~1000 characters.</strong></li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="two-col">
+    <!-- Left: builder -->
+    <div>
+
+      <!-- Template library -->
+      <details class="template-library" id="tmpl-library">
+        <summary>
+          <span>Template library <span id="tmpl-active-badge" style="display:none;background:var(--teal);color:white;font-size:10px;padding:2px 8px;border-radius:99px;margin-left:8px;font-weight:600;"></span></span>
+          <span class="chevron">▾</span>
+        </summary>
+        <div class="template-library-inner">
+          <div class="tmpl-sub-tabs">
+            <button class="tmpl-sub-tab active" id="tsub-url" onclick="switchTmplCat('url')">URL patterns</button>
+            <button class="tmpl-sub-tab" id="tsub-query" onclick="switchTmplCat('query')">Query patterns</button>
+          </div>
+          <div id="tmpl-list"></div>
+        </div>
+      </details>
+
+      <!-- Template params (shown when parameterised template selected) -->
+      <div id="tmpl-params" style="display:none" class="tmpl-params">
+        <div class="tmpl-params-title">
+          <span id="tmpl-params-name"></span>
+          <button class="clear-tmpl-btn" onclick="clearTemplate()">Clear template</button>
+        </div>
+        <div id="tmpl-params-fields"></div>
+      </div>
+
+      <!-- Builder: tabbed card -->
+      <div class="card">
+        <div class="builder-tabs">
+          <button class="builder-tab active" id="btab-picker" onclick="switchBuilderTab('picker')">URL picker</button>
+          <button class="builder-tab" id="btab-manual" onclick="switchBuilderTab('manual')">Manual</button>
+        </div>
+
+        <!-- Manual pane -->
+        <div id="pane-manual" style="display:none">
+        <div class="section-heading" style="margin-bottom:12px">Target</div>
+        <div class="radio-group" id="target-group">
+          <label class="radio-pill selected" onclick="setTarget('url',this)"><input type="radio" name="target" value="url" checked> URL</label>
+          <label class="radio-pill" onclick="setTarget('query',this)"><input type="radio" name="target" value="query"> Query</label>
+        </div>
+
+        <div style="height:1px;background:var(--border);margin:14px 0;"></div>
+
+        <div class="section-heading" style="margin-bottom:12px">Match mode</div>
+        <div class="radio-group" id="mode-group">
+          <label class="radio-pill selected" onclick="setMode('contains',this)"><input type="radio" name="mode" value="contains" checked> Contains</label>
+          <label class="radio-pill" onclick="setMode('starts',this)"><input type="radio" name="mode" value="starts"> Starts with</label>
+          <label class="radio-pill" onclick="setMode('ends',this)"><input type="radio" name="mode" value="ends"> Ends with</label>
+          <label class="radio-pill" onclick="setMode('exact',this)"><input type="radio" name="mode" value="exact"> Exact match</label>
+        </div>
+
+        <div style="height:1px;background:var(--border);margin:14px 0;"></div>
+
+        <div class="section-heading" style="margin-bottom:12px">
+          Values
+          <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:var(--text-4)">multiple = OR logic</span>
+        </div>
+        <div class="values-list" id="values-list"></div>
+        <button class="add-btn" onclick="addValue()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add another value
+        </button>
+
+        <label class="toggle-row">
+          <span class="toggle-switch"><input type="checkbox" id="escape-toggle" checked onchange="buildRegex()"><span class="toggle-slider"></span></span>
+          <span class="toggle-label">Escape special characters <span style="color:var(--text-4);font-size:11px">(for plain text — disable for regex values)</span></span>
+        </label>
+        </div><!-- /pane-manual -->
+
+        <!-- URL Picker pane -->
+        <div id="pane-picker">
+          <!-- AND/OR operator bar (shown when >1 URL) -->
+          <div class="picker-operator-bar" id="picker-op-bar" style="display:none">
+            <span>Between URL rules:</span>
+            <div class="radio-group">
+              <label class="radio-pill picker-op-pill selected" data-op="or" onclick="pickerSetOperator('or',this)"><input type="radio" name="picker-op" value="or" checked> OR</label>
+              <label class="radio-pill picker-op-pill" data-op="and" onclick="pickerSetOperator('and',this)" title="GSC only allows 1 Page filter — AND outputs multiple regexes"><input type="radio" name="picker-op" value="and"> AND ⚠️</label>
+            </div>
+          </div>
+          <p class="picker-hint">Paste a URL and click path segments to select them. <strong>1 click</strong> = match literal value (teal). <strong>2 clicks</strong> = match by character count (purple). <strong>3 clicks</strong> = deselect. Mix both types to build hybrid patterns.</p>
+          <!-- URL blocks rendered by JS -->
+          <div id="picker-urls-list"></div>
+          <!-- Add URL -->
+          <button class="add-btn" id="picker-add-btn" onclick="pickerAddURL()" style="margin-top:12px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add URL
+          </button>
+        </div><!-- /pane-picker -->
+
+      </div><!-- /card -->
+
+      <!-- Custom validation messages -->
+      <div id="validation-msgs"></div>
+
+    </div>
+
+    <!-- Right: output panel -->
+    <div class="output-panel">
+      <div class="out-label">Your regex</div>
+      <div class="regex-display" id="out-regex"><span class="regex-empty">Choose a template or enter values…</span></div>
+      <button class="copy-btn" id="copy-btn" onclick="copyRegex()" aria-label="Copy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy regex
+      </button>
+
+      <!-- Secondary output: AND filters + reject filters -->
+      <div id="picker-secondary" style="display:none">
+        <div class="out-divider"></div>
+        <div id="picker-secondary-inner"></div>
+      </div>
+
+      <div class="out-divider"></div>
+
+      <div id="re2-status" class="re2-status empty">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        No regex yet
+      </div>
+      <div id="out-explanation" class="explanation empty">Explanation will appear here.</div>
+
+      <div class="out-divider"></div>
+
+      <div class="out-label">Live tester</div>
+      <textarea class="tester-textarea" id="tester-input" placeholder="Paste URLs or queries, one per line…" oninput="runTest()"></textarea>
+      <div id="tester-results"></div>
+
+      <div class="out-divider"></div>
+
+      <div class="out-label" style="margin-bottom:8px">Where to use in GSC</div>
+      <div class="usage-box">
+        <strong>Performance report</strong> → Add filter → <span id="usage-target-label">Page</span> → Custom (regex) → paste
+        <div class="usage-path" id="usage-path">Performance → Filters → Page → Custom (regex)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// TEMPLATE DATA
+// ─────────────────────────────────────────────────────────────
+// Each template: id, group, name, desc, preview, cat (url|query)
+// mode: which match mode to set when applied
+// values(params): array of string values to populate in builder
+// escape: whether to turn escape toggle on
+// params: [] or [{id, label, placeholder, default}]
+// explain(params): string explanation
+
+const TEMPLATES = [
+  // URL
+  { cat:'url', group:'Directory & Path', id:'dir-prefix', name:'Pages in a directory',
+    desc:'All pages under a path prefix', preview:'://[^/]+/blog/',
+    mode:'contains', escape:false,
+    params:[{id:'path',label:'Directory path',placeholder:'/blog/',def:'/blog/'}],
+    values: p => ['://[^/]+' + escRE2(p.path)],
+    explain: p => `Matches all pages in the ${p.path} directory. GSC Page filters match against full URLs — ://[^/]+ skips the protocol and domain without hardcoding them.` },
+
+  { cat:'url', group:'Directory & Path', id:'url-kw', name:'URL contains a keyword',
+    desc:'Any URL with a specific word or slug', preview:'shoes',
+    mode:'contains', escape:true,
+    params:[{id:'kw',label:'Keyword or slug',placeholder:'shoes',def:''}],
+    values: p => [p.kw],
+    explain: p => `Matches URLs containing "${p.kw}" anywhere in the path.` },
+
+  { cat:'url', group:'Directory & Path', id:'depth-1', name:'Top-level pages only',
+    desc:'One path segment — no subdirectories', preview:'://[^/]+/[^/?]+/?$',
+    mode:'contains', escape:false, params:[],
+    values: () => ['://[^/]+/[^/?]+/?$'],
+    explain: () => 'Matches pages with exactly one path segment (e.g. example.com/about, example.com/blog). ://[^/]+ matches the domain, [^/?]+ matches one path segment with no slashes or query strings.' },
+
+  { cat:'url', group:'Directory & Path', id:'depth-2', name:'Second-level pages',
+    desc:'Exactly two path segments deep', preview:'://[^/]+/[^/]+/[^/?]+/?$',
+    mode:'contains', escape:false, params:[],
+    values: () => ['://[^/]+/[^/]+/[^/?]+/?$'],
+    explain: () => 'Matches pages exactly two path segments deep (e.g. example.com/blog/post-title, example.com/category/item).' },
+
+  { cat:'url', group:'Parameters & Filters', id:'has-params', name:'Has query parameters',
+    desc:'Any URL containing a query string', preview:'\\?',
+    mode:'contains', escape:false, params:[],
+    values: () => ['\\?'],
+    explain: () => 'Matches any URL with a query string — anything with "?" in the URL.' },
+
+  { cat:'url', group:'Parameters & Filters', id:'specific-param', name:'Has a specific parameter',
+    desc:'URL containing a named query parameter', preview:'[?&]utm_source=',
+    mode:'contains', escape:false,
+    params:[{id:'param',label:'Parameter name',placeholder:'utm_source',def:'utm_source'}],
+    values: p => ['[?&]' + escRE2(p.param) + '='],
+    explain: p => `Matches URLs containing the parameter "${p.param}" — whether it's the first or subsequent param.` },
+
+  { cat:'url', group:'Parameters & Filters', id:'no-params', name:'Clean URLs (no query string)',
+    desc:'URLs without any parameters', preview:'^[^?]+$',
+    mode:'exact', escape:false, params:[],
+    values: () => ['[^?]+'],
+    explain: () => 'Matches URLs with no query string. Uses a character class to exclude "?" — RE2 cannot do true negation.' },
+
+  { cat:'url', group:'Parameters & Filters', id:'paginated', name:'Paginated URLs',
+    desc:'Page 2+ in common formats', preview:'/page/[2-9]|\\?p=[2-9]',
+    mode:'contains', escape:false, params:[],
+    values: () => ['(/page/[2-9]|/page/[0-9]{2,}|\\?p=[2-9]|\\?p=[0-9]{2,}|\\?page=[2-9]|\\?page=[0-9]{2,})'],
+    explain: () => 'Matches paginated URLs for page 2 and beyond: /page/2, ?p=2, ?page=2, and variants for page 10+.' },
+
+  { cat:'url', group:'Parameters & Filters', id:'faceted', name:'Faceted navigation',
+    desc:'Filtering parameters — color, size, brand…', preview:'[?&](color|size)=',
+    mode:'contains', escape:false,
+    params:[{id:'params',label:'Parameter names (comma-separated)',placeholder:'color,size,brand,filter',def:'color,size,brand,filter'}],
+    values: p => ['[?&](' + p.params.split(',').map(x=>escRE2(x.trim())).join('|') + ')='],
+    explain: p => `Matches URLs with faceted filter parameters: ${p.params}.` },
+
+  { cat:'url', group:'Content Type', id:'file-types', name:'Specific file types',
+    desc:'URLs ending in a file extension', preview:'\\.(pdf|xlsx)$',
+    mode:'ends', escape:false,
+    params:[{id:'exts',label:'Extensions (comma-separated)',placeholder:'pdf,xlsx,docx',def:'pdf,xlsx,docx'}],
+    values: p => ['\\.(' + p.exts.split(',').map(x=>escRE2(x.trim().replace(/^\./,''))).join('|') + ')'],
+    explain: p => `Matches URLs ending in: ${p.exts}.` },
+
+  { cat:'url', group:'Content Type', id:'amp', name:'AMP pages',
+    desc:'Accelerated Mobile Pages variants', preview:'/amp(/|$)',
+    mode:'contains', escape:false, params:[],
+    values: () => ['/amp(/|$)'],
+    explain: () => 'Matches AMP URLs — both /amp/ subdirectory and URLs ending in /amp.' },
+
+  { cat:'url', group:'Locale & Language', id:'locale', name:'Language/locale prefix',
+    desc:'hreflang-style URLs with locale codes', preview:'://[^/]+/(en|fr|de)/',
+    mode:'contains', escape:false,
+    params:[{id:'locales',label:'Locale codes (comma-separated)',placeholder:'en,fr,de,it,pl,es',def:'en,fr,de,it,pl,es'}],
+    values: p => ['://[^/]+/(' + p.locales.split(',').map(x=>escRE2(x.trim())).join('|') + ')/'],
+    explain: p => `Matches URLs where the locale code is the first path segment (e.g. example.com/en/page). Locale codes: ${p.locales}.` },
+
+  // Query
+  { cat:'query', group:'Search Intent', id:'questions', name:'Question queries',
+    desc:'Who / what / how / why / when / where…', preview:'^(what|how|why|when)',
+    mode:'starts', escape:false, params:[],
+    values: () => ['(what|how|why|when|where|who|which|is|are|can|does|do)\\b'],
+    explain: () => 'Matches queries starting with a question word. Good for identifying informational content opportunities.' },
+
+  { cat:'query', group:'Search Intent', id:'buy-intent', name:'Commercial / buy intent',
+    desc:'Purchase-related keywords', preview:'\\b(buy|price|cheap)\\b',
+    mode:'contains', escape:false, params:[],
+    values: () => ['\\b(buy|purchase|price|cheap|discount|deal|coupon|order|shop|sale|cost)\\b'],
+    explain: () => 'Matches queries containing commercial intent signals. Use to segment high-intent traffic.' },
+
+  { cat:'query', group:'Search Intent', id:'comparison', name:'Comparison intent',
+    desc:'vs / review / compare / alternative', preview:'\\b(vs|review|compare)\\b',
+    mode:'contains', escape:false, params:[],
+    values: () => ['\\b(vs|versus|compare|comparison|review|reviews|alternative|alternatives)\\b'],
+    explain: () => 'Matches mid-funnel comparison queries. Useful for finding pages where users are evaluating options.' },
+
+  { cat:'query', group:'Search Intent', id:'how-to', name:'How-to / guide queries',
+    desc:'Tutorial and step-by-step intent', preview:'\\b(how to|guide|tutorial)\\b',
+    mode:'contains', escape:false, params:[],
+    values: () => ['\\b(how to|guide|tutorial|step by step|step-by-step|walkthrough)\\b'],
+    explain: () => 'Matches queries seeking tutorials or guides. Good for identifying instructional content gaps.' },
+
+  { cat:'query', group:'Search Intent', id:'best-top', name:'Best / top queries',
+    desc:'Ranked list and recommendation intent', preview:'\\b(best|top [0-9]+)\\b',
+    mode:'contains', escape:false, params:[],
+    values: () => ['\\b(best|top [0-9]+|[0-9]+ best|top rated|top-rated|recommended)\\b'],
+    explain: () => 'Matches queries looking for ranked recommendations: best, top 10, top-rated, etc.' },
+
+  { cat:'query', group:'Search Intent', id:'local', name:'Local intent queries',
+    desc:'"Near me" and location-based searches', preview:'near me|nearby',
+    mode:'contains', escape:false,
+    params:[{id:'cities',label:'City/location terms (comma-separated, optional)',placeholder:'london,new york',def:''}],
+    values: p => {
+      const base = '(near me|nearby|in my area)';
+      if (p.cities && p.cities.trim()) {
+        const cs = p.cities.split(',').map(x=>'\\bin '+escRE2(x.trim())+'\\b').join('|');
+        return [base + '|' + cs];
+      }
+      return [base];
+    },
+    explain: p => `Matches local intent queries: near me, nearby${p.cities ? ', plus: '+p.cities : ''}.` },
+
+  { cat:'query', group:'Brand', id:'brand', name:'Brand mentions',
+    desc:'Queries containing your brand name', preview:'(yourbrand)',
+    mode:'contains', escape:false,
+    params:[{id:'brand',label:'Brand name(s) — comma-separated for variations',placeholder:'acme,acme inc',def:''}],
+    values: p => {
+      if (!p.brand.trim()) return ['(your-brand-here)'];
+      return ['(' + p.brand.split(',').map(x=>escRE2(x.trim())).join('|') + ')'];
+    },
+    explain: p => `Matches branded queries containing: ${p.brand || 'your brand name'}. Use to segment branded vs non-branded traffic.` },
+
+  { cat:'query', group:'Query Length', id:'longtail', name:'Long-tail (4+ words)',
+    desc:'Queries with four or more words', preview:'\\w.+ \\w.+ \\w.+ \\w.+',
+    mode:'contains', escape:false, params:[],
+    values: () => ['\\w.+ \\w.+ \\w.+ \\w.+'],
+    explain: () => 'Matches queries containing four or more words. Each \\w.+ matches a word starting with an ASCII character — more robust than \\w+ for multilingual queries with accented characters.' },
+
+  { cat:'query', group:'Query Length', id:'headterms', name:'Head terms (1–2 words)',
+    desc:'Short, broad keyword queries', preview:'^\\w+( \\w+)?$',
+    mode:'exact', escape:false, params:[],
+    values: () => ['\\w+( \\w+)?'],
+    explain: () => 'Matches queries of exactly 1 or 2 words — head terms with typically high volume and competition.' },
+
+  { cat:'query', group:'Content', id:'kw-query', name:'Queries containing a keyword',
+    desc:'Any query with a specific term (whole word)', preview:'\\bkeyword\\b',
+    mode:'contains', escape:false,
+    params:[{id:'kw',label:'Keyword',placeholder:'seo',def:''}],
+    values: p => ['\\b' + escRE2(p.kw) + '\\b'],
+    explain: p => `Matches queries containing "${p.kw}" as a whole word (not as part of another word).` },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let target = 'url';
+let mode = 'contains';
+let values = [''];
+let escapeOn = true;
+let selectedTmpl = null;
+let tmplCat = 'url';
+
+// ─────────────────────────────────────────────────────────────
+// UTILITIES
+// ─────────────────────────────────────────────────────────────
+function escRE2(s) { return s.replace(/[.+*?^${}()|[\]\\]/g, '\\$&'); }
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function validateRE2(regex) {
+  const errors = [], warnings = [];
+  if (!regex) return { errors, warnings };
+  if (/\(\?!/.test(regex)) errors.push('Negative lookaheads (?!...) are not supported in RE2/GSC.');
+  if (/\(\?<!/.test(regex)) errors.push('Negative lookbehinds (?<!...) are not supported in RE2/GSC.');
+  if (/\\[1-9]/.test(regex)) errors.push('Backreferences (\\1, \\2…) are not supported in RE2.');
+  if (/\(\?>/.test(regex)) errors.push('Atomic groups (?>) are not supported in RE2.');
+  if (/\(\?<=/.test(regex)) warnings.push('Positive lookbehinds (?<=...) have limited RE2 support — test in GSC.');
+  if (regex.length > 800) warnings.push(`Regex is ${regex.length} chars — GSC limit is ~1000.`);
+  try { new RegExp(regex); } catch(e) { errors.push('Invalid syntax: ' + e.message); }
+  return { errors, warnings };
+}
+
+// ─────────────────────────────────────────────────────────────
+// BUILDER
+// ─────────────────────────────────────────────────────────────
+function setTarget(val, el) {
+  target = val;
+  document.querySelectorAll('#target-group .radio-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  updateUsageGuide();
+  buildRegex();
+}
+
+function setMode(val, el) {
+  mode = val;
+  document.querySelectorAll('#mode-group .radio-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  buildRegex();
+}
+
+function setModeById(val) {
+  mode = val;
+  document.querySelectorAll('#mode-group .radio-pill').forEach(p => {
+    const input = p.querySelector('input');
+    p.classList.toggle('selected', input && input.value === val);
+  });
+}
+
+function setTargetById(val) {
+  target = val;
+  document.querySelectorAll('#target-group .radio-pill').forEach(p => {
+    const input = p.querySelector('input');
+    p.classList.toggle('selected', input && input.value === val);
+  });
+  updateUsageGuide();
+}
+
+function addValue() {
+  values.push('');
+  renderValues();
+}
+
+function removeValue(i) {
+  values.splice(i, 1);
+  if (values.length === 0) values = [''];
+  renderValues();
+  buildRegex();
+}
+
+function renderValues() {
+  const list = document.getElementById('values-list');
+  list.innerHTML = values.map((v, i) => `
+    <div class="value-row">
+      <span class="or-label">${i > 0 ? 'OR' : ''}</span>
+      <input class="value-input" type="text" value="${escHtml(v)}"
+        placeholder="${target === 'url' ? '/path/ or regex…' : 'keyword or regex…'}"
+        oninput="values[${i}]=this.value;buildRegex()" autocomplete="off" spellcheck="false">
+      ${values.length > 1 ? `<button class="remove-btn" onclick="removeValue(${i})" title="Remove">×</button>` : '<span style="width:26px;flex-shrink:0"></span>'}
+    </div>
+  `).join('');
+}
+
+function buildRegex() {
+  escapeOn = document.getElementById('escape-toggle').checked;
+  const nonEmpty = values.filter(v => v.trim());
+  if (!nonEmpty.length) { clearOutput(); return; }
+
+  const parts = nonEmpty.map(v => escapeOn ? escRE2(v) : v);
+  const combined = parts.length === 1 ? parts[0] : '(' + parts.join('|') + ')';
+
+  let regex = combined;
+  if (mode === 'starts') regex = '^' + combined;
+  else if (mode === 'ends') regex = combined + '$';
+  else if (mode === 'exact') regex = '^' + combined + '$';
+
+  const modeLabel = { contains:'contains', starts:'starts with', ends:'ends with', exact:'exactly matches' }[mode];
+  const valList = nonEmpty.map(v => `"${v}"`).join(', ');
+  const explanation = selectedTmpl
+    ? getTemplateExplanation()
+    : `Matches ${target === 'url' ? 'URLs' : 'queries'} that ${modeLabel} ${valList}.`;
+
+  updateOutput(regex, explanation);
+}
+
+function getTemplateExplanation() {
+  if (!selectedTmpl) return '';
+  const params = getTmplParams(selectedTmpl);
+  return selectedTmpl.explain(params);
+}
+
+// ─────────────────────────────────────────────────────────────
+// TEMPLATES
+// ─────────────────────────────────────────────────────────────
+function switchTmplCat(cat) {
+  tmplCat = cat;
+  ['url','query'].forEach(c => document.getElementById('tsub-'+c).classList.toggle('active', c === cat));
+  renderTmplList();
+}
+
+function renderTmplList() {
+  const items = TEMPLATES.filter(t => t.cat === tmplCat);
+  const groups = {};
+  items.forEach(t => { if (!groups[t.group]) groups[t.group] = []; groups[t.group].push(t); });
+  document.getElementById('tmpl-list').innerHTML = Object.entries(groups).map(([g, ts]) => `
+    <div>
+      <div class="tmpl-group-label">${g}</div>
+      ${ts.map(t => `
+        <div class="tmpl-item${selectedTmpl && selectedTmpl.id===t.id?' selected':''}" onclick="applyTemplate('${t.id}')">
+          <div>
+            <div class="tmpl-name">${t.name}</div>
+            <div class="tmpl-desc">${t.desc}</div>
+          </div>
+          <div class="tmpl-preview">${t.preview}</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function applyTemplate(id) {
+  const t = TEMPLATES.find(tt => tt.id === id);
+  if (!t) return;
+  selectedTmpl = t;
+
+  // Update target if switching category
+  setTargetById(t.cat);
+  // Update mode
+  setModeById(t.mode);
+  // Update escape toggle
+  document.getElementById('escape-toggle').checked = t.escape;
+  escapeOn = t.escape;
+
+  // Refresh template list to show selected state
+  renderTmplList();
+
+  // Show template name badge
+  const badge = document.getElementById('tmpl-active-badge');
+  badge.style.display = '';
+  badge.textContent = t.name;
+
+  // Show params panel if needed
+  if (t.params && t.params.length > 0) {
+    document.getElementById('tmpl-params').style.display = '';
+    document.getElementById('tmpl-params-name').textContent = t.name;
+    document.getElementById('tmpl-params-fields').innerHTML = t.params.map(p => `
+      <div class="tmpl-param">
+        <label>${p.label}</label>
+        <input type="text" id="tp-${t.id}-${p.id}" value="${escHtml(p.def)}" placeholder="${p.placeholder}"
+          oninput="onTmplParamChange()" autocomplete="off" spellcheck="false">
+      </div>
+    `).join('');
+  } else {
+    document.getElementById('tmpl-params').style.display = 'none';
+  }
+
+  // Apply values
+  applyTmplValues(t);
+}
+
+function getTmplParams(t) {
+  const params = {};
+  (t.params || []).forEach(p => {
+    const el = document.getElementById('tp-' + t.id + '-' + p.id);
+    params[p.id] = el ? el.value : p.def;
+  });
+  return params;
+}
+
+function applyTmplValues(t) {
+  const params = getTmplParams(t);
+  values = t.values(params);
+  renderValues();
+  buildRegex();
+}
+
+function onTmplParamChange() {
+  if (selectedTmpl) applyTmplValues(selectedTmpl);
+}
+
+function clearTemplate() {
+  selectedTmpl = null;
+  document.getElementById('tmpl-params').style.display = 'none';
+  document.getElementById('tmpl-active-badge').style.display = 'none';
+  values = [''];
+  renderValues();
+  renderTmplList();
+  clearOutput();
+}
+
+// ─────────────────────────────────────────────────────────────
+// OUTPUT
+// ─────────────────────────────────────────────────────────────
+function updateOutput(regex, explanation) {
+  const { errors, warnings } = validateRE2(regex);
+  document.getElementById('out-regex').innerHTML = `<span style="user-select:all">${escHtml(regex)}</span>`;
+
+  const statusEl = document.getElementById('re2-status');
+  if (errors.length) {
+    statusEl.className = 're2-status invalid';
+    statusEl.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> RE2 error`;
+  } else if (warnings.length) {
+    statusEl.className = 're2-status warn-state';
+    statusEl.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> Valid — warnings`;
+  } else {
+    statusEl.className = 're2-status valid';
+    statusEl.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Valid RE2`;
+  }
+
+  const explEl = document.getElementById('out-explanation');
+  explEl.className = 'explanation';
+  explEl.textContent = explanation;
+
+  // Validation messages
+  const msgEl = document.getElementById('validation-msgs');
+  msgEl.innerHTML = [
+    ...errors.map(e => `<div class="validation-msg error"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>${e}</div>`),
+    ...warnings.map(w => `<div class="validation-msg warn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>${w}</div>`)
+  ].join('');
+
+  runTest();
+  // Store current regex for copy
+  window._currentRegex = regex;
+}
+
+function clearOutput() {
+  window._currentRegex = '';
+  document.getElementById('out-regex').innerHTML = '<span class="regex-empty">Choose a template or enter values…</span>';
+  document.getElementById('re2-status').className = 're2-status empty';
+  document.getElementById('re2-status').innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> No regex yet`;
+  document.getElementById('out-explanation').className = 'explanation empty';
+  document.getElementById('out-explanation').textContent = 'Explanation will appear here.';
+  document.getElementById('tester-results').innerHTML = '';
+  document.getElementById('validation-msgs').innerHTML = '';
+}
+
+// ─────────────────────────────────────────────────────────────
+// TESTER
+// ─────────────────────────────────────────────────────────────
+function runTest() {
+  const input = document.getElementById('tester-input').value.trim();
+  const resultsEl = document.getElementById('tester-results');
+  if (!input || !window._currentRegex) { resultsEl.innerHTML = ''; return; }
+  let re;
+  try { re = new RegExp(window._currentRegex, 'i'); } catch(e) { resultsEl.innerHTML = '<div style="font-size:11px;color:var(--red);margin-top:6px">Invalid regex — cannot test.</div>'; return; }
+  const lines = input.split('\n').map(l=>l.trim()).filter(Boolean);
+  if (!lines.length) { resultsEl.innerHTML = ''; return; }
+  let matches = 0;
+  const rows = lines.map(line => {
+    const matched = re.test(line);
+    if (matched) matches++;
+    return `<div class="tester-row">
+      <div class="tester-dot ${matched?'match':'no-match'}"></div>
+      <div class="tester-val ${matched?'match':''}">${escHtml(line)}</div>
+    </div>`;
+  });
+  resultsEl.innerHTML = rows.join('') + `<div class="tester-summary">${matches} of ${lines.length} match</div>`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// COPY
+// ─────────────────────────────────────────────────────────────
+function copyRegex() {
+  if (!window._currentRegex) return;
+  navigator.clipboard.writeText(window._currentRegex).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy regex`;
+    }, 1800);
+  });
+}
+
+function updateUsageGuide() {
+  const lbl = target === 'url' ? 'Page' : 'Query';
+  document.getElementById('usage-target-label').textContent = lbl;
+  document.getElementById('usage-path').textContent = `Performance → Filters → ${lbl} → Custom (regex)`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// BUILDER TABS
+// ─────────────────────────────────────────────────────────────
+function switchBuilderTab(tab) {
+  document.getElementById('pane-manual').style.display = tab === 'manual' ? '' : 'none';
+  document.getElementById('pane-picker').style.display = tab === 'picker' ? '' : 'none';
+  document.getElementById('btab-manual').classList.toggle('active', tab === 'manual');
+  document.getElementById('btab-picker').classList.toggle('active', tab === 'picker');
+  if (tab === 'manual') {
+    document.getElementById('picker-secondary').style.display = 'none';
+    var outLabelEl = document.querySelector('.output-panel .out-label');
+    if (outLabelEl) outLabelEl.textContent = 'Your regex';
+    buildRegex();
+  } else {
+    pickerCombine();
+  }
+}
+
+
+// ─────────────────────────────────────────────────────────────
+// URL PICKER
+// ─────────────────────────────────────────────────────────────
+var MAX_PICKER_URLS = 10;
+var pickerURLs = [{ url:'', segs:[], sel:[], type:'include', pattern:null, explan:null }];
+var pickerOperator = 'or';
+
+function pickerNewEntry() {
+  return { url:'', segs:[], sel:[], selModes:{}, prefixVal:null, type:'include', pattern:null, explan:null, isAndSplit:false, patterns:null, selOptIdx:null };
+}
+
+// Parse a URL string into coloured segment objects
+function parseUrlIntoSegs(urlStr) {
+  var segs = [];
+  if (!urlStr.trim()) return segs;
+  try {
+    var url = new URL(urlStr.trim());
+    segs.push({ type:'protocol', display: url.protocol + '//', clickable: false });
+    segs.push({ type:'domain', display: url.hostname, value: url.hostname, clickable: false });
+    var parts = url.pathname.split('/');
+    for (var i = 1; i < parts.length; i++) {
+      segs.push({ type:'separator', display:'/', clickable: false });
+      if (parts[i]) segs.push({ type:'path', display: parts[i], value: parts[i], position: i, clickable: true });
+    }
+    if (url.search) {
+      var first = true;
+      url.searchParams.forEach(function(val, key) {
+        segs.push({ type:'separator', display: first ? '?' : '&', clickable: false });
+        segs.push({ type:'query', display: key + '=' + val, key: key, val: val, clickable: true });
+        first = false;
+      });
+    }
+    if (url.hash) {
+      segs.push({ type:'separator', display:'#', clickable: false });
+      segs.push({ type:'fragment', display: url.hash.slice(1), clickable: false });
+    }
+  } catch(e) {
+    segs.push({ type:'raw', display: urlStr.trim(), clickable: false });
+  }
+  return segs;
+}
+
+// Render all URL blocks from state
+function pickerRenderAll() {
+  var list = document.getElementById('picker-urls-list');
+  var opBar = document.getElementById('picker-op-bar');
+  var addBtn = document.getElementById('picker-add-btn');
+  opBar.style.display = pickerURLs.length > 1 ? '' : 'none';
+  if (addBtn) addBtn.style.display = pickerURLs.length >= MAX_PICKER_URLS ? 'none' : '';
+
+  var html = '';
+  for (var i = 0; i < pickerURLs.length; i++) {
+    var e = pickerURLs[i];
+    if (i > 0) {
+      html += '<div class="picker-op-sep"><span class="picker-op-badge">' + pickerOperator.toUpperCase() + '</span></div>';
+    }
+    html += '<div class="picker-url-block" id="picker-block-' + i + '">';
+    html += '<div class="picker-url-label">';
+    html += '<span>';
+    html += '<button class="picker-type-pill ' + e.type + '" id="picker-type-' + i + '" onclick="pickerToggleType(' + i + ')">';
+    html += e.type === 'include' ? '&#10003; include' : '&#10007; reject';
+    html += '</button>';
+    html += 'URL ' + (i + 1);
+    html += '</span>';
+    if (pickerURLs.length > 1) {
+      html += '<button class="remove-btn" onclick="pickerRemoveURL(' + i + ')" title="Remove" style="margin-left:auto">&#215;</button>';
+    }
+    html += '</div>';
+    html += '<input type="text" class="url-picker-input" id="picker-url-' + i + '"';
+    html += ' value="' + escHtml(e.url) + '"';
+    html += ' placeholder="https://example.com/blog/post-title/"';
+    html += ' oninput="pickerOnInput(' + i + ')" autocomplete="off" spellcheck="false">';
+    html += '<div class="url-segments" id="picker-segs-' + i + '"></div>';
+    html += '<div id="picker-opts-' + i + '" style="display:none"></div>';
+    html += '</div>';
+  }
+  list.innerHTML = html;
+
+  // Now populate segments for each entry
+  for (var j = 0; j < pickerURLs.length; j++) {
+    pickerRenderSegs(j);
+    pickerBuildOptions(j);
+  }
+}
+
+// Render segment pills for one URL entry
+function pickerRenderSegs(idx) {
+  var e = pickerURLs[idx];
+  var el = document.getElementById('picker-segs-' + idx);
+  if (!el) return;
+  if (!e.segs.length) {
+    el.innerHTML = '<span style="font-size:11px;color:var(--text-4)">Paste a URL to see its segments</span>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < e.segs.length; i++) {
+    var seg = e.segs[i];
+    var segMode = e.selModes[i];
+    var selClass = segMode === 'literal' ? ' selected' : segMode === 'length' ? ' selected-length' : '';
+    var cls = 'url-seg ' + seg.type + (seg.clickable ? ' clickable' : '') + selClass;
+    var click = seg.clickable ? ' onclick="pickerSegClick(' + idx + ',' + i + ')"' : '';
+    html += '<span class="' + cls + '"' + click + '>' + escHtml(seg.display) + '</span>';
+  }
+  el.innerHTML = html;
+}
+
+// Toggle a segment selection — 3 states: unselected → literal (teal) → length (purple) → unselected
+function pickerSegClick(idx, segIdx) {
+  var e = pickerURLs[idx];
+  var currentMode = e.selModes[segIdx];
+  if (!currentMode) {
+    e.sel.push(segIdx);
+    e.selModes[segIdx] = 'literal';
+  } else if (currentMode === 'literal') {
+    e.selModes[segIdx] = 'length';
+  } else {
+    var pos = e.sel.indexOf(segIdx);
+    if (pos >= 0) e.sel.splice(pos, 1);
+    delete e.selModes[segIdx];
+  }
+  e.pattern = null; e.explan = null; e.isAndSplit = false; e.patterns = null; e.selOptIdx = null; e.prefixVal = null;
+  pickerRenderSegs(idx);
+  pickerBuildOptions(idx);
+  pickerCombine();
+}
+
+// Generate and render option buttons for one URL entry
+function pickerBuildOptions(idx) {
+  var e   = pickerURLs[idx];
+  var el  = document.getElementById('picker-opts-' + idx);
+  if (!el) return;
+  if (!e.sel.length) { el.style.display = 'none'; el.innerHTML = ''; return; }
+
+  var selIdxSorted = e.sel.slice().sort(function(a,b){ return a-b; });
+  var selItems = selIdxSorted.map(function(i){ var seg = e.segs[i]; return seg ? { seg:seg, mode:e.selModes[i]||'literal' } : null; }).filter(Boolean);
+  var opts = pickerGenOptions(selItems);
+  if (!opts.length) { el.style.display = 'none'; return; }
+
+  // Auto-select first option if none chosen yet
+  if (!e.pattern) {
+    e.pattern    = opts[0].pattern;
+    e.explan     = opts[0].explanation;
+    e.isAndSplit = opts[0].isAndSplit || false;
+    e.patterns   = opts[0].patterns   || null;
+    e.selOptIdx  = 0;
+  }
+
+  var prefixActive = e.selOptIdx === -1;
+  var html = '<div class="picker-options"><div class="picker-options-title">Choose pattern</div>';
+  for (var i = 0; i < opts.length; i++) {
+    var isActive = !prefixActive && (e.selOptIdx !== null ? e.selOptIdx === i : e.pattern === opts[i].pattern);
+    html += '<button class="picker-option-btn' + (isActive ? ' picker-opt-active' : '') + '"';
+    html += ' onclick="pickerApplyOpt(' + idx + ',' + i + ')">';
+    html += '<span>' + escHtml(opts[i].label) + '</span>';
+    html += '<span class="picker-opt-code">' + escHtml(opts[i].preview) + '</span>';
+    html += '</button>';
+  }
+  html += '</div>';
+
+  // Prefix card: show for single teal path segment only
+  var singleTealSeg = null;
+  var tealPathItems = selItems.filter(function(it){ return it.seg.type === 'path' && it.mode === 'literal'; });
+  if (tealPathItems.length === 1 && selItems.length === 1) singleTealSeg = tealPathItems[0].seg;
+  if (singleTealSeg) {
+    var pVal = e.prefixVal !== null ? e.prefixVal : singleTealSeg.value;
+    var pPat = pVal.length ? '(^|/)' + escRE2(pVal) + '[^/]*(/|$)' : '';
+    html += '<div id="picker-prefix-card-' + idx + '" class="picker-prefix-card' + (prefixActive ? ' picker-opt-active' : '') + '">';
+    html += '<div class="picker-prefix-top"><span class="picker-prefix-lbl">Starts with\u2026</span>';
+    html += '<span class="picker-opt-code" id="picker-prefix-preview-' + idx + '">' + escHtml(pPat) + '</span></div>';
+    html += '<input class="picker-prefix-input" id="picker-prefix-input-' + idx + '" type="text" value="' + escHtml(pVal) + '"';
+    html += ' oninput="pickerUpdatePrefix(' + idx + ',this.value)" onfocus="pickerFocusPrefix(' + idx + ')" placeholder="type prefix, e.g. flights-">';
+    html += '</div>';
+  }
+
+  el.innerHTML = html;
+  el.style.display = '';
+  el._opts = opts;
+  el._hasPrefixCard = !!singleTealSeg;
+}
+
+// Apply a chosen option for entry idx
+function pickerApplyOpt(idx, optIdx) {
+  var el = document.getElementById('picker-opts-' + idx);
+  if (!el || !el._opts || !el._opts[optIdx]) return;
+  var opt = el._opts[optIdx];
+  pickerURLs[idx].pattern    = opt.pattern;
+  pickerURLs[idx].explan     = opt.explanation;
+  pickerURLs[idx].isAndSplit = opt.isAndSplit || false;
+  pickerURLs[idx].patterns   = opt.patterns   || null;
+  pickerURLs[idx].selOptIdx  = optIdx;
+  pickerURLs[idx].prefixVal = null;
+  // Highlight active button; deactivate prefix card if present
+  var btns = el.querySelectorAll('.picker-option-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('picker-opt-active', i === optIdx);
+  var prefixCard = document.getElementById('picker-prefix-card-' + idx);
+  if (prefixCard) prefixCard.classList.remove('picker-opt-active');
+  pickerCombine();
+}
+
+// Handle prefix input typing — targeted DOM update only, no full re-render (preserves focus)
+function pickerUpdatePrefix(idx, val) {
+  var e = pickerURLs[idx];
+  e.prefixVal  = val;
+  e.selOptIdx  = -1;
+  var pat = val.length ? '(^|/)' + escRE2(val) + '[^/]*(/|$)' : '';
+  e.pattern    = pat;
+  e.explan     = val.length ? 'Matches URLs with a path segment starting with "' + val + '".' : '';
+  e.isAndSplit = false;
+  e.patterns   = null;
+  // Targeted DOM: update preview, toggle active states
+  var previewEl = document.getElementById('picker-prefix-preview-' + idx);
+  if (previewEl) previewEl.textContent = pat;
+  var prefixCard = document.getElementById('picker-prefix-card-' + idx);
+  if (prefixCard) prefixCard.classList.add('picker-opt-active');
+  var el = document.getElementById('picker-opts-' + idx);
+  if (el) { var btns = el.querySelectorAll('.picker-option-btn'); for (var i = 0; i < btns.length; i++) btns[i].classList.remove('picker-opt-active'); }
+  pickerCombine();
+}
+
+// Activate the prefix option when user focuses the input (without changing typed value)
+function pickerFocusPrefix(idx) {
+  var e = pickerURLs[idx];
+  if (e.selOptIdx === -1) return; // already active
+  var input = document.getElementById('picker-prefix-input-' + idx);
+  var val = input ? input.value : (e.prefixVal || '');
+  pickerUpdatePrefix(idx, val);
+}
+
+// Generate options list — selItems = [{seg, mode:'literal'|'length'}, ...]
+function pickerGenOptions(selItems) {
+  var opts = [];
+  var pathItems  = selItems.filter(function(it){ return it.seg.type === 'path'; });
+  var queryItems = selItems.filter(function(it){ return it.seg.type === 'query'; });
+  var domainItems= selItems.filter(function(it){ return it.seg.type === 'domain'; });
+
+  if (pathItems.length > 0 && !queryItems.length && !domainItems.length) {
+    if (pathItems.length === 1) {
+      var it  = pathItems[0];
+      var seg = it.seg, v = seg.value, pos = seg.position, len = v.length;
+      var litOpts = [
+        { label:'Pages in /' + v + '/ directory', preview:'/' + v + '/', pattern:'/' + escRE2(v) + '/', isAndSplit:false, patterns:null, explanation:'Matches all URLs in the /' + v + '/ directory.' },
+        { label:'URL contains "' + v + '"', preview:v, pattern:escRE2(v), isAndSplit:false, patterns:null, explanation:'Matches URLs containing the slug "' + v + '" anywhere in the path.' },
+        { label:'At least ' + pos + ' path segment' + (pos>1?'s':'') + ' deep', preview:'[^/]+\u2026 x'+pos, pattern:'://[^/]+(\\/[^/?#]+){' + pos + ',}', isAndSplit:false, patterns:null, explanation:'Matches URLs with at least ' + pos + ' path segment' + (pos>1?'s':'') + '.' }
+      ];
+      var lenOpts = [
+        { label:'Slugs \u2265 ' + len + ' chars', preview:'[^/]{'+len+',}', pattern:'(^|/)[^/]{'+len+',}(/|$)', isAndSplit:false, patterns:null, explanation:'Matches URLs with any path segment of at least ' + len + ' characters.' },
+        { label:'Slugs exactly ' + len + ' chars', preview:'[^/]{'+len+'}', pattern:'(^|/)[^/]{'+len+'}(/|$)', isAndSplit:false, patterns:null, explanation:'Matches URLs with any path segment of exactly ' + len + ' characters.' }
+      ];
+      opts = it.mode === 'length' ? lenOpts.concat(litOpts) : litOpts.concat(lenOpts);
+
+    } else {
+      var sorted   = pathItems.slice().sort(function(a,b){ return a.seg.position - b.seg.position; });
+      var consec   = sorted.every(function(it,k){ return k===0 || it.seg.position === sorted[k-1].seg.position+1; });
+      var allLit   = sorted.every(function(it){ return it.mode !== 'length'; });
+      var allLen   = sorted.every(function(it){ return it.mode === 'length'; });
+      var hasMixed = !allLit && !allLen;
+
+      // Helpers for structural slug-length patterns
+      function buildSlugPat(srt, exact) {
+        var p = '(^|/)[^/.]{' + srt[0].seg.value.length + (exact ? '' : ',') + '}/';
+        for (var i = 1; i < srt.length; i++) {
+          var g = srt[i].seg.position - srt[i-1].seg.position - 1;
+          for (var j = 0; j < g; j++) p += '[^/]+/';
+          p += '[^/]{' + srt[i].seg.value.length + (exact ? '' : ',') + '}/';
+        }
+        return p.slice(0,-1) + '(/|$)';
+      }
+      function buildSlugLabel(srt, exact) {
+        var parts = [(exact ? 'exactly ' : '\u2265 ') + srt[0].seg.value.length + ' chars'];
+        for (var i = 1; i < srt.length; i++) {
+          var g = srt[i].seg.position - srt[i-1].seg.position - 1;
+          if (g > 0) parts.push('gap');
+          parts.push((exact ? 'exactly ' : '\u2265 ') + srt[i].seg.value.length + ' chars');
+        }
+        return 'Slugs ' + parts.join(', ');
+      }
+      function buildSlugExplan(srt, exact) {
+        var items = [(exact ? 'exactly ' : '\u2265 ') + srt[0].seg.value.length + '-char segment'];
+        for (var i = 1; i < srt.length; i++) {
+          var g = srt[i].seg.position - srt[i-1].seg.position - 1;
+          if (g > 0) items.push(g + ' gap segment' + (g>1?'s':''));
+          items.push((exact ? 'exactly ' : '\u2265 ') + srt[i].seg.value.length + '-char segment');
+        }
+        return 'Matches URLs with ' + items.join(', then ') + '. First segment excludes dots to avoid domain false-positives; later segments allow dots.';
+      }
+
+      // MIXED HYBRID PATTERN (some literal, some length)
+      if (hasMixed) {
+        var mmP = '(^|/)', meP = '(^|/)';
+        var mmL = [], meL = [], mmX = [], meX = [];
+        for (var mi = 0; mi < sorted.length; mi++) {
+          var msit = sorted[mi], msv = msit.seg.value, msl = msv.length, mIsFirst = mi === 0;
+          if (mi > 0) {
+            var msg = sorted[mi].seg.position - sorted[mi-1].seg.position - 1;
+            mmP += '/'; meP += '/';
+            for (var mj = 0; mj < msg; mj++) { mmP += '[^/]+/'; meP += '[^/]+/'; }
+            if (msg > 0) { mmL.push('gap'); meL.push('gap'); mmX.push(msg+' gap segment'+(msg>1?'s':'')); meX.push(msg+' gap segment'+(msg>1?'s':'')); }
+          }
+          if (msit.mode === 'literal') {
+            mmP += escRE2(msv); meP += escRE2(msv);
+            mmL.push('/'+msv+'/'); meL.push('/'+msv+'/');
+            mmX.push('"/'+msv+'/"'); meX.push('"/'+msv+'/"');
+          } else {
+            var mdd = mIsFirst ? '[^/.]' : '[^/]';
+            mmP += mdd+'{'+msl+',}'; meP += mdd+'{'+msl+'}';
+            mmL.push('\u2265 '+msl+' chars'); meL.push('exactly '+msl+' chars');
+            mmX.push('\u2265 '+msl+'-char segment'); meX.push('exactly '+msl+'-char segment');
+          }
+        }
+        mmP += '(/|$)'; meP += '(/|$)';
+        opts.push({ label:'Path: '+mmL.join(', '), preview:mmP, pattern:mmP, isAndSplit:false, patterns:null, explanation:'Matches URLs with '+mmX.join(', then ')+'.' });
+        opts.push({ label:'Path (exact counts): '+meL.join(', '), preview:meP, pattern:meP, isAndSplit:false, patterns:null, explanation:'Matches URLs with '+meX.join(', then ')+'.' });
+      }
+
+      // LITERAL PATH OPTION
+      if (!allLen) {
+        if (consec) {
+          var joined    = sorted.map(function(it){ return escRE2(it.seg.value); }).join('/');
+          var joinedRaw = sorted.map(function(it){ return it.seg.value; }).join('/');
+          opts.push({ label:'Path contains /'+joinedRaw+'/', preview:'/'+joinedRaw+'/', pattern:'/'+joined+'/', isAndSplit:false, patterns:null, explanation:'Matches URLs containing the path /'+joinedRaw+'/.' });
+        } else {
+          var lp = '/'+escRE2(sorted[0].seg.value)+'/';
+          for (var k = 1; k < sorted.length; k++) {
+            var gp = sorted[k].seg.position - sorted[k-1].seg.position - 1;
+            for (var gj = 0; gj < gp; gj++) lp += '[^/]+/';
+            lp += escRE2(sorted[k].seg.value)+'/';
+          }
+          var pprevs = sorted.map(function(it){ return '/'+it.seg.value+'/'; });
+          var gapLbls = [];
+          for (var gi = 0; gi < pprevs.length; gi++) { gapLbls.push(pprevs[gi]); if (gi < pprevs.length-1) gapLbls.push('gap'); }
+          opts.push({ label:'Path contains '+gapLbls.join(', '), preview:lp, pattern:lp.slice(0,-1)+'(/|$)', isAndSplit:false, patterns:null, explanation:'Matches URLs where '+pprevs.join(' appears before ')+' in the path, with segments in between.' });
+        }
+      }
+
+      // STRUCTURAL SLUG-LENGTH PATTERNS — only when ALL selected segments are purple (length mode)
+      // Mixed selections already have a hybrid pattern; all-literal selections use the path pattern
+      if (allLen && sorted.length >= 2) {
+        opts.push({ label:buildSlugLabel(sorted,false), preview:buildSlugPat(sorted,false), pattern:buildSlugPat(sorted,false), isAndSplit:false, patterns:null, explanation:buildSlugExplan(sorted,false) });
+        opts.push({ label:buildSlugLabel(sorted,true),  preview:buildSlugPat(sorted,true),  pattern:buildSlugPat(sorted,true),  isAndSplit:false, patterns:null, explanation:buildSlugExplan(sorted,true)  });
+      }
+
+      // SLUG RANGE OPTIONS — only when ALL selected segments are teal (literal mode)
+      // Hidden for mixed and all-length: in those cases these "any single segment" options are misleading
+      if (allLit) {
+        var maxLen = Math.max.apply(null, pathItems.map(function(it){ return it.seg.value.length; }));
+        var minLen = Math.min.apply(null, pathItems.map(function(it){ return it.seg.value.length; }));
+        opts.push({ label:'Slugs \u2265 '+maxLen+' chars', preview:'[^/]{'+maxLen+',}', pattern:'(^|/)[^/]{'+maxLen+',}(/|$)', isAndSplit:false, patterns:null, explanation:'Matches URLs with any path segment of at least '+maxLen+' characters.' });
+        if (minLen !== maxLen) opts.push({ label:'Slugs '+minLen+'\u2013'+maxLen+' chars', preview:'[^/]{'+minLen+','+maxLen+'}', pattern:'(^|/)[^/]{'+minLen+','+maxLen+'}(/|$)', isAndSplit:false, patterns:null, explanation:'Matches URLs with any path segment between '+minLen+' and '+maxLen+' characters long.' });
+      }
+    }
+  } else if (queryItems.length > 0) {
+    var q = queryItems[0].seg;
+    opts.push({ label:'Has parameter "'+q.key+'"', preview:'[?&]'+q.key+'=', pattern:'[?&]'+escRE2(q.key)+'=', isAndSplit:false, patterns:null, explanation:'Matches URLs with query parameter "'+q.key+'".' });
+    opts.push({ label:'Exact: '+q.key+'='+q.val, preview:'[?&]'+q.key+'='+q.val, pattern:'[?&]'+escRE2(q.key)+'='+escRE2(q.val), isAndSplit:false, patterns:null, explanation:'Matches URLs where '+q.key+'="'+q.val+'".' });
+    if (queryItems.length > 1) {
+      var q2 = queryItems[1].seg;
+      if (q2.key === q.key) opts.push({ label:'"'+q.key+'" = "'+q.val+'" or "'+q2.val+'"', preview:'[?&]'+q.key+'=('+q.val+'|'+q2.val+')', pattern:'[?&]'+escRE2(q.key)+'=('+escRE2(q.val)+'|'+escRE2(q2.val)+')', isAndSplit:false, patterns:null, explanation:'Matches URLs where '+q.key+' is "'+q.val+'" or "'+q2.val+'".' });
+    }
+  } else if (domainItems.length > 0) {
+    var d = domainItems[0].seg;
+    opts.push({ label:'From domain "'+d.value+'"', preview:d.value, pattern:escRE2(d.value), isAndSplit:false, patterns:null, explanation:'Matches URLs from domain '+d.value+'.' });
+  }
+  return opts;
+}
+
+// Handle URL input change for entry idx
+function pickerOnInput(idx) {
+  var input = document.getElementById('picker-url-' + idx);
+  if (!input) return;
+  var e = pickerURLs[idx];
+  e.url       = input.value;
+  e.segs      = parseUrlIntoSegs(input.value);
+  e.sel       = [];
+  e.selModes  = {};
+  e.prefixVal = null;
+  e.pattern   = null;
+  e.explan  = null;
+  pickerRenderSegs(idx);
+  pickerBuildOptions(idx);
+  pickerCombine();
+}
+
+// Toggle include/reject for entry idx
+function pickerToggleType(idx) {
+  pickerURLs[idx].type = pickerURLs[idx].type === 'include' ? 'reject' : 'include';
+  var btn = document.getElementById('picker-type-' + idx);
+  if (btn) {
+    var t = pickerURLs[idx].type;
+    btn.className = 'picker-type-pill ' + t;
+    btn.innerHTML = t === 'include' ? '&#10003; include' : '&#10007; reject';
+  }
+  pickerCombine();
+}
+
+// Add a new URL entry
+function pickerAddURL() {
+  if (pickerURLs.length >= MAX_PICKER_URLS) return;
+  pickerURLs.push(pickerNewEntry());
+  pickerRenderAll();
+  pickerCombine();
+}
+
+// Remove a URL entry
+function pickerRemoveURL(idx) {
+  pickerURLs.splice(idx, 1);
+  if (!pickerURLs.length) pickerURLs.push(pickerNewEntry());
+  pickerRenderAll();
+  pickerCombine();
+}
+
+// Set AND/OR operator
+function pickerSetOperator(op, el) {
+  pickerOperator = op;
+  document.querySelectorAll('.picker-op-pill').forEach(function(p){ p.classList.toggle('selected', p.dataset.op === op); });
+  document.querySelectorAll('.picker-op-badge').forEach(function(b){ b.textContent = op.toUpperCase(); });
+  pickerCombine();
+}
+
+// Build final regex from all entries and update output
+function pickerCombine() {
+  var includeEntries = pickerURLs.filter(function(e){ return e.type === 'include' && e.pattern; });
+  var rejectEntries  = pickerURLs.filter(function(e){ return e.type === 'reject'  && e.pattern; });
+
+  if (!includeEntries.length && !rejectEntries.length) {
+    clearOutput();
+    document.getElementById('picker-secondary').style.display = 'none';
+    return;
+  }
+
+  var mainRegex = '', mainExplan = '';
+  var andExtras = [];
+
+  if (includeEntries.length > 0) {
+    // Separate AND-split entries (multi-segment → separate AND filters) from normal entries
+    var normalEntries    = includeEntries.filter(function(e){ return !(e.isAndSplit && e.patterns && e.patterns.length > 1); });
+    var andSplitEntries  = includeEntries.filter(function(e){ return   e.isAndSplit && e.patterns && e.patterns.length > 1;  });
+
+    // Expand AND-split entries into individual {pattern, explan} objects
+    var splitFilters = [];
+    andSplitEntries.forEach(function(e) {
+      e.patterns.forEach(function(p) { splitFilters.push({ pattern: p, explan: e.explan }); });
+    });
+
+    // Build the primary filter from normal entries (OR or AND based on operator)
+    var normalFilters = [];
+    if (pickerOperator === 'or') {
+      if (normalEntries.length > 1) {
+        normalFilters = [{ pattern: '(' + normalEntries.map(function(e){ return e.pattern; }).join('|') + ')', explan: 'Matches URLs satisfying any of the selected patterns (OR).' }];
+      } else if (normalEntries.length === 1) {
+        normalFilters = [{ pattern: normalEntries[0].pattern, explan: normalEntries[0].explan }];
+      }
+    } else {
+      // AND operator: every normal entry is its own separate GSC filter
+      normalFilters = normalEntries.map(function(e){ return { pattern: e.pattern, explan: e.explan }; });
+    }
+
+    // Combine: normal filters first, then AND-split filters — all AND'd together in GSC
+    var allFilters = normalFilters.concat(splitFilters);
+
+    if (!allFilters.length) { clearOutput(); document.getElementById('picker-secondary').style.display = 'none'; return; }
+
+    mainRegex  = allFilters[0].pattern;
+    mainExplan = allFilters.length > 1
+      ? 'AND filter 1 of ' + allFilters.length + '. Apply each regex separately in GSC (Page → Custom (regex)).'
+      : allFilters[0].explan;
+    andExtras  = allFilters.slice(1);
+  } else {
+    mainRegex  = rejectEntries[0].pattern;
+    mainExplan = 'Exclusion pattern — use Page does not match regex in GSC.';
+  }
+
+  // Update output panel label to reflect AND-split context
+  var outLabelEl = document.querySelector('.output-panel .out-label');
+  if (outLabelEl) {
+    outLabelEl.textContent = andExtras.length > 0
+      ? 'AND Filter 1 of ' + (andExtras.length + 1)
+      : 'Your regex';
+  }
+  updateOutput(mainRegex, mainExplan);
+  pickerRenderSecondary(andExtras, rejectEntries);
+}
+
+// Render secondary output (AND filters + reject filters)
+function pickerRenderSecondary(andExtras, rejectEntries) {
+  var secEl    = document.getElementById('picker-secondary');
+  var secInner = document.getElementById('picker-secondary-inner');
+  var hasExtra = andExtras.length > 0 || rejectEntries.length > 0;
+  secEl.style.display = hasExtra ? '' : 'none';
+  if (!hasExtra) return;
+
+  var html = '';
+  if (andExtras.length > 0) {
+    html += '<div class="validation-msg warn" style="margin-bottom:10px">';
+    html += '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>';
+    html += 'AND mode: apply each filter separately in GSC Performance &rarr; Filters &rarr; Page &rarr; Custom (regex).';
+    html += '</div>';
+    for (var i = 0; i < andExtras.length; i++) {
+      var safe = andExtras[i].pattern.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      html += '<div class="secondary-out-block">';
+      html += '<div class="secondary-out-label include">AND Filter ' + (i + 2) + '</div>';
+      html += '<div class="secondary-out-row">';
+      html += '<div class="secondary-out-code">' + escHtml(andExtras[i].pattern) + '</div>';
+      html += '<button class="secondary-out-copy" onclick="pickerCopySecondary(this,\'' + safe + '\')">Copy</button>';
+      html += '</div></div>';
+    }
+  }
+  if (rejectEntries.length > 0) {
+    if (andExtras.length > 0) html += '<div style="height:1px;background:var(--border);margin:10px 0;"></div>';
+    html += '<div style="font-size:11px;color:var(--text-2);margin-bottom:8px;line-height:1.5">Use <strong>Page &rarr; does not match regex</strong> in GSC to exclude:</div>';
+    for (var j = 0; j < rejectEntries.length; j++) {
+      var safeR = rejectEntries[j].pattern.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      html += '<div class="secondary-out-block">';
+      html += '<div class="secondary-out-label reject">Exclude ' + (j + 1) + '</div>';
+      html += '<div class="secondary-out-row">';
+      html += '<div class="secondary-out-code reject">' + escHtml(rejectEntries[j].pattern) + '</div>';
+      html += '<button class="secondary-out-copy" onclick="pickerCopySecondary(this,\'' + safeR + '\')">Copy</button>';
+      html += '</div></div>';
+    }
+  }
+  secInner.innerHTML = html;
+}
+
+function pickerCopySecondary(btn, text) {
+  navigator.clipboard.writeText(text).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = 'Copied!'; btn.style.color = 'var(--green)'; btn.style.borderColor = 'var(--green)';
+    setTimeout(function(){ btn.textContent = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 1800);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// THEME + ACCOUNT
+// ─────────────────────────────────────────────────────────────
+document.addEventListener('click', function(){ if(window.closeAcctMenu) window.closeAcctMenu(); });
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+renderValues();
+renderTmplList();
+updateUsageGuide();
+pickerRenderAll();
+
+// ─────────────────────────────────────────────────────────────
+// CLERK AUTH
+// ─────────────────────────────────────────────────────────────
+
+</script>
+
+<!-- ═══════════════ CONTENT SECTIONS ═══════════════ -->
+<style>
+  .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
+  .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
+  .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
+  .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+  .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
+
+  /* Intro cards */
+  .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
+  .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+  .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
+  .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .ct-card p { font-size: 13px; color: var(--text-3); line-height: 1.6; margin: 0; }
+  .ct-card code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+  /* Steps */
+  .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
+  .ct-steps::before { content: ''; position: absolute; left: 19px; top: 28px; bottom: 28px; width: 1px; background: var(--border); }
+  .ct-step { display: flex; gap: 20px; padding: 24px 0; }
+  .ct-step-num { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; background: var(--bg2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Menlo','Monaco',monospace; font-size: 12px; color: var(--teal); position: relative; z-index: 1; }
+  .ct-step-body h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; padding-top: 10px; }
+  .ct-step-body p { font-size: 13px; color: var(--text-3); line-height: 1.65; margin: 0; }
+  .ct-step-body strong { color: var(--text-1); }
+  .ct-gsc-mockup { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-top: 14px; }
+  .ct-mock-path { font-size: 10px; color: var(--text-4); font-family: 'Menlo',monospace; margin-bottom: 10px; }
+  .ct-filter-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .ct-filter-chip { background: var(--surface); border: 1px solid var(--border); padding: 4px 10px; border-radius: 6px; font-size: 11px; color: var(--text-3); }
+  .ct-filter-chip.active { border-color: var(--teal); color: var(--teal); background: var(--mint-light); }
+  html.dark .ct-filter-chip.active { background: rgba(14,116,144),.12); }
+  .ct-filter-regex { background: var(--bg); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; font-family: 'Menlo',monospace; font-size: 12px; color: var(--text-1); width: 100%; margin-top: 8px; display: block; }
+
+  /* Pattern tables */
+  .ct-group-label { font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-4); padding: 20px 0 14px; display: block; border-bottom: 1px solid var(--border); }
+  .ct-table-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; overflow-x: auto; margin-bottom: 32px; }
+  .ct-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .ct-table thead th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-4); border-bottom: 1px solid var(--border); background: var(--bg2); }
+  .ct-table tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
+  .ct-table tbody tr:last-child { border-bottom: none; }
+  .ct-table tbody tr:hover { background: var(--bg2); }
+  .ct-table td { padding: 12px 16px; vertical-align: top; color: var(--text-3); line-height: 1.55; }
+  .ct-table td:first-child { color: var(--text-1); font-weight: 500; width: 22%; }
+  .ct-table td:nth-child(2) { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; color: var(--teal); white-space: normal; word-break: break-all; width: 28%; }
+  .ct-table td:nth-child(3) { width: 50%; }
+  .ct-table code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+  @media (max-width: 680px) {
+    .ct-table-wrap { border-radius: 10px; }
+    .ct-table thead { display: none; }
+    .ct-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .ct-table tbody tr:last-child { border-bottom: none; }
+    .ct-table td { display: block; padding: 3px 16px; border: none; width: auto !important; }
+    .ct-table td:first-child { font-size: 13px; font-weight: 600; padding-top: 12px; }
+    .ct-table td:nth-child(2) { font-size: 12px; padding: 6px 16px; }
+    .ct-table td:nth-child(3) { font-size: 12px; color: var(--text-3); padding-bottom: 12px; }
+  }
+
+  /* Callout */
+  .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
+  .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144),.2); }
+  html.dark .ct-callout--teal { background: rgba(14,116,144),.1); }
+  .ct-callout--red { background: rgba(220,38,38,.06); border: 1px solid rgba(220,38,38,.2); }
+  .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+  .ct-callout-body strong { display: block; font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+  .ct-callout-body p { font-size: 13px; color: var(--text-3); margin: 0; line-height: 1.6; }
+  .ct-callout-body ul { font-size: 13px; color: var(--text-3); padding-left: 18px; margin-top: 6px; line-height: 1.7; }
+  .ct-callout-body li { margin-bottom: 3px; }
+  .ct-callout-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+  /* Cheat sheet */
+  .ct-cheat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 28px; }
+  .ct-cheat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; }
+  .ct-cheat-symbol { font-family: 'Menlo',monospace; font-size: 14px; font-weight: 500; color: var(--teal); background: var(--mint-light); border: 1px solid rgba(14,116,144),.2); padding: 6px 10px; border-radius: 7px; min-width: 52px; text-align: center; flex-shrink: 0; }
+  html.dark .ct-cheat-symbol { background: rgba(14,116,144),.12); }
+  .ct-cheat-name { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 3px; }
+  .ct-cheat-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+  .ct-cheat-example { font-family: 'Menlo',monospace; font-size: 10px; color: var(--text-4); margin-top: 5px; }
+
+  /* Use cases */
+  .ct-use-cases { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+  .ct-use-case { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .ct-use-num { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-4); margin-bottom: 8px; font-family: 'Menlo',monospace; }
+  .ct-use-case h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 10px; line-height: 1.35; }
+  .ct-use-case p { font-size: 13px; color: var(--text-3); line-height: 1.65; margin: 0; }
+  .ct-use-case code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+  .ct-use-pattern { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+  .ct-use-pattern-label { font-family: 'Menlo',monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-4); }
+  .ct-use-pattern-code { font-family: 'Menlo',monospace; font-size: 12px; color: var(--teal); word-break: break-all; line-height: 1.6; }
+  .ct-use-pattern-note { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+  /* Limitations */
+  .ct-limits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-top: 28px; }
+  .ct-limit { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: flex; gap: 12px; }
+  .ct-limit-icon { font-size: 16px; flex-shrink: 0; }
+  .ct-limit-title { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 5px; }
+  .ct-limit p { font-size: 13px; color: var(--text-3); line-height: 1.55; margin: 0; }
+
+  /* FAQ */
+  .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
+  .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
+  .ct-faq summary::-webkit-details-marker { display: none; }
+  .ct-faq summary::after { content: '▾'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+  .ct-faq details[open] summary::after { transform: rotate(180deg); }
+  .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
+  .ct-faq summary:hover { background: var(--bg2); }
+  .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
+  .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
+  .ct-faq-body code { font-family: 'Menlo',monospace; font-size: 12px; background: var(--bg2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
+
+  @media (max-width: 700px) {
+    .ct-use-case { grid-template-columns: 1fr; }
+    .ct-wrap { padding: 0 16px 60px; }
+    .ct-steps::before { display: none; }
+  }
+</style>
+
+<div class="ct-wrap">
+
+  <!-- ─── 1. WHAT IS GSC REGEX ─── -->
+  <div class="ct-section" id="what-is-gsc-regex">
+    <span class="ct-section-label">Background</span>
+    <h2 class="ct-h2">What is Google Search Console Regex?</h2>
+    <p class="ct-lead">GSC lets you filter your Performance report by <strong>Page</strong> (URL) and <strong>Query</strong> using a Custom (regex) option. Instead of a single keyword or exact URL, regex lets you match patterns across hundreds of URLs or queries at once — brand terms, directory paths, intent clusters, pagination, query length, and more.</p>
+    <p class="ct-lead" style="margin-top:12px">The catch: GSC uses <strong>RE2</strong>, Google's own regex engine. RE2 is faster than PCRE but forbids several features developers expect — including negative lookaheads, backreferences, and atomic groups. Patterns that work perfectly in regex101.com or Python can silently fail in GSC. This tool generates patterns guaranteed to work in RE2.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <div class="ct-card-title">Page (URL) Filters</div>
+        <p>Filter to specific directories, URL structures, parameterised pages, or pagination. URL filters are <strong>case-sensitive</strong> — <code>/Blog/</code> will not match <code>/blog/</code>.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <div class="ct-card-title">Query Filters</div>
+        <p>Segment queries by intent (informational, transactional, commercial), brand mentions, question words, query length, or keyword clusters. Query filters are <strong>case-insensitive</strong>.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <div class="ct-card-title">Partial Match by Default</div>
+        <p>GSC treats every regex as a partial (contains) match. A pattern of <code>/blog/</code> matches any URL containing that string. For Page filters, GSC matches against the <strong>full URL</strong> (e.g. <code>https://example.com/blog/post</code>), so <code>^</code> anchors to the protocol — use <code>://[^/]+/blog/</code> to anchor to the start of the path. For Query filters, <code>^</code> anchors to the start of the query string normally.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+        <div class="ct-card-title">Character Limit: ~1,000</div>
+        <p>GSC's documented regex limit is approximately 1,000 characters. This tool warns at <strong>800 characters</strong> to leave a safe margin — a detail most other tools miss entirely.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 2. HOW TO USE ─── -->
+  <div class="ct-section" id="how-to-use">
+    <span class="ct-section-label">Step by step</span>
+    <h2 class="ct-h2">How to Use the Builder</h2>
+    <p class="ct-lead">Build your pattern here, paste it directly into GSC. Here's the exact workflow.</p>
+    <div class="ct-steps">
+      <div class="ct-step">
+        <div class="ct-step-num">01</div>
+        <div class="ct-step-body">
+          <h4>Choose your mode</h3>
+          <p>The <strong>URL Picker</strong> lets you paste any URL and click its parsed segments to build a pattern visually. The <strong>Manual Builder</strong> gives full control over match mode and values. The <strong>Template Library</strong> has 22 pre-built patterns for the most common GSC use cases — one click to apply, with live-update parameter inputs for your own values.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">02</div>
+        <div class="ct-step-body">
+          <h4>Build and validate your pattern</h3>
+          <p>The output panel shows your regex in real time with a <strong>RE2 status badge</strong>: green (valid RE2), amber (works but has risks), or red (will fail in GSC). Hard errors — like negative lookaheads — are flagged immediately with specific, actionable messages. A plain-English explanation tells you exactly what the pattern matches.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">03</div>
+        <div class="ct-step-body">
+          <h4>Test against real URLs or queries</h3>
+          <p>Paste your actual URLs or queries into the <strong>Live Tester</strong>. Results update on every keystroke — green dots for matches, red for non-matches, with an X/Y summary. Structural verification before you ever touch GSC. Note: the tester uses case-insensitive matching; URL filters in GSC are case-sensitive, so verify case manually if needed.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">04</div>
+        <div class="ct-step-body">
+          <h4>Paste into Google Search Console</h3>
+          <p>Copy your pattern with one click. In GSC: <strong>Performance → Add filter → Page (or Query) → Custom (regex) → paste</strong>. Note that only one Page filter and one Query filter can be active at a time. The "Where to use in GSC" guide at the bottom of the output panel updates dynamically depending on what you're filtering.</p>
+          <div class="ct-gsc-mockup">
+            <div class="ct-mock-path">Google Search Console → Performance → Search results → Filters</div>
+            <div class="ct-filter-row">
+              <div class="ct-filter-chip">Query</div>
+              <div class="ct-filter-chip active">Page ✓</div>
+              <div class="ct-filter-chip">Country</div>
+              <div class="ct-filter-chip">Device</div>
+            </div>
+            <div class="ct-filter-row">
+              <div class="ct-filter-chip active">Custom (regex)</div>
+              <div class="ct-filter-chip">Contains</div>
+              <div class="ct-filter-chip">Equals</div>
+            </div>
+            <div class="ct-filter-regex">://[^/]+/blog/[^/]+/[^/]+/</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 3. PATTERN LIBRARY ─── -->
+  <div class="ct-section" id="pattern-library">
+    <span class="ct-section-label">Copy-paste patterns</span>
+    <h2 class="ct-h2">Ready-Made GSC Regex Patterns</h2>
+    <p class="ct-lead">Every pattern below is taken directly from the template library above. All are RE2-validated and safe to paste into GSC. Use the builder to customise them with your own values.</p>
+
+    <span class="ct-group-label" style="margin-top:32px">URL / Page Filters</span>
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead><tr><th>Goal</th><th>Regex pattern</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>All pages in a directory</td><td>://[^/]+/blog/</td><td>Matches all pages in the /blog/ directory. Using <code>://[^/]+</code> skips the protocol and domain — works for both http and https without hardcoding your domain. The <code>/blog/</code> then anchors to the first path segment.</td></tr>
+          <tr><td>URL contains a keyword</td><td>shoes</td><td>Partial match — catches /shoes/, /womens-shoes/, /sale-shoes/. No anchors needed.</td></tr>
+          <tr><td>Top-level pages only</td><td>://[^/]+/[^/?]+/?$</td><td>Matches pages with exactly one path segment — e.g. example.com/about, example.com/blog. <code>://[^/]+</code> matches the domain, <code>[^/?]+</code> matches one path segment (no slashes or query strings), <code>/?$</code> allows an optional trailing slash.</td></tr>
+          <tr><td>Second-level pages only</td><td>://[^/]+/[^/]+/[^/?]+/?$</td><td>Matches pages exactly two path segments deep — e.g. example.com/blog/post-title. Useful for auditing a specific content tier.</td></tr>
+          <tr><td>Any URL with query parameters</td><td>\?</td><td>The backslash escapes the literal <code>?</code>. Catches any URL with a query string.</td></tr>
+          <tr><td>Has a specific parameter</td><td>[?&amp;]utm_source=</td><td><code>[?&amp;]</code> handles first-param (?) and subsequent-param (&amp;) positions. Swap utm_source for your param name.</td></tr>
+          <tr><td>Clean URLs (no query string)</td><td>^[^?]+$</td><td>RE2 has no true negation, so <code>[^?]+</code> — only non-? characters — is the correct workaround.</td></tr>
+          <tr><td>Paginated URLs (page 2+)</td><td>(/page/[2-9]|/page/[0-9]{2,}|\?p=[2-9]|\?p=[0-9]{2,}|\?page=[2-9]|\?page=[0-9]{2,})</td><td>Covers /page/, ?p=, and ?page= formats. Single and multi-digit page numbers handled separately.</td></tr>
+          <tr><td>Faceted navigation params</td><td>[?&amp;](color|size|brand|filter)=</td><td>List your facet param names separated by <code>|</code>. Add as many as needed.</td></tr>
+          <tr><td>Specific file types</td><td>\.(pdf|xlsx|docx)$</td><td>Ends-with anchor + escaped dot. Swap in your extensions.</td></tr>
+          <tr><td>AMP pages</td><td>/amp(/|$)</td><td><code>(/|$)</code> matches /amp/ and /amp at path end. Prevents false matches on words like /amphibian/.</td></tr>
+          <tr><td>Language/locale prefix</td><td>://[^/]+/(en|fr|de|it|pl|es)/</td><td>Matches hreflang-style URLs where the locale is the first path segment — e.g. example.com/en/page. Add or remove codes to match your i18n structure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="ct-group-label">Query Filters</span>
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead><tr><th>Goal</th><th>Regex pattern</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Question queries</td><td>^(what|how|why|when|where|who|which|is|are|can|does|do)\b</td><td>Starts-with anchor + word boundary <code>\b</code> prevents "what" matching "whatnot". Query filters are case-insensitive in GSC.</td></tr>
+          <tr><td>Commercial / buy intent</td><td>\b(buy|purchase|price|cheap|discount|deal|coupon|order|shop|sale|cost)\b</td><td>Both word boundaries ensure whole-word matching — "deals" will not match "deal".</td></tr>
+          <tr><td>Comparison intent</td><td>\b(vs|versus|compare|comparison|review|reviews|alternative|alternatives)\b</td><td>Catches mid-funnel commercial research queries at the comparison stage.</td></tr>
+          <tr><td>How-to / guide queries</td><td>\b(how to|guide|tutorial|step by step|step-by-step|walkthrough)\b</td><td>Multi-word phrases like "how to" work correctly inside <code>\b</code> boundaries in RE2.</td></tr>
+          <tr><td>Best / top queries</td><td>\b(best|top [0-9]+|[0-9]+ best|top rated|top-rated|recommended)\b</td><td>Covers "top 10", "10 best", "top-rated". Number patterns use <code>[0-9]+</code> for any digit count.</td></tr>
+          <tr><td>Local intent</td><td>(near me|nearby|in my area)</td><td>Add city names like <code>|\bin london\b|\bin new york\b</code> to extend beyond proximity terms.</td></tr>
+          <tr><td>Brand mentions</td><td>(yourbrand|yourbrand inc)</td><td>List brand variants including common misspellings. Contains mode — matches brand anywhere in the query.</td></tr>
+          <tr><td>Long-tail queries (4+ words)</td><td>\w.+ \w.+ \w.+ \w.+</td><td><code>\w.+</code> matches a word starting with an ASCII character followed by any characters — works for multilingual queries where words may contain accented characters after the first letter.</td></tr>
+          <tr><td>Head terms (1–2 words)</td><td>^\w+( \w+)?$</td><td>Matches queries of exactly 1 or 2 words, fully anchored. Same ASCII limitation applies — accented characters in queries will not be matched by <code>\w</code>.</td></tr>
+          <tr><td>Keyword whole-word match</td><td>\bseo\b</td><td>Whole-word only — "seo" will not match "seotool". Replace with your keyword.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ct-callout ct-callout--teal">
+      <div class="ct-callout-icon">💡</div>
+      <div class="ct-callout-body">
+        <strong>Customise any pattern in the builder above</strong>
+        <p>Every pattern in this table can be built and customised using the Template Library tab above. Paste your own values and the regex updates instantly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 4. CHEAT SHEET ─── -->
+  <div class="ct-section" id="cheat-sheet">
+    <span class="ct-section-label">RE2 syntax reference</span>
+    <h2 class="ct-h2">GSC Regex Cheat Sheet</h2>
+    <p class="ct-lead">GSC uses RE2 — Google's own regex engine. These are the metacharacters that actually work. Anything not on this list is either unsupported or unreliable in GSC.</p>
+    <div class="ct-cheat-grid">
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">|</div>
+        <div>
+          <div class="ct-cheat-name">OR operator</div>
+          <div class="ct-cheat-desc">Matches either the expression on its left or its right.</div>
+          <div class="ct-cheat-example">shoes|boots|trainers</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">^</div>
+        <div>
+          <div class="ct-cheat-name">Starts with</div>
+          <div class="ct-cheat-desc">Anchors the match to the start of the string. For Page filters, GSC URLs start with https:// — so ^ anchors to the full URL, not just the path.</div>
+          <div class="ct-cheat-example">^https://example\.com/blog/ → pages in /blog/</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">$</div>
+        <div>
+          <div class="ct-cheat-name">Ends with</div>
+          <div class="ct-cheat-desc">Anchors the match to the end of the string.</div>
+          <div class="ct-cheat-example">/contact$ → must end with /contact</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">.*</div>
+        <div>
+          <div class="ct-cheat-name">Any characters</div>
+          <div class="ct-cheat-desc">Matches zero or more of any character.</div>
+          <div class="ct-cheat-example">review → URL contains "review" (simpler than .*review.*)</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">( )</div>
+        <div>
+          <div class="ct-cheat-name">Grouping</div>
+          <div class="ct-cheat-desc">Groups expressions together. Essential for OR logic across whole terms.</div>
+          <div class="ct-cheat-example">^(buy|purchase|order)</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">[ ]</div>
+        <div>
+          <div class="ct-cheat-name">Character class</div>
+          <div class="ct-cheat-desc">Matches any single character within the brackets.</div>
+          <div class="ct-cheat-example">[0-9] → any digit</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">[^ ]</div>
+        <div>
+          <div class="ct-cheat-name">Negated class</div>
+          <div class="ct-cheat-desc">Matches any character NOT in the brackets. Used for clean URL workarounds.</div>
+          <div class="ct-cheat-example">[^/]+ → any non-slash chars</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">\b</div>
+        <div>
+          <div class="ct-cheat-name">Word boundary</div>
+          <div class="ct-cheat-desc">Matches the position between a word char and a non-word char. Prevents partial matches.</div>
+          <div class="ct-cheat-example">\bseo\b → "seo" not "seotool"</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">{N,}</div>
+        <div>
+          <div class="ct-cheat-name">Quantifier (min)</div>
+          <div class="ct-cheat-desc">Matches N or more repetitions of the preceding element.</div>
+          <div class="ct-cheat-example">[^/]{5,} → slug ≥ 5 chars</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">\w</div>
+        <div>
+          <div class="ct-cheat-name">Word character</div>
+          <div class="ct-cheat-desc">Matches [a-zA-Z0-9_] — ASCII only. Does not match hyphens, accented characters (é, ą, ó), or other non-ASCII letters. Avoid for multilingual query filtering.</div>
+          <div class="ct-cheat-example">\w.+ \w.+ → 2+ words, multilingual-safe</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">\.</div>
+        <div>
+          <div class="ct-cheat-name">Escaped dot</div>
+          <div class="ct-cheat-desc">Matches a literal dot. Unescaped, dot matches any character.</div>
+          <div class="ct-cheat-example">\.(pdf|docx)$ → file extensions</div>
+        </div>
+      </div>
+      <div class="ct-cheat-card">
+        <div class="ct-cheat-symbol">\?</div>
+        <div>
+          <div class="ct-cheat-name">Escaped question mark</div>
+          <div class="ct-cheat-desc">Matches a literal ?. Unescaped, ? is a quantifier (zero or one).</div>
+          <div class="ct-cheat-example">\? → URL has query string</div>
+        </div>
+      </div>
+    </div>
+    <div class="ct-callout ct-callout--red" style="margin-top:28px">
+      <div class="ct-callout-icon">🚫</div>
+      <div class="ct-callout-body">
+        <strong>These do NOT work in GSC (RE2 forbids them)</strong>
+        <ul>
+          <li><strong>Negative lookaheads</strong> <code>(?!...)</code> — RE2 forbids them entirely. Use GSC's "does not match regex" filter instead.</li>
+          <li><strong>Negative lookbehinds</strong> <code>(?&lt;!...)</code> — same restriction.</li>
+          <li><strong>Backreferences</strong> <code>\1, \2</code> — RE2 does not track capture groups for reuse.</li>
+          <li><strong>Atomic groups</strong> <code>(?&gt;...)</code> — not supported in RE2.</li>
+          <li><strong>Positive lookbehinds</strong> <code>(?&lt;=...)</code> — limited, inconsistent RE2 support. Test carefully before using.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 5. USE CASES ─── -->
+  <div class="ct-section" id="use-cases">
+    <span class="ct-section-label">Real-world scenarios</span>
+    <h2 class="ct-h2">5 Ways to Use GSC Regex in Your SEO Workflow</h2>
+    <p class="ct-lead">These are the most impactful use cases — each with the exact pattern you'd apply in GSC.</p>
+    <div class="ct-use-cases">
+
+      <div class="ct-use-case">
+        <div>
+          <div class="ct-use-num">Use case 01</div>
+          <h4>Audit a relaunched section's query performance</h3>
+          <p>You've just relaunched your <code>/services/</code> section with new page structure. Apply a Page filter to isolate those URLs, then switch the dimension to Queries to see exactly what search terms are driving traffic to the new pages — without the noise of your whole site.</p>
+        </div>
+        <div class="ct-use-pattern">
+          <div class="ct-use-pattern-label">Page filter</div>
+          <div class="ct-use-pattern-code">://[^/]+/services/</div>
+          <div class="ct-use-pattern-note">Matches all pages under /services/. GSC Page filters match against full URLs (https://...) — using ://[^/]+ skips the protocol and domain without hardcoding them.</div>
+        </div>
+      </div>
+
+      <div class="ct-use-case">
+        <div>
+          <div class="ct-use-num">Use case 02</div>
+          <h4>Separate branded from non-branded traffic</h3>
+          <p>Brand vs. non-brand is one of the most critical segmentations in GSC. Apply a Query filter with your brand name, then use a second filter set to "does not match" the same pattern. Compare CTR, average position, and impressions across both segments to understand your true organic footprint.</p>
+        </div>
+        <div class="ct-use-pattern">
+          <div class="ct-use-pattern-label">Brand filter — Query → matches</div>
+          <div class="ct-use-pattern-code">(yourbrand|yourbrand inc|yourbrand.com)</div>
+          <div class="ct-use-pattern-note">List all brand name variants. Note the numbers, then switch to "does not match" with the same pattern for the non-brand view. These are two separate analysis sessions — GSC does not support both simultaneously.</div>
+        </div>
+      </div>
+
+      <div class="ct-use-case">
+        <div>
+          <div class="ct-use-num">Use case 03</div>
+          <h4>Find question-intent queries for content gap analysis</h3>
+          <p>Filter all queries beginning with question words to see where informational demand is arriving. Cross-reference with low average position (ranking 8–20) to identify pages that need FAQ sections or dedicated how-to content to move up.</p>
+        </div>
+        <div class="ct-use-pattern">
+          <div class="ct-use-pattern-label">Query filter</div>
+          <div class="ct-use-pattern-code">^(what|how|why|when|where|who|which|is|are|can|does|do)\b</div>
+          <div class="ct-use-pattern-note">The word boundary \b prevents "what" matching "whatnot". Sort by impressions to surface highest-volume question queries.</div>
+        </div>
+      </div>
+
+      <div class="ct-use-case">
+        <div>
+          <div class="ct-use-num">Use case 04</div>
+          <h4>Identify keyword cannibalisation candidates</h3>
+          <p>Paste multiple similar URL slugs into the URL Picker and select them all as teal (literal) segments. The builder produces a single regex matching all of them. Apply it in GSC to see if multiple pages are ranking for the same queries — a clear signal of cannibalisation to resolve.</p>
+        </div>
+        <div class="ct-use-pattern">
+          <div class="ct-use-pattern-label">Multi-URL Page filter (OR mode)</div>
+          <div class="ct-use-pattern-code">(/seo-tools/|/seo-tool/|/free-seo-tools/)</div>
+          <div class="ct-use-pattern-note">The builder combines multiple URL selections into one OR pattern automatically. Switch to AND mode for separate filter entries.</div>
+        </div>
+      </div>
+
+      <div class="ct-use-case">
+        <div>
+          <div class="ct-use-num">Use case 05</div>
+          <h4>Isolate paginated URLs eating crawl budget</h3>
+          <p>Pagination pages are a common crawl budget drain. Filter all paginated URLs using the Paginated URLs template to see how much of your click and impression share is going to page 2+ — and whether those pages should be noindexed or consolidated.</p>
+        </div>
+        <div class="ct-use-pattern">
+          <div class="ct-use-pattern-label">Page filter</div>
+          <div class="ct-use-pattern-code">(/page/[2-9]|/page/[0-9]{2,}|\?p=[2-9]|\?p=[0-9]{2,})</div>
+          <div class="ct-use-pattern-note">Covers /page/, ?p=, and ?page= formats. Single and multi-digit page numbers handled separately to avoid false matches on page 1.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 6. LIMITATIONS ─── -->
+  <div class="ct-section" id="limitations">
+    <span class="ct-section-label">Know the limits</span>
+    <h2 class="ct-h2">What GSC Regex Cannot Do</h2>
+    <p class="ct-lead">Understanding RE2's constraints prevents hours of debugging. These are the most common places where SEOs hit a wall — and the right workaround for each.</p>
+    <div class="ct-limits-grid">
+      <div class="ct-limit">
+        <div class="ct-limit-icon">🔗</div>
+        <div>
+          <div class="ct-limit-title">Cannot AND two conditions on the same dimension</div>
+          <p>GSC allows only <strong>one filter per dimension</strong> — one Page filter and one Query filter can be active at a time. You cannot stack two Page filters, and RE2 can't express AND in a single pattern either. If you need "URL must match A AND B", it is simply not achievable within one GSC session. What IS possible: combining filters from different dimensions simultaneously — a Page filter AND a Query filter both apply with AND logic.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">🚫</div>
+        <div>
+          <div class="ct-limit-title">Cannot negate in-pattern</div>
+          <p>RE2 has no real negation operator. To exclude patterns, use GSC's "does not match regex" filter option alongside a standard positive pattern — two filter entries, not one regex.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">🎯</div>
+        <div>
+          <div class="ct-limit-title">Cannot enforce exact segment position</div>
+          <p>The URL Picker approximates position-based matching via consecutive/non-consecutive patterns but cannot guarantee "only segment 3 must be X" — a genuine RE2 constraint, not a tool limitation.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">🔤</div>
+        <div>
+          <div class="ct-limit-title">URL filters are case-sensitive</div>
+          <p>GSC enforces case sensitivity on Page filters. The live tester always uses case-insensitive matching — so a match in the tester against a capitalised URL could be a false positive in real GSC.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">#</div>
+        <div>
+          <div class="ct-limit-title">Fragment (#hash) segments unavailable</div>
+          <p>Fragments are not transmitted to the server and do not appear in GSC data. Fragment segments in the URL Picker are intentionally non-clickable — filtering by hash is not possible in GSC by design.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">💾</div>
+        <div>
+          <div class="ct-limit-title">No saved history</div>
+          <p>The tool has no import, export, or session memory — a refresh resets everything. This is intentional: no data ever leaves your browser. Copy your patterns before closing the tab.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 7. FAQ ─── -->
+  <div class="ct-section" id="faq">
+    <span class="ct-section-label">Common questions</span>
+    <h2 class="ct-h2">Frequently Asked Questions</h2>
+    <div class="ct-faq">
+
+      <details>
+        <summary>Does regex work in Google Search Console?</summary>
+        <div class="ct-faq-body">Yes. GSC supports regex in the <strong>Custom (regex)</strong> filter for both <strong>Query</strong> and <strong>Page</strong> dimensions in the Performance report. The engine is <strong>RE2</strong> — Google's own regex implementation — which is more restrictive than standard PCRE. Negative lookaheads, backreferences, and atomic groups are not supported and will cause your filter to fail silently or be rejected.</div>
+      </details>
+
+      <details>
+        <summary>What is the character limit for GSC regex?</summary>
+        <div class="ct-faq-body">Google Search Console has a documented regex character limit of approximately <strong>1,000 characters</strong>. This builder warns at <strong>800 characters</strong> to leave a safe margin. If you're hitting the limit, consider grouping — <code>example.com/(aa|bb)</code> is shorter than <code>example.com/aa|example.com/bb</code> and produces identical matches.</div>
+      </details>
+
+      <details>
+        <summary>Is regex case-sensitive in Google Search Console?</summary>
+        <div class="ct-faq-body">It depends on the dimension you're filtering. <strong>Page (URL) filters are case-sensitive</strong> — a pattern of <code>/Blog/</code> will NOT match <code>/blog/</code>. <strong>Query filters are case-insensitive</strong> — a pattern of <code>buy</code> will match "Buy", "BUY", and "buy". This is one of the most misunderstood behaviours in GSC regex.</div>
+      </details>
+
+      <details>
+        <summary>What's the difference between RE2 and PCRE?</summary>
+        <div class="ct-faq-body"><strong>RE2</strong> is Google's own regex engine, designed to guarantee linear-time matching at scale. <strong>PCRE</strong> (Perl Compatible Regular Expressions) is used by most programming languages, tools like regex101.com, Python, and VS Code. The key practical difference: RE2 forbids negative lookaheads <code>(?!...)</code>, negative lookbehinds <code>(?&lt;!...)</code>, backreferences, and atomic groups. Patterns that work in PCRE-based tools may silently fail in GSC. This builder only produces RE2-safe output.</div>
+      </details>
+
+      <details>
+        <summary>Can I use negative lookahead in Google Search Console?</summary>
+        <div class="ct-faq-body">No. <strong>Negative lookaheads</strong> <code>(?!...)</code> are forbidden in RE2 and GSC will reject or silently mishandle filters that include them. The correct workaround is to use GSC's built-in <strong>"does not match regex"</strong> filter option alongside a standard positive pattern. You apply two filter entries rather than trying to negate within a single regex.</div>
+      </details>
+
+      <details>
+        <summary>How do I filter brand vs. non-brand queries in GSC?</summary>
+        <div class="ct-faq-body">Create a brand filter using a Query → matches regex pattern like <code>(yourbrand|yourbrand inc)</code>. Then duplicate the filter and switch it to "does not match" with the same pattern to see non-brand traffic. You cannot do this in a single RE2 regex — two separate GSC filter entries are required. The builder's AND output mode helps by splitting patterns into numbered filter outputs.</div>
+      </details>
+
+      <details>
+        <summary>Does GSC regex use partial match or full match by default?</summary>
+        <div class="ct-faq-body"><strong>Partial match (contains) by default.</strong> A pattern of <code>blog</code> will match any URL or query containing "blog" anywhere — <code>/blog/</code>, <code>/my-blog-post/</code>, <code>/categories/blogging/</code> all match. Use <code>^</code> to anchor the start, <code>$</code> to anchor the end, or wrap both — <code>^pattern$</code> — for an exact match. The builder's match mode selector handles all of this automatically.</div>
+      </details>
+
+      <details>
+        <summary>How do I use AND logic between GSC regex filters?</summary>
+        <div class="ct-faq-body">GSC allows <strong>one filter per dimension</strong> — one Page filter and one Query filter active at a time. You cannot have two Page filters or two Query filters simultaneously. RE2 also cannot express AND within a single pattern. This means "URL must match A AND B" is not achievable if both conditions target the same dimension. However, you CAN combine filters across <em>different</em> dimensions: a Page filter of <code>^/blog/</code> plus a Query filter of <code>\bhow to\b</code> are applied simultaneously and both must match — showing only "how to" queries that landed on blog pages. For same-dimension AND conditions, the only option is to encode both conditions into a single regex where structurally possible (for example, combining path and query parameter conditions into one pattern).</div>
+      </details>
+
+    </div>
+  </div>
+
+</div>
+<!-- ═══════════════ END CONTENT SECTIONS ═══════════════ -->
+
+<div style="max-width:860px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+  <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:10px">Sources</p>
+  <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
+    <li><a href="https://developers.google.com/search/blog/2021/06/regex-negative-match" target="_blank" rel="noopener" style="font-size:13px;color:var(--teal);text-decoration:none;font-family:'Menlo','Monaco','Courier New',monospace">developers.google.com — Regex negative match in Search Console ↗</a></li>
+  </ul>
+</div>
+
+</main>
+<footer>
+  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a> · <a href="/disclaimer/">Disclaimer</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script src="/header.js"></script>
+</body>
+</html>

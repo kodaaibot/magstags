@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Snippet Schema Markup — JSON-LD for Google Search | MagsTags</title>
+  <meta name="description" content="Learn how to implement Product Snippet structured data (JSON-LD) to show star ratings, reviews, pros and cons, and pricing in Google Search. Free generator included.">
+  <link rel="canonical" href="https://www.magstags.com/product-snippet-schema/">
+  <meta property="og:title" content="Product Snippet Schema Markup — JSON-LD for Google Search">
+  <meta property="og:description" content="Implement Product Snippet structured data to show star ratings, review information, and pricing in organic Google Search results. Free JSON-LD generator.">
+  <meta property="og:url" content="https://www.magstags.com/product-snippet-schema/">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Product Snippet Schema Markup — JSON-LD for Google Search",
+    "description": "Learn how to implement Product Snippet structured data to show star ratings, reviews, pros/cons, and pricing in Google Search organic results.",
+    "url": "https://www.magstags.com/product-snippet-schema/",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Learn SEO", "item": "https://www.magstags.com/learn-seo/" },
+        { "@type": "ListItem", "position": 3, "name": "Product Schema", "item": "https://www.magstags.com/product-schema/" },
+        { "@type": "ListItem", "position": 4, "name": "Product Snippet Schema", "item": "https://www.magstags.com/product-snippet-schema/" }
+      ]
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I use Product Snippet schema on a review site that doesn't sell products?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Product Snippet works on any page that describes a specific product: editorial reviews, comparison sites, aggregators, and merchant pages. Selling is not a requirement."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the minimum required markup for Product Snippet to show in Google Search?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A product name plus at least one of: a review, an aggregateRating, or an offer. Name alone isn't enough. Google needs something to show in the snippet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I add pros and cons markup to a Product Snippet schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, but only for editorial review pages — not merchant pages or customer reviews. Add positiveNotes and negativeNotes inside your review object, each as an ItemList. Google requires at least two statements in total (any combination of positive and negative) for the pros and cons feature to be eligible."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I use AggregateOffer instead of Offer in Product Snippet schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use Offer (single) when you are describing one seller's price — this also enables Google's price drop alerts. Use AggregateOffer when your page aggregates prices from multiple sellers (lowPrice, highPrice, offerCount). Do not use AggregateOffer for product variants — use ProductGroup for that."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Product Snippet schema directly improve Google rankings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not directly. Schema makes your page eligible for rich results. Google still decides whether to show them. The indirect effect is real: better-looking snippets get more clicks."ty. Higher CTR can have an indirect positive impact on your position over time."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3; --teal: #0E7490; --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888; --green: #16a34a; --radius: 20px; }
+    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--text-4); } .breadcrumb a:hover { color: var(--teal); text-decoration: none; } .breadcrumb-sep { opacity: .5; }
+    .hero { padding: 48px 0 40px; }
+    .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+    .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
+    .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s, transform .1s; }
+    .hero-cta:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
+    .hero-secondary { margin-top: 14px; font-size: 13px; color: var(--text-4); }
+    .hero-secondary a { color: var(--text-4); text-decoration: underline; text-underline-offset: 3px; }
+    .serp-demo { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin: 40px 0; }
+    .demo-label { font-size: 11px; font-weight: 600; color: var(--text-4); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+    .serp-result { background: #fff; border-radius: 10px; padding: 14px 16px; font-family: Arial, sans-serif; max-width: 600px; border: 1px solid #e8e8e8; }
+    html.dark .serp-result { background: #1a1a1a; border-color: #333; }
+    .serp-url { font-size: 12px; color: #4d5156; margin-bottom: 2px; } html.dark .serp-url { color: #9aa0a6; }
+    .serp-title { font-size: 18px; color: #1a0dab; margin-bottom: 4px; } html.dark .serp-title { color: #8ab4f8; }
+    .serp-stars { font-size: 13px; color: #e37400; margin-bottom: 2px; }
+    .serp-stars span { color: #4d5156; font-size: 12px; } html.dark .serp-stars span { color: #9aa0a6; }
+    .serp-price { font-size: 13px; color: #0d652d; font-weight: 600; margin-bottom: 4px; }
+    .serp-snippet { font-size: 13px; color: #4d5156; line-height: 1.5; } html.dark .serp-snippet { color: #9aa0a6; }
+    .serp-pros-cons { margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .serp-pc-col { flex: 1; min-width: 140px; }
+    .serp-pc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+    .serp-pc-label.pro { color: #0d652d; }
+    .serp-pc-label.con { color: #b91c1c; }
+    .serp-pc-item { font-size: 11px; color: #4d5156; display: flex; gap: 5px; margin-bottom: 2px; align-items: flex-start; }
+    html.dark .serp-pc-item { color: #9aa0a6; }
+    .serp-callout { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .serp-callout-item { font-size: 11px; color: var(--teal); background: rgba(14,116,144,.08); border-radius: 99px; padding: 4px 12px; font-weight: 600; }
+    .section { margin-top: 56px; }
+    .section-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 24px; font-weight: 400; margin-bottom: 20px; }
+    .section-lead { font-size: 15px; color: var(--text-3); margin-bottom: 24px; line-height: 1.7; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .benefit-icon { width: 36px; height: 36px; background: rgba(14,116,144,.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .benefit-icon svg { color: var(--teal); }
+    .benefit-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
+    .benefit-desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+    .fields-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .fields-table th { text-align: left; padding: 10px 12px; font-weight: 600; color: var(--text-2); border-bottom: 2px solid var(--border); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+    .fields-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+    .fields-table tr:last-child td { border-bottom: none; }
+    .fields-table td:first-child { font-family: 'Courier New', monospace; font-size: 12px; color: var(--teal); font-weight: 600; }
+    .badge-req { display: inline-block; background: rgba(220,38,38,.08); color: #dc2626; border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    .badge-rec { display: inline-block; background: rgba(14,116,144,.08); color: var(--teal); border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    .badge-opt { display: inline-block; background: rgba(0,0,0,.05); color: var(--text-4); border-radius: 99px; padding: 2px 8px; font-size: 10px; font-weight: 700; }
+    html.dark .badge-opt { background: rgba(255,255,255,.08); }
+    .faq-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .faq-item { background: var(--surface); }
+    .faq-q { width: 100%; text-align: left; padding: 18px 20px; background: none; border: none; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'Inter', sans-serif; line-height: 1.4; }
+    .faq-q:hover { color: var(--teal); }
+    .faq-q svg { flex-shrink: 0; color: var(--text-4); transition: transform .2s; }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+    .faq-a { display: none; padding: 14px 20px 18px; font-size: 14px; color: var(--text-3); line-height: 1.7; border-top: 1px solid var(--border); }
+    .faq-item.open .faq-a { display: block; }
+    .nav-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+    .nav-pill { font-size: 12px; font-weight: 600; color: var(--text-3); border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; text-decoration: none; transition: all .15s; }
+    .nav-pill:hover { border-color: var(--teal); color: var(--teal); text-decoration: none; }
+    .cta-section { margin-top: 56px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; text-align: center; }
+    .cta-section h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 26px; font-weight: 400; margin-bottom: 12px; }
+    .cta-section p { font-size: 15px; color: var(--text-3); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s; }
+    .cta-btn:hover { opacity: .88; text-decoration: none; }
+    .cta-btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: none; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all .15s; }
+    .cta-btn-outline:hover { background: rgba(14,116,144,.06); text-decoration: none; }
+    .cta-badge { background: rgba(255,255,255,.25); border-radius: 99px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-left: 2px; }
+    .code-wrap { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .code-lang { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-4); }
+    .code-copy { font-size: 11px; font-weight: 600; color: var(--teal); cursor: pointer; border: none; background: none; padding: 4px 10px; border-radius: 99px; transition: background .12s; font-family: 'Inter', sans-serif; }
+    .code-copy:hover { background: rgba(14,116,144,.08); }
+    .code-block { margin: 0; padding: 20px; background: #1e1e1e; overflow-x: auto; font-size: 12px; line-height: 1.8; }
+    .code-block code { color: #d4d0c8; font-family: 'Courier New', monospace; white-space: pre; }
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .compare-table th { text-align: left; padding: 10px 14px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-2); border-bottom: 2px solid var(--border); }
+    .compare-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; line-height: 1.5; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .check { color: var(--green); font-weight: 700; }
+    .cross { color: #dc2626; font-weight: 700; }
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+
+    /* Series sidebar */
+    .page-layout { display: flex; gap: 48px; align-items: flex-start; }
+    .series-sidebar { width: 200px; flex-shrink: 0; position: sticky; top: 88px; }
+    .series-sidebar-inner { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; }
+    .series-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 12px; }
+    .series-item { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border-radius: 8px; margin-bottom: 2px; text-decoration: none; transition: background .12s; }
+    .series-item:hover { background: var(--bg); }
+    .series-item.active { background: rgba(14,116,144,.07); pointer-events: none; }
+    .series-item-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); }
+    .series-item.active .series-item-type { color: var(--teal); }
+    .series-item-name { font-size: 12px; font-weight: 600; color: var(--text-2); line-height: 1.3; }
+    .series-item.active .series-item-name { color: var(--teal); }
+    .page-content { flex: 1; min-width: 0; }
+    @media (max-width: 860px) { .series-sidebar { display: none; } }
+
+      @media(max-width:600px){main{padding:24px 16px 60px}.container{padding:0}}
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+<main>
+<div class="page-layout">
+
+<aside class="series-sidebar">
+  <div class="series-sidebar-inner">
+    <div class="series-label">Also in this series</div>
+    <a href="/product-schema/" class="series-item"><span class="series-item-type">Overview</span><span class="series-item-name">Product structured data</span></a>
+    <div class="series-item active"><span class="series-item-type">Type 1</span><span class="series-item-name">Product Snippet schema</span></div>
+    <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Type 2</span><span class="series-item-name">Merchant Listing schema</span></a>
+    <a href="/product-variants-schema/" class="series-item"><span class="series-item-type">Type 3</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></a>
+  </div>
+</aside>
+<div class="page-content">
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/learn-seo/">Learn SEO</a><span class="breadcrumb-sep">›</span>
+    <a href="/product-schema/">Product Schema</a><span class="breadcrumb-sep">›</span>
+    <span>Product Snippet</span>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-label">Product Structured Data</p>
+    <h1>Product Snippet Schema Markup</h1>
+    <p class="hero-lead">The one that adds stars and pricing to your Google results. Works on any product page — you don't have to be selling it.</p>
+    <a href="/product-snippet-schema-generator/" class="hero-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Generate Product Snippet Schema <span class="cta-badge">Free</span>
+    </a>
+    <p class="hero-secondary">Also a merchant? <a href="/merchant-listing-schema/">Add Merchant Listing schema</a> to unlock Shopping features too.</p>
+  </section>
+
+  <!-- SERP demo -->
+  <div class="serp-demo">
+    <p class="demo-label">Product Snippet in Google Search</p>
+    <div class="serp-result">
+      <div class="serp-url">example.com › reviews › executive-anvil</div>
+      <div class="serp-title">Executive Anvil Review — CNET</div>
+      <div class="serp-stars">★★★★☆ <span>4.4 (89 reviews)</span></div>
+      <div class="serp-price">£29.99 · In stock</div>
+      <div class="serp-snippet">The Executive Anvil is sleeker than ACME's Classic model and perfect for the business traveler. We tested it for three months.</div>
+      <div class="serp-pros-cons">
+        <div class="serp-pc-col">
+          <div class="serp-pc-label pro">Pros</div>
+          <div class="serp-pc-item"><span style="color:#0d652d">+</span> Consistent results</div>
+          <div class="serp-pc-item"><span style="color:#0d652d">+</span> Still sharp after many uses</div>
+        </div>
+        <div class="serp-pc-col">
+          <div class="serp-pc-label con">Cons</div>
+          <div class="serp-pc-item"><span style="color:#b91c1c">−</span> No child protection</div>
+          <div class="serp-pc-item"><span style="color:#b91c1c">−</span> Lacking advanced features</div>
+        </div>
+      </div>
+    </div>
+    <div class="serp-callout">
+      <span class="serp-callout-item">Star ratings</span>
+      <span class="serp-callout-item">Pros and cons</span>
+      <span class="serp-callout-item">Price range</span>
+      <span class="serp-callout-item">Review author</span>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <section class="section">
+    <h2 class="section-title">What Product Snippet schema unlocks</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+        <div class="benefit-title">Star ratings in organic search</div>
+        <div class="benefit-desc">Aggregate review stars shown in the snippet before users click, for any page with aggregateRating.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></div>
+        <div class="benefit-title">Pros and cons</div>
+        <div class="benefit-desc">Google can display positiveNotes and negativeNotes for editorial review pages. Minimum 2 statements required.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="benefit-title">Price in the snippet</div>
+        <div class="benefit-desc">Single Offer price or AggregateOffer price range (lowPrice–highPrice) shown directly in organic results.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="benefit-title">Price drop alerts</div>
+        <div class="benefit-desc">Use a single Offer (not AggregateOffer) to be eligible for Google's price drop notification feature.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who uses it -->
+  <section class="section">
+    <h2 class="section-title">Who should use Product Snippet schema</h2>
+    <p class="section-lead">Unlike Merchant Listing, Product Snippet is not restricted to sellers. Any of the following page types are eligible:</p>
+    <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px">
+      <li style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--text-2)"><span style="width:20px;height:20px;background:rgba(14,116,144,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span><strong>Editorial review pages</strong>: sites that review products but don't sell them. Full access to pros/cons feature.</span></li>
+      <li style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--text-2)"><span style="width:20px;height:20px;background:rgba(14,116,144,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span><strong>Shopping aggregator pages</strong>: comparison sites listing multiple sellers. Use AggregateOffer with lowPrice, highPrice, offerCount.</span></li>
+      <li style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--text-2)"><span style="width:20px;height:20px;background:rgba(14,116,144,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span><strong>Merchant product pages</strong>: pages where you sell the product. Add Merchant Listing markup too for Shopping features.</span></li>
+    </ul>
+  </section>
+
+  <!-- Required fields -->
+  <section class="section">
+    <h2 class="section-title">Required and recommended properties</h2>
+    <p class="section-lead">The minimum for a Product Snippet is <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">name</code> plus at least one of <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">review</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">aggregateRating</code>, or <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">offers</code>.</p>
+    <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
+      <table class="fields-table">
+        <thead><tr><th>Property</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>name</td><td><span class="badge-req">Required</span></td><td>Product name.</td></tr>
+          <tr><td>review / aggregateRating / offers</td><td><span class="badge-req">Required</span></td><td>At least one of these three must be present for rich result eligibility.</td></tr>
+          <tr><td>aggregateRating</td><td><span class="badge-rec">Recommended</span></td><td>Enables star ratings. Requires ratingValue and reviewCount.</td></tr>
+          <tr><td>review</td><td><span class="badge-rec">Recommended</span></td><td>Individual review with author and rating. Add positiveNotes/negativeNotes for editorial pages.</td></tr>
+          <tr><td>offers (Offer)</td><td><span class="badge-rec">Recommended</span></td><td>Single seller price. Required: price, priceCurrency. Enables price drop alerts.</td></tr>
+          <tr><td>offers (AggregateOffer)</td><td><span class="badge-opt">Optional</span></td><td>For aggregator pages. Required: lowPrice, priceCurrency. Add highPrice and offerCount.</td></tr>
+          <tr><td>image</td><td><span class="badge-rec">Recommended</span></td><td>Product image URL. Crawlable and indexable.</td></tr>
+          <tr><td>description</td><td><span class="badge-rec">Recommended</span></td><td>Product description.</td></tr>
+          <tr><td>brand</td><td><span class="badge-rec">Recommended</span></td><td>Brand name as nested Brand object.</td></tr>
+          <tr><td>sku</td><td><span class="badge-opt">Optional</span></td><td>Stock keeping unit. Recommended for Shopping matching. No whitespace; ASCII preferred.</td></tr>
+          <tr><td>gtin13 / gtin12 / gtin8 / gtin14</td><td><span class="badge-opt">Optional</span></td><td>Global Trade Item Number. Use the most specific type that applies (EAN = gtin13, UPC = gtin12). Numerical form only — not URL form. Strongly recommended for Shopping matching.</td></tr>
+          <tr><td>mpn</td><td><span class="badge-opt">Optional</span></td><td>Manufacturer Part Number. Use when no GTIN is available.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--text-4)">Note: pros/cons (positiveNotes / negativeNotes) are only eligible for editorial review pages — not merchant pages or customer reviews.</p>
+  </section>
+
+  <!-- JSON-LD examples -->
+  <section class="section">
+    <h2 class="section-title">JSON-LD examples</h2>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:0">Basic — name, rating, price</h3>
+    <p class="section-lead" style="margin-bottom:0">The minimum viable Product Snippet for a merchant page: name + aggregateRating + Offer. Works for any page type.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <pre class="code-block"><code>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Executive Anvil",
+  "image": "https://example.com/anvil.jpg",
+  "description": "Sleeker than the Classic Anvil. Perfect for business travellers.",
+  "brand": { "@type": "Brand", "name": "ACME" },
+  "sku": "ANVIL-EXEC-001",
+  "gtin13": "1234567890123",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.4",
+    "reviewCount": "89",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "29.99",
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock",
+    "priceValidUntil": "2026-12-31"
+  }
+}</code></pre>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Editorial review — with pros and cons</h3>
+    <p class="section-lead" style="margin-bottom:0">For editorial review pages only. Add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">positiveNotes</code> and <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">negativeNotes</code> inside your <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">review</code> object as <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">ItemList</code>. Reviewer name must be a valid person or team — not promotional text (e.g. <em>"50% off this week"</em> as an author name will be ignored).</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <pre class="code-block"><code>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Executive Anvil",
+  "image": "https://example.com/anvil.jpg",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.4",
+    "reviewCount": "89",
+    "bestRating": "5"
+  },
+  "review": {
+    "@type": "Review",
+    "author": {
+      "@type": "Organization",
+      "name": "CNET Reviewers"
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "4",
+      "bestRating": "5"
+    },
+    "positiveNotes": {
+      "@type": "ItemList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Consistent results" },
+        { "@type": "ListItem", "position": 2, "name": "Still sharp after many uses" }
+      ]
+    },
+    "negativeNotes": {
+      "@type": "ItemList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "No child protection" }
+      ]
+    }
+  }
+}</code></pre>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Aggregator page — AggregateOffer</h3>
+    <p class="section-lead" style="margin-bottom:0">For comparison sites listing prices from multiple sellers. Use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">AggregateOffer</code> — not a single <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">Offer</code>. Note: AggregateOffer is <strong>not</strong> for product variants — use ProductGroup for that.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+      <pre class="code-block"><code>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Executive Anvil",
+  "image": "https://example.com/anvil.jpg",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.4",
+    "reviewCount": "89"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "lowPrice": "29.99",
+    "highPrice": "49.99",
+    "priceCurrency": "GBP",
+    "offerCount": "5"
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Product Snippet vs Merchant Listing -->
+  <section class="section">
+    <h2 class="section-title">Product Snippet vs Merchant Listing</h2>
+    <p class="section-lead">Both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">@type: Product</code>. The difference is who can use them and what features they unlock.</p>
+    <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Product Snippet</th>
+            <th>Merchant Listing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Who can use it</td>
+            <td>Any page describing a product — reviews, aggregators, merchants</td>
+            <td>Purchase pages only — you must be the seller</td>
+          </tr>
+          <tr>
+            <td>Star ratings in organic</td>
+            <td><span class="check">✓</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Price in organic snippet</td>
+            <td><span class="check">✓</span> (Offer or AggregateOffer)</td>
+            <td><span class="check">✓</span> (Offer only — must be &gt; 0)</td>
+          </tr>
+          <tr>
+            <td>Pros and cons</td>
+            <td><span class="check">✓</span> Editorial review pages only</td>
+            <td><span class="cross">✗</span></td>
+          </tr>
+          <tr>
+            <td>Google Shopping panel</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Price drop alerts</td>
+            <td><span class="check">✓</span> Single Offer only</td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Shipping annotations</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Return policy annotations</td>
+            <td><span class="cross">✗</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Required price &gt; 0</td>
+            <td><span class="cross">✗</span> (price can be 0)</td>
+            <td><span class="check">✓</span> Must be &gt; 0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--text-3)">Merchant pages can — and should — use both. Adding Merchant Listing required properties (<code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">name</code> + <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers.price</code> + <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers.priceCurrency</code>) also qualifies the page for Product Snippet. It's a one-way relationship — not the other way around.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I use Product Snippet schema on a review site that doesn't sell products?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes. Product Snippet works on any page that describes a specific product: editorial reviews, comparison sites, aggregators, and merchant pages. Selling is not a requirement.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What's the minimum required markup for Product Snippet to show in Google Search?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">A product name plus at least one of: a review, an aggregateRating, or an offer. Name alone isn't enough. Google needs something to show in the snippet.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I add pros and cons markup to a Product Snippet schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Use positiveNotes and negativeNotes inside your review object, each as an ItemList. You need at least two statements total. This only works on editorial review pages. Not merchant pages, not customer reviews.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When should I use AggregateOffer instead of Offer in Product Snippet schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Use AggregateOffer when your page lists prices from multiple sellers: it takes lowPrice, highPrice, and offerCount. Use a single Offer when you're describing one seller's price. Single Offer also enables price drop alerts; AggregateOffer doesn't.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Does Product Snippet schema directly improve Google rankings?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Not directly. Schema makes your page eligible for rich results. Google still decides whether to show them. The indirect effect is real though: better-looking snippets get more clicks.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What reviewer name formats does Google accept?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Reviewer names must be a valid Person or Organization name — for example "James Smith" or "CNET Reviewers". Google will not accept promotional text as a reviewer name (e.g. "Best price this week" or "50% off"). If the reviewer name fails this check, the review may not be eligible for the rich result.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Why is my price not showing in the snippet?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">The most common cause is an expired priceValidUntil date. If the date in your markup has passed, Google will not show the price. Other causes: price mismatch between markup and the visible page price, or using AggregateOffer on a non-aggregator page. Check all three if your price disappears from results.</div></div>
+    </div>
+  </section>
+
+  <!-- Also in this series -->
+  <section class="section">
+    <h2 class="section-title">Also in this series</h2>
+    <div class="nav-pills">
+      <a href="/product-schema/" class="nav-pill">Overview: Product structured data</a>
+      <a href="/merchant-listing-schema/" class="nav-pill">Merchant Listing schema →</a>
+      <a href="/product-variants-schema/" class="nav-pill">Product Variants schema →</a>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <h2>Generate valid Product Snippet schema</h2>
+    <p>Add reviews, ratings, pros/cons, and pricing — get clean JSON-LD in seconds. No account needed.</p>
+    <div class="cta-links">
+      <a href="/product-snippet-schema-generator/" class="cta-btn">Open Schema Generator →</a>
+      <a href="/merchant-listing-schema/" class="cta-btn-outline">Merchant Listing schema →</a>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+</main>
+<footer><p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-schema/" style="color:inherit;opacity:.7">Product Schema</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script>
+function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!open)item.classList.add('open');}
+function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');navigator.clipboard.writeText(code.textContent).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);});}
+</script>
+</body>
+</html>

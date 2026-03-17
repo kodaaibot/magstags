@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/bill-slawski/">
+  <meta name="description" content="Bill Slawski covered Google patents the way nobody else did. I sent him questions, shyly, and he always replied. This is me, a bit late, saying thank you.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Bill Slawski | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
+    #blog-content{display:block}
+    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:#FCE7F3;color:#9D174D;margin-bottom:16px}
+    html.dark .post-category{background:#4a0d2a;color:#fbcfe8}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:20px;line-height:1.7;color:var(--text-2);margin-bottom:36px}
+    .post-body p{margin-bottom:22px}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+    main{max-width:1320px;margin:0 auto;padding:40px 36px 100px}
+  </style>
+  <meta property="og:title" content="Bill Slawski | MagsTags">
+  <meta property="og:description" content="Bill Slawski covered Google patents the way nobody else did. I sent him questions, shyly, and he always replied. This is me, a bit late, saying thank you.">
+  <meta property="og:url" content="https://www.magstags.com/notes/bill-slawski/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bill Slawski | MagsTags">
+  <meta name="twitter:description" content="Bill Slawski covered Google patents the way nobody else did. I sent him questions, shyly, and he always replied. This is me, a bit late, saying thank you.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Bill Slawski",
+    "description": "Bill Slawski covered Google patents the way nobody else did. I sent him questions, shyly, and he always replied. This is me, a bit late, saying thank you.",
+    "url": "https://www.magstags.com/notes/bill-slawski/",
+    "datePublished": "2026-03-08",
+    "dateModified": "2026-03-08",
+    "image": "https://www.magstags.com/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com"
+    }
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Bill Slawski</span>
+    </nav>
+
+    <span class="post-category">Personal</span>
+    <h1 class="post-h1">Bill Slawski</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>16 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>3 min read</span>
+    </div>
+
+    <div class="post-body">
+
+      <p class="post-lead">There is a feeling you get when a film you have been waiting for is finally about to start. That is what it felt like to open a new Bill Slawski post.</p>
+
+      <p>I never met him in person. But I sent him questions, shyly, and he always replied. Always. That kind of generosity is rarer than it sounds, especially from someone who had every reason to be protective of his time. I appreciated it more than I ever got around to telling him.</p>
+
+      <p>I found SEO by the Sea at my first SEO agency in London. I had come to SEO through the long way round — optimising my own small online business, reading a book, getting the role. When someone there pointed me toward Bill's work, I went back to 2005 and read everything. I spent weeks on the patent analysis alone, going through post after post trying to understand every piece of it. I was not skimming. I was studying.</p>
+
+      <p>Bill covered Google patents. Not summarised them. Not skimmed them for a LinkedIn post. Covered them — properly, thoroughly, in the way you do when you actually understand what you are reading and respect the person you are writing for. He would take a patent filing written for engineers and lawyers and work through it until it meant something. Until it told you how Google was actually thinking. Not the Google of blog posts and spokesperson quotes. The Google that had been quietly building a system since the late nineties with a very specific idea of what understanding language, authority, and intent should look like.</p>
+
+      <p>Nobody does what he did. That gap is still there.</p>
+
+      <p>Years later, I still catch myself quoting him in meetings. Not performing it, not referencing it deliberately — just reaching for the right way to explain something and realising the framing came from him. That is what an invisible mentor looks like.</p>
+
+      <p>In 2022 I took a six-month sabbatical from SEO. Burnout — the kind where you unsubscribe from everything, block anything work-related, and spend your time gardening instead. I needed all of it.</p>
+
+      <p>Eventually, the sabbatical ran its course. Coffee on the balcony. Six months of the internet to catch up on.</p>
+
+      <p>That is when I saw it. The post about Bill Slawski's death. I knew he had been ill. I still didn't expect it.</p>
+
+      <p>I had been away when it happened. I had missed the tributes, the community's reaction, all of it. Sitting on that balcony with my coffee, I found out on my own, days late. And I felt it — that specific sadness of losing someone whose work mattered to you, even if you only ever knew each other through a screen. It felt like something had ended. Like a big chapter, a whole era of how this industry thought about itself, had quietly closed while I was gone.</p>
+
+      <p>A lot of people who were shaped by his work never got to say thank you. This is me, a bit late, saying it anyway.</p>
+
+      <p>If you are newer to SEO and haven't read <a href="https://www.seobythesea.com/" target="_blank" rel="noopener noreferrer">SEO by the Sea</a>: the archive is still there. Start anywhere. Read it more than once.</p>
+
+      <a href="/notes/" class="post-back">← Back to Notes</a>
+
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+  </footer>
+</div>
+<script src="/header.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+</body>
+</html>

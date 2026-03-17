@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/serp-preview/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  
+  <title>SERP Snippet Previewer | MagsTags</title>
+  <meta name="description" content="Preview your Google title and meta description before you publish. Check pixel width, truncation, and how your snippet looks on desktop and mobile.">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #fafaf7;
+      --border:     #ddd9d3;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+      --teal:       #0E7490;
+      --mint:       #0891B2;
+      --mint-light: #E0F2FE;
+      --red:        #dc2626;
+      --orange:     #d97706;
+      --green:      #16a34a;
+      --shadow-sm:  0 1px 3px rgba(26,24,22,.07);
+      --shadow-md:  0 4px 16px rgba(26,24,22,.09);
+    }
+    html.dark {
+      --bg:         #111110;
+      --bg2:        #191817;
+      --surface:    #1e1c1a;
+      --border:     rgba(255,255,255,.08);
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+      --teal:       #22D3EE;
+      --mint:       #67E8F9;
+      --mint-light: rgba(14,116,144),.14);
+      --shadow-sm:  0 1px 3px rgba(0,0,0,.5);
+      --shadow-md:  0 4px 16px rgba(0,0,0,.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; transition: background .25s, color .25s; -webkit-font-smoothing: antialiased; }
+
+    /* Header */
+    .logo-sep { color: var(--text-4); margin: 0 4px; }
+    .logo-sub { color: var(--text-3); font-size: 13px; }
+    .header-btn { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 99px; font-size: 12px; font-weight: 500; background: var(--bg2); border: 1px solid var(--border); color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
+    .header-btn:hover { color: var(--text-1); border-color: var(--text-3); }
+    .back-link { font-size: 12px; color: var(--text-3); text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    .back-link:hover { color: var(--teal); }
+
+    /* Layout */
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+
+    .page-header { margin-bottom: 28px; }
+    .page-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .page-sub { font-size: 14px; color: var(--text-3); line-height: 1.5; }
+
+    /* Two-column layout */
+    .tool-layout { display: grid; grid-template-columns: 400px 1fr; gap: 24px; align-items: start; }
+    @media (max-width: 860px) { .tool-layout { grid-template-columns: 1fr; } }
+
+    /* Input card */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-sm); }
+    .card-title { font-size: 12px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 16px; }
+
+    .field { margin-bottom: 16px; }
+    .field:last-of-type { margin-bottom: 0; }
+    .field-label { font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
+    .field-label-hint { font-weight: 400; color: var(--text-4); font-size: 11px; }
+    input[type=text], textarea {
+      width: 100%; padding: 8px 11px; font-size: 13px; font-family: 'Inter', sans-serif;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text-1); outline: none; resize: vertical; transition: border-color .15s;
+    }
+    input[type=text]:focus, textarea:focus { border-color: var(--teal); }
+    textarea { min-height: 72px; line-height: 1.5; }
+
+    /* Pixel meter */
+    .px-meter { margin-top: 6px; }
+    .px-meter-bar-wrap { height: 4px; background: var(--bg2); border-radius: 99px; overflow: visible; position: relative; margin-bottom: 4px; }
+    .px-meter-bar { height: 4px; border-radius: 99px; transition: width .12s, background-color .12s; max-width: 100%; }
+    .px-meter-bar.ok      { background: var(--green); }
+    .px-meter-bar.warn    { background: var(--orange); }
+    .px-meter-bar.over    { background: var(--red); width: 100% !important; }
+    .px-meter-label { font-size: 11px; color: var(--text-4); display: flex; justify-content: space-between; }
+    .px-meter-label .status { font-weight: 600; }
+    .px-meter-label .status.ok   { color: var(--green); }
+    .px-meter-label .status.warn { color: var(--orange); }
+    .px-meter-label .status.over { color: var(--red); }
+
+    /* Preview cards */
+    .preview-col { display: flex; flex-direction: column; gap: 16px; }
+    .preview-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
+    .preview-card-header { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .preview-card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); }
+    .preview-card-dim { font-size: 11px; color: var(--text-4); }
+    .preview-card-body { padding: 20px 24px; }
+
+    /* Google SERP result styles */
+    .serp-result { font-family: Arial, sans-serif; max-width: 600px; }
+    .serp-result.mobile { max-width: 360px; }
+
+    .serp-site-row { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+    .serp-favicon { width: 18px; height: 18px; border-radius: 50%; background: #e8eaed; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .serp-favicon svg { width: 12px; height: 12px; }
+    .serp-site-info { display: flex; flex-direction: column; }
+    .serp-site-name { font-size: 14px; color: #202124; line-height: 1.3; }
+    .serp-breadcrumb { font-size: 12px; color: #4d5156; line-height: 1.3; }
+    html.dark .serp-site-name, html.dark .serp-breadcrumb { color: #9aa0a6; }
+
+    .serp-title { font-size: 20px; color: #1a0dab; line-height: 1.3; margin-bottom: 4px; cursor: pointer; display: block; text-decoration: none; word-break: break-word; }
+    .serp-title:hover { text-decoration: underline; }
+    html.dark .serp-title { color: #8ab4f8; }
+    .serp-title.truncated { color: #1a0dab; }
+    .serp-title.truncated::after { content: ''; }
+
+    .serp-desc { font-size: 14px; color: #4d5156; line-height: 1.58; word-break: break-word; }
+    html.dark .serp-desc { color: #9aa0a6; }
+
+    .serp-result.mobile .serp-site-name { font-size: 13px; }
+    .serp-result.mobile .serp-breadcrumb { font-size: 11px; }
+    .serp-result.mobile .serp-title { font-size: 18px; }
+    .serp-result.mobile .serp-desc { font-size: 13px; }
+
+    .trunc-badge { display: inline-block; font-size: 10px; font-weight: 600; background: rgba(220,38,38,.1); color: var(--red); border-radius: 4px; padding: 1px 5px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .05em; }
+
+    .empty-hint { font-size: 13px; color: var(--text-4); font-style: italic; }
+  
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+    footer a{color:var(--text-4);text-decoration:none;opacity:.8}
+    footer a:hover{color:var(--teal)}
+      @media(max-width:600px){main{padding:24px 16px 60px}}
+  </style>
+<script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+  <meta property="og:title" content="SERP Snippet Previewer | MagsTags">
+  <meta property="og:description" content="Preview your Google title and meta description before you publish. Check pixel width, truncation, and how your snippet looks on desktop and mobile.">
+  <meta property="og:url" content="https://www.magstags.com/serp-preview/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SERP Snippet Previewer | MagsTags">
+  <meta name="twitter:description" content="Preview your Google title and meta description before you publish. Check pixel width, truncation, and how your snippet looks on desktop and mobile.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+
+
+</div>
+
+
+<main>
+  <p style="font-size:12px;color:var(--text-4);margin-bottom:20px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> SERP Snippet Previewer</p>
+  <div class="page-header">
+    <h1 class="page-title">SERP Snippet Previewer</h1>
+    <p class="page-sub">Because 'it looks fine in the CMS' is not the same as 'it looks fine in Google.' And no, the limit isn't exactly 60 characters — it's pixels.<hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">Pixel-accurate SERP preview, live truncation warnings, and the satisfaction of fixing it before anyone sends you a screenshot of how it actually looked.</p>
+  </div>
+
+  <div class="tool-layout">
+
+    <!-- Input panel -->
+    <div class="card">
+      <div class="card-title">Snippet inputs</div>
+
+      <div class="field">
+        <div class="field-label">
+          Page URL <span class="field-label-hint">optional — for breadcrumb</span>
+        </div>
+        <input type="text" id="inp-url" aria-label="Page URL" placeholder="https://www.example.com/path/to/page" oninput="update()">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Title tag</div>
+        <input type="text" id="inp-title" aria-label="Page title" placeholder="Your page title here" oninput="update()" maxlength="200">
+        <div class="px-meter" id="meter-title-desktop">
+          <div class="px-meter-bar-wrap"><div class="px-meter-bar ok" style="width:0%"></div></div>
+          <div class="px-meter-label">
+            <span>Desktop <span class="status ok">0 px</span> / 580 px</span>
+            <span id="meter-title-desktop-chars">0 chars</span>
+          </div>
+        </div>
+        <div class="px-meter" id="meter-title-mobile" style="margin-top:5px">
+          <div class="px-meter-bar-wrap"><div class="px-meter-bar ok" style="width:0%"></div></div>
+          <div class="px-meter-label">
+            <span>Mobile <span class="status ok">0 px</span> / 480 px</span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Meta description</div>
+        <textarea id="inp-desc" placeholder="A concise summary of what this page is about..." oninput="update()"></textarea>
+        <div class="px-meter" id="meter-desc-desktop">
+          <div class="px-meter-bar-wrap"><div class="px-meter-bar ok" style="width:0%"></div></div>
+          <div class="px-meter-label">
+            <span>Desktop <span class="status ok">0 px</span> / 920 px</span>
+            <span id="meter-desc-desktop-chars">0 chars</span>
+          </div>
+        </div>
+        <div class="px-meter" id="meter-desc-mobile" style="margin-top:5px">
+          <div class="px-meter-bar-wrap"><div class="px-meter-bar ok" style="width:0%"></div></div>
+          <div class="px-meter-label">
+            <span>Mobile <span class="status ok">0 px</span> / 680 px</span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview panels -->
+    <div class="preview-col">
+
+      <!-- Desktop -->
+      <div class="preview-card">
+        <div class="preview-card-header">
+          <span class="preview-card-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Desktop
+          </span>
+          <span class="preview-card-dim">~600 px result width · title max 580 px</span>
+        </div>
+        <div class="preview-card-body">
+          <div class="serp-result" id="preview-desktop">
+            <p class="empty-hint">Start typing to see a preview.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div class="preview-card">
+        <div class="preview-card-header">
+          <span class="preview-card-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+            Mobile
+          </span>
+          <span class="preview-card-dim">~360 px result width · title max 480 px</span>
+        </div>
+        <div class="preview-card-body">
+          <div class="serp-result mobile" id="preview-mobile">
+            <p class="empty-hint">Start typing to see a preview.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<canvas id="measure-canvas" style="display:none"></canvas>
+
+<script>
+// ── Auth ──────────────────────────────────────────────────────────────────
+var isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+// ── Theme ─────────────────────────────────────────────────────────────────
+
+// ── Canvas text measurement ───────────────────────────────────────────────
+var _ctx = document.getElementById('measure-canvas').getContext('2d');
+
+function px(text, font) {
+  _ctx.font = font;
+  return _ctx.measureText(text).width;
+}
+
+var TITLE_D_FONT = 'bold 20px Arial';
+var TITLE_D_MAX  = 580;
+var TITLE_M_FONT = 'bold 18px Arial';
+var TITLE_M_MAX  = 480;
+
+var DESC_D_FONT  = '14px Arial';
+var DESC_D_MAX   = 920;  // total across 2 lines (~460px each)
+var DESC_M_FONT  = '13px Arial';
+var DESC_M_MAX   = 680;  // total across 2–3 lines
+
+// Truncate text to fit pixel width, adding ellipsis
+function truncate(text, font, maxW) {
+  _ctx.font = font;
+  if (_ctx.measureText(text).width <= maxW) return { out: text, truncated: false };
+  var lo = 0, hi = text.length;
+  while (lo < hi - 1) {
+    var mid = (lo + hi) >> 1;
+    if (_ctx.measureText(text.slice(0, mid) + '\u2026').width <= maxW) lo = mid;
+    else hi = mid;
+  }
+  return { out: text.slice(0, lo) + '\u2026', truncated: true };
+}
+
+// Wrap text into lines, truncate last line if needed
+function wrapDesc(text, font, lineMax, maxLines) {
+  _ctx.font = font;
+  if (!text) return { lines: [], truncated: false };
+  var words = text.split(' ');
+  var lines = [];
+  var cur = '';
+  for (var i = 0; i < words.length; i++) {
+    var candidate = cur ? cur + ' ' + words[i] : words[i];
+    if (_ctx.measureText(candidate).width > lineMax && cur) {
+      lines.push(cur);
+      if (lines.length >= maxLines) {
+        // Need to truncate — remaining words go into truncation
+        var remaining = words.slice(i).join(' ');
+        var t = truncate(lines[lines.length - 1] + ' ' + remaining, font, lineMax);
+        lines[lines.length - 1] = t.out;
+        return { lines: lines, truncated: true };
+      }
+      cur = words[i];
+    } else {
+      cur = candidate;
+    }
+  }
+  if (cur) {
+    if (lines.length >= maxLines) {
+      var t2 = truncate(lines[lines.length - 1] + ' ' + cur, font, lineMax);
+      lines[lines.length - 1] = t2.out;
+      return { lines: lines, truncated: t2.truncated };
+    }
+    lines.push(cur);
+  }
+  return { lines: lines, truncated: false };
+}
+
+// ── Meter update helper ───────────────────────────────────────────────────
+function updateMeter(containerId, pxVal, maxPx, chars, charsElId) {
+  var wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  var bar   = wrap.querySelector('.px-meter-bar');
+  var label = wrap.querySelector('.px-meter-label .status');
+  var pct = Math.min(pxVal / maxPx * 100, 100);
+  bar.style.width = pct + '%';
+  var cls = pxVal > maxPx ? 'over' : pxVal > maxPx * 0.85 ? 'warn' : 'ok';
+  bar.className = 'px-meter-bar ' + cls;
+  label.className = 'status ' + cls;
+  label.textContent = Math.round(pxVal) + ' px';
+  if (charsElId) document.getElementById(charsElId).textContent = chars + ' chars';
+}
+
+// ── URL → breadcrumb ─────────────────────────────────────────────────────
+function parseBreadcrumb(urlStr) {
+  try {
+    var u = new URL(urlStr);
+    var host = u.hostname.replace(/^www\./, '');
+    var parts = u.pathname.split('/').filter(Boolean);
+    if (!parts.length) return { site: host, crumb: host };
+    var crumb = host + ' \u203a ' + parts.map(function(p){ return decodeURIComponent(p).replace(/-/g,' '); }).join(' \u203a ');
+    return { site: host, crumb: crumb };
+  } catch(e) {
+    return { site: urlStr || 'example.com', crumb: urlStr || 'example.com' };
+  }
+}
+
+// ── Favicon SVG placeholder ───────────────────────────────────────────────
+var FAVICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#9aa0a6"><circle cx="12" cy="12" r="10"/></svg>';
+
+function faviconEl(urlStr) {
+  try {
+    var u = new URL(urlStr);
+    return '<img alt="" src="https://www.google.com/s2/favicons?domain=' + encodeURIComponent(u.hostname) + '&sz=32" width="18" height="18" style="border-radius:50%;object-fit:cover" onerror="this.style.display=\'none\'">';
+  } catch(e) { return FAVICON_SVG; }
+}
+
+// ── Main update function ──────────────────────────────────────────────────
+function update() {
+  var urlVal   = document.getElementById('inp-url').value.trim();
+  var titleVal = document.getElementById('inp-title').value;
+  var descVal  = document.getElementById('inp-desc').value;
+
+  var isEmpty = !titleVal && !descVal;
+
+  // Meters
+  var tPxD = px(titleVal, TITLE_D_FONT);
+  var tPxM = px(titleVal, TITLE_M_FONT);
+  var dPxD = px(descVal, DESC_D_FONT);
+  var dPxM = px(descVal, DESC_M_FONT);
+
+  updateMeter('meter-title-desktop', tPxD, TITLE_D_MAX, titleVal.length, 'meter-title-desktop-chars');
+  updateMeter('meter-title-mobile',  tPxM, TITLE_M_MAX, titleVal.length, null);
+  updateMeter('meter-desc-desktop',  dPxD, DESC_D_MAX,  descVal.length,  'meter-desc-desktop-chars');
+  updateMeter('meter-desc-mobile',   dPxM, DESC_M_MAX,  descVal.length,  null);
+
+  renderPreview('preview-desktop', urlVal, titleVal, descVal, false);
+  renderPreview('preview-mobile',  urlVal, titleVal, descVal, true);
+}
+
+function renderPreview(elId, urlVal, titleVal, descVal, isMobile) {
+  var el = document.getElementById(elId);
+  if (!titleVal && !descVal) { el.innerHTML = '<p class="empty-hint">Start typing to see a preview.</p>'; return; }
+
+  var tFont   = isMobile ? TITLE_M_FONT   : TITLE_D_FONT;
+  var tMax    = isMobile ? TITLE_M_MAX    : TITLE_D_MAX;
+  var dFont   = isMobile ? DESC_M_FONT    : DESC_D_FONT;
+  var dLineW  = isMobile ? 340            : 460;
+  var dLines  = isMobile ? 3              : 2;
+
+  // Title
+  var tResult = truncate(titleVal || '', tFont, tMax);
+  var titleHtml = esc(tResult.out) + (tResult.truncated ? '<span class="trunc-badge">truncated</span>' : '');
+
+  // Description
+  var dResult = wrapDesc(descVal || '', dFont, dLineW, dLines);
+  var descHtml = dResult.lines.map(esc).join('<br>') + (dResult.truncated ? '' : '');
+
+  // URL / breadcrumb
+  var bc = urlVal ? parseBreadcrumb(urlVal) : { site: 'example.com', crumb: 'example.com \u203a page' };
+  var fav = urlVal ? faviconEl(urlVal) : FAVICON_SVG;
+
+  el.innerHTML =
+    '<div class="serp-site-row">' +
+      '<div class="serp-favicon">' + fav + '</div>' +
+      '<div class="serp-site-info">' +
+        '<span class="serp-site-name">' + esc(bc.site) + '</span>' +
+        '<span class="serp-breadcrumb">' + esc(bc.crumb) + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<a class="serp-title' + (tResult.truncated ? ' truncated' : '') + '" href="#">' + titleHtml + '</a>' +
+    '<div class="serp-desc">' + (descHtml || '<em style="color:var(--text-4)">No description</em>') + '</div>';
+}
+
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+<footer>
+  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a> · <a href="/disclaimer/">Disclaimer</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script src="/header.js"></script>
+</body>
+</html>

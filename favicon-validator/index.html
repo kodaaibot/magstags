@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favicon Validator — Check Your Favicon for Google Search | MagsTags</title>
+  <meta name="description" content="Validate your favicon against Google's requirements and browser standards. Check size, format, link tags, and apple-touch-icon. Instant client-side analysis.">
+  <link rel="canonical" href="https://www.magstags.com/favicon-validator/">
+  <meta property="og:title" content="Favicon Validator — Check Your Favicon for Google Search | MagsTags">
+  <meta property="og:description" content="Check your favicon against Google's requirements: size, format, link tags, apple-touch-icon. Instant, client-side.">
+  <meta property="og:url" content="https://www.magstags.com/favicon-validator/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "Favicon Validator",
+    "applicationCategory": "WebApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.magstags.com/favicon-validator/",
+    "description": "Validate your favicon against Google Search requirements and browser standards.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "SEO Tools", "item": "https://www.magstags.com/seo-tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Favicon Validator", "item": "https://www.magstags.com/favicon-validator/" }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3;
+      --teal: #0E7490; --teal-light: #e0f2f7;
+      --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888;
+      --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
+      --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
+      --amber: #d97706; --amber-bg: #fffbeb; --amber-border: #fde68a;
+      --radius: 20px;
+    }
+    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    main { max-width: 860px; margin: 0 auto; padding: 24px 24px 100px; }
+
+    .breadcrumb { padding: 8px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .breadcrumb a { color: var(--text-4); }
+    .breadcrumb a:hover { color: var(--teal); text-decoration: none; }
+    .breadcrumb-sep { opacity: .5; }
+
+    h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 40px); font-weight: 400; line-height: 1.2; margin-bottom: 10px; }
+    .tagline { font-size: 16px; color: var(--teal); font-weight: 600; margin-bottom: 14px; }
+    .voice { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 620px; }
+    .section-hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    /* Tool card */
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; }
+
+    /* Mode tabs */
+    .mode-tabs { display: flex; gap: 4px; background: var(--bg); border-radius: 10px; padding: 4px; margin-bottom: 22px; width: fit-content; }
+    .mode-tab { padding: 7px 18px; border-radius: 7px; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
+    .mode-tab.active { background: var(--surface); color: var(--teal); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .mode-tab:hover:not(.active) { color: var(--text-1); }
+
+    /* Inputs */
+    label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+    .input-row { display: flex; gap: 10px; align-items: center; }
+    .url-input { flex: 1; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
+    .url-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); }
+    .url-input::placeholder { color: var(--text-4); }
+    textarea.url-input { resize: vertical; min-height: 110px; font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.6; }
+    .hint { font-size: 12px; color: var(--text-4); margin-top: 8px; line-height: 1.5; }
+    .btn-primary { padding: 11px 24px; background: var(--teal); color: #fff; border: none; border-radius: 99px; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .15s; white-space: nowrap; font-family: 'Inter', sans-serif; }
+    .btn-primary:hover { opacity: .88; }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Loading */
+    .loading { display: flex; align-items: center; gap: 10px; color: var(--text-3); font-size: 14px; padding: 20px 0; }
+    .spinner { width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--teal); border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Results */
+    #results { display: none; }
+
+    /* Score */
+    .results-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+    .score-badge { padding: 8px 20px; border-radius: 99px; font-size: 14px; font-weight: 700; }
+    .score-pass { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    .score-warn { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+    .score-fail { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+    .score-info { font-size: 13px; color: var(--text-3); }
+
+    /* SERP preview */
+    .serp-wrap { background: #fff; border: 1px solid #dfe1e5; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+    .serp-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); margin-bottom: 12px; }
+    .serp-site-line { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .serp-favicon-wrap { width: 26px; height: 26px; border-radius: 50%; background: #f1f3f4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .serp-favicon-wrap img { width: 16px; height: 16px; object-fit: contain; display: block; }
+    .serp-favicon-empty { width: 16px; height: 16px; background: #ccc; border-radius: 2px; }
+    .serp-site-meta { line-height: 1.2; }
+    .serp-site-name { font-size: 14px; color: #202124; font-family: Arial, sans-serif; }
+    .serp-site-url { font-size: 12px; color: #4d5156; font-family: Arial, sans-serif; }
+    .serp-title { font-size: 20px; color: #1a0dab; font-family: Arial, sans-serif; font-weight: 400; margin-bottom: 3px; }
+    .serp-snippet { font-size: 14px; color: #4d5156; font-family: Arial, sans-serif; line-height: 1.5; max-width: 600px; }
+
+    /* Favicon tiles */
+    .tiles-section { margin-bottom: 24px; }
+    .tiles-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); margin-bottom: 10px; }
+    .favicon-tiles { display: flex; gap: 12px; flex-wrap: wrap; }
+    .favicon-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .favicon-tile-canvas { background: repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 8px 8px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+    .favicon-tile-name { font-size: 10px; color: var(--text-4); font-weight: 600; text-align: center; max-width: 80px; word-break: break-all; }
+    .favicon-tile-dims { font-size: 11px; color: var(--teal); font-weight: 700; }
+    .favicon-tile-status { font-size: 11px; }
+
+    /* Checks */
+    .checks-section { margin-bottom: 24px; }
+    .checks-group-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 8px; margin-top: 20px; }
+    .checks-group-label:first-child { margin-top: 0; }
+    .check-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .check-item { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+    .check-item:last-child { border-bottom: none; }
+    .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+    .check-body { flex: 1; min-width: 0; }
+    .check-label { font-size: 14px; font-weight: 600; color: var(--text-1); }
+    .check-detail { font-size: 11px; font-weight: 600; color: var(--text-4); margin-top: 2px; font-family: 'Courier New', monospace; }
+    .check-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; margin-top: 4px; }
+    .check-fix { font-size: 12px; color: var(--text-2); margin-top: 6px; background: var(--bg); border-radius: 6px; padding: 8px 10px; line-height: 1.5; }
+    .check-fix code { font-size: 11px; background: rgba(0,0,0,.06); padding: 1px 4px; border-radius: 3px; font-family: 'Courier New', monospace; }
+
+    /* Snippet */
+    .snippet-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+    .snippet-header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 10px 16px; font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .07em; display: flex; justify-content: space-between; align-items: center; }
+    .snippet-code { padding: 16px 20px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.7; color: var(--text-2); white-space: pre; overflow-x: auto; }
+    .btn-copy { background: var(--teal); color: #fff; border: none; border-radius: 99px; padding: 4px 12px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+    .btn-copy:hover { opacity: .88; }
+
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+
+    @media(max-width:600px) { main { padding: 16px 16px 60px; } .input-row { flex-direction: column; align-items: stretch; } }
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+
+<main>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
+    <span>Favicon Validator</span>
+  </nav>
+
+  <h1>Favicon Validator</h1>
+  <p class="tagline">Check your favicon against Google's requirements and browser standards.</p>
+  <p class="voice">You spent weeks on your logo. Google crops it to 16 pixels square and sticks it next to your URL in every search result. It should work at 16 pixels. This checks if it does — and whether Google will even show it.</p>
+  <hr class="section-hr">
+
+  <div class="tool-card">
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tab-url" onclick="setMode(this,'url')">Check by URL</button>
+      <button class="mode-tab" id="tab-paste" onclick="setMode(this,'paste')">Paste HTML</button>
+    </div>
+
+    <!-- URL mode -->
+    <div id="mode-url">
+      <label for="url-input">Your site homepage URL</label>
+      <div class="input-row">
+        <input type="url" id="url-input" class="url-input" placeholder="https://example.com" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')runUrlCheck()">
+        <button class="btn-primary" id="btn-url" onclick="runUrlCheck()">Validate</button>
+      </div>
+      <p class="hint">We'll probe common favicon paths at your domain using image loading — no fetch, no CORS issues. For full link-tag analysis, use Paste HTML mode.</p>
+    </div>
+
+    <!-- Paste mode -->
+    <div id="mode-paste" style="display:none">
+      <label for="html-input">Paste your &lt;head&gt; HTML (or just the favicon link tags)</label>
+      <textarea id="html-input" class="url-input" placeholder='<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">&#10;<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">&#10;<link rel="apple-touch-icon" href="/favicon-apple.png">'></textarea>
+      <label for="base-input" style="margin-top:14px">Base URL <span style="font-weight:400;color:var(--text-4)">(your domain, to load relative image paths)</span></label>
+      <input type="url" id="base-input" class="url-input" placeholder="https://example.com" style="margin-top:6px" autocomplete="off" spellcheck="false">
+      <p class="hint">Paste your &lt;head&gt; and enter your domain. No data is sent anywhere — everything runs in your browser.</p>
+      <button class="btn-primary" style="margin-top:14px" id="btn-paste" onclick="runPasteCheck()">Validate</button>
+    </div>
+  </div>
+
+  <div id="loading" style="display:none">
+    <div class="loading"><div class="spinner"></div><span id="loading-msg">Checking…</span></div>
+  </div>
+
+  <div id="results"></div>
+</main>
+
+<footer>
+  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
+  <div id="footer-auth" style="margin-top:10px;font-size:11px;color:var(--text-4)"></div>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" data-clerk-publishable-key="pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA" crossorigin="anonymous"></script>
+<script>
+// Footer auth — staff login
+(function() {
+  var CLERK_KEY = 'pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA';
+  var el = document.getElementById('footer-auth');
+  if (!el) return;
+  var btnStyle = 'background:none;border:none;padding:0;cursor:pointer;font-size:11px;color:var(--text-4);font-family:inherit;text-decoration:underline;text-underline-offset:2px';
+  var _clerkReady = null;
+  function loadClerk() {
+    if (_clerkReady) return _clerkReady;
+    _clerkReady = window.Clerk.load({ publishableKey: CLERK_KEY }).then(function() { return window.Clerk; });
+    return _clerkReady;
+  }
+  function renderFooterAuth(clerk) {
+    if (clerk.user) {
+      var email = (clerk.user.primaryEmailAddress && clerk.user.primaryEmailAddress.emailAddress) || 'signed in';
+      el.innerHTML = '<span style="opacity:.6;font-size:11px;color:var(--text-4)">' + email + '</span> &middot; <button onclick="window.__clerkSignOut()" style="' + btnStyle + '">Sign out</button>';
+      window.__clerkSignOut = function() { window.Clerk.signOut().then(function(){ location.reload(); }); };
+    }
+  }
+  el.innerHTML = '<button onclick="window.__clerkSignInFooter()" style="' + btnStyle + '">Staff login</button>';
+  window.__clerkSignInFooter = function() { loadClerk().then(function(clerk) { clerk.openSignIn({ redirectUrl: window.location.href }); }).catch(function(e) { console.error('Clerk load failed:', e); }); };
+  window.addEventListener('load', function() { if (typeof window.Clerk === 'undefined') return; loadClerk().then(renderFooterAuth); });
+})();
+</script>
+
+<script>
+// ─── Mode switching ───────────────────────────────────────────────────────────
+function setMode(btn, mode) {
+  document.querySelectorAll('.mode-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('mode-url').style.display   = mode === 'url'   ? '' : 'none';
+  document.getElementById('mode-paste').style.display = mode === 'paste' ? '' : 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('loading').style.display = 'none';
+}
+
+// ─── Load image → returns {ok, w, h, url} ────────────────────────────────────
+function loadImage(url) {
+  return new Promise(function(resolve) {
+    var img = new Image();
+    var done = false;
+    var timer = setTimeout(function() {
+      if (!done) { done = true; resolve({ ok: false, w: 0, h: 0, url: url }); }
+    }, 8000);
+    img.onload = function() {
+      if (!done) {
+        done = true; clearTimeout(timer);
+        resolve({ ok: true, w: img.naturalWidth, h: img.naturalHeight, url: url });
+      }
+    };
+    img.onerror = function() {
+      if (!done) { done = true; clearTimeout(timer); resolve({ ok: false, w: 0, h: 0, url: url }); }
+    };
+    // Cache-bust to avoid stale cached 404s
+    img.src = url + (url.includes('?') ? '&' : '?') + '_fv=' + Date.now();
+  });
+}
+
+// ─── Get file extension ───────────────────────────────────────────────────────
+function getExt(url) {
+  try {
+    var path = new URL(url, 'https://x.com').pathname;
+    var m = path.match(/\.([a-zA-Z0-9]+)(\?|$)/);
+    return m ? m[1].toLowerCase() : '';
+  } catch(e) { return ''; }
+}
+
+// ─── Parse favicon <link> tags from HTML string ───────────────────────────────
+function parseFaviconLinks(html) {
+  var re = /<link([^>]*)>/gi;
+  var links = [];
+  var m;
+  var FAV_RELS = ['icon', 'shortcut icon', 'apple-touch-icon', 'apple-touch-icon-precomposed'];
+  while ((m = re.exec(html)) !== null) {
+    var attrs = m[1];
+    var relM = attrs.match(/rel\s*=\s*["']([^"']+)["']/i);
+    if (!relM) continue;
+    var rel = relM[1].toLowerCase().trim();
+    if (!FAV_RELS.some(function(r) { return rel === r; })) continue;
+    var href  = (attrs.match(/href\s*=\s*["']([^"']+)["']/i)  || [])[1] || '';
+    var sizes = (attrs.match(/sizes\s*=\s*["']([^"']+)["']/i) || [])[1] || '';
+    var type  = (attrs.match(/type\s*=\s*["']([^"']+)["']/i)  || [])[1] || '';
+    if (!href) continue;
+    links.push({ rel: rel, href: href, sizes: sizes, type: type });
+  }
+  return links;
+}
+
+// ─── Resolve href to absolute URL ────────────────────────────────────────────
+function resolveUrl(href, base) {
+  if (!href || href.startsWith('data:')) return href;
+  try { return new URL(href, base).href; } catch(e) { return null; }
+}
+
+// ─── Build checks from image results ─────────────────────────────────────────
+function buildChecks(opts) {
+  var links      = opts.links || [];   // parsed link tags (may be empty for URL mode)
+  var images     = opts.images || {};  // { url: {ok,w,h,url} }
+  var probed     = opts.probed || [];  // [{path, result}] for URL mode probed paths
+  var domain     = opts.domain || '';
+  var mode       = opts.mode;          // 'url' or 'paste'
+
+  var iconLinks  = links.filter(function(l) { return l.rel === 'icon' || l.rel === 'shortcut icon'; });
+  var appleLinks = links.filter(function(l) { return l.rel === 'apple-touch-icon' || l.rel === 'apple-touch-icon-precomposed'; });
+  var allLoaded  = Object.values(images).filter(function(r) { return r.ok && r.w > 0; });
+
+  // For URL mode, figure out what's present from probed results
+  var probedOk = probed.filter(function(p) { return p.result.ok; });
+
+  var checks = [];
+  var ICON = { pass: '✅', fail: '❌', warn: '⚠️', suggest: '💡', info: 'ℹ️' };
+
+  // ── 1. Favicon link tag (paste mode only) ────────────────────────────────
+  if (mode === 'paste') {
+    var hasIcon = iconLinks.length > 0;
+    checks.push({
+      group: 'Link Tags', icon: hasIcon ? ICON.pass : ICON.fail, status: hasIcon ? 'pass' : 'fail',
+      label: 'Favicon link tag present',
+      detail: hasIcon ? iconLinks.length + ' <link rel="icon"> tag' + (iconLinks.length > 1 ? 's' : '') + ' found' : 'No <link rel="icon"> found',
+      desc: 'Google needs a <link rel="icon"> in your &lt;head&gt; to locate your favicon.',
+      fix: hasIcon ? null : 'Add to &lt;head&gt;: <code>&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"&gt;</code>'
+    });
+
+    var hasApple = appleLinks.length > 0;
+    checks.push({
+      group: 'Link Tags', icon: hasApple ? ICON.pass : ICON.warn, status: hasApple ? 'pass' : 'warn',
+      label: 'Apple Touch Icon link tag present',
+      detail: hasApple ? 'Found: ' + appleLinks[0].href : 'No <link rel="apple-touch-icon"> found',
+      desc: 'iOS and iPadOS use apple-touch-icon for home screen shortcuts. Google also accepts it as a valid favicon source.',
+      fix: hasApple ? null : 'Add: <code>&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;</code> (180×180px PNG recommended)'
+    });
+
+    var hasSizes = iconLinks.some(function(l) { return l.sizes && l.sizes !== 'any'; });
+    checks.push({
+      group: 'Link Tags', icon: hasSizes ? ICON.pass : ICON.suggest, status: hasSizes ? 'pass' : 'suggest',
+      label: 'sizes attribute declared on icon link tags',
+      detail: hasSizes ? 'Sizes: ' + iconLinks.filter(function(l){return l.sizes;}).map(function(l){return l.sizes;}).join(', ') : 'No sizes= attribute found',
+      desc: 'HTML5 recommends specifying sizes so browsers pick the best resolution for each context.',
+      fix: hasSizes ? null : 'Add sizes="32x32" (or the actual dimensions) to your icon link tags.'
+    });
+  }
+
+  // ── 2. favicon.ico at root ────────────────────────────────────────────────
+  var icoProbe = probed.find(function(p) { return p.path === '/favicon.ico'; });
+  if (icoProbe || domain) {
+    var icoOk = icoProbe ? icoProbe.result.ok : false;
+    checks.push({
+      group: 'Files', icon: icoOk ? ICON.pass : ICON.suggest, status: icoOk ? 'pass' : 'suggest',
+      label: '/favicon.ico at domain root',
+      detail: icoOk ? 'favicon.ico found (' + (icoProbe.result.w || '?') + '×' + (icoProbe.result.h || '?') + 'px)' : 'Not found at ' + (domain || '') + '/favicon.ico',
+      desc: 'Many browsers and tools request /favicon.ico automatically regardless of your link tags. It\'s the universal fallback.',
+      fix: icoOk ? null : 'Place a favicon.ico at your domain root. Multi-size ICO files (16×16 + 32×32) give the best browser coverage.'
+    });
+  }
+
+  // ── 3. File loads ─────────────────────────────────────────────────────────
+  var anyFailed = allLoaded.length === 0 && (links.length > 0 || probed.length > 0);
+  var failedLinks = links.filter(function(l) { return l._absUrl && images[l._absUrl] && !images[l._absUrl].ok; });
+  if (links.length > 0 && Object.keys(images).length > 0) {
+    var allOkLinks = failedLinks.length === 0;
+    checks.push({
+      group: 'Files', icon: allOkLinks ? ICON.pass : ICON.fail, status: allOkLinks ? 'pass' : 'fail',
+      label: 'Favicon files load (not 404)',
+      detail: allOkLinks ? 'All declared favicons load successfully' : 'Cannot load: ' + failedLinks.map(function(l){return l.href;}).join(', '),
+      desc: 'Every favicon URL in your link tags must return a valid image. 404s are silently ignored by browsers and Google.',
+      fix: allOkLinks ? null : 'Check these file paths exist on your server: ' + failedLinks.map(function(l){return '<code>'+l.href+'</code>';}).join(', ')
+    });
+  }
+
+  // ── 4. Square aspect ratio ────────────────────────────────────────────────
+  if (allLoaded.length > 0) {
+    var nonSquare = allLoaded.filter(function(r) { return r.w !== r.h && r.w > 0 && r.h > 0; });
+    checks.push({
+      group: 'Image Quality', icon: nonSquare.length === 0 ? ICON.pass : ICON.fail, status: nonSquare.length === 0 ? 'pass' : 'fail',
+      label: 'Square aspect ratio (1:1)',
+      detail: nonSquare.length === 0 ? 'All images are square' : nonSquare.map(function(r){return r.url.split('/').pop().split('?')[0] + ': ' + r.w + '×' + r.h;}).join(', '),
+      desc: 'Google requires favicons to have a 1:1 aspect ratio. Non-square images are cropped or rejected.',
+      fix: nonSquare.length > 0 ? 'Recreate as a perfect square — width and height must be identical.' : null
+    });
+  }
+
+  // ── 5. Minimum size ───────────────────────────────────────────────────────
+  if (allLoaded.length > 0) {
+    var squareLoaded = allLoaded.filter(function(r) { return r.w === r.h && r.w > 0; });
+    var largest = squareLoaded.reduce(function(max, r) { return (!max || r.w > max.w) ? r : max; }, null);
+    var smallest = squareLoaded.reduce(function(min, r) { return (!min || r.w < min.w) ? r : min; }, null);
+    var has48 = squareLoaded.some(function(r) { return r.w >= 48; });
+    checks.push({
+      group: 'Image Quality', icon: has48 ? ICON.pass : ICON.warn, status: has48 ? 'pass' : 'warn',
+      label: 'At least 48×48px (Google recommended)',
+      detail: largest ? 'Largest square: ' + largest.w + '×' + largest.h + 'px' + (smallest && smallest.w < 48 && squareLoaded.length > 1 ? ' · Smallest: ' + smallest.w + '×' + smallest.h + 'px' : '') : 'No square images loaded',
+      desc: 'Google\'s hard minimum is 8×8px, but recommends ≥48×48px for clear rendering. Anything smaller may appear blurry or pixelated in results.',
+      fix: !has48 ? 'Export your favicon at ≥48×48px. The 32×32 tab icon + 512×512 high-res version is the recommended combination.' : null
+    });
+  }
+
+  // ── 6. High-res 512×512 ───────────────────────────────────────────────────
+  var has512 = allLoaded.some(function(r) { return r.w >= 512 && r.w === r.h; }) ||
+               iconLinks.some(function(l) { return l.sizes && l.sizes.includes('512'); });
+  checks.push({
+    group: 'Image Quality', icon: has512 ? ICON.pass : ICON.suggest, status: has512 ? 'pass' : 'suggest',
+    label: 'High-resolution version (≥512×512)',
+    detail: has512 ? '512×512 version found' : 'No ≥512×512 favicon detected',
+    desc: 'PWA launchers, Google Discover, Android home screen shortcuts, and other high-DPI surfaces use a high-res favicon. 512×512 is the recommended size.',
+    fix: !has512 ? 'Add: <code>&lt;link rel="icon" type="image/png" sizes="512x512" href="/og-image.png"&gt;</code>' : null
+  });
+
+  // ── 7. 32×32 version ──────────────────────────────────────────────────────
+  var has32 = allLoaded.some(function(r) { return r.w === 32 && r.h === 32; }) ||
+              iconLinks.some(function(l) { return l.sizes && l.sizes.includes('32'); });
+  checks.push({
+    group: 'Image Quality', icon: has32 ? ICON.pass : ICON.suggest, status: has32 ? 'pass' : 'suggest',
+    label: '32×32px version (browser tab)',
+    detail: has32 ? '32×32 version found' : 'No 32×32 favicon declared or detected',
+    desc: 'Most desktop browsers use a 32×32px favicon for browser tabs. Without it, browsers scale down a larger image, sometimes with poor results.',
+    fix: !has32 ? 'Add: <code>&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"&gt;</code>' : null
+  });
+
+  // ── 8. Apple touch icon size ──────────────────────────────────────────────
+  var appleLoaded = appleLinks.map(function(l) { return l._absUrl ? images[l._absUrl] : null; }).filter(function(r) { return r && r.ok; });
+  var appleProbe = probed.find(function(p) { return p.path === '/apple-touch-icon.png'; });
+  var appleResult = appleLoaded[0] || (appleProbe && appleProbe.result.ok ? appleProbe.result : null);
+  if (appleResult) {
+    var apple180 = appleResult.w >= 150 && appleResult.w <= 220;
+    checks.push({
+      group: 'Image Quality', icon: apple180 ? ICON.pass : ICON.warn, status: apple180 ? 'pass' : 'warn',
+      label: 'Apple Touch Icon 180×180px',
+      detail: 'Detected: ' + appleResult.w + '×' + appleResult.h + 'px',
+      desc: 'Apple recommends 180×180px for sharp rendering on Retina displays. Smaller icons are scaled up and may look blurry.',
+      fix: !apple180 ? 'Export your apple-touch-icon at exactly 180×180px.' : null
+    });
+  }
+
+  // ── 9. Format ─────────────────────────────────────────────────────────────
+  var GOOD = ['ico','png','svg','webp','gif'];
+  var BAD  = ['jpg','jpeg','bmp'];
+  var allHrefs = links.map(function(l){return l.href;}).concat(probedOk.map(function(p){return p.path;}));
+  var badFmt = allHrefs.map(getExt).filter(function(e){return BAD.includes(e);});
+  if (allHrefs.length > 0) {
+    var fmts = [...new Set(allHrefs.map(getExt).filter(Boolean))];
+    checks.push({
+      group: 'Format', icon: badFmt.length > 0 ? ICON.warn : ICON.pass, status: badFmt.length > 0 ? 'warn' : 'pass',
+      label: 'Supported file format',
+      detail: 'Format' + (fmts.length > 1 ? 's' : '') + ': ' + (fmts.join(', ') || 'unknown'),
+      desc: 'Google supports PNG, ICO, SVG, WebP, and GIF. JPEG and BMP are valid formats but don\'t support transparency and don\'t scale well.',
+      fix: badFmt.length > 0 ? 'Convert to PNG (supports transparency, widely compatible) or ICO (multi-size container for broad browser support).' : null
+    });
+  }
+
+  // ── 10. Googlebot reminder ────────────────────────────────────────────────
+  checks.push({
+    group: 'Google Requirements', icon: ICON.info, status: 'info',
+    label: 'Googlebot can crawl your favicon',
+    detail: 'Cannot verify automatically — check your robots.txt',
+    desc: 'Googlebot-Image must be able to access your favicon file and Googlebot must be able to crawl your homepage. If either is blocked in robots.txt, Google will not show your favicon.',
+    fix: 'Verify your robots.txt does not block Googlebot or Googlebot-Image from your favicon paths or homepage.'
+  });
+
+  return checks;
+}
+
+// ─── URL mode — probe common favicon paths ────────────────────────────────────
+async function runUrlCheck() {
+  var raw = document.getElementById('url-input').value.trim();
+  if (!raw) { document.getElementById('url-input').focus(); return; }
+  var url = /^https?:\/\//i.test(raw) ? raw : 'https://' + raw;
+  var domain;
+  try { domain = new URL(url).origin; } catch(e) { alert('Invalid URL'); return; }
+
+  setLoading(true, 'Probing favicon paths…');
+
+  var PATHS = ['/favicon.ico', '/favicon.png', '/favicon-32.png', '/og-image.png', '/apple-touch-icon.png', '/favicon-apple.png', '/apple-touch-icon-180x180.png'];
+  var probed = await Promise.all(PATHS.map(async function(path) {
+    var result = await loadImage(domain + path);
+    return { path: path, result: result };
+  }));
+
+  setLoading(false);
+
+  // Build images map from probed results
+  var images = {};
+  probed.forEach(function(p) { if (p.result.ok) images[p.result.url] = p.result; });
+
+  var checks = buildChecks({ links: [], images: images, probed: probed, domain: domain, mode: 'url' });
+
+  // Best favicon for preview
+  var best = probed.filter(function(p){return p.result.ok && p.result.w >= 16;}).sort(function(a,b){return b.result.w - a.result.w;})[0];
+  var primaryUrl = best ? (domain + best.path) : null;
+
+  renderResults({
+    checks: checks,
+    domain: domain,
+    siteUrl: url,
+    primaryFaviconUrl: primaryUrl,
+    probed: probed,
+    images: images,
+    mode: 'url'
+  });
+}
+
+// ─── Paste mode ───────────────────────────────────────────────────────────────
+async function runPasteCheck() {
+  var html   = document.getElementById('html-input').value.trim();
+  var rawBase = document.getElementById('base-input').value.trim();
+  if (!html) { document.getElementById('html-input').focus(); return; }
+
+  var base = rawBase ? (/^https?:\/\//i.test(rawBase) ? rawBase : 'https://' + rawBase) : null;
+  var domain = base ? (function(){ try { return new URL(base).origin; } catch(e) { return null; } })() : null;
+
+  setLoading(true, 'Parsing tags and loading images…');
+
+  var links = parseFaviconLinks(html);
+
+  // Resolve URLs and load images
+  var images = {};
+  await Promise.all(links.map(async function(l) {
+    var abs = base ? resolveUrl(l.href, base) : (l.href.startsWith('http') ? l.href : null);
+    l._absUrl = abs;
+    if (abs) { images[abs] = await loadImage(abs); }
+  }));
+
+  // Also probe /favicon.ico if domain known
+  var probed = [];
+  if (domain) {
+    var icoR = await loadImage(domain + '/favicon.ico');
+    probed.push({ path: '/favicon.ico', result: icoR });
+  }
+
+  setLoading(false);
+
+  var checks = buildChecks({ links: links, images: images, probed: probed, domain: domain, mode: 'paste' });
+
+  var iconLinks = links.filter(function(l) { return l.rel === 'icon' || l.rel === 'shortcut icon'; });
+  var best = iconLinks.find(function(l) { return l._absUrl && images[l._absUrl] && images[l._absUrl].ok; });
+  var primaryUrl = best ? best._absUrl : null;
+
+  renderResults({
+    checks: checks,
+    domain: domain,
+    siteUrl: base,
+    primaryFaviconUrl: primaryUrl,
+    probed: probed,
+    images: images,
+    mode: 'paste'
+  });
+}
+
+// ─── Loading state ────────────────────────────────────────────────────────────
+function setLoading(on, msg) {
+  document.getElementById('loading').style.display = on ? '' : 'none';
+  if (msg) document.getElementById('loading-msg').textContent = msg;
+  document.getElementById('results').style.display = on ? 'none' : document.getElementById('results').style.display;
+  ['btn-url','btn-paste'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.disabled = on;
+  });
+}
+
+// ─── Render results ───────────────────────────────────────────────────────────
+function renderResults(data) {
+  var checks = data.checks;
+  var errors   = checks.filter(function(c) { return c.status === 'fail'; });
+  var warnings = checks.filter(function(c) { return c.status === 'warn'; });
+  var suggests = checks.filter(function(c) { return c.status === 'suggest'; });
+  var passes   = checks.filter(function(c) { return c.status === 'pass'; });
+
+  var overall = errors.length > 0 ? 'fail' : warnings.length > 0 ? 'warn' : 'pass';
+  var scoreLbl = overall === 'pass' ? '✅ Pass' : overall === 'warn' ? '⚠️ Needs Work' : '❌ Fail';
+  var scoreCls = overall === 'pass' ? 'score-pass' : overall === 'warn' ? 'score-warn' : 'score-fail';
+
+  // Display domain
+  var displayDomain = 'your-site.com';
+  try { if (data.siteUrl) displayDomain = new URL(data.siteUrl).hostname; } catch(e) {}
+  var displayUrl = data.siteUrl ? data.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : displayDomain;
+
+  // SERP preview
+  var faviconSrc = data.primaryFaviconUrl;
+  if (!faviconSrc && data.probed) {
+    var icoP = data.probed.find(function(p) { return p.path === '/favicon.ico' && p.result.ok; });
+    if (icoP) faviconSrc = (data.domain || '') + '/favicon.ico';
+  }
+
+  var serpHtml = '<div class="serp-wrap">' +
+    '<div class="serp-label">How your favicon appears in Google Search results</div>' +
+    '<div class="serp-site-line">' +
+      '<div class="serp-favicon-wrap">' +
+        (faviconSrc
+          ? '<img src="' + esc(faviconSrc) + '" alt="" onerror="this.parentNode.innerHTML=\'<div class=&quot;serp-favicon-empty&quot;></div>\'">'
+          : '<div class="serp-favicon-empty"></div>') +
+      '</div>' +
+      '<div class="serp-site-meta">' +
+        '<div class="serp-site-name">' + esc(displayDomain) + '</div>' +
+        '<div class="serp-site-url">' + esc(displayUrl) + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="serp-title">Page Title — Your Website</div>' +
+    '<div class="serp-snippet">This is where your meta description appears in Google Search results — alongside your 16px favicon and site name.</div>' +
+  '</div>';
+
+  // Favicon tiles
+  var loadedImages = Object.values(data.images).filter(function(r) { return r.ok && r.w > 0; });
+  var tilesHtml = '';
+  if (loadedImages.length > 0) {
+    loadedImages.sort(function(a, b) { return b.w - a.w; });
+    tilesHtml = '<div class="tiles-section">' +
+      '<div class="tiles-label">Detected favicon files</div>' +
+      '<div class="favicon-tiles">' +
+      loadedImages.map(function(img) {
+        var display = Math.min(img.w, 48);
+        var name = img.url.split('/').pop().split('?')[0];
+        var isSquare = img.w === img.h;
+        return '<div class="favicon-tile">' +
+          '<div class="favicon-tile-canvas" style="width:' + (display+8) + 'px;height:' + (display+8) + 'px">' +
+            '<img src="' + esc(img.url) + '" width="' + display + '" height="' + display + '" style="object-fit:contain" alt="">' +
+          '</div>' +
+          '<div class="favicon-tile-name">' + esc(name) + '</div>' +
+          '<div class="favicon-tile-dims">' + img.w + '×' + img.h + 'px</div>' +
+          '<div class="favicon-tile-status">' + (isSquare ? '✅' : '❌ not square') + '</div>' +
+        '</div>';
+      }).join('') + '</div></div>';
+  }
+
+  // Group checks
+  var groupOrder = ['Link Tags', 'Files', 'Image Quality', 'Format', 'Google Requirements'];
+  var grouped = {};
+  checks.forEach(function(c) {
+    if (!grouped[c.group]) grouped[c.group] = [];
+    grouped[c.group].push(c);
+  });
+
+  var checksHtml = '<div class="checks-section">';
+  groupOrder.forEach(function(g) {
+    if (!grouped[g] || grouped[g].length === 0) return;
+    checksHtml += '<div class="checks-group-label">' + esc(g) + '</div>' +
+      '<div class="check-group">' +
+      grouped[g].map(function(c) {
+        return '<div class="check-item">' +
+          '<div class="check-icon">' + c.icon + '</div>' +
+          '<div class="check-body">' +
+            '<div class="check-label">' + esc(c.label) + '</div>' +
+            (c.detail ? '<div class="check-detail">' + esc(c.detail) + '</div>' : '') +
+            '<div class="check-desc">' + esc(c.desc) + '</div>' +
+            (c.fix ? '<div class="check-fix">💬 ' + c.fix + '</div>' : '') +
+          '</div>' +
+        '</div>';
+      }).join('') +
+      '</div>';
+  });
+  checksHtml += '</div>';
+
+  // Recommended snippet
+  var snippet = '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">\n<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">\n<link rel="apple-touch-icon" href="/favicon-apple.png">';
+
+  var snippetHtml = '<div class="snippet-box">' +
+    '<div class="snippet-header"><span>Recommended favicon pattern (Google + browsers)</span><button class="btn-copy" onclick="copySnippet(this)">Copy</button></div>' +
+    '<div class="snippet-code">' + esc(snippet) + '</div>' +
+  '</div>' +
+  '<p style="font-size:12px;color:var(--text-4);margin-top:4px">Source: <a href="https://developers.google.com/search/docs/appearance/favicon-in-search" target="_blank" rel="noopener">Google Search Central — Define Website Favicon for Search Results</a></p>';
+
+  var html = '<div class="results-header">' +
+    '<span class="score-badge ' + scoreCls + '">' + scoreLbl + '</span>' +
+    '<span class="score-info">' + passes.length + ' passed · ' + errors.length + ' failed · ' + warnings.length + ' warnings · ' + suggests.length + ' suggestions</span>' +
+  '</div>' +
+  serpHtml + tilesHtml + checksHtml + snippetHtml;
+
+  var el = document.getElementById('results');
+  el.innerHTML = html;
+  el.style.display = '';
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function copySnippet(btn) {
+  var code = btn.closest('.snippet-box').querySelector('.snippet-code');
+  navigator.clipboard.writeText(code.textContent.trim()).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+</script>
+</body>
+</html>

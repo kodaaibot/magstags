@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/contact/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Contact | MagsTags</title>
+  <meta name="description" content="Get in touch with Mags — questions, feedback, or collaboration enquiries.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint:       #0891B2;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+      --paid-color: #E11D48;
+      --paid-light: #FFE4E6;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint:       #67E8F9;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;transition:background .25s,color .25s;-webkit-font-smoothing:antialiased}
+
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+
+    .page-hero{margin-bottom:40px}
+    .page-hero h1{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:var(--text-1);margin-bottom:10px}
+    .page-hero p{font-size:15px;color:var(--text-3);line-height:1.65;max-width:520px}
+
+    .contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;max-width:920px}
+    @media(max-width:700px){.contact-layout{grid-template-columns:1fr}}
+
+    /* ── Form card ── */
+    .form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 28px 32px}
+
+    .field-group{margin-bottom:18px}
+    .field-label{display:block;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+    .field-label .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-4)}
+    .field-input,
+    .field-textarea{width:100%;font-size:14px;font-family:'Inter',sans-serif;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--text-1);outline:none;transition:border .15s;resize:none}
+    .field-input:focus,.field-textarea:focus{border-color:var(--teal)}
+    .field-input::placeholder,.field-textarea::placeholder{color:var(--text-4)}
+    .field-input.err,.field-textarea.err{border-color:var(--paid-color)}
+    .field-textarea{line-height:1.6;min-height:130px}
+
+    /* Math validation */
+    .math-row{display:flex;align-items:center;gap:10px}
+    .math-question{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;font-weight:600;color:var(--teal);white-space:nowrap}
+    .math-input{width:72px;text-align:center;font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px}
+    .math-error{font-size:12px;color:var(--paid-color);margin-top:5px;display:none}
+
+    /* Submit button */
+    .btn-submit{width:100%;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s;margin-top:4px}
+    .btn-submit:hover{opacity:.85}
+    .btn-submit:disabled{opacity:.5;cursor:not-allowed}
+
+    /* Success / error states */
+    .form-success{display:none;text-align:center;padding:32px 20px}
+    .form-success .icon{font-size:40px;margin-bottom:12px}
+    .form-success h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:8px}
+    .form-success p{font-size:14px;color:var(--text-3);line-height:1.6}
+    .form-send-error{display:none;padding:12px 14px;background:var(--paid-light);border:1px solid #fca5a5;border-radius:9px;font-size:13px;color:#7f1d1d;margin-top:12px;line-height:1.5}
+    html.dark .form-send-error{background:#450a0a;border-color:#991b1b;color:#fca5a5}
+
+    /* ── Info panel ── */
+    .info-panel{display:flex;flex-direction:column;gap:16px}
+    .info-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px}
+    .info-card-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:6px}
+    .info-card-body{font-size:13px;color:var(--text-3);line-height:1.65}
+    .info-card-body a{color:var(--teal);text-decoration:none}
+    .info-card-body a:hover{text-decoration:underline}
+
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+      @media(max-width:600px){main{padding:24px 16px 60px}}
+  </style>
+  <meta property="og:title" content="Contact | MagsTags">
+  <meta property="og:description" content="Get in touch with Mags — questions, feedback, or collaboration enquiries.">
+  <meta property="og:url" content="https://www.magstags.com/contact/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact | MagsTags">
+  <meta name="twitter:description" content="Get in touch with Mags — questions, feedback, or collaboration enquiries.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
+  })();
+</script>
+
+<main id="main-content">
+  <div class="page-hero">
+    <h1>Get in touch</h1>
+    <p>These contact form submissions go directly to me — a real person who will read it, think about it, and write back. Here for the right reasons? Great. Questions about the tools, feedback, collaboration enquiries, interesting SEO problems — all in. Cold outreach or link exchange requests — respectfully, the bin.</p>
+  </div>
+
+  <div class="contact-layout">
+
+    <!-- ── Form ── -->
+    <div class="form-card">
+      <form name="contact" id="contact-form" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="contact">
+        <div style="display:none"><input name="bot-field" tabindex="-1" autocomplete="off"></div>
+
+        <div class="field-group">
+          <label class="field-label" for="field-name">Name</label>
+          <input class="field-input" type="text" id="field-name" name="name" placeholder="Your name" autocomplete="name" required>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="field-email">Email</label>
+          <input class="field-input" type="email" id="field-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="field-subject">Subject</label>
+          <input class="field-input" type="text" id="field-subject" name="subject" placeholder="What's this about?" required>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="field-message">Message</label>
+          <textarea class="field-textarea" id="field-message" name="message" placeholder="Your message…" required></textarea>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">
+            <span id="math-label-text">Spam check</span>
+            <span class="hint"> — type the answer</span>
+          </label>
+          <div class="math-row">
+            <span class="math-question" id="math-question">…</span>
+            <input class="field-input math-input" type="text" id="math-answer" name="_math" autocomplete="off" inputmode="numeric" placeholder="?" required>
+          </div>
+          <div class="math-error" id="math-error">Wrong answer — try again</div>
+        </div>
+
+        <button class="btn-submit" type="submit" id="submit-btn">Send message</button>
+        <div class="form-send-error" id="send-error">Something went wrong — please try again.</div>
+      </form>
+
+      <!-- Success state -->
+      <div class="form-success" id="form-success">
+        <div class="icon">✉️</div>
+        <h3>Message sent</h3>
+        <p>Thanks — I'll get back to you as soon as I can.</p>
+      </div>
+    </div>
+
+    <!-- ── Info ── -->
+    <div class="info-panel">
+      <div class="info-card">
+        <div class="info-card-title">About magstags</div>
+        <div class="info-card-body">Free tools for technical SEO and e-commerce professionals. Built and maintained by <a href="/mags-sikora/" style="color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px">Mags Sikora, SEO specialist based in London, UK</a>.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Response time</div>
+        <div class="info-card-body">I typically reply within 1–2 business days.</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">What I can help with</div>
+        <div class="info-card-body">Tool feedback, bug reports, feature requests, collaboration, or general SEO and e-commerce questions.</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+
+<script src="/header.js"></script>
+<script>
+// ── Math challenge ─────────────────────────────────────────────────────────
+var _mathA, _mathB, _mathAns;
+
+function newChallenge() {
+  var ops = [
+    function(a,b){ return { q: a + ' + ' + b, a: a+b }; },
+    function(a,b){ return { q: (a+b) + ' − ' + b,  a: a   }; },
+    function(a,b){ return { q: (a+b) + ' − ' + a,  a: b   }; },
+  ];
+  _mathA = Math.floor(Math.random() * 8) + 2;
+  _mathB = Math.floor(Math.random() * 8) + 2;
+  var op = ops[Math.floor(Math.random() * ops.length)](_mathA, _mathB);
+  _mathAns = op.a;
+  document.getElementById('math-question').textContent = 'What is ' + op.q + '?';
+  document.getElementById('math-answer').value = '';
+  document.getElementById('math-error').style.display = 'none';
+  document.getElementById('math-answer').classList.remove('err');
+}
+
+newChallenge();
+
+// ── Validation helpers ─────────────────────────────────────────────────────
+function validate(form) {
+  var ok = true;
+  ['field-name','field-email','field-subject','field-message'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el.value.trim()) { el.classList.add('err'); ok = false; }
+    else el.classList.remove('err');
+  });
+  // email format
+  var em = document.getElementById('field-email');
+  if (em.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) {
+    em.classList.add('err'); ok = false;
+  }
+  // math
+  var mathEl = document.getElementById('math-answer');
+  var mathVal = parseInt(mathEl.value.trim(), 10);
+  if (isNaN(mathVal) || mathVal !== _mathAns) {
+    mathEl.classList.add('err');
+    document.getElementById('math-error').style.display = 'block';
+    newChallenge();
+    ok = false;
+  }
+  return ok;
+}
+
+// ── Submit ─────────────────────────────────────────────────────────────────
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('send-error').style.display = 'none';
+
+  if (!validate(this)) return;
+
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  var form = this;
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(form)).toString()
+  }).then(function(res) {
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      throw new Error('Non-OK response');
+    }
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Send message';
+    document.getElementById('send-error').style.display = 'block';
+    newChallenge();
+  });
+});
+
+// ── Clear err state on input ───────────────────────────────────────────────
+['field-name','field-email','field-subject','field-message'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', function() {
+    this.classList.remove('err');
+  });
+});
+</script>
+</body>
+</html>
