@@ -164,9 +164,15 @@
   <!-- Notes -->
   <url>
     <loc>https://www.magstags.com/notes/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.magstags.com/notes/crawl-budget-enterprise/</loc>
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/agentic-search/</loc>
