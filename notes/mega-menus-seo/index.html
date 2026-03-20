@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/mega-menus-seo/">
+  <meta name="description" content="A decision framework for when mega menus help and when they hurt. Link equity dilution, the Reasonable Surfer model, anchor text uniformity, and what to do instead.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Mega Menus &amp; SEO | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
+    #blog-content{display:block}
+    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:#E0F2FE;color:#0E7490;margin-bottom:16px}
+    html.dark .post-category{background:#164e63;color:#7dd3fc}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:17px;line-height:1.7;color:var(--text-3);margin-bottom:36px;font-style:italic;border-left:3px solid var(--border);padding-left:18px}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body em{color:var(--text-3)}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;background:var(--mint-light);color:var(--teal);padding:2px 6px;border-radius:4px;word-break:break-all}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .decision-tree{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;margin:32px 0}
+    .decision-tree h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:12px}
+    .decision-tree p{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:10px}
+    .decision-tree p:last-child{margin-bottom:0}
+    .faq-block{margin:52px 0}
+    .faq-block h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
+    .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+    .faq-item:first-of-type{border-top:1px solid var(--border)}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:10px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
+    .faq-a a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-1);margin-bottom:20px}
+    .sources ul{padding-left:0;list-style:none}
+    .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
+    .sources a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--text-2);font-weight:600}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+  </style>
+  <meta property="og:title" content="Mega Menus &amp; SEO | MagsTags">
+  <meta property="og:description" content="A decision framework for when mega menus help and when they hurt. Link equity dilution, the Reasonable Surfer model, anchor text uniformity, and what to do instead.">
+  <meta property="og:url" content="https://www.magstags.com/notes/mega-menus-seo/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mega Menus &amp; SEO | MagsTags">
+  <meta name="twitter:description" content="Link equity dilution, anchor text uniformity, the Reasonable Surfer model, and a practical decision tree.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Mega Menus: A Decision Framework for When They Help and When They Hurt",
+    "description": "A decision framework for when mega menus help and when they hurt, link equity dilution, the Reasonable Surfer model, anchor text uniformity, and what to do instead.",
+    "url": "https://www.magstags.com/notes/mega-menus-seo/",
+    "datePublished": "2026-03-20",
+    "dateModified": "2026-03-20",
+    "image": "https://www.magstags.com/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com"
+    }
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+<script src="/header.js" defer></script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Mega Menus: A Decision Framework</span>
+    </nav>
+
+    <span class="post-category">Technical SEO</span>
+    <h1 class="post-h1">Mega Menus &amp; SEO: A Decision Framework for When They Help and When They Hurt</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>20 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>14 min read</span>
+    </div>
+
+    <div class="post-body">
+
+      <p class="post-lead">For SEOs who've tried to explain link equity dilution to a dev team using a whiteboard, and for developers who've been asked to "just add everything to the nav" by someone who doesn't understand what that costs.</p>
+
+      <p>Most mega menu advice falls into one of two camps: "mega menus are great for UX" or "mega menus are bad for SEO." Neither is useful. The real question is whether your specific site, with its specific architecture and its specific URL count, benefits from putting that many links on every page, or whether it's quietly undermining the signals you're trying to send.</p>
+
+      <p>This is a decision framework. Not a blanket recommendation. The answer depends on what you're linking to, how many pages you have, and whether the navigation is doing what you think it's doing.</p>
+
+      <h2>The core problem, stated plainly</h2>
+
+      <p>A mega menu places the same set of links (often dozens, sometimes hundreds) on every page of your site. Every product page, every category page, every blog post, every landing page. The same links, with the same anchor text, repeated across your entire template.</p>
+
+      <p>That creates three compounding issues:</p>
+
+      <p><strong>Every page votes for everything equally.</strong> Internal links are how you tell Google which pages matter and how they relate to each other. When every page links to the same 80 destinations with identical anchor text, you're not signalling priority. You're signalling nothing. You are, as one SEO put it years ago, voting for nothing by voting for everything.</p>
+
+      <p><strong>Anchor text becomes uniform and contextually meaningless.</strong> If your mega menu links to <code>/shoes/running/</code> with the anchor text "Running Shoes" from every page on your site, your returns page, your blog about sustainability, your size guide, that anchor text carries no contextual weight. It's the same signal from everywhere, regardless of relevance. Google has stated it tries to understand site structure the way a user would. A user on your size guide page doesn't think "Running Shoes" is the most important related destination. Your mega menu does.</p>
+
+      <p><strong>Link equity spreads thin.</strong> Each page has a finite amount of authority to distribute through its outbound internal links. A page with 30 internal links passes meaningfully more equity per link than a page with 150. When your mega menu accounts for 100+ of those links, the contextual links in your actual page content, the ones that are editorially relevant, topically appropriate, and placed where a user would actually find them useful, get a fraction of the equity they would otherwise carry.</p>
+
+      <p>None of these problems are theoretical. They're architectural. And they get worse as the site gets bigger.</p>
+
+      <h2>Why not all links are equal: the Reasonable Surfer model</h2>
+
+      <p>The original PageRank model treated all links on a page equally. A link in the footer carried the same weight as a link in the opening paragraph. A navigation link passed the same equity as a contextual editorial link. Google called this the "random surfer model": imagine someone clicking links at random, with no preference for where those links sit on the page or how relevant they are.</p>
+
+      <p>In 2004, Google filed a patent that replaced this with something more realistic. Bill Slawski, through his work at SEO by the Sea, was the first to surface and properly analyse this patent. He called the concept the "Reasonable Surfer model," and it changed how the industry should think about internal linking.</p>
+
+      <p>The core idea: not all links on a page pass the same amount of PageRank. Instead, Google models the probability that a real user would actually click a given link, and adjusts the equity passed accordingly. Links that are more likely to be clicked pass more value. Links that are less likely to be clicked pass less.</p>
+
+      <p>The patent identifies several features that influence this probability:</p>
+
+      <ul>
+        <li><strong>Position on the page.</strong> Links in the main content area are more likely to be clicked than links in navigation, sidebars, or footers.</li>
+        <li><strong>Topical relevance.</strong> Links where the anchor text relates to the surrounding content and the topic of the destination page carry more weight.</li>
+        <li><strong>Visual prominence.</strong> Font size, colour, and whether the link stands out from surrounding text affect click probability.</li>
+        <li><strong>Type of link.</strong> Editorial links placed in context are treated differently from boilerplate navigation links repeated across every page.</li>
+      </ul>
+
+      <p>This matters enormously for mega menus. If Google's system is modelling which links a reasonable person would actually click, a navigation link to "Formal Shoes" on a blog post about sustainability scores lower than a contextual link to "Formal Shoes" on a page about business dress codes. The mega menu link exists on both pages. The contextual link exists only where it's relevant. The Reasonable Surfer model suggests the contextual link carries more weight, and the navigation link, especially when repeated identically across thousands of pages, carries less.</p>
+
+      <p>The implication is that mega menu links may not be passing as much equity as their sheer volume suggests. But they are still consuming the equity budget of every page they appear on, which means they're diluting the value available to contextual links without contributing proportional value themselves.</p>
+
+      <p>Slawski's analysis of the patent also noted that the model considers the relationship between the source page's topic and the destination page's topic. A link from a running shoes category page to a running shoes subcategory is topically coherent. A link from a kitchenware page to that same running shoes subcategory (via a mega menu) is not. The Reasonable Surfer model gives Google a mechanism to weight those two links differently, even if both use identical anchor text.</p>
+
+      <div class="post-callout">
+        <strong>Navigation links still count.</strong> They still pass equity, still consume crawl budget, and still influence discovery. The point isn't that they're worthless, it's that they're not all worth the same, and a mega menu placing the same links on every page regardless of context is likely getting less value per link than most site owners assume.
+      </div>
+
+      <h2>The anchor text problem in detail</h2>
+
+      <p>When Google encounters multiple links on a page pointing to the same URL, it has to decide which anchor text to associate with that destination. The historical theory, known as "first link priority," suggested Google only counted the anchor text of the first link it encountered in the HTML. The navigation link, being first in the source code, would override any contextual link you placed in the body content.</p>
+
+      <p>Google's John Mueller has pushed back on the strict version of this, saying the system tries to understand which anchor text is most relevant rather than naively picking the first one. Cyrus Shepard's research at Zyppy reframed this as "selective link priority": Google may record one or two anchor texts per destination from a given page, but never all of them.</p>
+
+      <p>Here's why this matters for mega menus specifically: your navigation anchor text is almost always generic. "Running Shoes." "Women's Clothing." "Sale." These are category labels, not contextual signals. If Google selects the navigation anchor over the body content anchor (which it may, especially when the nav link appears first in the HTML), you've lost the opportunity to pass descriptive, keyword-rich anchor text from the one place on the page where it would actually be relevant.</p>
+
+      <p>And because the mega menu is templated, this happens at scale. Every page on your site sends the same generic anchor text to the same destinations. The contextual links you carefully placed in your content may be competing with, or being overridden by, the nav link that says exactly the same thing as every other page's nav link.</p>
+
+      <p>The result: your internal anchor text profile becomes flat. Every destination receives the same signal from everywhere. Google can see that your site links to <code>/shoes/running/</code> a lot. What it can't easily see is <em>why</em> any specific page considers that destination relevant, because the anchor text never varies and the context is never page-specific.</p>
+
+      <h2>The link equity math</h2>
+
+      <p>The equity distribution problem is straightforward but often underestimated. Consider two versions of the same product page:</p>
+
+      <p><strong>Version A, with mega menu:</strong> 120 links in the mega menu + 15 contextual links in the body content + 10 footer links = 145 total internal links.</p>
+
+      <p><strong>Version B, lean navigation:</strong> 15 links in a streamlined nav + 15 contextual links in the body content + 10 footer links = 40 total internal links.</p>
+
+      <p>Under the old equal-distribution model, each link in Version A would carry roughly 0.7% of the page's equity, versus 2.5% per link in Version B. A 3.5x difference.</p>
+
+      <p>But Google doesn't distribute equity equally. The Reasonable Surfer model weights links by click probability: position on the page, topical relevance to the surrounding content, visual prominence. Navigation links that appear identically on every page score lower on all of these. Contextual links placed in body content, near relevant text, with descriptive anchor text, score higher.</p>
+
+      <p>This means the real gap between Version A and Version B is likely larger than 3.5x, not smaller. In Version B, the 15 contextual body links receive a greater share of the equity budget <em>and</em> each of those links is individually weighted more heavily because of where it sits and how it relates to the content around it. In Version A, those same 15 contextual links are competing with 120 navigation links for equity. Even though navigation links carry less weight under the Reasonable Surfer model, they still collectively consume a significant portion of the page's total equity budget.</p>
+
+      <p>At enterprise scale, tens of thousands of pages each carrying a mega menu, this dilution compounds across the entire internal link graph. The pages you most want to rank receive less concentrated equity from fewer contextually relevant links, because the budget is being spread across a navigation that treats every destination as equally important from every page, even though Google's own system does not.</p>
+
+      <h2>The crawl budget dimension</h2>
+
+      <p>For smaller sites (under 10,000 pages) crawl budget is unlikely to be a material concern regardless of menu size. For larger sites, a mega menu compounds the crawl allocation problem. The full picture is in the <a href="/notes/crawl-budget-enterprise/">enterprise crawl budget guide</a>.</p>
+
+      <p>The short version: when every page links to 100+ destinations via navigation, Googlebot discovers and queues all of those URLs from every page it crawls. If your mega menu includes deep subcategory links, filter combinations, or seasonal pages, you're creating crawl demand for URLs that may not warrant frequent revisiting. From every single page on your site.</p>
+
+      <p>More importantly, the mega menu flattens your site's architecture from Googlebot's perspective. Mueller has been direct on this: when a site structure becomes too flat, Google can't recognise which parts of the site belong together. A pyramid structure, where categories link to subcategories and subcategories link to products, gives Google a hierarchy to interpret. A mega menu that links to everything from everywhere removes that hierarchy.</p>
+
+      <h2>When a mega menu actually makes sense</h2>
+
+      <p><strong>Small to medium sites with a manageable taxonomy.</strong> If your entire site has 6 top-level categories and 30 subcategories, a well-structured mega menu that groups those subcategories under their parent category can improve both UX and crawlability. The link count is reasonable, the equity dilution is minimal, and the hierarchy is clear.</p>
+
+      <p><strong>Sites where the primary user journey depends on cross-category discovery.</strong> Some sites (department stores, marketplaces, travel aggregators) have user journeys that genuinely benefit from exposing the full breadth of the catalogue in navigation. If users regularly move between unrelated categories in a single session and analytics confirm this, a mega menu may serve a real navigational need.</p>
+
+      <p><strong>When the mega menu is selective, not exhaustive.</strong> The menu links to top-level categories and a curated set of high-value subcategories, not every possible destination. Link to top-performing pages; group links by topic; use the menu for navigation, not promotion.</p>
+
+      <h2>When it doesn't</h2>
+
+      <p><strong>Large e-commerce sites with deep taxonomies.</strong> If you have hundreds of subcategories and thousands of product types, a mega menu that tries to expose them all creates the full set of problems described above. The link count becomes unmanageable, the anchor text becomes uniform, and the site structure flattens.</p>
+
+      <p><strong>Sites where the menu content doesn't change per section.</strong> If a user browsing running shoes sees the same mega menu as a user browsing formal wear, including links to every unrelated category, the navigation is adding noise, not clarity. For users and for search engines.</p>
+
+      <p><strong>Sites relying on contextual internal linking for topical authority.</strong> If your SEO strategy depends on building topical clusters through in-content links, a mega menu undermines that strategy by drowning those contextual signals in navigational noise.</p>
+
+      <p><strong>Sites where the top 10 menu links account for 90%+ of navigation clicks.</strong> This is more common than most teams expect. If analytics show that the vast majority of navigation engagement happens on a handful of links, the remaining 90 links in the mega menu are there for nobody. Not users. Not Google. They're there because someone decided the nav should be "comprehensive", which is not a user need. It's an information architecture assumption that should be tested.</p>
+
+      <h2>The decision tree</h2>
+
+      <p>Before choosing a navigation pattern, answer these questions in order:</p>
+
+      <div class="decision-tree">
+        <h3>1. How many distinct destinations does the mega menu link to?</h3>
+        <p><strong>Under 40:</strong> unlikely to cause material issues. Proceed with standard best practices. Group by topic, use descriptive anchor text.</p>
+        <p><strong>40 to 100:</strong> the risk zone. Audit click-through rates on every menu link. If more than half get negligible clicks, you're paying an equity cost for no user value.</p>
+        <p><strong>Over 100:</strong> almost certainly causing dilution. The question becomes whether you can justify the cost, not whether the cost exists.</p>
+      </div>
+
+      <div class="decision-tree">
+        <h3>2. Does the menu content vary by section or page type?</h3>
+        <p><strong>If yes</strong>, the menu on the shoes section shows shoe subcategories, the menu on clothing shows clothing subcategories, you're contextualising the navigation. This significantly reduces the anchor text uniformity problem and keeps link equity distribution more relevant.</p>
+        <p><strong>If no</strong>, every page shows the same complete menu regardless of where the user is, every problem described in this post applies at full scale.</p>
+      </div>
+
+      <div class="decision-tree">
+        <h3>3. Are your highest-value pages receiving concentrated internal link equity from contextually relevant pages?</h3>
+        <p>Pull your internal link data. For your top 20 revenue-driving pages, what percentage of their inbound internal links come from the mega menu versus from in-content contextual links? If the mega menu dominates, those pages are receiving high volume but low-quality internal signals, many links, all with the same generic anchor text, from pages with no topical relationship.</p>
+      </div>
+
+      <div class="decision-tree">
+        <h3>4. Does your analytics data support the navigation's breadth?</h3>
+        <p>Check click-through rates on every mega menu link over a 90-day window. If more than half the links receive fewer than 0.5% of total navigation clicks, those links are serving nobody. Remove them from the menu and link to them contextually from relevant pages instead.</p>
+      </div>
+
+      <h2>What to do instead</h2>
+
+      <p><strong>Lean top-level navigation + hub pages.</strong> Your global nav links to 5–8 top-level categories. Each category has a well-structured hub page that links to its subcategories, filters, and key content. Users get to the same destinations in two clicks instead of one, and the link equity flows through a hierarchy that Google can interpret.</p>
+
+      <p><strong>Section-specific subnavigation.</strong> Instead of a global mega menu, each section of the site has its own contextual subnav. The shoes section shows shoe subcategories. The blog section shows topic clusters. The nav adapts to where the user is, which means the anchor text and link targets are relevant to the content around them.</p>
+
+      <p><strong>Contextual in-content linking.</strong> The most powerful internal links are placed in body content, with varied anchor text, in a context that makes the link editorially relevant. A link to "Women's Running Shoes" from a blog post about marathon training carries more topical signal than the same link in a mega menu on your returns policy page. Invest the effort you'd spend maintaining a mega menu into building a systematic contextual linking practice instead.</p>
+
+      <p><strong>HTML sitemaps as crawl infrastructure.</strong> For sites concerned about deep page discovery without a mega menu, a well-structured HTML sitemap provides Googlebot with a crawl path to every significant URL without placing those links on every page and diluting the equity of your contextual links. Every page in your XML sitemap should be reachable via at least one internal link, the HTML sitemap is how you guarantee that without polluting your navigation.</p>
+
+      <h2>Making the change</h2>
+
+      <p>If you're moving from a mega menu to a leaner navigation, the transition matters.</p>
+
+      <p>Don't remove 100 links from every page overnight without replacing the crawl paths. The destinations that were previously linked from every page need alternative internal link routes: hub pages, contextual links, HTML sitemaps. Without those routes, you're removing crawl signals without providing replacements, and indexation may suffer during the transition.</p>
+
+      <p>Audit first: identify which mega menu destinations have no other internal links. Those are the pages that will lose all internal link signals if the mega menu is removed. Prioritise building alternative link paths for those pages before making the navigation change.</p>
+
+      <p>Roll out gradually if possible. Reduce the mega menu to top-level categories first. Monitor crawl stats and indexation coverage for 4–6 weeks. Then refine further based on data.</p>
+
+      <div class="post-callout">
+        The goal is not to remove links. The goal is to replace undifferentiated, high-volume, low-context links with fewer, more intentional, contextually relevant ones. That's not removing signal. That's concentrating it.
+      </div>
+
+      <div class="faq-block">
+        <h2>Frequently asked questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-q">Does Google treat navigation links differently from in-content links?</div>
+          <div class="faq-a">Google has indicated it tries to understand the context and placement of links. The Reasonable Surfer patent provides the theoretical basis: links a user is more likely to click, based on position, prominence, and topical relevance, pass more value. Mueller has said Google tries to understand site structure the way a user would. Users understand that navigation is structural scaffolding, not editorial endorsement, and Google's systems are likely making a similar distinction. Navigation links still count, still pass equity, and still consume crawl budget, they're just not all worth the same.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Is it safe to load mega menu links via JavaScript so Googlebot doesn't see them?</div>
+          <div class="faq-a">Links loaded only via user interaction, like hover-triggered AJAX, may not be discovered by Googlebot's initial crawl. Some sites use this deliberately to reduce the SEO footprint of a mega menu while keeping it available for users, and there are legitimate reasons to do so. A mega menu can genuinely improve user experience by giving visitors quick access to deep sections without extra page loads. The risk is maintaining two different experiences and the crawl gap if anything goes wrong. If those destinations matter, make sure they're still reachable by Googlebot through other internal link paths, hub pages, category pages, contextual links, HTML sitemaps. The goal isn't to hide pages from Google. It's to ensure the crawl and equity signals come from the right places.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What about using nofollow on mega menu links?</div>
+          <div class="faq-a">This was a common recommendation a decade ago. The idea: prevent link equity from flowing through low-value navigation links. Google has since clarified that nofollowed links still consume equity from the source page, the equity just evaporates rather than passing to the destination. You don't save equity by nofollowing mega menu links; you waste it. The solution is fewer links, not nofollowed links.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Our UX team insists the mega menu is essential for user experience. How do I make the SEO case?</div>
+          <div class="faq-a">With data. Pull click-through rates on every mega menu item. In most cases, a small number of links account for the vast majority of clicks, and the long tail of menu items is functionally invisible to users. Present that data alongside the equity dilution argument: the mega menu isn't just an SEO cost, it's not even serving the users it's supposedly designed for. A leaner menu that surfaces the links people actually click, combined with good on-page navigation and search, typically outperforms a mega menu on both SEO and UX metrics.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">We have 500 subcategories. How do we make them all accessible without a mega menu?</div>
+          <div class="faq-a">Through hierarchy. Your global nav links to 8 top-level categories. Each category page links to its 20–30 subcategories. Each subcategory page links to its products or content. That's a three-level pyramid. Every subcategory is two clicks from the homepage, link equity flows through a clear hierarchy, and each link carries contextual anchor text relevant to the section it's in. Add a well-structured HTML sitemap for crawl coverage, and every page is discoverable without a single mega menu link.</div>
+        </div>
+      </div>
+
+      <div class="sources">
+        <h2>Sources and further reading</h2>
+        <ul>
+          <li><strong>Google's Reasonable Surfer patent</strong>, <em>Ranking documents based on user behavior and/or feature data</em> (US9305099). Originally filed 2004, granted 2016. The patent that replaced the random surfer model with a probability-based model for link value distribution. <a href="https://patents.google.com/patent/US9305099" target="_blank" rel="noopener">patents.google.com</a></li>
+          <li><strong>Bill Slawski, SEO by the Sea</strong>, <a href="https://www.seobythesea.com/2010/05/googles-reasonable-surfer-how-the-value-of-a-link-may-differ-based-upon-link-and-document-features-and-user-data/" target="_blank" rel="noopener">Google's Reasonable Surfer: How the Value of a Link May Differ</a> (2010) and <a href="https://www.seobythesea.com/2016/04/googles-reasonable-surfer-patent-updated/" target="_blank" rel="noopener">Reasonable Surfer Patent Updated</a> (2016). The most thorough analysis of Google's link valuation patents available.</li>
+          <li><strong>John Mueller, Google</strong>, <a href="https://www.seroundtable.com/google-pyramid-navigation-structures-31020.html" target="_blank" rel="noopener">Google recommends pyramid navigation structures</a> (Search Engine Roundtable, 2021). Mueller's recommendation for pyramid site structures, including discussion of a site with 1,000+ static mega menu links.</li>
+          <li><strong>John Mueller, Google</strong>, <a href="https://www.seroundtable.com/google-multiple-anchors-same-page-31541.html" target="_blank" rel="noopener">Multiple anchor texts to the same URL</a> (Search Engine Roundtable, 2021). How Google handles multiple links to the same destination.</li>
+          <li><strong>Cyrus Shepard, Zyppy</strong>, <a href="https://zyppy.com/seo/selective-link-priority/" target="_blank" rel="noopener">How Google's Selective Link Priority Impacts SEO</a> (2023, updated 2025). Testing-based research on how Google selects anchor text when multiple links point to the same URL from a single page.</li>
+          <li><strong>Google Search Central</strong>, <a href="https://developers.google.com/search/docs/crawling-indexing/links-crawlable" target="_blank" rel="noopener">SEO Link Best Practices</a> and <a href="https://developers.google.com/search/docs/specialty/ecommerce/help-google-understand-your-ecommerce-site-structure" target="_blank" rel="noopener">Ecommerce Website Navigation Structure</a>.</li>
+          <li><strong>Related on this site</strong>, <a href="/notes/crawl-budget-enterprise/">Enterprise Crawl Budget: How to Manage It at Scale</a>. How mega menu link volume compounds the crawl budget problem on large sites.</li>
+        </ul>
+      </div>
+
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+
+      <a href="/notes/" class="post-back">← Back to Notes</a>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 MagsTags</span>
+</footer>
+</body>
+</html>
