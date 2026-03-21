@@ -249,22 +249,22 @@ function setMode(btn, mode) {
 // ─── Load image → returns {ok, w, h, url} ────────────────────────────────────
 function loadImage(url) {
   return new Promise(function(resolve) {
-    var img = new Image();
+    var img = document.createElement('img');
+    img.style.display = 'none';
+    document.body.appendChild(img);
     var done = false;
-    var timer = setTimeout(function() {
-      if (!done) { done = true; resolve({ ok: false, w: 0, h: 0, url: url }); }
-    }, 8000);
-    img.onload = function() {
-      if (!done) {
-        done = true; clearTimeout(timer);
-        resolve({ ok: true, w: img.naturalWidth, h: img.naturalHeight, url: url });
-      }
-    };
-    img.onerror = function() {
-      if (!done) { done = true; clearTimeout(timer); resolve({ ok: false, w: 0, h: 0, url: url }); }
-    };
-    // Cache-bust to avoid stale cached 404s
-    img.src = url + (url.includes('?') ? '&' : '?') + '_fv=' + Date.now();
+    function finish(ok) {
+      if (done) return;
+      done = true;
+      var w = ok ? (img.naturalWidth || 0) : 0;
+      var h = ok ? (img.naturalHeight || 0) : 0;
+      try { document.body.removeChild(img); } catch(e) {}
+      resolve({ ok: ok && w > 0, w: w, h: h, url: url });
+    }
+    img.onload = function() { finish(true); };
+    img.onerror = function() { finish(false); };
+    setTimeout(function() { finish(false); }, 8000);
+    img.src = url;
   });
 }
 
