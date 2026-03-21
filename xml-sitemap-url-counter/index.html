@@ -683,35 +683,46 @@
       });
     });
 
-    /* Directory breakdown (above per-sitemap) */
-    if (uniqueUrls.length > 0) {
-      var dirs = getDirectoryBreakdown(uniqueUrls);
-      var maxDir = dirs.length > 0 ? dirs[0].count : 1;
-      html += '<div class="section-title">URLs by top-level directory</div>';
-      html += '<table class="breakdown-table"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
-      dirs.forEach(function(d) {
-        var pct = uniqueCount > 0 ? (d.count / uniqueCount * 100) : 0;
-        var barPct = maxDir > 0 ? Math.round(d.count / maxDir * 100) : 0;
-        html += '<tr><td class="url-cell">' + esc(d.dir) + '</td>';
-        html += '<td class="count-cell">' + d.count.toLocaleString() + '</td>';
-        html += '<td class="count-cell" style="color:var(--text-3);font-weight:400">' + pct.toFixed(1) + '%</td>';
-        html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
-      });
-      html += '</tbody></table>';
-    }
+    /* Tabbed breakdown: Directory / Per-sitemap */
+    var hasDir = uniqueUrls.length > 0;
+    var hasSitemaps = urlsets.length > 1;
 
-    /* Per-sitemap breakdown (only for sitemap indexes with multiple urlsets) */
-    if (urlsets.length > 1) {
-      html += '<div class="section-title">Per-sitemap breakdown</div>';
-      html += '<table class="breakdown-table"><thead><tr><th>Sitemap</th><th style="text-align:right">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
-      var maxCount = Math.max.apply(null, urlsets.map(function(s) { return s.urls.length; }));
-      urlsets.forEach(function(s) {
-        var barPct = maxCount > 0 ? Math.round(s.urls.length / maxCount * 100) : 0;
-        html += '<tr><td class="url-cell">' + esc(shortName(s.name)) + '</td>';
-        html += '<td class="count-cell">' + s.urls.length.toLocaleString() + '</td>';
-        html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
-      });
-      html += '</tbody></table>';
+    if (hasDir || hasSitemaps) {
+      html += '<div class="mode-tabs" style="margin-top:16px">';
+      if (hasDir) html += '<button class="mode-tab active" onclick="switchResultTab(\'dir\',this)">By directory</button>';
+      if (hasSitemaps) html += '<button class="mode-tab' + (hasDir ? '' : ' active') + '" onclick="switchResultTab(\'sitemap\',this)">Per sitemap</button>';
+      html += '</div>';
+
+      /* Directory tab */
+      if (hasDir) {
+        var dirs = getDirectoryBreakdown(uniqueUrls);
+        var maxDir = dirs.length > 0 ? dirs[0].count : 1;
+        html += '<div id="tab-dir" class="result-tab-panel">';
+        html += '<table class="breakdown-table"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
+        dirs.forEach(function(d) {
+          var pct = uniqueCount > 0 ? (d.count / uniqueCount * 100) : 0;
+          var barPct = maxDir > 0 ? Math.round(d.count / maxDir * 100) : 0;
+          html += '<tr><td class="url-cell">' + esc(d.dir) + '</td>';
+          html += '<td class="count-cell">' + d.count.toLocaleString() + '</td>';
+          html += '<td class="count-cell" style="color:var(--text-3);font-weight:400">' + pct.toFixed(1) + '%</td>';
+          html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
+        });
+        html += '</tbody></table></div>';
+      }
+
+      /* Per-sitemap tab */
+      if (hasSitemaps) {
+        html += '<div id="tab-sitemap" class="result-tab-panel"' + (hasDir ? ' style="display:none"' : '') + '>';
+        html += '<table class="breakdown-table"><thead><tr><th>Sitemap</th><th style="text-align:right">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
+        var maxCount = Math.max.apply(null, urlsets.map(function(s) { return s.urls.length; }));
+        urlsets.forEach(function(s) {
+          var barPct = maxCount > 0 ? Math.round(s.urls.length / maxCount * 100) : 0;
+          html += '<tr><td class="url-cell">' + esc(shortName(s.name)) + '</td>';
+          html += '<td class="count-cell">' + s.urls.length.toLocaleString() + '</td>';
+          html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
+        });
+        html += '</tbody></table></div>';
+      }
     }
 
     /* Lastmod stats */
@@ -792,6 +803,16 @@
   };
 
   /* ── Clear ── */
+  window.switchResultTab = function(tab, btn) {
+    var panels = document.querySelectorAll('.result-tab-panel');
+    for (var i = 0; i < panels.length; i++) panels[i].style.display = 'none';
+    var target = document.getElementById('tab-' + tab);
+    if (target) target.style.display = 'block';
+    var tabs = btn.parentNode.querySelectorAll('.mode-tab');
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+    btn.classList.add('active');
+  };
+
   window.clearAll = function() {
     allResults = [];
     document.getElementById('xml-input').value = '';
