@@ -29,10 +29,16 @@
   status = 301
   force  = true
 
-# Redirect old blog URL
+# Redirect old hreflang URL (both /blog/ and /notes/ paths)
 [[redirects]]
   from   = "/blog/hreflang-2025/"
-  to     = "/blog/hreflang-mistakes/"
+  to     = "/notes/hreflang-mistakes/"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/hreflang-2025/"
+  to     = "/notes/hreflang-mistakes/"
   status = 301
   force  = true
 

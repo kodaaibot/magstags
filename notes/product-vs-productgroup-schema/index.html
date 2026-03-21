@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/product-vs-productgroup-schema/">
+  <meta name="description" content="Product and ProductGroup are not interchangeable schema types. One describes a thing you sell; the other groups its variations. Here's when to use each and what breaks when you confuse them.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <title>Product vs ProductGroup Schema: When to Use Which | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #f0eeec;
+      --bg2:        #F5EDE7;
+      --surface:    #FFFBF9;
+      --border:     rgba(0,0,0,.08);
+      --teal:       #0E7490;
+      --mint-light: #E0F2FE;
+      --text-1:     #111009;
+      --text-2:     #26221f;
+      --text-3:     #504c49;
+      --text-4:     #857f7a;
+    }
+    html.dark {
+      --bg:         #0f0e0d;
+      --bg2:        #1a1917;
+      --surface:    #161513;
+      --border:     rgba(255,255,255,.08);
+      --teal:       #22D3EE;
+      --mint-light: #164e63;
+      --text-1:     #f5f2ee;
+      --text-2:     #c8c4be;
+      --text-3:     #857f79;
+      --text-4:     #4a4743;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
+    #blog-content{display:block}
+    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:17px;line-height:1.7;color:var(--text-3);margin-bottom:36px;font-style:italic;border-left:3px solid var(--border);padding-left:18px}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;background:var(--mint-light);color:var(--teal);padding:2px 6px;border-radius:4px;word-break:break-all}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--text-1)}
+
+    /* Tables */
+    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px 0}
+    .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
+    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table code{font-size:12.5px}
+    .post-table .col-label{font-weight:600;color:var(--text-1);white-space:nowrap}
+
+    /* Diagrams */
+    .post-diagram{margin:32px 0;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 16px 16px}
+    .post-diagram svg{max-width:100%;height:auto}
+    .post-diagram-caption{font-size:13px;color:var(--text-4);margin-top:10px;font-style:italic}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+    main{max-width:1320px;margin:0 auto;padding:40px 36px 100px}
+  </style>
+  <meta property="og:title" content="Product vs ProductGroup Schema: When to Use Which | MagsTags">
+  <meta property="og:description" content="Product and ProductGroup are not interchangeable schema types. One describes a thing you sell; the other groups its variations. Here's when to use each and what breaks when you confuse them.">
+  <meta property="og:url" content="https://www.magstags.com/notes/product-vs-productgroup-schema/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Product vs ProductGroup Schema: When to Use Which | MagsTags">
+  <meta name="twitter:description" content="Product and ProductGroup are not interchangeable schema types. One describes a thing you sell; the other groups its variations. Here's when to use each.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Product vs ProductGroup Schema: When to Use Which",
+    "description": "Product and ProductGroup are not interchangeable schema types. One describes a thing you sell; the other groups its variations. Here's when to use each and what breaks when you confuse them.",
+    "url": "https://www.magstags.com/notes/product-vs-productgroup-schema/",
+    "datePublished": "2026-03-21",
+    "dateModified": "2026-03-21",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com/"
+    },
+    "image": "https://www.magstags.com/og-image.png",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.magstags.com/notes/product-vs-productgroup-schema/"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need ProductGroup schema for a product with no variants?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. ProductGroup exists to group variations of the same product — different colours, sizes, or materials. If a product has no selectable variants, use Product markup alone. Wrapping a single-SKU product in ProductGroup adds complexity without triggering any additional Google features."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does ProductGroup replace Product schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. ProductGroup wraps Product — it does not replace it. Each variant inside a ProductGroup is still a full Product object with its own SKU, GTIN, price, image, and availability. ProductGroup provides the parent container; Product provides the purchasable items."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between hasVariant and isVariantOf in ProductGroup schema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "hasVariant is used in nested structures where the ProductGroup contains variant Product objects directly. isVariantOf is used in flat structures where each variant Product is a separate JSON-LD object that links back to the ProductGroup via a shared @id. Both are valid — hasVariant is more common for single-page implementations, isVariantOf is typical for multi-page setups where each variant has its own URL."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Product vs ProductGroup Schema</span>
+    </nav>
+
+    <span class="post-category">Structured Data</span>
+    <h1 class="post-h1">Product vs ProductGroup Schema: When to Use Which</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>21 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>10 min read</span>
+    </div>
+
+    <div class="post-body">
+
+      <p class="post-lead">For everyone who's wrapped a single-SKU candle in ProductGroup and wondered why nothing happened.</p>
+
+      <p>Product and ProductGroup are not interchangeable. One describes a thing you sell. The other groups variations of that thing. The distinction matters because Google uses them at different stages, for different features, and getting the choice wrong doesn't produce an error — it produces silence.</p>
+
+      <p>I see this confusion constantly when auditing e-commerce structured data. A site has a product page for a running shoe that comes in six colours and four sizes. The developer marks it up as a single <code>Product</code> with one offer. Technically valid. Passes the Rich Results Test. But Google has no idea those six colours exist, which means no colour swatches in Shopping, no variant-level pricing, and no way for Google to match the right variant to the right query.</p>
+
+      <p>Alternatively, someone reads about <code>ProductGroup</code> and wraps every product on the site in it — even products with no variants at all. Also technically valid. Also a waste of complexity that Google doesn't reward.</p>
+
+      <p>The answer is simpler than the confusion suggests, and it comes down to one question: does this product have variants that a shopper would choose between?</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Product</th>
+              <th>ProductGroup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">What it is</td>
+              <td>A single, purchasable item — one SKU, one price</td>
+              <td>A parent container grouping variations of the same item</td>
+            </tr>
+            <tr>
+              <td class="col-label">When to use</td>
+              <td>Every product page, always</td>
+              <td>Only when the product has selectable variants (colour, size, material)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Carries an Offer?</td>
+              <td>Yes — price, currency, availability</td>
+              <td>No — each variant Product inside it carries the Offer</td>
+            </tr>
+            <tr>
+              <td class="col-label">Key properties</td>
+              <td><code>sku</code>, <code>gtin</code>, <code>offers</code>, <code>image</code></td>
+              <td><code>variesBy</code>, <code>hasVariant</code>, <code>productGroupID</code></td>
+            </tr>
+            <tr>
+              <td class="col-label">Google features</td>
+              <td>Star ratings, price in SERPs, Shopping listing</td>
+              <td>Colour swatches, variant-level pricing, unified product identity</td>
+            </tr>
+            <tr>
+              <td class="col-label">Can stand alone?</td>
+              <td>Yes</td>
+              <td>No — always contains Product entities</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Product: the thing itself</h2>
+
+      <p><code>Product</code> is the base type. It describes a single, purchasable item. One SKU, one price, one set of attributes. If someone can add it to their cart and check out, that's a <code>Product</code>.</p>
+
+      <p>Every product page on an e-commerce site needs <code>Product</code> markup. There is no scenario where <code>ProductGroup</code> replaces it. Even when you use <code>ProductGroup</code>, the individual variants inside it are still typed as <code>Product</code>.</p>
+
+      <div class="post-diagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 190" style="max-width:540px">
+          <style>
+            .wr-outer{fill:none;stroke:var(--teal,#0E7490);stroke-width:2;stroke-dasharray:6 3;rx:10}
+            .wr-inner{fill:var(--surface,#FFFBF9);stroke:var(--text-1,#111);stroke-width:1.5;rx:6}
+            .wr-offer{fill:var(--bg2,#F5EDE7);stroke:var(--text-1,#111);stroke-width:1;rx:4;stroke-dasharray:4 2}
+            .wr-text{font-family:'Space Grotesk',system-ui,sans-serif;font-size:12px;fill:var(--text-1,#111);text-anchor:middle}
+            .wr-text-sm{font-family:'Inter',system-ui,sans-serif;font-size:10px;fill:var(--text-4,#857f7a);text-anchor:middle}
+            .wr-label{font-family:'Space Grotesk',system-ui,sans-serif;font-size:11px;fill:var(--teal,#0E7490);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+          </style>
+          <!-- ProductGroup wrapper -->
+          <rect x="10" y="10" width="560" height="170" class="wr-outer"/>
+          <text x="30" y="30" class="wr-label">ProductGroup</text>
+          <text x="290" y="30" class="wr-text-sm">productGroupID: "TR-PRO-2026"   ·   variesBy: schema.org/color</text>
+          <!-- Variant 1 -->
+          <rect x="30" y="44" width="160" height="120" class="wr-inner"/>
+          <text x="110" y="65" class="wr-text">Product</text>
+          <text x="110" y="80" class="wr-text-sm">SKU: TR-PRO-GRN</text>
+          <text x="110" y="93" class="wr-text-sm">color: Forest Green</text>
+          <rect x="45" y="102" width="130" height="28" class="wr-offer"/>
+          <text x="110" y="121" class="wr-text-sm">Offer · £129 · InStock</text>
+          <text x="110" y="150" class="wr-text-sm">gtin13: 5901234123457</text>
+          <!-- Variant 2 -->
+          <rect x="210" y="44" width="160" height="120" class="wr-inner"/>
+          <text x="290" y="65" class="wr-text">Product</text>
+          <text x="290" y="80" class="wr-text-sm">SKU: TR-PRO-BLU</text>
+          <text x="290" y="93" class="wr-text-sm">color: Slate Blue</text>
+          <rect x="225" y="102" width="130" height="28" class="wr-offer"/>
+          <text x="290" y="121" class="wr-text-sm">Offer · £129 · InStock</text>
+          <text x="290" y="150" class="wr-text-sm">gtin13: 5901234123464</text>
+          <!-- Variant 3 (placeholder) -->
+          <rect x="390" y="44" width="160" height="120" class="wr-inner" style="stroke-dasharray:4 3;opacity:.45"/>
+          <text x="470" y="85" class="wr-text" style="opacity:.5">Product</text>
+          <text x="470" y="102" class="wr-text-sm" style="opacity:.5">…more variants</text>
+        </svg>
+        <p class="post-diagram-caption">ProductGroup wraps Product — it does not replace it</p>
+      </div>
+
+      <p>What <code>Product</code> markup unlocks depends on which properties you include. Google distinguishes between two experiences here, and the distinction is important because they serve different page types:</p>
+
+      <p><strong>Product Snippet</strong> — available to any page that describes a product: reviews, editorial, aggregators, and merchant pages. The focus is on ratings, reviews, and basic pricing. This is what gives you star ratings and price ranges in organic search results.</p>
+
+      <p><strong>Merchant Listing</strong> — only available on pages where a customer can actually buy the product. The focus shifts to offer details: price, availability, shipping, returns. This is what gets you into Google Shopping surfaces, Popular Products, and price drop badges.</p>
+
+      <p>A merchant product page can qualify for both. Adding the required Merchant Listing properties (price, availability, a valid <code>Offer</code>) also makes the page eligible for Product Snippets. There's no conflict between them; Merchant Listing is a superset.</p>
+
+      <p>If you're not ready to implement full variant markup yet, <code>AggregateOffer</code> is a simpler fallback: a single <code>Product</code> with <code>lowPrice</code> and <code>highPrice</code> to indicate a price range. You won't get Shopping swatches, but Google can at least show the range in search results. It's a pragmatic interim step — particularly for comparison pages or if your CMS can't expose individual variant data to the template.</p>
+
+      <div class="post-callout">
+        <strong>The practical rule:</strong> if you sell the product on that page, mark it up as a <a href="/merchant-listing-schema/">Merchant Listing</a>. If you're reviewing or comparing products you don't sell, use <a href="/product-snippet-schema/">Product Snippet</a>. The <a href="/ecommerce-schema-generator/">schema generator</a> has separate tabs for each.
+      </div>
+
+      <h2>ProductGroup: the parent of variants</h2>
+
+      <p><code>ProductGroup</code> exists for one purpose: to tell Google that multiple <code>Product</code> entities are variations of the same parent item. A T-shirt in five colours. A laptop in three storage configurations. A sofa in two fabrics. (The full implementation guide is on the <a href="/product-variants-schema/">Product Variants schema page</a>.)</p>
+
+      <p>Without <code>ProductGroup</code>, Google sees each variant as a separate, unrelated product. It has no way to associate the blue version with the red version, or to know that both cost the same and share the same reviews. With <code>ProductGroup</code>, Google can present those variants together — colour swatches in Shopping, variant-specific pricing, and a unified product identity across its knowledge graph.</p>
+
+      <p><code>ProductGroup</code> takes three key properties that <code>Product</code> doesn't have:</p>
+
+      <ul>
+        <li><code>variesBy</code> — what dimension(s) the variants differ on. Google supports specific schema.org URIs: <code>https://schema.org/color</code>, <code>https://schema.org/size</code>, <code>https://schema.org/material</code>, <code>https://schema.org/pattern</code>, <code>https://schema.org/suggestedAge</code>, and <code>https://schema.org/suggestedGender</code>. These must be full URIs, not plain text.</li>
+        <li><code>hasVariant</code> — the individual <code>Product</code> entities that belong to this group.</li>
+        <li><code>productGroupID</code> — a shared identifier across all variants, typically the parent SKU or style code.</li>
+      </ul>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>variesBy URI</th>
+              <th>Variant property</th>
+              <th>Example value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>https://schema.org/color</code></td>
+              <td><code>color</code></td>
+              <td>Forest Green</td>
+            </tr>
+            <tr>
+              <td><code>https://schema.org/size</code></td>
+              <td><code>size</code></td>
+              <td>42 EU</td>
+            </tr>
+            <tr>
+              <td><code>https://schema.org/material</code></td>
+              <td><code>material</code></td>
+              <td>Organic Cotton</td>
+            </tr>
+            <tr>
+              <td><code>https://schema.org/pattern</code></td>
+              <td><code>pattern</code></td>
+              <td>Striped</td>
+            </tr>
+            <tr>
+              <td><code>https://schema.org/suggestedAge</code></td>
+              <td><code>suggestedAge</code></td>
+              <td>3–5 years</td>
+            </tr>
+            <tr>
+              <td><code>https://schema.org/suggestedGender</code></td>
+              <td><code>suggestedGender</code></td>
+              <td>female</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The variants themselves are still full <code>Product</code> objects with their own SKU, GTIN, price, image, colour, size, and availability. <code>ProductGroup</code> doesn't replace any of that — it wraps it.</p>
+
+      <p>A note on GTINs: schema.org supports <code>gtin</code> as a generic property, plus specific lengths — <code>gtin8</code>, <code>gtin12</code> (UPC), <code>gtin13</code> (EAN), and <code>gtin14</code>. Google recommends using the most specific one that matches your barcode. If your products have EAN codes, use <code>gtin13</code>. If they have UPCs, use <code>gtin12</code>. The examples below use <code>gtin13</code>, but substitute whichever applies. This is how Google matches your structured data to your Merchant Center feed — if the GTIN in your schema doesn't match the GTIN in your feed, Google treats them as different products.</p>
+
+      <p>One practical benefit: properties that apply to the entire group — <code>brand</code>, <code>aggregateRating</code>, <code>hasMerchantReturnPolicy</code>, <code>shippingDetails</code> via <code>OfferShippingDetails</code> — can sit on the <code>ProductGroup</code> rather than being duplicated across every variant. This is especially useful for <a href="/merchant-listing-schema/">Merchant Listing</a> implementations where shipping and returns are recommended properties.</p>
+
+      <h2>The decision tree</h2>
+
+      <p>This is how I approach it in practice:</p>
+
+      <p><strong>Does the product come in variants a shopper selects (colour, size, material)?</strong> Use <code>ProductGroup</code> with <code>Product</code> entities inside it via <code>hasVariant</code>. Each variant needs its own <code>Offer</code>, its own image, and its own identifying properties.</p>
+
+      <p><strong>Is the product a single SKU with no meaningful variations?</strong> Use <code>Product</code> alone. Don't wrap it in a <code>ProductGroup</code>. There's nothing to group.</p>
+
+      <p><strong>Does the product have options that don't constitute real variants?</strong> This is where it gets judgmental. Gift wrapping, extended warranty, personalised engraving — these are add-ons, not variants. They don't change the core product. Don't model them as <code>ProductGroup</code> variants. Keep them as a single <code>Product</code> with one <code>Offer</code>.</p>
+
+      <p><strong>Are you a reviewer, aggregator, or editorial site?</strong> Use <code>Product</code> with Product Snippet properties. <code>ProductGroup</code> and Merchant Listing don't apply to you.</p>
+
+      <div class="post-diagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" style="max-width:620px">
+          <style>
+            .dt-box{fill:var(--surface,#FFFBF9);stroke:var(--text-1,#111);stroke-width:1.5}
+            .dt-result{fill:var(--text-1,#111);rx:6}
+            .dt-text{font-family:'Space Grotesk',system-ui,sans-serif;font-size:13px;fill:var(--text-1,#111);text-anchor:middle}
+            .dt-result-text{font-family:'Space Grotesk',system-ui,sans-serif;font-size:12px;fill:var(--surface,#FFFBF9);text-anchor:middle;font-weight:600}
+            .dt-line{stroke:var(--text-1,#111);stroke-width:1.5;fill:none}
+            .dt-label{font-family:'Inter',system-ui,sans-serif;font-size:11px;fill:var(--teal,#0E7490);font-weight:600}
+          </style>
+          <!-- Q1: Sell the product? -->
+          <rect x="210" y="10" width="260" height="48" rx="6" class="dt-box"/>
+          <text x="340" y="30" class="dt-text">Do you sell this product</text>
+          <text x="340" y="44" class="dt-text">on this page?</text>
+          <!-- Lines from Q1 -->
+          <line x1="260" y1="58" x2="140" y2="100" class="dt-line"/>
+          <text x="185" y="74" class="dt-label">No</text>
+          <line x1="420" y1="58" x2="540" y2="100" class="dt-line"/>
+          <text x="490" y="74" class="dt-label">Yes</text>
+          <!-- Result: Product Snippet -->
+          <rect x="50" y="100" width="180" height="40" class="dt-result"/>
+          <text x="140" y="125" class="dt-result-text">Product (Snippet)</text>
+          <!-- Q2: Has variants? -->
+          <rect x="430" y="100" width="220" height="48" rx="6" class="dt-box"/>
+          <text x="540" y="120" class="dt-text">Does it come in variants</text>
+          <text x="540" y="134" class="dt-text">a shopper selects?</text>
+          <!-- Lines from Q2 -->
+          <line x1="480" y1="148" x2="360" y2="200" class="dt-line"/>
+          <text x="405" y="170" class="dt-label">No</text>
+          <line x1="600" y1="148" x2="600" y2="200" class="dt-line"/>
+          <text x="614" y="178" class="dt-label">Yes</text>
+          <!-- Result: Product (Merchant Listing) -->
+          <rect x="240" y="200" width="240" height="40" class="dt-result"/>
+          <text x="360" y="225" class="dt-result-text">Product (Merchant Listing)</text>
+          <!-- Q3: Single or multi page? -->
+          <rect x="490" y="200" width="180" height="48" rx="6" class="dt-box"/>
+          <text x="580" y="220" class="dt-text">All variants on</text>
+          <text x="580" y="234" class="dt-text">one URL?</text>
+          <!-- Lines from Q3 -->
+          <line x1="535" y1="248" x2="340" y2="310" class="dt-line"/>
+          <text x="422" y="278" class="dt-label">No</text>
+          <line x1="625" y1="248" x2="540" y2="310" class="dt-line"/>
+          <text x="598" y="278" class="dt-label">Yes</text>
+          <!-- Result: multi-page isVariantOf -->
+          <rect x="140" y="310" width="280" height="52" class="dt-result"/>
+          <text x="280" y="332" class="dt-result-text">ProductGroup + Product</text>
+          <text x="280" y="348" class="dt-result-text" style="font-weight:400;font-size:11px">isVariantOf (flat, per page)</text>
+          <!-- Result: single-page hasVariant -->
+          <rect x="440" y="310" width="230" height="52" class="dt-result"/>
+          <text x="555" y="332" class="dt-result-text">ProductGroup + Product</text>
+          <text x="555" y="348" class="dt-result-text" style="font-weight:400;font-size:11px">hasVariant (nested, one page)</text>
+        </svg>
+        <p class="post-diagram-caption">Decision tree: which markup pattern to use</p>
+      </div>
+
+      <h2>Single page vs multi-page variants</h2>
+
+      <p>This is where implementations start to diverge and where I see the most mistakes.</p>
+
+      <div class="post-diagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" style="max-width:640px">
+          <style>
+            .arch-box{fill:var(--surface,#FFFBF9);stroke:var(--text-1,#111);stroke-width:1.5;rx:6}
+            .arch-group{fill:none;stroke:var(--teal,#0E7490);stroke-width:2;stroke-dasharray:6 3;rx:8}
+            .arch-text{font-family:'Space Grotesk',system-ui,sans-serif;font-size:12px;fill:var(--text-1,#111);text-anchor:middle}
+            .arch-text-sm{font-family:'Inter',system-ui,sans-serif;font-size:10px;fill:var(--text-4,#857f7a);text-anchor:middle}
+            .arch-label{font-family:'Space Grotesk',system-ui,sans-serif;font-size:11px;fill:var(--teal,#0E7490);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+            .arch-arrow{stroke:var(--text-1,#111);stroke-width:1.5;fill:none;marker-end:url(#arrowhead)}
+            .arch-heading{font-family:'Space Grotesk',system-ui,sans-serif;font-size:14px;fill:var(--text-1,#111);font-weight:700;text-anchor:middle}
+          </style>
+          <defs>
+            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="var(--text-1,#111)"/>
+            </marker>
+          </defs>
+
+          <!-- LEFT: Single-page -->
+          <text x="170" y="20" class="arch-heading">Single-page (hasVariant)</text>
+          <rect x="30" y="35" width="280" height="250" class="arch-group"/>
+          <text x="60" y="52" class="arch-label">ProductGroup</text>
+          <text x="170" y="70" class="arch-text-sm">/shoes/trail-runner/</text>
+          <rect x="55" y="84" width="100" height="60" class="arch-box"/>
+          <text x="105" y="108" class="arch-text">Product</text>
+          <text x="105" y="122" class="arch-text-sm">Green</text>
+          <rect x="185" y="84" width="100" height="60" class="arch-box"/>
+          <text x="235" y="108" class="arch-text">Product</text>
+          <text x="235" y="122" class="arch-text-sm">Blue</text>
+          <text x="170" y="172" class="arch-text-sm">hasVariant ↑</text>
+          <!-- Offer boxes -->
+          <rect x="55" y="190" width="100" height="36" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="105" y="212" class="arch-text-sm">Offer £129</text>
+          <rect x="185" y="190" width="100" height="36" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="235" y="212" class="arch-text-sm">Offer £129</text>
+          <line x1="105" y1="144" x2="105" y2="190" class="arch-arrow"/>
+          <line x1="235" y1="144" x2="235" y2="190" class="arch-arrow"/>
+          <text x="170" y="260" class="arch-text-sm">One JSON-LD block, one page</text>
+
+          <!-- RIGHT: Multi-page -->
+          <text x="510" y="20" class="arch-heading">Multi-page (isVariantOf)</text>
+          <!-- Page 1 -->
+          <rect x="390" y="35" width="110" height="120" class="arch-box"/>
+          <text x="445" y="55" class="arch-text">Product</text>
+          <text x="445" y="69" class="arch-text-sm">Green</text>
+          <text x="445" y="90" class="arch-text-sm" style="font-size:9px">/trail-runner-green/</text>
+          <rect x="405" y="100" width="80" height="28" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="445" y="119" class="arch-text-sm">Offer £129</text>
+          <!-- Page 2 -->
+          <rect x="530" y="35" width="110" height="120" class="arch-box"/>
+          <text x="585" y="55" class="arch-text">Product</text>
+          <text x="585" y="69" class="arch-text-sm">Blue</text>
+          <text x="585" y="90" class="arch-text-sm" style="font-size:9px">/trail-runner-blue/</text>
+          <rect x="545" y="100" width="80" height="28" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="585" y="119" class="arch-text-sm">Offer £129</text>
+          <!-- Shared ProductGroup reference -->
+          <rect x="420" y="210" width="200" height="50" class="arch-group"/>
+          <text x="440" y="228" class="arch-label">ProductGroup</text>
+          <text x="520" y="246" class="arch-text-sm">@id: …/trail-runner/#group</text>
+          <!-- isVariantOf arrows -->
+          <line x1="445" y1="155" x2="480" y2="210" class="arch-arrow"/>
+          <line x1="585" y1="155" x2="560" y2="210" class="arch-arrow"/>
+          <text x="440" y="185" class="arch-text-sm">isVariantOf</text>
+          <text x="590" y="185" class="arch-text-sm">isVariantOf</text>
+          <text x="520" y="285" class="arch-text-sm">Separate JSON-LD per page, linked by @id</text>
+        </svg>
+        <p class="post-diagram-caption">Two implementation patterns for variant markup</p>
+      </div>
+
+      <h3>Single-page (all variants on one URL)</h3>
+
+      <p>The most common e-commerce pattern. A product page at <code>/shoes/trail-runner/</code> with a colour dropdown. The URL doesn't change when you select a different colour, or it appends a parameter like <code>?color=blue</code>.</p>
+
+      <p>For this setup, the <code>ProductGroup</code> and all its variant <code>Product</code> objects live in the same JSON-LD block on the same page. The canonical URL should be the base URL without variant parameters — that's the URL that represents the ProductGroup as a whole.</p>
+
+      <pre>{
+  "@context": "https://schema.org/",
+  "@type": "ProductGroup",
+  "name": "Trail Runner Pro",
+  "productGroupID": "TR-PRO-2026",
+  "variesBy": ["https://schema.org/color"],
+  "hasVariant": [
+    {
+      "@type": "Product",
+      "name": "Trail Runner Pro — Forest Green",
+      "color": "Forest Green",
+      "sku": "TR-PRO-GRN",
+      "gtin13": "5901234123457",
+      "image": "https://example.com/img/tr-pro-green.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": 129.00,
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Trail Runner Pro — Slate Blue",
+      "color": "Slate Blue",
+      "sku": "TR-PRO-BLU",
+      "gtin13": "5901234123464",
+      "image": "https://example.com/img/tr-pro-blue.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": 129.00,
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  ]
+}</pre>
+
+      <h3>Multi-page (each variant has its own URL)</h3>
+
+      <p>Less common, but you see it on sites where each colour or configuration has a dedicated page: <code>/shoes/trail-runner-green/</code> and <code>/shoes/trail-runner-blue/</code>.</p>
+
+      <p>Here each page carries its own <code>Product</code> markup and links back to the group using <code>isVariantOf</code>. There's no single page that holds the <code>ProductGroup</code> — each variant page references the group ID so Google can assemble the cluster from individual pages.</p>
+
+      <p>This is harder to get right. Every page needs to reference the same <code>productGroupID</code>. Every page needs valid <code>isVariantOf</code> pointing at a consistent <code>ProductGroup</code> entity. And canonicals matter here: each variant page must be self-canonical. If you canonical the blue page to the green page, you've collapsed the variant back into a single product and the group breaks.</p>
+
+      <p>Here's what the JSON-LD looks like on each variant page — note <code>isVariantOf</code> linking back to the group via a shared <code>@id</code>:</p>
+
+      <pre>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Trail Runner Pro — Forest Green",
+  "color": "Forest Green",
+  "sku": "TR-PRO-GRN",
+  "gtin13": "5901234123457",
+  "image": "https://example.com/img/tr-pro-green.jpg",
+  "isVariantOf": {
+    "@type": "ProductGroup",
+    "@id": "https://example.com/shoes/trail-runner/#group",
+    "name": "Trail Runner Pro",
+    "productGroupID": "TR-PRO-2026",
+    "variesBy": ["https://schema.org/color"]
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": 129.00,
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock",
+    "url": "https://example.com/shoes/trail-runner-green/"
+  }
+}</pre>
+
+      <div class="post-callout-warn">
+        <strong>Sound familiar?</strong> This is the same canonical conflict pattern from the <a href="/notes/hreflang-canonical-conflict/">hreflang post</a>. Canonical pointing elsewhere kills the signal. For variants, it kills the group membership.
+      </div>
+
+      <h2>What actually breaks when you get this wrong</h2>
+
+      <p>The frustrating thing about structured data errors in this area is that they're mostly silent. The markup validates. The Rich Results Test shows a green tick. But the features you expected don't appear.</p>
+
+      <p><strong>Using Product alone when you should use ProductGroup:</strong> Google treats each variant as a separate, unrelated product. No colour swatches. No variant grouping in Shopping. If a user searches for "trail runner blue," Google might surface the green variant because it doesn't know the blue one exists as a related option.</p>
+
+      <p><strong>Using ProductGroup for a product with no variants:</strong> Google may ignore the wrapper entirely and just read the single <code>Product</code> inside it. No harm, but also no benefit. It's unnecessary complexity in your templates that makes debugging harder when something actually breaks.</p>
+
+      <p><strong>Using plain text values in variesBy instead of schema.org URIs:</strong> This is the most common implementation error I see. Writing <code>"variesBy": "Color"</code> instead of <code>"variesBy": "https://schema.org/color"</code>. Valid JSON-LD. Passes syntax checks. But Google doesn't trigger Shopping swatches from plain text values. It needs the full URI to map the variation dimension to its internal product graph.</p>
+
+      <p><strong>Missing offers on individual variants:</strong> The <code>ProductGroup</code> itself doesn't carry an <code>Offer</code>. Each variant <code>Product</code> needs its own. If you put the price on the group and omit it from the variants, Google has a group with no buyable items inside it.</p>
+
+      <p><strong>Inconsistent productGroupID across pages:</strong> On multi-page implementations, if even one variant page references a different <code>productGroupID</code> — a typo, a template variable that resolves differently, a staging value that leaked to production — that variant falls out of the group. Google can't match it to the others.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Mistake</th>
+              <th>What happens</th>
+              <th>Validates?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Product alone for variants</td>
+              <td>No colour swatches, no variant grouping in Shopping</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">ProductGroup with no variants</td>
+              <td>Google ignores the wrapper — no benefit, added complexity</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Plain text in variesBy</td>
+              <td>No Shopping swatches — Google needs full URIs</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Offer on group, not variants</td>
+              <td>Group has no buyable items — no Shopping features</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Mismatched productGroupID</td>
+              <td>Variant falls out of the group silently</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="post-diagram-caption" style="text-align:left;margin-top:-16px;margin-bottom:28px">Every mistake above passes validation. That's the problem.</p>
+
+      <h2>The relationship to your GMC feed</h2>
+
+      <p>This is worth mentioning because it comes up in every e-commerce audit. Your Google Merchant Center product feed also has a concept of "item group ID" that groups variants together. Google cross-references feed data with on-page structured data.</p>
+
+      <p>When your structured data's <code>productGroupID</code> matches your feed's <code>item_group_id</code>, Google has a consistent signal from two sources. When they don't match — or when one exists and the other doesn't — you're relying on Google to figure out the relationship on its own. It sometimes will. It sometimes won't.</p>
+
+      <p>The strongest implementations align both: the <code>productGroupID</code> in your schema matches the <code>item_group_id</code> in your feed, and the <code>sku</code> on each variant <code>Product</code> matches the <code>id</code> of the corresponding feed item. If you're already maintaining a GMC feed, you can audit this alignment with the <a href="/gmc-feed-analyzer/">feed analyzer</a>.</p>
+
+      <h2>A practical checklist</h2>
+
+      <p>Before shipping product structured data on an e-commerce site, run through these:</p>
+
+      <ol>
+        <li>Every product page has <code>Product</code> markup with a valid <code>Offer</code> including price, currency, and availability.</li>
+        <li>Products with selectable variants (colour, size, material) use <code>ProductGroup</code> as a wrapper.</li>
+        <li><code>variesBy</code> uses full schema.org URIs, not plain text strings.</li>
+        <li>Each variant inside the group has its own SKU, GTIN, image, and offer — not inherited from the parent.</li>
+        <li><code>productGroupID</code> is consistent across all pages and matches your GMC feed's <code>item_group_id</code>.</li>
+        <li>Products without variants use <code>Product</code> alone. No empty <code>ProductGroup</code> wrapper.</li>
+        <li>Every page with structured data has a self-referential canonical.</li>
+        <li>Schema prices match the visible page price and the checkout price.</li>
+        <li>Run the output through the <a href="https://search.google.com/test/rich-results" rel="noopener">Rich Results Test</a> and the <a href="https://validator.schema.org/" rel="noopener">schema.org validator</a> — green ticks don't guarantee Shopping features, but errors guarantee you won't get them.</li>
+      </ol>
+
+      <h2>A note on platforms</h2>
+
+      <p>Shopify handles single-page variants natively — toggle a colour, the URL stays the same. Apps like JSON-LD for SEO map this to <code>ProductGroup</code> using <code>inProductGroupWithID</code> to link variants to the parent product ID. On WooCommerce, variable products map naturally to <code>ProductGroup</code>, but the option slugs need a mapping layer to translate them into schema.org URIs (e.g. mapping the <code>pa_color</code> attribute to <code>https://schema.org/color</code>). Most headless setups using separate variant URLs will need the flat <code>isVariantOf</code> structure shown above.</p>
+
+      <p>If those nine things on the checklist are true, you're ahead of most e-commerce sites I audit. The generators for <a href="/ecommerce-schema-generator/">Product Snippet, Merchant Listing, and Product Variants</a> will produce valid output for all three patterns; the hard part isn't generating the markup, it's making sure your templates produce the right pattern for the right product type at scale.</p>
+
+      <h2>Frequently asked questions</h2>
+
+      <h3>Do I need ProductGroup schema for a product with no variants?</h3>
+      <p>No. <code>ProductGroup</code> exists to group variations of the same product — different colours, sizes, or materials. If a product has no selectable variants, use <code>Product</code> markup alone. Wrapping a single-SKU product in <code>ProductGroup</code> adds complexity without triggering any additional Google features.</p>
+
+      <h3>Does ProductGroup replace Product schema?</h3>
+      <p>No. <code>ProductGroup</code> wraps <code>Product</code> — it does not replace it. Each variant inside a <code>ProductGroup</code> is still a full <code>Product</code> object with its own SKU, GTIN, price, image, and availability. <code>ProductGroup</code> provides the parent container; <code>Product</code> provides the purchasable items.</p>
+
+      <h3>What is the difference between hasVariant and isVariantOf?</h3>
+      <p><code>hasVariant</code> is used in nested structures where the <code>ProductGroup</code> contains variant <code>Product</code> objects directly. <code>isVariantOf</code> is used in flat structures where each variant <code>Product</code> is a separate JSON-LD object that links back to the <code>ProductGroup</code> via a shared <code>@id</code>. Both are valid — <code>hasVariant</code> is more common for single-page implementations, <code>isVariantOf</code> is typical for multi-page setups where each variant has its own URL.</p>
+
+      <a href="/notes/" class="post-back">← Back to Notes</a>
+
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+  </footer>
+</div>
+<script src="/header.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+</body>
+</html>

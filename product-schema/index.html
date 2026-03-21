@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Schema Markup — Product Structured Data Intro | MagsTags</title>
-  <meta name="description" content="An introduction to Product structured data for Google Search. Learn the three types — Product Snippet, Merchant Listing, and Product Variants — and when to use each.">
+  <meta name="description" content="An introduction to Product structured data for Google Search. Learn the two main classes — Product Snippets and Merchant Listings — plus ProductGroup for variants, and when to use each.">
   <link rel="canonical" href="https://www.magstags.com/product-schema/">
   <meta property="og:title" content="Product Schema Markup — Introduction to Product Structured Data">
-  <meta property="og:description" content="Learn the three types of Product structured data — Product Snippet, Merchant Listing, and Product Variants — and when to use each for Google rich results.">
+  <meta property="og:description" content="Learn the two main classes of Product structured data — Product Snippets and Merchant Listings — plus ProductGroup for variants, and when to use each.">
   <meta property="og:url" content="https://www.magstags.com/product-schema/">
   <meta property="og:image" content="https://www.magstags.com/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -26,7 +26,7 @@
     "@type": "WebPage",
     "@id": "https://www.magstags.com/product-schema/",
     "name": "Product Schema Markup — Introduction to Product Structured Data",
-    "description": "An introduction to Product structured data for Google Search. Learn the three types — Product Snippet, Merchant Listing, and Product Variants.",
+    "description": "An introduction to Product structured data for Google Search. Learn the two main classes — Product Snippets and Merchant Listings — plus ProductGroup for variants.",
     "url": "https://www.magstags.com/product-schema/"
   }
   </script>
@@ -57,10 +57,10 @@
       },
       {
         "@type": "Question",
-        "name": "What are the three types of Product structured data?",
+        "name": "What are the two main classes of Product structured data?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Google recognises three main types: Product Snippet (for any page describing a product: reviews, editorial, aggregators, and merchant pages), Merchant Listing (for merchant pages where customers can buy the product), and Product Variants (for products with options like colour, size, or material, using ProductGroup schema)."
+          "text": "Google defines two main classes: Product Snippets (for any page describing a product: reviews, editorial, aggregators, and merchant pages) and Merchant Listings (for merchant pages where customers can buy the product directly). Products with variants add ProductGroup on top of either class to group variants together for colour swatches and variant pricing in Shopping."
         }
       },
       {
@@ -225,9 +225,9 @@
   <div class="series-sidebar-inner">
     <div class="series-label">In this series</div>
     <div class="series-item active"><span class="series-item-type">Overview</span><span class="series-item-name">Product structured data</span></div>
-    <a href="/product-snippet-schema/" class="series-item"><span class="series-item-type">Type 1</span><span class="series-item-name">Product Snippet schema</span></a>
-    <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Type 2</span><span class="series-item-name">Merchant Listing schema</span></a>
-    <a href="/product-variants-schema/" class="series-item"><span class="series-item-type">Type 3</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></a>
+    <a href="/product-snippet-schema/" class="series-item"><span class="series-item-type">Class 1</span><span class="series-item-name">Product Snippet schema</span></a>
+    <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Class 2</span><span class="series-item-name">Merchant Listing schema</span></a>
+    <a href="/product-variants-schema/" class="series-item"><span class="series-item-type">+ Variants</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></a>
   </div>
 </aside>
 <div class="page-content">
@@ -245,38 +245,38 @@
     <p class="hero-label">Structured Data Guide</p>
     <h1>Product Schema Markup</h1>
     <p style="font-size:12px;color:var(--text-4);margin-bottom:16px;margin-top:-10px">Last updated: March 2026</p>
-    <p class="hero-lead">Product structured data tells Google about the products on your pages. There are three types, each unlocking different Google features, and a merchant PDP with variants can qualify for all three at once. The difference is in what each type enables and what your page needs to be eligible.</p>
+    <p class="hero-lead">Product structured data tells Google about the products on your pages. There are two main classes — Product Snippets and Merchant Listings — each unlocking different Google features. Products with variants also use ProductGroup to group them. A merchant PDP with variants can qualify for all of these at once.</p>
     <a href="/ecommerce-schema-generator/" class="hero-cta">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
       Generate Product Schema <span class="cta-badge">Free</span>
     </a>
   </section>
 
-  <!-- Three types -->
+  <!-- Two classes + ProductGroup -->
   <section class="section">
-    <h2 class="section-title">The three types of Product structured data</h2>
-    <p class="section-lead">Product Snippet and Merchant Listing both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/Product</code> as their base type. Product Variants uses <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/ProductGroup</code> as a parent entity, with individual <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">Product</code> items nested inside via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code>. The difference in all cases is which properties you include and which Google features become available.</p>
-    <p style="font-size:13px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:-8px;margin-bottom:24px">ℹ️ <strong>Product Snippet</strong> and <strong>Merchant Listing</strong> are Google's names for the features they unlock, not different schema types. A merchant product page can qualify for both simultaneously.</p>
+    <h2 class="section-title">Two classes of Product markup, plus ProductGroup for variants</h2>
+    <p class="section-lead">Product Snippet and Merchant Listing both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/Product</code> as their base type — the difference is which properties you include and which Google features become available. Products with variants add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/ProductGroup</code> on top, with individual <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">Product</code> items nested inside via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code>.</p>
+    <p style="font-size:13px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:-8px;margin-bottom:24px">ℹ️ <strong>Product Snippet</strong> and <strong>Merchant Listing</strong> are Google's names for the features they unlock, not different schema types. A merchant product page can qualify for both. Adding Merchant Listing properties also makes the page eligible for Product Snippet features.</p>
     <div class="type-grid">
       <div class="type-card">
-        <div class="type-card-num">Type 1</div>
-        <div class="type-card-name"><a href="/product-snippet-schema/" style="color:inherit;text-decoration:none;">Product Snippet<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+        <div class="type-card-num">Class 1</div>
+        <div class="type-card-name"><a href="/product-snippet-schema/" style="color:inherit;text-decoration:none;">Product Snippets<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
         <div class="type-card-for">For: any page describing a product</div>
         <div class="type-card-desc">Editorial reviews, shopping aggregators, and merchant pages. Enables star ratings, review information, and pricing in organic search results.</div>
         <div class="type-card-link">Product Snippet guide →</div>
       </div>
       <div class="type-card">
-        <div class="type-card-num">Type 2</div>
-        <div class="type-card-name"><a href="/merchant-listing-schema/" style="color:inherit;text-decoration:none;">Merchant Listing<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+        <div class="type-card-num">Class 2</div>
+        <div class="type-card-name"><a href="/merchant-listing-schema/" style="color:inherit;text-decoration:none;">Merchant Listings<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
         <div class="type-card-for">For: pages where you sell the product</div>
-        <div class="type-card-desc">Merchant and retailer pages. Enables the Shopping panel, Popular products, price drop alerts, and shipping and return details.</div>
+        <div class="type-card-desc">Merchant and retailer pages. Enables the Shopping panel, Popular Products, price drop alerts, and shipping and return details. Also qualifies for Product Snippet features.</div>
         <div class="type-card-link">Merchant Listing guide →</div>
       </div>
       <div class="type-card">
-        <div class="type-card-num">Type 3</div>
-        <div class="type-card-name"><a href="/product-variants-schema/" style="color:inherit;text-decoration:none;">Product Variants<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
+        <div class="type-card-num">+ Variants</div>
+        <div class="type-card-name"><a href="/product-variants-schema/" style="color:inherit;text-decoration:none;">Product Variants (ProductGroup)<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
         <div class="type-card-for">For: products with colour, size, or material options</div>
-        <div class="type-card-desc">Uses ProductGroup with hasVariant. Groups all variants under a parent, enabling colour swatches and variant pricing in Shopping.</div>
+        <div class="type-card-desc">Layered on top of Product Snippet or Merchant Listing. Uses ProductGroup with hasVariant to group variants, enabling colour swatches and variant pricing in Shopping.</div>
         <div class="type-card-link">Product Variants guide →</div>
       </div>
     </div>
@@ -408,11 +408,11 @@
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">What is Product schema markup?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-        <div class="faq-a">Product schema markup is structured data — added to a web page as JSON-LD — that tells Google about the product on that page. It enables different Google features depending on the type: star ratings and pricing in organic search (Product Snippet), Shopping panel appearances and price drop alerts (Merchant Listing), and colour swatches in Google Shopping (Product Variants).</div>
+        <div class="faq-a">Product schema markup is structured data — added to a web page as JSON-LD — that tells Google about the product on that page. It enables different Google features depending on which properties you include: star ratings and pricing in organic search (Product Snippets), Shopping panel appearances and price drop alerts (Merchant Listings), and colour swatches in Google Shopping (ProductGroup for variants).</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">What are the three types of Product structured data?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-        <div class="faq-a">Google recognises three main types: <strong>Product Snippet</strong> (for any page describing a product — reviews, editorial, aggregators, and merchant pages), <strong>Merchant Listing</strong> (for merchant pages where customers can buy the product directly), and <strong>Product Variants</strong> (for products with options like colour, size, or material, using <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">schema.org/ProductGroup</code>).</div>
+        <button class="faq-q" onclick="toggleFaq(this)">What are the two main classes of Product structured data?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+        <div class="faq-a">Google defines two main classes: <strong>Product Snippets</strong> (for any page describing a product — reviews, editorial, aggregators, and merchant pages) and <strong>Merchant Listings</strong> (for merchant pages where customers can buy the product directly). Products with variants add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">ProductGroup</code> on top of either class to group variants together for colour swatches and variant pricing in Shopping.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Can a page be eligible for both Product Snippet and Merchant Listing?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
