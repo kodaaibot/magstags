@@ -576,7 +576,7 @@ function renderResults(data) {
   var suggests = checks.filter(function(c) { return c.status === 'suggest'; });
   var passes   = checks.filter(function(c) { return c.status === 'pass'; });
 
-  var overall = errors.length > 0 ? 'fail' : warnings.length > 0 ? 'warn' : 'pass';
+  var overall = errors.length > 0 ? 'fail' : warnings.length > 0 ? 'warn' : passes.length === 0 ? 'warn' : 'pass';
   var scoreLbl = overall === 'pass' ? '✅ Pass' : overall === 'warn' ? '⚠️ Needs Work' : '❌ Fail';
   var scoreCls = overall === 'pass' ? 'score-pass' : overall === 'warn' ? 'score-warn' : 'score-fail';
 

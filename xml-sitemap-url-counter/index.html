@@ -153,6 +153,11 @@
     .lastmod-stat { font-size: 12px; color: var(--text-3); }
     .lastmod-stat strong { color: var(--text-1); }
 
+    .view-more-row { text-align: center; padding: 10px 0; }
+    .view-more-btn { background: none; border: none; color: var(--teal); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; padding: 6px 16px; transition: opacity .15s; }
+    .view-more-btn:hover { opacity: .7; }
+    .breakdown-table tr.hidden-row { display: none; }
+
     .export-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
     .btn-copy { padding: 8px 18px; background: var(--teal); color: #fff; border: none; border-radius: 99px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity .15s; }
     .btn-copy:hover { opacity: .88; }
@@ -663,18 +668,32 @@
 
     var html = '';
 
+    /* Lastmod + directory stats for summary */
+    var lm = allLastmods.length > 0 ? getLastmodStats(allLastmods) : null;
+    var dirs = uniqueUrls.length > 0 ? getDirectoryBreakdown(uniqueUrls) : [];
+    var dominant = dirs.length > 0 && uniqueCount > 0 && (dirs[0].count / uniqueCount * 100) >= 40 ? dirs[0] : null;
+
     /* Total banner */
     html += '<div class="total-banner">';
     html += '<div class="total-number">' + uniqueCount.toLocaleString() + '</div>';
     if (isIndex) {
-      html += '<div class="total-label"><strong>unique URLs across ' + urlsets.length + ' sitemap' + (urlsets.length !== 1 ? 's' : '') + '</strong>';
-      html += '<br>' + totalChildren + ' child sitemap' + (totalChildren !== 1 ? 's' : '') + ' in sitemap index';
+      html += '<div class="total-label"><strong>unique URLs</strong>';
+      html += '<br>' + totalChildren + ' sitemap' + (totalChildren !== 1 ? 's' : '') + ' in index';
       if (dupes > 0) html += '<br>' + totalUrls.toLocaleString() + ' total (' + dupes.toLocaleString() + ' duplicate' + (dupes > 1 ? 's' : '') + ')';
-      html += '</div>';
     } else {
-      html += '<div class="total-label"><strong>URLs in sitemap</strong></div>';
+      html += '<div class="total-label"><strong>URLs in sitemap</strong>';
     }
-    html += '</div>';
+    if (lm) {
+      html += '<br>' + lm.withLastmod.toLocaleString() + ' with lastmod';
+      if (lm.missing > 0) html += ', <span style="color:var(--amber)">' + lm.missing.toLocaleString() + ' missing</span>';
+      html += ' &middot; newest ' + lm.newest + ', oldest ' + lm.oldest;
+      if (lm.staleCount > 0) html += ' &middot; <span style="color:var(--amber)">' + lm.staleCount.toLocaleString() + ' older than 1 year</span>';
+    }
+    if (dominant) {
+      var domPct = (dominant.count / uniqueCount * 100).toFixed(1);
+      html += '<br><strong>' + esc(dominant.dir) + '</strong> accounts for ' + domPct + '% of URLs';
+    }
+    html += '</div></div>';
 
     /* Warnings */
     warnings.forEach(function(w) {
@@ -700,50 +719,39 @@
 
       /* Directory tab */
       if (hasDir) {
-        var dirs = getDirectoryBreakdown(uniqueUrls);
         var maxDir = dirs.length > 0 ? dirs[0].count : 1;
         html += '<div id="tab-dir" class="result-tab-panel">';
-        html += '<table class="breakdown-table"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
-        dirs.forEach(function(d) {
+        html += '<table class="breakdown-table" id="table-dir"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
+        dirs.forEach(function(d, i) {
           var pct = uniqueCount > 0 ? (d.count / uniqueCount * 100) : 0;
           var barPct = maxDir > 0 ? Math.round(d.count / maxDir * 100) : 0;
-          html += '<tr><td class="url-cell">' + esc(d.dir) + '</td>';
+          html += '<tr' + (i >= 20 ? ' class="hidden-row"' : '') + '><td class="url-cell">' + esc(d.dir) + '</td>';
           html += '<td class="count-cell">' + d.count.toLocaleString() + '</td>';
           html += '<td class="count-cell" style="color:var(--text-3);font-weight:400">' + pct.toFixed(1) + '%</td>';
           html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
         });
-        html += '</tbody></table></div>';
+        html += '</tbody></table>';
+        if (dirs.length > 20) html += '<div class="view-more-row"><button class="view-more-btn" onclick="toggleRows(\'table-dir\',this)">View all ' + dirs.length + ' directories</button></div>';
+        html += '</div>';
       }
 
       /* Per-sitemap tab */
       if (hasSitemaps) {
         html += '<div id="tab-sitemap" class="result-tab-panel"' + (hasDir ? ' style="display:none"' : '') + '>';
-        html += '<table class="breakdown-table"><thead><tr><th>Sitemap</th><th style="text-align:right">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
+        html += '<table class="breakdown-table" id="table-sitemap"><thead><tr><th>Sitemap</th><th style="text-align:right">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
         var maxCount = Math.max.apply(null, urlsets.map(function(s) { return s.urls.length; }));
-        urlsets.forEach(function(s) {
+        urlsets.forEach(function(s, i) {
           var barPct = maxCount > 0 ? Math.round(s.urls.length / maxCount * 100) : 0;
-          html += '<tr><td class="url-cell">' + esc(shortName(s.name)) + '</td>';
+          html += '<tr' + (i >= 20 ? ' class="hidden-row"' : '') + '><td class="url-cell">' + esc(shortName(s.name)) + '</td>';
           html += '<td class="count-cell">' + s.urls.length.toLocaleString() + '</td>';
           html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
         });
-        html += '</tbody></table></div>';
-      }
-    }
-
-    /* Lastmod stats */
-    if (allLastmods.length > 0) {
-      var lm = getLastmodStats(allLastmods);
-      if (lm) {
-        html += '<div class="section-title">Lastmod coverage</div>';
-        html += '<div class="lastmod-stats">';
-        html += '<span class="lastmod-stat"><strong>' + lm.withLastmod.toLocaleString() + '</strong> with lastmod</span>';
-        if (lm.missing > 0) html += '<span class="lastmod-stat" style="color:var(--amber)"><strong>' + lm.missing.toLocaleString() + '</strong> missing</span>';
-        html += '<span class="lastmod-stat">Newest: <strong>' + lm.newest + '</strong></span>';
-        html += '<span class="lastmod-stat">Oldest: <strong>' + lm.oldest + '</strong></span>';
-        if (lm.staleCount > 0) html += '<span class="lastmod-stat" style="color:var(--amber)"><strong>' + lm.staleCount.toLocaleString() + '</strong> older than 1 year</span>';
+        html += '</tbody></table>';
+        if (urlsets.length > 20) html += '<div class="view-more-row"><button class="view-more-btn" onclick="toggleRows(\'table-sitemap\',this)">View all ' + urlsets.length + ' sitemaps</button></div>';
         html += '</div>';
       }
     }
+
 
     /* Export */
     if (allUrls.length > 0) {
@@ -816,6 +824,15 @@
     var tabs = btn.parentNode.querySelectorAll('.result-tab');
     for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
     btn.classList.add('active');
+  };
+
+  window.toggleRows = function(tableId, btn) {
+    var rows = document.querySelectorAll('#' + tableId + ' .hidden-row');
+    var showing = rows.length > 0 && rows[0].style.display === 'table-row';
+    for (var i = 0; i < rows.length; i++) rows[i].style.display = showing ? 'none' : 'table-row';
+    btn.textContent = showing ? btn.textContent.replace('Show less', 'View all') : btn.textContent.replace('View all', 'Show less');
+    if (showing) btn.textContent = 'View all ' + rows.length + ' more';
+    else btn.textContent = 'Show less';
   };
 
   window.clearAll = function() {
