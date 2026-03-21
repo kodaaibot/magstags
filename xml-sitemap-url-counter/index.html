@@ -96,6 +96,11 @@
     .mode-tab.active { background: var(--surface); color: var(--teal); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
     .mode-tab:hover:not(.active) { color: var(--text-1); }
 
+    .result-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin: 16px 0 0; }
+    .result-tab { padding: 10px 20px; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .result-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+    .result-tab:hover:not(.active) { color: var(--text-1); border-bottom-color: var(--border); }
+
     label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
     .url-input { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
     .url-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); }
@@ -688,9 +693,9 @@
     var hasSitemaps = urlsets.length > 1;
 
     if (hasDir || hasSitemaps) {
-      html += '<div class="mode-tabs" style="margin-top:16px">';
-      if (hasDir) html += '<button class="mode-tab active" onclick="switchResultTab(\'dir\',this)">By directory</button>';
-      if (hasSitemaps) html += '<button class="mode-tab' + (hasDir ? '' : ' active') + '" onclick="switchResultTab(\'sitemap\',this)">Per sitemap</button>';
+      html += '<div class="result-tabs">';
+      if (hasDir) html += '<button class="result-tab active" onclick="switchResultTab(\'dir\',this)">By directory</button>';
+      if (hasSitemaps) html += '<button class="result-tab' + (hasDir ? '' : ' active') + '" onclick="switchResultTab(\'sitemap\',this)">Per sitemap</button>';
       html += '</div>';
 
       /* Directory tab */
@@ -808,7 +813,7 @@
     for (var i = 0; i < panels.length; i++) panels[i].style.display = 'none';
     var target = document.getElementById('tab-' + tab);
     if (target) target.style.display = 'block';
-    var tabs = btn.parentNode.querySelectorAll('.mode-tab');
+    var tabs = btn.parentNode.querySelectorAll('.result-tab');
     for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
     btn.classList.add('active');
   };
