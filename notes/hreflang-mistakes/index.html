@@ -8,41 +8,17 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <title>Hreflang Mistakes That Keep Coming Back in 2026 | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg:         #f0eeec;
-      --bg2:        #F5EDE7;
-      --surface:    #FFFBF9;
-      --border:     rgba(0,0,0,.08);
-      --teal:       #0E7490;
-      --mint-light: #E0F2FE;
-      --text-1:     #111009;
-      --text-2:     #26221f;
-      --text-3:     #504c49;
-      --text-4:     #857f7a;
-    }
-    html.dark {
-      --bg:         #0f0e0d;
-      --bg2:        #1a1917;
-      --surface:    #161513;
-      --border:     rgba(255,255,255,.08);
-      --teal:       #22D3EE;
-      --mint-light: #164e63;
-      --text-1:     #f5f2ee;
-      --text-2:     #c8c4be;
-      --text-3:     #857f79;
-      --text-4:     #4a4743;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
     .gate-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;max-width:400px;width:100%;margin:24px}
     .gate-icon{font-size:36px;margin-bottom:20px}
     #blog-content{display:block}
-    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
     .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
     .breadcrumb a{color:var(--text-4);text-decoration:none}
     .breadcrumb a:hover{color:var(--teal)}
@@ -76,8 +52,15 @@
     .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
     .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
     .post-back:hover{color:var(--teal)}
-    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
-      main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
   </style>
   <meta property="og:title" content="Hreflang Mistakes That Keep Coming Back in 2026 | MagsTags">
   <meta property="og:description" content="Hreflang in 2026: what changed, what stays the same, and what still trips up international SEO implementations at scale.">
@@ -139,13 +122,15 @@
       <span>7 min read</span>
     </div>
 
-    <div class="post-body">
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
 
-      <p class="post-lead">Hreflang is one of those signals that looks straightforward in documentation and turns into a minefield in practice. After auditing implementations across dozens of enterprise sites (travel, e-commerce, media, SaaS), the same errors keep appearing. This is a frank look at what breaks and why.</p>
+          <p class="post-lead">Hreflang is one of those signals that looks straightforward in documentation and turns into a minefield in practice. After auditing implementations across dozens of enterprise sites (travel, e-commerce, media, SaaS), the same errors keep appearing. This is a frank look at what breaks and why.</p>
 
       <p>Let me say upfront what hreflang is not: it is not a ranking signal, it does not help you rank better in a given country, and it does not replace a proper localisation strategy. What it does is help Google serve the correct language or regional version of your content to the right user. Get it wrong and Google ignores it. Get it catastrophically wrong and it creates indexation problems you won't notice until weeks later.</p>
 
-      <h2>The return tag problem</h2>
+      <h2 id="return-tag-problem">The return tag problem</h2>
 
       <p>Hreflang requires reciprocal annotations. Every page you declare an alternate for must also reference back. If your English page (<code>en-gb</code>) points to your French page (<code>fr-fr</code>), the French page must point back to the English page. If it doesn't, Google treats the entire cluster as ambiguous and may ignore all annotations.</p>
 
@@ -155,7 +140,7 @@
         <strong>Check this first:</strong> for any language or region you're targeting, crawl both directions. Confirm page A references page B and page B references page A. Missing return tags are the single most common failure mode I find in audits.
       </div>
 
-      <h2>Using the wrong language codes</h2>
+      <h2 id="language-codes">Using the wrong language codes</h2>
 
       <p>Hreflang supports ISO 639-1 language codes and ISO 3166-1 alpha-2 country codes. The format is <code>language</code> or <code>language-COUNTRY</code>. Sounds simple. Here's where it goes wrong:</p>
 
@@ -165,7 +150,7 @@
         <li><strong>Invented region codes.</strong> I've audited sites using <code>en-EU</code>, <code>en-INTL</code>, and <code>en-GLOBAL</code>. None of these are valid. Google ignores them silently.</li>
       </ul>
 
-      <h2>x-default: misunderstood and misapplied</h2>
+      <h2 id="x-default-misuse">x-default: misunderstood and misapplied</h2>
 
       <p><code>x-default</code> does not mean "default for all other countries". It is a signal for pages that handle language selection — home pages with language pickers, regional redirect pages, or international landing pages that route users based on browser settings or IP.</p>
 
@@ -179,7 +164,7 @@
 
       <p>The result of misuse is rarely catastrophic, but it means Google has less signal about your internationalisation intent, and the international gateway page may not get treated as such.</p>
 
-      <h2>Canonical conflicts</h2>
+      <h2 id="canonical-conflicts">Canonical conflicts</h2>
 
       <p>The interaction between hreflang and canonicals is where things get genuinely complicated. A page's canonical must point to itself for hreflang to be trusted. If page A canonicals to page B, any hreflang annotations on page A are ignored. Google defers to the canonical version.</p>
 
@@ -193,7 +178,7 @@
 
       <p>Before diagnosing a hreflang problem, always check the canonical chain. A broken canonical is often masquerading as a hreflang problem.</p>
 
-      <h2>Implementation method: HTML vs sitemap vs HTTP headers</h2>
+      <h2 id="implementation-method">Implementation method: HTML vs sitemap vs HTTP headers</h2>
 
       <p>All three implementation methods are valid according to the spec. In practice:</p>
 
@@ -209,7 +194,7 @@
         <strong>Before any hreflang implementation:</strong> audit your canonical setup first. A broken canonical chain will nullify your hreflang work regardless of how clean the annotations are.
       </div>
 
-      <h2>Scale makes everything harder</h2>
+      <h2 id="scale-challenges">Scale makes everything harder</h2>
 
       <p>All of these problems are manageable on a 10-language, 5-market site. On a site with 50 markets, 15 languages, and 200,000 pages (the kind I regularly work on), they become systemic. Template errors affect millions of annotations simultaneously. A single CMS misconfiguration can silently break an entire language cluster for weeks.</p>
 
@@ -219,25 +204,61 @@
 
       <p>For a detailed breakdown of how hreflang and canonicals interact — and why the conflict is more common than most audits catch — see <a href="/notes/hreflang-canonical-conflict/">When Hreflang and Canonicals Conflict</a>. To generate a correct bidirectional tag set, use the <a href="/hreflang-generator/">Hreflang Generator</a>.</p>
 
-      <a href="/notes/" class="post-back">← Back to Notes</a>
+          <a href="/notes/" class="post-back">← Back to Notes</a>
 
-      <div class="author-card">
-        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
-        <div>
-          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
-          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
-          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+          <div class="author-card">
+            <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+            <div>
+              <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+              <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+              <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+            </div>
+          </div>
         </div>
       </div>
+      <aside class="ct-toc">
+        <div class="ct-toc-label">On this page</div>
+        <ul class="ct-toc-list">
+          <li><a href="#return-tag-problem">Return tags</a></li>
+          <li><a href="#language-codes">Language codes</a></li>
+          <li><a href="#x-default-misuse">x-default misuse</a></li>
+          <li><a href="#canonical-conflicts">Canonicals</a></li>
+          <li><a href="#implementation-method">Implementation</a></li>
+          <li><a href="#scale-challenges">Scale issues</a></li>
+        </ul>
+      </aside>
     </div>
   </div>
 
-  <footer>
-    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a></p>
-    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
 </div>
 <script src="/header.js"></script>
-<script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+<script src="/footer.js"></script><script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+<script>
+(function() {
+  const links = document.querySelectorAll('.ct-toc-list a');
+  const headings = Array.from(links).map(link => document.getElementById(link.getAttribute('href').slice(1)));
+
+  function updateActive() {
+    let active = null;
+    for (let heading of headings) {
+      if (heading) {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top < 150) {
+          active = heading.id;
+        }
+      }
+    }
+    links.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').slice(1) === active) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  document.addEventListener('scroll', updateActive);
+  updateActive();
+})();
+</script>
 </body>
 </html>

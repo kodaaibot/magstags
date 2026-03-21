@@ -19,6 +19,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
 
   <script type="application/ld+json">
   {
@@ -89,17 +91,10 @@
   </script>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3; --teal: #0E7490; --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888; --green: #16a34a; --radius: 20px; }
-    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
-    a { color: var(--teal); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .container { max-width: 860px; padding: 0 24px; }
     .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
     .breadcrumb a { color: var(--text-4); } .breadcrumb a:hover { color: var(--teal); text-decoration: none; } .breadcrumb-sep { opacity: .5; }
-    .hero { padding: 48px 0 40px; }
+    .hero { }
     .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
     .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
     .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
@@ -177,8 +172,14 @@
     .compare-table tr:last-child td { border-bottom: none; }
     .check { color: var(--green); font-weight: 700; }
     .cross { color: #dc2626; font-weight: 700; }
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
+
+    /* Content layout */
+    .ct-toc { margin-top: 16px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
 
     /* Series sidebar */
     .page-layout { display: flex; gap: 48px; align-items: flex-start; }
@@ -199,7 +200,7 @@
   </style>
 </head>
 <body>
-<script src="/header.js"></script>
+
 <main>
 <div class="page-layout">
 
@@ -211,6 +212,18 @@
     <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Class 2</span><span class="series-item-name">Merchant Listing schema</span></a>
     <a href="/product-variants-schema/" class="series-item"><span class="series-item-type">+ Variants</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></a>
   </div>
+  <nav class="ct-toc" aria-label="Table of contents">
+    <div class="ct-toc-label">Contents</div>
+    <ul class="ct-toc-list">
+      <li><a href="#what-unlocks">What unlocks</a></li>
+      <li><a href="#who-uses">Who uses</a></li>
+      <li><a href="#properties">Properties</a></li>
+      <li><a href="#json-examples">JSON examples</a></li>
+      <li><a href="#vs-merchant">vs Merchant</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#series">Series</a></li>
+    </ul>
+  </nav>
 </aside>
 <div class="page-content">
 <div class="container">
@@ -264,7 +277,7 @@
   </div>
 
   <!-- Benefits -->
-  <section class="section">
+  <section class="section" id="what-unlocks">
     <h2 class="section-title">What Product Snippet schema unlocks</h2>
     <div class="benefits-grid">
       <div class="benefit-card">
@@ -291,7 +304,7 @@
   </section>
 
   <!-- Who uses it -->
-  <section class="section">
+  <section class="section" id="who-uses">
     <h2 class="section-title">Who should use Product Snippet schema</h2>
     <p class="section-lead">Unlike Merchant Listing, Product Snippet is not restricted to sellers. Any of the following page types are eligible:</p>
     <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px">
@@ -302,7 +315,7 @@
   </section>
 
   <!-- Required fields -->
-  <section class="section">
+  <section class="section" id="properties">
     <h2 class="section-title">Required and recommended properties</h2>
     <p class="section-lead">The minimum for a Product Snippet is <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">name</code> plus at least one of <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">review</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">aggregateRating</code>, or <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">offers</code>.</p>
     <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
@@ -328,7 +341,7 @@
   </section>
 
   <!-- JSON-LD examples -->
-  <section class="section">
+  <section class="section" id="json-examples">
     <h2 class="section-title">JSON-LD examples</h2>
 
     <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:0">Basic — name, rating, price</h3>
@@ -430,7 +443,7 @@
   </section>
 
   <!-- Product Snippet vs Merchant Listing -->
-  <section class="section">
+  <section class="section" id="vs-merchant">
     <h2 class="section-title">Product Snippet vs Merchant Listing</h2>
     <p class="section-lead">Both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">@type: Product</code>. The difference is who can use them and what features they unlock.</p>
     <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
@@ -495,7 +508,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="section">
+  <section class="section" id="faq">
     <h2 class="section-title">Frequently asked questions</h2>
     <div class="faq-list">
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I use Product Snippet schema on a review site that doesn't sell products?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes. Product Snippet works on any page that describes a specific product: editorial reviews, comparison sites, aggregators, and merchant pages. Selling is not a requirement.</div></div>
@@ -509,7 +522,7 @@
   </section>
 
   <!-- Also in this series -->
-  <section class="section">
+  <section class="section" id="series">
     <h2 class="section-title">Also in this series</h2>
     <div class="nav-pills">
       <a href="/product-schema/" class="nav-pill">Overview: Product structured data</a>
@@ -531,11 +544,34 @@
 </div>
 </div>
 </main>
-<footer><p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-schema/" style="color:inherit;opacity:.7">Product Schema</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
+
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
+
 <script>
 function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!open)item.classList.add('open');}
 function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');navigator.clipboard.writeText(code.textContent).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);});}
 </script>
+
+<script>
+(function() {
+  var ids = ['what-unlocks', 'who-uses', 'properties', 'json-examples', 'vs-merchant', 'faq', 'series'];
+  var links = document.querySelectorAll('.ct-toc-list a');
+  if (!links.length) return;
+  function update() {
+    var current = '';
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el && el.getBoundingClientRect().top <= 120) current = ids[i];
+    }
+    links.forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
 </body>
 </html>

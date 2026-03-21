@@ -6,6 +6,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+
   <title>Learn SEO — Guides and Resources | MagsTags</title>
   <meta name="description" content="Practical SEO guides covering structured data, technical SEO, and e-commerce optimisation. Free resources for SEO specialists and developers.">
   <link rel="canonical" href="https://www.magstags.com/learn-seo/">
@@ -36,14 +40,7 @@
   </script>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3; --teal: #0E7490; --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888; --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09); }
-    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; min-height: 100vh; }
-    a { color: var(--teal); text-decoration: none; }
     main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-    .breadcrumb { font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 36px; }
-    .breadcrumb a { color: var(--text-4); } .breadcrumb a:hover { color: var(--teal); } .breadcrumb-sep { opacity: .5; }
     .page-hero { margin-bottom: 48px; }
     .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; background: rgba(14,116,144,.08); padding: 4px 12px; border-radius: 99px; }
     .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.15; color: var(--text-1); margin-bottom: 14px; }
@@ -64,13 +61,10 @@
     .guide-desc { font-size: 13px; color: var(--text-3); line-height: 1.55; }
     .guide-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
     .guide-tag { font-size: 11px; font-weight: 500; color: var(--text-4); background: var(--bg); border: 1px solid var(--border); border-radius: 99px; padding: 2px 10px; }
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
-      @media(max-width:600px){main{padding:24px 16px 60px}}
+    @media(max-width:600px){main{padding:24px 16px 60px}}
   </style>
 </head>
 <body>
-<script src="/header.js"></script>
 <main>
 
   <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -154,7 +148,7 @@
   </div>
 
 </main>
-<footer><p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/seo-tools/" style="color:inherit;opacity:.7">SEO Tools</a> · <a href="/product-schema/" style="color:inherit;opacity:.7">Product Schema</a></p>  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
+<script src="/footer.js"></script>
+<script src="/header.js"></script>
 </body>
 </html>

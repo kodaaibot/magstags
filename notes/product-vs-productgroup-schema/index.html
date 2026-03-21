@@ -8,39 +8,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <title>Product vs ProductGroup Schema: When to Use Which | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg:         #f0eeec;
-      --bg2:        #F5EDE7;
-      --surface:    #FFFBF9;
-      --border:     rgba(0,0,0,.08);
-      --teal:       #0E7490;
-      --mint-light: #E0F2FE;
-      --text-1:     #111009;
-      --text-2:     #26221f;
-      --text-3:     #504c49;
-      --text-4:     #857f7a;
-    }
-    html.dark {
-      --bg:         #0f0e0d;
-      --bg2:        #1a1917;
-      --surface:    #161513;
-      --border:     rgba(255,255,255,.08);
-      --teal:       #22D3EE;
-      --mint-light: #164e63;
-      --text-1:     #f5f2ee;
-      --text-2:     #c8c4be;
-      --text-3:     #857f79;
-      --text-4:     #4a4743;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
     #blog-content{display:block}
-    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
     .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
     .breadcrumb a{color:var(--text-4);text-decoration:none}
     .breadcrumb a:hover{color:var(--teal)}
@@ -68,7 +44,7 @@
     .post-body a:hover{color:var(--text-1)}
 
     /* Tables */
-    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px 0}
+    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px}
     .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
     .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
     .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
@@ -89,8 +65,17 @@
     .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
     .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
     .post-back:hover{color:var(--teal)}
-    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
-    main{max-width:1320px;margin:0 auto;padding:40px 36px 100px}
+
+    /* Table of Contents */
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
   </style>
   <meta property="og:title" content="Product vs ProductGroup Schema: When to Use Which | MagsTags">
   <meta property="og:description" content="Product and ProductGroup are not interchangeable schema types. One describes a thing you sell; the other groups its variations. Here's when to use each and what breaks when you confuse them.">
@@ -190,7 +175,9 @@
       <span>10 min read</span>
     </div>
 
-    <div class="post-body">
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
 
       <p class="post-lead">For everyone who's wrapped a single-SKU candle in ProductGroup and wondered why nothing happened.</p>
 
@@ -246,7 +233,7 @@
         </table>
       </div>
 
-      <h2>Product: the thing itself</h2>
+      <h2 id="product-the-thing-itself">Product: the thing itself</h2>
 
       <p><code>Product</code> is the base type. It describes a single, purchasable item. One SKU, one price, one set of attributes. If someone can add it to their cart and check out, that's a <code>Product</code>.</p>
 
@@ -304,7 +291,7 @@
         <strong>The practical rule:</strong> if you sell the product on that page, mark it up as a <a href="/merchant-listing-schema/">Merchant Listing</a>. If you're reviewing or comparing products you don't sell, use <a href="/product-snippet-schema/">Product Snippet</a>. The <a href="/ecommerce-schema-generator/">schema generator</a> has separate tabs for each.
       </div>
 
-      <h2>ProductGroup: the parent of variants</h2>
+      <h2 id="productgroup-the-parent-of-variants">ProductGroup: the parent of variants</h2>
 
       <p><code>ProductGroup</code> exists for one purpose: to tell Google that multiple <code>Product</code> entities are variations of the same parent item. A T-shirt in five colours. A laptop in three storage configurations. A sofa in two fabrics. (The full implementation guide is on the <a href="/product-variants-schema/">Product Variants schema page</a>.)</p>
 
@@ -368,7 +355,7 @@
 
       <p>One practical benefit: properties that apply to the entire group — <code>brand</code>, <code>aggregateRating</code>, <code>hasMerchantReturnPolicy</code>, <code>shippingDetails</code> via <code>OfferShippingDetails</code> — can sit on the <code>ProductGroup</code> rather than being duplicated across every variant. This is especially useful for <a href="/merchant-listing-schema/">Merchant Listing</a> implementations where shipping and returns are recommended properties.</p>
 
-      <h2>The decision tree</h2>
+      <h2 id="the-decision-tree">The decision tree</h2>
 
       <p>This is how I approach it in practice:</p>
 
@@ -435,7 +422,7 @@
         <p class="post-diagram-caption">Decision tree: which markup pattern to use</p>
       </div>
 
-      <h2>Single page vs multi-page variants</h2>
+      <h2 id="single-page-vs-multi-page-variants">Single page vs multi-page variants</h2>
 
       <p>This is where implementations start to diverge and where I see the most mistakes.</p>
 
@@ -589,7 +576,7 @@
         <strong>Sound familiar?</strong> This is the same canonical conflict pattern from the <a href="/notes/hreflang-canonical-conflict/">hreflang post</a>. Canonical pointing elsewhere kills the signal. For variants, it kills the group membership.
       </div>
 
-      <h2>What actually breaks when you get this wrong</h2>
+      <h2 id="what-actually-breaks">What actually breaks when you get this wrong</h2>
 
       <p>The frustrating thing about structured data errors in this area is that they're mostly silent. The markup validates. The Rich Results Test shows a green tick. But the features you expected don't appear.</p>
 
@@ -643,7 +630,7 @@
       </div>
       <p class="post-diagram-caption" style="text-align:left;margin-top:-16px;margin-bottom:28px">Every mistake above passes validation. That's the problem.</p>
 
-      <h2>The relationship to your GMC feed</h2>
+      <h2 id="gmc-feed-relationship">The relationship to your GMC feed</h2>
 
       <p>This is worth mentioning because it comes up in every e-commerce audit. Your Google Merchant Center product feed also has a concept of "item group ID" that groups variants together. Google cross-references feed data with on-page structured data.</p>
 
@@ -651,7 +638,7 @@
 
       <p>The strongest implementations align both: the <code>productGroupID</code> in your schema matches the <code>item_group_id</code> in your feed, and the <code>sku</code> on each variant <code>Product</code> matches the <code>id</code> of the corresponding feed item. If you're already maintaining a GMC feed, you can audit this alignment with the <a href="/gmc-feed-analyzer/">feed analyzer</a>.</p>
 
-      <h2>A practical checklist</h2>
+      <h2 id="practical-checklist">A practical checklist</h2>
 
       <p>Before shipping product structured data on an e-commerce site, run through these:</p>
 
@@ -667,13 +654,13 @@
         <li>Run the output through the <a href="https://search.google.com/test/rich-results" rel="noopener">Rich Results Test</a> and the <a href="https://validator.schema.org/" rel="noopener">schema.org validator</a> — green ticks don't guarantee Shopping features, but errors guarantee you won't get them.</li>
       </ol>
 
-      <h2>A note on platforms</h2>
+      <h2 id="note-on-platforms">A note on platforms</h2>
 
       <p>Shopify handles single-page variants natively — toggle a colour, the URL stays the same. Apps like JSON-LD for SEO map this to <code>ProductGroup</code> using <code>inProductGroupWithID</code> to link variants to the parent product ID. On WooCommerce, variable products map naturally to <code>ProductGroup</code>, but the option slugs need a mapping layer to translate them into schema.org URIs (e.g. mapping the <code>pa_color</code> attribute to <code>https://schema.org/color</code>). Most headless setups using separate variant URLs will need the flat <code>isVariantOf</code> structure shown above.</p>
 
       <p>If those nine things on the checklist are true, you're ahead of most e-commerce sites I audit. The generators for <a href="/ecommerce-schema-generator/">Product Snippet, Merchant Listing, and Product Variants</a> will produce valid output for all three patterns; the hard part isn't generating the markup, it's making sure your templates produce the right pattern for the right product type at scale.</p>
 
-      <h2>Frequently asked questions</h2>
+      <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 
       <h3>Do I need ProductGroup schema for a product with no variants?</h3>
       <p>No. <code>ProductGroup</code> exists to group variations of the same product — different colours, sizes, or materials. If a product has no selectable variants, use <code>Product</code> markup alone. Wrapping a single-SKU product in <code>ProductGroup</code> adds complexity without triggering any additional Google features.</p>
@@ -685,6 +672,23 @@
       <p><code>hasVariant</code> is used in nested structures where the <code>ProductGroup</code> contains variant <code>Product</code> objects directly. <code>isVariantOf</code> is used in flat structures where each variant <code>Product</code> is a separate JSON-LD object that links back to the <code>ProductGroup</code> via a shared <code>@id</code>. Both are valid — <code>hasVariant</code> is more common for single-page implementations, <code>isVariantOf</code> is typical for multi-page setups where each variant has its own URL.</p>
 
       <a href="/notes/" class="post-back">← Back to Notes</a>
+        </div>
+      </div>
+      <aside class="ct-toc">
+        <div class="ct-toc-label">On this page</div>
+        <ul class="ct-toc-list">
+          <li><a href="#product-the-thing-itself">Product</a></li>
+          <li><a href="#productgroup-the-parent-of-variants">ProductGroup</a></li>
+          <li><a href="#the-decision-tree">Decision tree</a></li>
+          <li><a href="#single-page-vs-multi-page-variants">Single vs multi-page</a></li>
+          <li><a href="#what-actually-breaks">What breaks</a></li>
+          <li><a href="#gmc-feed-relationship">GMC feed</a></li>
+          <li><a href="#practical-checklist">Checklist</a></li>
+          <li><a href="#note-on-platforms">Platforms</a></li>
+          <li><a href="#frequently-asked-questions">FAQs</a></li>
+        </ul>
+      </aside>
+    </div>
 
       <div class="author-card">
         <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
@@ -698,12 +702,37 @@
     </div>
   </div>
 
-  <footer>
-    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a></p>
-    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-  </footer>
 </div>
 <script src="/header.js"></script>
-<script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+<script src="/footer.js"></script><script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+<script>
+(function() {
+  const headings = document.querySelectorAll('.post-body h2[id]');
+  const tocLinks = document.querySelectorAll('.ct-toc-list a');
+
+  function updateActiveLink() {
+    let activeHeading = null;
+    for (const heading of headings) {
+      const rect = heading.getBoundingClientRect();
+      if (rect.top <= 150) {
+        activeHeading = heading;
+      } else {
+        break;
+      }
+    }
+
+    tocLinks.forEach(link => link.classList.remove('active'));
+    if (activeHeading) {
+      const activeLink = document.querySelector(`.ct-toc-list a[href="#${activeHeading.id}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', updateActiveLink);
+  updateActiveLink();
+})();
+</script>
 </body>
 </html>

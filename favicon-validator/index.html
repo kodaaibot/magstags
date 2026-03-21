@@ -32,38 +32,29 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "My favicon looks fine in the browser tab but doesn't show in Google Search", "acceptedAnswer": { "@type": "Answer", "text": "Two likely causes. First, Googlebot-Image might be blocked from fetching the favicon file — check your robots.txt. Second, Google may not have recrawled your homepage since you added or changed the favicon. Use the URL Inspection tool in Search Console to request indexing. Allow days to weeks for the change to propagate." } },
+      { "@type": "Question", "name": "Does the favicon need to be on my homepage?", "acceptedAnswer": { "@type": "Answer", "text": "The link rel=\"icon\" tag needs to be in the head of your homepage. Google reads the favicon declaration from the homepage and applies it site-wide for that hostname." } },
+      { "@type": "Question", "name": "Can I use an SVG favicon?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — Google supports SVG favicons, and they scale perfectly at any size. Not all browsers support SVG favicons natively though, so keep a PNG fallback alongside it." } },
+      { "@type": "Question", "name": "What's the difference between rel=\"icon\" and rel=\"shortcut icon\"?", "acceptedAnswer": { "@type": "Answer", "text": "rel=\"icon\" is the standard. rel=\"shortcut icon\" is a legacy variant from older IE versions. Google supports both, but there's no reason to use shortcut icon unless you're maintaining backward compatibility." } },
+      { "@type": "Question", "name": "Does this tool send my HTML to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs in your browser. In URL mode, the tool loads images directly from your domain. In Paste mode, it parses the HTML using the browser's built-in DOM parser. Nothing leaves your machine." } },
+      { "@type": "Question", "name": "My site has multiple subdomains — do I need a favicon for each?", "acceptedAnswer": { "@type": "Answer", "text": "If you want each subdomain to show its own favicon in Google Search, yes. Google treats each hostname as a separate site. But subdirectories can't override the root hostname's favicon." } }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3;
-      --teal: #0E7490; --teal-light: #e0f2f7;
-      --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888;
-      --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
-      --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
-      --amber: #d97706; --amber-bg: #fffbeb; --amber-border: #fde68a;
-      --radius: 20px;
-    }
-    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
-    a { color: var(--teal); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    main { max-width: 860px; margin: 0 auto; padding: 24px 24px 100px; }
-
-    .breadcrumb { padding: 8px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; }
-    .breadcrumb a { color: var(--text-4); }
-    .breadcrumb a:hover { color: var(--teal); text-decoration: none; }
-    .breadcrumb-sep { opacity: .5; }
-
-    h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 40px); font-weight: 400; line-height: 1.2; margin-bottom: 10px; }
-    .tagline { font-size: 16px; color: var(--teal); font-weight: 400; margin-bottom: 14px; }
-    .voice { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 620px; }
-    .section-hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
     /* Tool card */
     .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; }
@@ -136,9 +127,9 @@
     .check-body { flex: 1; min-width: 0; }
     .check-label { font-size: 14px; font-weight: 600; color: var(--text-1); }
     .check-detail { font-size: 11px; font-weight: 600; color: var(--text-4); margin-top: 2px; font-family: 'Courier New', monospace; }
-    .check-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; margin-top: 4px; }
-    .check-fix { font-size: 12px; color: var(--text-2); margin-top: 6px; background: var(--bg); border-radius: 6px; padding: 8px 10px; line-height: 1.5; }
-    .check-fix code { font-size: 11px; background: rgba(0,0,0,.06); padding: 1px 4px; border-radius: 3px; font-family: 'Courier New', monospace; }
+    .check-desc { font-size: 14px; color: var(--text-3); line-height: 1.5; margin-top: 4px; }
+    .check-fix { font-size: 14px; color: var(--text-2); margin-top: 6px; background: var(--bg); border-radius: 6px; padding: 8px 10px; line-height: 1.5; }
+    .check-fix code { font-size: 14px; font-weight: 700; background: rgba(0,0,0,.06); padding: 1px 4px; border-radius: 3px; font-family: 'Courier New', monospace; }
 
     /* Snippet */
     .snippet-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
@@ -147,10 +138,74 @@
     .btn-copy { background: var(--teal); color: #fff; border: none; border-radius: 99px; padding: 4px 12px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
     .btn-copy:hover { opacity: .88; }
 
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
-
     @media(max-width:600px) { main { padding: 16px 16px 60px; } .input-row { flex-direction: column; align-items: stretch; } }
+
+    /* ── Content sections (GSC-style) ── */
+    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
+    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
+    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
+    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
+    .ct-lead code { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+    /* Steps with timeline */
+    .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
+    .ct-steps::before { content: ''; position: absolute; left: 19px; top: 28px; bottom: 28px; width: 1px; background: var(--border); }
+    .ct-step { display: flex; gap: 20px; padding: 24px 0; }
+    .ct-step-num { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; background: var(--bg2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Courier New', monospace; font-size: 12px; color: var(--teal); position: relative; z-index: 1; }
+    .ct-step-body h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; padding-top: 10px; }
+    .ct-step-body p { font-size: 14px; color: var(--text-3); line-height: 1.65; margin: 0; }
+    .ct-step-body strong { color: var(--text-1); }
+    .ct-step-body code { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+    /* Feature cards */
+    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
+    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+    .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
+    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
+    .ct-card code { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+    /* Callout */
+    .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
+    .ct-callout--amber { background: #FEF9C3; border: 1px solid rgba(217,119,6,.2); }
+    html.dark .ct-callout--amber { background: rgba(217,119,6,.1); }
+    .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+    .ct-callout-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
+
+    /* FAQ accordion */
+    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
+    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
+    .ct-faq summary::-webkit-details-marker { display: none; }
+    .ct-faq summary::after { content: '\25BE'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+    .ct-faq details[open] summary::after { transform: rotate(180deg); }
+    .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
+    .ct-faq summary:hover { background: var(--bg2); }
+    .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
+    .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
+    .ct-faq-body code { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 700; background: var(--bg2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
+
+    /* Content layout — two-column with sticky TOC */
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+
+    /* Floating sticky TOC */
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+
+    @media(max-width:960px) {
+      .ct-layout { grid-template-columns: 1fr; gap: 0; }
+      .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+      .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; }
+      .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; }
+    }
+    @media(max-width:768px) { .ct-wrap { padding: 0 16px 60px; } }
   </style>
 </head>
 <body>
@@ -202,11 +257,191 @@
   <div id="results"></div>
 </main>
 
-<footer>
-  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
-  <div id="footer-auth" style="margin-top:10px;font-size:11px;color:var(--text-4)"></div>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
+<div class="ct-wrap">
+<div class="ct-layout">
+  <div class="ct-content">
+
+  <!-- ─── 1. HOW TO USE ─── -->
+  <div class="ct-section" id="how-to-use">
+    <span class="ct-section-label">Step by step</span>
+    <h2 class="ct-h2">How to Use This Tool</h2>
+    <p class="ct-lead">Enter a URL and get a full favicon audit. Two modes, same output.</p>
+    <div class="ct-steps">
+      <div class="ct-step">
+        <div class="ct-step-num">01</div>
+        <div class="ct-step-body">
+          <h4>Enter your homepage URL</h4>
+          <p>The tool probes common favicon paths at your domain — <code>/favicon.ico</code>, <code>/favicon.png</code>, <code>/apple-touch-icon.png</code>, and others. No server-side fetch, no CORS issues. It loads each path as an image directly in your browser.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">02</div>
+        <div class="ct-step-body">
+          <h4>Or paste your &lt;head&gt; HTML</h4>
+          <p>If you want link-tag analysis — which <code>rel</code> values you're declaring, whether <code>sizes</code> is set, whether you have an <code>apple-touch-icon</code> — paste your <code>&lt;head&gt;</code> markup and enter the base URL. The tool parses the tags, resolves relative paths, and loads each referenced image.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">03</div>
+        <div class="ct-step-body">
+          <h4>Read the results</h4>
+          <p>You get: a Google SERP preview showing your favicon at actual size, a tile view of every detected favicon file with dimensions, and a grouped checklist covering link tags, image quality, format, and Google requirements. Anything that fails or needs attention comes with a specific fix.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 2. WHY FAVICONS MATTER FOR SEARCH ─── -->
+  <div class="ct-section" id="favicons-in-search">
+    <span class="ct-section-label">Why it matters</span>
+    <h2 class="ct-h2">Favicons in Google Search Results</h2>
+    <p class="ct-lead">Google displays your favicon next to your site name and URL in search results. If it's missing, broken, or too small, you get a grey globe. In a list of ten results, the one without a favicon looks like it forgot to get dressed.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <div class="ct-card-title">The basics</div>
+        <p>Add a <code>&lt;link rel="icon"&gt;</code> tag to your homepage <code>&lt;head&gt;</code>. Google also supports <code>shortcut icon</code> (legacy) and <code>apple-touch-icon</code>. The <code>href</code> can be relative or absolute — including CDN-hosted.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Size requirements</div>
+        <p>Minimum 8×8px, but Google recommends 48×48px or larger. Must be square (1:1 aspect ratio). If you're only going to serve one size, make it 32×32px for browser tabs and include a 512×512px version for PWA and high-DPI surfaces.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">One per hostname</div>
+        <p>Google supports one favicon per hostname. <code>example.com</code> and <code>blog.example.com</code> can have different favicons. But <code>example.com/shop</code> inherits from <code>example.com</code> — subdirectories don't get their own.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Crawlability</div>
+        <p>Googlebot-Image must be able to fetch your favicon file, and Googlebot must be able to crawl your homepage. If either is blocked in <code>robots.txt</code>, no favicon in search results. This tool can't check your <code>robots.txt</code> — but it'll remind you to.</p>
+      </div>
+    </div>
+    <div class="ct-callout ct-callout--amber" style="margin-top:24px">
+      <div class="ct-callout-icon">&#9888;</div>
+      <div class="ct-callout-body">
+        <strong>Google doesn't guarantee your favicon will show.</strong>
+        <p>Even if everything is technically correct, Google may not display it. They also replace favicons they consider inappropriate. And crawling changes can take days to weeks — requesting indexing of your homepage via URL Inspection can speed things up, but it's not instant.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 3. WHAT THIS TOOL CHECKS ─── -->
+  <div class="ct-section" id="what-it-checks">
+    <span class="ct-section-label">Under the hood</span>
+    <h2 class="ct-h2">What This Tool Validates</h2>
+    <p class="ct-lead">Ten checks across four groups. Each maps to something Google or browsers actually care about.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <div class="ct-card-title">Link tags</div>
+        <p>Does your HTML declare <code>rel="icon"</code>? Is <code>apple-touch-icon</code> present? These are the tags Google and browsers look for. If they're missing, browsers fall back to <code>/favicon.ico</code> — which may or may not exist.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">File detection</div>
+        <p>The tool probes standard paths: <code>/favicon.ico</code>, <code>/favicon.png</code>, <code>/apple-touch-icon.png</code>, and several others. If a file loads and returns a valid image, it passes. If nothing loads at all, that's a problem.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Image quality</div>
+        <p>Is the image square? Is there a 32×32px version for browser tabs? A 512×512px version for PWA and high-DPI? Is the apple-touch-icon close to 180×180px? Undersized favicons get scaled and look blurry. Oversized ones waste bandwidth.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Format &amp; Google rules</div>
+        <p>PNG, ICO, SVG, WebP, and GIF are supported. JPEG and BMP work but don't support transparency. The tool also flags the Googlebot crawlability requirement — because a perfect favicon that Googlebot can't reach is the same as no favicon at all.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 4. RECOMMENDED SETUP ─── -->
+  <div class="ct-section" id="recommended-setup">
+    <span class="ct-section-label">Implementation</span>
+    <h2 class="ct-h2">The Favicon Setup That Covers Everything</h2>
+    <p class="ct-lead">Three link tags in your <code>&lt;head&gt;</code>. That's it. This covers Google Search, browser tabs, PWA home screens, and iOS.</p>
+    <div class="ct-steps">
+      <div class="ct-step">
+        <div class="ct-step-num">01</div>
+        <div class="ct-step-body">
+          <h4>32×32px PNG — browser tabs</h4>
+          <p><code>&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"&gt;</code> — this is what shows in the browser tab. Desktop Chrome, Firefox, Safari, Edge all use it. Make it square, make it crisp at small sizes.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">02</div>
+        <div class="ct-step-body">
+          <h4>512×512px PNG — PWA and high-DPI</h4>
+          <p><code>&lt;link rel="icon" type="image/png" sizes="512x512" href="/og-image.png"&gt;</code> — used by PWA launchers, Google Discover, and Android home screen shortcuts. 512×512 is the standard. This is also what Google pulls for search results if it needs a higher-resolution version.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">03</div>
+        <div class="ct-step-body">
+          <h4>Apple Touch Icon — iOS</h4>
+          <p><code>&lt;link rel="apple-touch-icon" href="/favicon-apple.png"&gt;</code> — 180×180px. Used when someone adds your site to their iPhone home screen. Apple rounds the corners and applies their own mask, so keep important visual elements away from the edges.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ct-callout ct-callout--amber" style="margin-top:16px">
+      <div class="ct-callout-icon">&#9888;</div>
+      <div class="ct-callout-body">
+        <strong>Keep the favicon URL stable.</strong>
+        <p>Google caches favicons. If you change the URL frequently, Google may stop updating it or fall back to the grey globe while it re-crawls. Pick a path and stick with it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 5. FAQ ─── -->
+  <div class="ct-section" id="faq">
+    <span class="ct-section-label">Common questions</span>
+    <h2 class="ct-h2">Frequently Asked Questions</h2>
+    <div class="ct-faq">
+
+      <details>
+        <summary>My favicon looks fine in the browser tab but doesn't show in Google Search</summary>
+        <div class="ct-faq-body">Two likely causes. First, Googlebot-Image might be blocked from fetching the favicon file — check your <code>robots.txt</code>. Second, Google may not have recrawled your homepage since you added or changed the favicon. Use the URL Inspection tool in Search Console to request indexing. Allow days to weeks for the change to propagate.</div>
+      </details>
+
+      <details>
+        <summary>Does the favicon need to be on my homepage?</summary>
+        <div class="ct-faq-body">The <code>&lt;link rel="icon"&gt;</code> tag needs to be in the <code>&lt;head&gt;</code> of your homepage. Google reads the favicon declaration from the homepage and applies it site-wide for that hostname. You can include the tag on other pages too (most CMSs do), but the homepage is the one Google cares about.</div>
+      </details>
+
+      <details>
+        <summary>Can I use an SVG favicon?</summary>
+        <div class="ct-faq-body">Yes — Google supports SVG favicons, and they scale perfectly at any size. Declare it as <code>&lt;link rel="icon" type="image/svg+xml" href="/favicon.svg"&gt;</code>. Not all browsers support SVG favicons natively though, so keep a PNG fallback alongside it.</div>
+      </details>
+
+      <details>
+        <summary>What's the difference between rel="icon" and rel="shortcut icon"?</summary>
+        <div class="ct-faq-body"><code>rel="icon"</code> is the standard. <code>rel="shortcut icon"</code> is a legacy variant from older IE versions. Google supports both, but there's no reason to use <code>shortcut icon</code> unless you're maintaining backward compatibility with something that specifically requires it.</div>
+      </details>
+
+      <details>
+        <summary>Does this tool send my HTML to a server?</summary>
+        <div class="ct-faq-body">No. Everything runs in your browser. In URL mode, the tool loads images directly from your domain — standard image requests, no proxy, no CORS workarounds. In Paste mode, it parses the HTML you paste using the browser's built-in DOM parser. Nothing leaves your machine.</div>
+      </details>
+
+      <details>
+        <summary>My site has multiple subdomains — do I need a favicon for each?</summary>
+        <div class="ct-faq-body">If you want each subdomain to show its own favicon in Google Search, yes. Google treats each hostname as a separate site — <code>www.example.com</code> and <code>shop.example.com</code> can have different favicons. But <code>example.com/blog</code> and <code>example.com/shop</code> share the same one — subdirectories can't override the root hostname's favicon.</div>
+      </details>
+
+    </div>
+  </div>
+
+  </div><!-- end .ct-content -->
+
+  <nav class="ct-toc" aria-label="Table of contents">
+    <div class="ct-toc-label">On this page</div>
+    <ol class="ct-toc-list">
+      <li><a href="#how-to-use">How to use this tool</a></li>
+      <li><a href="#favicons-in-search">Favicons in search results</a></li>
+      <li><a href="#what-it-checks">What it validates</a></li>
+      <li><a href="#recommended-setup">Recommended setup</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ol>
+  </nav>
+
+</div><!-- end .ct-layout -->
+</div><!-- end .ct-wrap -->
+
+<script src="/footer.js"></script>
+<div id="footer-auth" style="margin-top:10px;font-size:11px;color:var(--text-4)"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" data-clerk-publishable-key="pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA" crossorigin="anonymous"></script>
 <script>
@@ -692,6 +927,25 @@ function copySnippet(btn) {
     setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
   });
 }
+
+// ─── TOC scroll spy ──────────────────────────────────────────────────────────
+(function() {
+  var ids = ['how-to-use','favicons-in-search','what-it-checks','recommended-setup','faq'];
+  var links = document.querySelectorAll('.ct-toc-list a');
+  if (!links.length) return;
+  function update() {
+    var current = '';
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el && el.getBoundingClientRect().top <= 120) current = ids[i];
+    }
+    links.forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
 </script>
 </body>
 </html>

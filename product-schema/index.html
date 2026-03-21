@@ -19,6 +19,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
 
   <script type="application/ld+json">
   {
@@ -116,26 +118,14 @@
   </script>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3;
-      --teal: #0E7490; --teal-light: #14b8a6;
-      --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888;
-      --green: #16a34a; --radius: 20px;
-    }
-    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
-    a { color: var(--teal); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .container { max-width: 860px; padding: 0 24px; }
 
     .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
     .breadcrumb a { color: var(--text-4); }
     .breadcrumb a:hover { color: var(--teal); text-decoration: none; }
     .breadcrumb-sep { opacity: .5; }
 
-    .hero { padding: 48px 0 40px; }
+    .hero { }
     .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
     .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
     .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
@@ -193,8 +183,13 @@
     .cta-btn:hover { opacity: .88; text-decoration: none; }
     .cta-badge { background: rgba(255,255,255,.22); border-radius: 99px; padding: 2px 9px; font-size: 11px; font-weight: 700; letter-spacing: .03em; }
 
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
+    /* Content layout */
+    .ct-toc { margin-top: 16px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
 
     /* Series sidebar */
     .page-layout { display: flex; gap: 48px; align-items: flex-start; }
@@ -216,8 +211,6 @@
 </head>
 <body>
 
-<script src="/header.js"></script>
-
 <main>
 <div class="page-layout">
 
@@ -229,6 +222,16 @@
     <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Class 2</span><span class="series-item-name">Merchant Listing schema</span></a>
     <a href="/product-variants-schema/" class="series-item"><span class="series-item-type">+ Variants</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></a>
   </div>
+  <nav class="ct-toc" aria-label="Table of contents">
+    <div class="ct-toc-label">On this page</div>
+    <ul class="ct-toc-list">
+      <li><a href="#two-classes">Two classes</a></li>
+      <li><a href="#schema-example">Schema example</a></li>
+      <li><a href="#page-types">Page types</a></li>
+      <li><a href="#google-surfaces">Google surfaces</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </nav>
 </aside>
 <div class="page-content">
 <div class="container">
@@ -253,7 +256,7 @@
   </section>
 
   <!-- Two classes + ProductGroup -->
-  <section class="section">
+  <section class="section" id="two-classes">
     <h2 class="section-title">Two classes of Product markup, plus ProductGroup for variants</h2>
     <p class="section-lead">Product Snippet and Merchant Listing both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/Product</code> as their base type — the difference is which properties you include and which Google features become available. Products with variants add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/ProductGroup</code> on top, with individual <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">Product</code> items nested inside via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code>.</p>
     <p style="font-size:13px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:-8px;margin-bottom:24px">ℹ️ <strong>Product Snippet</strong> and <strong>Merchant Listing</strong> are Google's names for the features they unlock, not different schema types. A merchant product page can qualify for both. Adding Merchant Listing properties also makes the page eligible for Product Snippet features.</p>
@@ -284,7 +287,7 @@
 
 
   <!-- Minimal example -->
-  <section class="section">
+  <section class="section" id="schema-example">
     <h2 class="section-title">What Product schema looks like</h2>
     <p class="section-lead">All Product structured data is added as JSON-LD inside a <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">&lt;script type="application/ld+json"&gt;</code> tag in your page HTML. Here is a minimal valid Product schema:</p>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:4px">
@@ -315,7 +318,7 @@
   </section>
 
   <!-- Comparison -->
-  <section class="section">
+  <section class="section" id="page-types">
     <h2 class="section-title">Which type is right for your page?</h2>
     <p class="section-lead">Two separate questions: which types your page is eligible for, and what features each type unlocks.</p>
 
@@ -366,7 +369,7 @@
   </section>
 
   <!-- How it appears -->
-  <section class="section">
+  <section class="section" id="google-surfaces">
     <h2 class="section-title">How Product structured data appears in Google</h2>
     <div class="surfaces-grid">
       <div class="surface-card">
@@ -403,7 +406,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="section">
+  <section class="section" id="faq">
     <h2 class="section-title">Frequently asked questions</h2>
     <div class="faq-list">
       <div class="faq-item">
@@ -452,10 +455,8 @@
 </div>
 </main>
 
-<footer>
-  <p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/ecommerce-schema-generator/" style="color:inherit;opacity:.7">Schema Generator</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
 
 <script>
   function toggleFaq(btn) {
@@ -464,6 +465,26 @@
     document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
     if (!open) item.classList.add('open');
   }
+</script>
+
+<script>
+(function() {
+  var ids = ['two-classes', 'schema-example', 'page-types', 'google-surfaces', 'faq'];
+  var links = document.querySelectorAll('.ct-toc-list a');
+  if (!links.length) return;
+  function update() {
+    var current = '';
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el && el.getBoundingClientRect().top <= 120) current = ids[i];
+    }
+    links.forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
 </script>
 </body>
 </html>

@@ -8,39 +8,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <title>When Hreflang and Canonicals Conflict | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg:         #f0eeec;
-      --bg2:        #F5EDE7;
-      --surface:    #FFFBF9;
-      --border:     rgba(0,0,0,.08);
-      --teal:       #0E7490;
-      --mint-light: #E0F2FE;
-      --text-1:     #111009;
-      --text-2:     #26221f;
-      --text-3:     #504c49;
-      --text-4:     #857f7a;
-    }
-    html.dark {
-      --bg:         #0f0e0d;
-      --bg2:        #1a1917;
-      --surface:    #161513;
-      --border:     rgba(255,255,255,.08);
-      --teal:       #22D3EE;
-      --mint-light: #164e63;
-      --text-1:     #f5f2ee;
-      --text-2:     #c8c4be;
-      --text-3:     #857f79;
-      --text-4:     #4a4743;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
     #blog-content{display:block}
-    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
     .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
     .breadcrumb a{color:var(--text-4);text-decoration:none}
     .breadcrumb a:hover{color:var(--teal)}
@@ -74,8 +50,15 @@
     .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
     .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
     .post-back:hover{color:var(--teal)}
-    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
-    main{max-width:1320px;margin:0 auto;padding:40px 36px 100px}
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
   </style>
   <meta property="og:title" content="When Hreflang and Canonicals Conflict | MagsTags">
   <meta property="og:description" content="When hreflang and canonicals point in different directions, Google picks one and ignores the other. Here's what breaks, why it cascades, and how to find it.">
@@ -137,15 +120,17 @@
       <span>7 min read</span>
     </div>
 
-    <div class="post-body">
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
 
-      <p class="post-lead">Hreflang tells Google which language and region a page is for. Canonicals tell Google which version of a URL is the one that counts. Most of the time they coexist without issue. When they conflict, one wins and the other is silently discarded. It is almost always the hreflang.</p>
+          <p class="post-lead">Hreflang tells Google which language and region a page is for. Canonicals tell Google which version of a URL is the one that counts. Most of the time they coexist without issue. When they conflict, one wins and the other is silently discarded. It is almost always the hreflang.</p>
 
       <p>There is one rule that governs the relationship: a page's canonical must point to itself for its hreflang annotations to mean anything. If the canonical points elsewhere, Google ignores the hreflang. Silently. Without telling you.</p>
 
       <p>Canonical conflicts are one of the most common causes of hreflang appearing technically correct while producing no useful signal. The <a href="/notes/hreflang-mistakes/">Hreflang in 2026</a> post touched on this briefly; here's the full picture.</p>
 
-      <h2>The rule, and what it actually means</h2>
+      <h2 id="rule-meaning">The rule, and what it actually means</h2>
 
       <p>Google's position is clear: hreflang annotations on a non-canonical page are discarded. When Googlebot encounters a page where the <code>&lt;link rel="canonical"&gt;</code> tag points to a different URL, any hreflang on that page is treated as though it doesn't exist.</p>
 
@@ -153,7 +138,7 @@
 
       <p>The end result: your regional targeting fails for that URL type, and you probably won't know until you spot unexpected language or country serving in GSC performance data.</p>
 
-      <h2>How the conflict happens in practice</h2>
+      <h2 id="conflict-practice">How the conflict happens in practice</h2>
 
       <p>Most canonical conflicts with hreflang aren't deliberate; they're a byproduct of CMS behaviour, template logic, or site architecture decisions made without international SEO in mind.</p>
 
@@ -179,7 +164,7 @@
         <strong>Consolidation and hreflang cannot coexist.</strong> If you canonical a regional page to a different URL, you are consolidating. You cannot also use hreflang to maintain regional targeting for that page. You must choose: serve distinct content with a self-referential canonical, or consolidate and accept you've removed that page from international targeting.
       </div>
 
-      <h2>The cascading failure</h2>
+      <h2 id="cascading-failure">The cascading failure</h2>
 
       <p>A single URL type with a canonical conflict doesn't just break hreflang for that page. It breaks hreflang for every page in the cluster that references it.</p>
 
@@ -187,7 +172,7 @@
 
       <p>On a site with 50,000 product pages and 20 language variants, a single template error of this kind produces one million broken hreflang annotations. It doesn't throw an error in GSC. There's no signal anywhere that anything is wrong.</p>
 
-      <h2>How to find canonical conflicts in a hreflang implementation</h2>
+      <h2 id="find-conflicts">How to find canonical conflicts in a hreflang implementation</h2>
 
       <p>The most reliable method is a crawl that captures both canonical and hreflang data simultaneously, then cross-references them.</p>
 
@@ -199,7 +184,7 @@
         <strong>Also check:</strong> GSC's International Targeting report (if available) and the Coverage report for unusual indexing patterns on regional URLs. If regional pages are being de-indexed or if Google is serving the wrong language variant in performance data, a canonical conflict is high on the list of likely causes.
       </div>
 
-      <h2>The fix</h2>
+      <h2 id="the-fix">The fix</h2>
 
       <p>Every page that participates in a hreflang cluster must have a self-referential canonical. That's it. Not a different language version. Not a normalised variant without a trailing slash. Not page 1 of a paginated series. The canonical must point to the URL itself.</p>
 
@@ -213,25 +198,60 @@
 
       <p>Building hreflang from scratch? The <a href="/hreflang-generator/">Hreflang Generator</a> produces the full bidirectional tag set for every page in your cluster — paste each block onto the right page and the network is complete.</p>
 
-      <a href="/notes/" class="post-back">← Back to Notes</a>
+          <a href="/notes/" class="post-back">← Back to Notes</a>
 
-      <div class="author-card">
-        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
-        <div>
-          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
-          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
-          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+          <div class="author-card">
+            <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+            <div>
+              <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+              <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+              <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+            </div>
+          </div>
         </div>
       </div>
+      <aside class="ct-toc">
+        <div class="ct-toc-label">On this page</div>
+        <ul class="ct-toc-list">
+          <li><a href="#rule-meaning">Rule & meaning</a></li>
+          <li><a href="#conflict-practice">How it happens</a></li>
+          <li><a href="#cascading-failure">Cascading failure</a></li>
+          <li><a href="#find-conflicts">Find conflicts</a></li>
+          <li><a href="#the-fix">The fix</a></li>
+        </ul>
+      </aside>
     </div>
   </div>
 
-  <footer>
-    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a></p>
-    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-  </footer>
 </div>
 <script src="/header.js"></script>
-<script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+<script src="/footer.js"></script><script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+<script>
+(function() {
+  const links = document.querySelectorAll('.ct-toc-list a');
+  const headings = Array.from(links).map(link => document.getElementById(link.getAttribute('href').slice(1)));
+
+  function updateActive() {
+    let active = null;
+    for (let heading of headings) {
+      if (heading) {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top < 150) {
+          active = heading.id;
+        }
+      }
+    }
+    links.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').slice(1) === active) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  document.addEventListener('scroll', updateActive);
+  updateActive();
+})();
+</script>
 </body>
 </html>

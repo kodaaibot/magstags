@@ -8,39 +8,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <title>Enterprise Crawl Budget: How to Manage It at Scale | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg:         #f0eeec;
-      --bg2:        #F5EDE7;
-      --surface:    #FFFBF9;
-      --border:     rgba(0,0,0,.08);
-      --teal:       #0E7490;
-      --mint-light: #E0F2FE;
-      --text-1:     #111009;
-      --text-2:     #26221f;
-      --text-3:     #504c49;
-      --text-4:     #857f7a;
-    }
-    html.dark {
-      --bg:         #0f0e0d;
-      --bg2:        #1a1917;
-      --surface:    #161513;
-      --border:     rgba(255,255,255,.08);
-      --teal:       #22D3EE;
-      --mint-light: #164e63;
-      --text-1:     #f5f2ee;
-      --text-2:     #c8c4be;
-      --text-3:     #857f79;
-      --text-4:     #4a4743;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
     #blog-content{display:block}
-    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
     .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
     .breadcrumb a{color:var(--text-4);text-decoration:none}
     .breadcrumb a:hover{color:var(--teal)}
@@ -84,7 +60,21 @@
     .author-name a:hover{color:var(--teal)}
     .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
     .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
-    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+    /* Content layout — two-column with sticky TOC */
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    @media(max-width:960px) {
+      .ct-layout { grid-template-columns: 1fr; gap: 0; }
+      .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+      .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; }
+      .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; }
+    }
   </style>
   <meta property="og:title" content="Enterprise Crawl Budget: How to Manage It at Scale | MagsTags">
   <meta property="og:description" content="How enterprise SEO teams actually manage crawl budget at scale — log files, faceted navigation, JavaScript rendering gaps, and the crawl vs. indexation distinction most guides miss.">
@@ -123,7 +113,6 @@
 <script>
   (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
 </script>
-<script src="/header.js" defer></script>
 
 <div id="blog-content">
   <div class="post-wrap">
@@ -147,13 +136,15 @@
       <span>18 min read</span>
     </div>
 
-    <div class="post-body">
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
 
       <p class="post-lead">Most crawl budget guides are written for sites with ten thousand pages and treat the concept as a potential future concern. If you manage a site with millions of URLs, those guides don't map to your reality. At enterprise scale, crawl budget isn't a theoretical risk — it's an active allocation problem you're solving every day, whether you know it or not.</p>
 
       <p>This is not another explainer on what crawl budget is. If you're managing a large site, you know the definition. What's often missing on this topic is the operational layer: how you actually diagnose crawl waste, where the real decisions get made, and how to build monitoring that surfaces problems before they cost you rankings.</p>
 
-      <h2>The invisible 95%</h2>
+      <h2 id="the-invisible-95">The invisible 95%</h2>
 
       <p>Google does not crawl every URL it knows about with equal frequency. It allocates crawl resources dynamically, based on two factors: <strong>crawl rate limit</strong> (how fast it can fetch pages without overloading your server) and <strong>crawl demand</strong> (how much it believes your content is worth revisiting, based on PageRank, update frequency, and historical crawl value).</p>
 
@@ -163,7 +154,7 @@
 
       <p>The first mindset shift for enterprise crawl budget management is this: you are not waiting for Google to crawl your site. You are making decisions, through architecture and configuration, about which pages get prioritised. Every robots.txt directive, every canonical tag, every internal link pattern is a crawl budget decision.</p>
 
-      <h2>Crawl budget and indexation budget are not the same thing</h2>
+      <h2 id="crawl-vs-indexation">Crawl budget and indexation budget are not the same thing</h2>
 
       <p>This distinction is consistently absent from guides on this topic, and it causes real diagnostic confusion.</p>
 
@@ -183,7 +174,7 @@
 
       <p>Treating all three as "crawl budget issues" and responding with the same solutions (robots.txt, sitemaps, canonicals) is a common mistake that wastes engineering time without addressing the root cause.</p>
 
-      <h2>Why server logs are the ground truth</h2>
+      <h2 id="server-logs-ground-truth">Why server logs are the ground truth</h2>
 
       <p>Google Search Console's Crawl Stats report is a useful starting point. It shows total daily crawl requests, file types crawled, response code distribution, and how Googlebot time is distributed across your site. The problem is that it's sampled data. At scale, sampling introduces material gaps between what GSC shows and what is actually happening.</p>
 
@@ -210,7 +201,7 @@
 
       <p>For sites using a CDN, it's worth checking whether Googlebot is consistently hitting origin or being served cached responses. Some CDN configurations exclude Googlebot from caching rules by user agent, which means every Googlebot request goes to origin rather than being served from cache — increasing origin load and potentially suppressing crawl rate. This isn't universally the case, but it's worth verifying in your CDN configuration if you're seeing unexpectedly high origin load during crawl windows.</p>
 
-      <h2>The seven biggest crawl budget killers at enterprise scale</h2>
+      <h2 id="crawl-budget-killers">The seven biggest crawl budget killers at enterprise scale</h2>
 
       <p>Each of these is a distinct problem with a distinct solution. They're listed here roughly in order of how much crawl capacity they typically consume, based on the patterns that appear most frequently in large-site audits.</p>
 
@@ -288,7 +279,7 @@
       </ol>
       <p>Ensure staging is never linked from production, and treat crawler access control as a deployment requirement rather than something to configure after a problem surfaces.</p>
 
-      <h2>Internal linking as crawl infrastructure</h2>
+      <h2 id="internal-linking-infrastructure">Internal linking as crawl infrastructure</h2>
 
       <p>Internal links are the primary mechanism through which crawl budget flows through your site. Googlebot follows internal links to discover URLs and assigns crawl priority based on how deeply a page is linked from high-authority pages. A product page linked from your homepage is crawled more frequently than one linked only from a third-tier category page, which is crawled more frequently than an orphaned page linked from nothing.</p>
 
@@ -319,7 +310,7 @@
         <strong>A URL in your XML sitemap with zero internal links pointing to it is an orphan.</strong> Google may crawl it via the sitemap, but without internal link signals it has no authority context, no crawl priority inheritance, and no equity flow. If it deserves to be in your sitemap, it deserves an internal link.
       </div>
 
-      <h2>The faceted navigation decision framework</h2>
+      <h2 id="faceted-navigation-framework">The faceted navigation decision framework</h2>
 
       <p>Because faceted navigation is the single largest source of crawl waste on most large e-commerce sites, it deserves a more structured approach than the generic advice to "manage your URL parameters." Here is a practical decision framework for classifying filter combinations.</p>
 
@@ -369,7 +360,7 @@
 
       <p>For large e-commerce sites, the practical approach is to export your full parameter space, group by parameter type, and run keyword volume checks on the top combinations for each type. You don't need to check every permutation — you need to check enough to understand the demand pattern for each parameter dimension. Brand, colour, and size tend to have demand. Sort order, page number, and session identifiers never do.</p>
 
-      <h2>Building a crawl budget monitoring workflow</h2>
+      <h2 id="monitoring-workflow">Building a crawl budget monitoring workflow</h2>
 
       <p>Crawl budget management isn't a one-time audit. It requires ongoing monitoring because your site changes — new pages, new templates, new platform features, new marketing campaigns that generate parametric URLs — and because Googlebot's behaviour on your site shifts in response to those changes and to broader algorithm updates.</p>
 
@@ -399,7 +390,7 @@
         <li>A platform migration, CMS upgrade, or major architecture change — any of these can introduce new URL patterns or break existing crawl configurations</li>
       </ul>
 
-      <h2>Making the case for crawl budget work in enterprise organisations</h2>
+      <h2 id="making-the-case">Making the case for crawl budget work in enterprise organisations</h2>
 
       <p>Technical SEO recommendations that require engineering capacity to implement need to compete with product features, infrastructure work, and other priorities in a sprint planning process. "We need to fix our crawl budget" is not a compelling business case. The translation into engineering and product language matters.</p>
 
@@ -412,7 +403,7 @@
       <p>The implementation brief — not the audit document — is what gets this work prioritised. A brief that describes the business impact of indexation delay, estimates the engineering effort in sprint points, and defines what a successful outcome looks like is the deliverable that moves crawl budget work from the SEO backlog to the engineering roadmap.</p>
 
       <div class="faq-block">
-        <h2>Frequently asked questions</h2>
+        <h2 id="faq">Frequently asked questions</h2>
 
         <div class="faq-item">
           <div class="faq-q">How do I know if crawl budget is actually a problem for my site?</div>
@@ -449,6 +440,21 @@
           <div class="faq-a">Server log analysis is the primary tool — most enterprise teams use a combination of a log parser (Screaming Frog Log File Analyser, Botify, Lumar/DeepCrawl, or custom scripts) and a data warehouse for longer-term trend analysis. Google Search Console Crawl Stats provides sampled data and is useful for trend direction but not for granular URL-level analysis. A full site crawl using Screaming Frog or a similar crawler gives you the internal link graph needed for orphan analysis and redirect chain identification. For JavaScript rendering analysis, the GSC URL Inspection tool and Google's Rich Results Test show you what Googlebot actually sees at the rendered level versus the initial HTML.</div>
         </div>
       </div>
+      <nav class="ct-toc" aria-label="Table of contents">
+        <div class="ct-toc-label">On this page</div>
+        <ol class="ct-toc-list">
+          <li><a href="#the-invisible-95">The invisible 95%</a></li>
+          <li><a href="#crawl-vs-indexation">Crawl vs. indexation</a></li>
+          <li><a href="#server-logs-ground-truth">Server logs</a></li>
+          <li><a href="#crawl-budget-killers">7 biggest killers</a></li>
+          <li><a href="#internal-linking-infrastructure">Internal linking</a></li>
+          <li><a href="#faceted-navigation-framework">Faceted navigation</a></li>
+          <li><a href="#monitoring-workflow">Monitoring workflow</a></li>
+          <li><a href="#making-the-case">Making the case</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </nav>
+    </div>
 
       <div class="author-card">
         <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
@@ -458,11 +464,29 @@
           <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
         </div>
       </div>
-
-
-<footer>
-    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
-    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-  </footer>
+    </div>
+  </div>
+</div>
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
+<script>
+(function() {
+  var ids = ['the-invisible-95', 'crawl-vs-indexation', 'server-logs-ground-truth', 'crawl-budget-killers', 'internal-linking-infrastructure', 'faceted-navigation-framework', 'monitoring-workflow', 'making-the-case', 'faq'];
+  var links = document.querySelectorAll('.ct-toc-list a');
+  if (!links.length) return;
+  function update() {
+    var current = '';
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el && el.getBoundingClientRect().top <= 120) current = ids[i];
+    }
+    links.forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
 </body>
 </html>

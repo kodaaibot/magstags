@@ -8,46 +8,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
-  
+
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+
   <title>MagsTags | SEO & E-commerce Toolkit</title>
   <meta name="description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    :root {
-      --bg:           #f0eeec;
-      --bg2:          #F5EDE7;
-      --surface:      #fafaf7;
-      --border:       #ddd9d3;
-      --text-1:       #111009;
-      --text-2:       #26221f;
-      --text-3:       #504c49;
-      --text-4:       #857f7a;
-      --teal:         #0E7490;
-      --mint:         #0891B2;
-      --mint-light:   #E0F2FE;
-      --shadow-sm:    0 1px 3px rgba(26,24,22,.07);
-      --shadow-md:    0 4px 16px rgba(26,24,22,.09);
-    }
-    html.dark {
-      --bg:           #111110;
-      --bg2:          #191817;
-      --surface:      #1e1c1a;
-      --border:       rgba(255,255,255,.08);
-      --text-1:       #f5f2ee;
-      --text-2:       #c8c4be;
-      --text-3:       #857f79;
-      --text-4:       #4a4743;
-      --teal:         #22D3EE;
-      --mint:         #67E8F9;
-      --mint-light:   rgba(14,116,144),.14);
-      --shadow-sm:    0 1px 3px rgba(0,0,0,.5);
-      --shadow-md:    0 4px 16px rgba(0,0,0,.6);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; transition: background .25s, color .25s; -webkit-font-smoothing: antialiased; }
-
     /* ── Auth gate ── */
 
     /* ── Header ── */
@@ -149,7 +118,6 @@
       .coffee-bar { padding: 32px 16px; }
     }
   </style>
-  <script>(function(){ if(localStorage.getItem('gmc-theme')==='dark') document.documentElement.classList.add('dark'); })();</script>
   <meta property="og:title" content="MagsTags | SEO & E-commerce Toolkit">
   <meta property="og:description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
   <meta property="og:url" content="https://www.magstags.com/">
@@ -385,11 +353,12 @@
         </div>
         <span class="tool-badge tool-badge-free">Free</span>
       </div>
-      <div class="tool-name"><a href="/xml-sitemap-url-counter/" style="color:inherit;text-decoration:none;">XML Sitemap URL Counter<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Count every URL across your sitemaps without writing a script.</div>
+      <div class="tool-name"><a href="/xml-sitemap-url-counter-analyzer/" style="color:inherit;text-decoration:none;">XML Sitemap Counter &amp; Analyzer<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
+      <div class="tool-desc">URL counts, directory breakdown, duplicate detection, lastmod coverage — from one sitemap URL.</div>
       <div class="tool-tags">
         <span class="tool-tag">Sitemap index</span>
         <span class="tool-tag">URL count</span>
+        <span class="tool-tag">Lastmod</span>
         <span class="tool-tag">Technical SEO</span>
       </div>
     </div>
@@ -615,15 +584,6 @@
   </div>
 </section>
 
-<footer>
-  <p>© 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
-  <div id="footer-auth" style="margin-top:10px;font-size:11px;color:var(--text-4)"></div>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
-
-<script>
-</script>
-
 <script>
   // ── Filter logic ──────────────────────────────────────────────────────────
   var fState = { type: new Set(), price: new Set() };
@@ -659,10 +619,10 @@
     document.querySelectorAll('[data-type]').forEach(function(c){c.style.display='';});
     document.getElementById('filter-clear').style.display='none';
   }
-  
 </script>
 
 </main>
+<script src="/footer.js"></script>
 <script src="/header.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" data-clerk-publishable-key="pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA" crossorigin="anonymous"></script>
   <script src="/gmc-auth.js"></script>

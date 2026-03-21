@@ -6,6 +6,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <title>Product Snippet — Schema Generator | MagsTags</title>
   <meta name="description" content="The markup that adds prices and stars to your Google results. Generate Product Snippet JSON-LD for star ratings, reviews, pros/cons, and pricing in organic search. Free, no account needed.">
   <link rel="canonical" href="https://www.magstags.com/product-snippet-schema-generator/">
@@ -36,24 +38,6 @@
   </script>
 
   <style>
-    :root {
-      --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
-      --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #857f7a;
-      --teal: #0E7490; --mint: #0891B2;
-      --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09);
-      --red: #c0392b; --red-light: #fdf0ee; --green: #0a7c5c; --amber: #92400e;
-    }
-    html.dark {
-      --bg: #111110; --bg2: #191817; --surface: #1e1c1a; --surface-alt: #242220;
-      --border: rgba(255,255,255,.08); --text-1: #f5f2ee; --text-2: #c8c4be;
-      --text-3: #857f79; --text-4: #4a4743; --teal: #22D3EE; --mint: #67E8F9;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
-      --red-light: rgba(192,57,43,.14);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; font-size: 14px; }
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-    @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
 
     .page-hero { margin-bottom: 32px; }
     .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
@@ -173,7 +157,7 @@
     .tc-info { flex: 1; min-width: 0; }
     .tc-name { font-size: 12px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
     .tc-benefits { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-    .tc-benefits li { font-size: 12px; color: var(--text-3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+    .tc-benefits li { font-size: 14px; color: var(--text-3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
     .tc-benefits li::before { content: ''; width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
     @media (max-width: 600px) { .tc-inner { flex-direction: column; } .tc-serp { width: 100%; } }
 
@@ -183,15 +167,9 @@
     /* Form type indicator */
     .tab-intro { font-size: 13px; color: var(--text-3); background: rgba(14,116,144,.06); border: 1px solid rgba(14,116,144,.15); border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.5; }
     .tab-intro a { color: var(--teal); }
-
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
-      @media(max-width:600px){main{padding:24px 16px 60px}}
   </style>
 </head>
 <body>
-
-<script src="/header.js"></script>
 
 <div class="tool-content">
 <main>
@@ -879,13 +857,6 @@
 </main>
 </div><!-- end tool-content -->
 
-<footer>
-  <div style="max-width:1320px;margin:0 auto;padding:0 36px">
-    <p style="font-size:12px;color:var(--text-4)">© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>
-  </div>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
-
 <script>
   /* ─── Clerk auth (staff tools only — this tool is public) ─── */
 
@@ -1501,6 +1472,9 @@
     }
   })();
 </script>
+
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
 
 </body>
 </html>

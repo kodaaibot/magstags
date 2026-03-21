@@ -8,39 +8,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <title>Mega Menus &amp; SEO | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg:         #f0eeec;
-      --bg2:        #F5EDE7;
-      --surface:    #FFFBF9;
-      --border:     rgba(0,0,0,.08);
-      --teal:       #0E7490;
-      --mint-light: #E0F2FE;
-      --text-1:     #111009;
-      --text-2:     #26221f;
-      --text-3:     #504c49;
-      --text-4:     #857f7a;
-    }
-    html.dark {
-      --bg:         #0f0e0d;
-      --bg2:        #1a1917;
-      --surface:    #161513;
-      --border:     rgba(255,255,255,.08);
-      --teal:       #22D3EE;
-      --mint-light: #164e63;
-      --text-1:     #f5f2ee;
-      --text-2:     #c8c4be;
-      --text-3:     #857f79;
-      --text-4:     #4a4743;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;-webkit-font-smoothing:antialiased}
     #blog-content{display:block}
-    .post-wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
     .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
     .breadcrumb a{color:var(--text-4);text-decoration:none}
     .breadcrumb a:hover{color:var(--teal)}
@@ -122,7 +98,15 @@
     .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
     .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
     .post-back:hover{color:var(--teal)}
-    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
   </style>
   <meta property="og:title" content="Mega Menus &amp; SEO | MagsTags">
   <meta property="og:description" content="A decision framework for when mega menus help and when they hurt. Link equity dilution, the Reasonable Surfer model, anchor text uniformity, and what to do instead.">
@@ -161,7 +145,6 @@
 <script>
   (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
 </script>
-<script src="/header.js" defer></script>
 
 <div id="blog-content">
   <div class="post-wrap">
@@ -185,7 +168,9 @@
       <span>14 min read</span>
     </div>
 
-    <div class="post-body">
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
 
       <p class="post-lead">For SEOs who've tried to explain link equity dilution to a dev team using a whiteboard, and for developers who've been asked to "just add everything to the nav" by someone who doesn't understand what that costs.</p>
 
@@ -193,7 +178,7 @@
 
       <p>This is a decision framework. Not a blanket recommendation. The answer depends on what you're linking to, how many pages you have, and whether the navigation is doing what you think it's doing.</p>
 
-      <h2>The core problem, stated plainly</h2>
+      <h2 id="core-problem">The core problem, stated plainly</h2>
 
       <p>A mega menu places the same set of links (often dozens, sometimes hundreds) on every page of your site. Every product page, every category page, every blog post, every landing page. The same links, with the same anchor text, repeated across your entire template.</p>
 
@@ -207,7 +192,7 @@
 
       <p>None of these problems are theoretical. They're architectural. And they get worse as the site gets bigger.</p>
 
-      <h2>Why not all links are equal: the Reasonable Surfer model</h2>
+      <h2 id="reasonable-surfer">Why not all links are equal: the Reasonable Surfer model</h2>
 
       <p>The original PageRank model treated all links on a page equally. A link in the footer carried the same weight as a link in the opening paragraph. A navigation link passed the same equity as a contextual editorial link. Google called this the "random surfer model": imagine someone clicking links at random, with no preference for where those links sit on the page or how relevant they are.</p>
 
@@ -234,7 +219,7 @@
         <strong>Navigation links still count.</strong> They still pass equity, still consume crawl budget, and still influence discovery. The point isn't that they're worthless, it's that they're not all worth the same, and a mega menu placing the same links on every page regardless of context is likely getting less value per link than most site owners assume.
       </div>
 
-      <h2>The anchor text problem in detail</h2>
+      <h2 id="anchor-text">The anchor text problem in detail</h2>
 
       <p>When Google encounters multiple links on a page pointing to the same URL, it has to decide which anchor text to associate with that destination. The historical theory, known as "first link priority," suggested Google only counted the anchor text of the first link it encountered in the HTML. The navigation link, being first in the source code, would override any contextual link you placed in the body content.</p>
 
@@ -246,7 +231,7 @@
 
       <p>The result: your internal anchor text profile becomes flat. Every destination receives the same signal from everywhere. Google can see that your site links to <code>/shoes/running/</code> a lot. What it can't easily see is <em>why</em> any specific page considers that destination relevant, because the anchor text never varies and the context is never page-specific.</p>
 
-      <h2>The link equity math</h2>
+      <h2 id="link-equity">The link equity math</h2>
 
       <p>The equity distribution problem is straightforward but often underestimated. Consider two versions of the same product page:</p>
 
@@ -262,7 +247,7 @@
 
       <p>At enterprise scale, tens of thousands of pages each carrying a mega menu, this dilution compounds across the entire internal link graph. The pages you most want to rank receive less concentrated equity from fewer contextually relevant links, because the budget is being spread across a navigation that treats every destination as equally important from every page, even though Google's own system does not.</p>
 
-      <h2>The crawl budget dimension</h2>
+      <h2 id="crawl-budget">The crawl budget dimension</h2>
 
       <p>For smaller sites (under 10,000 pages) crawl budget is unlikely to be a material concern regardless of menu size. For larger sites, a mega menu compounds the crawl allocation problem. The full picture is in the <a href="/notes/crawl-budget-enterprise/">enterprise crawl budget guide</a>.</p>
 
@@ -270,7 +255,7 @@
 
       <p>More importantly, the mega menu flattens your site's architecture from Googlebot's perspective. Mueller has been direct on this: when a site structure becomes too flat, Google can't recognise which parts of the site belong together. A pyramid structure, where categories link to subcategories and subcategories link to products, gives Google a hierarchy to interpret. A mega menu that links to everything from everywhere removes that hierarchy.</p>
 
-      <h2>When it helps and when it doesn't</h2>
+      <h2 id="helps-hurts">When it helps and when it doesn't</h2>
 
       <div class="compare-grid">
         <div class="compare-col yes">
@@ -288,7 +273,7 @@
         </div>
       </div>
 
-      <h2>The decision tree</h2>
+      <h2 id="decision-tree">The decision tree</h2>
 
       <p>Before choosing a navigation pattern, answer these questions in order:</p>
 
@@ -326,7 +311,7 @@
         </div>
       </div>
 
-      <h2>What to do instead</h2>
+      <h2 id="alternatives">What to do instead</h2>
 
       <div class="alt-grid">
         <div class="alt-card">
@@ -351,7 +336,7 @@
         </div>
       </div>
 
-      <h2>Making the change</h2>
+      <h2 id="making-change">Making the change</h2>
 
       <p>If you're moving from a mega menu to a leaner navigation, the transition matters.</p>
 
@@ -366,7 +351,7 @@
       </div>
 
       <div class="faq-block">
-        <h2>Frequently asked questions</h2>
+        <h2 id="faq">Frequently asked questions</h2>
 
         <div class="faq-item">
           <div class="faq-q">Does Google treat navigation links differently from in-content links?</div>
@@ -395,7 +380,7 @@
       </div>
 
       <div class="sources">
-        <h2>Sources and further reading</h2>
+        <h2 id="sources">Sources and further reading</h2>
         <ul>
           <li><strong>Google's Reasonable Surfer patent</strong>, <em>Ranking documents based on user behavior and/or feature data</em> (US9305099). Originally filed 2004, granted 2016. The patent that replaced the random surfer model with a probability-based model for link value distribution. <a href="https://patents.google.com/patent/US9305099" target="_blank" rel="noopener">patents.google.com</a></li>
           <li><strong>Bill Slawski, SEO by the Sea</strong>, <a href="https://www.seobythesea.com/2010/05/googles-reasonable-surfer-how-the-value-of-a-link-may-differ-based-upon-link-and-document-features-and-user-data/" target="_blank" rel="noopener">Google's Reasonable Surfer: How the Value of a Link May Differ</a> (2010) and <a href="https://www.seobythesea.com/2016/04/googles-reasonable-surfer-patent-updated/" target="_blank" rel="noopener">Reasonable Surfer Patent Updated</a> (2016). The most thorough analysis of Google's link valuation patents available.</li>
@@ -415,11 +400,48 @@
           <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
         </div>
       </div>
+        </div>
+      </div>
+      <nav class="ct-toc">
+        <div class="ct-toc-label">On this page</div>
+        <ul class="ct-toc-list">
+          <li><a href="#core-problem">Core problem</a></li>
+          <li><a href="#reasonable-surfer">Reasonable Surfer</a></li>
+          <li><a href="#anchor-text">Anchor text</a></li>
+          <li><a href="#link-equity">Link equity</a></li>
+          <li><a href="#crawl-budget">Crawl budget</a></li>
+          <li><a href="#helps-hurts">Helps & hurts</a></li>
+          <li><a href="#decision-tree">Decision tree</a></li>
+          <li><a href="#alternatives">Alternatives</a></li>
+          <li><a href="#making-change">Making change</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
+<script>
+(function() {
+  const links = document.querySelectorAll('.ct-toc-list a');
+  const headings = document.querySelectorAll('.post-body h2[id]');
 
+  function updateActiveLink() {
+    let current = '';
+    headings.forEach(heading => {
+      if (heading.offsetTop - 100 <= window.scrollY) current = heading.id;
+    });
+    links.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  }
 
-<footer>
-    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
-    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-  </footer>
+  window.addEventListener('scroll', updateActiveLink);
+  updateActiveLink();
+})();
+</script>
 </body>
 </html>

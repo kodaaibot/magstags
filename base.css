@@ -1,0 +1,140 @@
+/* ── MagsTags Base Styles ──────────────────────────────────────────────────
+   Shared across all pages. Page-specific CSS stays inline.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Theme tokens ─────────────────────────────────────────────────────── */
+:root {
+  --bg: #f0ede8;
+  --bg2: #F5EDE7;
+  --surface: #fafaf7;
+  --border: #ddd9d3;
+  --teal: #0E7490;
+  --teal-light: #e0f2f7;
+  --mint: #0891B2;
+  --mint-light: #E0F2FE;
+  --text-1: #111;
+  --text-2: #333;
+  --text-3: #555;
+  --text-4: #888;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --green-border: #bbf7d0;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fecaca;
+  --amber: #d97706;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+  --paid-color: #E11D48;
+  --radius: 20px;
+}
+html.dark {
+  --bg: #141210;
+  --bg2: #1a1917;
+  --surface: #1c1a17;
+  --border: #2e2b27;
+  --text-1: #f5f2ee;
+  --text-2: #d4cfc9;
+  --text-3: #9e9890;
+  --text-4: #6b6560;
+  --teal-light: #164e63;
+  --mint-light: #164e63;
+  --green-bg: #14532d;
+  --green-border: #166534;
+  --green: #4ade80;
+  --red-bg: #450a0a;
+  --red-border: #7f1d1d;
+  --red: #f87171;
+  --amber-bg: #451a03;
+  --amber-border: #78350f;
+  --amber: #fbbf24;
+}
+
+/* ── Base typography ──────────────────────────────────────────────────── */
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background .25s, color .25s;
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Layout ───────────────────────────────────────────────────────────── */
+main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 24px 100px;
+}
+@media (max-width: 768px) {
+  main { padding: 24px 20px 60px; }
+}
+
+/* ── Headings ─────────────────────────────────────────────────────────── */
+h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+/* ── Breadcrumb ───────────────────────────────────────────────────────── */
+.breadcrumb {
+  padding: 8px 0 0;
+  font-size: 12px;
+  color: var(--text-4);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.breadcrumb a { color: var(--text-4); text-decoration: none; }
+.breadcrumb a:hover { color: var(--teal); }
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 36px;
+  text-align: center;
+}
+footer p { font-size: 12px; color: var(--text-4); }
+footer a { color: var(--text-4); text-decoration: none; opacity: .8; }
+footer a:hover { color: var(--teal); opacity: 1; }
+
+/* ── Main body text ───────────────────────────────────────────────────── */
+main p { font-size: 14px; }
+main code {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── Tagline ──────────────────────────────────────────────────────────── */
+.tagline {
+  font-size: 16px;
+  color: var(--teal);
+  font-weight: 400;
+  margin-bottom: 14px;
+}
+
+/* ── Voice paragraph ──────────────────────────────────────────────────── */
+.voice {
+  font-size: 15px;
+  color: var(--text-3);
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+/* ── Section divider ──────────────────────────────────────────────────── */
+.section-hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 20px 0;
+}

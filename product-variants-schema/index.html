@@ -19,6 +19,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
 
   <script type="application/ld+json">
   {
@@ -129,16 +131,10 @@
   </script>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #f0ede8; --surface: #fafaf7; --border: #ddd9d3; --teal: #0E7490; --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888; --green: #16a34a; --radius: 20px; }
-    html.dark { --bg: #141210; --surface: #1c1a17; --border: #2e2b27; --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
-    a { color: var(--teal); text-decoration: none; } a:hover { text-decoration: underline; }
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .container { max-width: 860px; padding: 0 24px; }
     .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
     .breadcrumb a { color: var(--text-4); } .breadcrumb a:hover { color: var(--teal); text-decoration: none; } .breadcrumb-sep { opacity: .5; }
-    .hero { padding: 48px 0 40px; }
+    .hero { }
     .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
     .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
     .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
@@ -201,8 +197,6 @@
     .cta-btn:hover { opacity: .88; text-decoration: none; }
     .cta-btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: none; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all .15s; }
     .cta-btn-outline:hover { background: rgba(14,116,144,.06); text-decoration: none; }
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
 
     /* Series sidebar */
     .page-layout { display: flex; gap: 48px; align-items: flex-start; }
@@ -244,10 +238,18 @@
     .challenge-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; }
     .challenge-fix { margin-top: 12px; font-size: 12px; color: var(--text-2); background: rgba(14,116,144,.05); border-left: 3px solid var(--teal); padding: 10px 14px; border-radius: 0 8px 8px 0; line-height: 1.6; }
     .challenge-fix strong { color: var(--teal); }
+
+    /* Content layout */
+    .ct-toc { margin-top: 16px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
   </style>
 </head>
 <body>
-<script src="/header.js"></script>
+
 <main>
 <div class="page-layout">
 
@@ -259,6 +261,19 @@
     <a href="/merchant-listing-schema/" class="series-item"><span class="series-item-type">Class 2</span><span class="series-item-name">Merchant Listing schema</span></a>
     <div class="series-item active"><span class="series-item-type">+ Variants</span><span class="series-item-name">ProductGroup &amp; Variants schema</span></div>
   </div>
+  <nav class="ct-toc" aria-label="Table of contents">
+    <div class="ct-toc-label">On this page</div>
+    <ul class="ct-toc-list">
+      <li><a href="#what-product-variants-unlocks">What unlocks</a></li>
+      <li><a href="#key-properties">Key properties</a></li>
+      <li><a href="#how-to-implement">How to implement</a></li>
+      <li><a href="#json-ld-examples">Examples</a></li>
+      <li><a href="#implementation-challenges">Challenges</a></li>
+      <li><a href="#faqs">FAQs</a></li>
+      <li><a href="#series">Series</a></li>
+      <li><a href="#generate-schema">Generate</a></li>
+    </ul>
+  </nav>
 </aside>
 <div class="page-content">
 <div class="container">
@@ -324,7 +339,7 @@
   </div>
 
   <!-- Benefits -->
-  <section class="section">
+  <section class="section" id="what-product-variants-unlocks">
     <h2 class="section-title">What Product Variants schema unlocks</h2>
     <div class="benefits-grid">
       <div class="benefit-card">
@@ -351,7 +366,7 @@
   </section>
 
   <!-- Required fields -->
-  <section class="section">
+  <section class="section" id="key-properties">
     <h2 class="section-title">Key properties for Product Variants schema</h2>
     <p class="section-lead">ProductGroup holds shared attributes. Each variant is a Product nested inside <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code> — or linked back via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">isVariantOf</code> in flat mode. The <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code> array must contain at least one valid variant — each variant must have an <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">offers</code> object or the ProductGroup can fail validation entirely.</p>
     <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
@@ -390,7 +405,7 @@
   </section>
 
   <!-- How to implement -->
-  <section class="section">
+  <section class="section" id="how-to-implement">
     <h2 class="section-title">How to implement ProductVariant schema</h2>
     <p class="section-lead">Google's official documentation explains what ProductVariant schema is well enough. What it skips is the CMS that doesn't store things the way schema.org expects, the variant with a missing price that breaks the entire group, and the part where you validate it three months later and find it was never rendering correctly. Here's how to do it properly from the start.</p>
     <div class="steps-list">
@@ -436,7 +451,7 @@
   </section>
 
   <!-- JSON-LD examples -->
-  <section class="section">
+  <section class="section" id="json-ld-examples">
     <h2 class="section-title">JSON-LD examples</h2>
 
     <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:32px">Nested structure (recommended)</h3>
@@ -635,7 +650,7 @@
   </section>
 
   <!-- Challenges -->
-  <section class="section">
+  <section class="section" id="implementation-challenges">
     <h2 class="section-title">Common implementation challenges</h2>
     <p class="section-lead">ProductVariant schema is technically optional the same way that QA testing is technically optional. What follows is a list of things that will happen to you if you skip the hard parts.</p>
     <div class="challenges-list">
@@ -668,7 +683,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="section">
+  <section class="section" id="faqs">
     <h2 class="section-title">Frequently asked questions</h2>
     <div class="faq-list">
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Does each product variant need its own URL for ProductGroup schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">No. ProductGroup schema supports both a single page with all variants selectable and separate pages per variant. For separate pages, each variant Product should have its own url property. For a single page, the ProductGroup and all variants can share the same URL.</div></div>
@@ -684,7 +699,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="series">
     <h2 class="section-title">Also in this series</h2>
     <div class="nav-pills">
       <a href="/product-schema/" class="nav-pill">Overview: Product structured data</a>
@@ -693,7 +708,7 @@
     </div>
   </section>
 
-  <div class="cta-section">
+  <div class="cta-section" id="generate-schema">
     <h2>Generate valid Product Variants schema</h2>
     <p>Add variants, choose nested or flat output, and get clean JSON-LD in seconds. No account needed.</p>
     <div class="cta-links">
@@ -706,11 +721,45 @@
 </div>
 </div>
 </main>
-<footer><p>© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-schema/" style="color:inherit;opacity:.7">Product Schema</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a></p>  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
+
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
+
 <script>
 function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!open)item.classList.add('open');}
 function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');navigator.clipboard.writeText(code.textContent).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);});}
+
+// TOC scroll spy
+(function() {
+  var toc = document.querySelector('.ct-toc-list');
+  if (!toc) return;
+
+  var links = toc.querySelectorAll('a');
+  var sections = Array.from(links).map(function(link) {
+    var id = link.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  function updateActive() {
+    var current = '';
+    for (var i = 0; i < sections.length; i++) {
+      var rect = sections[i].getBoundingClientRect();
+      if (rect.top < 200) {
+        current = sections[i].id;
+      }
+    }
+
+    links.forEach(function(link) {
+      link.classList.remove('active');
+      if (link.getAttribute('href').slice(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActive);
+  updateActive();
+})();
 </script>
 </body>
 </html>

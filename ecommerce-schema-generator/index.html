@@ -6,6 +6,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
   <title>Product Schema Generator | MagsTags</title>
   <meta name="description" content="Choose your generator: Product Snippet, Merchant Listing, or Product Variants. Free JSON-LD tools for Google rich results — no account needed.">
   <link rel="canonical" href="https://www.magstags.com/ecommerce-schema-generator/">
@@ -53,8 +55,6 @@
       --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
       --red-light: rgba(192,57,43,.14);
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; font-size: 14px; }
     main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
     @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
 
@@ -176,7 +176,7 @@
     .tc-info { flex: 1; min-width: 0; }
     .tc-name { font-size: 12px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
     .tc-benefits { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-    .tc-benefits li { font-size: 12px; color: var(--text-3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+    .tc-benefits li { font-size: 14px; color: var(--text-3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
     .tc-benefits li::before { content: ''; width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
     @media (max-width: 600px) { .tc-inner { flex-direction: column; } .tc-serp { width: 100%; } }
 
@@ -187,14 +187,10 @@
     .tab-intro { font-size: 13px; color: var(--text-3); background: rgba(14,116,144,.06); border: 1px solid rgba(14,116,144,.15); border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.5; }
     .tab-intro a { color: var(--teal); }
 
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
       @media(max-width:600px){main{padding:24px 16px 60px}}
   </style>
 </head>
 <body>
-
-<script src="/header.js"></script>
 
 <div class="tool-content">
 <main>
@@ -266,12 +262,8 @@
 </main>
 </div><!-- end tool-content -->
 
-<footer>
-  <div style="max-width:1320px;margin:0 auto;padding:0 36px">
-    <p style="font-size:12px;color:var(--text-4)">© 2026 MagsTags · <a href="/" style="color:inherit;opacity:.7">Home</a> · <a href="/product-snippet-schema/" style="color:inherit;opacity:.7">Product Snippet</a> · <a href="/merchant-listing-schema/" style="color:inherit;opacity:.7">Merchant Listing</a> · <a href="/product-variants-schema/" style="color:inherit;opacity:.7">Product Variants</a></p>
-  </div>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
-</footer>
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
 
 
 
