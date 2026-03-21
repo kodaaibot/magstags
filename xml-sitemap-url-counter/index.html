@@ -642,6 +642,8 @@
     var seen = {};
     var dupes = 0;
     allUrls.forEach(function(u) { if (seen[u]) dupes++; seen[u] = true; });
+    var uniqueUrls = Object.keys(seen);
+    var uniqueCount = uniqueUrls.length;
 
     var warnings = [];
     urlsets.forEach(function(s) {
@@ -649,19 +651,25 @@
     });
     if (dupes > 0) warnings.push(dupes.toLocaleString() + ' duplicate URL' + (dupes > 1 ? 's' : '') + ' across sitemaps.');
 
+    /* Is this a sitemap index or a single sitemap? */
+    var isIndex = indexes.length > 0;
+    var totalChildren = 0;
+    if (isIndex) indexes.forEach(function(idx) { totalChildren += idx.childLocs.length; });
+
     var html = '';
 
     /* Total banner */
     html += '<div class="total-banner">';
-    html += '<div class="total-number">' + totalUrls.toLocaleString() + '</div>';
-    html += '<div class="total-label"><strong>URLs across ' + urlsets.length + ' sitemap' + (urlsets.length !== 1 ? 's' : '') + '</strong>';
-    if (dupes > 0) html += '<br>' + Object.keys(seen).length.toLocaleString() + ' unique';
-    if (indexes.length > 0) {
-      var totalChildren = 0;
-      indexes.forEach(function(idx) { totalChildren += idx.childLocs.length; });
-      html += '<br>' + totalChildren + ' child sitemap' + (totalChildren !== 1 ? 's' : '') + ' in index';
+    html += '<div class="total-number">' + uniqueCount.toLocaleString() + '</div>';
+    if (isIndex) {
+      html += '<div class="total-label"><strong>unique URLs across ' + urlsets.length + ' sitemap' + (urlsets.length !== 1 ? 's' : '') + '</strong>';
+      html += '<br>' + totalChildren + ' child sitemap' + (totalChildren !== 1 ? 's' : '') + ' in sitemap index';
+      if (dupes > 0) html += '<br>' + totalUrls.toLocaleString() + ' total (' + dupes.toLocaleString() + ' duplicate' + (dupes > 1 ? 's' : '') + ')';
+      html += '</div>';
+    } else {
+      html += '<div class="total-label"><strong>URLs in sitemap</strong></div>';
     }
-    html += '</div></div>';
+    html += '</div>';
 
     /* Warnings */
     warnings.forEach(function(w) {
@@ -675,7 +683,24 @@
       });
     });
 
-    /* Per-sitemap breakdown (if more than one urlset) */
+    /* Directory breakdown (above per-sitemap) */
+    if (uniqueUrls.length > 0) {
+      var dirs = getDirectoryBreakdown(uniqueUrls);
+      var maxDir = dirs.length > 0 ? dirs[0].count : 1;
+      html += '<div class="section-title">URLs by top-level directory</div>';
+      html += '<table class="breakdown-table"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
+      dirs.forEach(function(d) {
+        var pct = uniqueCount > 0 ? (d.count / uniqueCount * 100) : 0;
+        var barPct = maxDir > 0 ? Math.round(d.count / maxDir * 100) : 0;
+        html += '<tr><td class="url-cell">' + esc(d.dir) + '</td>';
+        html += '<td class="count-cell">' + d.count.toLocaleString() + '</td>';
+        html += '<td class="count-cell" style="color:var(--text-3);font-weight:400">' + pct.toFixed(1) + '%</td>';
+        html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
+      });
+      html += '</tbody></table>';
+    }
+
+    /* Per-sitemap breakdown (only for sitemap indexes with multiple urlsets) */
     if (urlsets.length > 1) {
       html += '<div class="section-title">Per-sitemap breakdown</div>';
       html += '<table class="breakdown-table"><thead><tr><th>Sitemap</th><th style="text-align:right">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
@@ -684,23 +709,6 @@
         var barPct = maxCount > 0 ? Math.round(s.urls.length / maxCount * 100) : 0;
         html += '<tr><td class="url-cell">' + esc(shortName(s.name)) + '</td>';
         html += '<td class="count-cell">' + s.urls.length.toLocaleString() + '</td>';
-        html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
-      });
-      html += '</tbody></table>';
-    }
-
-    /* Directory breakdown */
-    if (allUrls.length > 0) {
-      var dirs = getDirectoryBreakdown(allUrls);
-      var maxDir = dirs.length > 0 ? dirs[0].count : 1;
-      html += '<div class="section-title">URLs by top-level directory</div>';
-      html += '<table class="breakdown-table"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
-      dirs.forEach(function(d) {
-        var pct = totalUrls > 0 ? (d.count / totalUrls * 100) : 0;
-        var barPct = maxDir > 0 ? Math.round(d.count / maxDir * 100) : 0;
-        html += '<tr><td class="url-cell">' + esc(d.dir) + '</td>';
-        html += '<td class="count-cell">' + d.count.toLocaleString() + '</td>';
-        html += '<td class="count-cell" style="color:var(--text-3);font-weight:400">' + pct.toFixed(1) + '%</td>';
         html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
       });
       html += '</tbody></table>';
@@ -751,25 +759,27 @@
     var seen = {};
     allUrls.forEach(function(u) { seen[u] = true; });
 
+    var uniqueUrls = Object.keys(seen);
     var lines = ['XML Sitemap URL Count Report', 'Generated: ' + new Date().toISOString().split('T')[0], ''];
-    lines.push('Total URLs: ' + allUrls.length.toLocaleString());
-    lines.push('Unique URLs: ' + Object.keys(seen).length.toLocaleString());
+    lines.push('Unique URLs: ' + uniqueUrls.length.toLocaleString());
+    if (allUrls.length !== uniqueUrls.length) lines.push('Total (incl. duplicates): ' + allUrls.length.toLocaleString());
     lines.push('Sitemaps processed: ' + urlsets.length);
     lines.push('');
+
+    var dirs = getDirectoryBreakdown(uniqueUrls);
+    if (dirs.length) {
+      lines.push('Directory breakdown:');
+      dirs.forEach(function(d) {
+        var pct = uniqueUrls.length > 0 ? (d.count / uniqueUrls.length * 100).toFixed(1) : '0.0';
+        lines.push('  ' + d.dir + '  ' + d.count.toLocaleString() + '  (' + pct + '%)');
+      });
+      lines.push('');
+    }
 
     if (urlsets.length > 1) {
       lines.push('Per-sitemap:');
       urlsets.forEach(function(s) { lines.push('  ' + s.name + '  ' + s.urls.length.toLocaleString()); });
       lines.push('');
-    }
-
-    var dirs = getDirectoryBreakdown(allUrls);
-    if (dirs.length) {
-      lines.push('Directory breakdown:');
-      dirs.forEach(function(d) {
-        var pct = allUrls.length > 0 ? (d.count / allUrls.length * 100).toFixed(1) : '0.0';
-        lines.push('  ' + d.dir + '  ' + d.count.toLocaleString() + '  (' + pct + '%)');
-      });
     }
 
     navigator.clipboard.writeText(lines.join('\n')).then(function() { toast('Report copied'); });
