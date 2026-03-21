@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML Sitemap URL Counter — Count URLs Across Sitemaps | MagsTags</title>
+  <meta name="description" content="Enter a sitemap URL and count every URL across all linked sitemaps. Automatically follows sitemap index files. Per-sitemap counts, directory breakdown, lastmod coverage.">
+  <link rel="canonical" href="https://www.magstags.com/sitemap-counter/">
+  <meta property="og:title" content="XML Sitemap URL Counter | MagsTags">
+  <meta property="og:description" content="Enter a sitemap URL — automatically follows index files and counts every URL. Per-sitemap breakdowns, directory stats, lastmod coverage.">
+  <meta property="og:url" content="https://www.magstags.com/sitemap-counter/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "XML Sitemap URL Counter",
+    "applicationCategory": "WebApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.magstags.com/sitemap-counter/",
+    "description": "Enter a sitemap URL and count every URL across all linked sitemaps. Automatically follows sitemap index files.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "SEO Tools", "item": "https://www.magstags.com/seo-tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Sitemap URL Counter", "item": "https://www.magstags.com/sitemap-counter/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many URLs should be in my sitemap?", "acceptedAnswer": { "@type": "Answer", "text": "As many as you have indexable pages — and no more. Every URL in your sitemap should return a 200 status, have a self-referencing canonical, and not be blocked by robots.txt or noindex. If your sitemap count is much higher than your indexed page count in Search Console, that gap is worth investigating further — use GSC's index coverage report to find out what's being excluded and why." } },
+      { "@type": "Question", "name": "Where do I find my sitemap URL?", "acceptedAnswer": { "@type": "Answer", "text": "Check yourdomain.com/robots.txt — most sites declare their sitemap there with a Sitemap: directive. If it's not there, try /sitemap.xml, /sitemap_index.xml, or check Google Search Console under Sitemaps. WordPress sites usually generate theirs at /wp-sitemap.xml or via a plugin like Yoast at /sitemap_index.xml." } },
+      { "@type": "Question", "name": "Does this tool fetch sitemaps from my server?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — when you use the URL mode, the tool fetches your sitemap through a lightweight proxy. The proxy reads the XML and passes it to your browser for parsing. No data is stored. If you'd rather not have anything fetched, use the Paste XML mode and paste the raw XML directly." } },
+      { "@type": "Question", "name": "Why is my URL count different from what Google shows as indexed?", "acceptedAnswer": { "@type": "Answer", "text": "This tool counts URLs in your sitemap — what you're submitting. Google's index count is what they've chosen to index. The two numbers are almost never the same. Google may not index every URL you submit, and it may index pages you didn't include in your sitemap. The gap between the two is one of the most useful things to investigate in a technical audit." } },
+      { "@type": "Question", "name": "Can I count URLs in a gzipped sitemap?", "acceptedAnswer": { "@type": "Answer", "text": "Not directly — the tool handles plain XML. If your sitemaps are served as .xml.gz, you'll need to decompress them first. Most browsers will do this automatically if you open the URL directly, so try pasting the URL — the server may serve it decompressed. Otherwise, download, decompress, and use Paste XML mode." } },
+      { "@type": "Question", "name": "What does the older than 1 year lastmod warning mean?", "acceptedAnswer": { "@type": "Answer", "text": "It means URLs in your sitemap have a lastmod date more than 12 months old. That's not inherently a problem — some pages genuinely don't change. But if a large percentage of your sitemap has stale lastmod dates, Google may deprioritise recrawling those URLs. If the content has been updated but the lastmod hasn't, your CMS isn't updating the timestamps correctly." } }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0ede8; --bg2: #F5EDE7; --surface: #fafaf7; --border: #ddd9d3;
+      --teal: #0E7490; --teal-light: #e0f2f7; --mint-light: #E0F2FE;
+      --text-1: #111; --text-2: #333; --text-3: #555; --text-4: #888;
+      --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
+      --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
+      --amber: #d97706; --amber-bg: #fffbeb; --amber-border: #fde68a;
+      --radius: 20px;
+    }
+    html.dark {
+      --bg: #141210; --bg2: #1a1917; --surface: #1c1a17; --border: #2e2b27;
+      --text-1: #f5f2ee; --text-2: #d4cfc9; --text-3: #9e9890; --text-4: #6b6560;
+      --teal-light: #164e63; --mint-light: #164e63;
+      --green-bg: #14532d; --green-border: #166534; --green: #4ade80;
+      --red-bg: #450a0a; --red-border: #7f1d1d; --red: #f87171;
+      --amber-bg: #451a03; --amber-border: #78350f; --amber: #fbbf24;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    main { max-width: 1320px; margin: 0 auto; padding: 24px 24px 100px; }
+
+    .breadcrumb { padding: 8px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .breadcrumb a { color: var(--text-4); }
+    .breadcrumb a:hover { color: var(--teal); text-decoration: none; }
+    .breadcrumb-sep { opacity: .5; }
+
+    h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 40px); font-weight: 400; line-height: 1.2; margin-bottom: 10px; }
+    .tagline { font-size: 16px; color: var(--teal); font-weight: 400; margin-bottom: 14px; }
+    .voice { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 640px; }
+    .section-hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; }
+
+    .mode-tabs { display: flex; gap: 4px; background: var(--bg); border-radius: 10px; padding: 4px; margin-bottom: 22px; width: fit-content; }
+    .mode-tab { padding: 7px 18px; border-radius: 7px; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
+    .mode-tab.active { background: var(--surface); color: var(--teal); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .mode-tab:hover:not(.active) { color: var(--text-1); }
+
+    label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+    .url-input { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
+    .url-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); }
+    .url-input::placeholder { color: var(--text-4); }
+    textarea.xml-input { width: 100%; min-height: 180px; resize: vertical; padding: 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.6; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
+    textarea.xml-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); }
+    textarea.xml-input::placeholder { color: var(--text-4); }
+    .hint { font-size: 12px; color: var(--text-4); margin-top: 8px; line-height: 1.5; }
+    .input-row { display: flex; gap: 10px; align-items: center; }
+    .btn-row { display: flex; gap: 10px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+    .btn-primary { padding: 11px 24px; background: var(--teal); color: #fff; border: none; border-radius: 99px; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity .15s; white-space: nowrap; font-family: 'Inter', sans-serif; }
+    .btn-primary:hover { opacity: .88; }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-secondary { padding: 11px 24px; background: var(--bg2); color: var(--text-2); border: 1px solid var(--border); border-radius: 99px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; white-space: nowrap; font-family: 'Inter', sans-serif; }
+    .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* Loading */
+    .loading-bar { display: none; margin: 20px 0; }
+    .loading-bar.active { display: block; }
+    .loading-status { font-size: 13px; color: var(--text-3); margin-bottom: 8px; }
+    .loading-track { height: 4px; background: var(--bg2); border-radius: 99px; overflow: hidden; }
+    .loading-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width .3s; width: 0%; }
+    .loading-detail { font-size: 11px; color: var(--text-4); margin-top: 6px; font-family: 'Courier New', monospace; word-break: break-all; }
+
+    /* Results */
+    #results { display: none; }
+
+    .total-banner { display: flex; align-items: center; gap: 16px; padding: 20px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 20px; flex-wrap: wrap; }
+    .total-number { font-family: 'DM Serif Display', Georgia, serif; font-size: 48px; color: var(--teal); line-height: 1; }
+    .total-label { font-size: 14px; color: var(--text-3); line-height: 1.4; }
+    .total-label strong { color: var(--text-1); font-weight: 600; }
+
+    .warning-banner { display: flex; gap: 10px; align-items: flex-start; padding: 14px 18px; background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 12px; margin-bottom: 16px; font-size: 13px; color: var(--amber); line-height: 1.5; }
+    .error-banner { display: flex; gap: 10px; align-items: flex-start; padding: 14px 18px; background: var(--red-bg); border: 1px solid var(--red-border); border-radius: 12px; margin-bottom: 16px; font-size: 13px; color: var(--red); line-height: 1.5; }
+    .warning-icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 10px; margin-top: 24px; }
+
+    .breakdown-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .breakdown-table th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-4); padding: 12px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .breakdown-table td { padding: 10px 16px; font-size: 13px; color: var(--text-2); border-bottom: 1px solid var(--border); }
+    .breakdown-table tr:last-child td { border-bottom: none; }
+    .breakdown-table .url-cell { font-family: 'Courier New', monospace; font-size: 12px; word-break: break-all; max-width: 500px; }
+    .breakdown-table .count-cell { font-weight: 700; color: var(--text-1); text-align: right; white-space: nowrap; }
+    .bar-cell { width: 120px; }
+    .bar-track { height: 6px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width .3s; }
+
+    .lastmod-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+    .lastmod-stat { font-size: 12px; color: var(--text-3); }
+    .lastmod-stat strong { color: var(--text-1); }
+
+    .export-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-copy { padding: 8px 18px; background: var(--teal); color: #fff; border: none; border-radius: 99px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity .15s; }
+    .btn-copy:hover { opacity: .88; }
+
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; }
+    footer p { font-size: 12px; color: var(--text-4); }
+
+    /* ── Content sections (GSC-style) ── */
+    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
+    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
+    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
+    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
+    .ct-lead code { font-family: 'Courier New', monospace; font-size: 12px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+    /* Steps with timeline */
+    .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
+    .ct-steps::before { content: ''; position: absolute; left: 19px; top: 28px; bottom: 28px; width: 1px; background: var(--border); }
+    .ct-step { display: flex; gap: 20px; padding: 24px 0; }
+    .ct-step-num { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; background: var(--bg2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Courier New', monospace; font-size: 12px; color: var(--teal); position: relative; z-index: 1; }
+    .ct-step-body h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; padding-top: 10px; }
+    .ct-step-body p { font-size: 13px; color: var(--text-3); line-height: 1.65; margin: 0; }
+    .ct-step-body strong { color: var(--text-1); }
+    .ct-step-body code { font-family: 'Courier New', monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+    /* Feature cards */
+    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
+    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+    .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
+    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .ct-card p { font-size: 13px; color: var(--text-3); line-height: 1.6; margin: 0; }
+    .ct-card code { font-family: 'Courier New', monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+    /* Callout */
+    .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
+    .ct-callout--amber { background: #FEF9C3; border: 1px solid rgba(217,119,6,.2); }
+    html.dark .ct-callout--amber { background: rgba(217,119,6,.1); }
+    .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+    .ct-callout-body strong { display: block; font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .ct-callout-body p { font-size: 13px; color: var(--text-3); margin: 0; line-height: 1.6; }
+
+    /* FAQ accordion */
+    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
+    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
+    .ct-faq summary::-webkit-details-marker { display: none; }
+    .ct-faq summary::after { content: '\25BE'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+    .ct-faq details[open] summary::after { transform: rotate(180deg); }
+    .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
+    .ct-faq summary:hover { background: var(--bg2); }
+    .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
+    .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
+    .ct-faq-body code { font-family: 'Courier New', monospace; font-size: 12px; background: var(--bg2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
+
+    @media(max-width:768px) { .ct-wrap { padding: 0 16px 60px; } }
+
+    @media(max-width:600px) {
+      main { padding: 16px 16px 60px; }
+      .input-row { flex-direction: column; align-items: stretch; }
+      .total-banner { flex-direction: column; gap: 8px; text-align: center; }
+      .breakdown-table .bar-cell { display: none; }
+    }
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+
+<main id="main-content">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
+    <span>Sitemap URL Counter</span>
+  </nav>
+
+  <h1>XML Sitemap URL Counter</h1>
+  <p class="tagline">The answer to "how many URLs are in our sitemaps?" without writing a script.</p>
+  <p class="voice">Someone asks you for a URL count. You open the sitemap index. It points to 47 child sitemaps. You briefly consider clicking through each one, then you don't. Paste the URL here — this fetches the index, follows every child sitemap, and gives you the number.</p>
+  <hr class="section-hr">
+
+  <div class="tool-card">
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tab-url" onclick="setMode('url')">Fetch URL</button>
+      <button class="mode-tab" id="tab-paste" onclick="setMode('paste')">Paste XML</button>
+    </div>
+
+    <!-- URL mode (primary) -->
+    <div id="mode-url">
+      <label for="sitemap-url">Sitemap URL</label>
+      <div class="input-row">
+        <input type="url" id="sitemap-url" class="url-input" placeholder="https://example.com/sitemap.xml" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')fetchAndCount()">
+        <button class="btn-primary" id="btn-fetch" onclick="fetchAndCount()">Count URLs</button>
+      </div>
+      <p class="hint">Works with both <code>&lt;urlset&gt;</code> sitemaps and <code>&lt;sitemapindex&gt;</code> files. Index files are followed automatically.</p>
+    </div>
+
+    <!-- Paste mode (fallback) -->
+    <div id="mode-paste" style="display:none">
+      <label for="xml-input">Paste your sitemap XML</label>
+      <textarea id="xml-input" class="xml-input" placeholder='<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://example.com/</loc></url>
+  <url><loc>https://example.com/about/</loc></url>
+</urlset>'></textarea>
+      <p class="hint">Paste a <code>&lt;urlset&gt;</code> or <code>&lt;sitemapindex&gt;</code>. For index files pasted here, child sitemaps won't be fetched automatically — use the URL mode for that.</p>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="analyseFromPaste()">Count URLs</button>
+        <button class="btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="loading-bar" id="loading">
+    <div class="loading-status" id="loading-status">Fetching sitemap…</div>
+    <div class="loading-track"><div class="loading-fill" id="loading-fill"></div></div>
+    <div class="loading-detail" id="loading-detail"></div>
+  </div>
+
+  <div id="results"></div>
+
+
+</main>
+
+<!-- ═══════════════ CONTENT SECTIONS ═══════════════ -->
+<div class="ct-wrap">
+
+  <!-- ─── 1. HOW TO USE ─── -->
+  <div class="ct-section" id="how-to-use">
+    <span class="ct-section-label">Step by step</span>
+    <h2 class="ct-h2">How to Use This Tool</h2>
+    <p class="ct-lead">Paste a URL, get a count. Here's the full workflow.</p>
+    <div class="ct-steps">
+      <div class="ct-step">
+        <div class="ct-step-num">01</div>
+        <div class="ct-step-body">
+          <h4>Paste the sitemap URL</h4>
+          <p>The full URL — <code>/sitemap.xml</code>, <code>/sitemap_index.xml</code>, whatever your CMS generates. If you don't know where it is, check <code>robots.txt</code>. There's almost always a <code>Sitemap:</code> directive at the bottom.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">02</div>
+        <div class="ct-step-body">
+          <h4>Hit Count URLs</h4>
+          <p>The tool fetches the XML. If it's a sitemap index, it follows every child <code>&lt;loc&gt;</code> automatically — five at a time, in parallel. You'll see a progress bar tracking which child it's on.</p>
+        </div>
+      </div>
+      <div class="ct-step">
+        <div class="ct-step-num">03</div>
+        <div class="ct-step-body">
+          <h4>Read the output</h4>
+          <p>Total URL count, per-sitemap split (if it's an index), directory-level breakdown, and lastmod coverage. Copy the report or export all URLs as a plain list — whatever you need for the audit.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ct-callout ct-callout--amber" style="margin-top:16px">
+      <div class="ct-callout-icon">&#9888;</div>
+      <div class="ct-callout-body">
+        <strong>Firewalled or staging sitemaps?</strong>
+        <p>If the URL mode can't reach your sitemap (staging environment, IP restrictions, localhost), switch to <strong>Paste XML</strong> and drop in the raw XML directly. Same output, no fetch required.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 2. USE CASES ─── -->
+  <div class="ct-section" id="use-cases">
+    <span class="ct-section-label">When to use it</span>
+    <h2 class="ct-h2">When You'd Actually Reach for This</h2>
+    <p class="ct-lead">This isn't a tool you run every day. It's the tool you reach for when someone needs a number and you don't want to write a script to get it.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <div class="ct-card-title">Technical audits</div>
+        <p>How many URLs is this site submitting via sitemaps? If the number is wildly different from the number of indexable pages, something is wrong — noindexed pages in the sitemap, redirects, parameter URLs that shouldn't be there.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+        <div class="ct-card-title">Pre-migration baseline</div>
+        <p>Get a count before the migration. Run it again after. If the post-migration number is dramatically different, something got dropped or duplicated. The per-directory breakdown makes it obvious which section lost URLs.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <div class="ct-card-title">Sitemap bloat</div>
+        <p>200,000 URLs in the sitemap but only 40,000 get traffic. Ecommerce sites are prone to this — product variants, filtered category pages, out-of-stock items accumulating. The directory breakdown shows where the bloat is concentrated.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <div class="ct-card-title">Competitor analysis</div>
+        <p>Most sitemaps are public. Paste a competitor's sitemap URL and see how many URLs they're submitting, how their content is structured across directories, and how recently their sitemaps were updated.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 3. HOW XML SITEMAPS WORK & WHAT THIS COUNTS ─── -->
+  <div class="ct-section" id="how-sitemaps-work">
+    <span class="ct-section-label">How it works</span>
+    <h2 class="ct-h2">XML Sitemaps and What This Tool Counts</h2>
+    <p class="ct-lead">An XML sitemap is a structured file that lists URLs you want search engines to discover. It's not a crawl instruction — it's a hint. This tool counts every <code>&lt;loc&gt;</code> element in that file, which is the number of URLs you're actively submitting. That number is not the same as what Google has indexed — that's a different question, and you'd need Search Console for it.</p>
+    <div class="ct-card-grid" style="margin-top:28px">
+      <div class="ct-card">
+        <div class="ct-card-title">Single sitemaps</div>
+        <p>Uses <code>&lt;urlset&gt;</code> as its root element and lists URLs directly. Each sits inside a <code>&lt;url&gt;</code> block with a required <code>&lt;loc&gt;</code> and optional <code>&lt;lastmod&gt;</code>, <code>&lt;changefreq&gt;</code>, and <code>&lt;priority&gt;</code>. The tool counts every <code>&lt;loc&gt;</code> here.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Sitemap indexes</div>
+        <p>Uses <code>&lt;sitemapindex&gt;</code> as its root and lists child sitemaps instead of individual URLs. The tool detects this, fetches every child automatically, then counts the <code>&lt;loc&gt;</code> elements across all of them. One child per content type is the typical pattern on large sites.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Limits</div>
+        <p>Each individual sitemap can contain a maximum of <strong>50,000 URLs</strong> and must not exceed <strong>50 MB</strong> uncompressed. If you hit either limit, split across multiple files and reference them from a sitemap index. No hard limit on how many children an index can have.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Lastmod</div>
+        <p>The <code>&lt;lastmod&gt;</code> tag tells search engines when a URL was last meaningfully changed. Google uses it — but only if it's accurate. If your CMS updates <code>&lt;lastmod&gt;</code> on every page when you change a footer, Google will stop trusting it.</p>
+      </div>
+    </div>
+    <div class="ct-callout ct-callout--amber" style="margin-top:24px">
+      <div class="ct-callout-icon">&#9888;</div>
+      <div class="ct-callout-body">
+        <strong>Sitemap count ≠ indexed count.</strong>
+        <p>Google decides what to index, not your sitemap. If you're submitting 50,000 URLs but only 12,000 are indexed, the gap is worth investigating — but this tool gives you the submission side of that equation. For the indexed side, check Search Console's index coverage report.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 5. FAQ ─── -->
+  <div class="ct-section" id="faq">
+    <span class="ct-section-label">Common questions</span>
+    <h2 class="ct-h2">Frequently Asked Questions</h2>
+    <div class="ct-faq">
+
+      <details>
+        <summary>How many URLs should be in my sitemap?</summary>
+        <div class="ct-faq-body">As many as you have indexable pages — and no more. Every URL in your sitemap should return a 200 status, have a self-referencing canonical, and not be blocked by robots.txt or noindex. If your sitemap count is much higher than your indexed page count in Search Console, that gap is worth investigating further — use GSC's index coverage report to find out what's being excluded and why.</div>
+      </details>
+
+      <details>
+        <summary>Where do I find my sitemap URL?</summary>
+        <div class="ct-faq-body">Check <code>yourdomain.com/robots.txt</code> — most sites declare their sitemap there with a <code>Sitemap:</code> directive. If it's not there, try <code>/sitemap.xml</code>, <code>/sitemap_index.xml</code>, or check Google Search Console under Sitemaps. WordPress sites usually generate theirs at <code>/wp-sitemap.xml</code> or via a plugin like Yoast at <code>/sitemap_index.xml</code>.</div>
+      </details>
+
+      <details>
+        <summary>Does this tool fetch sitemaps from my server?</summary>
+        <div class="ct-faq-body">Yes — when you use the URL mode, the tool fetches your sitemap through a lightweight proxy. The proxy reads the XML and passes it to your browser for parsing. No data is stored. If you'd rather not have anything fetched, use the Paste XML mode and paste the raw XML directly.</div>
+      </details>
+
+      <details>
+        <summary>Why is my URL count different from what Google shows as indexed?</summary>
+        <div class="ct-faq-body">This tool counts URLs in your sitemap — what you're <strong>submitting</strong>. Google's index count is what they've <strong>chosen to index</strong>. The two numbers are almost never the same. Google may not index every URL you submit (thin content, duplicates, low quality), and it may index pages you didn't include in your sitemap (discovered through links). The gap between the two is one of the most useful things to investigate in a technical audit.</div>
+      </details>
+
+      <details>
+        <summary>Can I count URLs in a gzipped sitemap?</summary>
+        <div class="ct-faq-body">Not directly — the tool handles plain XML. If your sitemaps are served as <code>.xml.gz</code>, you'll need to decompress them first. Most browsers will do this automatically if you open the URL directly, so try pasting the URL — the server may serve it decompressed. Otherwise, download, decompress, and use Paste XML mode.</div>
+      </details>
+
+      <details>
+        <summary>What does the older than 1 year lastmod warning mean?</summary>
+        <div class="ct-faq-body">It means URLs in your sitemap have a <code>&lt;lastmod&gt;</code> date more than 12 months old. That's not inherently a problem — some pages genuinely don't change. But if a large percentage of your sitemap has stale lastmod dates, Google may deprioritise recrawling those URLs. If the content <strong>has</strong> been updated but the lastmod hasn't, your CMS isn't updating the timestamps correctly.</div>
+      </details>
+
+    </div>
+  </div>
+
+</div>
+<!-- ═══════════════ END CONTENT SECTIONS ═══════════════ -->
+
+<footer>
+  <p>&copy; 2026 MagsTags · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a> · <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a> · <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+
+<script>
+(function() {
+
+  /* ── Proxy endpoint ── */
+  var PROXY = '/.netlify/functions/fetch-sitemap?url=';
+
+  /* ── State ── */
+  var allResults = [];   // { name, urls:[], lastmods:[], type:'urlset'|'index', childLocs:[] }
+
+  /* ── Mode switching ── */
+  window.setMode = function(mode) {
+    document.getElementById('mode-url').style.display = mode === 'url' ? '' : 'none';
+    document.getElementById('mode-paste').style.display = mode === 'paste' ? '' : 'none';
+    document.getElementById('tab-url').classList.toggle('active', mode === 'url');
+    document.getElementById('tab-paste').classList.toggle('active', mode === 'paste');
+  };
+
+  /* ── Parse XML string ── */
+  function parseXml(xmlStr) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(xmlStr, 'text/xml');
+    var err = doc.querySelector('parsererror');
+    if (err) return { error: 'Invalid XML: ' + (err.textContent || '').substring(0, 200) };
+
+    var root = doc.documentElement;
+    var tag = (root.localName || root.nodeName.replace(/^.*:/, '')).toLowerCase();
+
+    if (tag === 'sitemapindex') {
+      var smEls = doc.querySelectorAll('sitemap');
+      var locs = [], lms = [];
+      for (var i = 0; i < smEls.length; i++) {
+        var l = smEls[i].querySelector('loc');
+        var m = smEls[i].querySelector('lastmod');
+        locs.push(l ? l.textContent.trim() : '');
+        lms.push(m ? m.textContent.trim() : null);
+      }
+      return { type: 'index', childLocs: locs, childLastmods: lms };
+    }
+
+    if (tag === 'urlset') {
+      var urlEls = doc.querySelectorAll('url');
+      var urls = [], lastmods = [];
+      for (var j = 0; j < urlEls.length; j++) {
+        var ul = urlEls[j].querySelector('loc');
+        var um = urlEls[j].querySelector('lastmod');
+        urls.push(ul ? ul.textContent.trim() : '');
+        lastmods.push(um ? um.textContent.trim() : null);
+      }
+      return { type: 'urlset', urls: urls, lastmods: lastmods };
+    }
+
+    return { error: 'Unrecognised root element: <' + tag + '>. Expected <urlset> or <sitemapindex>.' };
+  }
+
+  /* ── Fetch a single URL via proxy ── */
+  async function fetchXml(url) {
+    var resp = await fetch(PROXY + encodeURIComponent(url));
+    if (!resp.ok) {
+      var body;
+      try { body = await resp.json(); } catch(e) { body = {}; }
+      throw new Error(body.error || ('HTTP ' + resp.status));
+    }
+    return await resp.text();
+  }
+
+  /* ── Progress helpers ── */
+  function showLoading(msg, detail, pct) {
+    var el = document.getElementById('loading');
+    el.classList.add('active');
+    document.getElementById('loading-status').textContent = msg || 'Fetching…';
+    document.getElementById('loading-detail').textContent = detail || '';
+    document.getElementById('loading-fill').style.width = (pct || 0) + '%';
+  }
+  function hideLoading() { document.getElementById('loading').classList.remove('active'); }
+
+  /* ── Main: Fetch URL and count ── */
+  window.fetchAndCount = async function() {
+    var urlInput = document.getElementById('sitemap-url');
+    var url = urlInput.value.trim();
+    if (!url) { urlInput.focus(); return; }
+
+    // Auto-prepend https if missing
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+    allResults = [];
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('btn-fetch').disabled = true;
+
+    try {
+      showLoading('Fetching sitemap…', url, 5);
+      var xml = await fetchXml(url);
+      var parsed = parseXml(xml);
+
+      if (parsed.error) { showError(parsed.error); hideLoading(); document.getElementById('btn-fetch').disabled = false; return; }
+
+      if (parsed.type === 'urlset') {
+        // Simple case — single sitemap
+        allResults.push({ name: url, type: 'urlset', urls: parsed.urls, lastmods: parsed.lastmods });
+        showLoading('Done', parsed.urls.length + ' URLs found', 100);
+
+      } else if (parsed.type === 'index') {
+        // Sitemap index — fetch every child
+        var children = parsed.childLocs.filter(function(l) { return l; });
+        allResults.push({ name: url, type: 'index', childLocs: children, childLastmods: parsed.childLastmods, urls: [], lastmods: [] });
+
+        var errors = [];
+        // Fetch children in batches of 5 for performance
+        var batchSize = 5;
+        for (var i = 0; i < children.length; i += batchSize) {
+          var batch = children.slice(i, i + batchSize);
+          var pct = Math.round(((i + 1) / children.length) * 90) + 10;
+          showLoading(
+            'Fetching child sitemaps… ' + Math.min(i + batchSize, children.length) + ' / ' + children.length,
+            batch[0],
+            pct
+          );
+
+          var promises = batch.map(function(childUrl) {
+            return fetchXml(childUrl).then(function(childXml) {
+              var childParsed = parseXml(childXml);
+              if (childParsed.error) {
+                errors.push(childUrl + ': ' + childParsed.error);
+                return;
+              }
+              if (childParsed.type === 'urlset') {
+                allResults.push({ name: childUrl, type: 'urlset', urls: childParsed.urls, lastmods: childParsed.lastmods });
+              } else {
+                // Nested index — just note it, don't go deeper
+                errors.push(childUrl + ': nested sitemap index (not followed)');
+              }
+            }).catch(function(err) {
+              errors.push(childUrl + ': ' + err.message);
+            });
+          });
+
+          await Promise.all(promises);
+        }
+
+        if (errors.length > 0) {
+          allResults.push({ type: 'errors', errors: errors });
+        }
+
+        showLoading('Done', 'All sitemaps processed', 100);
+      }
+
+      render();
+
+    } catch(err) {
+      showError('Failed to fetch: ' + err.message);
+    }
+
+    hideLoading();
+    document.getElementById('btn-fetch').disabled = false;
+  };
+
+  /* ── Analyse pasted XML ── */
+  window.analyseFromPaste = function() {
+    var xml = document.getElementById('xml-input').value.trim();
+    if (!xml) return;
+
+    allResults = [];
+    var parsed = parseXml(xml);
+    if (parsed.error) { showError(parsed.error); return; }
+
+    if (parsed.type === 'urlset') {
+      allResults.push({ name: 'Pasted sitemap', type: 'urlset', urls: parsed.urls, lastmods: parsed.lastmods });
+    } else if (parsed.type === 'index') {
+      allResults.push({ name: 'Pasted sitemap index', type: 'index', childLocs: parsed.childLocs, childLastmods: parsed.childLastmods, urls: [], lastmods: [] });
+    }
+    render();
+  };
+
+  /* ── Directory breakdown ── */
+  function getDirectoryBreakdown(urls) {
+    var dirs = {};
+    urls.forEach(function(u) {
+      try {
+        var p = new URL(u);
+        var parts = p.pathname.split('/').filter(Boolean);
+        var dir = parts.length > 0 ? '/' + parts[0] + '/' : '/';
+        dirs[dir] = (dirs[dir] || 0) + 1;
+      } catch(e) {
+        dirs['(invalid URL)'] = (dirs['(invalid URL)'] || 0) + 1;
+      }
+    });
+    return Object.keys(dirs).map(function(k) { return { dir: k, count: dirs[k] }; })
+      .sort(function(a, b) { return b.count - a.count; });
+  }
+
+  /* ── Lastmod stats ── */
+  function getLastmodStats(lastmods) {
+    var withLm = lastmods.filter(function(l) { return l !== null; });
+    if (withLm.length === 0) return null;
+    var dates = withLm.map(function(l) { return new Date(l); }).filter(function(d) { return !isNaN(d); });
+    if (dates.length === 0) return null;
+    dates.sort(function(a, b) { return a - b; });
+    var now = new Date();
+    var stale = dates.filter(function(d) { return (now - d) > 365 * 24 * 60 * 60 * 1000; }).length;
+    return {
+      total: lastmods.length,
+      withLastmod: withLm.length,
+      missing: lastmods.length - withLm.length,
+      newest: dates[dates.length - 1].toISOString().split('T')[0],
+      oldest: dates[0].toISOString().split('T')[0],
+      staleCount: stale
+    };
+  }
+
+  /* ── Render results ── */
+  function render() {
+    var urlsets = allResults.filter(function(r) { return r.type === 'urlset'; });
+    var indexes = allResults.filter(function(r) { return r.type === 'index'; });
+    var errSets = allResults.filter(function(r) { return r.type === 'errors'; });
+
+    var allUrls = [];
+    var allLastmods = [];
+    urlsets.forEach(function(s) { allUrls = allUrls.concat(s.urls); allLastmods = allLastmods.concat(s.lastmods); });
+
+    var totalUrls = allUrls.length;
+    var seen = {};
+    var dupes = 0;
+    allUrls.forEach(function(u) { if (seen[u]) dupes++; seen[u] = true; });
+
+    var warnings = [];
+    urlsets.forEach(function(s) {
+      if (s.urls.length > 50000) warnings.push(shortName(s.name) + ' has ' + s.urls.length.toLocaleString() + ' URLs — exceeds 50,000 limit.');
+    });
+    if (dupes > 0) warnings.push(dupes.toLocaleString() + ' duplicate URL' + (dupes > 1 ? 's' : '') + ' across sitemaps.');
+
+    var html = '';
+
+    /* Total banner */
+    html += '<div class="total-banner">';
+    html += '<div class="total-number">' + totalUrls.toLocaleString() + '</div>';
+    html += '<div class="total-label"><strong>URLs across ' + urlsets.length + ' sitemap' + (urlsets.length !== 1 ? 's' : '') + '</strong>';
+    if (dupes > 0) html += '<br>' + Object.keys(seen).length.toLocaleString() + ' unique';
+    if (indexes.length > 0) {
+      var totalChildren = 0;
+      indexes.forEach(function(idx) { totalChildren += idx.childLocs.length; });
+      html += '<br>' + totalChildren + ' child sitemap' + (totalChildren !== 1 ? 's' : '') + ' in index';
+    }
+    html += '</div></div>';
+
+    /* Warnings */
+    warnings.forEach(function(w) {
+      html += '<div class="warning-banner"><span class="warning-icon">&#9888;</span><span>' + esc(w) + '</span></div>';
+    });
+
+    /* Fetch errors */
+    errSets.forEach(function(es) {
+      es.errors.forEach(function(e) {
+        html += '<div class="error-banner"><span class="warning-icon">&#10005;</span><span>' + esc(e) + '</span></div>';
+      });
+    });
+
+    /* Per-sitemap breakdown (if more than one urlset) */
+    if (urlsets.length > 1) {
+      html += '<div class="section-title">Per-sitemap breakdown</div>';
+      html += '<table class="breakdown-table"><thead><tr><th>Sitemap</th><th style="text-align:right">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
+      var maxCount = Math.max.apply(null, urlsets.map(function(s) { return s.urls.length; }));
+      urlsets.forEach(function(s) {
+        var barPct = maxCount > 0 ? Math.round(s.urls.length / maxCount * 100) : 0;
+        html += '<tr><td class="url-cell">' + esc(shortName(s.name)) + '</td>';
+        html += '<td class="count-cell">' + s.urls.length.toLocaleString() + '</td>';
+        html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
+      });
+      html += '</tbody></table>';
+    }
+
+    /* Directory breakdown */
+    if (allUrls.length > 0) {
+      var dirs = getDirectoryBreakdown(allUrls);
+      var maxDir = dirs.length > 0 ? dirs[0].count : 1;
+      html += '<div class="section-title">URLs by top-level directory</div>';
+      html += '<table class="breakdown-table"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
+      dirs.forEach(function(d) {
+        var pct = totalUrls > 0 ? (d.count / totalUrls * 100) : 0;
+        var barPct = maxDir > 0 ? Math.round(d.count / maxDir * 100) : 0;
+        html += '<tr><td class="url-cell">' + esc(d.dir) + '</td>';
+        html += '<td class="count-cell">' + d.count.toLocaleString() + '</td>';
+        html += '<td class="count-cell" style="color:var(--text-3);font-weight:400">' + pct.toFixed(1) + '%</td>';
+        html += '<td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:' + barPct + '%"></div></div></td></tr>';
+      });
+      html += '</tbody></table>';
+    }
+
+    /* Lastmod stats */
+    if (allLastmods.length > 0) {
+      var lm = getLastmodStats(allLastmods);
+      if (lm) {
+        html += '<div class="section-title">Lastmod coverage</div>';
+        html += '<div class="lastmod-stats">';
+        html += '<span class="lastmod-stat"><strong>' + lm.withLastmod.toLocaleString() + '</strong> with lastmod</span>';
+        if (lm.missing > 0) html += '<span class="lastmod-stat" style="color:var(--amber)"><strong>' + lm.missing.toLocaleString() + '</strong> missing</span>';
+        html += '<span class="lastmod-stat">Newest: <strong>' + lm.newest + '</strong></span>';
+        html += '<span class="lastmod-stat">Oldest: <strong>' + lm.oldest + '</strong></span>';
+        if (lm.staleCount > 0) html += '<span class="lastmod-stat" style="color:var(--amber)"><strong>' + lm.staleCount.toLocaleString() + '</strong> older than 1 year</span>';
+        html += '</div>';
+      }
+    }
+
+    /* Export */
+    if (allUrls.length > 0) {
+      html += '<div class="export-row">';
+      html += '<button class="btn-copy" onclick="copyReport()">Copy report</button>';
+      html += '<button class="btn-copy" style="background:var(--bg2);color:var(--text-2);border:1px solid var(--border)" onclick="copyUrls()">Copy all URLs</button>';
+      html += '</div>';
+    }
+
+    var el = document.getElementById('results');
+    el.innerHTML = html;
+    el.style.display = '';
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ── Short name for display ── */
+  function shortName(url) {
+    try {
+      var u = new URL(url);
+      return u.pathname + (u.search || '');
+    } catch(e) { return url; }
+  }
+
+  /* ── Copy functions ── */
+  window.copyReport = function() {
+    var urlsets = allResults.filter(function(r) { return r.type === 'urlset'; });
+    var allUrls = [];
+    urlsets.forEach(function(s) { allUrls = allUrls.concat(s.urls); });
+    var seen = {};
+    allUrls.forEach(function(u) { seen[u] = true; });
+
+    var lines = ['XML Sitemap URL Count Report', 'Generated: ' + new Date().toISOString().split('T')[0], ''];
+    lines.push('Total URLs: ' + allUrls.length.toLocaleString());
+    lines.push('Unique URLs: ' + Object.keys(seen).length.toLocaleString());
+    lines.push('Sitemaps processed: ' + urlsets.length);
+    lines.push('');
+
+    if (urlsets.length > 1) {
+      lines.push('Per-sitemap:');
+      urlsets.forEach(function(s) { lines.push('  ' + s.name + '  ' + s.urls.length.toLocaleString()); });
+      lines.push('');
+    }
+
+    var dirs = getDirectoryBreakdown(allUrls);
+    if (dirs.length) {
+      lines.push('Directory breakdown:');
+      dirs.forEach(function(d) {
+        var pct = allUrls.length > 0 ? (d.count / allUrls.length * 100).toFixed(1) : '0.0';
+        lines.push('  ' + d.dir + '  ' + d.count.toLocaleString() + '  (' + pct + '%)');
+      });
+    }
+
+    navigator.clipboard.writeText(lines.join('\n')).then(function() { toast('Report copied'); });
+  };
+
+  window.copyUrls = function() {
+    var allUrls = [];
+    allResults.filter(function(r) { return r.type === 'urlset'; }).forEach(function(s) { allUrls = allUrls.concat(s.urls); });
+    navigator.clipboard.writeText(allUrls.join('\n')).then(function() { toast(allUrls.length + ' URLs copied'); });
+  };
+
+  /* ── Clear ── */
+  window.clearAll = function() {
+    allResults = [];
+    document.getElementById('xml-input').value = '';
+    document.getElementById('sitemap-url').value = '';
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('results').innerHTML = '';
+    hideLoading();
+  };
+
+  /* ── Utilities ── */
+  function showError(msg) {
+    var el = document.getElementById('results');
+    el.innerHTML = '<div class="error-banner"><span class="warning-icon">&#10005;</span><span>' + esc(msg) + '</span></div>';
+    el.style.display = '';
+  }
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  function toast(msg) {
+    var t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;font-weight:600;font-family:Inter,sans-serif;z-index:999';
+    document.body.appendChild(t);
+    setTimeout(function() { t.remove(); }, 2000);
+  }
+
+})();
+</script>
+</body>
+</html>

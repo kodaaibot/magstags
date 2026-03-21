@@ -1,19 +1,15 @@
 [build]
   publish = "."
 
+[functions]
+  directory = "netlify/functions"
+
 # Redirect apex → www
 [[redirects]]
   from   = "https://magstags.com/*"
   to     = "https://www.magstags.com/:splat"
   status = 301
   force  = true
-
-# Keep lab subdomain working (no redirect)
-[[redirects]]
-  from   = "https://lab.magstags.com/*"
-  to     = "https://lab.magstags.com/:splat"
-  status = 200
-  force  = false
 
 [[headers]]
   for = "/*"
