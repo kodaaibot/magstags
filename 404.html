@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | MagsTags</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .lost-wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    .lost-code {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(80px, 12vw, 140px);
+      font-weight: 700;
+      color: var(--border);
+      line-height: 1;
+      letter-spacing: -.04em;
+      margin-bottom: 12px;
+    }
+    .lost-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(24px, 4vw, 34px);
+      color: var(--text-1);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .lost-body {
+      font-size: 15px;
+      color: var(--text-3);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+    .lost-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .lost-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 22px;
+      border-radius: 99px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .15s;
+      letter-spacing: -.01em;
+    }
+    .lost-link-primary {
+      background: var(--text-1);
+      color: var(--surface);
+    }
+    .lost-link-primary:hover {
+      background: var(--text-2);
+      text-decoration: none;
+    }
+    .lost-link-secondary {
+      background: var(--surface);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+    }
+    .lost-link-secondary:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      text-decoration: none;
+    }
+    .lost-note {
+      font-size: 13px;
+      color: var(--text-4);
+      line-height: 1.6;
+    }
+    .lost-note a {
+      color: var(--teal);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .lost-note a:hover {
+      color: var(--text-2);
+    }
+  </style>
+</head>
+<body>
+  <script src="/header.js"></script>
+
+  <main>
+    <div class="lost-wrap">
+      <div class="lost-code">404</div>
+      <h1 class="lost-title">This page doesn't exist. Possibly never did.</h1>
+      <p class="lost-body">
+        You've either followed a broken link, typed something creative into the address bar, or I've moved things around without telling anyone. All equally likely. Either way, there's nothing here, but there's plenty elsewhere.
+      </p>
+
+      <div class="lost-links">
+        <a href="/free-seo-tools/" class="lost-link lost-link-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Browse the tools
+        </a>
+        <a href="/notes/" class="lost-link lost-link-secondary">Read the notes</a>
+        <a href="/mags-sikora/" class="lost-link lost-link-secondary">About me</a>
+        <a href="/contact/" class="lost-link lost-link-secondary">Get in touch</a>
+      </div>
+
+      <p class="lost-note">
+        If you think something should be here, <a href="/contact/">let me know</a>. I'll either fix it or confirm it was always a figment of the internet's imagination.
+      </p>
+    </div>
+  </main>
+
+  <script src="/footer.js"></script>
+</body>
+</html>
