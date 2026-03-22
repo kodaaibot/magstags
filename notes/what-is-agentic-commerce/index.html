@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/what-is-agentic-commerce/">
+  <meta name="description" content="What is agentic commerce? It's when AI agents handle product discovery, comparison, and checkout on behalf of the consumer. Here's how the shopping journey changes — with examples from ChatGPT, Google, Perplexity, and Amazon.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>What Is Agentic Commerce? How AI Agents Change the Shopping Journey | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:17px;line-height:1.7;color:var(--text-3);margin-bottom:36px;font-style:italic;border-left:3px solid var(--border);padding-left:18px}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;background:var(--mint-light);color:var(--teal);padding:2px 6px;border-radius:4px;word-break:break-all}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--text-1)}
+
+    /* Tables */
+    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
+    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table code{font-size:12.5px}
+    .post-table .col-label{font-weight:600;color:var(--text-1);white-space:nowrap}
+
+    /* Diagrams */
+    .post-diagram{margin:32px 0;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 16px 16px}
+    .post-diagram svg{max-width:100%;height:auto}
+    .post-diagram-caption{font-size:13px;color:var(--text-4);margin-top:10px;font-style:italic}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+
+    /* Table of Contents */
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
+
+    /* FAQ */
+    .faq-block{margin-top:52px}
+    .faq-item{padding:20px 0;border-bottom:1px solid var(--border)}
+    .faq-item:last-child{border-bottom:none}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
+    .faq-a code{font-size:13px}
+
+    /* Compare grid */
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+    .compare-col{padding:24px;border-radius:14px;font-size:15px;line-height:1.7}
+    .compare-col.yes{background:#ecfdf5;border:1px solid #6ee7b7}
+    .compare-col.no{background:#fef2f2;border:1px solid #fca5a5}
+    html.dark .compare-col.yes{background:#022c22;border-color:#065f46}
+    html.dark .compare-col.no{background:#450a0a;border-color:#991b1b}
+    .compare-col h4{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px}
+    .compare-col ul{padding-left:18px;margin:0}
+    .compare-col li{margin-bottom:6px;font-size:15px}
+    @media(max-width:640px){.compare-grid{grid-template-columns:1fr}}
+
+    /* Journey flow */
+    .journey-flow{display:grid;grid-template-columns:auto 1fr 1fr;gap:0;margin:28px 0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:15px;line-height:1.6}
+    .journey-flow .jf-header{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);padding:10px 14px;border-bottom:2px solid var(--text-1)}
+    .journey-flow .jf-stage{font-weight:600;color:var(--text-1);padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+    .journey-flow .jf-cell{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-2);border-left:1px solid var(--border)}
+    .journey-flow .jf-stage:last-child,.journey-flow .jf-cell:last-child{border-bottom:none}
+    .journey-flow .jf-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+    @media(max-width:640px){.journey-flow{grid-template-columns:1fr;}.journey-flow .jf-header:first-child{display:none}.journey-flow .jf-cell{border-left:none}}
+  </style>
+  <meta property="og:title" content="What Is Agentic Commerce? How AI Agents Change the Shopping Journey | MagsTags">
+  <meta property="og:description" content="What is agentic commerce? It's when AI agents handle product discovery, comparison, and checkout on behalf of the consumer. Here's how the shopping journey changes — with examples from ChatGPT, Google, Perplexity, and Amazon.">
+  <meta property="og:url" content="https://www.magstags.com/notes/what-is-agentic-commerce/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is Agentic Commerce? How AI Agents Change the Shopping Journey | MagsTags">
+  <meta name="twitter:description" content="What is agentic commerce? AI agents handle discovery, comparison, and checkout for the consumer. Here's how the shopping journey changes — with live examples from ChatGPT, Google, and Perplexity.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What Is Agentic Commerce? How AI Agents Change the Shopping Journey",
+    "description": "What is agentic commerce? It's when AI agents handle product discovery, comparison, and checkout on behalf of the consumer. Here's how the shopping journey changes — with examples from ChatGPT, Google, Perplexity, and Amazon.",
+    "url": "https://www.magstags.com/notes/what-is-agentic-commerce/",
+    "datePublished": "2026-03-22",
+    "dateModified": "2026-03-22",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com/"
+    },
+    "image": "https://www.magstags.com/og-image.png",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.magstags.com/notes/what-is-agentic-commerce/"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is agentic commerce?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Agentic commerce is a model where AI agents handle part or all of the shopping journey on behalf of the consumer. Instead of the customer performing every step (searching, browsing, filtering, comparing, and checking out), the customer expresses what they want, and the AI agent interprets that intent, manages product discovery, evaluation, comparison, and increasingly, the transaction itself. The agent can infer context from purchase history, preferences, and vague language. The consumer doesn't need to specify exact constraints. They stay in control of the decision, but the agent does the work."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is agentic commerce different from traditional e-commerce?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In traditional e-commerce, the customer drives every step: they search, browse product pages, filter results, compare options, add to cart, and complete checkout. The entire funnel is human-driven and session-based. In agentic commerce, the customer expresses what they want, sometimes precisely ('running shoes under £100, size 9'), sometimes vaguely ('something like last time but cheaper'), and the AI agent interprets that intent using context, history, and preferences. The agent then evaluates structured product data across multiple merchants, compares options, and can complete the purchase within the AI interface. The merchant's website may never be visited."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which AI shopping agents exist right now?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "As of early 2026, the main AI shopping agents are: ChatGPT with Instant Checkout (powered by OpenAI's Agentic Commerce Protocol and Stripe), Google's AI shopping in Search and Gemini (powered by the Universal Commerce Protocol), Perplexity's Buy with Pro feature, and Amazon's Rufus which now supports auto-buy functionality. Each processes product data differently, but all rely on structured data (feeds, schema markup, and product attributes) to discover and evaluate products."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to change my product data for agentic commerce?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most of what AI agents need is the same structured data you should already have in place for Google Shopping: complete schema markup, accurate feeds, and consistent product attributes. The difference is that agents have less tolerance for gaps. A human shopper fills in missing information with assumptions; an agent that can't match a constraint simply skips your product. The priority is auditing what you have for completeness and consistency, not building something fundamentally new."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Agentic Commerce Protocol (ACP)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Agentic Commerce Protocol (ACP) is an open standard developed by OpenAI and Stripe that enables purchases to be completed directly within ChatGPT. When a customer decides to buy, ChatGPT sends order details to the merchant's backend via ACP, the merchant processes payment through their existing provider, and handles fulfilment as normal. Google has introduced a parallel standard, the Universal Commerce Protocol (UCP), for its own AI shopping surfaces."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>What Is Agentic Commerce</span>
+    </nav>
+
+    <span class="post-category">E-commerce SEO</span>
+    <h1 class="post-h1">What Is Agentic Commerce? How AI Agents Change the Shopping Journey</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>22 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>16 min read</span>
+    </div>
+
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+
+      <p class="post-lead">For e-commerce teams who keep hearing "agentic commerce" in every conference talk and have yet to find an explanation that goes past the slide deck, into the customer journey, and down to the product data. This one does.</p>
+
+      <p>This post covers what agentic commerce actually is, what changed in the shopping journey, who the agents are, and what they evaluate. The companion post picks up where this one ends: <a href="/notes/agentic-commerce-optimization/">what to audit and fix in your schema, feeds, and product data</a>.</p>
+
+      <h2 id="definition">What agentic commerce actually means</h2>
+
+      <p><strong>Agentic commerce</strong> is when consumers make purchases through AI systems that handle discovery, evaluation, and increasingly, checkout without the consumer necessarily visiting your website. And it's not limited to product e-commerce: the same model applies to travel bookings, subscription management, B2B procurement, and any transaction complex enough that an agent can do it faster than a human clicking through forms.</p>
+
+      <p>The consumer expresses intent, sometimes precisely and sometimes vaguely. The agent interprets it and does the work.</p>
+
+      <p>That distinction matters. The consumer doesn't need to type a well-structured query or specify exact filters. They can say "something like those trainers I bought last year but cheaper" and the agent infers the brand, the category, the price constraint, and the sizing from purchase history and context. The agent understands intent even when the consumer doesn't fully articulate it.</p>
+
+      <p>For the past two decades, e-commerce has been a human-driven, session-based experience. The customer performs every step: search, browse, filter, compare, add to cart, enter payment details, confirm. The merchant's job was to make each of those steps as frictionless as possible. The entire discipline of conversion rate optimisation exists because the human was the one navigating the funnel.</p>
+
+      <p>In an agentic model, the human says what they want, regardless of how much detail they provide, and the agent interprets those constraints, queries structured product data across multiple merchants, evaluates candidates, ranks them, and presents a shortlist. In some implementations, the agent completes the purchase within its own interface.</p>
+
+      <p>The consumer is still in control, though the level varies. For low-risk, routine purchases (reordering toothpaste, restocking printer paper), the agent can act fully autonomously within pre-set budgets and preferences. For higher-value or unfamiliar purchases, the agent presents a shortlist and waits for approval. The autonomy is tiered, not binary. But in both cases, the agent isn't browsing your product pages. It's reading your data.</p>
+
+      <h2 id="journey-comparison">Agentic commerce vs traditional e-commerce: how the shopping journey changes</h2>
+
+      <p>The easiest way to understand the shift is to map both models side by side, stage by stage.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Traditional model</th>
+              <th>Agentic model</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Intent</td>
+              <td>Customer types a query into Google or navigates directly to a retailer</td>
+              <td>Customer expresses what they want, precisely or vaguely. The agent interprets intent from language, context, and history.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Discovery</td>
+              <td>Customer browses search results, clicks listings, visits multiple sites</td>
+              <td>Agent queries product feeds, indexed pages, and structured data sources simultaneously</td>
+            </tr>
+            <tr>
+              <td class="col-label">Evaluation</td>
+              <td>Customer reads PDPs, checks specs, scrolls reviews, opens tabs to compare</td>
+              <td>Agent reads product attributes, matches them against constraints, filters programmatically</td>
+            </tr>
+            <tr>
+              <td class="col-label">Comparison</td>
+              <td>Customer mentally weighs options across open tabs, maybe uses a comparison tool</td>
+              <td>Agent ranks candidates by price, availability, reviews, delivery, and attribute match quality</td>
+            </tr>
+            <tr>
+              <td class="col-label">Decision</td>
+              <td>Customer picks a product, adds to cart</td>
+              <td>Agent presents a ranked shortlist; customer approves</td>
+            </tr>
+            <tr>
+              <td class="col-label">Transaction</td>
+              <td>Customer enters payment, shipping, confirms order on the merchant's site</td>
+              <td>Agent completes checkout within its own interface (ACP, UCP), or redirects to merchant</td>
+            </tr>
+            <tr>
+              <td class="col-label">Post-purchase</td>
+              <td>Customer tracks order via email/app, initiates returns manually, browses for accessories</td>
+              <td>Agent tracks shipments, manages returns, and proactively recommends complementary products</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Two things to notice. First, the customer's role shrinks from "does everything" to "expresses intent and approves." Second, the merchant's website may not feature in the journey at all. The agent can discover the product from a feed, evaluate it from structured data, complete the transaction via a protocol, and manage post-purchase follow-up without rendering a single page.</p>
+
+      <p>That second point is the one that changes the game for SEO and e-commerce teams. Your PDP, your carefully optimised product page, your hero images, your brand story: the agent may never see any of it. What the agent sees is your data. Feeds, schema markup, and structured attributes.</p>
+
+      <h3>The marketing funnel doesn't apply here</h3>
+
+      <p>The traditional e-commerce funnel (awareness, consideration, decision, purchase) assumes the customer moves through distinct stages, and your marketing touches them at each one. Display ads build awareness. Content marketing handles consideration. Retargeting nudges the decision. The PDP closes the sale. Entire teams, budgets, and attribution models are built around this progression.</p>
+
+      <p>In an agentic model, those stages collapse. The customer says "I need new running shoes" and the agent handles discovery through to transaction in one interaction. There's no awareness stage to target because the agent doesn't see your brand campaign. There's no consideration stage where the customer browses your content hub. There's no retargeting pixel firing because the customer never visited your site. The agent evaluates your structured data, compares it against competitors, and either includes you or doesn't.</p>
+
+      <p>The funnel compresses into a single question: <strong>does your data match the intent, and is it better than the alternatives?</strong></p>
+
+      <p>This isn't a tweak to how you optimise the funnel. It's the removal of the funnel as an organising principle. The touchpoints that e-commerce marketing has spent two decades optimising (the ad impression, the landing page, the remarketing sequence, the cart abandonment email) don't exist in a journey where the agent never visits your site. What exists is your product data, evaluated once, in competition with every other merchant's product data, by a system that doesn't have brand loyalty.</p>
+
+      <p>There's a structural shift underneath this too. Traditional e-commerce is vertical: you go to Amazon for products, Expedia for travel, Deliveroo for food. Each platform owns its category. In an agentic model, the consumer's agent pulls from everywhere simultaneously. The vertical destinations get disintermediated. Your products compete not just within a single platform but across every data source the agent can access. That makes your structured data the only thing that travels with you across all of those surfaces.</p>
+
+      <div class="post-callout">
+        <strong>The key shift:</strong> In traditional e-commerce, you optimise the experience for a human navigating your site. In agentic commerce, you optimise the data for a machine evaluating your products without visiting your site. The funnel doesn't get shorter; it gets replaced.
+      </div>
+
+      <h2 id="interaction-models">Three agentic commerce interaction models</h2>
+
+      <p>Agentic commerce isn't one pattern. It's three, and they have different data implications:</p>
+
+      <ol>
+        <li><strong>Agent to site:</strong> the consumer's agent interacts directly with your platform. It reads your feeds, your schema, your product pages. This is the model most of this post focuses on, because it's the one live right now in ChatGPT, Google, and Perplexity. Your data needs to be <em>discoverable</em>.</li>
+        <li><strong>Agent to agent:</strong> the consumer's agent communicates with the merchant's own AI agent. They negotiate bundle pricing, check real-time inventory, apply loyalty discounts programmatically. This is where your data needs to be <em>negotiable</em>, not just readable. Structured pricing rules, bundle logic, and dynamic availability become the interface.</li>
+        <li><strong>Brokered agent to site:</strong> an intermediary platform (think OpenTable, or a marketplace aggregator) sits between the consumer's agent and the merchant. The broker agent orchestrates across multiple merchants simultaneously. Your data needs to be <em>standardised</em> enough for a third party to interpret and compare it against competitors.</li>
+      </ol>
+
+      <p>Most merchants right now need to focus on model one: making their existing product data discoverable by agents that are already live. But if you're building your data layer properly (complete, consistent, and machine-readable), you're also laying the groundwork for models two and three.</p>
+
+      <h2 id="what-agents-process">What AI shopping agents actually evaluate</h2>
+
+      <p>Ask ChatGPT for "a wireless keyboard for a standing desk, UK layout, under £60" and watch what happens. The agent doesn't browse your homepage, admire your hero banner, or read your "About Us." It queries structured data sources, matches attributes against constraints, and returns a ranked set of products, often without loading a single product page.</p>
+
+      <p>Agents pull from three data layers, each serving a different role:</p>
+
+      <ol>
+        <li><strong>Product feeds:</strong> Google Merchant Center, ChatGPT product feeds, marketplace catalogues. This is how the agent discovers your product exists. If you're not in a feed the agent can query, you're not in the consideration set. Full stop.</li>
+        <li><strong>Schema markup:</strong> the <a href="/product-schema/">Product</a>, <a href="/notes/product-vs-productgroup-schema/">ProductGroup</a>, <a href="/merchant-listing-schema/">Merchant Listing</a>, and <a href="/product-snippet-schema/">Product Snippet</a> JSON-LD on your pages. This is the validation layer. The agent cross-references feed data against schema to confirm price, availability, reviews, and variant-level attributes.</li>
+        <li><strong>Page content:</strong> the visible product description, specs tables, Q&A. LLM-based agents can read this, but they treat it as supplementary, filling gaps the structured data left open, not the primary signal.</li>
+      </ol>
+
+      <p>The difference from traditional search: a human shopper will forgive a vague product listing. They'll infer that "compact design" probably means it fits on a desk. An agent won't infer. "Compact" isn't a dimension. If your keyboard listing doesn't include <code>width</code> and <code>depth</code> as structured attributes, the agent can't evaluate "fits on a standing desk" and will drop the product from the shortlist rather than guessing.</p>
+
+      <p>Multiply that across every attribute an agent evaluates: layout, connectivity, price, stock, delivery. Then you'll start to see why structured data completeness is the single biggest factor in agentic visibility. The full breakdown of what to audit, fix, and add across all three layers is in the <a href="/notes/agentic-commerce-optimization/">agentic commerce optimization guide</a>.</p>
+
+      <h2 id="who-the-agents-are">Agentic commerce examples: the AI shopping agents live right now</h2>
+
+      <p>This isn't theoretical. The agents are live, they have users, and they're processing product data right now.</p>
+
+      <h3>ChatGPT + Instant Checkout (OpenAI)</h3>
+
+      <p>OpenAI launched "Buy it in ChatGPT" in February 2026, powered by the <strong>Agentic Commerce Protocol (ACP)</strong>, an open standard co-developed with Stripe. Users can search for products, see carousels, compare options, and complete checkout without leaving the chat interface. OpenAI charges merchants a 4% transaction fee on completed purchases.</p>
+
+      <p>The discovery mechanism is particularly interesting for SEOs: research from Peec AI found that ChatGPT sources 83% of its product carousel items from Google Shopping via what they call "shopping query fan-outs." The agent takes a user's conversational query, translates it into structured shopping queries, and pulls results from Google's Shopping index. Which means your Google Merchant Center feed isn't just for Google Shopping anymore. It's your primary discovery channel for ChatGPT product recommendations too.</p>
+
+      <p>At launch, over a million Shopify merchants were in the onboarding queue, with early partners including Glossier, SKIMS, Spanx, and Vuori.</p>
+
+      <h3>Google AI Shopping + UCP</h3>
+
+      <p>Google announced the <strong>Universal Commerce Protocol (UCP)</strong> at the National Retail Federation conference in January 2026. It's an open-source standard built in collaboration with Shopify, Wayfair, Target, Walmart, and endorsed by over 20 global partners including Mastercard, Visa, and Stripe.</p>
+
+      <p>UCP powers AI-assisted shopping across Google Search's AI mode and Gemini. Like ACP, it enables checkout within the AI interface. But Google has the advantage of already having the product data. Every merchant with a Google Merchant Center feed is already in Google's index. The UCP roadmap includes multi-item checkout, cart management, loyalty programmes, and post-order workflows.</p>
+
+      <h3>Perplexity Buy with Pro</h3>
+
+      <p>Perplexity launched its shopping feature for Pro users, with one-click checkout and free shipping through merchant partners. The <strong>Perplexity Merchant Program</strong> (essentially their version of Merchant Center) lets businesses share product catalogues including reviews, prices, and specs. Shopping queries on Perplexity have increased fivefold since launch. Their integration with Shopify gives them access to product data across Shopify-powered businesses globally.</p>
+
+      <h3>Amazon Rufus</h3>
+
+      <p>Amazon's AI shopping assistant has been used by over 250 million customers, with interactions up 210% year over year. Rufus is trained on Amazon's entire product catalogue, customer reviews, and community Q&amp;A posts. The latest capabilities include a price tracker and auto-buy. Customers set a target price and Rufus automatically completes the purchase when the price drops. This is agentic commerce in its most literal form: the agent executes the transaction without the customer being present.</p>
+
+      <div class="post-callout-warn">
+        <strong>Notice the pattern:</strong> Every major AI platform (OpenAI, Google, Perplexity, Amazon) has built or is building the ability to complete purchases within its own interface. The merchant's website is becoming optional in the transaction. Your product data is not.
+      </div>
+
+      <h2 id="protocols-explained">Agentic Commerce Protocol (ACP) vs Universal Commerce Protocol (UCP)</h2>
+
+      <p>Two protocols are emerging as the infrastructure layer for agentic transactions. They both solve the same problem: how does an AI agent securely complete a purchase on a merchant's backend? But they come from different directions.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>ACP (Agentic Commerce Protocol)</th>
+              <th>UCP (Universal Commerce Protocol)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Developed by</td>
+              <td>OpenAI + Stripe</td>
+              <td>Google + coalition (Shopify, Wayfair, Target, Walmart, Mastercard, Visa)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Primary surface</td>
+              <td>ChatGPT</td>
+              <td>Google Search AI mode, Gemini</td>
+            </tr>
+            <tr>
+              <td class="col-label">Open standard</td>
+              <td>Yes (GitHub)</td>
+              <td>Yes (open-source)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Payment flow</td>
+              <td>Stripe-processed, 4% merchant fee</td>
+              <td>Merchant's existing payment provider, compatible with AP2</td>
+            </tr>
+            <tr>
+              <td class="col-label">Product data source</td>
+              <td>Merchant integration + Google Shopping fan-outs</td>
+              <td>Google Merchant Center + direct integrations</td>
+            </tr>
+            <tr>
+              <td class="col-label">Fulfilment</td>
+              <td>Merchant handles directly</td>
+              <td>Merchant handles directly</td>
+            </tr>
+            <tr>
+              <td class="col-label">Current status</td>
+              <td>Live for US ChatGPT users (Plus, Pro, Free)</td>
+              <td>Announced Jan 2026, rolling out across Google surfaces</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The practical takeaway: you'll likely need to support both. The good news is that the underlying product data (the feeds, the schema, the attributes) is the same for both protocols. The differences are in the transaction layer, not the data layer. Get your product data right once, and you're eligible for both.</p>
+
+      <h3>The payment layer underneath</h3>
+
+      <p>Underneath ACP and UCP sits the payment infrastructure that actually moves money. Google's <strong>Agent Payments Protocol (AP2)</strong> handles delegated authentication, letting the agent complete a purchase using stored credentials without the consumer re-entering card details. Visa has introduced AI-ready tokenised credentials specifically for agent-initiated transactions. Stripe processes ACP payments for ChatGPT. These systems use delegated authentication and audit trails to maintain transaction transparency, because the entity initiating the payment isn't a human clicking "buy." It's a machine acting on their behalf. For merchants, the integration is handled through your existing payment provider in most cases. You don't need a new payments stack, but your provider needs to support the protocol.</p>
+
+      <h2 id="adoption-numbers">Agentic commerce adoption: where it actually stands in 2026</h2>
+
+      <p>The hype cycle is running hot, so let's separate signal from noise with actual numbers.</p>
+
+      <p>According to IBM's Institute for Business Value (January 2026), <strong>45% of consumers already use AI for at least part of their buying journey</strong>. A Riskified study puts the figure higher: 73% of shoppers using AI at some point, primarily for product ideas, review summaries, and price comparisons. Adobe's Digital Economy Index reports that traffic from AI sources has increased 1,200% for retailers.</p>
+
+      <p>But here's the nuance: <strong>usage is concentrated in research, not in transactions.</strong> PYMNTS Intelligence found that 41% of consumers have used AI platforms for product discovery, but only 13% have completed a purchase after an AI referral. The models are excellent at helping consumers research and shortlist. The infrastructure for executing the purchase is still being built.</p>
+
+      <p>That gap is closing fast. Nearly half of American consumers (44%) say they're comfortable with an AI agent browsing and shopping on their behalf, rising to 59% for shoppers aged 18–34. Morgan Stanley projects that nearly half of online shoppers will use AI shopping agents by 2030, accounting for approximately 25% of their spending. McKinsey's research puts the revenue opportunity at $3 trillion to $5 trillion globally by 2030, with the US B2C market alone representing up to $1 trillion in agent-orchestrated revenue. And that's goods only, before services and B2B.</p>
+
+      <p>The implication: if you wait until agentic transactions are mainstream to optimise your product data, you'll be optimising after your competitors who are doing it now. The discovery and research phase is already at scale, and it's where agents are evaluating your structured data today.</p>
+
+      <h2 id="data-implications">What agentic commerce means for your product data</h2>
+
+      <p>Every stage of the agentic journey maps to a specific data layer. Here's the connection:</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Agent stage</th>
+              <th>Data the agent needs</th>
+              <th>Where it comes from</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Discovery</td>
+              <td>Product titles, categories, GTINs, brand</td>
+              <td>Product feeds (GMC, ChatGPT feed, marketplace feeds)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Evaluation</td>
+              <td>Attributes, specs, descriptions, images</td>
+              <td>Schema markup (<code>Product</code>, <code>ProductGroup</code>), PDP content</td>
+            </tr>
+            <tr>
+              <td class="col-label">Comparison</td>
+              <td>Price, availability, shipping, returns, reviews</td>
+              <td>Schema (<code>Offer</code>, <code>ShippingService</code>, <code>MerchantReturnPolicy</code>, <code>aggregateRating</code>), feeds</td>
+            </tr>
+            <tr>
+              <td class="col-label">Transaction</td>
+              <td>Checkout endpoint, payment processing, order confirmation</td>
+              <td>ACP / UCP protocol integration, AP2 payment delegation</td>
+            </tr>
+            <tr>
+              <td class="col-label">Post-purchase</td>
+              <td>Order status, return eligibility, complementary product attributes</td>
+              <td>Order management APIs, <code>MerchantReturnPolicy</code> schema, product relationship data in feeds</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The first three stages (discovery, evaluation, comparison) are entirely dependent on your existing product data infrastructure. No new technology required. No new protocol integration. Just complete, accurate, consistent structured data across your feeds, schema, and page content.</p>
+
+      <p>Transaction and post-purchase are where the new protocols (ACP, UCP, AP2) come in, and those are platform integration decisions. But none of it happens if the agent never discovers and evaluates your product in the first place. Data completeness comes first.</p>
+
+      <div class="post-callout">
+        <strong>The uncomfortable truth:</strong> Most of what agents need from your product data is the same structured data you should already have in place for Google Shopping. The problem isn't that agentic commerce requires something fundamentally new. The problem is that most sites never got the existing layer right.
+      </div>
+
+      <p>If that sounds like your situation, the companion post walks through the audit section by section with code examples and a checklist: <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data</a>.</p>
+
+      <h2 id="not-a-revolution">The honest take</h2>
+
+      <p>This is a big change. The transaction is moving out of the merchant's site and into the agent's interface. The discovery mechanism is shifting from links and rankings to structured data queries. The customer relationship (the one you built through site experience, email flows, and brand touchpoints) is being intermediated by a machine that doesn't care about any of that.</p>
+
+      <p>That said, the infrastructure is still catching up. Right now, most agents are impressive at research and shortlisting but early on the actual transaction side. The protocols are new, the payment rails are being built, and full end-to-end agentic purchasing is limited to a handful of integrations. So you have a window. It's a window to prepare, not to wait.</p>
+
+      <p>The work isn't speculative either. Complete, consistent, machine-readable product data improves your Google Shopping performance, your rich results eligibility, and your visibility in every structured data-dependent surface that exists today. You're not betting on agentic commerce. You're fixing your data, and agentic readiness comes as a byproduct.</p>
+
+      <!-- FAQ -->
+        <h2 id="faq">Frequently asked questions</h2>
+
+        <div class="faq-item">
+          <p class="faq-q">What is agentic commerce?</p>
+          <p class="faq-a">Agentic commerce is a model where AI agents handle part or all of the shopping journey on behalf of the consumer. Instead of the customer performing every step (searching, browsing, filtering, comparing, and checking out), the customer expresses what they want, and the AI agent interprets that intent, manages product discovery, evaluation, comparison, and increasingly, the transaction itself. The agent can infer context from purchase history, preferences, and vague language. The consumer doesn't need to specify exact constraints. They stay in control of the decision, but the agent does the work.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">How is agentic commerce different from traditional e-commerce?</p>
+          <p class="faq-a">In traditional e-commerce, the customer drives every step: they search, browse product pages, filter results, compare options, add to cart, and complete checkout. The entire funnel is human-driven and session-based. In agentic commerce, the customer expresses what they want, sometimes precisely ("running shoes under £100, size 9"), sometimes vaguely ("something like last time but cheaper"), and the AI agent interprets that intent using context, history, and preferences. The agent then evaluates structured product data across multiple merchants, compares options, and can complete the purchase within the AI interface. The merchant's website may never be visited.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Which AI shopping agents exist right now?</p>
+          <p class="faq-a">As of early 2026, the main AI shopping agents are: ChatGPT with Instant Checkout (powered by OpenAI's Agentic Commerce Protocol and Stripe), Google's AI shopping in Search and Gemini (powered by the Universal Commerce Protocol), Perplexity's Buy with Pro feature, and Amazon's Rufus which now supports auto-buy functionality. Each processes product data differently, but all rely on structured data (feeds, schema markup, and product attributes) to discover and evaluate products.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Do I need to change my product data for agentic commerce?</p>
+          <p class="faq-a">Most of what AI agents need is the same structured data you should already have in place for Google Shopping: complete schema markup, accurate feeds, and consistent product attributes. The difference is that agents have less tolerance for gaps. A human shopper fills in missing information with assumptions; an agent that can't match a constraint simply skips your product. The priority is auditing what you have for completeness and consistency, not building something fundamentally new.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What is the Agentic Commerce Protocol (ACP)?</p>
+          <p class="faq-a">The Agentic Commerce Protocol (ACP) is an open standard developed by OpenAI and Stripe that enables purchases to be completed directly within ChatGPT. When a customer decides to buy, ChatGPT sends order details to the merchant's backend via ACP, the merchant processes payment through their existing provider, and handles fulfilment as normal. Google has introduced a parallel standard, the Universal Commerce Protocol (UCP), for its own AI shopping surfaces.</p>
+        </div>
+
+      <!-- Sources -->
+      <h2 id="sources" style="font-size:20px;margin-top:48px">Sources</h2>
+      <ul style="font-size:15px">
+        <li><a href="https://openai.com/index/buy-it-in-chatgpt/" rel="noopener">Buy it in ChatGPT / ACP launch</a> (OpenAI, February 2026)</li>
+        <li><a href="https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/" rel="noopener">Under the Hood: Universal Commerce Protocol (UCP)</a> (Google Developers Blog)</li>
+        <li><a href="https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/" rel="noopener">New tech and tools for retailers in an agentic shopping era</a> (Google Blog)</li>
+        <li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-agentic-commerce-opportunity-how-ai-agents-are-ushering-in-a-new-era-for-consumers-and-merchants" rel="noopener">The agentic commerce opportunity</a> (McKinsey)</li>
+        <li><a href="https://ir.riskified.com/news-releases/news-release-details/global-study-73-shoppers-using-ai-shopping-journey-merchants" rel="noopener">Global study: 73% of shoppers using AI in shopping journey</a> (Riskified, October 2025)</li>
+        <li><a href="https://business.adobe.com/resources/holiday-shopping-report.html" rel="noopener">Holiday Shopping / AI retail traffic data</a> (Adobe)</li>
+        <li><a href="https://searchengineland.com/new-finding-chatgpt-sources-83-of-its-carousel-products-from-google-shopping-via-shopping-query-fan-outs-470723" rel="noopener">ChatGPT sources 83% of carousel products from Google Shopping</a> (Search Engine Land / Peec AI, 2026)</li>
+        <li><a href="https://www.pymnts.com/artificial-intelligence-2/2026/why-ai-shopping-is-still-just-a-smarter-search-bar/" rel="noopener">Why AI shopping is still just a smarter search bar</a> (PYMNTS, 2026)</li>
+        <li><a href="https://www.aboutamazon.com/news/retail/amazon-rufus-ai-assistant-personalized-shopping-features" rel="noopener">Amazon Rufus AI assistant</a> (About Amazon)</li>
+      </ul>
+
+      <!-- Author card -->
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+
+      <a href="/notes/" class="post-back">← Back to all notes</a>
+
+        </div><!-- /post-body -->
+      </div><!-- /ct-content -->
+
+      <nav class="ct-toc">
+        <p class="ct-toc-label">On this page</p>
+        <ul class="ct-toc-list">
+          <li><a href="#definition">Definition</a></li>
+          <li><a href="#journey-comparison">Agentic vs traditional</a></li>
+          <li><a href="#interaction-models">Interaction models</a></li>
+          <li><a href="#what-agents-process">What agents evaluate</a></li>
+          <li><a href="#who-the-agents-are">Examples: live agents</a></li>
+          <li><a href="#protocols-explained">ACP vs UCP</a></li>
+          <li><a href="#adoption-numbers">Adoption in 2026</a></li>
+          <li><a href="#data-implications">Product data</a></li>
+          <li><a href="#not-a-revolution">Honest take</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+    </div><!-- /ct-layout -->
+
+  </div><!-- /post-wrap -->
+</div><!-- /blog-content -->
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
+<script>
+(function(){
+  const links = document.querySelectorAll('.ct-toc-list a');
+  const ids = Array.from(links).map(a => a.getAttribute('href').slice(1));
+  function update(){
+    let cur = ids[0];
+    for(const id of ids){
+      const el = document.getElementById(id);
+      if(el && el.getBoundingClientRect().top <= 120) cur = id;
+    }
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

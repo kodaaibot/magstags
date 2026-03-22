@@ -127,6 +127,11 @@
     .view-more-btn { background: none; border: none; color: var(--teal); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; padding: 6px 16px; transition: opacity .15s; }
     .view-more-btn:hover { opacity: .7; }
     .breakdown-table tr.hidden-row { display: none; }
+    .breakdown-table th.sortable { cursor: pointer; user-select: none; position: relative; transition: color .15s; }
+    .breakdown-table th.sortable:hover { color: var(--teal); }
+    .breakdown-table th.sortable::after { content: '⇅'; margin-left: 4px; font-size: 10px; opacity: .4; }
+    .breakdown-table th.sortable.sort-asc::after { content: '↑'; opacity: 1; color: var(--teal); }
+    .breakdown-table th.sortable.sort-desc::after { content: '↓'; opacity: 1; color: var(--teal); }
 
     .export-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
     .btn-copy { padding: 8px 18px; background: var(--teal); color: #fff; border: none; border-radius: 99px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity .15s; }
@@ -719,7 +724,7 @@
       if (hasDir) {
         var maxDir = dirs.length > 0 ? dirs[0].count : 1;
         html += '<div id="tab-dir" class="result-tab-panel">';
-        html += '<table class="breakdown-table" id="table-dir"><thead><tr><th>Directory</th><th style="text-align:right">URLs</th><th style="text-align:right">%</th><th class="bar-cell"></th></tr></thead><tbody>';
+        html += '<table class="breakdown-table" id="table-dir"><thead><tr><th class="sortable" onclick="sortTable(\'table-dir\',0,\'string\',this)">Directory</th><th class="sortable sort-desc" style="text-align:right" onclick="sortTable(\'table-dir\',1,\'number\',this)">URLs</th><th class="sortable" style="text-align:right" onclick="sortTable(\'table-dir\',2,\'number\',this)">%</th><th class="bar-cell"></th></tr></thead><tbody>';
         dirs.forEach(function(d, i) {
           var pct = uniqueCount > 0 ? (d.count / uniqueCount * 100) : 0;
           var barPct = maxDir > 0 ? Math.round(d.count / maxDir * 100) : 0;
@@ -736,7 +741,7 @@
       /* Per-sitemap tab */
       if (hasSitemaps) {
         html += '<div id="tab-sitemap" class="result-tab-panel"' + (hasDir ? ' style="display:none"' : '') + '>';
-        html += '<table class="breakdown-table" id="table-sitemap"><thead><tr><th>Sitemap</th><th style="text-align:right">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
+        html += '<table class="breakdown-table" id="table-sitemap"><thead><tr><th class="sortable" onclick="sortTable(\'table-sitemap\',0,\'string\',this)">Sitemap</th><th class="sortable sort-desc" style="text-align:right" onclick="sortTable(\'table-sitemap\',1,\'number\',this)">URLs</th><th class="bar-cell"></th></tr></thead><tbody>';
         var maxCount = Math.max.apply(null, urlsets.map(function(s) { return s.urls.length; }));
         urlsets.forEach(function(s, i) {
           var barPct = maxCount > 0 ? Math.round(s.urls.length / maxCount * 100) : 0;
@@ -831,6 +836,58 @@
     btn.textContent = showing ? btn.textContent.replace('Show less', 'View all') : btn.textContent.replace('View all', 'Show less');
     if (showing) btn.textContent = 'View all ' + rows.length + ' more';
     else btn.textContent = 'Show less';
+  };
+
+  window.sortTable = function(tableId, colIdx, type, th) {
+    var table = document.getElementById(tableId);
+    var tbody = table.querySelector('tbody');
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    var headers = table.querySelectorAll('th.sortable');
+
+    /* Determine sort direction */
+    var isDesc = th.classList.contains('sort-desc');
+    var isAsc = th.classList.contains('sort-asc');
+    var newDir = isDesc ? 'asc' : 'desc';
+
+    /* Reset all headers in this table */
+    for (var i = 0; i < headers.length; i++) {
+      headers[i].classList.remove('sort-asc', 'sort-desc');
+    }
+    th.classList.add('sort-' + newDir);
+
+    /* Sort rows */
+    rows.sort(function(a, b) {
+      var aText = a.cells[colIdx].textContent.trim();
+      var bText = b.cells[colIdx].textContent.trim();
+      var aVal, bVal;
+      if (type === 'number') {
+        aVal = parseFloat(aText.replace(/[,%]/g, '')) || 0;
+        bVal = parseFloat(bText.replace(/[,%]/g, '')) || 0;
+      } else {
+        aVal = aText.toLowerCase();
+        bVal = bText.toLowerCase();
+      }
+      if (aVal < bVal) return newDir === 'asc' ? -1 : 1;
+      if (aVal > bVal) return newDir === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    /* Re-append rows and re-apply hidden-row visibility */
+    for (var j = 0; j < rows.length; j++) {
+      rows[j].classList.remove('hidden-row');
+      rows[j].style.display = '';
+      tbody.appendChild(rows[j]);
+    }
+
+    /* Reset view-more if it exists */
+    var viewMoreBtn = table.parentNode.querySelector('.view-more-btn');
+    if (viewMoreBtn) {
+      for (var k = 20; k < rows.length; k++) {
+        rows[k].classList.add('hidden-row');
+        rows[k].style.display = 'none';
+      }
+      viewMoreBtn.textContent = 'View all ' + (rows.length - 20) + ' more';
+    }
   };
 
   window.clearAll = function() {

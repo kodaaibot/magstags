@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/agentic-commerce-optimization/">
+  <meta name="description" content="Agentic commerce optimization starts with your product data. Audit your schema markup, Google Merchant Center feeds, and PDP content to make products discoverable by AI shopping agents — with code examples and a checklist.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:17px;line-height:1.7;color:var(--text-3);margin-bottom:36px;font-style:italic;border-left:3px solid var(--border);padding-left:18px}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;background:var(--mint-light);color:var(--teal);padding:2px 6px;border-radius:4px;word-break:break-all}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--text-1)}
+
+    /* Tables */
+    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
+    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table code{font-size:12.5px}
+    .post-table .col-label{font-weight:600;color:var(--text-1);white-space:nowrap}
+
+    /* Diagrams */
+    .post-diagram{margin:32px 0;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 16px 16px}
+    .post-diagram svg{max-width:100%;height:auto}
+    .post-diagram-caption{font-size:13px;color:var(--text-4);margin-top:10px;font-style:italic}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+
+    /* Table of Contents */
+    .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+    .ct-content { min-width: 0; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
+    .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
+    .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+    .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
+    .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
+
+    /* FAQ */
+    .faq-block{margin-top:52px}
+    .faq-item{padding:20px 0;border-bottom:1px solid var(--border)}
+    .faq-item:last-child{border-bottom:none}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
+    .faq-a code{font-size:13px}
+
+    /* Compare grid */
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+    .compare-col{padding:24px;border-radius:14px;font-size:15px;line-height:1.7}
+    .compare-col.yes{background:#ecfdf5;border:1px solid #6ee7b7}
+    .compare-col.no{background:#fef2f2;border:1px solid #fca5a5}
+    html.dark .compare-col.yes{background:#022c22;border-color:#065f46}
+    html.dark .compare-col.no{background:#450a0a;border-color:#991b1b}
+    .compare-col h4{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px}
+    .compare-col ul{padding-left:18px;margin:0}
+    .compare-col li{margin-bottom:6px;font-size:15px}
+    @media(max-width:640px){.compare-grid{grid-template-columns:1fr}}
+  </style>
+  <meta property="og:title" content="Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data | MagsTags">
+  <meta property="og:description" content="Agentic commerce optimization starts with your product data. Audit your schema markup, GMC feeds, and PDP content to make products discoverable by AI shopping agents.">
+  <meta property="og:url" content="https://www.magstags.com/notes/agentic-commerce-optimization/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data | MagsTags">
+  <meta name="twitter:description" content="Agentic commerce optimization starts with your product data. Audit your schema markup, GMC feeds, and PDP content for AI shopping agents.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data",
+    "description": "Agentic commerce optimization starts with your product data. Audit your schema markup, Google Merchant Center feeds, and PDP content to make products discoverable by AI shopping agents — with code examples and a checklist.",
+    "url": "https://www.magstags.com/notes/agentic-commerce-optimization/",
+    "datePublished": "2026-03-22",
+    "dateModified": "2026-03-22",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com/"
+    },
+    "image": "https://www.magstags.com/og-image.png",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.magstags.com/notes/agentic-commerce-optimization/"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need new schema markup for agentic commerce?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Probably not a full rebuild. Audit and extend instead. If your existing Product, ProductGroup, and Merchant Listing schema is complete and accurate, you're already ahead of most merchants. The gap for most sites is in Organization-level policies (shipping, returns), feed-to-schema alignment, and the completeness of variant-level attributes. AI agents process the same structured data Google does; they just have less tolerance for gaps."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between a GMC feed and an AI product feed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A GMC feed is optimised for Google Shopping; it follows Google's attribute specification and is validated against Google's requirements. AI product feeds (like those for ChatGPT or Perplexity) may have different attribute requirements, different categorisation taxonomies, and different expectations for description quality. The core product data is the same, but the formatting, required fields, and optimisation targets differ. Most importantly, AI feeds reward richer, more descriptive attribute data because the agent needs to reason about your product, not just list it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does structured data affect AI shopping agent recommendations?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. AI shopping agents (whether Google's, OpenAI's, or Amazon's) evaluate products based on structured signals: price, availability, reviews, specifications, shipping, and return policies. Schema markup is one of the primary sources of these signals. If your structured data is incomplete, the agent has less information to work with than competitors whose data is complete. In an environment where the agent makes the selection (not the human browsing a results page), data completeness is directly competitive."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I optimise for Google or OpenAI shopping agents?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Both. The good news is that the foundation is the same. Complete, accurate, well-structured product data benefits you across all agent environments. The differences are in feed formats and platform-specific protocols (Google's UCP vs OpenAI's ACP), but the underlying product data quality that makes your products agent-eligible is universal. Start with your core data layer and then adapt output formats per platform."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Agentic Commerce Protocol (ACP)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ACP is an open standard developed by OpenAI and Stripe that enables purchases to be completed directly within ChatGPT. It allows AI agents to discover products, present options to users, and execute transactions without the consumer visiting the merchant's website. At launch, over one million Shopify merchants were in the onboarding queue. Google has introduced a parallel protocol (the Universal Commerce Protocol, or UCP) for its own agent infrastructure."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Agentic Commerce Optimization</span>
+    </nav>
+
+    <span class="post-category">E-commerce SEO</span>
+    <h1 class="post-h1">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>22 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>18 min read</span>
+    </div>
+
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+
+      <p class="post-lead">For e-commerce SEOs with "agentic optimisation" on the roadmap and nothing in the brief beyond the buzzword (yet). And for the developers expected to build it anyway.</p>
+
+      <p>I recently wrote a <a href="https://www.intrepidonline.com/blog/ai/why-digital-shelf-optimization-is-the-most-important-skill-in-e-commerce-right-now" rel="noopener">strategic overview of digital shelf optimisation in agentic commerce</a> for Intrepid Digital. It covers the market shift, the framework, and why this matters for e-commerce leadership. If you want the "what's happening and why should I care" version, start there.</p>
+
+      <p>This post is the practitioner companion. No frameworks. No strategic narratives. This is about what to actually check, fix, and add in your product data: schema markup, Merchant Center feeds, PDP content, and the alignment layer between them. That way, AI shopping agents can find, evaluate, and transact on your products.</p>
+
+      <p>Because the uncomfortable reality is this: most of what agents need from your product data is the same structured data you should already have in place for Google Shopping. The problem isn't that agentic commerce requires something fundamentally new. The problem is that most sites never got the existing layer right.</p>
+
+      <p>If you want the full breakdown of how AI shopping agents work, how the user journey changes, and why the traditional marketing funnel doesn't apply, that's covered in <a href="/notes/what-is-agentic-commerce/">What Is Agentic Commerce?</a> This post starts where that one ends: with your data.</p>
+
+      <h2 id="the-three-layers">The three layers agents evaluate — and where most sites break</h2>
+
+      <p>Your product data reaches AI systems through three distinct layers. If you've worked on e-commerce SEO, these are familiar. What's different is that agents cross-reference all three simultaneously, and inconsistencies between them create a trust problem that didn't exist when a human was the evaluator.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>What it is</th>
+              <th>Who processes it</th>
+              <th>Common failure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">PDP content</td>
+              <td>The visible product page: title, description, specs, images, reviews</td>
+              <td>Humans, crawlers, LLMs reading page content</td>
+              <td>Rich on story, thin on structured attributes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Product feed</td>
+              <td>GMC feed, ChatGPT product feed, marketplace feeds</td>
+              <td>Google Shopping, AI agent discovery systems</td>
+              <td>Truncated titles, missing GTINs, stale prices</td>
+            </tr>
+            <tr>
+              <td class="col-label">Schema markup</td>
+              <td>JSON-LD structured data in the page <code>&lt;head&gt;</code></td>
+              <td>Google rich results, AI agents evaluating on-page data</td>
+              <td>Hardcoded, missing variants, no shipping/returns</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>When all three layers agree (the PDP says £89, the feed says £89, the schema says £89), there's no ambiguity. The agent has high confidence. When they disagree (the PDP says £89, the feed says £79 because of yesterday's sale price that didn't update, and the schema says £99 from hardcoding at launch that was never touched), the agent has three conflicting signals and no way to determine which is correct.</p>
+
+      <p>A human might land on the PDP and see the current price. The agent, evaluating from feed and schema data before it ever renders your page, may simply move on.</p>
+
+      <p>There's also a layer that sits across all three: <strong>trust signals</strong>. Reviews, ratings, verified purchase indicators, certifications, and seller reputation. Whether these are collected on your own site or aggregated from third-party platforms, agents treat them as confidence indicators when evaluating the reliability of your product data. A product with 2,000 verified reviews and a 4.6 rating sends a different signal than one with no reviews at all, even if the structured data is otherwise identical. Agents weigh these signals during the comparison stage, and they're available as structured data: <code>aggregateRating</code> and <code>review</code> in your on-page schema, review feeds in Merchant Center, and seller ratings across platforms. If your competitors have strong review signals and you don't, that's a competitive gap that clean data alone won't close.</p>
+
+      <h2 id="schema-audit">Product schema audit for AI agents</h2>
+
+      <p>If you've implemented <a href="/product-schema/">Product schema</a> on your e-commerce site, you're ahead of most. But "implemented" and "complete" are different things, and the gap between them is where agent visibility is lost.</p>
+
+      <p>Here's the audit I'd run. Check each property against your actual markup (not what your CMS documentation says it outputs, but what actually appears in the rendered HTML). Use the Rich Results Test or view source.</p>
+
+      <h3>Product-level properties: the baseline</h3>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Agent impact</th>
+              <th>What I typically find</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label"><code>name</code></td>
+              <td>Primary identification. Must match feed title closely.</td>
+              <td>Usually present, but often a marketing title rather than the descriptive title in the feed</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>sku</code></td>
+              <td>Feed-to-schema matching. Must match feed <code>id</code> or use the same GTIN.</td>
+              <td>Missing in ~40% of implementations I audit</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>gtin13</code></td>
+              <td>Universal product identifier. How agents confirm product identity across sources.</td>
+              <td>Often missing entirely or at parent level instead of variant level</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>brand.name</code></td>
+              <td>Brand filtering and constraint matching</td>
+              <td>Usually present but sometimes set to the retailer name instead of the product brand</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>description</code></td>
+              <td>Semantic understanding. Agents parse this for attributes, use cases, compatibility.</td>
+              <td>Either missing or a duplicate of the meta description (too short to be useful)</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>image</code></td>
+              <td>Product representation. Multiple aspect ratios recommended.</td>
+              <td>Present but often a single image URL rather than an array</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Offer-level properties: where money lives</h3>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Agent impact</th>
+              <th>What I typically find</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label"><code>price</code> + <code>priceCurrency</code></td>
+              <td>The constraint agents match most frequently. Must be the active, current price.</td>
+              <td>Usually present. Often stale if hardcoded.</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>availability</code></td>
+              <td>Agents filter out of stock items. Must reflect real-time inventory.</td>
+              <td>Hardcoded to <code>InStock</code> on ~60% of sites, regardless of actual stock</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>priceValidUntil</code></td>
+              <td>Signals how current the price data is. Agents use this for confidence.</td>
+              <td>Almost always missing</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>itemCondition</code></td>
+              <td>New/Refurbished/Used filtering</td>
+              <td>Missing on most sites. Defaults to ambiguous.</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>shippingDetails</code></td>
+              <td>Delivery cost and speed. Increasingly a comparative signal for agents.</td>
+              <td>Missing on ~80% of e-commerce sites</td>
+            </tr>
+            <tr>
+              <td class="col-label"><code>hasMerchantReturnPolicy</code></td>
+              <td>Return conditions. Part of the trust evaluation.</td>
+              <td>Missing on ~90% of sites</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Look at that last column. Prices and names are usually there. But SKUs, GTINs, shipping, returns, and condition (the attributes that agents use to compare and rank) are consistently absent. This is the gap: not missing schema entirely, but missing the properties that move you from "technically present" to "competitively positioned."</p>
+
+      <div class="post-callout-warn">
+        <strong>The hardcoded availability problem is serious.</strong> If your schema says <code>InStock</code> for a product that's actually out of stock, you're not just misleading Google — you're creating a data integrity failure that agents will detect when they cross-reference your feed (which does reflect real inventory) against your markup (which doesn't). Mismatches like this erode trust at the domain level, not just the product level.
+      </div>
+
+      <h2 id="variants-and-productgroup">Variants: the biggest opportunity gap</h2>
+
+      <p>I wrote about this in detail in the <a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup</a> post, and the <a href="/product-variants-schema/">Product Variants schema guide</a> covers the full implementation. Here's why it matters specifically for agentic commerce.</p>
+
+      <p>When a user tells an agent "blue running shoes, size 9," the agent needs to find a specific variant (not a product family). If your schema only describes the parent product with an <code>AggregateOffer</code> price range, the agent can't confirm that the blue version exists, that it comes in size 9, or what it costs. It can tell the user you sell running shoes somewhere in the £89–£129 range. That's a weaker signal than a competitor whose schema says "Blue, Size 9, £99, InStock."</p>
+
+      <p>The <code>ProductGroup</code> + variant <code>Product</code> structure gives agents what they need: individual variants with their own SKU, GTIN, price, availability, colour, size, and image. Each variant is independently matchable against user constraints.</p>
+
+      <p>The critical rules haven't changed from the <a href="/product-variants-schema/">variants guide</a>, but they're worth restating in this context because agent systems are less forgiving than Google's traditional Shopping pipeline:</p>
+
+      <ul>
+        <li>Every dimension in <code>variesBy</code> must appear as a property on every variant. If you declare <code>variesBy: color, size</code> but a variant is missing its <code>size</code> value, agents can't classify it.</li>
+        <li>Every variant must have its own <code>offers</code> object. Missing <code>offers</code> on one variant can invalidate the entire ProductGroup in some agent implementations.</li>
+        <li><code>variesBy</code> must use full schema.org URIs (e.g., <code>https://schema.org/color</code>, not <code>"Color"</code>). Plain text is technically valid schema, but it doesn't trigger Shopping swatches and agents may not interpret it as a filterable dimension.</li>
+        <li>Keep <code>OutOfStock</code> variants in schema with the correct availability value. Removing them entirely means agents lose track of the full variant set.</li>
+      </ul>
+
+      <h2 id="organization-level-markup">Organization-level markup: the layer most brands skip entirely</h2>
+
+      <p>This is where I see the biggest gap between what Google's documentation recommends and what e-commerce sites actually implement.</p>
+
+      <p>Google supports (and increasingly rewards) Organization-level structured data for shipping policies (<code>ShippingService</code>), return policies (<code>MerchantReturnPolicy</code>), and loyalty programmes (<code>MemberProgram</code>). These are defined once on your Organization page and referenced from individual product offers, rather than duplicated across every product page.</p>
+
+      <p>For agents, this is significant because shipping and returns are comparison signals. When a user asks an agent to find a product with free shipping and easy returns, the agent needs structured data to evaluate that. If your competitor's schema includes <code>shippingRate: 0, currency: GBP, transitTime: 1-3 days</code> and yours doesn't mention shipping at all, the agent has no basis to include your product in a "free shipping" filtered result.</p>
+
+      <h3>ShippingService: define once, reference everywhere</h3>
+
+<pre>{
+  "@context": "https://schema.org/",
+  "@type": "Organization",
+  "name": "Your Store",
+  "url": "https://www.yourstore.com",
+  "hasShippingService": {
+    "@type": "ShippingService",
+    "@id": "https://www.yourstore.com/shipping#standard",
+    "shippingConditions": {
+      "@type": "ShippingConditions",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": 0,
+        "currency": "GBP"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "GB"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0, "maxValue": 1, "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 1, "maxValue": 3, "unitCode": "DAY"
+        }
+      }
+    }
+  }
+}</pre>
+
+      <p>Then on each product page, reference it from the Offer:</p>
+
+<pre>"shippingDetails": {
+  "@type": "OfferShippingDetails",
+  "hasShippingService": {
+    "@id": "https://www.yourstore.com/shipping#standard"
+  }
+}</pre>
+
+      <h3>MerchantReturnPolicy: same pattern</h3>
+
+<pre>"hasMerchantReturnPolicy": {
+  "@type": "MerchantReturnPolicy",
+  "@id": "https://www.yourstore.com/returns#policy",
+  "applicableCountry": "GB",
+  "returnPolicyCategory":
+    "https://schema.org/MerchantReturnFiniteReturnWindow",
+  "merchantReturnDays": 30,
+  "returnMethod": "https://schema.org/ReturnByMail",
+  "returnFees": "https://schema.org/FreeReturn"
+}</pre>
+
+      <p>This is not optional for agent competitiveness. It's the difference between your product appearing in a constrained search ("free returns, next-day delivery") and being invisible to it.</p>
+
+      <h2 id="feed-alignment">Feed alignment: where your data contradicts itself</h2>
+
+      <p>The GMC feed has always mattered for Shopping performance. In an agentic world, it matters even more: Google's shopping agents draw from your feed data when making recommendations, and OpenAI's product feed specification introduces a parallel channel with its own requirements.</p>
+
+      <p>The most common feed-to-schema mismatches I find during audits:</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Mismatch</th>
+              <th>Why it happens</th>
+              <th>Agent impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Feed price ≠ schema price</td>
+              <td>Schema is hardcoded; feed updates dynamically from PIM</td>
+              <td>Agent has two conflicting price signals. Deprioritises or excludes.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Feed <code>id</code> ≠ schema <code>sku</code></td>
+              <td>Different systems, different identifiers, no mapping</td>
+              <td>Agent can't confirm feed product and schema product are the same item.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Feed availability ≠ schema availability</td>
+              <td>Feed reflects real inventory; schema hardcoded to InStock</td>
+              <td>Trust failure. Agent learns your schema is unreliable.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Feed has GTINs; schema doesn't</td>
+              <td>GTIN added to feed for GMC compliance; never added to schema</td>
+              <td>Agent can't cross-reference product identity across sources.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Feed title ≠ schema name</td>
+              <td>Feed title optimised for Shopping; schema name from CMS field</td>
+              <td>Minor but adds ambiguity. Agent may treat as different products.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Feed has variant data; schema is parent-only</td>
+              <td>Feed exports individual variants; schema uses AggregateOffer</td>
+              <td>Agent can find variants in feed but can't validate them on-page.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Every one of these is fixable. Most of them are fixable quickly if your schema is dynamically generated from the same data source as your feed. The root cause, in almost every case, is that the feed and the schema are maintained by different teams using different data sources with no cross-validation.</p>
+
+      <div class="post-callout">
+        <strong>The fix isn't a one-time audit.</strong> It's a governance decision: schema and feed must be generated from the same data source (PIM, CMS product data, or wherever your canonical product truth lives). If they're not, they will drift apart. Drift is invisible until it causes a problem—in an agentic environment, that means lost transactions you never see.
+      </div>
+
+      <p>If you haven't run a feed audit recently, the <a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a> will flag the feed-side issues. The schema-side equivalent is running your product URLs through the Rich Results Test and comparing what appears against your feed data field by field.</p>
+
+      <h2 id="pdp-content-gap">The PDP content gap: what agents read vs what you wrote</h2>
+
+      <p>Your product descriptions were written for humans. Understandably. The problem is that AI agents also read them, and they're looking for different things.</p>
+
+      <p>A human reads "Luxurious comfort for all-day wear" and fills in the meaning from context, images, and prior brand experience. An agent reads it and extracts zero structured attributes: no material, no weight, no use case, no compatibility information.</p>
+
+      <p>Compare:</p>
+
+      <div class="compare-grid">
+        <div class="compare-col no">
+          <h4>What agents can't use</h4>
+          <ul>
+            <li>"Premium quality you can feel"</li>
+            <li>"Designed for the modern adventurer"</li>
+            <li>"Our most popular style"</li>
+            <li>"Perfect for any occasion"</li>
+          </ul>
+        </div>
+        <div class="compare-col yes">
+          <h4>What agents can parse</h4>
+          <ul>
+            <li>"400 thread count, 100% Egyptian cotton"</li>
+            <li>"Waterproof to 10,000mm, seam-sealed"</li>
+            <li>"Compatible with Shimano SPD-SL cleats"</li>
+            <li>"Machine washable at 40°C"</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>This doesn't mean you need to strip all personality from your PDPs. It means the structured, attribute-rich information needs to be present alongside the brand narrative and ideally surfaced in both the visible content and the structured data layer.</p>
+
+      <p>The practical check: for each product, can an agent determine these from your PDP content, feed, or schema?</p>
+
+      <ul>
+        <li>What it's made of (material, composition)</li>
+        <li>What it's for (use case, activity, compatibility)</li>
+        <li>What distinguishes it from similar products (key specifications)</li>
+        <li>What constraints it satisfies (size range, weight capacity, certifications)</li>
+        <li>What condition it's sold in (new, refurbished)</li>
+      </ul>
+
+      <p>If any of those are only communicated through brand copy that a machine can't reliably extract, you have a gap.</p>
+
+      <h2 id="chatgpt-product-feeds">ChatGPT already sources from your Google Shopping feed</h2>
+
+      <p>This is the data point that changes the entire conversation about "optimising for AI agents."</p>
+
+      <p>A <a href="https://searchengineland.com/new-finding-chatgpt-sources-83-of-its-carousel-products-from-google-shopping-via-shopping-query-fan-outs-470723" rel="noopener">2026 study by Peec AI</a>, published on Search Engine Land, analysed over 43,000 ChatGPT product carousel items and 200,000 organic shopping results from both Google and Bing. The finding: <strong>83% of ChatGPT's product carousel items were strong matches with Google Shopping's top 40 organic results.</strong> For Bing, that figure was 11%. Only 70 products across the entire dataset (0.16%) appeared exclusively in Bing and not in Google.</p>
+
+      <p>The mechanism is something called a <strong>shopping query fan-out</strong>. When you ask ChatGPT a product question, it doesn't answer purely from training data. It generates background search queries (fan-outs) to retrieve live product data. Shopping fan-outs are distinct from the regular search fan-outs ChatGPT uses for contextual information: they're shorter (averaging 7 words versus 12 for regular fan-outs), there are fewer of them per prompt (1.16 versus 2.4), and they differ from regular fan-outs 98.3% of the time. They exist specifically to hit shopping indexes for structured product listings.</p>
+
+      <p>The shopping index they overwhelmingly hit is Google's.</p>
+
+      <p>Let that sink in for a moment. The product carousel in ChatGPT (the thing the entire industry is trying to figure out how to optimise for) is drawing from Google Shopping organic results. The same Google Shopping results that are powered by your Merchant Center feed, your product schema markup, and your PDP content.</p>
+
+      <div class="post-callout">
+        <strong>The practical implication is enormous:</strong> If your products rank in Google Shopping's top 40 organic results for relevant queries, they're already in the candidate pool for ChatGPT's product carousels. If they don't, no amount of "AI optimisation" will get them there. The selection happens at the Google Shopping layer before ChatGPT ever evaluates the results.
+      </div>
+
+      <p>This reframes everything. The work you do on your GMC feed (titles, descriptions, GTINs, pricing, availability, product types, variant data) is not just Google Shopping work. It is AI agent visibility work. The feed quality checklist is the same. The schema alignment requirements are the same. The data governance discipline is the same.</p>
+
+      <p>60% of matched carousel products came from Google's top 10 organic shopping results. Ranking well in Google Shopping isn't just correlated with ChatGPT visibility; it's the primary pathway to it.</p>
+
+      <h3>The ACP feed: a parallel channel, not a replacement</h3>
+
+      <p>That said, OpenAI's Agentic Commerce Protocol (ACP), launched with Stripe in September 2025, does introduce a separate product feed specification. At launch, over one million Shopify merchants were in the onboarding queue. The ACP feed isn't a copy of your GMC feed; it's optimised for LLM-driven product understanding rather than Shopping ad placement.</p>
+
+      <p>Key differences from GMC feeds:</p>
+
+      <ul>
+        <li><strong>Descriptions</strong> matter more. In GMC, descriptions are secondary to titles. In an LLM feed, the description is primary content the agent uses to understand the product's purpose, use case, and differentiators.</li>
+        <li><strong>Categorisation</strong> may use different taxonomy. GMC uses Google's product category taxonomy. ChatGPT's feed may use different classification systems or rely on the agent to classify from descriptions.</li>
+        <li><strong>Attribute granularity</strong> is rewarded. Every additional structured attribute (care instructions, compatibility, certifications, warranty) gives the agent more dimensions to match against user constraints.</li>
+      </ul>
+
+      <p>But here's the nuance the Peec AI data reveals: even with ACP, the carousel discovery layer is still largely powered by Google Shopping. The ACP feed matters for transactional execution (completing the purchase within ChatGPT), but discovery and initial product selection happen upstream through shopping fan-outs against Google's index.</p>
+
+      <p>Which means the priority sequence is clear: get your Google Shopping performance right first. That's the gatekeeping layer. Products that don't make it into Google's top 40 for the relevant shopping fan-out query are excluded from the ChatGPT carousel selection pool before any other factors come into play. Then layer on ACP feed optimisation for the transactional side of things.</p>
+
+      <p>If your current feed workflow already pulls from a well-structured PIM with rich attribute data, both feeds are manageable. If your PIM is thin and your GMC feed is the richest version of your product data, you have a bigger problem: your canonical product data isn't rich enough for any agent environment, whether Google's or OpenAI's.</p>
+
+      <h2 id="audit-checklist">Agentic commerce optimization checklist</h2>
+
+      <p>Here's the sequence I'd follow. Start with your top 20 revenue-driving SKUs. Get them right, then scale the patterns across the catalogue.</p>
+
+      <h3>Schema markup (per product page)</h3>
+
+      <ol>
+        <li>Is the schema dynamically generated from product data, or hardcoded?</li>
+        <li>Does <code>price</code> in schema match the live PDP price and the feed price?</li>
+        <li>Does <code>availability</code> reflect real-time inventory?</li>
+        <li>Is <code>sku</code> present and does it match the feed <code>id</code>?</li>
+        <li>Is <code>gtin13</code> (or appropriate GTIN) present at variant level?</li>
+        <li>For variant products: does <code>ProductGroup</code> have <code>variesBy</code> with full schema.org URIs?</li>
+        <li>Does every variant have its own <code>Product</code> with <code>offers</code>, <code>color</code>/<code>size</code>, and <code>sku</code>?</li>
+        <li>Is <code>shippingDetails</code> present on the Offer?</li>
+        <li>Is <code>hasMerchantReturnPolicy</code> present on the Offer?</li>
+        <li>Does <code>description</code> in schema contain attribute-rich content (not just a marketing tagline)?</li>
+      </ol>
+
+      <h3>Organization-level markup</h3>
+
+      <ol>
+        <li>Is <code>ShippingService</code> defined at Organization level with a referenceable <code>@id</code>?</li>
+        <li>Is <code>MerchantReturnPolicy</code> defined at Organization level?</li>
+        <li>Do product-level Offers reference these policies via <code>@id</code>?</li>
+      </ol>
+
+      <h3>Feed alignment</h3>
+
+      <ol>
+        <li>Do feed <code>id</code> values match schema <code>sku</code> values?</li>
+        <li>Do feed prices match schema prices match PDP prices?</li>
+        <li>Do feed availability values match schema availability values?</li>
+        <li>Are GTINs present in both feed and schema?</li>
+        <li>Are feed titles reasonably consistent with schema <code>name</code> values?</li>
+        <li>If the feed has variant data, does the schema also have variant-level markup?</li>
+      </ol>
+
+      <h3>PDP content</h3>
+
+      <ol>
+        <li>Does the product description include explicit material, use case, and specification attributes?</li>
+        <li>Can an agent determine what distinguishes this product from competitors without relying on images?</li>
+        <li>Are key attributes (size, material, compatibility) in text, not just in images or PDFs?</li>
+      </ol>
+
+      <h3>Governance</h3>
+
+      <ol>
+        <li>Do schema and feed pull from the same canonical data source?</li>
+        <li>When a price changes in the PIM, does the schema update automatically?</li>
+        <li>When a product goes out of stock, does the schema reflect it in real time?</li>
+        <li>Is there a defined owner for product data integrity across PDP, feed, and schema?</li>
+      </ol>
+
+      <div class="post-callout">
+        <strong>Use the tools:</strong> The <a href="/ecommerce-schema-generator/">schema generators</a> will give you correct JSON-LD for <a href="/product-snippet-schema-generator/">Product Snippet</a>, <a href="/merchant-listing-schema-generator/">Merchant Listing</a>, and <a href="/product-variants-schema-generator/">ProductGroup variants</a>. The <a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a> will flag feed-side issues. Between them, you can cross-reference your feed and schema systematically rather than checking field by field in a spreadsheet.
+      </div>
+
+      <h2 id="what-this-means-practically">What this means practically</h2>
+
+      <p>Agentic commerce doesn't require you to throw out your existing structured data work and start over. It requires you to complete it.</p>
+
+      <p>The Product schema you implemented two years ago? Still the foundation. The GMC feed your team maintains? Still the primary discovery channel. The PDP content your copywriters produced? Still matters. It just needs to do double duty, serving both human readers and machine evaluators.</p>
+
+      <p>What's new is the standard you're measured against. In traditional Shopping, incomplete schema meant you missed some rich result enhancements. In agentic commerce, incomplete data means an agent can't confidently include your product in its recommendation set. The same gaps exist. The consequence of leaving them is larger.</p>
+
+      <p>The brands that will perform well in agent-driven commerce are not the ones with the most sophisticated AI strategy. They're the ones with the cleanest, most complete, most consistent product data layer (that's what agents evaluate). And the work to build that layer is unglamorous, specific, and entirely within reach of any e-commerce team that takes structured data seriously.</p>
+
+      <p>Which, if you're reading this, you probably already do.</p>
+
+      <!-- FAQ Section -->
+      <div class="faq-block">
+        <h2 id="faq">Frequently asked questions</h2>
+
+        <div class="faq-item">
+          <p class="faq-q">Do I need new schema markup for agentic commerce?</p>
+          <p class="faq-a">Probably not a full rebuild. Audit and extend instead. If your existing Product, ProductGroup, and Merchant Listing schema is complete and accurate, you're ahead of most merchants. The gap for most sites is in Organization-level policies (shipping, returns), feed-to-schema alignment, and the completeness of variant-level attributes. AI agents process the same structured data Google does; they just have less tolerance for gaps.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What is the difference between a GMC feed and an AI product feed?</p>
+          <p class="faq-a">A GMC feed is optimised for Google Shopping; it follows Google's attribute specification and is validated against Google's requirements. AI product feeds (like those for ChatGPT) may have different attribute requirements, different categorisation taxonomies, and different expectations for description quality. The core product data is the same, but AI feeds reward richer, more descriptive attribute data because the agent needs to reason about your product, not just list it.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Does structured data affect AI shopping agent recommendations?</p>
+          <p class="faq-a">Yes. AI shopping agents (whether Google's, OpenAI's, or Amazon's) evaluate products based on structured signals: price, availability, reviews, specifications, shipping, and return policies. Schema markup is one of the primary sources of these signals. If your structured data is incomplete, the agent has less information to work with than competitors whose data is complete. In an environment where the agent makes the selection, data completeness is directly competitive.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Should I optimise for Google or OpenAI shopping agents?</p>
+          <p class="faq-a">Both. The good news is that the foundation is the same. Complete, accurate, well-structured product data benefits you across all agent environments. The differences are in feed formats and platform-specific protocols (Google's UCP vs OpenAI's ACP), but the underlying product data quality that makes your products agent-eligible is universal. Start with your core data layer and then adapt output formats per platform.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What is the Agentic Commerce Protocol (ACP)?</p>
+          <p class="faq-a">ACP is an open standard developed by OpenAI and Stripe that enables purchases to be completed directly within ChatGPT. It allows AI agents to discover products, present options to users, and execute transactions without the consumer visiting the merchant's website. At launch, over one million Shopify merchants were in the onboarding queue. Google has introduced a parallel protocol (the Universal Commerce Protocol, or UCP) for its own agent infrastructure.</p>
+        </div>
+      </div>
+
+      <!-- Sources -->
+      <h2 id="sources" style="font-size:20px;margin-top:48px">Sources</h2>
+      <ul style="font-size:15px">
+        <li><a href="https://www.intrepidonline.com/blog/ai/why-digital-shelf-optimization-is-the-most-important-skill-in-e-commerce-right-now" rel="noopener">Why Digital Shelf Optimization Is the Most Important Skill in E-commerce Right Now</a> | Intrepid Digital (original strategic framework)</li>
+        <li><a href="https://openai.com/index/buy-it-in-chatgpt/" rel="noopener">Buy it in ChatGPT / ACP launch</a> | OpenAI</li>
+        <li><a href="https://stripe.com/newsroom/news/stripe-openai-instant-checkout" rel="noopener">Stripe ACP announcement</a></li>
+        <li><a href="https://ir.riskified.com/news-releases/news-release-details/global-study-73-shoppers-using-ai-shopping-journey-merchants" rel="noopener">Global study: 73% of shoppers using AI in shopping journey</a> | Riskified, October 2025</li>
+        <li><a href="https://business.adobe.com/resources/holiday-shopping-report.html" rel="noopener">Holiday Shopping / AI retail traffic data</a> | Adobe</li>
+        <li><a href="https://searchengineland.com/new-finding-chatgpt-sources-83-of-its-carousel-products-from-google-shopping-via-shopping-query-fan-outs-470723" rel="noopener">ChatGPT sources 83% of carousel products from Google Shopping via shopping query fan-outs</a> | Search Engine Land / Peec AI, 2026</li>
+      </ul>
+
+      <!-- Author card -->
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+
+      <a href="/notes/" class="post-back">← Back to all notes</a>
+
+        </div><!-- /post-body -->
+      </div><!-- /ct-content -->
+
+      <!-- Table of Contents -->
+      <nav class="ct-toc" aria-label="Table of contents">
+        <p class="ct-toc-label">On this page</p>
+        <ul class="ct-toc-list">
+          <li><a href="#the-three-layers">The three data layers</a></li>
+          <li><a href="#schema-audit">Schema for AI agents</a></li>
+          <li><a href="#variants-and-productgroup">Variants gap</a></li>
+          <li><a href="#organization-level-markup">Organization markup</a></li>
+          <li><a href="#feed-alignment">Feed alignment</a></li>
+          <li><a href="#pdp-content-gap">PDP content gap</a></li>
+          <li><a href="#chatgpt-product-feeds">ChatGPT &amp; Google Shopping</a></li>
+          <li><a href="#audit-checklist">ACO checklist</a></li>
+          <li><a href="#what-this-means-practically">What this means</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+    </div><!-- /ct-layout -->
+
+  </div><!-- /post-wrap -->
+</div>
+
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
+<script>
+// TOC active state
+(function(){
+  const links = document.querySelectorAll('.ct-toc-list a');
+  const ids = Array.from(links).map(a => a.getAttribute('href').slice(1));
+  function update(){
+    let cur = ids[0];
+    for(const id of ids){
+      const el = document.getElementById(id);
+      if(el && el.getBoundingClientRect().top <= 120) cur = id;
+    }
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
