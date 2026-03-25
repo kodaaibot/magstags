@@ -37,6 +37,18 @@
 
   <!-- Tools -->
   <url>
+    <loc>https://www.magstags.com/schema-markup-visualizer/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.magstags.com/schema-comparison-tool/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.magstags.com/hreflang-generator/</loc>
     <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>

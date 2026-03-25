@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Schema Comparison Tool — Side-by-Side JSON-LD Diff | MagsTags</title>
+  <meta name="description" content="Compare two JSON-LD schemas side by side. Spot missing types, added properties, and changed values instantly with a visual diff tree.">
+  <link rel="canonical" href="https://www.magstags.com/schema-comparison-tool/">
+  <meta property="og:title" content="Schema Comparison Tool — Side-by-Side JSON-LD Diff | MagsTags">
+  <meta property="og:description" content="Compare two JSON-LD schemas side by side. Spot missing types, added properties, and changed values.">
+  <meta property="og:url" content="https://www.magstags.com/schema-comparison-tool/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "Schema Comparison Tool",
+    "description": "Compare two JSON-LD schemas side by side. Spot missing types, added properties, and changed values with a visual diff tree.",
+    "url": "https://www.magstags.com/schema-comparison-tool/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "SEO Tools", "item": "https://www.magstags.com/seo-tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Schema Comparison Tool", "item": "https://www.magstags.com/schema-comparison-tool/" }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
+      --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #857f7a;
+      --teal: #0E7490; --mint: #0891B2;
+      --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09);
+      --red: #c0392b; --red-light: #fdf0ee;
+      --green: #0a7c5c; --green-light: #edfdf5;
+      --amber: #92400e; --amber-light: #fffbeb;
+      --purple: #7c3aed; --purple-light: #f3f0ff;
+      --pink: #c026d3; --cyan-val: #0e7490;
+      --diff-added: #059669; --diff-added-bg: rgba(5,150,105,.08);
+      --diff-removed: #dc2626; --diff-removed-bg: rgba(220,38,38,.08);
+      --diff-changed: #d97706; --diff-changed-bg: rgba(217,119,6,.08);
+    }
+    html.dark {
+      --bg: #111110; --bg2: #191817; --surface: #1e1c1a; --surface-alt: #242220;
+      --border: rgba(255,255,255,.08); --text-1: #f5f2ee; --text-2: #c8c4be;
+      --text-3: #857f79; --text-4: #4a4743; --teal: #22D3EE; --mint: #67E8F9;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
+      --red-light: rgba(192,57,43,.14); --green: #4ade80; --green-light: rgba(74,222,128,.1);
+      --amber: #fbbf24; --amber-light: rgba(251,191,36,.1);
+      --purple: #a78bfa; --purple-light: rgba(167,139,250,.1);
+      --pink: #e879f9; --cyan-val: #22d3ee;
+      --diff-added: #4ade80; --diff-added-bg: rgba(74,222,128,.1);
+      --diff-removed: #f87171; --diff-removed-bg: rgba(248,113,113,.1);
+      --diff-changed: #fbbf24; --diff-changed-bg: rgba(251,191,36,.1);
+    }
+
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
+
+    .page-hero { margin-bottom: 24px; }
+    .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .page-hero p { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 620px; }
+
+    /* ─── Input area ─── */
+    .input-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
+    }
+    @media (max-width: 768px) { .input-grid { grid-template-columns: 1fr; } }
+
+    .input-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 16px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .input-box-label {
+      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--text-2); display: flex; align-items: center; gap: 8px;
+    }
+    .label-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 6px; font-size: 11px; font-weight: 700;
+      color: #fff; flex-shrink: 0;
+    }
+    .label-a { background: var(--teal); }
+    .label-b { background: var(--purple); }
+
+    .text-area {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text-1); padding: 10px 14px;
+      font-size: 12px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      min-height: 160px; resize: vertical; line-height: 1.6; outline: none;
+      transition: border-color .15s; box-sizing: border-box;
+    }
+    .text-area:focus { border-color: var(--teal); }
+    .text-area::placeholder { color: var(--text-4); }
+
+    .sample-link {
+      color: var(--teal); cursor: pointer; font-size: 11px;
+      text-decoration: underline; background: none; border: none;
+      font-family: 'Inter', sans-serif; padding: 0;
+    }
+
+    .btn {
+      padding: 10px 24px; background: var(--teal); color: #fff; border: none;
+      border-radius: 99px; font-size: 13px; font-weight: 600; cursor: pointer;
+      font-family: 'Inter', sans-serif; white-space: nowrap; transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-ghost {
+      background: var(--surface); color: var(--text-2); border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); opacity: 1; }
+    .btn-sm { padding: 5px 14px; font-size: 12px; }
+    .btn-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 4px; }
+
+    /* ─── Mode toggle ─── */
+    .input-tabs {
+      display: flex; gap: 6px; justify-content: center; margin-bottom: 12px;
+    }
+    .input-tab {
+      padding: 6px 18px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 99px; font-size: 12px; font-weight: 500; cursor: pointer;
+      font-family: 'Inter', sans-serif; color: var(--text-3); transition: all .15s;
+    }
+    .input-tab:hover { border-color: var(--teal); color: var(--teal); }
+    .input-tab.active {
+      background: var(--teal); color: #fff; border-color: var(--teal);
+    }
+
+    /* ─── Status ─── */
+    .status { margin-top: 8px; padding: 8px 14px; border-radius: 10px; font-size: 12px; display: none; }
+    .status.error { display: block; background: var(--red-light); border: 1px solid var(--red); color: var(--red); }
+    .status.info { display: block; background: rgba(14,116,144,.08); border: 1px solid var(--teal); color: var(--teal); }
+    .status.warning { display: block; background: rgba(217,119,6,.1); border: 1px solid #d97706; color: #b45309; }
+    [data-theme="dark"] .status.warning { background: rgba(217,119,6,.12); border-color: #f59e0b; color: #fbbf24; }
+
+    /* ─── Results ─── */
+    #results { display: none; margin-top: 20px; }
+
+    /* ─── Summary panel ─── */
+    .summary-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; margin-bottom: 14px; overflow: hidden;
+    }
+    .summary-tabs { display: flex; border-bottom: 1px solid var(--border); }
+    .summary-tab {
+      padding: 10px 18px; background: none; border: none;
+      border-bottom: 2px solid transparent; color: var(--text-4);
+      font-size: 12px; font-weight: 500; cursor: pointer; transition: all .15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .summary-tab:hover { color: var(--text-1); }
+    .summary-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+    .tab-count {
+      display: inline-block; background: var(--bg2); color: var(--text-4);
+      font-size: 10px; padding: 1px 6px; border-radius: 99px; margin-left: 4px; font-weight: 600;
+    }
+    .summary-tab.active .tab-count { background: rgba(14,116,144,.12); color: var(--teal); }
+    .summary-content { display: none; padding: 14px 18px; }
+    .summary-content.active { display: block; }
+
+    .overview-grid { display: flex; gap: 28px; flex-wrap: wrap; }
+    .overview-stat { display: flex; flex-direction: column; gap: 1px; }
+    .stat-value { font-size: 22px; font-weight: 700; line-height: 1.2; }
+    .stat-label { font-size: 10px; color: var(--text-4); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+    .stat-teal { color: var(--teal); }
+    .stat-green { color: var(--diff-added); }
+    .stat-red { color: var(--diff-removed); }
+    .stat-amber { color: var(--diff-changed); }
+
+    .diff-list { display: flex; flex-direction: column; gap: 4px; }
+    .diff-item {
+      display: flex; align-items: baseline; gap: 8px; padding: 4px 10px;
+      border-radius: 8px; font-size: 12px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+    }
+    .diff-item.added { background: var(--diff-added-bg); }
+    .diff-item.removed { background: var(--diff-removed-bg); }
+    .diff-item.changed { background: var(--diff-changed-bg); }
+    .diff-badge {
+      font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 4px;
+      font-family: 'Inter', sans-serif; text-transform: uppercase; flex-shrink: 0;
+    }
+    .diff-badge.added { background: var(--diff-added); color: #fff; }
+    .diff-badge.removed { background: var(--diff-removed); color: #fff; }
+    .diff-badge.changed { background: var(--diff-changed); color: #fff; }
+    html.dark .diff-badge.added { color: #111; }
+    html.dark .diff-badge.removed { color: #111; }
+    html.dark .diff-badge.changed { color: #111; }
+    .diff-path { color: var(--text-2); word-break: break-all; }
+    .diff-vals { color: var(--text-4); font-size: 11px; }
+
+    /* ─── Side-by-side diff trees ─── */
+    .diff-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    @media (max-width: 768px) { .diff-grid { grid-template-columns: 1fr; } }
+
+    .diff-tree-col {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 12px 16px; overflow-x: auto; min-height: 80px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 12px; line-height: 1.8;
+    }
+    .diff-tree-header {
+      font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600;
+      color: var(--text-3); margin-bottom: 8px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px;
+    }
+
+    .toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+    .toolbar .spacer { flex: 1; }
+
+    /* ─── Connector-line rows ─── */
+    .tree-line {
+      display: flex; align-items: flex-start; white-space: nowrap;
+      transition: background .1s; padding: 0 8px; border-radius: 6px; cursor: default;
+    }
+    .tree-line:hover { background: var(--bg2); }
+    .tree-line.expandable { cursor: pointer; }
+    .tree-line.expandable:hover { background: rgba(14,116,144,.06); }
+
+    /* Diff highlights on tree lines */
+    .tree-line.diff-add { background: var(--diff-added-bg); }
+    .tree-line.diff-add:hover { background: var(--diff-added-bg); filter: brightness(0.97); }
+    .tree-line.diff-remove { background: var(--diff-removed-bg); }
+    .tree-line.diff-remove:hover { background: var(--diff-removed-bg); filter: brightness(0.97); }
+    .tree-line.diff-change { background: var(--diff-changed-bg); }
+    .tree-line.diff-change:hover { background: var(--diff-changed-bg); filter: brightness(0.97); }
+    /* ─── Type block cards (structural summary) ─── */
+    .type-block-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      margin-bottom: 10px; overflow: hidden;
+    }
+    .type-block-header {
+      display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+      border-bottom: 1px solid var(--border); font-family: 'Space Grotesk', sans-serif;
+    }
+    .type-block-badge {
+      font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: .3px; flex-shrink: 0;
+    }
+    .type-block-badge.type-a { background: var(--diff-removed-bg); color: var(--diff-removed); }
+    .type-block-badge.type-b { background: var(--diff-added-bg); color: var(--diff-added); }
+    .type-block-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .type-block-count { font-size: 11px; color: var(--text-4); margin-left: auto; }
+    .type-block-match { font-size: 11px; font-weight: 700; margin-left: auto; }
+    .type-block-props { padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .type-block-prop {
+      font-size: 11px; color: var(--text-3); background: var(--bg2); padding: 3px 10px;
+      border-radius: 6px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+    }
+    .type-block-prop strong { color: var(--text-1); }
+
+    /* ─── Property comparison table ─── */
+    .prop-compare-table {
+      width: 100%; border-collapse: collapse; font-size: 11px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+    }
+    .prop-compare-table th {
+      padding: 6px 12px; font-family: 'Inter', sans-serif; font-size: 10px;
+      font-weight: 600; text-transform: uppercase; letter-spacing: .4px;
+      border-bottom: 1px solid var(--border); text-align: left; color: var(--text-4);
+    }
+    .prop-compare-table td {
+      padding: 4px 12px; border-bottom: 1px solid var(--border); color: var(--text-2);
+      vertical-align: top;
+    }
+    .prop-compare-table tr:last-child td { border-bottom: none; }
+    .pct-col-both { width: 40%; }
+    .pct-col-a, .pct-col-b { width: 30%; }
+    .pct-col-a { color: var(--diff-removed); }
+    .pct-col-b { color: var(--diff-added); }
+    th.pct-col-a { color: var(--diff-removed); }
+    th.pct-col-b { color: var(--diff-added); }
+    .prop-dot {
+      display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+      margin-right: 6px; vertical-align: middle;
+    }
+    .prop-dot.both { background: var(--teal); }
+    .prop-dot.a-only { background: var(--diff-removed); }
+    .prop-dot.b-only { background: var(--diff-added); }
+
+    /* ─── Value type badges ─── */
+    .vtype-badge {
+      display: inline-block; font-size: 9px; font-weight: 600; padding: 1px 6px;
+      border-radius: 4px; font-family: 'Inter', sans-serif; vertical-align: middle;
+      margin-left: 4px;
+    }
+    .vtype-ref { background: rgba(124,58,237,.12); color: var(--purple); }
+    .vtype-url { background: rgba(14,116,144,.1); color: var(--teal); }
+    .vtype-date { background: rgba(217,119,6,.1); color: var(--amber); }
+    .vtype-num { background: rgba(59,130,246,.1); color: #3b82f6; }
+    .vtype-bool { background: rgba(236,72,153,.1); color: #ec4899; }
+    .vtype-arr { background: rgba(14,116,144,.08); color: var(--mint); }
+    .vtype-obj { background: rgba(107,114,128,.1); color: var(--text-3); }
+    .vtype-warn { background: rgba(220,38,38,.1); color: var(--diff-removed); }
+
+    /* ─── Property rows ─── */
+    .prop-row {
+      display: flex; align-items: center; padding: 4px 14px; font-size: 12px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+    }
+    .prop-row.nested { padding-left: 28px; font-size: 11px; color: var(--text-3); }
+    .prop-row.nested-a { background: var(--diff-removed-bg); }
+    .prop-row.nested-b { background: var(--diff-added-bg); }
+    .prop-row.prop-mismatch { background: var(--diff-changed-bg); }
+    .prop-name { color: var(--text-2); }
+    .prop-nested { border-left: 2px solid var(--border); margin-left: 20px; }
+
+    /* ─── Property sections inside shared type cards ─── */
+    .prop-section { margin-bottom: 4px; }
+    .prop-section:last-child { margin-bottom: 0; }
+    .prop-section-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
+      padding: 6px 14px 2px; font-family: 'Inter', sans-serif;
+    }
+    .label-a-only { color: var(--diff-removed); }
+    .label-b-only { color: var(--diff-added); }
+    .label-both { color: var(--teal); }
+
+    /* ─── Type block body ─── */
+    .type-block-body { padding: 6px 0; }
+    .type-block-body.compact-body { padding: 4px 0; }
+
+    /* ─── Stat pills ─── */
+    .type-block-stat-pills { display: flex; gap: 6px; margin-left: 12px; }
+    .pill {
+      font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px;
+      font-family: 'Inter', sans-serif; white-space: nowrap;
+    }
+    .pill-both { background: rgba(14,116,144,.1); color: var(--teal); }
+    .pill-a { background: var(--diff-removed-bg); color: var(--diff-removed); }
+    .pill-b { background: var(--diff-added-bg); color: var(--diff-added); }
+
+    /* ─── Full match collapse ─── */
+    .type-block-card.full-match .type-block-body { display: none; }
+    .type-block-card.full-match .clickable-header { cursor: pointer; }
+    .type-block-card.full-match .clickable-header::after {
+      content: '\u25B6'; font-size: 9px; color: var(--text-4); margin-left: 6px;
+      transition: transform .15s;
+    }
+    .type-block-card.full-match.expanded .type-block-body { display: block; }
+    .type-block-card.full-match.expanded .clickable-header::after { transform: rotate(90deg); }
+
+    .tree-line.structural-unique { background: var(--diff-added-bg); }
+    .tree-line.structural-unique:hover { background: var(--diff-added-bg); filter: brightness(0.97); }
+
+    .guide {
+      color: var(--border); flex-shrink: 0; white-space: pre;
+      user-select: none; letter-spacing: -0.5px;
+    }
+    html.dark .guide { color: rgba(255,255,255,.15); }
+    .chev {
+      display: inline-block; width: 14px; text-align: center;
+      color: var(--text-4); font-size: 9px; flex-shrink: 0;
+      transition: transform .15s; user-select: none;
+    }
+    .chev.open { transform: rotate(90deg); }
+    .chev.hidden { visibility: hidden; }
+
+    .key { color: var(--purple); }
+    .sep { color: var(--text-4); }
+    .val-string { color: var(--green); }
+    .val-number { color: var(--amber); }
+    .val-bool { color: var(--cyan-val); }
+    .val-null { color: var(--text-4); font-style: italic; }
+    .val-url { color: var(--teal); text-decoration: underline; cursor: pointer; }
+    .val-url:hover { opacity: .7; }
+    .arr-index { color: var(--text-4); opacity: .7; }
+    .summary { color: var(--text-4); font-style: italic; font-size: 11px; }
+
+    .type-tag {
+      display: inline-block; padding: 1px 7px; border-radius: 5px;
+      font-size: 10px; font-weight: 700; margin-left: 4px;
+      vertical-align: baseline; font-family: 'Inter', sans-serif;
+    }
+    .type-Product, .type-ProductGroup { background: rgba(10,124,92,.1); color: var(--green); }
+    .type-Offer, .type-AggregateOffer, .type-AggregateRating, .type-Review { background: rgba(146,64,14,.1); color: var(--amber); }
+    .type-Organization { background: rgba(124,58,237,.1); color: var(--purple); }
+    .type-WebSite { background: rgba(14,116,144,.1); color: var(--teal); }
+    .type-BreadcrumbList { background: rgba(14,116,144,.08); color: var(--teal); }
+    .type-FAQPage { background: rgba(192,38,211,.1); color: var(--pink); }
+    .type-OfferShippingDetails { background: rgba(192,38,211,.08); color: var(--pink); }
+    .type-ShippingDeliveryTime, .type-DefinedRegion { background: rgba(14,116,144,.08); color: var(--teal); }
+    .type-QuantitativeValue { background: var(--bg2); color: var(--text-4); }
+    .type-default { background: var(--bg2); color: var(--text-4); }
+
+    .spinner {
+      display: inline-block; width: 12px; height: 12px;
+      border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin .6s linear infinite;
+      margin-right: 6px; vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 640px) {
+      .diff-tree-col { font-size: 11px; padding: 8px; }
+      .overview-grid { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+
+<main id="main-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
+      <span>Schema Comparison Tool</span>
+    </nav>
+
+    <div class="page-hero">
+      <h1>Schema Comparison Tool</h1>
+      <p>Compare two JSON-LD schemas side by side. Spot missing types, added properties, and changed values instantly — perfect for before/after checks or competitor analysis.</p>
+    </div>
+
+    <!-- Two paste boxes -->
+    <div class="input-grid">
+      <div class="input-box">
+        <div class="input-box-label"><span class="label-badge label-a">A</span> <span id="label-a-text">Schema A (baseline)</span></div>
+        <textarea class="text-area" id="input-a" placeholder='Paste JSON-LD for Schema A...'></textarea>
+        <button class="sample-link" onclick="loadSampleA()">Load sample</button>
+      </div>
+      <div class="input-box">
+        <div class="input-box-label"><span class="label-badge label-b">B</span> <span id="label-b-text">Schema B (compare)</span></div>
+        <textarea class="text-area" id="input-b" placeholder='Paste JSON-LD for Schema B...'></textarea>
+        <button class="sample-link" onclick="loadSampleB()">Load sample</button>
+      </div>
+    </div>
+
+    <!-- Mode toggle -->
+    <div class="input-tabs">
+      <button class="input-tab active" data-mode="before-after" onclick="switchMode('before-after')">Before / After</button>
+      <button class="input-tab" data-mode="structural" onclick="switchMode('structural')">Structural</button>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="runCompare()">Compare</button>
+      <button class="btn btn-ghost" onclick="swapInputs()">⇄ Swap A / B</button>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <div id="results">
+
+      <!-- Summary panel -->
+      <div class="summary-panel">
+        <div class="summary-tabs" id="summary-tabs">
+          <button class="summary-tab active" data-stab="overview">Overview</button>
+          <button class="summary-tab" data-stab="added"><span id="tab-label-added">Added</span> <span class="tab-count" id="added-count">0</span></button>
+          <button class="summary-tab" data-stab="removed"><span id="tab-label-removed">Removed</span> <span class="tab-count" id="removed-count">0</span></button>
+          <button class="summary-tab" data-stab="changed"><span id="tab-label-changed">Changed</span> <span class="tab-count" id="changed-count">0</span></button>
+        </div>
+        <div class="summary-content active" id="sc-overview">
+          <div class="overview-grid" id="overview-grid"></div>
+        </div>
+        <div class="summary-content" id="sc-added">
+          <div class="diff-list" id="added-list"></div>
+        </div>
+        <div class="summary-content" id="sc-removed">
+          <div class="diff-list" id="removed-list"></div>
+        </div>
+        <div class="summary-content" id="sc-changed">
+          <div class="diff-list" id="changed-list"></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="spacer"></div>
+        <button class="btn btn-ghost btn-sm" onclick="expandAll()">Expand all</button>
+        <button class="btn btn-ghost btn-sm" onclick="collapseAll()">Collapse all</button>
+      </div>
+
+      <!-- Side-by-side trees -->
+      <div class="diff-grid">
+        <div class="diff-tree-col" id="tree-a">
+          <div class="diff-tree-header"><span class="label-badge label-a" style="width:18px;height:18px;font-size:10px;">A</span> <span id="tree-a-header">Schema A</span></div>
+        </div>
+        <div class="diff-tree-col" id="tree-b">
+          <div class="diff-tree-header"><span class="label-badge label-b" style="width:18px;height:18px;font-size:10px;">B</span> <span id="tree-b-header">Schema B</span></div>
+        </div>
+      </div>
+    </div>
+
+</main>
+
+<script src="/footer.js"></script>
+<script>
+// ═══════════════════════════════════════════
+// Global state
+// ═══════════════════════════════════════════
+var currentMode = 'before-after';
+
+// ═══════════════════════════════════════════
+// Mode switching
+// ═══════════════════════════════════════════
+function switchMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.input-tab').forEach(function(btn) { btn.classList.remove('active'); });
+  document.querySelector('[data-mode="' + mode + '"]').classList.add('active');
+
+  // Update labels based on mode
+  if (mode === 'before-after') {
+    document.getElementById('label-a-text').textContent = 'Schema A (baseline)';
+    document.getElementById('label-b-text').textContent = 'Schema B (compare)';
+    document.getElementById('tree-a-header').textContent = 'Schema A';
+    document.getElementById('tree-b-header').textContent = 'Schema B';
+    document.getElementById('tab-label-added').textContent = 'Added';
+    document.getElementById('tab-label-removed').textContent = 'Removed';
+    document.getElementById('tab-label-changed').textContent = 'Changed';
+  } else {
+    document.getElementById('label-a-text').textContent = 'Schema A';
+    document.getElementById('label-b-text').textContent = 'Schema B';
+    document.getElementById('tree-a-header').textContent = 'Schema A';
+    document.getElementById('tree-b-header').textContent = 'Schema B';
+    document.getElementById('tab-label-added').textContent = 'Only in A';
+    document.getElementById('tab-label-removed').textContent = 'Only in B';
+    document.getElementById('tab-label-changed').textContent = 'Shared';
+  }
+
+  // Rerun compare if results exist
+  if (document.getElementById('results').style.display === 'block') {
+    runCompare();
+  }
+}
+
+// ═══════════════════════════════════════════
+// Summary tab switching
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.summary-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('sc-' + btn.dataset.stab).classList.add('active');
+    });
+  });
+
+  // Delegate click for collapsible full-match type cards
+  document.addEventListener('click', function(e) {
+    var header = e.target.closest('.full-match .clickable-header');
+    if (header) {
+      header.closest('.type-block-card').classList.toggle('expanded');
+    }
+  });
+});
+
+// ═══════════════════════════════════════════
+// Status
+// ═══════════════════════════════════════════
+function showStatus(msg, type) {
+  var el = document.getElementById('status');
+  el.textContent = msg; el.className = 'status ' + type;
+}
+function clearStatus() {
+  var el = document.getElementById('status');
+  el.className = 'status'; el.textContent = '';
+}
+
+// ═══════════════════════════════════════════
+// JSON repair (reused from visualizer)
+// ═══════════════════════════════════════════
+function tryRepairJSON(raw) {
+  var fixed = raw;
+  fixed = fixed.replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(fixed); } catch(e) {}
+  fixed = raw.replace(/'/g, '"');
+  fixed = fixed.replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(fixed); } catch(e) {}
+  try { return JSON.parse('[' + fixed + ']'); } catch(e) {}
+  var noComments = raw.replace(/^\s*\/\/[^\n]*/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+  noComments = noComments.replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(noComments); } catch(e) {}
+  return null;
+}
+
+function smartParse(raw, label) {
+  try {
+    return { data: JSON.parse(raw), warning: null };
+  } catch(e) {
+    var repaired = tryRepairJSON(raw);
+    if (repaired) return { data: repaired, warning: label + ': auto-repaired (' + e.message + ')' };
+    return { data: null, warning: null, error: label + ': ' + e.message };
+  }
+}
+
+// ═══════════════════════════════════════════
+// Extract type → property detail map (structural mode)
+// Returns { TypeName: { propName: { path, valueType, childType, nested } } }
+// ═══════════════════════════════════════════
+function extractTypeProperties(obj) {
+  var typeMap = {};  // { typeName: { propName: infoObj } }
+
+  function classifyValue(val) {
+    if (val === null || val === undefined) return 'null';
+    if (typeof val === 'boolean') return 'boolean';
+    if (typeof val === 'number') return 'number';
+    if (typeof val === 'string') {
+      if (val.match(/^https?:\/\//)) return 'url';
+      if (val.match(/^\d{4}-\d{2}/)) return 'date';
+      return 'string';
+    }
+    if (Array.isArray(val)) return 'array';
+    if (typeof val === 'object' && val['@type']) return 'typed-object';
+    if (typeof val === 'object') return 'object';
+    return 'unknown';
+  }
+
+  function getChildType(val) {
+    if (val && typeof val === 'object' && !Array.isArray(val) && val['@type']) {
+      return Array.isArray(val['@type']) ? val['@type'].join('/') : val['@type'];
+    }
+    if (Array.isArray(val)) {
+      for (var i = 0; i < val.length; i++) {
+        if (val[i] && typeof val[i] === 'object' && val[i]['@type']) {
+          return Array.isArray(val[i]['@type']) ? val[i]['@type'].join('/') : val[i]['@type'];
+        }
+      }
+    }
+    return null;
+  }
+
+  // Collect nested property paths for non-typed objects
+  function collectNested(val, prefix) {
+    var nested = [];
+    if (val === null || val === undefined || typeof val !== 'object') return nested;
+    if (Array.isArray(val)) {
+      // For arrays, look inside first element for structure
+      if (val.length > 0 && typeof val[0] === 'object' && !val[0]['@type']) {
+        return collectNested(val[0], prefix);
+      }
+      return nested;
+    }
+    if (val['@type']) return nested; // Stop at typed boundaries
+    Object.keys(val).forEach(function(key) {
+      if (key.startsWith('@')) return;
+      var childVal = val[key];
+      var childPath = prefix ? prefix + '.' + key : key;
+      nested.push({ path: childPath, valueType: classifyValue(childVal) });
+      if (typeof childVal === 'object' && childVal !== null && !Array.isArray(childVal) && !childVal['@type']) {
+        nested = nested.concat(collectNested(childVal, childPath));
+      }
+    });
+    return nested;
+  }
+
+  function walk(val) {
+    if (val === null || val === undefined) return;
+
+    if (Array.isArray(val)) {
+      val.forEach(function(item) { walk(item); });
+      return;
+    }
+
+    if (typeof val === 'object') {
+      if (val['@type']) {
+        var types = Array.isArray(val['@type']) ? val['@type'] : [val['@type']];
+        types.forEach(function(t) {
+          if (!typeMap[t]) typeMap[t] = {};
+          Object.keys(val).forEach(function(key) {
+            if (key.startsWith('@')) return;
+            var childVal = val[key];
+            var vtype = classifyValue(childVal);
+            var ctype = getChildType(childVal);
+            var nested = [];
+            // Collect nested paths for non-typed objects
+            if (vtype === 'object') {
+              nested = collectNested(childVal, key);
+            }
+            // Merge: if property already exists from another instance, merge nested + keep richest info
+            if (!typeMap[t][key]) {
+              typeMap[t][key] = { valueType: vtype, childType: ctype, nested: nested };
+            } else {
+              if (ctype && !typeMap[t][key].childType) typeMap[t][key].childType = ctype;
+              if (nested.length > typeMap[t][key].nested.length) typeMap[t][key].nested = nested;
+              if (vtype !== 'null' && typeMap[t][key].valueType === 'null') typeMap[t][key].valueType = vtype;
+            }
+          });
+        });
+      }
+
+      Object.keys(val).forEach(function(key) {
+        walk(val[key]);
+      });
+    }
+  }
+
+  walk(obj);
+  return typeMap;
+}
+
+// Helper: get sorted property names from typeMap entry
+function getTypePropNames(typeEntry) {
+  return Object.keys(typeEntry).sort();
+}
+
+// ═══════════════════════════════════════════
+// Flatten schema to path → value map
+// ═══════════════════════════════════════════
+function flattenSchema(obj, prefix) {
+  var map = {};
+  if (prefix === undefined) prefix = '';
+  if (obj === null || obj === undefined) {
+    map[prefix || '(root)'] = String(obj);
+    return map;
+  }
+  if (Array.isArray(obj)) {
+    obj.forEach(function(item, i) {
+      var childPath = prefix + '[' + i + ']';
+      var sub = flattenSchema(item, childPath);
+      Object.keys(sub).forEach(function(k) { map[k] = sub[k]; });
+    });
+    return map;
+  }
+  if (typeof obj === 'object') {
+    Object.keys(obj).forEach(function(key) {
+      var childPath = prefix ? prefix + '.' + key : key;
+      var sub = flattenSchema(obj[key], childPath);
+      Object.keys(sub).forEach(function(k) { map[k] = sub[k]; });
+    });
+    return map;
+  }
+  map[prefix || '(root)'] = String(obj);
+  return map;
+}
+
+// ═══════════════════════════════════════════
+// Compute diff between two flattened schemas
+// ═══════════════════════════════════════════
+function computeDiff(flatA, flatB) {
+  var added = [];
+  var removed = [];
+  var changed = [];
+  var unchanged = [];
+
+  Object.keys(flatA).forEach(function(path) {
+    if (!(path in flatB)) {
+      removed.push({ path: path, valA: flatA[path] });
+    } else if (flatA[path] !== flatB[path]) {
+      changed.push({ path: path, valA: flatA[path], valB: flatB[path] });
+    } else {
+      unchanged.push(path);
+    }
+  });
+  Object.keys(flatB).forEach(function(path) {
+    if (!(path in flatA)) {
+      added.push({ path: path, valB: flatB[path] });
+    }
+  });
+
+  return { added: added, removed: removed, changed: changed, unchanged: unchanged };
+}
+
+// Build a set of paths that should be highlighted
+function buildDiffSets(diff) {
+  var addedPaths = {};
+  var removedPaths = {};
+  var changedPaths = {};
+  diff.added.forEach(function(d) { addedPaths[d.path] = true; });
+  diff.removed.forEach(function(d) { removedPaths[d.path] = true; });
+  diff.changed.forEach(function(d) { changedPaths[d.path] = true; });
+  return { added: addedPaths, removed: removedPaths, changed: changedPaths };
+}
+
+// ═══════════════════════════════════════════
+// Run comparison
+// ═══════════════════════════════════════════
+function runCompare() {
+  clearStatus();
+  var rawA = document.getElementById('input-a').value.trim();
+  var rawB = document.getElementById('input-b').value.trim();
+
+  if (!rawA || !rawB) { showStatus('Paste JSON-LD into both Schema A and Schema B.', 'error'); return; }
+
+  var parsedA = smartParse(rawA, 'Schema A');
+  var parsedB = smartParse(rawB, 'Schema B');
+
+  if (parsedA.error) { showStatus('Schema A — Invalid JSON: ' + parsedA.error, 'error'); return; }
+  if (parsedB.error) { showStatus('Schema B — Invalid JSON: ' + parsedB.error, 'error'); return; }
+
+  var warnings = [parsedA.warning, parsedB.warning].filter(Boolean);
+  if (warnings.length) showStatus('Warning: ' + warnings.join(' | '), 'warning');
+
+  var dataA = parsedA.data;
+  var dataB = parsedB.data;
+  if (!Array.isArray(dataA)) dataA = [dataA];
+  if (!Array.isArray(dataB)) dataB = [dataB];
+
+  var schemaA = dataA.length === 1 ? dataA[0] : dataA;
+  var schemaB = dataB.length === 1 ? dataB[0] : dataB;
+
+  // Show results
+  document.getElementById('results').style.display = 'block';
+
+  if (currentMode === 'before-after') {
+    runCompareBeforeAfter(schemaA, schemaB);
+  } else {
+    runCompareStructural(schemaA, schemaB);
+  }
+}
+
+// ═══════════════════════════════════════════
+// Before/After Mode
+// ═══════════════════════════════════════════
+function runCompareBeforeAfter(schemaA, schemaB) {
+  var flatA = flattenSchema(schemaA);
+  var flatB = flattenSchema(schemaB);
+  var diff = computeDiff(flatA, flatB);
+  var sets = buildDiffSets(diff);
+
+  // Overview
+  var total = diff.added.length + diff.removed.length + diff.changed.length + diff.unchanged.length;
+  var identical = diff.added.length === 0 && diff.removed.length === 0 && diff.changed.length === 0;
+  document.getElementById('overview-grid').innerHTML =
+    '<div class="overview-stat"><span class="stat-value stat-green">' + diff.added.length + '</span><span class="stat-label">Added in B</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-red">' + diff.removed.length + '</span><span class="stat-label">Removed from A</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-amber">' + diff.changed.length + '</span><span class="stat-label">Changed values</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-teal">' + diff.unchanged.length + '</span><span class="stat-label">Unchanged</span></div>' +
+    '<div class="overview-stat"><span class="stat-value" style="color:var(--text-4)">' + total + '</span><span class="stat-label">Total paths</span></div>' +
+    (identical ? '<div style="margin-top:8px;color:var(--teal);font-size:13px;font-weight:600;">✓ Schemas are identical</div>' : '');
+
+  // Tabs counts
+  document.getElementById('added-count').textContent = diff.added.length;
+  document.getElementById('removed-count').textContent = diff.removed.length;
+  document.getElementById('changed-count').textContent = diff.changed.length;
+
+  // Added list
+  document.getElementById('added-list').innerHTML = diff.added.length === 0
+    ? '<div style="color:var(--text-4);font-size:12px;">No properties added.</div>'
+    : diff.added.map(function(d) {
+        return '<div class="diff-item added"><span class="diff-badge added">+</span><span class="diff-path">' + esc(d.path) + '</span><span class="diff-vals">' + esc(truncate(d.valB)) + '</span></div>';
+      }).join('');
+
+  // Removed list
+  document.getElementById('removed-list').innerHTML = diff.removed.length === 0
+    ? '<div style="color:var(--text-4);font-size:12px;">No properties removed.</div>'
+    : diff.removed.map(function(d) {
+        return '<div class="diff-item removed"><span class="diff-badge removed">−</span><span class="diff-path">' + esc(d.path) + '</span><span class="diff-vals">' + esc(truncate(d.valA)) + '</span></div>';
+      }).join('');
+
+  // Changed list
+  document.getElementById('changed-list').innerHTML = diff.changed.length === 0
+    ? '<div style="color:var(--text-4);font-size:12px;">No changed values.</div>'
+    : diff.changed.map(function(d) {
+        return '<div class="diff-item changed"><span class="diff-badge changed">≠</span><span class="diff-path">' + esc(d.path) + '</span><span class="diff-vals">' + esc(truncate(d.valA)) + ' → ' + esc(truncate(d.valB)) + '</span></div>';
+      }).join('');
+
+  // Reset summary tabs
+  document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelector('[data-stab="overview"]').classList.add('active');
+  document.getElementById('sc-overview').classList.add('active');
+
+  // Build trees
+  var treeA = document.getElementById('tree-a');
+  var treeB = document.getElementById('tree-b');
+  var headerA = treeA.querySelector('.diff-tree-header').outerHTML;
+  var headerB = treeB.querySelector('.diff-tree-header').outerHTML;
+  treeA.innerHTML = headerA;
+  treeB.innerHTML = headerB;
+
+  buildDiffTree(treeA, schemaA, null, null, true, true, '', sets.removed, sets.changed, 'a');
+  buildDiffTree(treeB, schemaB, null, null, true, true, '', sets.added, sets.changed, 'b');
+}
+
+// ═══════════════════════════════════════════
+// Structural Mode
+// ═══════════════════════════════════════════
+function runCompareStructural(schemaA, schemaB) {
+  var typesA = extractTypeProperties(schemaA);
+  var typesB = extractTypeProperties(schemaB);
+
+  var propsA = function(t) { return getTypePropNames(typesA[t]); };
+  var propsB = function(t) { return getTypePropNames(typesB[t]); };
+
+  // Find types in each
+  var allTypes = new Set();
+  Object.keys(typesA).forEach(function(t) { allTypes.add(t); });
+  Object.keys(typesB).forEach(function(t) { allTypes.add(t); });
+  allTypes = Array.from(allTypes).sort();
+
+  var onlyA = [];
+  var onlyB = [];
+  var shared = [];
+
+  allTypes.forEach(function(t) {
+    if (t in typesA && !(t in typesB)) {
+      onlyA.push(t);
+    } else if (!(t in typesA) && t in typesB) {
+      onlyB.push(t);
+    } else {
+      shared.push(t);
+    }
+  });
+
+  // Build per-type stats with full property detail
+  var totalUniqueProps = new Set();
+  var sharedPropCount = 0;
+  var onlyInACount = 0;
+  var onlyInBCount = 0;
+  var perTypeStats = [];
+
+  shared.forEach(function(t) {
+    var namesA = propsA(t);
+    var namesB = propsB(t);
+    var setA = new Set(namesA);
+    var setB = new Set(namesB);
+    var inBoth = [];
+    var inAOnly = [];
+    var inBOnly = [];
+
+    namesA.forEach(function(p) {
+      totalUniqueProps.add(t + '.' + p);
+      if (setB.has(p)) { inBoth.push(p); } else { inAOnly.push(p); }
+    });
+    namesB.forEach(function(p) {
+      totalUniqueProps.add(t + '.' + p);
+      if (!setA.has(p)) { inBOnly.push(p); }
+    });
+
+    sharedPropCount += inBoth.length;
+    onlyInACount += inAOnly.length;
+    onlyInBCount += inBOnly.length;
+
+    perTypeStats.push({
+      type: t,
+      inBoth: inBoth.sort(),
+      inAOnly: inAOnly.sort(),
+      inBOnly: inBOnly.sort(),
+      detailA: typesA[t],
+      detailB: typesB[t]
+    });
+  });
+
+  var coveragePercent = totalUniqueProps.size > 0 ? Math.round((sharedPropCount / totalUniqueProps.size) * 100) : 0;
+
+  // Count total props in only-A and only-B types
+  var onlyAProps = 0;
+  onlyA.forEach(function(t) { onlyAProps += getTypePropNames(typesA[t]).length; });
+  var onlyBProps = 0;
+  onlyB.forEach(function(t) { onlyBProps += getTypePropNames(typesB[t]).length; });
+
+  // Total property counts per side
+  var totalPropsA = 0;
+  Object.keys(typesA).forEach(function(t) { totalPropsA += getTypePropNames(typesA[t]).length; });
+  var totalPropsB = 0;
+  Object.keys(typesB).forEach(function(t) { totalPropsB += getTypePropNames(typesB[t]).length; });
+
+  // Overview — comprehensive stats
+  document.getElementById('overview-grid').innerHTML =
+    '<div class="overview-stat"><span class="stat-value stat-teal">' + shared.length + '</span><span class="stat-label">Shared types</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-red">' + onlyA.length + ' <small style="font-size:11px;font-weight:400;color:var(--text-4)">(' + onlyAProps + ' props)</small></span><span class="stat-label">Types only in A</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-green">' + onlyB.length + ' <small style="font-size:11px;font-weight:400;color:var(--text-4)">(' + onlyBProps + ' props)</small></span><span class="stat-label">Types only in B</span></div>' +
+    '<div class="overview-stat"><span class="stat-value" style="color:var(--text-1)">' + coveragePercent + '%</span><span class="stat-label">Property overlap</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-amber">' + totalPropsA + ' / ' + totalPropsB + '</span><span class="stat-label">Total props A / B</span></div>';
+
+  // Update tab counts
+  document.getElementById('added-count').textContent = onlyA.length;
+  document.getElementById('removed-count').textContent = onlyB.length;
+  document.getElementById('changed-count').textContent = shared.length;
+
+  // Helper: render property with type badge
+  function propHtml(propName, detail, typeName) {
+    var vt = detail ? detail.valueType : 'unknown';
+    var ct = detail ? detail.childType : null;
+    var nested = detail ? detail.nested : [];
+    var badge = '';
+    if (ct) {
+      badge = ' <span class="vtype-badge vtype-ref">\u2192 ' + esc(ct) + '</span>';
+    } else if (vt === 'url') {
+      badge = ' <span class="vtype-badge vtype-url">url</span>';
+    } else if (vt === 'date') {
+      badge = ' <span class="vtype-badge vtype-date">date</span>';
+    } else if (vt === 'number') {
+      badge = ' <span class="vtype-badge vtype-num">num</span>';
+    } else if (vt === 'boolean') {
+      badge = ' <span class="vtype-badge vtype-bool">bool</span>';
+    } else if (vt === 'array') {
+      badge = ' <span class="vtype-badge vtype-arr">array</span>';
+    } else if (vt === 'object') {
+      badge = ' <span class="vtype-badge vtype-obj">object</span>';
+    }
+    var html = '<div class="prop-row"><span class="prop-name">' + esc(propName) + '</span>' + badge + '</div>';
+    // Show nested sub-properties for non-typed objects
+    if (nested.length > 0) {
+      html += '<div class="prop-nested">';
+      nested.forEach(function(n) {
+        var nb = '';
+        if (n.valueType === 'url') nb = ' <span class="vtype-badge vtype-url">url</span>';
+        else if (n.valueType === 'number') nb = ' <span class="vtype-badge vtype-num">num</span>';
+        else if (n.valueType === 'date') nb = ' <span class="vtype-badge vtype-date">date</span>';
+        html += '<div class="prop-row nested"><span class="prop-name">' + esc(n.path) + '</span>' + nb + '</div>';
+      });
+      html += '</div>';
+    }
+    return html;
+  }
+
+  // Only in A — types with their properties + value types
+  document.getElementById('added-list').innerHTML = onlyA.length === 0
+    ? '<div style="color:var(--text-4);font-size:12px;">No types unique to Schema A.</div>'
+    : onlyA.map(function(t) {
+        var names = getTypePropNames(typesA[t]);
+        return '<div class="type-block-card">' +
+          '<div class="type-block-header"><span class="type-block-badge type-a">A only</span><span class="type-block-name">' + esc(t) + '</span><span class="type-block-count">' + names.length + ' properties</span></div>' +
+          '<div class="type-block-body">' + names.map(function(p) {
+            return propHtml(p, typesA[t][p], t);
+          }).join('') + '</div>' +
+        '</div>';
+      }).join('');
+
+  // Only in B
+  document.getElementById('removed-list').innerHTML = onlyB.length === 0
+    ? '<div style="color:var(--text-4);font-size:12px;">No types unique to Schema B.</div>'
+    : onlyB.map(function(t) {
+        var names = getTypePropNames(typesB[t]);
+        return '<div class="type-block-card">' +
+          '<div class="type-block-header"><span class="type-block-badge type-b">B only</span><span class="type-block-name">' + esc(t) + '</span><span class="type-block-count">' + names.length + ' properties</span></div>' +
+          '<div class="type-block-body">' + names.map(function(p) {
+            return propHtml(p, typesB[t][p], t);
+          }).join('') + '</div>' +
+        '</div>';
+      }).join('');
+
+  // Shared types — thorough per-type comparison
+  document.getElementById('changed-list').innerHTML = shared.length === 0
+    ? '<div style="color:var(--text-4);font-size:12px;">No shared types.</div>'
+    : perTypeStats.map(function(s) {
+        var totalProps = s.inBoth.length + s.inAOnly.length + s.inBOnly.length;
+        var match = totalProps > 0 ? Math.round((s.inBoth.length / totalProps) * 100) : 100;
+        var matchColor = match === 100 ? 'var(--diff-added)' : match >= 50 ? 'var(--diff-changed)' : 'var(--diff-removed)';
+        var isFullMatch = s.inAOnly.length === 0 && s.inBOnly.length === 0;
+
+        var html = '<div class="type-block-card' + (isFullMatch ? ' full-match' : '') + '">' +
+          '<div class="type-block-header' + (isFullMatch ? ' clickable-header' : '') + '">' +
+            '<span class="type-block-name">' + esc(s.type) + '</span>' +
+            '<span class="type-block-stat-pills">' +
+              '<span class="pill pill-both">' + s.inBoth.length + ' shared</span>' +
+              (s.inAOnly.length > 0 ? '<span class="pill pill-a">' + s.inAOnly.length + ' A only</span>' : '') +
+              (s.inBOnly.length > 0 ? '<span class="pill pill-b">' + s.inBOnly.length + ' B only</span>' : '') +
+            '</span>' +
+            '<span class="type-block-match" style="color:' + matchColor + '">' + match + '%</span>' +
+          '</div>';
+
+        // Compact line for 100% match types
+        if (isFullMatch) {
+          html += '<div class="type-block-body compact-body">';
+          s.inBoth.forEach(function(p) {
+            // Show value type from A (same in both)
+            var detA = s.detailA[p];
+            html += propHtml(p, detA, s.type);
+          });
+          html += '</div>';
+        } else {
+          // Full three-column comparison for types with differences
+          html += '<div class="type-block-body">';
+
+          // Properties only in A
+          if (s.inAOnly.length > 0) {
+            html += '<div class="prop-section"><div class="prop-section-label label-a-only">Only in A (' + s.inAOnly.length + ')</div>';
+            s.inAOnly.forEach(function(p) {
+              html += propHtml(p, s.detailA[p], s.type);
+            });
+            html += '</div>';
+          }
+
+          // Properties only in B
+          if (s.inBOnly.length > 0) {
+            html += '<div class="prop-section"><div class="prop-section-label label-b-only">Only in B (' + s.inBOnly.length + ')</div>';
+            s.inBOnly.forEach(function(p) {
+              html += propHtml(p, s.detailB[p], s.type);
+            });
+            html += '</div>';
+          }
+
+          // Shared properties — compare value types between A and B
+          if (s.inBoth.length > 0) {
+            html += '<div class="prop-section"><div class="prop-section-label label-both">Shared (' + s.inBoth.length + ')</div>';
+            s.inBoth.forEach(function(p) {
+              var detA = s.detailA[p];
+              var detB = s.detailB[p];
+              var typeMismatch = detA && detB && detA.valueType !== detB.valueType;
+              var childMismatch = detA && detB && detA.childType !== detB.childType;
+              var hasMismatch = typeMismatch || childMismatch;
+
+              // Compare nested sub-properties if both are objects
+              var nestedA = detA ? detA.nested : [];
+              var nestedB = detB ? detB.nested : [];
+              var nestedOnlyA = [];
+              var nestedOnlyB = [];
+              var nestedBoth = [];
+              if (nestedA.length > 0 || nestedB.length > 0) {
+                var pathsA = {};
+                var pathsB = {};
+                nestedA.forEach(function(n) { pathsA[n.path] = n; });
+                nestedB.forEach(function(n) { pathsB[n.path] = n; });
+                Object.keys(pathsA).forEach(function(path) {
+                  if (path in pathsB) { nestedBoth.push(path); } else { nestedOnlyA.push(path); }
+                });
+                Object.keys(pathsB).forEach(function(path) {
+                  if (!(path in pathsA)) { nestedOnlyB.push(path); }
+                });
+              }
+
+              html += '<div class="prop-row' + (hasMismatch ? ' prop-mismatch' : '') + '"><span class="prop-name">' + esc(p) + '</span>';
+              if (detA && detA.childType) {
+                html += ' <span class="vtype-badge vtype-ref">\u2192 ' + esc(detA.childType) + '</span>';
+              } else if (detA) {
+                var vtA = detA.valueType;
+                var vtB = detB ? detB.valueType : vtA;
+                if (typeMismatch) {
+                  html += ' <span class="vtype-badge vtype-warn">' + vtA + ' vs ' + vtB + '</span>';
+                } else if (vtA === 'url') {
+                  html += ' <span class="vtype-badge vtype-url">url</span>';
+                } else if (vtA === 'date') {
+                  html += ' <span class="vtype-badge vtype-date">date</span>';
+                } else if (vtA === 'number') {
+                  html += ' <span class="vtype-badge vtype-num">num</span>';
+                } else if (vtA === 'array') {
+                  html += ' <span class="vtype-badge vtype-arr">array</span>';
+                }
+              }
+              html += '</div>';
+
+              // Show nested sub-property diff
+              if (nestedOnlyA.length > 0 || nestedOnlyB.length > 0) {
+                html += '<div class="prop-nested">';
+                nestedOnlyA.forEach(function(path) {
+                  html += '<div class="prop-row nested nested-a">\u2514 ' + esc(path) + ' <span class="vtype-badge vtype-warn">A only</span></div>';
+                });
+                nestedOnlyB.forEach(function(path) {
+                  html += '<div class="prop-row nested nested-b">\u2514 ' + esc(path) + ' <span class="vtype-badge vtype-warn">B only</span></div>';
+                });
+                html += '</div>';
+              }
+            });
+            html += '</div>';
+          }
+
+          html += '</div>';
+        }
+
+        html += '</div>';
+        return html;
+      }).join('');
+
+  // Reset summary tabs
+  document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelector('[data-stab="overview"]').classList.add('active');
+  document.getElementById('sc-overview').classList.add('active');
+
+  // Build structural trees (show which properties are unique)
+  var treeA = document.getElementById('tree-a');
+  var treeB = document.getElementById('tree-b');
+  var headerA = treeA.querySelector('.diff-tree-header').outerHTML;
+  var headerB = treeB.querySelector('.diff-tree-header').outerHTML;
+  treeA.innerHTML = headerA;
+  treeB.innerHTML = headerB;
+
+  // Build sets of unique properties for highlighting
+  var uniquePropsA = {};
+  var uniquePropsB = {};
+
+  shared.forEach(function(t) {
+    var namesA = getTypePropNames(typesA[t]);
+    var namesB = getTypePropNames(typesB[t]);
+    var setA = new Set(namesA);
+    var setB = new Set(namesB);
+
+    namesA.forEach(function(p) {
+      if (!setB.has(p)) {
+        uniquePropsA[t + '.' + p] = true;
+      }
+    });
+
+    namesB.forEach(function(p) {
+      if (!setA.has(p)) {
+        uniquePropsB[t + '.' + p] = true;
+      }
+    });
+  });
+
+  buildStructuralTree(treeA, schemaA, null, null, true, true, '', uniquePropsA, 'a', typesA, typesB, shared);
+  buildStructuralTree(treeB, schemaB, null, null, true, true, '', uniquePropsB, 'b', typesB, typesA, shared);
+}
+
+// ═══════════════════════════════════════════
+// Build structural tree (connector lines + highlights)
+// ═══════════════════════════════════════════
+function buildStructuralTree(parent, value, prefix, keyLabel, isLast, startOpen, currentPath, uniqueSet, side, currentTypeMap, otherTypeMap, sharedTypes, currentType) {
+  var isRoot = prefix === null;
+
+  if (value !== null && typeof value === 'object') {
+    var isArr = Array.isArray(value);
+    var entries = isArr ? value.map(function(v, i) { return [i, v]; }) : Object.entries(value);
+    var schemaType = !isArr && value['@type']
+      ? (Array.isArray(value['@type']) ? value['@type'].join('/') : value['@type'])
+      : null;
+
+    var headerLine = document.createElement('div');
+    headerLine.className = 'tree-line expandable';
+
+    // Structural highlight: if this property key is unique to this side's type
+    var objPropKey = currentType && keyLabel ? (currentType + '.' + keyLabel) : null;
+    if (objPropKey && objPropKey in uniqueSet) {
+      headerLine.classList.add('structural-unique');
+    }
+    // Also highlight entire type blocks that only exist in this side
+    if (schemaType && sharedTypes && sharedTypes.indexOf(schemaType) === -1 && !(schemaType in otherTypeMap)) {
+      headerLine.classList.add('structural-unique');
+    }
+
+    var guide = document.createElement('span');
+    guide.className = 'guide';
+    guide.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
+    headerLine.appendChild(guide);
+
+    var chev = document.createElement('span');
+    chev.className = 'chev' + (startOpen ? ' open' : '');
+    chev.textContent = '\u25B6';
+    headerLine.appendChild(chev);
+
+    if (keyLabel !== null && keyLabel !== undefined) {
+      var k = document.createElement('span');
+      if (typeof keyLabel === 'number') { k.className = 'arr-index'; k.textContent = '[' + keyLabel + ']'; }
+      else { k.className = 'key'; k.textContent = keyLabel; }
+      headerLine.appendChild(k);
+    }
+
+    var summary = document.createElement('span');
+    summary.className = 'summary';
+    summary.textContent = isArr ? ' [' + value.length + ']' : ' {' + entries.length + '}';
+    headerLine.appendChild(summary);
+
+    if (schemaType) {
+      var badge = document.createElement('span');
+      badge.className = 'type-tag ' + getTypeClass(schemaType);
+      badge.textContent = schemaType;
+      headerLine.appendChild(badge);
+    }
+
+    parent.appendChild(headerLine);
+
+    var childContainer = document.createElement('div');
+    childContainer.className = 'tree-children';
+    if (!startOpen) childContainer.style.display = 'none';
+
+    var childPrefix = isRoot ? '' : (prefix + (isLast ? '   ' : '\u2502  '));
+
+    entries.forEach(function(entry, idx) {
+      var childIsLast = idx === entries.length - 1;
+      var childKey = entry[0];
+      var childPath = currentPath
+        ? (typeof childKey === 'number' ? currentPath + '[' + childKey + ']' : currentPath + '.' + childKey)
+        : (typeof childKey === 'number' ? '[' + childKey + ']' : String(childKey));
+      buildStructuralTree(childContainer, entry[1], childPrefix, childKey, childIsLast, true, childPath, uniqueSet, side, currentTypeMap, otherTypeMap, sharedTypes, schemaType);
+    });
+
+    parent.appendChild(childContainer);
+
+    headerLine.addEventListener('click', function() {
+      chev.classList.toggle('open');
+      childContainer.style.display = childContainer.style.display === 'none' ? '' : 'none';
+    });
+
+  } else {
+    var line = document.createElement('div');
+    line.className = 'tree-line';
+
+    // In structural mode, highlight properties unique to this side
+    var propKey = currentType && keyLabel ? (currentType + '.' + keyLabel) : null;
+    if (propKey && propKey in uniqueSet) {
+      line.classList.add('structural-unique');
+    }
+
+    var guide2 = document.createElement('span');
+    guide2.className = 'guide';
+    guide2.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
+    line.appendChild(guide2);
+
+    var chev2 = document.createElement('span');
+    chev2.className = 'chev hidden';
+    chev2.textContent = '\u25B6';
+    line.appendChild(chev2);
+
+    if (keyLabel !== null && keyLabel !== undefined) {
+      var k2 = document.createElement('span');
+      if (typeof keyLabel === 'number') { k2.className = 'arr-index'; k2.textContent = '[' + keyLabel + ']'; }
+      else { k2.className = 'key'; k2.textContent = keyLabel; }
+      line.appendChild(k2);
+      var sep = document.createElement('span');
+      sep.className = 'sep'; sep.textContent = ': ';
+      line.appendChild(sep);
+    }
+
+    var valSpan = document.createElement('span');
+    if (value === null || value === undefined) {
+      valSpan.className = 'val-null'; valSpan.textContent = 'null';
+    } else if (typeof value === 'boolean') {
+      valSpan.className = 'val-bool'; valSpan.textContent = String(value);
+    } else if (typeof value === 'number') {
+      valSpan.className = 'val-number'; valSpan.textContent = String(value);
+    } else if (typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://'))) {
+      valSpan.className = 'val-url'; valSpan.textContent = value;
+    } else {
+      valSpan.className = 'val-string';
+      var str = String(value);
+      valSpan.textContent = '"' + (str.length > 80 ? str.slice(0, 80) + '\u2026' : str) + '"';
+    }
+    line.appendChild(valSpan);
+    parent.appendChild(line);
+  }
+}
+
+// ═══════════════════════════════════════════
+// Build diff tree (connector lines + highlights)
+// ═══════════════════════════════════════════
+function buildDiffTree(parent, value, prefix, keyLabel, isLast, startOpen, currentPath, highlightSet, changedSet, side) {
+  var isRoot = prefix === null;
+
+  if (value !== null && typeof value === 'object') {
+    var isArr = Array.isArray(value);
+    var entries = isArr ? value.map(function(v, i) { return [i, v]; }) : Object.entries(value);
+    var schemaType = !isArr && value['@type']
+      ? (Array.isArray(value['@type']) ? value['@type'].join('/') : value['@type'])
+      : null;
+
+    var headerLine = document.createElement('div');
+    headerLine.className = 'tree-line expandable';
+
+    // Check if entire subtree is highlighted
+    var hasHighlight = anyPathStartsWith(currentPath, highlightSet);
+    var hasChanged = anyPathStartsWith(currentPath, changedSet);
+    if (hasHighlight && side === 'a') headerLine.classList.add('diff-remove');
+    else if (hasHighlight && side === 'b') headerLine.classList.add('diff-add');
+
+    var guide = document.createElement('span');
+    guide.className = 'guide';
+    guide.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
+    headerLine.appendChild(guide);
+
+    var chev = document.createElement('span');
+    chev.className = 'chev' + (startOpen ? ' open' : '');
+    chev.textContent = '\u25B6';
+    headerLine.appendChild(chev);
+
+    if (keyLabel !== null && keyLabel !== undefined) {
+      var k = document.createElement('span');
+      if (typeof keyLabel === 'number') { k.className = 'arr-index'; k.textContent = '[' + keyLabel + ']'; }
+      else { k.className = 'key'; k.textContent = keyLabel; }
+      headerLine.appendChild(k);
+    }
+
+    var summary = document.createElement('span');
+    summary.className = 'summary';
+    summary.textContent = isArr ? ' [' + value.length + ']' : ' {' + entries.length + '}';
+    headerLine.appendChild(summary);
+
+    if (schemaType) {
+      var badge = document.createElement('span');
+      badge.className = 'type-tag ' + getTypeClass(schemaType);
+      badge.textContent = schemaType;
+      headerLine.appendChild(badge);
+    }
+
+    parent.appendChild(headerLine);
+
+    var childContainer = document.createElement('div');
+    childContainer.className = 'tree-children';
+    if (!startOpen) childContainer.style.display = 'none';
+
+    var childPrefix = isRoot ? '' : (prefix + (isLast ? '   ' : '\u2502  '));
+
+    entries.forEach(function(entry, idx) {
+      var childIsLast = idx === entries.length - 1;
+      var childKey = entry[0];
+      var childPath = currentPath
+        ? (typeof childKey === 'number' ? currentPath + '[' + childKey + ']' : currentPath + '.' + childKey)
+        : (typeof childKey === 'number' ? '[' + childKey + ']' : String(childKey));
+      buildDiffTree(childContainer, entry[1], childPrefix, childKey, childIsLast, true, childPath, highlightSet, changedSet, side);
+    });
+
+    parent.appendChild(childContainer);
+
+    headerLine.addEventListener('click', function() {
+      chev.classList.toggle('open');
+      childContainer.style.display = childContainer.style.display === 'none' ? '' : 'none';
+    });
+
+  } else {
+    var line = document.createElement('div');
+    line.className = 'tree-line';
+
+    // Highlight leaf
+    if (currentPath in highlightSet) {
+      line.classList.add(side === 'a' ? 'diff-remove' : 'diff-add');
+    } else if (currentPath in changedSet) {
+      line.classList.add('diff-change');
+    }
+
+    var guide2 = document.createElement('span');
+    guide2.className = 'guide';
+    guide2.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
+    line.appendChild(guide2);
+
+    var chev2 = document.createElement('span');
+    chev2.className = 'chev hidden';
+    chev2.textContent = '\u25B6';
+    line.appendChild(chev2);
+
+    if (keyLabel !== null && keyLabel !== undefined) {
+      var k2 = document.createElement('span');
+      if (typeof keyLabel === 'number') { k2.className = 'arr-index'; k2.textContent = '[' + keyLabel + ']'; }
+      else { k2.className = 'key'; k2.textContent = keyLabel; }
+      line.appendChild(k2);
+      var sep = document.createElement('span');
+      sep.className = 'sep'; sep.textContent = ': ';
+      line.appendChild(sep);
+    }
+
+    var valSpan = document.createElement('span');
+    if (value === null || value === undefined) {
+      valSpan.className = 'val-null'; valSpan.textContent = 'null';
+    } else if (typeof value === 'boolean') {
+      valSpan.className = 'val-bool'; valSpan.textContent = String(value);
+    } else if (typeof value === 'number') {
+      valSpan.className = 'val-number'; valSpan.textContent = String(value);
+    } else if (typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://'))) {
+      valSpan.className = 'val-url'; valSpan.textContent = value;
+    } else {
+      valSpan.className = 'val-string';
+      var str = String(value);
+      valSpan.textContent = '"' + (str.length > 80 ? str.slice(0, 80) + '\u2026' : str) + '"';
+    }
+    line.appendChild(valSpan);
+    parent.appendChild(line);
+  }
+}
+
+// ═══════════════════════════════════════════
+// Helpers
+// ═══════════════════════════════════════════
+function getTypeClass(type) {
+  var base = type.replace(/^schema:/, '').split('/')[0];
+  var known = [
+    'Product','ProductGroup','Offer','AggregateOffer','Organization','WebSite',
+    'BreadcrumbList','FAQPage','Review','AggregateRating','OfferShippingDetails',
+    'ShippingDeliveryTime','DefinedRegion','QuantitativeValue'
+  ];
+  return known.indexOf(base) !== -1 ? 'type-' + base : 'type-default';
+}
+
+function anyPathStartsWith(prefix, pathSet) {
+  if (!prefix) return false;
+  var keys = Object.keys(pathSet);
+  for (var i = 0; i < keys.length; i++) {
+    if (keys[i] === prefix || keys[i].indexOf(prefix + '.') === 0 || keys[i].indexOf(prefix + '[') === 0) return true;
+  }
+  return false;
+}
+
+function esc(str) {
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function truncate(str) {
+  return str && str.length > 60 ? str.slice(0, 60) + '\u2026' : (str || '');
+}
+
+// ═══════════════════════════════════════════
+// Toolbar
+// ═══════════════════════════════════════════
+function expandAll() {
+  document.querySelectorAll('.tree-children').forEach(function(c) { c.style.display = ''; });
+  document.querySelectorAll('.chev:not(.hidden)').forEach(function(c) { c.classList.add('open'); });
+}
+function collapseAll() {
+  document.querySelectorAll('.tree-children').forEach(function(c) { c.style.display = 'none'; });
+  document.querySelectorAll('.chev:not(.hidden)').forEach(function(c) { c.classList.remove('open'); });
+  // Keep top-level open
+  document.querySelectorAll('.diff-tree-col > .tree-children').forEach(function(c) { c.style.display = ''; });
+  document.querySelectorAll('.diff-tree-col > .tree-line .chev:not(.hidden)').forEach(function(c) { c.classList.add('open'); });
+}
+
+function swapInputs() {
+  var a = document.getElementById('input-a');
+  var b = document.getElementById('input-b');
+  var tmp = a.value; a.value = b.value; b.value = tmp;
+}
+
+// ═══════════════════════════════════════════
+// Sample schemas
+// ═══════════════════════════════════════════
+function loadSampleA() {
+  document.getElementById('input-a').value = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Floral Gift Tag — Small",
+    "sku": "GT-FLORAL-SM",
+    "description": "Beautiful floral gift tags, perfect for any occasion.",
+    "image": "https://magstags.com/images/floral-sm.jpg",
+    "brand": { "@type": "Organization", "name": "MagsTags" },
+    "offers": {
+      "@type": "Offer",
+      "price": "8.99",
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock",
+      "url": "https://magstags.com/products/floral-gift-tag-small"
+    }
+  }, null, 2);
+}
+
+function loadSampleB() {
+  document.getElementById('input-b').value = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Floral Gift Tag — Small",
+    "sku": "GT-FLORAL-SM",
+    "description": "Beautiful floral gift tags, perfect for any occasion. Now with eco-friendly materials.",
+    "image": "https://magstags.com/images/floral-sm-v2.jpg",
+    "color": "White/Pink",
+    "brand": { "@type": "Organization", "name": "MagsTags", "url": "https://magstags.com" },
+    "offers": {
+      "@type": "Offer",
+      "price": "9.49",
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock",
+      "url": "https://magstags.com/products/floral-gift-tag-small",
+      "priceValidUntil": "2026-12-31"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "142"
+    }
+  }, null, 2);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Schema Markup Visualizer — Structured Data Viewer Tool | MagsTags</title>
+  <meta name="description" content="Free schema markup visualizer. Paste JSON-LD or fetch from any URL to see your structured data as an interactive tree. Types, properties, nesting depth — visible at a glance instead of buried in braces. No logins. No catch.">
+  <link rel="canonical" href="https://www.magstags.com/schema-markup-visualizer/">
+  <meta property="og:title" content="Schema Markup Visualizer — Structured Data Viewer">
+  <meta property="og:description" content="Free structured data visualizer. Paste JSON-LD or fetch from any URL. See schema markup as an interactive tree with type badges, property counts, and nesting depth.">
+  <meta property="og:url" content="https://www.magstags.com/schema-markup-visualizer/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:image:alt" content="Schema Markup Visualizer — Free JSON-LD Inspector">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Schema Markup Visualizer — Structured Data Viewer">
+  <meta name="twitter:description" content="Paste or fetch JSON-LD. See your structured data as an interactive tree. Inspect types, properties, and nesting depth instantly.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "Schema Markup Visualizer",
+    "alternateName": ["Structured Data Visualizer", "JSON-LD Viewer", "Schema Markup Tester"],
+    "description": "Free schema markup visualizer and structured data viewer. Paste JSON-LD or fetch from any URL. See your structured data as an interactive tree with type badges, property counts, and nesting depth.",
+    "url": "https://www.magstags.com/schema-markup-visualizer/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "en-US",
+    "creator": { "@type": "Organization", "name": "MagsTags", "url": "https://www.magstags.com/" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": ["JSON-LD parsing and visualization", "Interactive tree view with expand/collapse", "Fetch schema from any URL", "Auto-repair malformed JSON", "Type and property inventory", "Nesting depth analysis", "Dark mode support", "Competitor analysis"],
+    "image": "https://www.magstags.com/og-image.png"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "SEO Tools", "item": "https://www.magstags.com/seo-tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Schema Markup Visualizer", "item": "https://www.magstags.com/schema-markup-visualizer/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is a schema markup visualizer?", "acceptedAnswer": { "@type": "Answer", "text": "A tool that takes structured data (typically JSON-LD) and renders it as a visual tree. Instead of reading raw code and counting braces, you see each schema type, property, and value in a hierarchical view with expand/collapse controls. The structure Google sees, made visible to you." }},
+      { "@type": "Question", "name": "How is this different from Google's Rich Results Test?", "acceptedAnswer": { "@type": "Answer", "text": "Different job. Google's Rich Results Test checks whether your page qualifies for specific rich results. This visualizer shows you the full structure of your JSON-LD as a tree, regardless of which rich result you're targeting. Use this tool to understand your schema, then use Google's tool to confirm eligibility." }},
+      { "@type": "Question", "name": "Can I visualize structured data from any website?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Enter any URL in the Fetch tab and the tool extracts all JSON-LD blocks from that page. Some sites block cross-origin requests — in which case, view the page source, copy the JSON-LD, and paste it in the Paste tab." }},
+      { "@type": "Question", "name": "What types of structured data does this support?", "acceptedAnswer": { "@type": "Answer", "text": "All of them. Product, Organization, LocalBusiness, Article, FAQPage, BreadcrumbList, HowTo, Event, Recipe — the visualizer reads the JSON structure and renders whatever it finds. Any valid schema.org type works." }},
+      { "@type": "Question", "name": "What happens if my JSON-LD has errors?", "acceptedAnswer": { "@type": "Answer", "text": "The tool tries to fix it before giving up. It handles trailing commas, single quotes, JavaScript-style comments, and unwrapped fragments. If the repair works, you get a warning banner and the tree still renders. If it's too broken, you get an error pointing to the parse failure. Not a blank screen." }},
+      { "@type": "Question", "name": "Does the visualizer validate my schema against Google's requirements?", "acceptedAnswer": { "@type": "Answer", "text": "No. This tool shows structure — what's in your JSON-LD and how it's nested. It does not check whether your markup meets Google's requirements for rich results. Use this tool first to understand what you have, then run it through Google's Rich Results Test. Structure first, eligibility second." }},
+      { "@type": "Question", "name": "Can I compare two schemas side by side?", "acceptedAnswer": { "@type": "Answer", "text": "Not here — but the Schema Comparison tool lets you paste two schemas and see a side-by-side diff. Two modes: Before/After for tracking changes to your own markup, and Structural for comparing against competitors at the type and property level." }},
+      { "@type": "Question", "name": "What does nesting depth tell me?", "acceptedAnswer": { "@type": "Answer", "text": "How many levels deep your schema goes. A flat schema (depth 2-3) is typical for simple pages. E-commerce pages with ProductGroup variants can go 5-7 levels deep. Excessive depth can mean your CMS template is generating wrapper objects nobody asked for. The tree makes it visible." }}
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
+      --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #857f7a;
+      --teal: #0E7490; --mint: #0891B2; --mint-light: #E0F2FE;
+      --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09);
+      --red: #c0392b; --red-light: #fdf0ee;
+      --green: #0a7c5c; --green-light: #edfdf5;
+      --amber: #92400e; --amber-light: #fffbeb;
+      --purple: #7c3aed; --purple-light: #f3f0ff;
+      --pink: #c026d3; --cyan-val: #0e7490;
+    }
+    html.dark {
+      --bg: #111110; --bg2: #191817; --surface: #1e1c1a; --surface-alt: #242220;
+      --border: rgba(255,255,255,.08); --text-1: #f5f2ee; --text-2: #c8c4be;
+      --text-3: #857f79; --text-4: #4a4743; --teal: #22D3EE; --mint: #67E8F9;
+      --mint-light: rgba(14,116,144,.14);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
+      --red-light: rgba(192,57,43,.14); --green: #4ade80; --green-light: rgba(74,222,128,.1);
+      --amber: #fbbf24; --amber-light: rgba(251,191,36,.1);
+      --purple: #a78bfa; --purple-light: rgba(167,139,250,.1);
+      --pink: #e879f9; --cyan-val: #22d3ee;
+    }
+
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
+
+    .tool-header { margin-bottom: 32px; }
+    .tool-badge-free { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 600; background: var(--mint-light); color: var(--teal); margin-bottom: 12px; }
+    .tool-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .tool-subtitle { font-size: 15px; color: var(--text-3); max-width: 640px; line-height: 1.6; }
+    .tool-subtitle code { font-size: 13px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+
+    /* ─── Input tabs ─── */
+    .input-tabs {
+      display: flex; gap: 4px; margin-bottom: 16px;
+      background: var(--surface); border-radius: 99px; padding: 4px;
+      width: fit-content; border: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .input-tab {
+      background: none; border: none; border-radius: 99px; padding: 7px 22px;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+      color: var(--text-3); cursor: pointer; transition: all .15s; white-space: nowrap;
+    }
+    .input-tab:hover { color: var(--text-1); }
+    .input-tab.active { background: var(--teal); color: #fff; font-weight: 600; }
+
+    .input-panel { display: none; }
+    .input-panel.active { display: block; }
+
+    /* ─── Form elements ─── */
+    .text-input, .text-area {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; color: var(--text-1); padding: 10px 14px;
+      font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
+      transition: border-color .15s;
+    }
+    .text-input:focus, .text-area:focus { border-color: var(--teal); }
+    .text-area {
+      min-height: 140px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 12px; resize: vertical; line-height: 1.6;
+    }
+
+    .input-row { display: flex; gap: 8px; align-items: stretch; }
+
+    .btn {
+      padding: 9px 20px; background: var(--teal); color: #fff; border: none;
+      border-radius: 99px; font-size: 13px; font-weight: 600; cursor: pointer;
+      font-family: 'Inter', sans-serif; white-space: nowrap; transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    .btn-ghost {
+      background: var(--surface); color: var(--text-2); border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); opacity: 1; }
+
+    .btn-sm { padding: 5px 14px; font-size: 12px; }
+
+    .sample-link {
+      color: var(--teal); cursor: pointer; font-size: 12px;
+      text-decoration: underline; background: none; border: none;
+      font-family: 'Inter', sans-serif;
+    }
+    .hint { color: var(--text-4); font-size: 11px; margin-top: 6px; }
+
+    /* ─── Status ─── */
+    .status { margin-top: 8px; padding: 8px 14px; border-radius: 10px; font-size: 12px; display: none; }
+    .status.error { display: block; background: var(--red-light); border: 1px solid var(--red); color: var(--red); }
+    .status.info { display: block; background: rgba(14,116,144,.08); border: 1px solid var(--teal); color: var(--teal); }
+    .status.warning { display: block; background: rgba(217,119,6,.1); border: 1px solid #d97706; color: #b45309; }
+    [data-theme="dark"] .status.warning { background: rgba(217,119,6,.12); border-color: #f59e0b; color: #fbbf24; }
+
+    /* ─── Results ─── */
+    #results { display: none; margin-top: 20px; }
+
+    /* ─── Summary panel ─── */
+    .summary-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; margin-bottom: 14px; overflow: hidden;
+    }
+    .summary-tabs {
+      display: flex; border-bottom: 1px solid var(--border);
+    }
+    .summary-tab {
+      padding: 10px 18px; background: none; border: none;
+      border-bottom: 2px solid transparent; color: var(--text-4);
+      font-size: 12px; font-weight: 500; cursor: pointer; transition: all .15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .summary-tab:hover { color: var(--text-1); }
+    .summary-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+    .tab-count {
+      display: inline-block; background: var(--bg2); color: var(--text-4);
+      font-size: 10px; padding: 1px 6px; border-radius: 99px; margin-left: 4px; font-weight: 600;
+    }
+    .summary-tab.active .tab-count { background: rgba(14,116,144,.12); color: var(--teal); }
+
+    .summary-content { display: none; padding: 14px 18px; }
+    .summary-content.active { display: block; }
+
+    .overview-grid { display: flex; gap: 28px; flex-wrap: wrap; }
+    .overview-stat { display: flex; flex-direction: column; gap: 1px; }
+    .stat-value { font-size: 22px; font-weight: 700; line-height: 1.2; }
+    .stat-label { font-size: 10px; color: var(--text-4); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+    .stat-teal { color: var(--teal); }
+    .stat-green { color: var(--green); }
+    .stat-purple { color: var(--purple); }
+    .stat-amber { color: var(--amber); }
+
+    .summary-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .summary-list-item {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 8px; font-size: 12px;
+      background: var(--bg2); border: 1px solid var(--border); transition: background .1s;
+    }
+    .summary-list-item:hover { background: var(--surface-alt); }
+    .item-count {
+      font-size: 10px; color: var(--text-4); font-weight: 600;
+      background: var(--surface); padding: 1px 5px; border-radius: 99px;
+    }
+    .item-name { font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-size: 11px; color: var(--purple); }
+
+    /* ─── Toolbar ─── */
+    .toolbar {
+      display: flex; gap: 6px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;
+    }
+    .toolbar .spacer { flex: 1; }
+
+    /* ─── Tree container ─── */
+    .tree-wrap {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 12px 16px; overflow-x: auto; min-height: 80px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 12px; line-height: 1.8;
+    }
+    .tree-empty {
+      color: var(--text-4); font-size: 13px; text-align: center;
+      padding: 40px 16px; font-family: 'Inter', sans-serif;
+    }
+    .tree-empty code {
+      display: block; margin-top: 8px; font-size: 12px;
+      color: var(--text-4); opacity: .6;
+    }
+
+    /* ─── Connector-line rows ─── */
+    .tree-line {
+      display: flex; align-items: flex-start; white-space: nowrap;
+      transition: background .1s; padding: 0 8px; border-radius: 6px; cursor: default;
+    }
+    .tree-line:hover { background: var(--bg2); }
+    .tree-line.expandable { cursor: pointer; }
+    .tree-line.expandable:hover { background: rgba(14,116,144,.06); }
+
+    .guide {
+      color: var(--border); flex-shrink: 0; white-space: pre;
+      user-select: none; letter-spacing: -0.5px;
+    }
+    html.dark .guide { color: rgba(255,255,255,.15); }
+
+    .chev {
+      display: inline-block; width: 14px; text-align: center;
+      color: var(--text-4); font-size: 9px; flex-shrink: 0;
+      transition: transform .15s; user-select: none;
+    }
+    .chev.open { transform: rotate(90deg); }
+    .chev.hidden { visibility: hidden; }
+
+    .key { color: var(--purple); }
+    .sep { color: var(--text-4); }
+    .val-string { color: var(--green); }
+    .val-number { color: var(--amber); }
+    .val-bool { color: var(--cyan-val); }
+    .val-null { color: var(--text-4); font-style: italic; }
+    .val-url { color: var(--teal); text-decoration: underline; cursor: pointer; }
+    .val-url:hover { opacity: .7; }
+    .arr-index { color: var(--text-4); opacity: .7; }
+    .summary { color: var(--text-4); font-style: italic; font-size: 11px; }
+
+    .type-tag {
+      display: inline-block; padding: 1px 7px; border-radius: 5px;
+      font-size: 10px; font-weight: 700; margin-left: 4px;
+      vertical-align: baseline; font-family: 'Inter', sans-serif;
+    }
+
+    .type-Product, .type-ProductGroup { background: rgba(10,124,92,.1); color: var(--green); }
+    .type-Offer, .type-AggregateOffer, .type-AggregateRating, .type-Review { background: rgba(146,64,14,.1); color: var(--amber); }
+    .type-Organization { background: rgba(124,58,237,.1); color: var(--purple); }
+    .type-WebSite { background: rgba(14,116,144,.1); color: var(--teal); }
+    .type-BreadcrumbList { background: rgba(14,116,144,.08); color: var(--teal); }
+    .type-FAQPage { background: rgba(192,38,211,.1); color: var(--pink); }
+    .type-OfferShippingDetails { background: rgba(192,38,211,.08); color: var(--pink); }
+    .type-ShippingDeliveryTime, .type-DefinedRegion { background: rgba(14,116,144,.08); color: var(--teal); }
+    .type-QuantitativeValue { background: var(--bg2); color: var(--text-4); }
+    .type-default { background: var(--bg2); color: var(--text-4); }
+
+    /* ─── Raw panel ─── */
+    .raw-panel { display: none; margin-top: 10px; }
+    .raw-panel.visible { display: block; }
+    .raw-panel pre {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px; font-size: 11px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      overflow-x: auto; max-height: 400px; overflow-y: auto; color: var(--text-3);
+    }
+
+    .spinner {
+      display: inline-block; width: 12px; height: 12px;
+      border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin .6s linear infinite;
+      margin-right: 6px; vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 640px) {
+      .tree-wrap { font-size: 11px; padding: 8px; }
+      .overview-grid { gap: 16px; }
+    }
+
+    /* ─── Content sections (ct-* pattern) ─── */
+    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
+    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
+    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
+    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
+    .ct-lead code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 14px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
+    .ct-body { font-size: 14px; color: var(--text-2); line-height: 1.75; }
+    .ct-body code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 14px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
+
+    /* Cards */
+    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
+    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+    .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
+    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
+
+    /* Callout */
+    .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
+    .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
+    html.dark .ct-callout--teal { background: rgba(14,116,144,.1); }
+    .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+    .ct-callout-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
+
+    /* FAQ */
+    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
+    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
+    .ct-faq summary::-webkit-details-marker { display: none; }
+    .ct-faq summary::after { content: '▾'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+    .ct-faq details[open] summary::after { transform: rotate(180deg); }
+    .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
+    .ct-faq summary:hover { background: var(--bg2); }
+    .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
+
+    /* CTA */
+    .ct-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px; text-align: center; margin: 72px 0 0; }
+    .ct-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 400; color: var(--text-1); letter-spacing: -.02em; margin-bottom: 12px; }
+    .ct-cta p { font-size: 15px; color: var(--text-3); max-width: 560px; margin: 0 auto 28px; line-height: 1.7; }
+    .ct-cta-links { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; transition: opacity .15s; }
+    .ct-cta-link-primary:hover { opacity: .85; }
+    .ct-cta-link-secondary { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 500; transition: opacity .15s; }
+    .ct-cta-link-secondary:hover { opacity: .7; }
+    @media (max-width: 640px) { .ct-wrap { padding: 0 16px 60px; } }
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+
+<main id="main-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
+      <span>Schema Markup Visualizer</span>
+    </nav>
+
+    <div class="tool-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
+        <h1 class="tool-title" style="margin-bottom:0">Schema Markup Visualizer</h1>
+        <span class="tool-badge-free">Free</span>
+      </div>
+      <p class="tool-subtitle">JSON-LD: readable by machines, tolerated by developers, debugged by SEOs at hours nobody should be working.</p>
+      <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+      <p class="tool-subtitle">Paste your JSON-LD or fetch structured data from any URL. See it as an interactive tree with type badges, property counts, and nesting depth — so you can spot what's there, what's missing, and what's nested three levels deeper than it should be. No logins. No "upgrade to see results." Just the tree.</p>
+    </div>
+
+    <!-- Input tabs -->
+    <div class="input-tabs">
+      <button class="input-tab active" data-tab="paste">Paste JSON-LD</button>
+      <button class="input-tab" data-tab="url">Fetch from URL</button>
+    </div>
+
+    <div class="input-panel active" id="tab-paste">
+      <textarea class="text-area" id="json-input" placeholder='Paste your JSON-LD here — the contents of a <script type="application/ld+json"> tag...'></textarea>
+      <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
+        <button class="btn" onclick="parseFromPaste()">Visualize</button>
+        <button class="sample-link" onclick="loadSample()">Load sample schema</button>
+      </div>
+    </div>
+
+    <div class="input-panel" id="tab-url">
+      <div class="input-row">
+        <input type="text" class="text-input" id="url-input" placeholder="https://example.com/product-page">
+        <button class="btn" id="fetch-btn" onclick="fetchFromUrl()">Fetch &amp; Visualize</button>
+      </div>
+      <p class="hint">
+        Extracts all <code>&lt;script type="application/ld+json"&gt;</code> blocks from the page.
+        Some sites may block cross-origin requests.
+      </p>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <div id="results">
+
+      <!-- Summary panel -->
+      <div class="summary-panel">
+        <div class="summary-tabs">
+          <button class="summary-tab active" data-stab="overview">Overview</button>
+          <button class="summary-tab" data-stab="types">Types <span class="tab-count" id="types-count">0</span></button>
+          <button class="summary-tab" data-stab="properties">Properties <span class="tab-count" id="props-count">0</span></button>
+        </div>
+        <div class="summary-content active" id="sc-overview">
+          <div class="overview-grid" id="overview-grid"></div>
+        </div>
+        <div class="summary-content" id="sc-types">
+          <div class="summary-list" id="types-list"></div>
+        </div>
+        <div class="summary-content" id="sc-properties">
+          <div class="summary-list" id="props-list"></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="spacer"></div>
+        <button class="btn btn-ghost btn-sm" onclick="expandAll()">Expand all</button>
+        <button class="btn btn-ghost btn-sm" onclick="collapseAll()">Collapse all</button>
+        <button class="btn btn-ghost btn-sm" onclick="toggleRaw()">Raw JSON</button>
+        <button class="btn btn-ghost btn-sm" onclick="copyTree()">Copy tree</button>
+      </div>
+
+      <div class="tree-wrap" id="tree-container">
+        <div class="tree-empty">
+          Paste or fetch schema to see the tree.
+          <code>{ "@type": "Product", ... }</code>
+        </div>
+      </div>
+
+      <div class="raw-panel" id="raw-panel">
+        <pre id="raw-json"></pre>
+      </div>
+    </div>
+
+  </main>
+
+<div class="ct-wrap">
+
+  <section class="ct-section" id="what-is">
+    <span class="ct-section-label">Background</span>
+    <h2 class="ct-h2">What a structured data visualizer actually does</h2>
+    <p class="ct-lead">Structured data — the JSON-LD sitting inside your page's <code>&lt;script type="application/ld+json"&gt;</code> tag — is not meant for humans. It's a nested block of objects, arrays, and key-value pairs written for search engines. You're not supposed to read it. You read it anyway, because something broke and the validator is being unhelpful.</p>
+    <p class="ct-body" style="margin-top:16px">A schema markup visualizer takes that JSON-LD and turns it into a tree. Every <code>@type</code> gets a colour-coded badge. Every property is indented under its parent. Every nesting level is visible at a glance. Instead of counting braces and matching brackets, you see the structure the way Google sees it — hierarchical, typed, and explicit. The thing you were doing manually, except now you can stop.</p>
+    <p class="ct-body" style="margin-top:12px">Paste your JSON-LD or enter a URL, and the tool builds an interactive tree with expand/collapse controls, a type and property inventory, and the nesting depth of your schema. It also auto-repairs common JSON issues — trailing commas, single quotes, stray comments — so malformed markup still renders instead of throwing an error and leaving you to figure out which of your 47 closing braces is the wrong one.</p>
+  </section>
+
+  <section class="ct-section" id="use-cases">
+    <span class="ct-section-label">Use cases</span>
+    <h2 class="ct-h2">When to use this tool</h2>
+    <p class="ct-lead">A few situations where staring at raw JSON-LD wastes time and a visual tree saves it. You've probably been in at least three of these this month.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <div class="ct-card-title">Debugging</div>
+        <p>An Offer sitting outside its parent Product. AggregateRating floating at root level instead of inside anything useful. These mistakes are invisible in raw JSON but obvious in a tree. You see exactly where each type ended up — and whether that's where it belongs.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Auditing</div>
+        <p>The summary panel counts every @type and property in your markup. Three types or twelve. Whether your Offers have <code>priceValidUntil</code>. Whether <code>brand</code> is a typed Organization or just a string someone pasted in. The inventory you'd build manually, already done.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Competitor analysis</div>
+        <p>Enter a competitor URL. The tool fetches their JSON-LD and builds the same tree. See which types they use, what properties they include, and how deeply they nest — without right-clicking "View Source" and scrolling past 400 lines of GTM.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Learning</div>
+        <p>If you're new to structured data, the tree view makes the parent-child relationships click. Load the sample schema, expand each node, and see how Product contains Offer, how Offer contains priceSpecification. schema.org's documentation explains this. Sort of.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Pre-flight check</div>
+        <p>Before running Google's Rich Results Test, use the tree to confirm your schema looks right structurally. Catch the missing required property, the duplicate type, the orphaned object — before Google catches it for you in a less friendly way.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Migration</div>
+        <p>Switching CMS, changing theme, or refactoring schema templates? Visualize the old and new markup side by side — or use the <a href="/schema-comparison-tool/" style="color:var(--teal)">Schema Comparison tool</a> for a proper diff. Either way, you'll know if something got lost in the move before Google tells you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-section" id="how-it-works">
+    <span class="ct-section-label">How it works</span>
+    <h2 class="ct-h2">How the visualizer reads your schema</h2>
+    <p class="ct-lead">Two input methods. Paste mode takes whatever you give it — the contents of a <code>&lt;script type="application/ld+json"&gt;</code> tag, a raw JSON object, or even slightly broken JSON with trailing commas and single quotes. The tool parses it as-is first. If that fails, it runs a repair pipeline: stripping trailing commas, swapping single quotes for doubles, wrapping fragments in arrays, removing JavaScript-style comments. If the repair works, you get a warning banner and a tree. If it doesn't, you get a clear error. Not a blank screen. Not silence.</p>
+    <p class="ct-body" style="margin-top:16px">URL mode fetches the page through a CORS proxy, finds all JSON-LD script blocks in the HTML, and parses each one. If the page has multiple schema blocks — a Product, a BreadcrumbList, an Organization — you'll see all of them in one tree. No need to view-source and manually find the right <code>&lt;script&gt;</code> tag buried between analytics snippets.</p>
+    <div class="ct-callout ct-callout--teal">
+      <div class="ct-callout-icon">ℹ️</div>
+      <div class="ct-callout-body">
+        <strong>The summary panel</strong>
+        <p>The Overview tab gives you total types, total properties, maximum nesting depth, and whether there are arrays. The Types tab lists every <code>@type</code> with instance counts. The Properties tab lists every unique property key across all types. Think of it as the inventory you'd normally build in a spreadsheet — except it's already done.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-section" id="what-to-look-for">
+    <span class="ct-section-label">Inspection guide</span>
+    <h2 class="ct-h2">What to look for in the tree</h2>
+    <p class="ct-lead">A well-structured schema tree tells a clear story. When it doesn't, these are the things that give it away.</p>
+    <p class="ct-body" style="margin-top:16px"><strong>Nesting hierarchy.</strong> Product types should contain their Offers, not sit beside them. AggregateRating belongs inside Product, not floating at root level like it owns the place. If a type badge appears at the wrong depth, the schema won't produce the rich result you expect. The tree makes this obvious. The raw JSON does not.</p>
+    <p class="ct-body" style="margin-top:12px"><strong>Required properties.</strong> Google's documentation lists required and recommended properties for each type. The Properties tab in the summary gives you a quick inventory. If you're targeting Merchant Listings and you don't see <code>availability</code>, <code>price</code>, and <code>priceCurrency</code> under Offer — that's your gap. Better to find it here than in a disapproval email from Merchant Center.</p>
+    <p class="ct-body" style="margin-top:12px"><strong>Type correctness.</strong> The tree badges each <code>@type</code> with a colour. Product, Offer, Organization, BreadcrumbList, AggregateRating — each gets its own tag. If you see a type you don't recognise, or one that shouldn't be there, you've found something worth investigating. CMS templates are creative like that.</p>
+    <p class="ct-body" style="margin-top:12px"><strong>Depth and complexity.</strong> Some schemas nest 6 or 7 levels deep. Others are flat. Neither is inherently wrong, but if your ProductGroup → hasVariant → Product → offers → Offer chain goes deeper than you expected, the tree makes it visible. You can decide whether that's intentional or whether your template is generating wrapper objects nobody asked for.</p>
+  </section>
+
+  <section class="ct-section" id="faq">
+    <span class="ct-section-label">Common questions</span>
+    <h2 class="ct-h2">Frequently asked questions</h2>
+    <div class="ct-faq">
+      <details>
+        <summary>What is a schema markup visualizer?</summary>
+        <div class="ct-faq-body">A tool that takes structured data — typically JSON-LD — and renders it as a visual tree. Instead of reading raw code and counting braces, you see each schema type, property, and value in a hierarchical view with expand/collapse controls. Types are nested inside their parents. Properties are listed under each type. The structure that Google sees, made visible to you.</div>
+      </details>
+      <details>
+        <summary>How is this different from Google's Rich Results Test?</summary>
+        <div class="ct-faq-body">Different job. Google's Rich Results Test checks whether your page qualifies for specific rich results — Product Snippets, FAQ panels, that sort of thing. This visualizer shows you the full structure of your JSON-LD as a tree, regardless of which rich result you're targeting. Use this tool to understand and debug your schema structure. Use Google's tool to confirm you'll actually get the rich result. Two steps, two tools.</div>
+      </details>
+      <details>
+        <summary>Can I visualize structured data from any website?</summary>
+        <div class="ct-faq-body">Yes. Enter any URL in the Fetch tab and the tool extracts all JSON-LD blocks from that page. Some sites block cross-origin requests — in which case, view the page source, copy the JSON-LD, and paste it in the Paste tab. Slightly more effort. Same result.</div>
+      </details>
+      <details>
+        <summary>What types of structured data does this support?</summary>
+        <div class="ct-faq-body">All of them. Product, Organization, LocalBusiness, Article, FAQPage, BreadcrumbList, HowTo, Event, Recipe — the visualizer reads the JSON structure and renders whatever it finds. Any valid schema.org type works. If Google supports it, the tree will show it.</div>
+      </details>
+      <details>
+        <summary>What happens if my JSON-LD has errors?</summary>
+        <div class="ct-faq-body">The tool tries to fix it before giving up. It handles trailing commas, single quotes instead of double quotes, JavaScript-style comments, and unwrapped fragments. If the repair works, you get a warning banner explaining what was fixed and the tree still renders. If it's too broken, you get an error pointing to the parse failure. Not a blank screen.</div>
+      </details>
+      <details>
+        <summary>Does the visualizer validate my schema against Google's requirements?</summary>
+        <div class="ct-faq-body">No. This tool shows you structure — what's in your JSON-LD and how it's nested. It does not check whether your markup meets Google's specific requirements for rich results. For that, use this tool first to understand what you have, then run it through <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener" style="color:var(--teal)">Google's Rich Results Test</a>. Structure first, eligibility second.</div>
+      </details>
+      <details>
+        <summary>Can I compare two schemas side by side?</summary>
+        <div class="ct-faq-body">Not here — but we built a separate tool for that. <a href="/schema-comparison-tool/" style="color:var(--teal)">Schema Comparison</a> lets you paste two schemas and see a side-by-side diff. Two modes: Before/After for tracking changes to your own markup, and Structural for comparing against competitors at the type and property level. The tool this tool needed a friend for.</div>
+      </details>
+      <details>
+        <summary>What does nesting depth tell me?</summary>
+        <div class="ct-faq-body">How many levels deep your schema goes. A flat schema (depth 2–3) is typical for simple pages. E-commerce pages with ProductGroup → hasVariant → Product → offers → Offer → priceSpecification can go 5–7 levels deep. Excessive depth isn't necessarily wrong, but it can mean your CMS template is generating wrapper objects nobody asked for. The tree makes it visible. Then you can decide.</div>
+      </details>
+    </div>
+  </section>
+
+  <div class="ct-cta">
+    <h2>More structured data tools</h2>
+    <p>Visualize, compare, generate. The schema markup workflow, without the tab-switching.</p>
+    <div class="ct-cta-links">
+      <a href="/schema-comparison-tool/" class="ct-cta-link-primary">Compare Two Schemas →</a>
+      <a href="/ecommerce-schema-generator/" class="ct-cta-link-secondary">Schema Generator ↗</a>
+      <a href="/product-schema/" class="ct-cta-link-secondary">Product Schema Guide ↗</a>
+    </div>
+  </div>
+
+</div><!-- end .ct-wrap -->
+
+<script src="/footer.js"></script>
+<script>
+// ═══════════════════════════════════════════
+// Input tab switching
+// ═══════════════════════════════════════════
+document.querySelectorAll('.input-tab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.input-tab').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.input-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ═══════════════════════════════════════════
+// Summary tab switching
+// ═══════════════════════════════════════════
+document.querySelectorAll('.summary-tab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('sc-' + btn.dataset.stab).classList.add('active');
+  });
+});
+
+// ═══════════════════════════════════════════
+// Status
+// ═══════════════════════════════════════════
+function showStatus(msg, type) {
+  var el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status ' + type;
+}
+function clearStatus() {
+  var el = document.getElementById('status');
+  el.className = 'status'; el.textContent = '';
+}
+
+// ═══════════════════════════════════════════
+// Parse from paste
+// ═══════════════════════════════════════════
+function tryRepairJSON(raw) {
+  var fixed = raw;
+  // 1. Remove trailing commas before } or ]
+  fixed = fixed.replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(fixed); } catch(e) {}
+  // 2. Replace single-quoted keys/values with double quotes
+  //    Match ':' preceded by single-quoted key or followed by single-quoted value
+  fixed = raw.replace(/'/g, '"');
+  fixed = fixed.replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(fixed); } catch(e) {}
+  // 3. Try wrapping in array (multiple objects pasted)
+  try { return JSON.parse('[' + fixed + ']'); } catch(e) {}
+  // 4. Remove JS-style line comments (only at line start, not inside URLs)
+  var noComments = raw.replace(/^\s*\/\/[^\n]*/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+  noComments = noComments.replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(noComments); } catch(e) {}
+  return null;
+}
+
+function parseFromPaste() {
+  clearStatus();
+  var raw = document.getElementById('json-input').value.trim();
+  if (!raw) { showStatus('Paste some JSON-LD first.', 'error'); return; }
+  try {
+    var data = JSON.parse(raw);
+    if (!Array.isArray(data)) data = [data];
+    renderSchemas(data, raw);
+  } catch (e) {
+    // Strict parse failed — try to repair
+    var repaired = tryRepairJSON(raw);
+    if (repaired) {
+      if (!Array.isArray(repaired)) repaired = [repaired];
+      showStatus('Warning: Invalid JSON was auto-repaired — ' + e.message + '. Check values for accuracy.', 'warning');
+      renderSchemas(repaired, raw);
+    } else {
+      showStatus('Invalid JSON: ' + e.message, 'error');
+    }
+  }
+}
+
+// ═══════════════════════════════════════════
+// Fetch from URL
+// ═══════════════════════════════════════════
+async function fetchFromUrl() {
+  clearStatus();
+  var url = document.getElementById('url-input').value.trim();
+  if (!url) { showStatus('Enter a URL first.', 'error'); return; }
+
+  var btn = document.getElementById('fetch-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Fetching\u2026';
+
+  try {
+    var proxies = [
+      function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+      function(u) { return 'https://corsproxy.io/?' + encodeURIComponent(u); }
+    ];
+
+    var html = null;
+    for (var i = 0; i < proxies.length; i++) {
+      try {
+        var resp = await fetch(proxies[i](url), { signal: AbortSignal.timeout(12000) });
+        if (resp.ok) { html = await resp.text(); break; }
+      } catch(e) {}
+    }
+
+    if (!html) {
+      showStatus('Could not fetch the page. The site may block cross-origin requests. Try pasting the JSON-LD directly.', 'error');
+      return;
+    }
+
+    var regex = /<script[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+    var schemas = [];
+    var match;
+    while ((match = regex.exec(html)) !== null) {
+      try {
+        var parsed = JSON.parse(match[1].trim());
+        if (Array.isArray(parsed)) schemas.push.apply(schemas, parsed);
+        else schemas.push(parsed);
+      } catch(e) {}
+    }
+
+    if (schemas.length === 0) {
+      showStatus('No JSON-LD schema found on that page.', 'error');
+      return;
+    }
+
+    showStatus('Found ' + schemas.length + ' schema block' + (schemas.length > 1 ? 's' : '') + ' on the page.', 'info');
+    renderSchemas(schemas, JSON.stringify(schemas, null, 2));
+  } catch (e) {
+    showStatus('Fetch failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Fetch &amp; Visualize';
+  }
+}
+
+// ═══════════════════════════════════════════
+// Render schemas
+// ═══════════════════════════════════════════
+var maxDepth = 0;
+
+function renderSchemas(schemas, rawJson) {
+  maxDepth = 0;
+  var container = document.getElementById('tree-container');
+  var results = document.getElementById('results');
+
+  results.style.display = 'block';
+  document.getElementById('raw-panel').classList.remove('visible');
+
+  // Collect stats
+  var types = {};
+  var allProps = {};
+  var totalProps = 0;
+  var totalObjects = 0;
+
+  function collectStats(obj, depth) {
+    if (!obj || typeof obj !== 'object') return;
+    if (depth > maxDepth) maxDepth = depth;
+    if (Array.isArray(obj)) { obj.forEach(function(item) { collectStats(item, depth); }); return; }
+    totalObjects++;
+    if (obj['@type']) {
+      var t = Array.isArray(obj['@type']) ? obj['@type'].join('/') : obj['@type'];
+      types[t] = (types[t] || 0) + 1;
+    }
+    Object.keys(obj).forEach(function(k) {
+      if (!k.startsWith('@')) { allProps[k] = (allProps[k] || 0) + 1; totalProps++; }
+    });
+    Object.values(obj).forEach(function(v) { collectStats(v, depth + 1); });
+  }
+  schemas.forEach(function(s) { collectStats(s, 0); });
+
+  // Overview
+  document.getElementById('overview-grid').innerHTML =
+    '<div class="overview-stat"><span class="stat-value stat-purple">' + (maxDepth + 1) + '</span><span class="stat-label">Levels deep</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-teal">' + Object.keys(types).length + '</span><span class="stat-label">Schema types</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-green">' + Object.keys(allProps).length + '</span><span class="stat-label">Unique properties</span></div>' +
+    '<div class="overview-stat"><span class="stat-value stat-amber">' + totalObjects + '</span><span class="stat-label">Objects</span></div>' +
+    '<div class="overview-stat"><span class="stat-value" style="color:var(--text-4)">' + schemas.length + '</span><span class="stat-label">Schema blocks</span></div>';
+
+  // Types
+  document.getElementById('types-count').textContent = Object.keys(types).length;
+  document.getElementById('types-list').innerHTML = Object.entries(types)
+    .sort(function(a,b) { return b[1] - a[1]; })
+    .map(function(e) {
+      return '<div class="summary-list-item"><span class="type-tag ' + getTypeClass(e[0]) + '" style="margin:0">' + e[0] + '</span><span class="item-count">\u00d7' + e[1] + '</span></div>';
+    }).join('');
+
+  // Properties
+  document.getElementById('props-count').textContent = Object.keys(allProps).length;
+  document.getElementById('props-list').innerHTML = Object.entries(allProps)
+    .sort(function(a,b) { return b[1] - a[1]; })
+    .map(function(e) {
+      return '<div class="summary-list-item"><span class="item-name">' + e[0] + '</span><span class="item-count">\u00d7' + e[1] + '</span></div>';
+    }).join('');
+
+  // Reset summary tabs
+  document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelector('[data-stab="overview"]').classList.add('active');
+  document.getElementById('sc-overview').classList.add('active');
+
+  // Build tree
+  container.innerHTML = '';
+  schemas.forEach(function(schema, i) {
+    var label = schemas.length > 1 ? 'Schema ' + (i + 1) : null;
+    buildConnectorTree(container, schema, null, label, true, true);
+  });
+
+  // Raw JSON
+  document.getElementById('raw-json').textContent = rawJson || JSON.stringify(schemas, null, 2);
+}
+
+// ═══════════════════════════════════════════
+// Build connector-line tree
+// ═══════════════════════════════════════════
+function buildConnectorTree(parent, value, prefix, keyLabel, isLast, startOpen) {
+  var isRoot = prefix === null;
+
+  if (value !== null && typeof value === 'object') {
+    var isArr = Array.isArray(value);
+    var entries = isArr ? value.map(function(v, i) { return [i, v]; }) : Object.entries(value);
+    var schemaType = !isArr && value['@type']
+      ? (Array.isArray(value['@type']) ? value['@type'].join('/') : value['@type'])
+      : null;
+
+    var headerLine = document.createElement('div');
+    headerLine.className = 'tree-line expandable';
+
+    var guide = document.createElement('span');
+    guide.className = 'guide';
+    guide.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
+    headerLine.appendChild(guide);
+
+    var chev = document.createElement('span');
+    chev.className = 'chev' + (startOpen ? ' open' : '');
+    chev.textContent = '\u25B6';
+    headerLine.appendChild(chev);
+
+    if (keyLabel !== null && keyLabel !== undefined) {
+      var k = document.createElement('span');
+      if (typeof keyLabel === 'number') {
+        k.className = 'arr-index';
+        k.textContent = '[' + keyLabel + ']';
+      } else {
+        k.className = 'key';
+        k.textContent = keyLabel;
+      }
+      headerLine.appendChild(k);
+    }
+
+    var summary = document.createElement('span');
+    summary.className = 'summary';
+    summary.textContent = isArr
+      ? ' [' + value.length + ' item' + (value.length !== 1 ? 's' : '') + ']'
+      : ' {' + entries.length + '}';
+    headerLine.appendChild(summary);
+
+    if (schemaType) {
+      var badge = document.createElement('span');
+      badge.className = 'type-tag ' + getTypeClass(schemaType);
+      badge.textContent = schemaType;
+      headerLine.appendChild(badge);
+    }
+
+    parent.appendChild(headerLine);
+
+    var childContainer = document.createElement('div');
+    childContainer.className = 'tree-children';
+    if (!startOpen) childContainer.style.display = 'none';
+
+    var childPrefix = isRoot ? '' : (prefix + (isLast ? '   ' : '\u2502  '));
+
+    entries.forEach(function(entry, idx) {
+      var childIsLast = idx === entries.length - 1;
+      var childStartOpen = isImportantKey(entry[0]);
+      buildConnectorTree(childContainer, entry[1], childPrefix, entry[0], childIsLast, childStartOpen);
+    });
+
+    parent.appendChild(childContainer);
+
+    headerLine.addEventListener('click', function() {
+      chev.classList.toggle('open');
+      childContainer.style.display = childContainer.style.display === 'none' ? '' : 'none';
+    });
+
+  } else {
+    var line = document.createElement('div');
+    line.className = 'tree-line';
+
+    var guide2 = document.createElement('span');
+    guide2.className = 'guide';
+    guide2.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
+    line.appendChild(guide2);
+
+    var chev2 = document.createElement('span');
+    chev2.className = 'chev hidden';
+    chev2.textContent = '\u25B6';
+    line.appendChild(chev2);
+
+    if (keyLabel !== null && keyLabel !== undefined) {
+      var k2 = document.createElement('span');
+      if (typeof keyLabel === 'number') {
+        k2.className = 'arr-index';
+        k2.textContent = '[' + keyLabel + ']';
+      } else {
+        k2.className = 'key';
+        k2.textContent = keyLabel;
+      }
+      line.appendChild(k2);
+
+      var sep = document.createElement('span');
+      sep.className = 'sep';
+      sep.textContent = ': ';
+      line.appendChild(sep);
+    }
+
+    var valSpan = document.createElement('span');
+    if (value === null || value === undefined) {
+      valSpan.className = 'val-null'; valSpan.textContent = 'null';
+    } else if (typeof value === 'boolean') {
+      valSpan.className = 'val-bool'; valSpan.textContent = String(value);
+    } else if (typeof value === 'number') {
+      valSpan.className = 'val-number'; valSpan.textContent = String(value);
+    } else if (typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://'))) {
+      valSpan.className = 'val-url'; valSpan.textContent = value;
+      valSpan.title = 'Click to open in new tab';
+      valSpan.addEventListener('click', function(e) { e.stopPropagation(); window.open(value, '_blank'); });
+    } else {
+      valSpan.className = 'val-string';
+      var str = String(value);
+      valSpan.textContent = '"' + (str.length > 100 ? str.slice(0, 100) + '\u2026' : str) + '"';
+    }
+
+    line.appendChild(valSpan);
+    parent.appendChild(line);
+  }
+}
+
+// ═══════════════════════════════════════════
+// Helpers
+// ═══════════════════════════════════════════
+function getTypeClass(type) {
+  var base = type.replace(/^schema:/, '').split('/')[0];
+  var known = [
+    'Product','ProductGroup','Offer','AggregateOffer','Organization','WebSite',
+    'BreadcrumbList','FAQPage','Review','AggregateRating','OfferShippingDetails',
+    'ShippingDeliveryTime','DefinedRegion','QuantitativeValue'
+  ];
+  return known.indexOf(base) !== -1 ? 'type-' + base : 'type-default';
+}
+
+function isImportantKey(key) {
+  var important = ['@graph','offers','hasVariant','mainEntity','itemListElement','brand','aggregateRating'];
+  if (typeof key === 'string' && important.indexOf(key) !== -1) return true;
+  if (typeof key === 'number') return true;
+  return false;
+}
+
+// ═══════════════════════════════════════════
+// Toolbar actions
+// ═══════════════════════════════════════════
+function expandAll() {
+  document.querySelectorAll('.tree-children').forEach(function(c) { c.style.display = ''; });
+  document.querySelectorAll('.chev:not(.hidden)').forEach(function(c) { c.classList.add('open'); });
+}
+
+function collapseAll() {
+  document.querySelectorAll('.tree-children').forEach(function(c) { c.style.display = 'none'; });
+  document.querySelectorAll('.chev:not(.hidden)').forEach(function(c) { c.classList.remove('open'); });
+  document.querySelectorAll('#tree-container > .tree-children').forEach(function(c) { c.style.display = ''; });
+  document.querySelectorAll('#tree-container > .tree-line .chev:not(.hidden)').forEach(function(c) { c.classList.add('open'); });
+}
+
+function toggleRaw() {
+  document.getElementById('raw-panel').classList.toggle('visible');
+}
+
+function copyTree() {
+  var lines = [];
+  function walk(el) {
+    if (el.classList && el.classList.contains('tree-line')) {
+      var guideText = el.querySelector('.guide') ? el.querySelector('.guide').textContent : '';
+      var rest = [];
+      el.childNodes.forEach(function(n) {
+        if (n.classList && (n.classList.contains('guide') || n.classList.contains('chev'))) return;
+        var t = n.textContent ? n.textContent.trim() : '';
+        if (t) rest.push(t);
+      });
+      lines.push(guideText + rest.join(' '));
+    }
+    if (el.classList && el.classList.contains('tree-children') && el.style.display === 'none') return;
+    el.childNodes.forEach(walk);
+  }
+  walk(document.getElementById('tree-container'));
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    var btn = document.querySelector('[onclick="copyTree()"]');
+    var orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = orig; }, 1500);
+  });
+}
+
+// ═══════════════════════════════════════════
+// Sample schema
+// ═══════════════════════════════════════════
+function loadSample() {
+  var sample = {
+    "@context": "https://schema.org",
+    "@type": "ProductGroup",
+    "name": "Custom Printed Gift Tags \u2014 Personalised Swing Tags",
+    "description": "Premium custom gift tags for every occasion. Choose your design, add your text, and we print & ship.",
+    "url": "https://magstags.com/collections/gift-tags",
+    "brand": { "@type": "Organization", "name": "MagsTags", "url": "https://magstags.com" },
+    "variesBy": ["https://schema.org/size", "https://schema.org/color"],
+    "hasVariant": [
+      {
+        "@type": "Product", "name": "Floral Gift Tag \u2014 Small", "sku": "GT-FLORAL-SM",
+        "size": "Small (50\u00d730mm)", "color": "White/Pink",
+        "image": "https://magstags.com/images/floral-sm.jpg",
+        "offers": {
+          "@type": "Offer", "price": "8.99", "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://magstags.com/products/floral-gift-tag-small",
+          "priceValidUntil": "2026-12-31",
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "GB" },
+            "deliveryTime": {
+              "@type": "ShippingDeliveryTime",
+              "handlingTime": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 3, "unitCode": "d" },
+              "transitTime": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 2, "unitCode": "d" }
+            }
+          }
+        }
+      },
+      {
+        "@type": "Product", "name": "Floral Gift Tag \u2014 Large", "sku": "GT-FLORAL-LG",
+        "size": "Large (90\u00d755mm)", "color": "White/Pink",
+        "image": "https://magstags.com/images/floral-lg.jpg",
+        "offers": {
+          "@type": "Offer", "price": "12.99", "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": "https://magstags.com/products/floral-gift-tag-large"
+        }
+      }
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "142" }
+  };
+  document.getElementById('json-input').value = JSON.stringify(sample, null, 2);
+  parseFromPaste();
+}
+
+// ═══════════════════════════════════════════
+// Keyboard shortcuts
+// ═══════════════════════════════════════════
+document.getElementById('url-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') fetchFromUrl();
+});
+document.getElementById('json-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) parseFromPaste();
+});
+  </script>
+</body>
+</html>
