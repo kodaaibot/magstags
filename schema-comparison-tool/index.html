@@ -9,10 +9,10 @@
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
   <title>Schema Comparison Tool — Side-by-Side JSON-LD Diff | MagsTags</title>
-  <meta name="description" content="Compare two JSON-LD schemas side by side. Spot missing types, added properties, and changed values instantly with a visual diff tree.">
+  <meta name="description" content="Free schema comparison tool. Paste two JSON-LD blocks or fetch from URLs — see what's added, removed, or changed in a colour-coded side-by-side diff. Before/After or Structural mode. No logins. No catch.">
   <link rel="canonical" href="https://www.magstags.com/schema-comparison-tool/">
   <meta property="og:title" content="Schema Comparison Tool — Side-by-Side JSON-LD Diff | MagsTags">
-  <meta property="og:description" content="Compare two JSON-LD schemas side by side. Spot missing types, added properties, and changed values.">
+  <meta property="og:description" content="Free schema comparison tool. See what's added, removed, or changed between two JSON-LD blocks — colour-coded, side by side.">
   <meta property="og:url" content="https://www.magstags.com/schema-comparison-tool/">
   <script type="application/ld+json">
   {
@@ -37,6 +37,62 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What's the difference between Before/After and Structural mode?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Before/After treats Schema A as the original and Schema B as the updated version — so the diff is directional. Structural mode compares both schemas symmetrically, showing what each has that the other doesn't. Use Before/After for checking your own changes. Use Structural for competitor analysis or comparing two unrelated pages."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compare schemas from live URLs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not directly from this tool — but you can use the Schema Markup Visualizer to fetch schema from any URL, copy the JSON-LD output, and paste it here."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this validate my schema against schema.org?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. This tool compares two schemas against each other, not against a specification. For validation, use Google's Rich Results Test or the schema.org validator."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data sent to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The entire comparison runs in your browser using JavaScript. Nothing is transmitted, stored, or logged."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if my JSON-LD has syntax errors?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool will tell you which input failed to parse and roughly where the error is. Fix the syntax first — a comparison requires two valid JSON-LD blocks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compare more than two schemas at once?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not currently. The tool handles one pair at a time. For multi-page audits, compare each page's schema individually against your baseline template."
+        }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,7 +101,7 @@
     :root {
       --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
       --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #857f7a;
-      --teal: #0E7490; --mint: #0891B2;
+      --teal: #0E7490; --mint: #0891B2; --mint-light: #E0F2FE;
       --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09);
       --red: #c0392b; --red-light: #fdf0ee;
       --green: #0a7c5c; --green-light: #edfdf5;
@@ -73,9 +129,11 @@
     main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
     @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
 
-    .page-hero { margin-bottom: 24px; }
-    .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
-    .page-hero p { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 620px; }
+    .tool-hero { margin-bottom: 24px; }
+    .tool-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .tool-badge-free { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 99px; background: var(--mint-light, #E0F2FE); color: var(--teal); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+    .tool-subtitle { font-size: 15px; color: var(--text-3); max-width: 640px; line-height: 1.6; }
+    .tool-subtitle code { font-size: 13px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
 
     /* ─── Input area ─── */
     .input-grid {
@@ -413,6 +471,46 @@
       .diff-tree-col { font-size: 11px; padding: 8px; }
       .overview-grid { gap: 16px; }
     }
+
+    /* ─── Content sections (ct-* design system) ─── */
+    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
+    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
+    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
+    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
+    .ct-lead code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 14px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
+    .ct-body { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 680px; }
+    .ct-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
+    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+    .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
+    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 8px; }
+    .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
+    .ct-callout { display: flex; gap: 14px; padding: 18px 20px; border-radius: 12px; margin-top: 28px; }
+    .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
+    .ct-callout-icon { font-size: 16px; flex-shrink: 0; }
+    .ct-callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 4px; }
+    .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
+    .ct-callout-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+    .ct-limit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 28px; }
+    .ct-limit { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: flex; gap: 12px; }
+    .ct-limit-icon { font-size: 16px; flex-shrink: 0; }
+    .ct-limit-title { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 5px; }
+    .ct-limit p { font-size: 13px; color: var(--text-3); line-height: 1.55; margin: 0; }
+    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
+    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
+    .ct-faq summary::-webkit-details-marker { display: none; }
+    .ct-faq summary::after { content: '\25BE'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+    .ct-faq details[open] summary::after { transform: rotate(180deg); }
+    .ct-faq details[open] summary { background: var(--surface); color: var(--teal); }
+    .ct-faq-body { padding: 0 22px 18px; font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
+    .ct-cta { text-align: center; padding: 48px 24px; max-width: 600px; margin: 0 auto; }
+    .ct-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; }
+    .ct-cta p { font-size: 14px; color: var(--text-3); margin: 8px 0 24px; }
+    .ct-cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 99px; background: var(--teal); color: white; font-size: 13px; font-weight: 600; text-decoration: none; transition: background .15s; }
+    .ct-cta-link-secondary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 99px; border: 1px solid var(--border); color: var(--text-2); font-size: 13px; font-weight: 500; text-decoration: none; transition: all .15s; }
   </style>
 </head>
 <body>
@@ -425,9 +523,14 @@
       <span>Schema Comparison Tool</span>
     </nav>
 
-    <div class="page-hero">
-      <h1>Schema Comparison Tool</h1>
-      <p>Compare two JSON-LD schemas side by side. Spot missing types, added properties, and changed values instantly — perfect for before/after checks or competitor analysis.</p>
+    <div class="tool-hero">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
+        <h1 class="tool-title" style="margin-bottom:0">Schema Comparison Tool</h1>
+        <span class="tool-badge-free">Free</span>
+      </div>
+      <p class="tool-subtitle">Two schemas go in. One diff comes out. The part where you squint at two tabs trying to spot what changed — that's over.</p>
+      <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
+      <p class="tool-subtitle">Paste two JSON-LD blocks or fetch them from URLs. See what's been added, removed, or changed — side by side, colour-coded, with Before/After or Structural mode depending on whether you're checking your own work or sizing up a competitor. No logins. No diff tool that requires a PhD. Just the differences.</p>
     </div>
 
     <!-- Two paste boxes -->
@@ -499,6 +602,163 @@
     </div>
 
 </main>
+
+<div class="ct-wrap">
+
+  <section class="ct-section">
+    <span class="ct-section-label">Background</span>
+    <h2 class="ct-h2">Why comparing schemas manually is a bad afternoon</h2>
+    <p class="ct-lead">You changed the schema. Or someone else did. Or a plugin updated itself and nobody noticed until the rich results vanished. Either way, now you need to know what's different between two versions of structured data — and the answer is buried inside two blocks of nested JSON-LD that look almost identical until they don't.</p>
+    <p class="ct-body" style="margin-top:14px;">You could paste both into a text diff tool. You'd get a wall of red and green that treats a trailing comma the same as a missing <code>@type</code>. This tool understands the structure — it knows what a property is, what a type is, what a value is — and shows you exactly what moved, what appeared, and what disappeared. The noise goes away. The signal stays.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <svg class="ct-card-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10h14M10 3v14"/></svg>
+        <div class="ct-card-title">Added properties</div>
+        <p>New types, fields, or nested objects that exist in B but not in A. Green-highlighted so they're obvious at a glance.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12"/></svg>
+        <div class="ct-card-title">Removed properties</div>
+        <p>Anything that was in A but is missing from B. The fields that somebody deleted — intentionally or otherwise.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l6 8 6-8"/></svg>
+        <div class="ct-card-title">Changed values</div>
+        <p>Same property, different value. Price went from 29.99 to 34.99. URL switched from HTTP to HTTPS. The quiet changes that break things quietly.</p>
+      </div>
+      <div class="ct-card">
+        <svg class="ct-card-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10h6"/></svg>
+        <div class="ct-card-title">Structural overview</div>
+        <p>Summary counts — how many types in each schema, total differences, and a breakdown by category so you know how big the gap is before you dig in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-section">
+    <span class="ct-section-label">Use cases</span>
+    <h2 class="ct-h2">When this saves you from tab-switching</h2>
+    <p class="ct-lead">Schema comparison comes up more often than people admit. Usually at inconvenient times.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <div class="ct-card-title">Before / After deploys</div>
+        <p>You just pushed a schema update. Paste the old version and the new version. See exactly what changed before your client asks why FAQs stopped appearing in search results.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Competitor analysis</div>
+        <p>Fetch schema from your product page and your competitor's. Structural mode shows you which types they're using that you're not — and which properties they've filled in that you left empty.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Migration audits</div>
+        <p>Replatforming and need to verify the new CMS outputs the same schema as the old one? Before/After mode was built for this. Run it across your key templates and spot what the migration lost.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Schema debugging</div>
+        <p>Rich results disappeared and you don't know why. Compare today's schema against a cached version from when it was working. The diff tells you what changed. Usually faster than the validator.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-section">
+    <span class="ct-section-label">How it works</span>
+    <h2 class="ct-h2">Two modes, one goal: show you what's different</h2>
+    <p class="ct-lead">The tool parses both JSON-LD inputs into structured trees, then walks them node by node. The comparison is type-aware — it understands <code>@type</code>, <code>@context</code>, and nested objects — so the diff is semantic, not just textual.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <div class="ct-card-title">Before / After mode</div>
+        <p>Treats A as the baseline and B as the update. Shows what was added, removed, or changed — the way you'd review a pull request. Best for checking your own changes or verifying a deploy.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-title">Structural mode</div>
+        <p>Compares the shape of both schemas without assuming one is "correct." Shows differences in both directions — what A has that B doesn't, and vice versa. Best for competitor analysis or comparing two independent pages.</p>
+      </div>
+    </div>
+    <div class="ct-callout ct-callout--teal" style="margin-top:28px;">
+      <div class="ct-callout-icon">&#x1F4A1;</div>
+      <div class="ct-callout-body">
+        <div class="ct-callout-title">Tip</div>
+        <p>Use the <strong>Swap A / B</strong> button to quickly flip perspective. In Before/After mode, this reverses what counts as "added" vs "removed" — useful when you pasted them in the wrong order. Happens more than you'd think.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-section">
+    <span class="ct-section-label">Know the limits</span>
+    <h2 class="ct-h2">What this tool does and doesn't do</h2>
+    <p class="ct-lead">It compares structure and values. It doesn't validate against schema.org or check Google's eligibility requirements. Different tools, different jobs.</p>
+    <div class="ct-limit-grid">
+      <div class="ct-limit">
+        <div class="ct-limit-icon">&#x2705;</div>
+        <div>
+          <div class="ct-limit-title">Compares JSON-LD</div>
+          <p>Parses and diffs valid JSON-LD structured data. Handles nested objects, arrays, multiple <code>@type</code> declarations, and deeply nested properties.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">&#x2705;</div>
+        <div>
+          <div class="ct-limit-title">Colour-coded diff</div>
+          <p>Green for added, red for removed, amber for changed. Visible in both the summary panel and the side-by-side tree view.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">&#x26A0;&#xFE0F;</div>
+        <div>
+          <div class="ct-limit-title">Client-side only</div>
+          <p>Everything runs in your browser. Nothing is sent to a server. But that also means very large schemas (50KB+) might slow the diff rendering.</p>
+        </div>
+      </div>
+      <div class="ct-limit">
+        <div class="ct-limit-icon">&#x26A0;&#xFE0F;</div>
+        <div>
+          <div class="ct-limit-title">JSON-LD only</div>
+          <p>Microdata and RDFa are not supported. If you need to compare those formats, convert to JSON-LD first — Google's Rich Results Test can export it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-section">
+    <span class="ct-section-label">Common questions</span>
+    <h2 class="ct-h2">Frequently asked questions</h2>
+    <div class="ct-faq">
+      <details>
+        <summary>What's the difference between Before/After and Structural mode?</summary>
+        <div class="ct-faq-body">Before/After treats Schema A as the original and Schema B as the updated version — so the diff is directional, like a code review. Structural mode compares both schemas symmetrically, showing what each has that the other doesn't. Use Before/After for checking your own changes. Use Structural for competitor analysis or comparing two unrelated pages.</div>
+      </details>
+      <details>
+        <summary>Can I compare schemas from live URLs?</summary>
+        <div class="ct-faq-body">Not directly from this tool — but you can use the <a href="/schema-markup-visualizer/" style="color:var(--teal);">Schema Markup Visualizer</a> to fetch schema from any URL, copy the JSON-LD output, and paste it here. Two extra clicks, but it works.</div>
+      </details>
+      <details>
+        <summary>Does this validate my schema against schema.org?</summary>
+        <div class="ct-faq-body">No. This tool compares two schemas against each other, not against a specification. For validation, use Google's Rich Results Test or the schema.org validator. Different questions, different tools.</div>
+      </details>
+      <details>
+        <summary>Is my data sent to a server?</summary>
+        <div class="ct-faq-body">No. The entire comparison runs in your browser using JavaScript. Nothing is transmitted, stored, or logged. Paste confidential schemas without worry.</div>
+      </details>
+      <details>
+        <summary>What if my JSON-LD has syntax errors?</summary>
+        <div class="ct-faq-body">The tool will tell you which input failed to parse and roughly where the error is. Fix the syntax first — a comparison requires two valid JSON-LD blocks. If you're not sure where the error is, paste it into the <a href="/schema-markup-visualizer/" style="color:var(--teal);">Schema Markup Visualizer</a> which has auto-repair built in.</div>
+      </details>
+      <details>
+        <summary>Can I compare more than two schemas at once?</summary>
+        <div class="ct-faq-body">Not currently. The tool handles one pair at a time. For multi-page audits, compare each page's schema individually against your baseline template — it's more manageable than a three-way diff anyway.</div>
+      </details>
+    </div>
+  </section>
+
+</div>
+
+<div class="ct-cta">
+  <h2>Done comparing? Keep going.</h2>
+  <p>Visualize a single schema in detail, or generate one from scratch.</p>
+  <div class="ct-cta-links">
+    <a href="/schema-markup-visualizer/" class="ct-cta-link-primary">Visualize Schema &#x2192;</a>
+    <a href="/ecommerce-schema-generator/" class="ct-cta-link-secondary">Schema Generator &#x2197;</a>
+    <a href="/product-schema/" class="ct-cta-link-secondary">Product Schema Guide &#x2197;</a>
+  </div>
+</div>
 
 <script src="/footer.js"></script>
 <script>
