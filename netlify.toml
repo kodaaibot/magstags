@@ -44,3 +44,8 @@
   to     = "/notes/:splat"
   status = 301
   force  = true
+
+# ── Edge Function: server-side auth gate for GMC Feed Analyzer ───────
+[[edge_functions]]
+  function = "gmc-gate"
+  path     = "/gmc-feed-analyzer/*"
