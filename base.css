@@ -127,6 +127,12 @@ article code {
   border-radius: 4px;
   color: var(--text-2);
 }
+/* Code inside paragraphs: inherit size from parent, no bold, teal */
+p code {
+  font-size: inherit;
+  font-weight: normal;
+  color: var(--teal);
+}
 /* Multi-line code blocks keep their own styling */
 pre code {
   font-size: inherit;
