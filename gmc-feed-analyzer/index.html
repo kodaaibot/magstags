@@ -379,7 +379,7 @@
     ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
 
     /* ─── Inline code ─── */
-    code { font-size: 11.5px; background: var(--bg2); color: var(--teal); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono','Fira Code',monospace; }
+    code { font-family: 'Menlo', 'Monaco', 'Courier New', monospace; font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--text-2); }
     html.dark code { background: rgba(255,255,255,.06); }
 
     /* ─── Divider ─── */
@@ -428,7 +428,7 @@
 
   <!-- ── Auth gate ──────────────────────────────────────── -->
   <div id="gmc-auth-gate" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:20px;padding:48px 24px;text-align:center">
-    <div style="width:52px;height:52px;border-radius:99px;background:var(--mint-light);display:flex;align-items:center;justify-content:center;font-size:24px">🔒</div>
+    <div style="width:52px;height:52px;border-radius:99px;background:var(--mint-light);display:flex;align-items:center;justify-content:center;font-size:24px"></div>
     <h2 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:500;color:var(--text-1);margin:0">Restricted tool</h2>
     <p id="gmc-gate-status" style="font-size:14px;color:var(--text-3);max-width:400px;line-height:1.6;margin:0"></p>
     <button id="gmc-gate-btn" style="background:var(--teal);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"></button>
@@ -696,7 +696,7 @@
       <div class="form-group">
         <!-- Drop zone -->
         <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-          <div class="drop-zone-icon">📂</div>
+          <div class="drop-zone-icon"></div>
           <div class="drop-zone-label">Drag &amp; drop your feed file here</div>
           <div class="drop-zone-sub">CSV, TSV, JSON, XML — or <strong onclick="event.stopPropagation(); document.getElementById('fileInput').click()">browse to upload</strong></div>
         </div>
@@ -704,7 +704,7 @@
 
         <!-- File loaded indicator -->
         <div id="fileLoaded" class="file-loaded" style="display:none;">
-          <span>📄</span>
+          <span></span>
           <span class="file-loaded-name" id="fileName"></span>
           <span class="file-loaded-size" id="fileSize"></span>
           <button class="file-clear" onclick="clearFile()" title="Remove file">✕</button>
@@ -911,7 +911,7 @@ const SPEC = {
   subscription_cost:        { label: 'Subscription Cost',         tier: 'optional',    note: 'Sub-attrs: period (week|month|year) + period_length (int) + amount (ISO 4217 per period). Physical Goods Subscriptions (US Shopping ads only): set product [price] to 0 (customer pays via subscription, not per-unit) and submit [subscription_cost] with the recurring charge details. Eligible categories: Personal Care, Health Care, Home & Garden, Pet Supplies, Toys, Prepared Foods, Apparel, Coffee. Week period supported for Physical Goods Subscriptions.' },
   loyalty_program:          { label: 'Loyalty Program',            tier: 'optional',    note: '7 sub-attrs: program_label + tier_label + price + cashback_for_future_use + loyalty_points + member_price_effective_date + shipping_label. Available: US, AU, BR, MX, CA, FR, DE, IN, IT, NL, KR, ES, UK, JP.' },
   // Energy labels (non-EU only from April 2025)
-  energy_efficiency_class:  { label: 'Energy Efficiency Class',   tier: 'optional',    values: ['A+++','A++','A+','A','B','C','D','E','F','G'], note: '⚠️ Valid for CH, NO, UK ONLY (not EU). Use [certification] for all EU countries from April 2025.' },
+  energy_efficiency_class:  { label: 'Energy Efficiency Class',   tier: 'optional',    values: ['A+++','A++','A+','A','B','C','D','E','F','G'], note: 'Valid for CH, NO, UK ONLY (not EU). Use [certification] for all EU countries from April 2025.' },
   min_energy_efficiency_class:{ label: 'Min Energy Efficiency',   tier: 'optional',    note: 'CH, NO, UK only. Combine with energy_efficiency_class and max_energy_efficiency_class.' },
   max_energy_efficiency_class:{ label: 'Max Energy Efficiency',   tier: 'optional',    note: 'CH, NO, UK only. Combine with energy_efficiency_class and min_energy_efficiency_class.' },
   // Campaign / destination controls
@@ -1013,13 +1013,13 @@ function goToStep(n) {
 function updateMarketHint() {
   const market = document.getElementById('targetMarket').value;
   const hints = {
-    UK: '⚠️ UK requires shipping attribute. Price must include VAT. Energy labels: use [energy_efficiency_class] (not [certification]).',
-    US: '🇺🇸 US: Price excludes tax. Shipping required. [tax] attribute or account-level settings needed.',
-    DE: '🇩🇪 DE: Price includes VAT. Shipping required. EU [certification] needed for energy products (from April 2025).',
-    FR: '🇫🇷 FR: Price includes VAT. Shipping required. Apparel needs color/size/gender.',
-    AU: '🇦🇺 AU: Shipping required. GST included in price.',
-    IN: '🇮🇳 IN: Use [maximum_retail_price] (MRP) including GST. Shipping required.',
-    JP: '🇯🇵 JP: Price includes consumption tax. Shipping required.',
+    UK: 'UK requires shipping attribute. Price must include VAT. Energy labels: use [energy_efficiency_class] (not [certification]).',
+    US: 'US: Price excludes tax. Shipping required. [tax] attribute or account-level settings needed.',
+    DE: 'DE: Price includes VAT. Shipping required. EU [certification] needed for energy products (from April 2025).',
+    FR: 'FR: Price includes VAT. Shipping required. Apparel needs color/size/gender.',
+    AU: 'AU: Shipping required. GST included in price.',
+    IN: 'IN: Use [maximum_retail_price] (MRP) including GST. Shipping required.',
+    JP: 'JP: Price includes consumption tax. Shipping required.',
   };
   document.getElementById('market-hint').textContent = hints[market] || '';
 }
@@ -1028,7 +1028,7 @@ function updateCategoryHint() {
   const cat = document.getElementById('productCategory').value;
   const hints = {
     apparel: 'Apparel: color, size, gender, age_group required for key markets. item_group_id required for variants.',
-    electronics: 'Electronics: GTIN strongly recommended. EU energy-labelled products (appliances, displays, lighting, tyres) require [certification] with EC:EPREL:<id> format (not [energy_efficiency_class]). ⚠️ Smartphones added to certification requirement from June 2025.',
+    electronics: 'Electronics: GTIN strongly recommended. EU energy-labelled products (appliances, displays, lighting, tyres) require [certification] with EC:EPREL:<id> format (not [energy_efficiency_class]). Smartphones added to certification requirement from June 2025.',
     mobile: 'Mobile: [condition] required. Carrier/contract attributes may apply. Use Google Product Category 267 (Mobile Phones).',
     food_beverage: 'Food & Beverages: [google_product_category] required for alcoholic beverages.',
     gift_cards: 'Gift Cards: [google_product_category] required (use specific ID).',
@@ -1700,7 +1700,7 @@ function validateField(attr, val, row, isReq, isRec) {
   if (['energy_efficiency_class','min_energy_efficiency_class','max_energy_efficiency_class'].includes(attr)) {
     const euMarkets = ['DE','FR','AT','IT','NL','ES','BE','CZ','PL','RO','IE','FI','SE','DK','PT','GR','HU','SK','SI','LT','LV','EE'];
     if (euMarkets.includes(settings.market)) {
-      return { status: 'error', msg: `⚠️ ${attr} is no longer valid for EU markets (from April 2025). Use [certification] with EC:EPREL:<id> format instead. Products using this attribute for EU will have data quality issues.` };
+      return { status: 'error', msg: `${attr} is no longer valid for EU markets (from April 2025). Use [certification] with EC:EPREL:<id> format instead. Products using this attribute for EU will have data quality issues.` };
     }
   }
 
@@ -2222,57 +2222,57 @@ function buildTips() {
   });
 
   if (isPaid && priorityIssues.some(i => i.attr === 'gtin')) tips.push({
-    title: '🔑 GTINs: Missing GTINs Exclude You From Shopping Auctions',
+    title: 'GTINs: Missing GTINs Exclude You From Shopping Auctions',
     body: 'Products without a GTIN or a valid identifier_exists=no flag risk being excluded from Google Shopping auctions entirely. Prioritise sourcing GTINs from your supplier or the GS1 database (barcodelookup.com, gs1.org/services/verified-by-gs1). If a GTIN genuinely doesn\'t exist, set identifier_exists=FALSE and provide brand + MPN instead.'
   });
 
   if (hasVariants) tips.push({
-    title: '🔄 Variants: Consolidate With item_group_id for Better Performance',
+    title: 'Variants: Consolidate With item_group_id for Better Performance',
     body: 'Products sharing an item_group_id are displayed together as a single product unit with size/colour swatches. This improves CTR vs. showing every variant separately. Ensure all variants in a group submit the same title structure, brand, and Google Product Category — only the variant attribute (color/size) should differ.'
   });
 
   tips.push({
-    title: '🚀 Performance Max: Feed Quality Is Your Creative',
+    title: 'Performance Max: Feed Quality Is Your Creative',
     body: 'For Performance Max campaigns, your product data IS your ad creative. High-quality titles (with brand + key attributes), comprehensive descriptions, and multiple image angles (use additional_image_link) give Google more to work with when building ad combinations. Products with lifestyle_image_link also get better placements on Discover and YouTube.'
   });
 
   if (settings.returnsSetup === 'none') tips.push({
-    title: '⚠️ Returns Policy: Missing Configuration Will Limit Visibility',
+    title: 'Returns Policy: Missing Configuration Will Limit Visibility',
     body: 'A return policy is strongly recommended across all markets and required to unlock certain Shopping features (e.g. the "Free returns" badge, promotions eligibility). Set up your policy in GMC Settings → Returns, then either apply it at account level or use <code>return_policy_label</code> in your feed to map different products to different policies.'
   });
 
   if (settings.hasFreeReturns) tips.push({
-    title: '✅ Free Returns: Maximise Your Badge Visibility',
+    title: 'Free Returns: Maximise Your Badge Visibility',
     body: 'Free returns are a positive ranking signal and unlock the "Free returns" badge on Shopping listings. Ensure your GMC return policy is configured with free_returns = true for the relevant markets. For UK and DE in particular, free returns significantly improve CTR — ensure the return window and method are explicitly stated in your policy.'
   });
 
   if (!settings.hasFreeReturns && (market === 'UK' || market === 'DE' || market === 'US')) tips.push({
-    title: `💡 ${market}: Free Returns Drive Higher CTR`,
+    title: `${market}: Free Returns Drive Higher CTR`,
     body: `Competitors offering free returns in ${market} show consistently higher click-through rates on Shopping. If your margins allow it, consider offering free returns and configuring this in GMC — it unlocks a visible badge on your listings and is a ranking signal for Shopping ads.`
   });
 
   if (settings.shippingSetup === 'carrier') tips.push({
-    title: '🚚 Carrier-Calculated Shipping: Dimensions Must Be Accurate',
+    title: 'Carrier-Calculated Shipping: Dimensions Must Be Accurate',
     body: 'All three shipping dimensions (length, width, height) plus shipping_weight must be submitted for every product. Use the packed/boxed dimensions, not the bare product. Inaccurate dimensions result in incorrect rate calculations and potential disapprovals. Google recommends account-level carrier settings as a fallback.'
   });
 
   if (settings.hasFreeShipping) tips.push({
-    title: '🎁 Free Shipping Threshold: Unlock the Free Shipping Badge',
+    title: 'Free Shipping Threshold: Unlock the Free Shipping Badge',
     body: 'Submit <code>free_shipping_threshold</code> with country + price_threshold to display a "Free shipping" badge on eligible products. Format: country code + ISO 4217 amount (e.g. GB:25.00 GBP). The currency must match your product price currency exactly. This is one of the highest-impact visibility improvements for competitive categories.'
   });
 
   if (settings.hasHandlingTime) tips.push({
-    title: '📦 Handling & Transit Times: Accurate Delivery Estimates Win Clicks',
+    title: 'Handling & Transit Times: Accurate Delivery Estimates Win Clicks',
     body: 'Google displays estimated delivery dates on Shopping listings — products with faster, more accurate estimates see higher CTR. Submit min/max_handling_time per product (or configure at account level), and use shipping_transit_business_days to reflect your actual carrier SLAs. 0-day handling = same-day dispatch badge eligibility.'
   });
 
   tips.push({
-    title: '🔁 Feed Freshness: Price & Availability Must Be Near Real-Time',
+    title: 'Feed Freshness: Price & Availability Must Be Near Real-Time',
     body: 'Google crawls feeds and landing pages independently. If your feed price or availability is out of sync with your website, products will be disapproved. Submit price/availability updates within 30 minutes of any site change. Use the Content API or scheduled feeds with at minimum daily refresh. Enable Automatic Item Updates as a safety net.'
   });
 
   if (['DE','FR','AT','IT','NL','ES','BE','CZ','PL','RO'].includes(market)) tips.push({
-    title: `⚠️ EU Market (${market}): Energy Labels Now Require [certification]`,
+    title: `EU Market (${market}): Energy Labels Now Require [certification]`,
     body: 'As of April 2025, EU products requiring energy efficiency labels (appliances, displays, lighting, smartphones, tyres) must use the [certification] attribute with EU EPREL database references (format: EC:EPREL:<id>). The legacy [energy_efficiency_class] attribute is no longer valid for EU countries and will cause data quality issues.'
   });
 
@@ -2342,7 +2342,7 @@ function exportMarkdownReport() {
   const suggestions = priorityIssues.filter(i => i.status === 'suggest');
   const affectedRows = [...new Set(criticals.flatMap(i => i.rows))].length;
 
-  const priorityLabel = { error: '🔴 High (Critical)', warn: '🟠 Medium (Warning)', suggest: '🟡 Low (Suggestion)' };
+  const priorityLabel = { error: 'High (Critical)', warn: 'Medium (Warning)', suggest: 'Low (Suggestion)' };
   const whyItMatters = {
     error: 'This is a critical feed error. Products affected are disapproved or excluded from Shopping auctions until fixed.',
     warn:  'This warning degrades feed quality and limits ad reach. Products may lose impressions or Shopping eligibility over time.',
@@ -2356,9 +2356,9 @@ function exportMarkdownReport() {
   md += `## Summary\n\n`;
   md += `| Category | Issues found | Products affected |\n`;
   md += `|----------|-------------|-------------------|\n`;
-  md += `| 🔴 Critical | ${criticals.length} | ${affectedRows} (${total > 0 ? ((affectedRows/total)*100).toFixed(0) : 0}% of feed) |\n`;
-  md += `| 🟠 Warnings | ${warnings.length} | — |\n`;
-  md += `| 🟡 Suggestions | ${suggestions.length} | — |\n\n`;
+  md += `| Critical | ${criticals.length} | ${affectedRows} (${total > 0 ? ((affectedRows/total)*100).toFixed(0) : 0}% of feed) |\n`;
+  md += `| Warnings | ${warnings.length} | — |\n`;
+  md += `| Suggestions | ${suggestions.length} | — |\n\n`;
 
   if (criticals.length) {
     const top3 = criticals.slice(0, 3).map(i => SPEC[i.attr]?.label || i.attr);
@@ -2391,6 +2391,7 @@ function exportMarkdownReport() {
 
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" data-clerk-publishable-key="pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA" crossorigin="anonymous"></script>
   <script src="/gmc-auth.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function(){ if(window.GmcAuth) GmcAuth.runToolMode(); });</script>

@@ -258,8 +258,8 @@
   <!-- Two classes + ProductGroup -->
   <section class="section" id="two-classes">
     <h2 class="section-title">Two classes of Product markup, plus ProductGroup for variants</h2>
-    <p class="section-lead">Product Snippet and Merchant Listing both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/Product</code> as their base type — the difference is which properties you include and which Google features become available. Products with variants add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">schema.org/ProductGroup</code> on top, with individual <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">Product</code> items nested inside via <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasVariant</code>.</p>
-    <p style="font-size:13px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:-8px;margin-bottom:24px">ℹ️ <strong>Product Snippet</strong> and <strong>Merchant Listing</strong> are Google's names for the features they unlock, not different schema types. A merchant product page can qualify for both. Adding Merchant Listing properties also makes the page eligible for Product Snippet features.</p>
+    <p class="section-lead">Product Snippet and Merchant Listing both use <code>schema.org/Product</code> as their base type — the difference is which properties you include and which Google features become available. Products with variants add <code>schema.org/ProductGroup</code> on top, with individual <code>Product</code> items nested inside via <code>hasVariant</code>.</p>
+    <p style="font-size:13px;color:var(--text-3);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:-8px;margin-bottom:24px"><strong>Product Snippet</strong> and <strong>Merchant Listing</strong> are Google's names for the features they unlock, not different schema types. A merchant product page can qualify for both. Adding Merchant Listing properties also makes the page eligible for Product Snippet features.</p>
     <div class="type-grid">
       <div class="type-card">
         <div class="type-card-num">Class 1</div>
@@ -289,7 +289,7 @@
   <!-- Minimal example -->
   <section class="section" id="schema-example">
     <h2 class="section-title">What Product schema looks like</h2>
-    <p class="section-lead">All Product structured data is added as JSON-LD inside a <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">&lt;script type="application/ld+json"&gt;</code> tag in your page HTML. Here is a minimal valid Product schema:</p>
+    <p class="section-lead">All Product structured data is added as JSON-LD inside a <code>&lt;script type="application/ld+json"&gt;</code> tag in your page HTML. Here is a minimal valid Product schema:</p>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:4px">
       <div style="background:rgba(0,0,0,.03);border-bottom:1px solid var(--border);padding:10px 16px;font-size:11px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.07em;display:flex;justify-content:space-between;align-items:center">
         <span>JSON-LD — Minimal Product schema</span>
@@ -314,7 +314,7 @@
   }
 }</code></pre>
     </div>
-    <p style="margin-top:12px;font-size:13px;color:var(--text-4)">This qualifies for <strong>Product Snippet</strong> features (price, availability in organic results). To add <strong>Merchant Listing</strong> features (Shopping panel, price drop alerts, shipping/returns), add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">hasMerchantReturnPolicy</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">shippingDetails</code>, and other required properties. Use the generators below to build the full version.</p>
+    <p style="margin-top:12px;font-size:13px;color:var(--text-4)">This qualifies for <strong>Product Snippet</strong> features (price, availability in organic results). To add <strong>Merchant Listing</strong> features (Shopping panel, price drop alerts, shipping/returns), add <code>hasMerchantReturnPolicy</code>, <code>shippingDetails</code>, and other required properties. Use the generators below to build the full version.</p>
   </section>
 
   <!-- Comparison -->
@@ -415,7 +415,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">What are the two main classes of Product structured data?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-        <div class="faq-a">Google defines two main classes: <strong>Product Snippets</strong> (for any page describing a product — reviews, editorial, aggregators, and merchant pages) and <strong>Merchant Listings</strong> (for merchant pages where customers can buy the product directly). Products with variants add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">ProductGroup</code> on top of either class to group variants together for colour swatches and variant pricing in Shopping.</div>
+        <div class="faq-a">Google defines two main classes: <strong>Product Snippets</strong> (for any page describing a product — reviews, editorial, aggregators, and merchant pages) and <strong>Merchant Listings</strong> (for merchant pages where customers can buy the product directly). Products with variants add <code>ProductGroup</code> on top of either class to group variants together for colour swatches and variant pricing in Shopping.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Can a page be eligible for both Product Snippet and Merchant Listing?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -423,7 +423,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Do I need a different schema type for product variants?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-        <div class="faq-a">Yes. If your product comes in multiple colours, sizes, or materials, use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">ProductGroup</code> schema with <code style="font-size:12px;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:4px">hasVariant</code>. This groups all variants under a parent entity, enabling colour swatches and variant-specific pricing in Google Shopping. Both Product Snippet and Merchant Listing pages support product variants.</div>
+        <div class="faq-a">Yes. If your product comes in multiple colours, sizes, or materials, use <code>ProductGroup</code> schema with <code>hasVariant</code>. This groups all variants under a parent entity, enabling colour swatches and variant-specific pricing in Google Shopping. Both Product Snippet and Merchant Listing pages support product variants.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Does adding schema guarantee a rich result?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -457,6 +457,7 @@
 
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
 
 <script>
   function toggleFaq(btn) {

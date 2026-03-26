@@ -317,7 +317,7 @@
   <!-- Required fields -->
   <section class="section" id="properties">
     <h2 class="section-title">Required and recommended properties</h2>
-    <p class="section-lead">The minimum for a Product Snippet is <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">name</code> plus at least one of <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">review</code>, <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">aggregateRating</code>, or <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">offers</code>.</p>
+    <p class="section-lead">The minimum for a Product Snippet is <code>name</code> plus at least one of <code>review</code>, <code>aggregateRating</code>, or <code>offers</code>.</p>
     <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
       <table class="fields-table">
         <thead><tr><th>Property</th><th>Status</th><th>Notes</th></tr></thead>
@@ -375,7 +375,7 @@
     </div>
 
     <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Editorial review — with pros and cons</h3>
-    <p class="section-lead" style="margin-bottom:0">For editorial review pages only. Add <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">positiveNotes</code> and <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">negativeNotes</code> inside your <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">review</code> object as <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">ItemList</code>. Reviewer name must be a valid person or team — not promotional text (e.g. <em>"50% off this week"</em> as an author name will be ignored).</p>
+    <p class="section-lead" style="margin-bottom:0">For editorial review pages only. Add <code>positiveNotes</code> and <code>negativeNotes</code> inside your <code>review</code> object as <code>ItemList</code>. Reviewer name must be a valid person or team — not promotional text (e.g. <em>"50% off this week"</em> as an author name will be ignored).</p>
     <div class="code-wrap">
       <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
       <pre class="code-block"><code>{
@@ -418,7 +418,7 @@
     </div>
 
     <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Aggregator page — AggregateOffer</h3>
-    <p class="section-lead" style="margin-bottom:0">For comparison sites listing prices from multiple sellers. Use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">AggregateOffer</code> — not a single <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">Offer</code>. Note: AggregateOffer is <strong>not</strong> for product variants — use ProductGroup for that.</p>
+    <p class="section-lead" style="margin-bottom:0">For comparison sites listing prices from multiple sellers. Use <code>AggregateOffer</code> — not a single <code>Offer</code>. Note: AggregateOffer is <strong>not</strong> for product variants — use ProductGroup for that.</p>
     <div class="code-wrap">
       <div class="code-header"><span class="code-lang">JSON-LD</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
       <pre class="code-block"><code>{
@@ -445,7 +445,7 @@
   <!-- Product Snippet vs Merchant Listing -->
   <section class="section" id="vs-merchant">
     <h2 class="section-title">Product Snippet vs Merchant Listing</h2>
-    <p class="section-lead">Both use <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 6px;border-radius:4px">@type: Product</code>. The difference is who can use them and what features they unlock.</p>
+    <p class="section-lead">Both use <code>@type: Product</code>. The difference is who can use them and what features they unlock.</p>
     <div style="overflow-x:auto;border:1px solid var(--border);border-radius:16px;">
       <table class="compare-table">
         <thead>
@@ -504,7 +504,7 @@
         </tbody>
       </table>
     </div>
-    <p style="margin-top:12px;font-size:13px;color:var(--text-3)">Merchant pages can — and should — use both. Adding Merchant Listing required properties (<code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">name</code> + <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers.price</code> + <code style="font-size:12px;background:rgba(0,0,0,.05);padding:2px 5px;border-radius:4px">offers.priceCurrency</code>) also qualifies the page for Product Snippet. It's a one-way relationship — not the other way around.</p>
+    <p style="margin-top:12px;font-size:13px;color:var(--text-3)">Merchant pages can — and should — use both. Adding Merchant Listing required properties (<code>name</code> + <code>offers.price</code> + <code>offers.priceCurrency</code>) also qualifies the page for Product Snippet. It's a one-way relationship — not the other way around.</p>
   </section>
 
   <!-- FAQ -->
@@ -547,6 +547,7 @@
 
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
 
 <script>
 function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!open)item.classList.add('open');}

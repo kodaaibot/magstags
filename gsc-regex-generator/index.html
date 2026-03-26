@@ -203,7 +203,7 @@
     .url-seg.fragment { color: var(--text-3); background: var(--bg2); border-color: var(--border); }
     .url-seg.raw { color: var(--red); font-size: 11px; }
     .url-seg.selected        { background: var(--teal) !important; border-color: var(--teal) !important; color: white !important; }
-    .url-seg.selected-length { background: #7c3aed    !important; border-color: #7c3aed    !important; color: white !important; }
+    .url-seg.selected-length { background: var(--teal) !important; border-color: var(--teal) !important; color: white !important; }
     .picker-url-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 7px; display: flex; align-items: center; justify-content: space-between; }
 
     /* URL picker — options panel */
@@ -375,7 +375,7 @@
             <span>Between URL rules:</span>
             <div class="radio-group">
               <label class="radio-pill picker-op-pill selected" data-op="or" onclick="pickerSetOperator('or',this)"><input type="radio" name="picker-op" value="or" checked> OR</label>
-              <label class="radio-pill picker-op-pill" data-op="and" onclick="pickerSetOperator('and',this)" title="GSC only allows 1 Page filter — AND outputs multiple regexes"><input type="radio" name="picker-op" value="and"> AND ⚠️</label>
+              <label class="radio-pill picker-op-pill" data-op="and" onclick="pickerSetOperator('and',this)" title="GSC only allows 1 Page filter — AND outputs multiple regexes"><input type="radio" name="picker-op" value="and"> AND</label>
             </div>
           </div>
           <p class="picker-hint">Paste a URL and click path segments to select them. <strong>1 click</strong> = match literal value (teal). <strong>2 clicks</strong> = match by character count (purple). <strong>3 clicks</strong> = deselect. Mix both types to build hybrid patterns.</p>
@@ -1490,7 +1490,6 @@ pickerRenderAll();
   .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
   .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
   .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-  .ct-card code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 14px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
 
   /* Steps */
   .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
@@ -1520,7 +1519,6 @@ pickerRenderAll();
   .ct-table td:first-child { color: var(--text-1); font-weight: 500; width: 22%; }
   .ct-table td:nth-child(2) { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; color: var(--teal); white-space: normal; word-break: break-all; width: 28%; }
   .ct-table td:nth-child(3) { width: 50%; }
-  .ct-table code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
   @media (max-width: 680px) {
     .ct-table-wrap { border-radius: 10px; }
     .ct-table thead { display: none; }
@@ -1542,7 +1540,6 @@ pickerRenderAll();
   .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
   .ct-callout-body ul { font-size: 13px; color: var(--text-3); padding-left: 18px; margin-top: 6px; line-height: 1.7; }
   .ct-callout-body li { margin-bottom: 3px; }
-  .ct-callout-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
 
   /* Cheat sheet */
   .ct-cheat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 28px; }
@@ -1559,10 +1556,10 @@ pickerRenderAll();
   .ct-use-num { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-4); margin-bottom: 8px; font-family: 'Menlo',monospace; }
   .ct-use-case h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 10px; line-height: 1.35; }
   .ct-use-case p { font-size: 13px; color: var(--text-3); line-height: 1.65; margin: 0; }
-  .ct-use-case code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+  .ct-use-case code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--text-2); }
   .ct-use-pattern { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
   .ct-use-pattern-label { font-family: 'Menlo',monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-4); }
-  .ct-use-pattern-code { font-family: 'Menlo',monospace; font-size: 12px; color: var(--teal); word-break: break-all; line-height: 1.6; }
+  .ct-use-pattern-code { font-family: 'Menlo',monospace; font-size: 12px; color: var(--text-2); word-break: break-all; line-height: 1.6; }
   .ct-use-pattern-note { font-size: 12px; color: var(--text-3); line-height: 1.5; }
 
   /* Limitations */
@@ -1583,7 +1580,6 @@ pickerRenderAll();
   .ct-faq summary:hover { background: var(--bg2); }
   .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
   .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
-  .ct-faq-body code { font-family: 'Menlo',monospace; font-size: 14px; background: var(--bg2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
 
   /* Content layout — two-column with sticky TOC */
   .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
@@ -1744,7 +1740,7 @@ pickerRenderAll();
     </div>
 
     <div class="ct-callout ct-callout--teal">
-      <div class="ct-callout-icon">💡</div>
+      <div class="ct-callout-icon"></div>
       <div class="ct-callout-body">
         <strong>Customise any pattern in the builder above</strong>
         <p>Every pattern in this table can be built and customised using the Template Library tab above. Paste your own values and the regex updates instantly.</p>
@@ -1856,7 +1852,7 @@ pickerRenderAll();
       </div>
     </div>
     <div class="ct-callout ct-callout--red" style="margin-top:28px">
-      <div class="ct-callout-icon">🚫</div>
+      <div class="ct-callout-icon"></div>
       <div class="ct-callout-body">
         <strong>These do NOT work in GSC (RE2 forbids them)</strong>
         <ul>
@@ -1952,28 +1948,28 @@ pickerRenderAll();
     <p class="ct-lead">Understanding RE2's constraints prevents hours of debugging. These are the most common places where SEOs hit a wall — and the right workaround for each.</p>
     <div class="ct-limits-grid">
       <div class="ct-limit">
-        <div class="ct-limit-icon">🔗</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">Cannot AND two conditions on the same dimension</div>
           <p>GSC allows only <strong>one filter per dimension</strong> — one Page filter and one Query filter can be active at a time. You cannot stack two Page filters, and RE2 can't express AND in a single pattern either. If you need "URL must match A AND B", it is simply not achievable within one GSC session. What IS possible: combining filters from different dimensions simultaneously — a Page filter AND a Query filter both apply with AND logic.</p>
         </div>
       </div>
       <div class="ct-limit">
-        <div class="ct-limit-icon">🚫</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">Cannot negate in-pattern</div>
           <p>RE2 has no real negation operator. To exclude patterns, use GSC's "does not match regex" filter option alongside a standard positive pattern — two filter entries, not one regex.</p>
         </div>
       </div>
       <div class="ct-limit">
-        <div class="ct-limit-icon">🎯</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">Cannot enforce exact segment position</div>
           <p>The URL Picker approximates position-based matching via consecutive/non-consecutive patterns but cannot guarantee "only segment 3 must be X" — a genuine RE2 constraint, not a tool limitation.</p>
         </div>
       </div>
       <div class="ct-limit">
-        <div class="ct-limit-icon">🔤</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">URL filters are case-sensitive</div>
           <p>GSC enforces case sensitivity on Page filters. The live tester always uses case-insensitive matching — so a match in the tester against a capitalised URL could be a false positive in real GSC.</p>
@@ -1987,7 +1983,7 @@ pickerRenderAll();
         </div>
       </div>
       <div class="ct-limit">
-        <div class="ct-limit-icon">💾</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">No saved history</div>
           <p>The tool has no import, export, or session memory — a refresh resets everything. This is intentional: no data ever leaves your browser. Copy your patterns before closing the tab.</p>
@@ -2074,6 +2070,7 @@ pickerRenderAll();
 
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
 
 <script>
 // ─── TOC scroll spy ──────────────────────────────────────────────────────────

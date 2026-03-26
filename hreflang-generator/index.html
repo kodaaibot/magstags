@@ -47,7 +47,7 @@
     .tool-badge-free{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;font-weight:600;background:var(--mint-light);color:var(--teal);margin-bottom:12px}
     .tool-title{font-family:'DM Serif Display',Georgia,serif;font-size:36px;font-weight:400;color:var(--text-1);margin-bottom:8px}
     .tool-subtitle{font-size:15px;color:var(--text-3);max-width:640px;line-height:1.6}
-    .tool-subtitle code{font-size:13px;background:var(--bg2);padding:2px 6px;border-radius:4px;font-family:monospace}
+    .tool-subtitle code{font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);padding:1px 5px;border-radius:4px;font-family:'Menlo','Monaco','Courier New',monospace;color:var(--text-2)}
 
     /* Two-column */
     .tool-body{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
@@ -121,7 +121,7 @@
     .copy-all-btn:hover{border-color:var(--teal);color:var(--teal)}
 
     .info-note{font-size:12px;color:var(--text-3);background:var(--bg2);border-radius:8px;padding:10px 14px;margin-top:14px;line-height:1.6}
-    .info-note code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;background:var(--surface);padding:1px 4px;border-radius:4px;color:var(--teal)}
+    .info-note code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;background:var(--surface);padding:1px 4px;border-radius:4px;color:var(--text-2)}
 
 
     /* ── Content sections ─────────────────────────────────────────────────── */
@@ -137,7 +137,6 @@
     .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
     .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
     .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-    .ct-card code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 14px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
 
     /* Steps */
     .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
@@ -160,7 +159,6 @@
     .ct-table td:first-child { color: var(--text-1); font-weight: 500; width: 22%; }
     .ct-table td:nth-child(2) { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; color: var(--teal); white-space: normal; word-break: break-all; width: 28%; }
     .ct-table td:nth-child(3) { width: 50%; }
-    .ct-table code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
     @media (max-width: 680px) {
       .ct-table-wrap { border-radius: 10px; }
       .ct-table thead { display: none; }
@@ -182,7 +180,6 @@
     .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
     .ct-callout-body ul { font-size: 13px; color: var(--text-3); padding-left: 18px; margin-top: 6px; line-height: 1.7; }
     .ct-callout-body li { margin-bottom: 3px; }
-    .ct-callout-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
 
     /* FAQ */
     .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
@@ -195,7 +192,6 @@
     .ct-faq summary:hover { background: var(--bg2); }
     .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
     .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
-    .ct-faq-body code { font-family: 'Menlo',monospace; font-size: 14px; background: var(--bg2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
 
     /* Content layout — two-column with sticky TOC */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
@@ -224,7 +220,6 @@
     /* Page-specific styles */
     .ct-h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:500;color:var(--text-1);margin-bottom:10px}
     .ct-body{font-size:14px;color:var(--text-2);line-height:1.75}
-    .ct-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;background:var(--bg2);padding:2px 6px;border-radius:4px;color:var(--teal)}
 
     /* Three cols */
     .ct-cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
@@ -233,7 +228,6 @@
     .ct-col-card-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:10px}
     .ct-col-card h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:500;color:var(--text-1);margin-bottom:10px}
     .ct-col-card p{font-size:14px;color:var(--text-2);line-height:1.65}
-    .ct-col-card p code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 5px;border-radius:4px;color:var(--teal)}
     .ct-col-card pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px;color:var(--text-2);line-height:1.7;overflow-x:auto;white-space:pre}
 
     /* Diagram */
@@ -250,7 +244,6 @@
     .ct-bullets li{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--text-2);line-height:1.65}
     .ct-bullets li::before{content:'';width:6px;height:6px;border-radius:99px;background:var(--teal);flex-shrink:0;margin-top:8px}
     .ct-bullets li strong{color:var(--text-1)}
-    .ct-bullets li code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;background:var(--bg2);padding:2px 5px;border-radius:4px;color:var(--teal)}
 
     /* CTA banner */
     .ct-cta{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center;margin:72px 0 0}
@@ -380,7 +373,7 @@
       </div>
     </div>
     <div class="ct-callout ct-callout--teal">
-      <div class="ct-callout-icon">ℹ️</div>
+      <div class="ct-callout-icon"></div>
       <div class="ct-callout-body">
         <strong>Important:</strong>
         <p>Paste the full code block onto each page listed — not just the tag pointing to that page. Each block contains the complete set of tags for that page, covering all alternates and x-default. Pasting the full block onto every respective page is what makes your hreflang network bidirectional.</p>
@@ -715,12 +708,12 @@ function validateGroup(g) {
     vals.push({cls:'val-ok', icon:'✓', txt:'Bidirectional'});
     vals.push({cls:'val-ok', icon:'✓', txt:'Self-reference'});
   } else if (filled.length === 1) {
-    vals.push({cls:'val-warn', icon:'⚠', txt:'Add at least 2 URLs'});
+    vals.push({cls:'val-warn', icon:'—', txt:'Add at least 2 URLs'});
   }
   const hasXd = g.rows.some(r => r.xd && r.url);
   vals.push(hasXd
     ? {cls:'val-ok',  icon:'✓', txt:'x-default set'}
-    : {cls:'val-warn',icon:'⚠', txt:'No x-default — recommended'});
+    : {cls:'val-warn',icon:'—', txt:'No x-default — recommended'});
   const keys = filled.map(r => (r.lang + (r.region?'-'+r.region:'')).toLowerCase());
   if (keys.length !== new Set(keys).size)
     vals.push({cls:'val-err', icon:'✕', txt:'Duplicate lang/region'});
@@ -849,5 +842,6 @@ renderOutput();
 
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
 </body>
 </html>

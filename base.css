@@ -7,18 +7,18 @@
 
 /* ── Theme tokens ─────────────────────────────────────────────────────── */
 :root {
-  --bg: #f0ede8;
+  --bg: #f0eeec;
   --bg2: #F5EDE7;
   --surface: #fafaf7;
   --border: #ddd9d3;
   --teal: #0E7490;
-  --teal-light: #e0f2f7;
+  --teal-light: #E0F2FE;
   --mint: #0891B2;
   --mint-light: #E0F2FE;
-  --text-1: #111;
-  --text-2: #333;
-  --text-3: #555;
-  --text-4: #888;
+  --text-1: #111009;
+  --text-2: #26221f;
+  --text-3: #504c49;
+  --text-4: #857f7a;
   --green: #16a34a;
   --green-bg: #f0fdf4;
   --green-border: #bbf7d0;
@@ -28,7 +28,7 @@
   --amber: #d97706;
   --amber-bg: #fffbeb;
   --amber-border: #fde68a;
-  --paid-color: #E11D48;
+  --paid-color: #0E7490;
   --radius: 20px;
 }
 html.dark {
@@ -110,10 +110,32 @@ footer a:hover { color: var(--teal); opacity: 1; }
 
 /* ── Main body text ───────────────────────────────────────────────────── */
 main p { font-size: 14px; }
-main code {
-  font-size: 14px;
-  font-weight: 700;
-  font-family: 'Courier New', monospace;
+
+/* ── Inline code (global) ────────────────────────────────────────────── */
+main code,
+.ct-wrap code,
+.ct-content code,
+.post-body code,
+.note-body code,
+article code {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--text-2);
+}
+/* Multi-line code blocks keep their own styling */
+pre code {
+  font-size: inherit;
+  font-weight: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
 }
 
 /* ── Tagline ──────────────────────────────────────────────────────────── */

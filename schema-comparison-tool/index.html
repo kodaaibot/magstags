@@ -133,7 +133,7 @@
     .tool-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
     .tool-badge-free { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 99px; background: var(--mint-light, #E0F2FE); color: var(--teal); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
     .tool-subtitle { font-size: 15px; color: var(--text-3); max-width: 640px; line-height: 1.6; }
-    .tool-subtitle code { font-size: 13px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+    .tool-subtitle code { font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; font-family: 'Menlo', 'Monaco', 'Courier New', monospace; color: var(--text-2); }
 
     /* ─── Input area ─── */
     .input-grid {
@@ -478,9 +478,7 @@
     .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
     .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
     .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
-    .ct-lead code { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 14px; background: var(--bg2); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
     .ct-body { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 680px; }
-    .ct-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
     .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
     .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
     .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
@@ -491,7 +489,6 @@
     .ct-callout-icon { font-size: 16px; flex-shrink: 0; }
     .ct-callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 4px; }
     .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
-    .ct-callout-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
     .ct-limit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 28px; }
     .ct-limit { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: flex; gap: 12px; }
     .ct-limit-icon { font-size: 16px; flex-shrink: 0; }
@@ -673,7 +670,7 @@
       </div>
     </div>
     <div class="ct-callout ct-callout--teal" style="margin-top:28px;">
-      <div class="ct-callout-icon">&#x1F4A1;</div>
+      <div class="ct-callout-icon"></div>
       <div class="ct-callout-body">
         <div class="ct-callout-title">Tip</div>
         <p>Use the <strong>Swap A / B</strong> button to quickly flip perspective. In Before/After mode, this reverses what counts as "added" vs "removed" — useful when you pasted them in the wrong order. Happens more than you'd think.</p>
@@ -687,28 +684,28 @@
     <p class="ct-lead">It compares structure and values. It doesn't validate against schema.org or check Google's eligibility requirements. Different tools, different jobs.</p>
     <div class="ct-limit-grid">
       <div class="ct-limit">
-        <div class="ct-limit-icon">&#x2705;</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">Compares JSON-LD</div>
           <p>Parses and diffs valid JSON-LD structured data. Handles nested objects, arrays, multiple <code>@type</code> declarations, and deeply nested properties.</p>
         </div>
       </div>
       <div class="ct-limit">
-        <div class="ct-limit-icon">&#x2705;</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">Colour-coded diff</div>
           <p>Green for added, red for removed, amber for changed. Visible in both the summary panel and the side-by-side tree view.</p>
         </div>
       </div>
       <div class="ct-limit">
-        <div class="ct-limit-icon">&#x26A0;&#xFE0F;</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">Client-side only</div>
           <p>Everything runs in your browser. Nothing is sent to a server. But that also means very large schemas (50KB+) might slow the diff rendering.</p>
         </div>
       </div>
       <div class="ct-limit">
-        <div class="ct-limit-icon">&#x26A0;&#xFE0F;</div>
+        <div class="ct-limit-icon"></div>
         <div>
           <div class="ct-limit-title">JSON-LD only</div>
           <p>Microdata and RDFa are not supported. If you need to compare those formats, convert to JSON-LD first — Google's Rich Results Test can export it.</p>
@@ -761,6 +758,7 @@
 </div>
 
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
 <script>
 // ═══════════════════════════════════════════
 // Global state

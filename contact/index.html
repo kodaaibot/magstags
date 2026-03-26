@@ -54,8 +54,8 @@
     .form-success .icon{font-size:40px;margin-bottom:12px}
     .form-success h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:8px}
     .form-success p{font-size:14px;color:var(--text-3);line-height:1.6}
-    .form-send-error{display:none;padding:12px 14px;background:var(--paid-light);border:1px solid #fca5a5;border-radius:9px;font-size:13px;color:#7f1d1d;margin-top:12px;line-height:1.5}
-    html.dark .form-send-error{background:#450a0a;border-color:#991b1b;color:#fca5a5}
+    .form-send-error{display:none;padding:12px 14px;background:var(--red-bg);border:1px solid var(--red-border);border-radius:9px;font-size:13px;color:var(--red);margin-top:12px;line-height:1.5}
+    html.dark .form-send-error{background:var(--red-bg);border-color:var(--red-border);color:var(--red)}
 
     /* ── Info panel ── */
     .info-panel{display:flex;flex-direction:column;gap:16px}
@@ -139,7 +139,7 @@
 
       <!-- Success state -->
       <div class="form-success" id="form-success">
-        <div class="icon">✉️</div>
+        <div class="icon"></div>
         <h3>Message sent</h3>
         <p>Thanks — I'll get back to you as soon as I can.</p>
       </div>
@@ -166,5 +166,6 @@
 
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
 </body>
 </html>

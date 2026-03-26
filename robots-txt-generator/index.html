@@ -143,7 +143,7 @@
     .pattern-dd-header{padding:10px 14px 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4)}
     .pattern-item{display:flex;align-items:baseline;gap:12px;padding:9px 14px;cursor:pointer;transition:background .1s;border:none;background:none;width:100%;text-align:left}
     .pattern-item:hover{background:var(--mint-light)}
-    .pattern-item code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;color:var(--teal);white-space:nowrap;flex-shrink:0;min-width:80px}
+    .pattern-item code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;color:var(--text-2);white-space:nowrap;flex-shrink:0;min-width:80px}
     .pattern-item span{font-size:12px;color:var(--text-3);line-height:1.4}
     .group-footer{padding:8px 16px 12px;display:flex;gap:8px}
     .btn-add-rule{font-size:12px;font-weight:500;color:var(--teal);background:none;border:1px solid var(--mint-light);border-radius:7px;padding:5px 12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
@@ -183,7 +183,7 @@
     .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
     .ct-h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
     .ct-body{font-size:14px;color:var(--text-2);line-height:1.75;margin-bottom:14px}
-    .ct-code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;font-weight:700;background:var(--mint-light);color:var(--teal);padding:2px 6px;border-radius:4px;word-break:break-all}
+    .ct-code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);color:var(--text-2);padding:1px 5px;border-radius:4px;word-break:break-all}
     .ct-list{font-size:15px;color:var(--text-2);line-height:1.75;padding-left:22px;margin-bottom:16px}
     .ct-list li{margin-bottom:10px}
     .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
@@ -216,7 +216,7 @@
     .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
     .ct-callout-body ul { font-size: 13px; color: var(--text-3); padding-left: 18px; margin-top: 6px; line-height: 1.7; }
     .ct-callout-body li { margin-bottom: 3px; }
-    .ct-callout-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+    .ct-callout-body code { font-family: 'Menlo',monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--text-2); }
     /* FAQ */
     .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
     .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
@@ -228,7 +228,6 @@
     .ct-faq summary:hover { background: var(--bg2); }
     .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
     .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
-    .ct-faq-body code { font-family: 'Menlo',monospace; font-size: 14px; background: var(--bg2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; color: var(--teal); }
     /* Related tools CTA */
     .ct-cta-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px}
     .ct-tools-list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
@@ -384,10 +383,10 @@
         </div>
       </div>
       <div class="ct-callout ct-callout--amber">
-        <div class="ct-callout-icon">⚠</div>
+        <div class="ct-callout-icon"></div>
         <div class="ct-callout-body">
           <strong>Before you publish:</strong>
-          <p>if you see <code style="font-family:monospace;font-size:12px">Disallow: /</code> in your output and didn't intend to block everything, stop. This tells every search engine to ignore your entire website. The tool warns you when this is set — take it seriously.</p>
+          <p>if you see <code>Disallow: /</code> in your output and didn't intend to block everything, stop. This tells every search engine to ignore your entire website. The tool warns you when this is set — take it seriously.</p>
         </div>
       </div>
     </section>
@@ -514,7 +513,7 @@ Sitemap: https://example.com/sitemap.xml</pre>
       </table>
 
       <div class="ct-callout ct-callout--amber" style="margin-top:20px">
-        <div class="ct-callout-icon">⚠</div>
+        <div class="ct-callout-icon"></div>
         <div class="ct-callout-body">
           <strong>Important:</strong>
           <p>blocking these bots in robots.txt is advisory — it relies on the operator respecting the standard. OpenAI, Anthropic, and most major AI companies have publicly committed to honouring robots.txt. However, robots.txt is not a technical block. For stronger protection, consider IP-level blocking or authentication.</p>
@@ -572,7 +571,7 @@ Sitemap: https://example.com/sitemap.xml</pre>
 
       <table class="ct-table ct-compare-table">
         <thead>
-          <tr><th></th><th>robots.txt <code style="font-family:monospace;font-size:11px;font-weight:400">Disallow</code></th><th><code style="font-family:monospace;font-size:11px;font-weight:400">noindex</code> meta tag</th></tr>
+          <tr><th></th><th>robots.txt <code>Disallow</code></th><th><code>noindex</code> meta tag</th></tr>
         </thead>
         <tbody>
           <tr>
@@ -604,7 +603,7 @@ Sitemap: https://example.com/sitemap.xml</pre>
       </table>
 
       <div class="ct-callout ct-callout--amber">
-        <div class="ct-callout-icon">⚠</div>
+        <div class="ct-callout-icon"></div>
         <div class="ct-callout-body">
           <strong>The key rule:</strong>
           <p>never use robots.txt to hide a page you don't want indexed. If Google can't crawl the page, it can't see the noindex tag either — meaning a disallowed page may still get indexed if linked to from elsewhere. For pages that must not appear in search, use noindex and allow crawling.</p>
@@ -922,7 +921,7 @@ function addGroup(agentValue, rules) {
     '  <input class="group-agent-custom" placeholder="BotName" oninput="renderOutput()" />',
     '  <button class="btn-rm-group" onclick="removeGroup(this)" title="Remove group">×</button>',
     '</div>',
-    '<div class="adsbot-warning">⚠ <strong>AdsBot crawlers are not covered by <code style="font-family:monospace;font-size:11px">*</code>.</strong> Add separate groups for <code style="font-family:monospace;font-size:11px">AdsBot-Google</code>, <code style="font-family:monospace;font-size:11px">AdsBot-Google-Mobile</code>, and <code style="font-family:monospace;font-size:11px">Mediapartners-Google</code> if you need to control them. (<code style="font-family:monospace;font-size:11px">APIs-Google</code> also ignores <code style="font-family:monospace;font-size:11px">*</code>.)</div>',
+    '<div class="adsbot-warning"><strong>AdsBot crawlers are not covered by <code>*</code>.</strong> Add separate groups for <code>AdsBot-Google</code>, <code>AdsBot-Google-Mobile</code>, and <code>Mediapartners-Google</code> if you need to control them. (<code>APIs-Google</code> also ignores <code>*</code>.)</div>',
     '<div class="group-rules"></div>',
     '<div class="group-footer">',
     '  <button class="btn-add-rule" onclick="addRule(this.closest(\'.group-card\'))">+ Disallow</button>',
@@ -1016,7 +1015,7 @@ function addRule(card, type, path) {
     '<input class="rule-path-input" type="text" placeholder="/ or /path/" value="' + escHtml(path) + '" oninput="onPathInput(this)">',
     '<button class="btn-pattern" data-rule-id="' + ruleId + '" onclick="togglePatternPicker(this)" title="Path patterns">Patterns ▾</button>',
     '<button class="btn-rm-rule" onclick="removeRule(this)" title="Remove">×</button>',
-    '<div class="disallow-all-warning" style="flex:0 0 100%;margin-top:6px">🚨 <strong>This blocks all crawlers from your entire site.</strong> Any URL not explicitly allowed will be blocked from crawling — and Google cannot index content it cannot crawl. If this is intentional, make sure it is.</div>',
+    '<div class="disallow-all-warning" style="flex:0 0 100%;margin-top:6px"><strong>This blocks all crawlers from your entire site.</strong> Any URL not explicitly allowed will be blocked from crawling — and Google cannot index content it cannot crawl. If this is intentional, make sure it is.</div>',
   ].join('');
 
   rulesEl.appendChild(row);
@@ -1326,5 +1325,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
 </body>
 </html>
