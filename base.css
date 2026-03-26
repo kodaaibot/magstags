@@ -128,7 +128,12 @@ article code {
   color: var(--text-2);
 }
 /* Code inside paragraphs: inherit size from parent, no bold, teal */
-p code {
+main p code,
+.ct-wrap p code,
+.ct-content p code,
+.post-body p code,
+.note-body p code,
+article p code {
   font-size: inherit;
   font-weight: normal;
   color: var(--teal);
