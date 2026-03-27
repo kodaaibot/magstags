@@ -50,11 +50,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
   <style>
+    /* Status colour variables */
+    :root {
+      --green: #166534; --green-bg: #f0fdf4; --green-border: #86efac;
+      --amber: #92400e; --amber-bg: #fffbeb; --amber-border: #fcd34d;
+      --red: #991b1b; --red-bg: #fef2f2; --red-border: #fca5a5;
+      --blue: #9a3412; --blue-bg: #fff7ed; --blue-border: #fdba74;
+    }
+    html.dark {
+      --green: #4ade80; --green-bg: #052e16; --green-border: #166534;
+      --amber: #fcd34d; --amber-bg: #422006; --amber-border: #92400e;
+      --red: #f87171; --red-bg: #2d0a0a; --red-border: #7f1d1d;
+      --blue: #fb923c; --blue-bg: #431407; --blue-border: #9a3412;
+    }
 
     /* Tool card */
     .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; }
@@ -117,14 +130,24 @@
     .favicon-tile-status { font-size: 11px; }
 
     /* Checks */
-    .checks-section { margin-bottom: 24px; }
+    .checks-section { margin-bottom: 24px; max-width: 900px; }
     .checks-group-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 8px; margin-top: 20px; }
     .checks-group-label:first-child { margin-top: 0; }
     .check-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .check-item { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+    .check-item { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: flex-start; }
     .check-item:last-child { border-bottom: none; }
-    .check-icon { font-size: 15px; flex-shrink: 0; margin-top: 2px; }
-    .check-body { flex: 1; min-width: 0; }
+
+    .check-icon { font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 3px; width: 64px; text-align: center; padding: 3px 0; border-radius: 99px; white-space: nowrap; }
+    .check-icon.ci-pass { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+    html.dark .check-icon.ci-pass { background: #052e16; color: #4ade80; border: 1px solid #166534; }
+    .check-icon.ci-warn { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+    html.dark .check-icon.ci-warn { background: #422006; color: #fcd34d; border: 1px solid #92400e; }
+    .check-icon.ci-fail { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+    html.dark .check-icon.ci-fail { background: #2d0a0a; color: #f87171; border: 1px solid #7f1d1d; }
+    .check-icon.ci-suggest { background: #fff7ed; color: #c2410c; border: 1px solid #fdba74; }
+    html.dark .check-icon.ci-suggest { background: #431407; color: #fb923c; border: 1px solid #9a3412; }
+    .check-icon.ci-info { background: var(--surface); color: var(--text-3); border: 1px solid var(--border); }
+    .check-body { flex: 1; min-width: 0; max-width: 100%; }
     .check-label { font-size: 14px; font-weight: 600; color: var(--text-1); }
     .check-detail { font-size: 11px; font-weight: 600; color: var(--text-4); margin-top: 2px; font-family: 'Courier New', monospace; }
     .check-desc { font-size: 14px; color: var(--text-3); line-height: 1.5; margin-top: 4px; }
@@ -231,13 +254,13 @@
         <input type="url" id="url-input" class="url-input" placeholder="https://example.com" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')runUrlCheck()">
         <button class="btn-primary" id="btn-url" onclick="runUrlCheck()">Validate</button>
       </div>
-      <p class="hint">We'll probe common favicon paths at your domain using image loading — no fetch, no CORS issues. For full link-tag analysis, use Paste HTML mode.</p>
+      <p class="hint">We probe common favicon paths at your domain using image loading. If your favicon is at a non-standard path, switch to <strong>Paste HTML</strong> mode for accurate results — it reads your actual &lt;link&gt; tags. Cross-origin restrictions may cause some images to appear undetected even when they load.</p>
     </div>
 
     <!-- Paste mode -->
     <div id="mode-paste" style="display:none">
       <label for="html-input">Paste your &lt;head&gt; HTML (or just the favicon link tags)</label>
-      <textarea id="html-input" class="url-input" placeholder='<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">&#10;<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">&#10;<link rel="apple-touch-icon" href="/favicon-apple.png">'></textarea>
+      <textarea id="html-input" class="url-input" placeholder='<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">&#10;<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">&#10;<link rel="apple-touch-icon" href="/favicon-apple.png">'></textarea>
       <label for="base-input" style="margin-top:14px">Base URL <span style="font-weight:400;color:var(--text-4)">(your domain, to load relative image paths)</span></label>
       <input type="url" id="base-input" class="url-input" placeholder="https://example.com" style="margin-top:6px" autocomplete="off" spellcheck="false">
       <p class="hint">Paste your &lt;head&gt; and enter your domain. No data is sent anywhere — everything runs in your browser.</p>
@@ -360,7 +383,7 @@
         <div class="ct-step-num">02</div>
         <div class="ct-step-body">
           <h4>512×512px PNG — PWA and high-DPI</h4>
-          <p><code>&lt;link rel="icon" type="image/png" sizes="512x512" href="/og-image.png"&gt;</code> — used by PWA launchers, Google Discover, and Android home screen shortcuts. 512×512 is the standard. This is also what Google pulls for search results if it needs a higher-resolution version.</p>
+          <p><code>&lt;link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"&gt;</code> — used by PWA launchers, Google Discover, and Android home screen shortcuts. 512×512 is the standard. This is also what Google pulls for search results if it needs a higher-resolution version.</p>
         </div>
       </div>
       <div class="ct-step">
@@ -551,7 +574,7 @@ function buildChecks(opts) {
   var probedOk = probed.filter(function(p) { return p.result.ok; });
 
   var checks = [];
-  var ICON = { pass: 'Pass', fail: 'Fail', warn: 'Warn', suggest: 'Suggest', info: 'Info' };
+  var ICON = { pass: 'pass', fail: 'fail', warn: 'warn', suggest: 'suggest', info: 'info' };
 
   // ── 1. Favicon link tag (paste mode only) ────────────────────────────────
   if (mode === 'paste') {
@@ -645,7 +668,7 @@ function buildChecks(opts) {
     label: 'High-resolution version (≥512×512)',
     detail: has512 ? '512×512 version found' : 'No ≥512×512 favicon detected',
     desc: 'PWA launchers, Google Discover, Android home screen shortcuts, and other high-DPI surfaces use a high-res favicon. 512×512 is the recommended size.',
-    fix: !has512 ? 'Add: <code>&lt;link rel="icon" type="image/png" sizes="512x512" href="/og-image.png"&gt;</code>' : null
+    fix: !has512 ? 'Add: <code>&lt;link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"&gt;</code>' : null
   });
 
   // ── 7. 32×32 version ──────────────────────────────────────────────────────
@@ -712,7 +735,7 @@ async function runUrlCheck() {
 
   setLoading(true, 'Probing favicon paths…');
 
-  var PATHS = ['/favicon.ico', '/favicon.png', '/favicon-32.png', '/og-image.png', '/apple-touch-icon.png', '/favicon-apple.png', '/apple-touch-icon-180x180.png'];
+  var PATHS = ['/favicon.ico', '/favicon.png', '/favicon-32.png', '/favicon-16.png', '/favicon-96.png', '/apple-touch-icon.png', '/favicon-apple.png', '/apple-touch-icon-180x180.png'];
   var probed = await Promise.all(PATHS.map(async function(path) {
     var result = await loadImage(domain + path);
     return { path: path, result: result };
@@ -878,7 +901,7 @@ function renderResults(data) {
       '<div class="check-group">' +
       grouped[g].map(function(c) {
         return '<div class="check-item">' +
-          '<div class="check-icon">' + c.icon + '</div>' +
+          '<div class="check-icon ci-' + c.status + '">' + c.icon.charAt(0).toUpperCase() + c.icon.slice(1) + '</div>' +
           '<div class="check-body">' +
             '<div class="check-label">' + esc(c.label) + '</div>' +
             (c.detail ? '<div class="check-detail">' + esc(c.detail) + '</div>' : '') +
@@ -892,7 +915,7 @@ function renderResults(data) {
   checksHtml += '</div>';
 
   // Recommended snippet
-  var snippet = '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">\n<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">\n<link rel="apple-touch-icon" href="/favicon-apple.png">';
+  var snippet = '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">\n<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">\n<link rel="apple-touch-icon" href="/favicon-apple.png">';
 
   var snippetHtml = '<div class="snippet-box">' +
     '<div class="snippet-header"><span>Recommended favicon pattern (Google + browsers)</span><button class="btn-copy" onclick="copySnippet(this)">Copy</button></div>' +

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/ecommerce-structured-data-2026/">
+  <meta name="description" content="Most ecommerce sites implement schema wrong or implement the wrong schema. This is the practitioner guide to product structured data at scale: what earns rich results, what to prioritise first, and what to deprioritise entirely.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>E-commerce Structured Data in 2026: What Actually Moves the Needle at Scale | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:17px;line-height:1.7;color:var(--text-3);margin-bottom:36px;font-style:italic;border-left:3px solid var(--border);padding-left:18px}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);padding:1px 5px;border-radius:4px;color:var(--text-2);word-break:break-all}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--text-1)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
+    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table code{font-size:11px}
+    .post-table .col-label{font-weight:600;color:var(--text-1);white-space:nowrap}
+    .priority-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+    @media(max-width:640px){.priority-grid{grid-template-columns:1fr}}
+    .priority-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+    .priority-card-num{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin:0 0 8px 0}
+    .priority-card h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin:0 0 10px 0}
+    .priority-card p{font-size:14px;color:var(--text-2);line-height:1.7;margin:0 0 8px 0}
+    .priority-card p:last-child{margin-bottom:0}
+    .checklist{list-style:none;padding:0;margin:28px 0}
+    .checklist li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);font-size:16px;line-height:1.65;color:var(--text-2)}
+    .checklist li:last-child{border-bottom:none}
+    .checklist-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--mint-light);color:var(--teal);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px}
+    .faq-block{margin:52px 0}
+    .faq-block h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
+    .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+    .faq-item:first-of-type{border-top:1px solid var(--border)}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:10px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
+    .faq-a a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-1);margin:0 0 20px 0}
+    .sources ul{padding-left:0;list-style:none}
+    .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
+    .sources a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--text-2);font-weight:600}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+    .ct-content{min-width:0}
+    .ct-toc{position:sticky;top:80px;padding-top:60px}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
+    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
+    @media(max-width:960px){.ct-layout{grid-template-columns:1fr;gap:0}.ct-toc{position:static;padding-top:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.ct-toc-list{border-left:none;flex-direction:row;flex-wrap:wrap;gap:4px 16px}.ct-toc-list li a{border-left:none;padding:6px 0;font-size:13px}}
+  </style>
+  <meta property="og:title" content="E-commerce Structured Data in 2026: What Actually Moves the Needle at Scale | MagsTags">
+  <meta property="og:description" content="Most ecommerce sites implement schema wrong or implement the wrong schema. The practitioner guide to product structured data at scale: what earns rich results, what to prioritise first, and what to deprioritise.">
+  <meta property="og:url" content="https://www.magstags.com/notes/ecommerce-structured-data-2026/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="E-commerce Structured Data in 2026: What Actually Moves the Needle at Scale | MagsTags">
+  <meta name="twitter:description" content="Most ecommerce sites implement schema wrong or implement the wrong schema. What earns rich results, what to prioritise, what to skip.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "E-commerce Structured Data in 2026: What Actually Moves the Needle at Scale",
+    "description": "Most ecommerce sites implement schema wrong or implement the wrong schema. This is the practitioner guide to product structured data at scale: what earns rich results, what to prioritise first, and what to deprioritise entirely.",
+    "url": "https://www.magstags.com/notes/ecommerce-structured-data-2026/",
+    "datePublished": "2026-03-27",
+    "dateModified": "2026-03-27",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com/"
+    },
+    "image": "https://www.magstags.com/og-image.png",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.magstags.com/notes/ecommerce-structured-data-2026/"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Google guarantee rich results if my schema is valid?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Valid schema makes you eligible for rich results. It doesn't guarantee them. Google decides whether to show rich results based on quality signals beyond the markup itself, including content quality, page experience, and data accuracy. Validation is a necessary condition, not a sufficient one." }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between Merchant Listing and Product Snippet schema?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Merchant Listing schema is for pages where users can directly purchase the product. It enables price, availability, and shipping annotations in Google Shopping and organic results. Product Snippet schema is for editorial pages like reviews and comparison articles. On a PDP, you want Merchant Listing." }
+      },
+      {
+        "@type": "Question",
+        "name": "My schema passes Rich Results Test but I'm not seeing rich results. Why?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Several possible causes: the page isn't indexed, the page doesn't meet Google's content quality threshold for rich results, the data doesn't match the page content (triggering suppression), or the rich result type requires a minimum volume of impressions before it appears consistently. Check Search Console for manual actions and review the Rich Results report for per-URL issues." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does schema markup help with AI Overviews?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Google uses structured data as a confidence signal when generating AI responses. Complete, accurate product schema — particularly price, availability, and GTIN — increases the likelihood your product pages are cited in Shopping-related AI Overviews. It doesn't guarantee inclusion, but missing schema removes you from consideration." }
+      },
+      {
+        "@type": "Question",
+        "name": "How often should I audit schema on a large ecommerce site?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Monthly for a sample check, plus triggered audits after any platform update or template change. The schema implementation is only as accurate as your last deployment. Treat it like any other technical SEO signal that needs monitoring, not a one-time implementation task." }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Notes", "item": "https://www.magstags.com/notes/" },
+      { "@type": "ListItem", "position": 3, "name": "E-commerce Structured Data in 2026", "item": "https://www.magstags.com/notes/ecommerce-structured-data-2026/" }
+    ]
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>E-commerce Structured Data in 2026</span>
+    </nav>
+
+    <span class="post-category">Structured Data</span>
+    <h1 class="post-h1">E-commerce Structured Data in 2026: What Actually Moves the Needle at Scale</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>27 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>16 min read</span>
+    </div>
+
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+
+      <p>For e-commerce SEOs auditing sites where the schema implementation was set up three years ago by a developer who has since left, using a plugin that was never configured properly, on a platform that generates a different JSON-LD block on every page template. This is for you.</p>
+
+      <p>And for the teams who have schema working — technically valid, passes the Rich Results Test — but aren't seeing the rich results they expect. That's a different problem, and it's more common than the first one.</p>
+
+      <h2 id="valid-vs-effective">The gap between "valid schema" and "schema that works"</h2>
+
+      <p>Google's Rich Results Test will tell you your markup is valid. It will not tell you whether Google is actually using it, whether the data matches what's on the page, or whether the schema type you've implemented is the right one for the feature you're trying to trigger.</p>
+
+      <p>Valid schema and effective schema are not the same thing.</p>
+
+      <p>At scale, the distinction matters more because the errors compound. If your product template generates an incorrect price property on 3% of pages, that's 1,500 pages with bad data on a 50,000 SKU site. Google doesn't flag these individually. You find them in Search Console's Rich Results report, months later, as a spike in "items with issues."</p>
+
+      <p>The goal of this article is not to explain what product schema is. It's to tell you what to implement, in what order, and what to stop doing.</p>
+
+      <h2 id="what-earns-rich-results">What actually earns rich results in 2026</h2>
+
+      <p>There are four SERP features an e-commerce site can earn through structured data. Each maps to a specific schema implementation. Miss the implementation, miss the feature.</p>
+
+      <h3>1. Price and availability annotations in organic results</h3>
+      <p>The price badge and stock status that appear beneath your page title in organic search. Requires: <code>Product</code> with a valid <code>Offer</code> containing <code>price</code>, <code>priceCurrency</code>, and <code>availability</code>. This is the baseline. Without it, nothing else matters.</p>
+      <p>Use <a href="/merchant-listing-schema/">Merchant Listing schema</a> on any page where users can purchase directly. <a href="/merchant-listing-schema-generator/">Generate your Merchant Listing JSON-LD here</a>.</p>
+
+      <h3>2. Free product listings in Google Shopping</h3>
+      <p>The unpaid product tiles in the Shopping tab and sometimes in the main SERP. Merchant Listing schema is the on-page signal; your Merchant Center feed is the other. Both need to agree on price, availability, and product identifiers for Google to confidently surface your product.</p>
+      <p>On identifiers: Google uses them to match your product against its product knowledge graph. The accepted types are <code>gtin8</code>, <code>gtin12</code>, <code>gtin13</code>, <code>gtin14</code> (use the generic <code>gtin</code> property if you're unsure of the format), <code>mpn</code> (Manufacturer Part Number), and <code>brand</code>. The strongest signal is a GTIN — it's globally unique and unambiguous. If you don't have a GTIN, <code>brand</code> + <code>mpn</code> together are the accepted fallback. Brand alone is the weakest and should only be used when neither GTIN nor MPN is available. Whatever you use in schema must match exactly what's in your Merchant Center feed.</p>
+      <p>A separate point on <code>sku</code>: the <code>sku</code> property in schema is an internal identifier — your own stock code. Google does not use it for product matching or rich results eligibility. It does not replace GTIN or MPN. However, your Merchant Center feed uses <code>id</code> as its primary item identifier, and many teams map their internal SKU to that field. If the SKU in your schema doesn't match the item <code>id</code> in your feed, you're not breaking rich results — but you are making it harder to reconcile Search Console data, feed errors, and on-page schema issues against each other. Keep them consistent.</p>
+
+      <div class="post-callout">For a full breakdown of identifier types, what each field does, and what breaks at scale — see <a href="/notes/product-identifiers-seo/">Product Identifiers for SEO: GTIN, MPN, SKU and What Google Actually Uses</a>.</div>
+
+      <h3>3. Variant-level Shopping features</h3>
+      <p>Colour swatches, size selectors, and variant-specific pricing in Shopping results. Requires: <a href="/product-variants-schema/">ProductGroup with hasVariant</a>, where each variant is a separate <code>Product</code> node with its own <code>Offer</code>, image, and identifier. This is where most enterprise sites leave visible CTR gains on the table.</p>
+
+      <h3>4. Shipping and returns annotations</h3>
+      <p>Estimated delivery dates and return policy information displayed directly in Shopping results. Requires: <code>ShippingDetails</code> (<code>shippingRate</code> + <code>deliveryTime</code>) and <code>ReturnPolicy</code> (<code>returnPolicyCategory</code> + <code>merchantReturnDays</code>). The lowest implementation effort of the four. Most competitors don't have it. If you have a consistent shipping and returns policy, this is a same-sprint win.</p>
+
+      <h2 id="prioritisation">The prioritisation order</h2>
+
+      <p>If you're deciding where to spend implementation effort, this is the sequence:</p>
+
+      <div class="priority-grid">
+        <div class="priority-card">
+          <p class="priority-card-num">Priority 1</p>
+          <h3>Product + Offer with required properties</h3>
+          <p>No price, no rich results. Get this right across 100% of PDPs before doing anything else. Required: <code>name</code>, <code>image</code>, <code>offers</code> with <code>price</code>, <code>priceCurrency</code>, <code>availability</code>.</p>
+          <p>If your template is missing any of these on any page type — bundle pages, gift cards, pre-order items — fix that first.</p>
+          <p>On editorial or review pages rather than direct purchase pages, use <a href="/product-snippet-schema/">Product Snippet schema</a> instead. <a href="/product-snippet-schema-generator/">Generate it here</a>.</p>
+        </div>
+        <div class="priority-card">
+          <p class="priority-card-num">Priority 2</p>
+          <h3>ShippingDetails + ReturnPolicy</h3>
+          <p>Low implementation cost, direct SERP feature. Most competitors don't have it.</p>
+          <p>Two properties trigger delivery date annotations: <code>shippingRate</code> and <code>deliveryTime</code>. The return policy annotation requires <code>returnPolicyCategory</code> and <code>merchantReturnDays</code>. Neither requires a dev sprint if your shipping and returns policy is consistent.</p>
+        </div>
+        <div class="priority-card">
+          <p class="priority-card-num">Priority 3</p>
+          <h3>ProductGroup + hasVariant</h3>
+          <p>High value for variant-heavy catalogues. Technically more complex. The payoff is colour swatches and size-specific pricing in Shopping, and better Google understanding of which variant maps to which query.</p>
+          <p>Start with your highest-traffic categories before rolling out site-wide.</p>
+          <p>Full implementation guide: <a href="/product-variants-schema/">Product Variants Schema Markup</a>.</p>
+        </div>
+        <div class="priority-card">
+          <p class="priority-card-num">Priority 4</p>
+          <h3>BreadcrumbList + AggregateRating</h3>
+          <p><strong>BreadcrumbList:</strong> Low effort, improves SERP display, helps Google understand site hierarchy. Every page template should have this.</p>
+          <p><strong>AggregateRating:</strong> Only implement if you have genuine first-party reviews. Google has penalised sites for manipulative use. If you're importing third-party scores and displaying them as your own, don't.</p>
+        </div>
+      </div>
+
+      <h2 id="freshness">The price and availability freshness problem</h2>
+
+      <p>This is the most common cause of schema that validates but doesn't perform.</p>
+
+      <p>Google's product data quality guidelines require that the price and availability in your schema match what a user sees when they land on the page. If your schema says £89 and the page shows £79 because of a sale that went live this morning, that's a mismatch. Google will suppress rich results for pages where the data doesn't match. In some cases it will issue a manual action.</p>
+
+      <p>At enterprise scale, this happens constantly:</p>
+      <ul>
+        <li>Sale prices go live before schema is updated</li>
+        <li>Flash promotions change the displayed price without touching the JSON-LD</li>
+        <li>Stock status changes to <code>OutOfStock</code> but the schema still says <code>InStock</code></li>
+        <li>Prices are hardcoded in schema templates rather than pulled dynamically from the product data layer</li>
+      </ul>
+
+      <p>The fix is not complicated, but it requires a decision: either your schema is generated dynamically from the same data source as the page, or you accept that there will be a lag and build a monitoring workflow to catch mismatches.</p>
+
+      <div class="post-callout-warn">
+        <strong>The worst pattern:</strong> static JSON-LD embedded in page templates. Static schema becomes stale. On a site with daily price changes and inventory updates, static schema is not a solution.
+      </div>
+
+      <h2 id="product-vs-productgroup">Product vs ProductGroup: the decision at scale</h2>
+
+      <p>The full breakdown, with implementation examples and the most common mistakes by page type, is in <a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup Schema: When to Use Which</a>.</p>
+
+      <p>The summary for scale:</p>
+
+      <p>Use <strong>Product</strong> on every PDP. Always.</p>
+
+      <p>Use <strong>ProductGroup</strong> wrapping multiple <code>Product hasVariant</code> nodes when:</p>
+      <ul>
+        <li>The product has selectable variants a shopper chooses between (colour, size, material)</li>
+        <li>Each variant has a distinct URL or at minimum a distinct SKU</li>
+        <li>You want Google to surface the right variant for variant-specific queries</li>
+      </ul>
+
+      <p>Do not use <strong>ProductGroup</strong> when:</p>
+      <ul>
+        <li>The product has no variants</li>
+        <li>You're wrapping everything in ProductGroup because you read that it's better (it isn't, by default)</li>
+      </ul>
+
+      <div class="post-callout">
+        The most common mistake at scale: a single template that wraps all products in ProductGroup regardless of whether they have variants. This passes validation, produces no errors, and loses you rich results on every single-SKU product.
+      </div>
+
+      <h2 id="deprioritise">What to deprioritise</h2>
+
+      <p><strong>FAQ schema on PDPs.</strong> Google deprecated FAQ rich results for most pages in 2023. FAQ schema on product pages no longer produces the expandable rich result it used to. It adds weight to your JSON-LD for no SERP benefit.</p>
+
+      <p><strong>Speakable.</strong> Not widely used, no measurable impact on standard SERP features. Skip it.</p>
+
+      <p><strong>VideoObject on PDPs.</strong> Only worth implementing if video is central to the product experience and the content is unique per product. A generic product demo video embedded via YouTube does not justify VideoObject implementation across your catalogue.</p>
+
+      <p><strong>ItemList / Carousel on category pages.</strong> Google's guidance here has been inconsistent. The carousel rich result for product listings is rarely triggered in practice. The effort is better spent on PDP coverage.</p>
+
+      <div class="post-callout">
+        Not sure which schema type applies to your use case? <a href="/schema-comparison-tool/">Compare schema types side by side</a> or <a href="/schema-markup-visualizer/">visualise what Google sees in your existing markup</a>.
+      </div>
+
+      <h2 id="alignment">The three-layer alignment problem</h2>
+
+      <p>Your product data reaches Google through three distinct channels: the structured data on the page, your Merchant Center feed, and the visible content on the PDP itself.</p>
+
+      <p>When all three agree — the page shows £89, the schema says £89, the feed says £89 — Google has high confidence. When they disagree, Google has a trust problem.</p>
+
+      <p>The alignment layer is where most enterprise schema implementations break down. Not because the schema is wrong, but because the schema, the feed, and the page are all pulling from different data sources on different update schedules.</p>
+
+            <div class="post-diagram" style="padding:28px 24px 20px">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-4);margin-bottom:20px">Three-layer alignment: aligned vs misaligned</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:left">
+
+          <!-- ALIGNED -->
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:#166534;background:#f0fdf4;border:1px solid #86efac;border-radius:99px;padding:3px 12px;display:inline-block;margin-bottom:14px">✓ Aligned — Google has confidence</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:4px">PDP content</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1)">£89</div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#f0fdf4"/><path d="M5.5 10.5l3 3 6-6" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="text-align:center;color:var(--text-4);font-size:18px;line-height:1">↕</div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:4px">Schema markup</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1)">"price": "89"</div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#f0fdf4"/><path d="M5.5 10.5l3 3 6-6" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="text-align:center;color:var(--text-4);font-size:18px;line-height:1">↕</div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:4px">Merchant Center feed</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1)">£89</div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#f0fdf4"/><path d="M5.5 10.5l3 3 6-6" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- MISALIGNED -->
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:#991b1b;background:#fef2f2;border:1px solid #fca5a5;border-radius:99px;padding:3px 12px;display:inline-block;margin-bottom:14px">✗ Misaligned — rich results suppressed</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:4px">PDP content</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#dc2626">£79 <span style="font-size:13px;font-weight:500;color:var(--text-4)">(sale price)</span></div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#fef2f2"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" stroke="#991b1b" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div style="text-align:center;color:#fca5a5;font-size:18px;line-height:1">↕</div>
+              <div style="background:var(--surface);border:1px solid #fca5a5;border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:4px">Schema markup</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#dc2626">"price": "89" <span style="font-size:13px;font-weight:500;color:var(--text-4)">(stale)</span></div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#fef2f2"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" stroke="#991b1b" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div style="text-align:center;color:var(--text-4);font-size:18px;line-height:1">↕</div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:4px">Merchant Center feed</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1)">£89</div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#f0fdf4"/><path d="M5.5 10.5l3 3 6-6" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="post-diagram-caption" style="margin-top:16px">When PDP content, schema, and Merchant Center feed disagree on price, Google suppresses rich results. The mismatch doesn't have to be on all three — one discrepancy is enough.</div>
+      </div>
+
+<p>The practical check: take a sample of 20 high-traffic PDPs. Pull the price from the rendered page. Pull the price from the schema. Pull the price from the Merchant Center feed. If these three numbers are not identical for every product in the sample, you have a data alignment problem that no amount of schema optimisation will fix.</p>
+
+      <h2 id="governance">Governance: keeping it accurate at scale</h2>
+
+      <p>Schema decays. Platforms get updated, templates get modified, new page types get added. The schema that was accurate when it was implemented is not guaranteed to be accurate six months later.</p>
+
+      <p>A minimal governance workflow for enterprise e-commerce:</p>
+
+      <ul>
+        <li><strong>Weekly:</strong> Check Search Console's Rich Results report for items with issues. Investigate any new error types — they usually indicate a template change.</li>
+        <li><strong>Monthly:</strong> Pull a crawl sample of PDPs and compare schema price and availability against the live page. Flag mismatches. Any mismatch rate above 1–2% warrants a template audit.</li>
+        <li><strong>On every platform update or template change:</strong> Run the Rich Results Test on representative page types before and after. Add this to your QA checklist. It takes five minutes and has caught breaking changes that would have taken weeks to discover through Search Console.</li>
+        <li><strong>On pricing or promotional changes:</strong> Confirm with the platform team that price changes in the product management system propagate to schema generation in the same deployment. If they don't, flag this as a known risk and document the lag.</li>
+      </ul>
+
+      <div class="post-callout">
+        All the <a href="/ecommerce-schema-generator/">schema generators on this site</a> produce valid, Google-compliant JSON-LD you can use as a reference when auditing your templates.
+      </div>
+
+      <h2 id="ai-overviews">Schema and AI Overviews</h2>
+
+      <p>Google is using structured data as a confidence signal for AI-generated responses, not just for traditional rich results. Pages with accurate, complete product schema are better candidates for inclusion in Shopping-related AI Overviews.</p>
+
+      <p>This doesn't change the implementation priorities above. It reinforces them. Accurate price, availability, GTIN, and shipping data are exactly the signals AI evaluation uses when deciding whether to cite a product page.</p>
+
+      <p>What it adds: the importance of GTIN. AI systems and Google Shopping both use GTIN to match products across sources. If your schema includes a correct GTIN (EAN, UPC, or the generic <code>gtin</code> property), Google can verify your product against its product knowledge graph. Sites without GTIN are relying on Google matching via name and brand alone, which is less precise and less likely to surface in comparison contexts.</p>
+
+      <p>For a full picture of how AI agents evaluate product data — across schema, Merchant Center, and PDP content — see <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data</a>.</p>
+
+      <h2 id="audit-checklist">The implementation audit checklist</h2>
+
+      <p>Before adding anything new, audit what you have:</p>
+
+      <ul class="checklist">
+        <li><span class="checklist-num">1</span>Does every PDP have a <code>Product</code> entity with <code>name</code>, <code>image</code>, and <code>offers</code>?</li>
+        <li><span class="checklist-num">2</span>Does the <code>offers</code> node include <code>price</code>, <code>priceCurrency</code>, and <code>availability</code>?</li>
+        <li><span class="checklist-num">3</span>Is the price in the schema dynamically generated from the live product data, or hardcoded?</li>
+        <li><span class="checklist-num">4</span>Does the availability status in schema match the add-to-basket state on the page?</li>
+        <li><span class="checklist-num">5</span>If the product has variants, is <code>ProductGroup</code> implemented correctly with <code>hasVariant</code> nodes?</li>
+        <li><span class="checklist-num">6</span>Is there a GTIN property? Is it accurate?</li>
+        <li><span class="checklist-num">7</span>Are <code>ShippingDetails</code> and <code>ReturnPolicy</code> implemented?</li>
+        <li><span class="checklist-num">8</span>Is <code>BreadcrumbList</code> present on PDPs and category pages?</li>
+        <li><span class="checklist-num">9</span>Are there any deprecated schema types still in the templates (FAQ on PDPs, Speakable)?</li>
+        <li><span class="checklist-num">10</span>When did someone last check that schema output matches page content for a sample of pages?</li>
+      </ul>
+
+      <p>Ten questions. Most enterprise teams can't answer all of them. The ones they can't answer are the implementation priorities.</p>
+
+      <div class="faq-block">
+        <h2>Frequently asked questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-q">Does Google guarantee rich results if my schema is valid?</div>
+          <div class="faq-a">No. Valid schema makes you eligible for rich results. It doesn't guarantee them. Google decides whether to show rich results based on quality signals beyond the markup itself, including content quality, page experience, and data accuracy. Validation is a necessary condition, not a sufficient one.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How do I check if my schema is actually being used by Google?</div>
+          <div class="faq-a">Search Console's Rich Results report shows pages Google has detected rich result eligibility for and pages with issues. The URL Inspection tool shows what Google last crawled and what structured data it found. Neither tells you whether a specific rich result appeared in search for a specific query — for that, track rich result appearance rates against impressions in GSC.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What's the difference between Merchant Listing and Product Snippet schema?</div>
+          <div class="faq-a"><a href="/merchant-listing-schema/">Merchant Listing schema</a> is for pages where users can directly purchase the product. It enables price, availability, and shipping annotations in Google Shopping and organic results. <a href="/product-snippet-schema/">Product Snippet schema</a> is for editorial pages like reviews and comparison articles. On a PDP, you want Merchant Listing.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Should I implement schema on category pages?</div>
+          <div class="faq-a">BreadcrumbList yes, always. Product/ItemList on category pages is technically supported but rarely triggers carousel rich results in practice. The effort is usually better spent on PDP coverage.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">My schema passes Rich Results Test but I'm not seeing rich results. Why?</div>
+          <div class="faq-a">Several possible causes: the page isn't indexed, the page doesn't meet Google's content quality threshold for rich results, the data doesn't match the page content (triggering suppression), or the rich result type requires a minimum volume of impressions before it appears consistently. Check Search Console for manual actions and review the Rich Results report for per-URL issues.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How often should I audit schema on a large ecommerce site?</div>
+          <div class="faq-a">Monthly for a sample check, plus triggered audits after any platform update or template change. The schema implementation is only as accurate as your last deployment. Treat it like any other technical SEO signal that needs monitoring, not a one-time implementation task.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Does schema markup help with AI Overviews?</div>
+          <div class="faq-a">Google uses structured data as a confidence signal when generating AI responses. Complete, accurate product schema — particularly price, availability, and GTIN — increases the likelihood your product pages are cited in Shopping-related AI Overviews. It doesn't guarantee inclusion, but missing schema removes you from consideration. See <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization</a> for the full picture.</div>
+        </div>
+      </div>
+
+      <div class="sources">
+        <h2>Sources and further reading</h2>
+        <ul>
+          <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/specialty/ecommerce/include-structured-data-relevant-to-ecommerce" target="_blank" rel="noopener">Structured Data for Ecommerce Sites</a> — official documentation on supported schema types</li>
+          <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/product-variants" target="_blank" rel="noopener">Product Variant Structured Data</a> — ProductGroup and hasVariant implementation guide</li>
+          <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/product" target="_blank" rel="noopener">Product rich results</a> — required and recommended properties</li>
+          <li><strong>MagsTags:</strong> <a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup Schema: When to Use Which</a> — implementation guide with examples by page type</li>
+          <li><strong>MagsTags:</strong> <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization</a> — what AI agents evaluate in your product data</li>
+          <li><strong>Schema.org:</strong> <a href="https://schema.org/Product" target="_blank" rel="noopener">Product type reference</a> — full property list</li>
+          <li><strong>Schema.org:</strong> <a href="https://schema.org/ProductGroup" target="_blank" rel="noopener">ProductGroup type reference</a> — variant grouping specification</li>
+        </ul>
+      </div>
+
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+    <nav class="ct-toc" aria-label="Table of contents">
+      <div class="ct-toc-label">On this page</div>
+      <ol class="ct-toc-list">
+        <li><a href="#valid-vs-effective">Valid vs effective schema</a></li>
+        <li><a href="#what-earns-rich-results">What earns rich results</a></li>
+        <li><a href="#prioritisation">Prioritisation order</a></li>
+        <li><a href="#freshness">The freshness problem</a></li>
+        <li><a href="#product-vs-productgroup">Product vs ProductGroup</a></li>
+        <li><a href="#deprioritise">What to deprioritise</a></li>
+        <li><a href="#alignment">Three-layer alignment</a></li>
+        <li><a href="#governance">Governance</a></li>
+        <li><a href="#ai-overviews">AI Overviews</a></li>
+        <li><a href="#audit-checklist">Audit checklist</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </nav>
+
+  </div>
+</div>
+
+<script src="/header.js"></script>
+<footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+  </footer>
+<script src="/cookie-consent.js"></script>
+<script>
+(function() {
+  var ids = ['valid-vs-effective','what-earns-rich-results','prioritisation','freshness','product-vs-productgroup','deprioritise','alignment','governance','ai-overviews','audit-checklist'];
+  var links = document.querySelectorAll('.ct-toc-list a');
+  if (!links.length) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        links.forEach(function(l) { l.classList.remove('active'); });
+        var active = document.querySelector('.ct-toc-list a[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  ids.forEach(function(id) { var el = document.getElementById(id); if (el) observer.observe(el); });
+})();
+</script>
+</body>
+</html>

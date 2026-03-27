@@ -470,6 +470,7 @@
                 <div class="form-group">
                   <label class="form-label">GTIN Type</label>
                   <select id="ml-gtin-type" onchange="onGtinTypeChange(this)">
+                    <option value="gtin" selected>GTIN (generic — recommended if unsure)</option>
                     <option value="gtin13">GTIN-13 (EAN)</option>
                     <option value="gtin12">GTIN-12 (UPC)</option>
                     <option value="gtin8">GTIN-8</option>
@@ -1295,7 +1296,7 @@
       '</div>' +
       '<div class="grid-3" style="margin-bottom:12px">' +
         '<div class="form-group"><label class="form-label">MPN</label><input type="text" data-f="vmpn" placeholder="Part No." oninput="generate()"></div>' +
-        '<div class="form-group"><label class="form-label">GTIN Type</label><select data-f="vgtin-type" onchange="onGtinTypeChange(this)"><option value="gtin13">GTIN-13</option><option value="gtin12">GTIN-12</option><option value="gtin8">GTIN-8</option><option value="gtin14">GTIN-14</option></select></div>' +
+        '<div class="form-group"><label class="form-label">GTIN Type</label><select data-f="vgtin-type" onchange="onGtinTypeChange(this)"><option value="gtin" selected>GTIN (generic)</option><option value="gtin13">GTIN-13</option><option value="gtin12">GTIN-12</option><option value="gtin8">GTIN-8</option><option value="gtin14">GTIN-14</option></select></div>' +
         '<div class="form-group"><label class="form-label">GTIN Value</label><input type="text" data-f="vgtin" data-vtype="gtin" onblur="validateField(this)" placeholder="0123456789012" oninput="generate()"></div>' +
       '</div>' +
       '<div class="grid-3" style="margin-bottom:4px">' +
