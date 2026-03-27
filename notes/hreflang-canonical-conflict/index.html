@@ -134,7 +134,7 @@
 
       <p>Google's position is clear: hreflang annotations on a non-canonical page are discarded. When Googlebot encounters a page where the <code>&lt;link rel="canonical"&gt;</code> tag points to a different URL, any hreflang on that page is treated as though it doesn't exist.</p>
 
-      <p>The implication is broader than it first appears. Hreflang requires reciprocal annotations — every page in a cluster must reference every other page, and be referenced back. If one page in the cluster has a canonical conflict and its annotations are discarded, the entire cluster now has broken return tags pointing to a page that isn't contributing valid hreflang data. Google is then looking at a set of annotations with gaps it didn't expect. It makes its own call about which version to serve, usually defaulting to whatever it considers authoritative based on other signals.</p>
+      <p>The implication is broader than it first appears. Hreflang requires reciprocal annotations, every page in a cluster must reference every other page, and be referenced back. If one page in the cluster has a canonical conflict and its annotations are discarded, the entire cluster now has broken return tags pointing to a page that isn't contributing valid hreflang data. Google is then looking at a set of annotations with gaps it didn't expect. It makes its own call about which version to serve, usually defaulting to whatever it considers authoritative based on other signals.</p>
 
       <p>The end result: your regional targeting fails for that URL type, and you probably won't know until you spot unexpected language or country serving in GSC performance data.</p>
 
@@ -150,7 +150,7 @@
 
       <h3>Tracking parameters and URL variants</h3>
 
-      <p>An analytics parameter (<code>?utm_source=email</code>) or a session token gets indexed. The canonical on that URL points to the clean version. The hreflang on the parameter URL is discarded. Not a disaster by itself, but if this happens at scale — which it can on sites with poor parameter handling, you end up with a crawl budget problem layered on top of a hreflang signal problem.</p>
+      <p>An analytics parameter (<code>?utm_source=email</code>) or a session token gets indexed. The canonical on that URL points to the clean version. The hreflang on the parameter URL is discarded. Not a disaster by itself, but if this happens at scale, which it can on sites with poor parameter handling, you end up with a crawl budget problem layered on top of a hreflang signal problem.</p>
 
       <h3>URL normalisation issues</h3>
 
@@ -194,9 +194,9 @@
 
       <p>After fixing, validate in two places: crawl again to confirm canonicals are now self-referential on all hreflang pages, and check GSC's International Targeting report over the following weeks for signs of improved cluster recognition. Indexing and serving changes take time to propagate at scale. Don't expect immediate results, and don't mistake slow propagation for a continued error.</p>
 
-      <p>Hreflang and canonicals both exist to help Google make accurate decisions about your content. When they contradict each other, Google doesn't throw up its hands — it picks one. It just doesn't pick the one you'd have chosen.</p>
+      <p>Hreflang and canonicals both exist to help Google make accurate decisions about your content. When they contradict each other, Google doesn't throw up its hands, it picks one. It just doesn't pick the one you'd have chosen.</p>
 
-      <p>Building hreflang from scratch? The <a href="/hreflang-generator/">Hreflang Generator</a> produces the full bidirectional tag set for every page in your cluster — paste each block onto the right page and the network is complete.</p>
+      <p>Building hreflang from scratch? The <a href="/hreflang-generator/">Hreflang Generator</a> produces the full bidirectional tag set for every page in your cluster, paste each block onto the right page and the network is complete.</p>
 
           <a href="/notes/" class="post-back">← Back to Notes</a>
 

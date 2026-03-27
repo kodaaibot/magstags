@@ -140,7 +140,7 @@
       <div class="ct-content">
         <div class="post-body">
 
-      <p class="post-lead">Most crawl budget guides are written for sites with ten thousand pages and treat the concept as a potential future concern. If you manage a site with millions of URLs, those guides don't map to your reality. At enterprise scale, crawl budget isn't a theoretical risk — it's an active allocation problem you're solving every day, whether you know it or not.</p>
+      <p class="post-lead">Most crawl budget guides are written for sites with ten thousand pages and treat the concept as a potential future concern. If you manage a site with millions of URLs, those guides don't map to your reality. At enterprise scale, crawl budget isn't a theoretical risk, it's an active allocation problem you're solving every day, whether you know it or not.</p>
 
       <p>This is not another explainer on what crawl budget is. If you're managing a large site, you know the definition. What's often missing on this topic is the operational layer: how you actually diagnose crawl waste, where the real decisions get made, and how to build monitoring that surfaces problems before they cost you rankings.</p>
 
@@ -148,9 +148,9 @@
 
       <p>Google does not crawl every URL it knows about with equal frequency. It allocates crawl resources dynamically, based on two factors: <strong>crawl rate limit</strong> (how fast it can fetch pages without overloading your server) and <strong>crawl demand</strong> (how much it believes your content is worth revisiting, based on PageRank, update frequency, and historical crawl value).</p>
 
-      <p>For a site with ten million URLs, a crawl budget of 500,000 pages per day means Google is visiting 5% of your inventory on any given day. That's not a failure — it's a mathematical reality of how crawling works at scale. The question is: which 5%? And more importantly, are the right pages in that 5%?</p>
+      <p>For a site with ten million URLs, a crawl budget of 500,000 pages per day means Google is visiting 5% of your inventory on any given day. That's not a failure, it's a mathematical reality of how crawling works at scale. The question is: which 5%? And more importantly, are the right pages in that 5%?</p>
 
-      <p>If Googlebot is spending 40% of its daily crawl on parametric filter combinations that generate no meaningful search traffic, it is not spending that capacity on your new product launches, your updated category pages, or the editorial content you published last week. That is a direct, measurable impact on indexation speed — and therefore on organic revenue.</p>
+      <p>If Googlebot is spending 40% of its daily crawl on parametric filter combinations that generate no meaningful search traffic, it is not spending that capacity on your new product launches, your updated category pages, or the editorial content you published last week. That is a direct, measurable impact on indexation speed, and therefore on organic revenue.</p>
 
       <p>The first mindset shift for enterprise crawl budget management is this: you are not waiting for Google to crawl your site. You are making decisions, through architecture and configuration, about which pages get prioritised. Every robots.txt directive, every canonical tag, every internal link pattern is a crawl budget decision.</p>
 
@@ -158,18 +158,18 @@
 
       <p>This distinction is consistently absent from guides on this topic, and it causes real diagnostic confusion.</p>
 
-      <p><strong>Crawl budget</strong> determines whether Googlebot fetches a URL. <strong>Indexation budget</strong> — a less commonly used but useful mental model — determines whether Google keeps a URL in the index after fetching it. They're connected, but the failure modes are different.</p>
+      <p><strong>Crawl budget</strong> determines whether Googlebot fetches a URL. <strong>Indexation budget</strong> (a less commonly used but useful mental model) determines whether Google keeps a URL in the index after fetching it. They're connected, but the failure modes are different.</p>
 
-      <p>A page can be crawled frequently and never indexed, if Google determines the content is low-quality, near-duplicate, or not substantially different from a canonical version it already holds. This shows up in Google Search Console as "Crawled — currently not indexed" — one of the most frustrating statuses precisely because it tells you the crawl is working, but something upstream of indexation is wrong.</p>
+      <p>A page can be crawled frequently and never indexed, if Google determines the content is low-quality, near-duplicate, or not substantially different from a canonical version it already holds. This shows up in Google Search Console as "Crawled (currently not indexed") one of the most frustrating statuses precisely because it tells you the crawl is working, but something upstream of indexation is wrong.</p>
 
       <p>Conversely, a page can be indexed but crawled infrequently, meaning its content in the index is stale. This matters especially for product pages with changing prices, availability, or structured data, and for news sites where freshness is a ranking signal.</p>
 
       <p>When you're diagnosing a crawl budget problem, you need to know which of these failure modes you're dealing with before you can fix it:</p>
 
       <ul>
-        <li><strong>"Discovered — currently not indexed"</strong>: Google knows the URL exists but hasn't crawled it yet. This is a crawl budget problem — the URL isn't getting enough crawl frequency.</li>
-        <li><strong>"Crawled — currently not indexed"</strong>: Google fetched the page but decided not to index it. This is a content quality or duplicate content problem, not a crawl budget problem in the traditional sense.</li>
-        <li><strong>Indexed but stale</strong>: The page is in the index but reflects an old version. This is a crawl demand problem — Google doesn't consider the content worth revisiting frequently enough.</li>
+        <li><strong>"Discovered, currently not indexed"</strong>: Google knows the URL exists but hasn't crawled it yet. This is a crawl budget problem, the URL isn't getting enough crawl frequency.</li>
+        <li><strong>"Crawled, currently not indexed"</strong>: Google fetched the page but decided not to index it. This is a content quality or duplicate content problem, not a crawl budget problem in the traditional sense.</li>
+        <li><strong>Indexed but stale</strong>: The page is in the index but reflects an old version. This is a crawl demand problem, Google doesn't consider the content worth revisiting frequently enough.</li>
       </ul>
 
       <p>Treating all three as "crawl budget issues" and responding with the same solutions (robots.txt, sitemaps, canonicals) is a common mistake that wastes engineering time without addressing the root cause.</p>
@@ -178,7 +178,7 @@
 
       <p>Google Search Console's Crawl Stats report is a useful starting point. It shows total daily crawl requests, file types crawled, response code distribution, and how Googlebot time is distributed across your site. The problem is that it's sampled data. At scale, sampling introduces material gaps between what GSC shows and what is actually happening.</p>
 
-      <p>Server logs are not sampled. Every request Googlebot makes to your server generates a log entry — the URL, the timestamp, the response code, the time to first byte. If you're managing crawl budget seriously on a large site, logs are the primary diagnostic tool, and GSC is a sanity check.</p>
+      <p>Server logs are not sampled. Every request Googlebot makes to your server generates a log entry, the URL, the timestamp, the response code, the time to first byte. If you're managing crawl budget seriously on a large site, logs are the primary diagnostic tool, and GSC is a sanity check.</p>
 
       <h3>What to look for in crawl logs</h3>
 
@@ -186,7 +186,7 @@
 
       <ol>
         <li>Export Googlebot user-agent requests from your logs for a rolling 30-day window</li>
-        <li>Segment by URL pattern — category pages, product pages, filter/facet URLs, pagination, static assets, error pages, redirects</li>
+        <li>Segment by URL pattern, category pages, product pages, filter/facet URLs, pagination, static assets, error pages, redirects</li>
         <li>Calculate crawl frequency per segment (requests per URL per day)</li>
         <li>Map those frequencies against your business priority: which segments drive revenue, which drive traffic, which are low value</li>
       </ol>
@@ -194,12 +194,12 @@
       <p>On sites that haven't actively managed crawl budget, this analysis regularly surfaces a mismatch: high-value pages crawled less often than low-value URL permutations. If that gap exists on your site, that's your starting point.</p>
 
       <div class="post-callout">
-        <strong>Watch your response code mix:</strong> In a well-configured large site, Googlebot's requests should resolve cleanly. A crawl log dominated by 3xx responses — particularly 302s against JS and CSS assets — almost always means static files are being served from temporarily redirected URLs rather than stable, cacheable ones. That's an infrastructure configuration problem, not a content problem, and it burns crawl budget on requests that contribute nothing to indexation.
+        <strong>Watch your response code mix:</strong> In a well-configured large site, Googlebot's requests should resolve cleanly. A crawl log dominated by 3xx responses (particularly 302s against JS and CSS assets) almost always means static files are being served from temporarily redirected URLs rather than stable, cacheable ones. That's an infrastructure configuration problem, not a content problem, and it burns crawl budget on requests that contribute nothing to indexation.
       </div>
 
-      <p>Server response time is a direct input to crawl rate. Google's own documentation states that if a site "responds quickly for a while, the limit goes up" and "if the site slows down or responds with server errors, the limit goes down and Google crawls less." Your server logs capture the response times Googlebot actually experiences — which can differ from what your synthetic monitoring reports, since Googlebot accesses from Google's distributed infrastructure at unpredictable times. Sustained high response times on specific URL segments will suppress crawl rate on those paths.</p>
+      <p>Server response time is a direct input to crawl rate. Google's own documentation states that if a site "responds quickly for a while, the limit goes up" and "if the site slows down or responds with server errors, the limit goes down and Google crawls less." Your server logs capture the response times Googlebot actually experiences, which can differ from what your synthetic monitoring reports, since Googlebot accesses from Google's distributed infrastructure at unpredictable times. Sustained high response times on specific URL segments will suppress crawl rate on those paths.</p>
 
-      <p>For sites using a CDN, it's worth checking whether Googlebot is consistently hitting origin or being served cached responses. Some CDN configurations exclude Googlebot from caching rules by user agent, which means every Googlebot request goes to origin rather than being served from cache — increasing origin load and potentially suppressing crawl rate. This isn't universally the case, but it's worth verifying in your CDN configuration if you're seeing unexpectedly high origin load during crawl windows.</p>
+      <p>For sites using a CDN, it's worth checking whether Googlebot is consistently hitting origin or being served cached responses. Some CDN configurations exclude Googlebot from caching rules by user agent, which means every Googlebot request goes to origin rather than being served from cache, increasing origin load and potentially suppressing crawl rate. This isn't universally the case, but it's worth verifying in your CDN configuration if you're seeing unexpectedly high origin load during crawl windows.</p>
 
       <h2 id="crawl-budget-killers">The seven biggest crawl budget killers at enterprise scale</h2>
 
@@ -207,9 +207,9 @@
 
       <h3>1. Faceted navigation generating unbounded URL space</h3>
 
-      <p>This is the most common and most severe crawl waste problem on large e-commerce and marketplace sites. A product category with ten filter dimensions — colour, size, brand, material, price range, availability, rating, shipping, region, condition — can mathematically generate billions of URL permutations. Even with a modest inventory, a faceted nav that appends parameters to URLs creates an indexable URL space that is orders of magnitude larger than your actual product count.</p>
+      <p>This is the most common and most severe crawl waste problem on large e-commerce and marketplace sites. A product category with ten filter dimensions, colour, size, brand, material, price range, availability, rating, shipping, region, condition, can mathematically generate billions of URL permutations. Even with a modest inventory, a faceted nav that appends parameters to URLs creates an indexable URL space that is orders of magnitude larger than your actual product count.</p>
 
-      <p>Googlebot discovers these URLs primarily through internal links — and sometimes through sitemaps, if filter URLs have been inadvertently included (which happens more than it should). Each crawl request on a near-duplicate filter page is a request that isn't going to a real product page or a high-value category.</p>
+      <p>Googlebot discovers these URLs primarily through internal links, and sometimes through sitemaps, if filter URLs have been inadvertently included (which happens more than it should). Each crawl request on a near-duplicate filter page is a request that isn't going to a real product page or a high-value category.</p>
 
       <p>The decision framework here is more nuanced than "block faceted URLs." Some filter combinations do target real search queries with meaningful volume. <code>/shoes/running/womens/</code> is a legitimate category. <code>/shoes/?colour=teal&size=7&brand=nike&sort=price-asc&page=3</code> is not. The diagnostic question is: does this URL combination appear in keyword research as a search query someone actually types? If yes, it may deserve to be crawlable and indexable. If no, it is crawl waste.</p>
 
@@ -218,11 +218,11 @@
       <p>The technical implementation follows from that answer:</p>
 
       <ul>
-        <li><strong>Block via robots.txt</strong>: appropriate for parameter combinations that have no search demand and no internal navigation value. Use with caution — robots.txt blocking prevents crawling but does not remove URLs from the index if they're already there.</li>
+        <li><strong>Block via robots.txt</strong>: appropriate for parameter combinations that have no search demand and no internal navigation value. Use with caution, robots.txt blocking prevents crawling but does not remove URLs from the index if they're already there.</li>
         <li><strong>Canonical to the base category</strong>: appropriate for filter combinations that may have some utility for users but don't warrant their own index entry. Googlebot will still crawl these occasionally, but canonicals signal that the base category is the indexable version.</li>
         <li><strong>Noindex + follow</strong>: appropriate when the filter page has internal linking value (you want Googlebot to follow links from it) but shouldn't appear in search results itself. The page is crawled but not indexed.</li>
         <li><strong>Keep crawlable and indexable</strong>: only for filter combinations that target real search queries with measurable demand.</li>
-        <li><strong>Render filter state via JavaScript only</strong>: if filters update page content without changing the URL (via JS state or hash routing), Googlebot's first-wave crawl never sees the filter URLs in the DOM and won't attempt to discover them. This is the cleanest approach for pure UX filters that have no search demand — you prevent discovery at the source rather than managing it downstream. The caveat: if filter URLs are shareable or externally linked, they'll eventually be discovered through other means and you'll need a fallback handling strategy.</li>
+        <li><strong>Render filter state via JavaScript only</strong>: if filters update page content without changing the URL (via JS state or hash routing), Googlebot's first-wave crawl never sees the filter URLs in the DOM and won't attempt to discover them. This is the cleanest approach for pure UX filters that have no search demand, you prevent discovery at the source rather than managing it downstream. The caveat: if filter URLs are shareable or externally linked, they'll eventually be discovered through other means and you'll need a fallback handling strategy.</li>
       </ul>
 
       <div class="post-callout-warn">
@@ -231,37 +231,37 @@
 
       <h3>2. JavaScript rendering queue delay</h3>
 
-      <p>Google's crawling infrastructure operates in two waves. In the first wave, Googlebot fetches the raw HTML of a page. In the second wave — which happens on a separate queue, using a separate pool of resources — it renders the JavaScript and processes the fully-rendered DOM. The gap between these two waves can be hours, days, or in some documented cases, weeks.</p>
+      <p>Google's crawling infrastructure operates in two waves. In the first wave, Googlebot fetches the raw HTML of a page. In the second wave, which happens on a separate queue, using a separate pool of resources, it renders the JavaScript and processes the fully-rendered DOM. The gap between these two waves can be hours, days, or in some documented cases, weeks.</p>
 
-      <p>For a site where critical content or internal links exist only in the rendered DOM — not in the initial HTML — this means Googlebot may be regularly fetching pages without being able to understand their content or follow their links. The crawl is happening. The value of that crawl is not.</p>
+      <p>For a site where critical content or internal links exist only in the rendered DOM (not in the initial HTML) this means Googlebot may be regularly fetching pages without being able to understand their content or follow their links. The crawl is happening. The value of that crawl is not.</p>
 
       <p>The diagnostic for this is to compare the raw HTML response of your pages against the fully-rendered version. The fastest way to do this at scale is to use <strong>Google's Rich Results Test</strong> or the <strong>URL Inspection tool</strong> in GSC (which shows the rendered page as Googlebot sees it) against what your server actually returns in the initial HTTP response.</p>
 
-      <p>If your primary navigation, your product data, your internal links, or your structured data only exist in the rendered version and not in the initial HTML, you have a rendering problem that crawl budget configuration alone cannot solve. The fix is server-side rendering (SSR) or static site generation (SSG) for the content that matters — not workarounds at the crawl level.</p>
+      <p>If your primary navigation, your product data, your internal links, or your structured data only exist in the rendered version and not in the initial HTML, you have a rendering problem that crawl budget configuration alone cannot solve. The fix is server-side rendering (SSR) or static site generation (SSG) for the content that matters, not workarounds at the crawl level.</p>
 
       <p>For enterprise sites running React, Next.js, Angular, or similar frameworks: the default configuration of most of these frameworks serves a nearly empty HTML shell with JavaScript that populates the page client-side. Unless SSR or prerendering is explicitly implemented, Googlebot's first-wave crawl is capturing very little of your content.</p>
 
       <h3>3. Session IDs and tracking parameters in URLs</h3>
 
-      <p>Any mechanism that appends a unique identifier to a URL — session IDs, click tracking parameters, A/B test variants, affiliate codes, UTM parameters when they're accidentally included in internal links — creates duplicate crawlable URL space. Each variant is a distinct URL from Googlebot's perspective, even if the content is identical.</p>
+      <p>Any mechanism that appends a unique identifier to a URL, session IDs, click tracking parameters, A/B test variants, affiliate codes, UTM parameters when they're accidentally included in internal links, creates duplicate crawlable URL space. Each variant is a distinct URL from Googlebot's perspective, even if the content is identical.</p>
 
       <p>The fix for tracking parameters is to ensure they're stripped or canonicalized consistently. Internal links should never include UTM parameters. Session IDs in URLs should be replaced with cookie-based session management wherever possible. If parameters must exist for technical reasons, they should be handled via canonical tags or robots.txt depending on whether they affect page content.</p>
 
       <h3>4. Redirect chains consuming crawl capacity</h3>
 
-      <p>Every redirect hop in a chain consumes a separate crawl request. A URL that redirects through three intermediate URLs before reaching its destination costs four crawl requests to resolve. At scale — when you have thousands of pages with multi-hop redirect chains, often the result of historical migrations or CMS slug changes — this is significant crawl waste.</p>
+      <p>Every redirect hop in a chain consumes a separate crawl request. A URL that redirects through three intermediate URLs before reaching its destination costs four crawl requests to resolve. At scale, when you have thousands of pages with multi-hop redirect chains, often the result of historical migrations or CMS slug changes, this is significant crawl waste.</p>
 
-      <p>The audit is straightforward: crawl your site and filter for redirect chains of depth 2 or more. The fix is equally straightforward in principle: collapse chains to direct 301 redirects from original URL to final destination. The challenge in enterprise environments is that historical redirect chains are often distributed across different systems — application-level redirects, CDN rules, server configuration — and no single team has a complete picture.</p>
+      <p>The audit is straightforward: crawl your site and filter for redirect chains of depth 2 or more. The fix is equally straightforward in principle: collapse chains to direct 301 redirects from original URL to final destination. The challenge in enterprise environments is that historical redirect chains are often distributed across different systems (application-level redirects, CDN rules, server configuration) and no single team has a complete picture.</p>
 
       <h3>5. Thin and near-duplicate pagination</h3>
 
-      <p>Paginated content — search results, category listings, blog archives — is a persistent crawl waste problem on large sites. Page 47 of a category listing has minimal unique content and minimal search value. If your pagination generates hundreds of pages per category and you have thousands of categories, you have a significant crawl budget drain from pages that will never rank and rarely get clicked.</p>
+      <p>Paginated content (search results, category listings, blog archives) is a persistent crawl waste problem on large sites. Page 47 of a category listing has minimal unique content and minimal search value. If your pagination generates hundreds of pages per category and you have thousands of categories, you have a significant crawl budget drain from pages that will never rank and rarely get clicked.</p>
 
       <p>The appropriate handling depends on whether your pagination carries unique content or internal linking value. For most e-commerce pagination, <code>rel="next"</code> and <code>rel="prev"</code> (though deprecated by Google in 2019) have been replaced with a pragmatic approach: canonicalize pagination to the root category where the paginated content is truly redundant, and noindex deep pagination pages. The first two pages of a category listing are often worth keeping indexable. Pages beyond that rarely are.</p>
 
       <h3>6. Orphaned pages with no internal links</h3>
 
-      <p>Pages that exist in your database and are included in your sitemap but have no internal links pointing to them are difficult for Googlebot to find and assign value to. At enterprise scale — particularly on platforms with complex CMS architectures, regional variants, or legacy content — orphaned page populations can be surprisingly large.</p>
+      <p>Pages that exist in your database and are included in your sitemap but have no internal links pointing to them are difficult for Googlebot to find and assign value to. At enterprise scale, particularly on platforms with complex CMS architectures, regional variants, or legacy content, orphaned page populations can be surprisingly large.</p>
 
       <p>Googlebot will crawl these if it finds them via sitemap, but without internal link signals, it has no way to evaluate their authority relative to the rest of your site. These pages also fail to pass any link equity to other pages. An orphaned page is both a crawl cost and a missed internal linking opportunity.</p>
 
@@ -269,13 +269,13 @@
 
       <h3>7. Staging, test, or development environments accessible to Googlebot</h3>
 
-      <p>This happens more often than most teams admit. A staging environment that isn't properly blocked by robots.txt or authentication — particularly if it's linked from the production site, even accidentally — becomes visible to Googlebot. If staging URLs are indexed, you now have duplicate content at scale and crawl waste on a non-production environment.</p>
+      <p>This happens more often than most teams admit. A staging environment that isn't properly blocked by robots.txt or authentication, particularly if it's linked from the production site, even accidentally, becomes visible to Googlebot. If staging URLs are indexed, you now have duplicate content at scale and crawl waste on a non-production environment.</p>
 
       <p>The diagnosis is simple: check your log files for Googlebot requests to non-production hostnames. If you see them, the remediation has three steps in order:</p>
       <ol>
-        <li><strong>Add a meta robots noindex, follow tag</strong> to all staging pages immediately. This signals to Google to drop those URLs from the index while still allowing crawling — so existing indexed pages begin de-indexing without you having to block Googlebot entirely while cleanup is in progress.</li>
-        <li><strong>Submit the staging URLs for removal</strong> via the URL Removal tool in Google Search Console to accelerate de-indexation. Don't wait for Google to discover the noindex tag organically — actively request removal for any staging URLs already appearing in the index.</li>
-        <li><strong>Apply authentication</strong> — HTTP basic auth or IP allowlist — once the index is clean. Robots.txt is not the right long-term control here: it's publicly readable, confirms the environment exists, and still allows Googlebot to attempt requests against it. Authentication blocks access entirely and removes the environment from Googlebot's discovered URL space.</li>
+        <li><strong>Add a meta robots noindex, follow tag</strong> to all staging pages immediately. This signals to Google to drop those URLs from the index while still allowing crawling, so existing indexed pages begin de-indexing without you having to block Googlebot entirely while cleanup is in progress.</li>
+        <li><strong>Submit the staging URLs for removal</strong> via the URL Removal tool in Google Search Console to accelerate de-indexation. Don't wait for Google to discover the noindex tag organically, actively request removal for any staging URLs already appearing in the index.</li>
+        <li><strong>Apply authentication</strong> (HTTP basic auth or IP allowlist) once the index is clean. Robots.txt is not the right long-term control here: it's publicly readable, confirms the environment exists, and still allows Googlebot to attempt requests against it. Authentication blocks access entirely and removes the environment from Googlebot's discovered URL space.</li>
       </ol>
       <p>Ensure staging is never linked from production, and treat crawler access control as a deployment requirement rather than something to configure after a problem surfaces.</p>
 
@@ -290,21 +290,21 @@
       <ul>
         <li><strong>Mega-menus with too much depth</strong>: if your navigation links to thousands of subcategories, Googlebot distributes link equity thinly across all of them. A flatter, more selective navigation concentrates crawl signals on your most important pages.</li>
         <li><strong>Category pages that link to filter combinations</strong>: if your category pages include links to faceted filter URLs as part of the user interface, those links are crawl signals that Googlebot will follow. This is often the primary discovery mechanism for faceted URL bloat.</li>
-        <li><strong>Pagination links to deep pages</strong>: a standard pagination pattern links from page 1 to page 2, page 2 to page 3, and so on. This means page 47 is 46 clicks deep from the category root — and therefore very low crawl priority.</li>
+        <li><strong>Pagination links to deep pages</strong>: a standard pagination pattern links from page 1 to page 2, page 2 to page 3, and so on. This means page 47 is 46 clicks deep from the category root, and therefore very low crawl priority.</li>
         <li><strong>Broken internal links</strong>: links that point to 404 or 410 pages waste crawl capacity on request resolution and then provide no crawl value downstream. They also degrade perceived site quality for Googlebot.</li>
       </ul>
 
       <div class="post-callout">
-        <strong>The hub page principle:</strong> For sites with deep content archives, hub pages — dedicated pages that aggregate and link to content within a topic cluster — serve a dual purpose. They improve user navigation and they concentrate internal link signals on the content you most want crawled and indexed. A well-structured hub page can meaningfully increase crawl frequency for the content it links to.
+        <strong>The hub page principle:</strong> For sites with deep content archives, hub pages, dedicated pages that aggregate and link to content within a topic cluster, serve a dual purpose. They improve user navigation and they concentrate internal link signals on the content you most want crawled and indexed. A well-structured hub page can meaningfully increase crawl frequency for the content it links to.
       </div>
 
       <h3>The HTML sitemap as crawl infrastructure</h3>
 
       <p>There's a principle that gets overlooked in most internal linking discussions: <strong>your homepage, category pages, and navigation should not function as the sole mechanism for distributing link equity across a million-page site.</strong> No navigation can link to every URL. No homepage can carry crawl signals to the long tail. If your only route to deep pages is through a chain of navigation clicks, your deep pages are structurally deprived of crawl frequency.</p>
 
-      <p>This is where the HTML sitemap earns its place as a serious technical asset — not the user-navigation footnote it's often treated as. The principle is simple: <strong>every URL in your XML sitemap should be reachable via at least one internal link</strong>. For pages that can't be reached through your main navigation, the HTML sitemap is the mechanism that provides that link path.</p>
+      <p>This is where the HTML sitemap earns its place as a serious technical asset, not the user-navigation footnote it's often treated as. The principle is simple: <strong>every URL in your XML sitemap should be reachable via at least one internal link</strong>. For pages that can't be reached through your main navigation, the HTML sitemap is the mechanism that provides that link path.</p>
 
-      <p>A well-structured HTML sitemap gives Googlebot a single crawlable document that links directly to every significant URL on the site. It doesn't need to be exhaustive for very large sites — a sitemap that links to every major category, every significant subcategory, and a representative sample of deep pages does the job. The goal is to ensure no URL in your XML sitemap exists without a corresponding internal link path that Googlebot can follow.</p>
+      <p>A well-structured HTML sitemap gives Googlebot a single crawlable document that links directly to every significant URL on the site. It doesn't need to be exhaustive for very large sites, a sitemap that links to every major category, every significant subcategory, and a representative sample of deep pages does the job. The goal is to ensure no URL in your XML sitemap exists without a corresponding internal link path that Googlebot can follow.</p>
 
       <div class="post-callout-warn">
         <strong>A URL in your XML sitemap with zero internal links pointing to it is an orphan.</strong> Google may crawl it via the sitemap, but without internal link signals it has no authority context, no crawl priority inheritance, and no equity flow. If it deserves to be in your sitemap, it deserves an internal link.
@@ -330,7 +330,7 @@
           </tr>
           <tr>
             <td>Category + multiple attributes</td>
-            <td>Rarely — check keyword data</td>
+            <td>Rarely, check keyword data</td>
             <td>Canonical to base category, or to the most specific single-attribute URL if one exists.</td>
           </tr>
           <tr>
@@ -358,17 +358,17 @@
 
       <p>The keyword data step is non-negotiable. "Women's running shoes size 8" may have enough search volume to justify a crawlable landing page. "Women's running shoes blue size 8 sort newest" does not. The decision is empirical, not intuitive.</p>
 
-      <p>For large e-commerce sites, the practical approach is to export your full parameter space, group by parameter type, and run keyword volume checks on the top combinations for each type. You don't need to check every permutation — you need to check enough to understand the demand pattern for each parameter dimension. Brand, colour, and size tend to have demand. Sort order, page number, and session identifiers never do.</p>
+      <p>For large e-commerce sites, the practical approach is to export your full parameter space, group by parameter type, and run keyword volume checks on the top combinations for each type. You don't need to check every permutation, you need to check enough to understand the demand pattern for each parameter dimension. Brand, colour, and size tend to have demand. Sort order, page number, and session identifiers never do.</p>
 
       <h2 id="monitoring-workflow">Building a crawl budget monitoring workflow</h2>
 
-      <p>Crawl budget management isn't a one-time audit. It requires ongoing monitoring because your site changes — new pages, new templates, new platform features, new marketing campaigns that generate parametric URLs — and because Googlebot's behaviour on your site shifts in response to those changes and to broader algorithm updates.</p>
+      <p>Crawl budget management isn't a one-time audit. It requires ongoing monitoring because your site changes, new pages, new templates, new platform features, new marketing campaigns that generate parametric URLs, and because Googlebot's behaviour on your site shifts in response to those changes and to broader algorithm updates.</p>
 
       <h3>Weekly checks</h3>
 
       <ul>
         <li>GSC Crawl Stats: total daily crawl requests, trend over the past 28 days. A sudden increase can indicate a new source of URL bloat. A sudden decrease can indicate a server performance issue suppressing crawl rate.</li>
-        <li>GSC Index Coverage: new entries in "Discovered — currently not indexed" or "Crawled — currently not indexed." These are early signals of either a crawl allocation problem or a content quality problem.</li>
+        <li>GSC Index Coverage: new entries in "Discovered (currently not indexed" or "Crawled) currently not indexed." These are early signals of either a crawl allocation problem or a content quality problem.</li>
         <li>Log file quick check: response code distribution for Googlebot requests. The ratio of 200s to 3xxs, 4xxs, and 5xxs should be stable. Material shifts indicate infrastructure changes affecting crawl efficiency.</li>
       </ul>
 
@@ -386,8 +386,8 @@
       <ul>
         <li>Significant drop in crawl requests without a corresponding robots.txt change</li>
         <li>Large increase in 5xx errors visible in crawl logs (indicates server capacity being hit)</li>
-        <li>Material increase in "Discovered — currently not indexed" in GSC with no corresponding content publishing activity</li>
-        <li>A platform migration, CMS upgrade, or major architecture change — any of these can introduce new URL patterns or break existing crawl configurations</li>
+        <li>Material increase in "Discovered, currently not indexed" in GSC with no corresponding content publishing activity</li>
+        <li>A platform migration, CMS upgrade, or major architecture change, any of these can introduce new URL patterns or break existing crawl configurations</li>
       </ul>
 
       <h2 id="making-the-case">Making the case for crawl budget work in enterprise organisations</h2>
@@ -396,11 +396,11 @@
 
       <p>The business case for crawl budget work rests on two arguments:</p>
 
-      <p><strong>Indexation speed = revenue timing.</strong> For an e-commerce site, a new product line that takes two weeks to be indexed instead of two days is a measurable revenue delay. For a news publisher, content that isn't crawled within hours of publication isn't competitive for breaking-news search demand. Quantifying the revenue impact of indexation lag — even roughly — converts a technical metric into a business metric that product and finance teams can evaluate.</p>
+      <p><strong>Indexation speed = revenue timing.</strong> For an e-commerce site, a new product line that takes two weeks to be indexed instead of two days is a measurable revenue delay. For a news publisher, content that isn't crawled within hours of publication isn't competitive for breaking-news search demand. Quantifying the revenue impact of indexation lag (even roughly) converts a technical metric into a business metric that product and finance teams can evaluate.</p>
 
       <p><strong>Crawl waste is server load.</strong> Every unnecessary request Googlebot makes to your server consumes bandwidth, processing capacity, and infrastructure cost. If your site serves millions of Googlebot requests per month on filter combinations that will never rank, that is a direct infrastructure cost. For engineering teams focused on performance and cost efficiency, framing crawl waste as unnecessary server load is often more persuasive than the SEO framing.</p>
 
-      <p>The implementation brief — not the audit document — is what gets this work prioritised. A brief that describes the business impact of indexation delay, estimates the engineering effort in sprint points, and defines what a successful outcome looks like is the deliverable that moves crawl budget work from the SEO backlog to the engineering roadmap.</p>
+      <p>The implementation brief (not the audit document) is what gets this work prioritised. A brief that describes the business impact of indexation delay, estimates the engineering effort in sprint points, and defines what a successful outcome looks like is the deliverable that moves crawl budget work from the SEO backlog to the engineering roadmap.</p>
 
       <div class="faq-block">
         <h2 id="faq">Frequently asked questions</h2>

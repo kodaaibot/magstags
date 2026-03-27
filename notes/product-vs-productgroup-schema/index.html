@@ -179,11 +179,11 @@
       <div class="ct-content">
         <div class="post-body">
 
-      <p>Product and ProductGroup are not interchangeable. One describes a thing you sell. The other groups variations of that thing. The distinction matters because Google uses them at different stages, for different features, and getting the choice wrong doesn't produce an error — it produces silence.</p>
+      <p>Product and ProductGroup are not interchangeable. One describes a thing you sell. The other groups variations of that thing. The distinction matters because Google uses them at different stages, for different features, and getting the choice wrong doesn't produce an error, it produces silence.</p>
 
       <p>I see this confusion constantly when auditing e-commerce structured data. A site has a product page for a running shoe that comes in six colours and four sizes. The developer marks it up as a single <code>Product</code> with one offer. Technically valid. Passes the Rich Results Test. But Google has no idea those six colours exist, which means no colour swatches in Shopping, no variant-level pricing, and no way for Google to match the right variant to the right query.</p>
 
-      <p>Alternatively, someone reads about <code>ProductGroup</code> and wraps every product on the site in it — even products with no variants at all. Also technically valid. Also a waste of complexity that Google doesn't reward.</p>
+      <p>Alternatively, someone reads about <code>ProductGroup</code> and wraps every product on the site in it, even products with no variants at all. Also technically valid. Also a waste of complexity that Google doesn't reward.</p>
 
       <p>The answer is simpler than the confusion suggests, and it comes down to one question: does this product have variants that a shopper would choose between?</p>
 
@@ -199,7 +199,7 @@
           <tbody>
             <tr>
               <td class="col-label">What it is</td>
-              <td>A single, purchasable item — one SKU, one price</td>
+              <td>A single, purchasable item, one SKU, one price</td>
               <td>A parent container grouping variations of the same item</td>
             </tr>
             <tr>
@@ -209,8 +209,8 @@
             </tr>
             <tr>
               <td class="col-label">Carries an Offer?</td>
-              <td>Yes — price, currency, availability</td>
-              <td>No — each variant Product inside it carries the Offer</td>
+              <td>Yes, price, currency, availability</td>
+              <td>No, each variant Product inside it carries the Offer</td>
             </tr>
             <tr>
               <td class="col-label">Key properties</td>
@@ -225,7 +225,7 @@
             <tr>
               <td class="col-label">Can stand alone?</td>
               <td>Yes</td>
-              <td>No — always contains Product entities</td>
+              <td>No, always contains Product entities</td>
             </tr>
           </tbody>
         </table>
@@ -272,18 +272,18 @@
           <text x="470" y="85" class="wr-text" style="opacity:.5">Product</text>
           <text x="470" y="102" class="wr-text-sm" style="opacity:.5">…more variants</text>
         </svg>
-        <p class="post-diagram-caption">ProductGroup wraps Product — it does not replace it</p>
+        <p class="post-diagram-caption">ProductGroup wraps Product, it does not replace it</p>
       </div>
 
       <p>What <code>Product</code> markup unlocks depends on which properties you include. Google distinguishes between two experiences here, and the distinction is important because they serve different page types:</p>
 
-      <p><strong>Product Snippet</strong> — available to any page that describes a product: reviews, editorial, aggregators, and merchant pages. The focus is on ratings, reviews, and basic pricing. This is what gives you star ratings and price ranges in organic search results.</p>
+      <p><strong>Product Snippet</strong>: available to any page that describes a product: reviews, editorial, aggregators, and merchant pages. The focus is on ratings, reviews, and basic pricing. This is what gives you star ratings and price ranges in organic search results.</p>
 
-      <p><strong>Merchant Listing</strong> — only available on pages where a customer can actually buy the product. The focus shifts to offer details: price, availability, shipping, returns. This is what gets you into Google Shopping surfaces, Popular Products, and price drop badges.</p>
+      <p><strong>Merchant Listing</strong>: only available on pages where a customer can actually buy the product. The focus shifts to offer details: price, availability, shipping, returns. This is what gets you into Google Shopping surfaces, Popular Products, and price drop badges.</p>
 
       <p>A merchant product page can qualify for both. Adding the required Merchant Listing properties (price, availability, a valid <code>Offer</code>) also makes the page eligible for Product Snippets. There's no conflict between them; Merchant Listing is a superset.</p>
 
-      <p>If you're not ready to implement full variant markup yet, <code>AggregateOffer</code> is a simpler fallback: a single <code>Product</code> with <code>lowPrice</code> and <code>highPrice</code> to indicate a price range. You won't get Shopping swatches, but Google can at least show the range in search results. It's a pragmatic interim step — particularly for comparison pages or if your CMS can't expose individual variant data to the template.</p>
+      <p>If you're not ready to implement full variant markup yet, <code>AggregateOffer</code> is a simpler fallback: a single <code>Product</code> with <code>lowPrice</code> and <code>highPrice</code> to indicate a price range. You won't get Shopping swatches, but Google can at least show the range in search results. It's a pragmatic interim step, particularly for comparison pages or if your CMS can't expose individual variant data to the template.</p>
 
       <div class="post-callout">
         <strong>The practical rule:</strong> if you sell the product on that page, mark it up as a <a href="/merchant-listing-schema/">Merchant Listing</a>. If you're reviewing or comparing products you don't sell, use <a href="/product-snippet-schema/">Product Snippet</a>. The <a href="/ecommerce-schema-generator/">schema generator</a> has separate tabs for each.
@@ -293,14 +293,14 @@
 
       <p><code>ProductGroup</code> exists for one purpose: to tell Google that multiple <code>Product</code> entities are variations of the same parent item. A T-shirt in five colours. A laptop in three storage configurations. A sofa in two fabrics. (The full implementation guide is on the <a href="/product-variants-schema/">Product Variants schema page</a>.)</p>
 
-      <p>Without <code>ProductGroup</code>, Google sees each variant as a separate, unrelated product. It has no way to associate the blue version with the red version, or to know that both cost the same and share the same reviews. With <code>ProductGroup</code>, Google can present those variants together — colour swatches in Shopping, variant-specific pricing, and a unified product identity across its knowledge graph.</p>
+      <p>Without <code>ProductGroup</code>, Google sees each variant as a separate, unrelated product. It has no way to associate the blue version with the red version, or to know that both cost the same and share the same reviews. With <code>ProductGroup</code>, Google can present those variants together, colour swatches in Shopping, variant-specific pricing, and a unified product identity across its knowledge graph.</p>
 
       <p><code>ProductGroup</code> takes three key properties that <code>Product</code> doesn't have:</p>
 
       <ul>
-        <li><code>variesBy</code> — what dimension(s) the variants differ on. Google supports specific schema.org URIs: <code>https://schema.org/color</code>, <code>https://schema.org/size</code>, <code>https://schema.org/material</code>, <code>https://schema.org/pattern</code>, <code>https://schema.org/suggestedAge</code>, and <code>https://schema.org/suggestedGender</code>. These must be full URIs, not plain text.</li>
-        <li><code>hasVariant</code> — the individual <code>Product</code> entities that belong to this group.</li>
-        <li><code>productGroupID</code> — a shared identifier across all variants, typically the parent SKU or style code.</li>
+        <li><code>variesBy</code>: what dimension(s) the variants differ on. Google supports specific schema.org URIs: <code>https://schema.org/color</code>, <code>https://schema.org/size</code>, <code>https://schema.org/material</code>, <code>https://schema.org/pattern</code>, <code>https://schema.org/suggestedAge</code>, and <code>https://schema.org/suggestedGender</code>. These must be full URIs, not plain text.</li>
+        <li><code>hasVariant</code>: the individual <code>Product</code> entities that belong to this group.</li>
+        <li><code>productGroupID</code>: a shared identifier across all variants, typically the parent SKU or style code.</li>
       </ul>
 
       <div class="post-table-wrap">
@@ -347,11 +347,11 @@
         </table>
       </div>
 
-      <p>The variants themselves are still full <code>Product</code> objects with their own SKU, GTIN, price, image, colour, size, and availability. <code>ProductGroup</code> doesn't replace any of that — it wraps it.</p>
+      <p>The variants themselves are still full <code>Product</code> objects with their own SKU, GTIN, price, image, colour, size, and availability. <code>ProductGroup</code> doesn't replace any of that, it wraps it.</p>
 
-      <p>A note on GTINs: schema.org supports <code>gtin</code> as a generic property, plus specific lengths — <code>gtin8</code>, <code>gtin12</code> (UPC), <code>gtin13</code> (EAN), and <code>gtin14</code>. Google recommends using the most specific one that matches your barcode. If your products have EAN codes, use <code>gtin13</code>. If they have UPCs, use <code>gtin12</code>. The examples below use <code>gtin13</code>, but substitute whichever applies. This is how Google matches your structured data to your Merchant Center feed — if the GTIN in your schema doesn't match the GTIN in your feed, Google treats them as different products.</p>
+      <p>A note on GTINs: schema.org supports <code>gtin</code> as a generic property, plus specific lengths, <code>gtin8</code>, <code>gtin12</code> (UPC), <code>gtin13</code> (EAN), and <code>gtin14</code>. Google recommends using the most specific one that matches your barcode. If your products have EAN codes, use <code>gtin13</code>. If they have UPCs, use <code>gtin12</code>. The examples below use <code>gtin13</code>, but substitute whichever applies. This is how Google matches your structured data to your Merchant Center feed, if the GTIN in your schema doesn't match the GTIN in your feed, Google treats them as different products.</p>
 
-      <p>One practical benefit: properties that apply to the entire group — <code>brand</code>, <code>aggregateRating</code>, <code>hasMerchantReturnPolicy</code>, <code>shippingDetails</code> via <code>OfferShippingDetails</code> — can sit on the <code>ProductGroup</code> rather than being duplicated across every variant. This is especially useful for <a href="/merchant-listing-schema/">Merchant Listing</a> implementations where shipping and returns are recommended properties.</p>
+      <p>One practical benefit: properties that apply to the entire group, <code>brand</code>, <code>aggregateRating</code>, <code>hasMerchantReturnPolicy</code>, <code>shippingDetails</code> via <code>OfferShippingDetails</code>: can sit on the <code>ProductGroup</code> rather than being duplicated across every variant. This is especially useful for <a href="/merchant-listing-schema/">Merchant Listing</a> implementations where shipping and returns are recommended properties.</p>
 
       <h2 id="the-decision-tree">The decision tree</h2>
 
@@ -361,7 +361,7 @@
 
       <p><strong>Is the product a single SKU with no meaningful variations?</strong> Use <code>Product</code> alone. Don't wrap it in a <code>ProductGroup</code>. There's nothing to group.</p>
 
-      <p><strong>Does the product have options that don't constitute real variants?</strong> This is where it gets judgmental. Gift wrapping, extended warranty, personalised engraving — these are add-ons, not variants. They don't change the core product. Don't model them as <code>ProductGroup</code> variants. Keep them as a single <code>Product</code> with one <code>Offer</code>.</p>
+      <p><strong>Does the product have options that don't constitute real variants?</strong> This is where it gets judgmental. Gift wrapping, extended warranty, personalised engraving, these are add-ons, not variants. They don't change the core product. Don't model them as <code>ProductGroup</code> variants. Keep them as a single <code>Product</code> with one <code>Offer</code>.</p>
 
       <p><strong>Are you a reviewer, aggregator, or editorial site?</strong> Use <code>Product</code> with Product Snippet properties. <code>ProductGroup</code> and Merchant Listing don't apply to you.</p>
 
@@ -496,7 +496,7 @@
 
       <p>The most common e-commerce pattern. A product page at <code>/shoes/trail-runner/</code> with a colour dropdown. The URL doesn't change when you select a different colour, or it appends a parameter like <code>?color=blue</code>.</p>
 
-      <p>For this setup, the <code>ProductGroup</code> and all its variant <code>Product</code> objects live in the same JSON-LD block on the same page. The canonical URL should be the base URL without variant parameters — that's the URL that represents the ProductGroup as a whole.</p>
+      <p>For this setup, the <code>ProductGroup</code> and all its variant <code>Product</code> objects live in the same JSON-LD block on the same page. The canonical URL should be the base URL without variant parameters, that's the URL that represents the ProductGroup as a whole.</p>
 
       <pre>{
   "@context": "https://schema.org/",
@@ -507,7 +507,7 @@
   "hasVariant": [
     {
       "@type": "Product",
-      "name": "Trail Runner Pro — Forest Green",
+      "name": "Trail Runner Pro, Forest Green",
       "color": "Forest Green",
       "sku": "TR-PRO-GRN",
       "gtin13": "5901234123457",
@@ -521,7 +521,7 @@
     },
     {
       "@type": "Product",
-      "name": "Trail Runner Pro — Slate Blue",
+      "name": "Trail Runner Pro, Slate Blue",
       "color": "Slate Blue",
       "sku": "TR-PRO-BLU",
       "gtin13": "5901234123464",
@@ -540,16 +540,16 @@
 
       <p>Less common, but you see it on sites where each colour or configuration has a dedicated page: <code>/shoes/trail-runner-green/</code> and <code>/shoes/trail-runner-blue/</code>.</p>
 
-      <p>Here each page carries its own <code>Product</code> markup and links back to the group using <code>isVariantOf</code>. There's no single page that holds the <code>ProductGroup</code> — each variant page references the group ID so Google can assemble the cluster from individual pages.</p>
+      <p>Here each page carries its own <code>Product</code> markup and links back to the group using <code>isVariantOf</code>. There's no single page that holds the <code>ProductGroup</code>: each variant page references the group ID so Google can assemble the cluster from individual pages.</p>
 
       <p>This is harder to get right. Every page needs to reference the same <code>productGroupID</code>. Every page needs valid <code>isVariantOf</code> pointing at a consistent <code>ProductGroup</code> entity. And canonicals matter here: each variant page must be self-canonical. If you canonical the blue page to the green page, you've collapsed the variant back into a single product and the group breaks.</p>
 
-      <p>Here's what the JSON-LD looks like on each variant page — note <code>isVariantOf</code> linking back to the group via a shared <code>@id</code>:</p>
+      <p>Here's what the JSON-LD looks like on each variant page, note <code>isVariantOf</code> linking back to the group via a shared <code>@id</code>:</p>
 
       <pre>{
   "@context": "https://schema.org/",
   "@type": "Product",
-  "name": "Trail Runner Pro — Forest Green",
+  "name": "Trail Runner Pro, Forest Green",
   "color": "Forest Green",
   "sku": "TR-PRO-GRN",
   "gtin13": "5901234123457",
@@ -586,7 +586,7 @@
 
       <p><strong>Missing offers on individual variants:</strong> The <code>ProductGroup</code> itself doesn't carry an <code>Offer</code>. Each variant <code>Product</code> needs its own. If you put the price on the group and omit it from the variants, Google has a group with no buyable items inside it.</p>
 
-      <p><strong>Inconsistent productGroupID across pages:</strong> On multi-page implementations, if even one variant page references a different <code>productGroupID</code> — a typo, a template variable that resolves differently, a staging value that leaked to production — that variant falls out of the group. Google can't match it to the others.</p>
+      <p><strong>Inconsistent productGroupID across pages:</strong> On multi-page implementations, if even one variant page references a different <code>productGroupID</code>: a typo, a template variable that resolves differently, a staging value that leaked to production, that variant falls out of the group. Google can't match it to the others.</p>
 
       <div class="post-table-wrap">
         <table class="post-table">
@@ -605,17 +605,17 @@
             </tr>
             <tr>
               <td class="col-label">ProductGroup with no variants</td>
-              <td>Google ignores the wrapper — no benefit, added complexity</td>
+              <td>Google ignores the wrapper, no benefit, added complexity</td>
               <td>Yes</td>
             </tr>
             <tr>
               <td class="col-label">Plain text in variesBy</td>
-              <td>No Shopping swatches — Google needs full URIs</td>
+              <td>No Shopping swatches, Google needs full URIs</td>
               <td>Yes</td>
             </tr>
             <tr>
               <td class="col-label">Offer on group, not variants</td>
-              <td>Group has no buyable items — no Shopping features</td>
+              <td>Group has no buyable items, no Shopping features</td>
               <td>Yes</td>
             </tr>
             <tr>
@@ -632,7 +632,7 @@
 
       <p>This is worth mentioning because it comes up in every e-commerce audit. Your Google Merchant Center product feed also has a concept of "item group ID" that groups variants together. Google cross-references feed data with on-page structured data.</p>
 
-      <p>When your structured data's <code>productGroupID</code> matches your feed's <code>item_group_id</code>, Google has a consistent signal from two sources. When they don't match — or when one exists and the other doesn't — you're relying on Google to figure out the relationship on its own. It sometimes will. It sometimes won't.</p>
+      <p>When your structured data's <code>productGroupID</code> matches your feed's <code>item_group_id</code>, Google has a consistent signal from two sources. When they don't match (or when one exists and the other doesn't) you're relying on Google to figure out the relationship on its own. It sometimes will. It sometimes won't.</p>
 
       <p>The strongest implementations align both: the <code>productGroupID</code> in your schema matches the <code>item_group_id</code> in your feed, and the <code>sku</code> on each variant <code>Product</code> matches the <code>id</code> of the corresponding feed item. If you're already maintaining a GMC feed, you can audit this alignment with the <a href="/gmc-feed-analyzer/">feed analyzer</a>.</p>
 
@@ -644,30 +644,30 @@
         <li>Every product page has <code>Product</code> markup with a valid <code>Offer</code> including price, currency, and availability.</li>
         <li>Products with selectable variants (colour, size, material) use <code>ProductGroup</code> as a wrapper.</li>
         <li><code>variesBy</code> uses full schema.org URIs, not plain text strings.</li>
-        <li>Each variant inside the group has its own SKU, GTIN, image, and offer — not inherited from the parent.</li>
+        <li>Each variant inside the group has its own SKU, GTIN, image, and offer, not inherited from the parent.</li>
         <li><code>productGroupID</code> is consistent across all pages and matches your GMC feed's <code>item_group_id</code>.</li>
         <li>Products without variants use <code>Product</code> alone. No empty <code>ProductGroup</code> wrapper.</li>
         <li>Every page with structured data has a self-referential canonical.</li>
         <li>Schema prices match the visible page price and the checkout price.</li>
-        <li>Run the output through the <a href="https://search.google.com/test/rich-results" rel="noopener">Rich Results Test</a> and the <a href="https://validator.schema.org/" rel="noopener">schema.org validator</a> — green ticks don't guarantee Shopping features, but errors guarantee you won't get them.</li>
+        <li>Run the output through the <a href="https://search.google.com/test/rich-results" rel="noopener">Rich Results Test</a> and the <a href="https://validator.schema.org/" rel="noopener">schema.org validator</a>, green ticks don't guarantee Shopping features, but errors guarantee you won't get them.</li>
       </ol>
 
       <h2 id="note-on-platforms">A note on platforms</h2>
 
-      <p>Shopify handles single-page variants natively — toggle a colour, the URL stays the same. Apps like JSON-LD for SEO map this to <code>ProductGroup</code> using <code>inProductGroupWithID</code> to link variants to the parent product ID. On WooCommerce, variable products map naturally to <code>ProductGroup</code>, but the option slugs need a mapping layer to translate them into schema.org URIs (e.g. mapping the <code>pa_color</code> attribute to <code>https://schema.org/color</code>). Most headless setups using separate variant URLs will need the flat <code>isVariantOf</code> structure shown above.</p>
+      <p>Shopify handles single-page variants natively, toggle a colour, the URL stays the same. Apps like JSON-LD for SEO map this to <code>ProductGroup</code> using <code>inProductGroupWithID</code> to link variants to the parent product ID. On WooCommerce, variable products map naturally to <code>ProductGroup</code>, but the option slugs need a mapping layer to translate them into schema.org URIs (e.g. mapping the <code>pa_color</code> attribute to <code>https://schema.org/color</code>). Most headless setups using separate variant URLs will need the flat <code>isVariantOf</code> structure shown above.</p>
 
       <p>If those nine things on the checklist are true, you're ahead of most e-commerce sites I audit. The generators for <a href="/ecommerce-schema-generator/">Product Snippet, Merchant Listing, and Product Variants</a> will produce valid output for all three patterns; the hard part isn't generating the markup, it's making sure your templates produce the right pattern for the right product type at scale.</p>
 
       <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 
       <h3>Do I need ProductGroup schema for a product with no variants?</h3>
-      <p>No. <code>ProductGroup</code> exists to group variations of the same product — different colours, sizes, or materials. If a product has no selectable variants, use <code>Product</code> markup alone. Wrapping a single-SKU product in <code>ProductGroup</code> adds complexity without triggering any additional Google features.</p>
+      <p>No. <code>ProductGroup</code> exists to group variations of the same product, different colours, sizes, or materials. If a product has no selectable variants, use <code>Product</code> markup alone. Wrapping a single-SKU product in <code>ProductGroup</code> adds complexity without triggering any additional Google features.</p>
 
       <h3>Does ProductGroup replace Product schema?</h3>
-      <p>No. <code>ProductGroup</code> wraps <code>Product</code> — it does not replace it. Each variant inside a <code>ProductGroup</code> is still a full <code>Product</code> object with its own SKU, GTIN, price, image, and availability. <code>ProductGroup</code> provides the parent container; <code>Product</code> provides the purchasable items.</p>
+      <p>No. <code>ProductGroup</code> wraps <code>Product</code>: it does not replace it. Each variant inside a <code>ProductGroup</code> is still a full <code>Product</code> object with its own SKU, GTIN, price, image, and availability. <code>ProductGroup</code> provides the parent container; <code>Product</code> provides the purchasable items.</p>
 
       <h3>What is the difference between hasVariant and isVariantOf?</h3>
-      <p><code>hasVariant</code> is used in nested structures where the <code>ProductGroup</code> contains variant <code>Product</code> objects directly. <code>isVariantOf</code> is used in flat structures where each variant <code>Product</code> is a separate JSON-LD object that links back to the <code>ProductGroup</code> via a shared <code>@id</code>. Both are valid — <code>hasVariant</code> is more common for single-page implementations, <code>isVariantOf</code> is typical for multi-page setups where each variant has its own URL.</p>
+      <p><code>hasVariant</code> is used in nested structures where the <code>ProductGroup</code> contains variant <code>Product</code> objects directly. <code>isVariantOf</code> is used in flat structures where each variant <code>Product</code> is a separate JSON-LD object that links back to the <code>ProductGroup</code> via a shared <code>@id</code>. Both are valid, <code>hasVariant</code> is more common for single-page implementations, <code>isVariantOf</code> is typical for multi-page setups where each variant has its own URL.</p>
 
       <a href="/notes/" class="post-back">← Back to Notes</a>
         </div>

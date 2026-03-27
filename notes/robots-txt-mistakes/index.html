@@ -152,7 +152,7 @@
 
       <h2 id="mistake-1-access-control">Mistake 1: Treating robots.txt as an access control mechanism</h2>
 
-      <p>The robots.txt spec is advisory. That's not a caveat buried in the documentation — it's the central point of the entire protocol. When you add <code>Disallow: /admin/</code>, you are politely asking crawlers not to go there. You are not blocking them.</p>
+      <p>The robots.txt spec is advisory. That's not a caveat buried in the documentation, it's the central point of the entire protocol. When you add <code>Disallow: /admin/</code>, you are politely asking crawlers not to go there. You are not blocking them.</p>
 
       <p>In practice:</p>
 
@@ -195,11 +195,11 @@ Disallow: /</pre>
 
       <p>If a disallowed page receives a single inbound link from anywhere on the web, Google can discover the URL and index it without ever visiting the page. The result is an indexed URL with no snippet, no title, and no content context. Not hidden. Just empty.</p>
 
-      <p>To prevent a page from appearing in search results, you need a <code>noindex</code> meta tag in the HTML head — and you need Google to be able to crawl the page in order to read it. Disallow and noindex are not interchangeable; they work at different stages of the pipeline.</p>
+      <p>To prevent a page from appearing in search results, you need a <code>noindex</code> meta tag in the HTML head, and you need Google to be able to crawl the page in order to read it. Disallow and noindex are not interchangeable; they work at different stages of the pipeline.</p>
 
       <h2 id="mistake-5-sitemap">Mistake 5: Not including the sitemap</h2>
 
-      <p>The <code>Sitemap:</code> directive in robots.txt is one of the most reliable ways to make sure all major crawlers know where your content is. It's not only Googlebot — Bing, Yandex, and others all read robots.txt and follow the sitemap reference.</p>
+      <p>The <code>Sitemap:</code> directive in robots.txt is one of the most reliable ways to make sure all major crawlers know where your content is. It's not only Googlebot, Bing, Yandex, and others all read robots.txt and follow the sitemap reference.</p>
 
       <p>A robots.txt without a sitemap URL is a missed opportunity, particularly for large sites where discovery is a real crawl budget consideration.</p>
 

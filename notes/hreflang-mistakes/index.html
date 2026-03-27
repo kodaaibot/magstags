@@ -145,14 +145,14 @@
       <p>Hreflang supports ISO 639-1 language codes and ISO 3166-1 alpha-2 country codes. The format is <code>language</code> or <code>language-COUNTRY</code>. Sounds simple. Here's where it goes wrong:</p>
 
       <ul>
-        <li><strong>Using language codes only when you need region specificity.</strong> <code>en</code> covers all English. If you have separate content for the UK and the US, you need <code>en-GB</code> and <code>en-US</code> — not two pages both tagged <code>en</code>.</li>
+        <li><strong>Using language codes only when you need region specificity.</strong> <code>en</code> covers all English. If you have separate content for the UK and the US, you need <code>en-GB</code> and <code>en-US</code>: not two pages both tagged <code>en</code>.</li>
         <li><strong>Using the wrong case.</strong> Language codes are lowercase (<code>en</code>), country codes are uppercase (<code>GB</code>). <code>en-gb</code> and <code>en-GB</code> are both valid in practice, but mixed case from different template engines creates inconsistencies that are hard to audit.</li>
         <li><strong>Invented region codes.</strong> I've audited sites using <code>en-EU</code>, <code>en-INTL</code>, and <code>en-GLOBAL</code>. None of these are valid. Google ignores them silently.</li>
       </ul>
 
       <h2 id="x-default-misuse">x-default: misunderstood and misapplied</h2>
 
-      <p><code>x-default</code> does not mean "default for all other countries". It is a signal for pages that handle language selection — home pages with language pickers, regional redirect pages, or international landing pages that route users based on browser settings or IP.</p>
+      <p><code>x-default</code> does not mean "default for all other countries". It is a signal for pages that handle language selection, home pages with language pickers, regional redirect pages, or international landing pages that route users based on browser settings or IP.</p>
 
       <p>Common misuse patterns:</p>
 
@@ -202,7 +202,7 @@
 
       <p>The good news is that hreflang errors are fixable. The bad news is that they don't announce themselves. The only way to know your implementation is healthy is to check it regularly.</p>
 
-      <p>For a detailed breakdown of how hreflang and canonicals interact — and why the conflict is more common than most audits catch — see <a href="/notes/hreflang-canonical-conflict/">When Hreflang and Canonicals Conflict</a>. To generate a correct bidirectional tag set, use the <a href="/hreflang-generator/">Hreflang Generator</a>.</p>
+      <p>For a detailed breakdown of how hreflang and canonicals interact (and why the conflict is more common than most audits catch) see <a href="/notes/hreflang-canonical-conflict/">When Hreflang and Canonicals Conflict</a>. To generate a correct bidirectional tag set, use the <a href="/hreflang-generator/">Hreflang Generator</a>.</p>
 
           <a href="/notes/" class="post-back">← Back to Notes</a>
 
