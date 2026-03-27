@@ -259,7 +259,7 @@
         </table>
       </div>
 
-      <p>The feed might be updated daily from the ERP. The schema template gets updated quarterly during platform deploys. After a product refresh, the GTIN in the feed is correct. The schema is six months stale. Google sees a discrepancy between on-page and feed signals. Confidence drops.</p>
+      <p>Schema and feed drift apart. A GTIN gets corrected in the feed but the page template doesn't get touched. A product gets relaunched under a new identifier and the feed is updated, but the schema is generated from a cached data layer that nobody remembered to flush. The feed gets a new MPN from the manufacturer; the schema still has the old one. None of these produce an error. Google just sees two sources disagreeing, weights its confidence accordingly, and moves on.</p>
 
       <p>The practical check: pull a sample of 20 high-traffic PDPs. Compare the <code>gtin</code> in the schema against the <code>gtin</code> in the Merchant Center feed for the same product. They should be identical. If they're not, you have a data source alignment problem, and no amount of schema optimisation will fix it.</p>
 
