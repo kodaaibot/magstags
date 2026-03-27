@@ -170,47 +170,47 @@
 
       <div class="id-card">
         <span class="id-card-tag global">Global standard</span>
-        <h3>GTIN — Global Trade Item Number</h3>
-        <p>A unique product identifier (UPI) assigned by the manufacturer, registered with GS1, globally unique. The same GTIN identifies a product whether you're selling it, your competitor is, or a retailer in another country is. Google uses it to match your listing to a known product entity in its knowledge graph — price comparisons, Shopping knowledge panels, AI Overview signals all depend on that match.</p>
+        <h3>GTIN, Global Trade Item Number</h3>
+        <p>A unique product identifier (UPI) assigned by the manufacturer, registered with GS1, globally unique. The same GTIN identifies a product whether you're selling it, your competitor is, or a retailer in another country is. Google uses it to match your listing to a known product entity in its knowledge graph, price comparisons, Shopping knowledge panels, AI Overview signals all depend on that match.</p>
         <p><strong>Types:</strong> UPC (GTIN-12, 12 digits, North America), EAN (GTIN-13, 13 digits, outside North America), JAN (GTIN-13, 8 or 13 digits, Japan only), ISBN-13 (books), GTIN-14 (multipacks), GTIN-8 (small products). GTINs are the numbers printed beneath the barcode on retail packaging. In schema, use <code>gtin</code> (generic) or the specific subtype (<code>gtin12</code>, <code>gtin13</code>, etc.).</p>
       </div>
 
       <div class="id-card">
         <span class="id-card-tag mfr">Manufacturer assigned</span>
-        <h3>MPN — Manufacturer Part Number</h3>
-        <p>A unique product identifier (UPI) assigned by the manufacturer for their own catalogue. Alphanumeric, 1–70 characters. Unique within a manufacturer's range — not globally. Required for all products without a GTIN. Always submitted alongside <code>brand</code> — neither alone is sufficient for matching. Schema.org property: <code>Product.mpn</code>.</p>
+        <h3>MPN, Manufacturer Part Number</h3>
+        <p>A unique product identifier (UPI) assigned by the manufacturer for their own catalogue. Alphanumeric, 1–70 characters. Unique within a manufacturer's range, not globally. Required for all products without a GTIN. Always submitted alongside <code>brand</code>: neither alone is sufficient for matching. Schema.org property: <code>Product.mpn</code>.</p>
       </div>
 
       <div class="id-card">
         <span class="id-card-tag mfr">Context required</span>
         <h3>Brand</h3>
-        <p>Required for products with a clearly associated manufacturer. On its own, it does not identify a specific product — it gives Google a manufacturer name but no product-level match. Always paired with MPN when GTIN isn't available. String, 1–70 characters. Schema.org property: <code>Product.brand</code> (type: <code>Brand</code>).</p>
+        <p>Required for products with a clearly associated manufacturer. On its own, it does not identify a specific product, it gives Google a manufacturer name but no product-level match. Always paired with MPN when GTIN isn't available. String, 1–70 characters. Schema.org property: <code>Product.brand</code> (type: <code>Brand</code>).</p>
       </div>
 
       <div class="id-card">
         <span class="id-card-tag internal">Internal only</span>
-        <h3>SKU — Stock Keeping Unit</h3>
-        <p>Your internal product code. It belongs to your catalogue management system. Google does not use it for product matching, rich results eligibility, or Shopping performance. In schema, the <code>sku</code> property is supported but not used for matching. In Merchant Center, your SKU typically maps to <code>id [id]</code> — your primary item identifier. It does not go in <code>gtin [gtin]</code>.</p>
+        <h3>SKU, Stock Keeping Unit</h3>
+        <p>Your internal product code. It belongs to your catalogue management system. Google does not use it for product matching, rich results eligibility, or Shopping performance. In schema, the <code>sku</code> property is supported but not used for matching. In Merchant Center, your SKU typically maps to <code>id [id]</code>: your primary item identifier. It does not go in <code>gtin [gtin]</code>.</p>
       </div>
 
       <h2 id="what-breaks">What actually breaks: Google Shopping, Merchant Center, and silent underperformance</h2>
 
       <h3>Internal SKUs in the GTIN field</h3>
-      <p>The most common issue in feed audits. It gets through Merchant Center validation because the system doesn't always reject invalid GTINs on ingestion — it flags them later, or not at all if the value happens to pass a loose format check.</p>
-      <p>The result: products appear in Google Shopping but never get matched to a product entity. No price comparison panel. No Shopping knowledge panel. Weaker signals for AI Overviews on product queries. You won't see this as a clear error — it's silent underperformance.</p>
+      <p>The most common issue in feed audits. It gets through Merchant Center validation because the system doesn't always reject invalid GTINs on ingestion, it flags them later, or not at all if the value happens to pass a loose format check.</p>
+      <p>The result: products appear in Google Shopping but never get matched to a product entity. No price comparison panel. No Shopping knowledge panel. Weaker signals for AI Overviews on product queries. You won't see this as a clear error, it's silent underperformance.</p>
 
       <h3>Missing GTINs on products that have them</h3>
-      <p>Google states this explicitly: products with an assigned GTIN submitted without one may have limited visibility. In practice, Google Shopping impressions are lower than they should be relative to competitors selling the same product. The product exists in the feed, it shows — but it's not being matched with full confidence. No diagnostics warning. You find it by comparing impression share against competitors for identical products.</p>
+      <p>Google states this explicitly: products with an assigned GTIN submitted without one may have limited visibility. In practice, Google Shopping impressions are lower than they should be relative to competitors selling the same product. The product exists in the feed, it shows, but it's not being matched with full confidence. No diagnostics warning. You find it by comparing impression share against competitors for identical products.</p>
 
       <h3>MPN without brand (or brand without MPN)</h3>
       <p>Submitting MPN alone gives Google an alphanumeric string with no manufacturer context. Some MPNs are short enough that they could belong to dozens of manufacturers. Without brand to anchor it, the identifier is effectively useless for matching. The reverse is also true: brand without MPN tells Google who makes the product, not which product. Submit both or neither.</p>
 
       <h3>Copying GTINs from similar products</h3>
-      <p>If you can't find the GTIN, it's tempting to use the GTIN of a similar variant. This leads to disapprovals. A GTIN mismatch — where your submitted GTIN doesn't match the product Google expects to find at that URL — is one of the harder errors to diagnose because it doesn't always produce an explicit error. It produces silence: no match, no Shopping features, no explanation in Merchant Center diagnostics.</p>
+      <p>If you can't find the GTIN, it's tempting to use the GTIN of a similar variant. This leads to disapprovals. A GTIN mismatch, where your submitted GTIN doesn't match the product Google expects to find at that URL, is one of the harder errors to diagnose because it doesn't always produce an explicit error. It produces silence: no match, no Shopping features, no explanation in Merchant Center diagnostics.</p>
 
       <h3>SKU in schema vs item ID in the feed</h3>
-      <p>This one doesn't break rich results, but it creates a data reconciliation problem that gets painful at scale. In schema markup, the <code>sku</code> property outputs your internal product reference. In Merchant Center, the <code>id [id]</code> attribute is your primary item identifier — and most teams map their internal SKU to that field.</p>
-      <p>These two values should be consistent. When they aren't — schema says <code>PROD-001-BLK</code>, feed item ID says <code>1234567</code> — you lose the ability to trace a Search Console rich result error back to the specific feed item. When Merchant Center flags a product for a price mismatch or identifier issue, you need to match it to a URL. When Search Console flags a structured data issue, you need to match it to a feed item. Inconsistent internal references across schema and feed make that cross-referencing significantly harder, especially on catalogues with thousands of SKUs.</p>
+      <p>This one doesn't break rich results, but it creates a data reconciliation problem that gets painful at scale. In schema markup, the <code>sku</code> property outputs your internal product reference. In Merchant Center, the <code>id [id]</code> attribute is your primary item identifier, and most teams map their internal SKU to that field.</p>
+      <p>These two values should be consistent. When they aren't, schema says <code>PROD-001-BLK</code>, feed item ID says <code>1234567</code>: you lose the ability to trace a Search Console rich result error back to the specific feed item. When Merchant Center flags a product for a price mismatch or identifier issue, you need to match it to a URL. When Search Console flags a structured data issue, you need to match it to a feed item. Inconsistent internal references across schema and feed make that cross-referencing significantly harder, especially on catalogues with thousands of SKUs.</p>
 
       <div class="post-callout-warn">
         <strong>The rule that matters most:</strong> submitting no identifier is better than submitting a wrong one. An absent GTIN results in limited visibility. An incorrect GTIN results in a disapproval and breaks Shopping eligibility entirely.
@@ -218,7 +218,7 @@
 
       <h2 id="schema-feed-gap">The schema vs Merchant Center feed alignment gap</h2>
 
-      <p>Product identifiers live in two places: your on-page schema markup and your Merchant Center feed. Different teams, different update cycles, different source systems. They drift — and when the GTIN in your schema disagrees with the GTIN in your Google Shopping feed, Google has two conflicting signals and no way to know which is right.</p>
+      <p>Product identifiers live in two places: your on-page schema markup and your Merchant Center feed. Different teams, different update cycles, different source systems. They drift, and when the GTIN in your schema disagrees with the GTIN in your Google Shopping feed, Google has two conflicting signals and no way to know which is right.</p>
 
       <div class="post-table-wrap">
         <table class="post-table">
@@ -235,24 +235,24 @@
               <td class="col-label">GTIN</td>
               <td><code>gtin</code>, <code>gtin12</code>, <code>gtin13</code>, <code>gtin8</code>, <code>gtin14</code></td>
               <td><code>gtin [gtin]</code></td>
-              <td>Yes — primary signal</td>
+              <td>Yes, primary signal</td>
             </tr>
             <tr>
               <td class="col-label">MPN</td>
               <td><code>mpn</code></td>
               <td><code>mpn [mpn]</code></td>
-              <td>Yes — with brand</td>
+              <td>Yes, with brand</td>
             </tr>
             <tr>
               <td class="col-label">Brand</td>
               <td><code>brand</code> → nested <code>Brand</code> with <code>name</code></td>
               <td><code>brand [brand]</code></td>
-              <td>Yes — with MPN</td>
+              <td>Yes, with MPN</td>
             </tr>
             <tr>
               <td class="col-label">Internal SKU</td>
               <td><code>sku</code></td>
-              <td><code>id [id]</code> (item ref — NOT <code>gtin</code>)</td>
+              <td><code>id [id]</code> (item ref, NOT <code>gtin</code>)</td>
               <td>No</td>
             </tr>
           </tbody>
@@ -261,7 +261,7 @@
 
       <p>Schema and feed drift apart. A GTIN gets corrected in the feed but the page template doesn't get touched. A product gets relaunched under a new identifier and the feed is updated, but the schema is generated from a cached data layer that nobody remembered to flush. The feed gets a new MPN from the manufacturer; the schema still has the old one. None of these produce an error. Google just sees two sources disagreeing, weights its confidence accordingly, and moves on.</p>
 
-      <p>The practical check: pull a sample of 20 high-traffic PDPs. Compare the <code>gtin</code> in the schema against the <code>gtin</code> in the Merchant Center feed for the same product. They should be identical. If they're not, you have a data alignment problem that affects both your structured data signals and your Google Shopping eligibility — and no amount of schema tweaking will fix it.</p>
+      <p>The practical check: pull a sample of 20 high-traffic PDPs. Compare the <code>gtin</code> in the schema against the <code>gtin</code> in the Merchant Center feed for the same product. They should be identical. If they're not, you have a data alignment problem that affects both your structured data signals and your Google Shopping eligibility, and no amount of schema tweaking will fix it.</p>
 
       <h2 id="gtin-audit">The GTIN coverage audit</h2>
 
@@ -271,14 +271,14 @@
 
       <p>Signals that something's wrong:</p>
       <ul>
-        <li>GTIN values the same length as your internal SKUs — typically 6–10 characters vs the 8, 12, 13, or 14 digits GTINs require</li>
-        <li>GTIN values containing letters — GTINs are numeric only</li>
+        <li>GTIN values the same length as your internal SKUs, typically 6–10 characters vs the 8, 12, 13, or 14 digits GTINs require</li>
+        <li>GTIN values containing letters, GTINs are numeric only</li>
         <li>GTIN values starting with restricted prefixes: <code>02</code>, <code>04</code>, <code>2</code> (internal use) or <code>05</code>, <code>98</code>, <code>99</code> (coupon ranges)</li>
-        <li>Multiple products with the same GTIN but different variant attributes — each colour/size variant needs its own GTIN</li>
+        <li>Multiple products with the same GTIN but different variant attributes, each colour/size variant needs its own GTIN</li>
       </ul>
 
       <div class="post-callout">
-        Run your GTINs through the GS1 check digit calculator at gs1.org. The last digit is mathematically derived from the preceding digits — if it doesn't validate, the GTIN is wrong. This takes minutes to script against a feed export and catches a significant proportion of invalid values immediately.
+        Run your GTINs through the GS1 check digit calculator at gs1.org. The last digit is mathematically derived from the preceding digits, if it doesn't validate, the GTIN is wrong. This takes minutes to script against a feed export and catches a significant proportion of invalid values immediately.
       </div>
 
       <h2 id="no-gtin">When you don't have the GTIN</h2>
@@ -286,8 +286,8 @@
       <p>Not having a GTIN doesn't mean guessing. Three options, in order:</p>
 
       <ol class="audit-steps">
-        <li>Find the GTIN. Check the product packaging. Ask the manufacturer or distributor. For some categories, GS1's GEPIR database at gepir.gs1.org is searchable. For books, ISBNdb.com or Google Books. This is the right answer for widely manufactured products — if there's a GTIN assigned, find it.</li>
-        <li>Submit brand + MPN. For products where a GTIN genuinely isn't assigned — OEM parts, store brand products, custom goods — submit both. Neither alone is sufficient. If you're the manufacturer with no assigned MPN, assign one. Your internal part number or catalogue reference works. You are the manufacturer, so this is legitimate.</li>
+        <li>Find the GTIN. Check the product packaging. Ask the manufacturer or distributor. For some categories, GS1's GEPIR database at gepir.gs1.org is searchable. For books, ISBNdb.com or Google Books. This is the right answer for widely manufactured products, if there's a GTIN assigned, find it.</li>
+        <li>Submit brand + MPN. For products where a GTIN genuinely isn't assigned (OEM parts, store brand products, custom goods) submit both. Neither alone is sufficient. If you're the manufacturer with no assigned MPN, assign one. Your internal part number or catalogue reference works. You are the manufacturer, so this is legitimate.</li>
         <li>Submit nothing in the identifier fields. Only for products where no identifiers exist and none can reasonably be assigned. Custom artwork, one-of-a-kind vintage items. Don't fabricate values.</li>
       </ol>
 
@@ -326,7 +326,7 @@
 
         <div class="faq-item">
           <div class="faq-q">Can I use my internal SKU as the GTIN?</div>
-          <div class="faq-a">No, with one exception. SKU is an internal identifier and won't be used for product matching. The one legitimate case: private-label products where you're the only seller and no GTIN exists. In that case, your SKU goes in <code>mpn [mpn]</code> — still not in <code>gtin [gtin]</code>.</div>
+          <div class="faq-a">No, with one exception. SKU is an internal identifier and won't be used for product matching. The one legitimate case: private-label products where you're the only seller and no GTIN exists. In that case, your SKU goes in <code>mpn [mpn]</code>: still not in <code>gtin [gtin]</code>.</div>
         </div>
 
         <div class="faq-item">
@@ -336,7 +336,7 @@
 
         <div class="faq-item">
           <div class="faq-q">Is brand + MPN as effective as GTIN?</div>
-          <div class="faq-a">Not quite. GTIN is globally unique and unambiguous — Google can match it with certainty. Brand + MPN is unique within a manufacturer's range and requires Google to verify the combination. For widely distributed products, GTIN gives better Shopping performance. For products without GTINs, brand + MPN is the correct and accepted approach.</div>
+          <div class="faq-a">Not quite. GTIN is globally unique and unambiguous, Google can match it with certainty. Brand + MPN is unique within a manufacturer's range and requires Google to verify the combination. For widely distributed products, GTIN gives better Shopping performance. For products without GTINs, brand + MPN is the correct and accepted approach.</div>
         </div>
 
         <div class="faq-item">
@@ -346,7 +346,7 @@
 
         <div class="faq-item">
           <div class="faq-q">How do I validate a GTIN quickly?</div>
-          <div class="faq-a">Use the GS1 check digit calculator at gs1.org. The last digit is mathematically derived — if it doesn't match, the GTIN is wrong. Also check: digit count (12 for UPC, 13 for EAN, 8 for GTIN-8, 14 for GTIN-14), numbers only (no letters), and that the prefix isn't in a restricted range (<code>02</code>, <code>04</code>, <code>2</code>) or coupon range (<code>05</code>, <code>98</code>, <code>99</code>).</div>
+          <div class="faq-a">Use the GS1 check digit calculator at gs1.org. The last digit is mathematically derived, if it doesn't match, the GTIN is wrong. Also check: digit count (12 for UPC, 13 for EAN, 8 for GTIN-8, 14 for GTIN-14), numbers only (no letters), and that the prefix isn't in a restricted range (<code>02</code>, <code>04</code>, <code>2</code>) or coupon range (<code>05</code>, <code>98</code>, <code>99</code>).</div>
         </div>
 
         <div class="faq-item">
