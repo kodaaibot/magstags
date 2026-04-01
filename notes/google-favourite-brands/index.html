@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/google-favourite-brands/">
+  <meta name="description" content="Google is testing a Favourite Brands widget in shopping search results. Users pick their preferred brands in Shopping preferences, and results are personalised to match. Here's what it looks like and what brands should do about it.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Google Favourite Shopping Brand - Personalisation in Search, A Test? | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:#FEE2E2;color:#991B1B;margin-bottom:16px}
+    html.dark .post-category{background:#450a0a;color:#fca5a5}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:20px;line-height:1.7;color:var(--text-2);margin-bottom:36px}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .post-body a{color:var(--teal);text-decoration:none}
+    .post-body a:hover{text-decoration:underline}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+    .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+    .ct-content{min-width:0}
+    .ct-toc{position:sticky;top:80px;padding-top:60px}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
+    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
+    @media(max-width:960px){.ct-layout{grid-template-columns:1fr;gap:0}.ct-toc{position:static;padding-top:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.ct-toc-list{border-left:none;flex-direction:row;flex-wrap:wrap;gap:4px 16px}.ct-toc-list li a{border-left:none;padding:6px 0;font-size:13px}}
+    .screenshot-wrap{margin:32px 0;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .screenshot-wrap img{width:100%;display:block}
+    .screenshot-caption{font-size:13px;color:var(--text-4);padding:10px 16px;background:var(--bg2);line-height:1.5}
+    .faq-item{border-top:1px solid var(--border);padding:24px 0}
+    .faq-item:last-child{border-bottom:1px solid var(--border)}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:var(--text-1);margin-bottom:10px}
+    .faq-a{font-size:15px;color:var(--text-2);line-height:1.75}
+  </style>
+  <meta property="og:title" content="Google Favourite Shopping Brand - Personalisation in Search, A Test? | MagsTags">
+  <meta property="og:description" content="Google is testing a Favourite Brands widget in shopping search results. Users pick their preferred brands in Shopping preferences, and results are personalised to match. Here's what it looks like and what brands should do about it.">
+  <meta property="og:url" content="https://www.magstags.com/notes/google-favourite-brands/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google Favourite Shopping Brand - Personalisation in Search, A Test? | MagsTags">
+  <meta name="twitter:description" content="Google is testing a Favourite Brands widget in shopping search results. Users pick their preferred brands in Shopping preferences, and results are personalised to match. Here's what it looks like and what brands should do about it.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Google Favourite Shopping Brand - Personalisation in Search, A Test?",
+    "description": "Google is testing a Favourite Brands widget in shopping search results. Users pick their preferred brands in Shopping preferences, and results are personalised to match. Here's what it looks like and what brands should do about it.",
+    "url": "https://www.magstags.com/notes/google-favourite-brands/",
+    "datePublished": "2026-04-01",
+    "dateModified": "2026-04-01",
+    "image": "https://www.magstags.com/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com"
+    }
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Google Favourite Brand Personalisation</span>
+    </nav>
+
+    <span class="post-category">Google SERP Tests</span>
+    <h1 class="post-h1">Google Favourite Shopping Brand - Personalisation in Search, A Test?</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>1 April 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>5 min read</span>
+    </div>
+
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+
+          <p class="post-lead">Google appears to be testing a brand personalisation layer in shopping search. Users can select their favourite brands in Shopping preferences, and those choices directly shape which products and brands surface for generic queries. It is early, but if it rolls out, it changes how brand visibility works in organic shopping results.</p>
+
+          <h2 id="what-i-saw">What I saw</h2>
+
+          <p>Searching for "underwear" on Google, a widget appeared mid-results: <em>"Save your favorite brands to get more relevant results."</em> Below it, a horizontal row of brand tiles: Calvin Klein, Hanes, Aerie, Jockey, Victoria's Secret, H&M, Soma, and others. I selected Soma from the widget to see what would happen next.</p>
+
+          <figure class="screenshot-wrap">
+            <img src="img/favourite-brands-serp.png" alt="Google search results for 'underwear' showing the Save your favorite brands widget with brand tiles and a Popular from your favorite brands product carousel below" width="1200" loading="lazy">
+            <figcaption class="screenshot-caption">Google SERP for "underwear": the brand selection widget and the personalised product carousel beneath it after selecting Soma.</figcaption>
+          </figure>
+
+          <p>Immediately below the Wikipedia result and this widget, a new section appeared: <strong>"Popular from your favorite brands"</strong>, a carousel populated entirely with Soma products, prices, and ratings. A completely generic query, shaped into a personalised brand feed.</p>
+
+          <p>The widget also carries a three-dot menu linking to <em>"Edit shopping preferences"</em>, which takes users to a dedicated <strong>Shopping preferences</strong> page. Navigating there, Soma was now saved as a tile with a blue checkmark, confirming the selection had been stored in the account. The settings page description reads: <em>"These preferences will help make your product, brand, and other shopping recommendations more relevant."</em></p>
+
+          <figure class="screenshot-wrap">
+            <img src="img/shopping-preferences.png" alt="Google Shopping preferences settings page showing Soma saved as a favourite brand with a blue checkmark tile, and a loyalty programs section below" width="1200" loading="lazy">
+            <figcaption class="screenshot-caption">Google Shopping preferences, where saved brands are stored. Soma is reflected here after being selected via the in-SERP widget.</figcaption>
+          </figure>
+
+          <h2 id="how-it-works">How the personalisation pipeline works</h2>
+
+          <p>The mechanics are straightforward:</p>
+
+          <ol>
+            <li>A user saves a brand in their Google Shopping preferences (either from the settings page or directly via the in-SERP widget)</li>
+            <li>When that user later searches for a relevant category term ("underwear", "trainers", "coffee maker"), Google surfaces a personalised section pulled from their saved brands</li>
+            <li>The brand widget in the SERP reflects their existing choices, with a blue tick on any already-saved brand</li>
+          </ol>
+
+          <p>This is not just a UI experiment. It connects user identity (Google account), declared brand preference, and organic shopping results into a single loop. The preference persists across sessions and affects what that user sees on future searches.</p>
+
+          <div class="post-callout-warn">
+            <strong>This appears to be a test.</strong> It is not confirmed as a stable, rolled-out feature. Not all users are seeing it, and Google has not made a public announcement. Treat it as directional signal rather than established behaviour.
+          </div>
+
+          <h2 id="preferred-sources-parallel">The Preferred Sources parallel</h2>
+
+          <p>This is not the first time Google has built a preference-driven personalisation layer. The <a href="https://developers.google.com/search/docs/appearance/preferred-sources" target="_blank" rel="noopener">Preferred Sources</a> feature does exactly this for news and editorial content: users select which publications they want to see more of, and those selections influence Top Stories results.</p>
+
+          <p>Google even gives publishers a deep link to direct their audience directly to the preference-setting page:</p>
+
+          <pre style="font-family:'Menlo','Monaco','Courier New',monospace;font-size:13px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2)">https://google.com/preferences/source?q=yoursite.com</pre>
+
+          <p>Publishers are encouraged to add this link to their social CTAs and on-site buttons, alongside a Google-provided badge asset. The brand favourites feature appears to be the same concept applied to retail: instead of editorial sources, you are selecting commercial brands. The underlying intent is identical, letting users shape their results around the sources they already trust.</p>
+
+          <p>Whether Google builds out an equivalent deep-link mechanism for brand preferences remains to be seen. For now, the only way to save a brand is through the in-SERP widget itself. There is no settings panel where users can proactively search and add brands. If this feature does roll out fully, a direct-link format like the one Preferred Sources uses would be the logical next step.</p>
+
+          <h2 id="what-brands-should-do">What brands should do</h2>
+
+          <p>Even at the testing stage, the signal here is worth acting on. This is Google building a declared-interest channel between users and brands, and brands that move early on user awareness will have an advantage when (if) it becomes stable.</p>
+
+          <h3>Make your audience aware the feature exists, starting with social</h3>
+
+          <p>Most users will not know they can save favourite brands in Google. The people most likely to add you are the ones already following you. Brand social accounts are the obvious first move: an Instagram story, a TikTok, a pinned post on X. <em>"Did you know you can save us as a favourite brand on Google so our products show up when you search?"</em> is a concrete, zero-friction ask directed at an audience that has already chosen to follow you. Pair it with a newsletter mention and you are covering both the scroll-and-tap crowd and the inbox-loyal customers in one push.</p>
+
+          <h3>Add a CTA where loyalty signals already exist</h3>
+
+          <p>Your best candidates for brand-saving are existing customers: loyalty programme members, repeat buyers, email subscribers. These people are already choosing you over alternatives. A prompt at post-purchase, in a loyalty confirmation email, or on your account page asking them to add you in Google Shopping preferences is a natural extension of that relationship. Google has not yet provided a direct link to add a specific brand, so for now you are directing users to Shopping preferences and asking them to search for and save you manually. Worth noting that, given this is still a test, that extra step is the reality brands are working with today.</p>
+
+          <h3>Treat it like a new loyalty channel</h3>
+
+          <p>Google Shopping preferences already integrates with loyalty programmes directly. Users can connect their loyalty accounts in the same settings panel where they save brands. If your brand has a loyalty programme, there is a second hook here: getting users to connect their accounts means Google can potentially factor programme membership into shopping recommendations. Both signals point in the same direction. Being present in a user's Shopping preferences is a form of persistent, declared affinity that affects organic visibility.</p>
+
+          <div class="post-callout">
+            <strong>Bottom line for brands:</strong> Google is building a mechanism for users to declare brand loyalty inside its own interface. If that preference then shapes organic product visibility, being saved as a favourite is a new form of earned presence in search, driven by user action rather than relevance signals alone. Start building the habit in your audience now.
+          </div>
+
+          <h2 id="what-this-means-for-seo">What this means for SEO</h2>
+
+          <p>If this feature rolls out broadly, organic shopping results will no longer be uniform across users. Two people searching the same query will see different products, not because of location or device but because of brand declarations they made in their Google account. That changes how you interpret Shopping performance data, and it changes what "organic visibility" means for a retail brand.</p>
+
+          <p>Impression and click data in Google Search Console will increasingly reflect a personalised reality rather than a universal one. Brands with strong affinity among their customer base, the kind that gets people to actively save them in preferences, will accrue a compounding advantage: more visibility for the people most likely to convert, while remaining normally visible to everyone else.</p>
+
+          <p>It is also worth watching how this interacts with Google Merchant Center feeds and Shopping ads. The preference layer sits on top of the organic product graph, but it is not yet clear whether declared brand preferences also influence paid Shopping results or just organic ones.</p>
+
+          <h2 id="faq">FAQ</h2>
+
+          <div class="faq-item">
+            <div class="faq-q">Is this a confirmed Google feature or just a test?</div>
+            <div class="faq-a">As of April 2026 it has been spotted in the wild. Google has made no public announcement. That is the extent of what is known: treat it as early signal, not established behaviour.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Where do users manage their favourite brands on Google?</div>
+            <div class="faq-a">From the in-SERP widget, the "Save your favorite brands" tile row that appears in shopping-related results. Once saved, the preference is reflected in the Shopping preferences page (google.com/preferences/shopping), but as of now that settings page is read-only for brand selections; you cannot add brands directly from there.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Does saving a brand as a favourite affect paid Shopping ads too?</div>
+            <div class="faq-a">This is not confirmed. The personalised section visible in testing ("Popular from your favorite brands") appears in the organic results area, not labelled as an ad. Whether the preference also influences paid placement is unclear.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">How is this similar to Preferred Sources?</div>
+            <div class="faq-a">Preferred Sources lets users save news publishers to get more of their content in Top Stories. Favourite Brands applies the same declared-preference model to retail: users save brands and get more of their products in relevant shopping queries. Same mechanic, different vertical.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Will this affect how Google Search Console data looks?</div>
+            <div class="faq-a">Potentially yes, if it rolls out at scale. Personalised results mean impressions and clicks will increasingly reflect brand-affinity segments rather than a single universal SERP. Aggregated GSC data may become harder to interpret without factoring in personalisation variance.</div>
+          </div>
+
+          <a href="/notes/" class="post-back">← Back to Notes</a>
+
+          <div class="author-card">
+            <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="56" height="56">
+            <div>
+              <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+              <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+              <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <nav class="ct-toc">
+        <div class="ct-toc-label">On this page</div>
+        <ul class="ct-toc-list">
+          <li><a href="#what-i-saw">What I saw</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#preferred-sources-parallel">Preferred Sources parallel</a></li>
+          <li><a href="#what-brands-should-do">What brands should do</a></li>
+          <li><a href="#what-this-means-for-seo">What this means for SEO</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</div>
+
+<script src="/header.js"></script>
+<footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script src="/cookie-consent.js"></script>
+<script>
+(function() {
+  const tocLinks = document.querySelectorAll('.ct-toc-list a');
+  const headings = document.querySelectorAll('.post-body h2');
+
+  function updateActiveLink() {
+    let activeId = '';
+    for (let heading of headings) {
+      const rect = heading.getBoundingClientRect();
+      if (rect.top < 150) {
+        activeId = heading.id;
+      }
+    }
+
+    tocLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + activeId) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveLink);
+  updateActiveLink();
+})();
+</script>
+</body>
+</html>
