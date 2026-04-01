@@ -45,6 +45,157 @@
   status = 301
   force  = true
 
+# Image format migrations (PNG/GIF → WebP) — April 2026
+[[redirects]]
+  from   = "/notes/google-favourite-brands/img/favourite-brands-serp.png"
+  to     = "/notes/google-favourite-brands/img/favourite-brands-serp.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-favourite-brands/img/shopping-preferences.png"
+  to     = "/notes/google-favourite-brands/img/shopping-preferences.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/ecommerce-structured-data-serp-features/google-merchant-center-price-mismatch-feed-vs-landing-page.gif"
+  to     = "/notes/ecommerce-structured-data-serp-features/google-merchant-center-price-mismatch-feed-vs-landing-page.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/ecommerce-structured-data-serp-features/google-shopping-variant-swatches-size-selector-schema-annotated.png"
+  to     = "/notes/ecommerce-structured-data-serp-features/google-shopping-variant-swatches-size-selector-schema-annotated.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/ecommerce-structured-data-serp-features/google-shopping-productgroup-variant-swatches-size-inseam-schema.png"
+  to     = "/notes/ecommerce-structured-data-serp-features/google-shopping-productgroup-variant-swatches-size-inseam-schema.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/ecommerce-structured-data-serp-features/google-shopping-variant-swatches-size-selector-schema.png"
+  to     = "/notes/ecommerce-structured-data-serp-features/google-shopping-variant-swatches-size-selector-schema.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/ecommerce-structured-data-serp-features/google-organic-search-shipping-returns-annotation-schema-example.png"
+  to     = "/notes/ecommerce-structured-data-serp-features/google-organic-search-shipping-returns-annotation-schema-example.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/ecommerce-structured-data-serp-features/product-rich-result-example.png"
+  to     = "/notes/ecommerce-structured-data-serp-features/product-rich-result-example.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/ecommerce-structured-data-serp-features/google-shopping-free-product-listings-ecommerce-schema.png"
+  to     = "/notes/ecommerce-structured-data-serp-features/google-shopping-free-product-listings-ecommerce-schema.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/loyalty-programme-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/loyalty-programme-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/coupon-discount-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/coupon-discount-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/product-rating-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/product-rating-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/pros-cons-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/pros-cons-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/delivery-price-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/delivery-price-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/store-nearby-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/store-nearby-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/price-drop-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/price-drop-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/store-rating-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/store-rating-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-ecommerce-rich-results/images/return-policy-rich-result.png"
+  to     = "/notes/google-ecommerce-rich-results/images/return-policy-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-store-ratings-vs-product-ratings/images/shopping-merchant-rating-browse.png"
+  to     = "/notes/google-store-ratings-vs-product-ratings/images/shopping-merchant-rating-browse.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-store-ratings-vs-product-ratings/images/organic-blue-link-rating.png"
+  to     = "/notes/google-store-ratings-vs-product-ratings/images/organic-blue-link-rating.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-store-ratings-vs-product-ratings/images/shopping-merchant-rating-2.png"
+  to     = "/notes/google-store-ratings-vs-product-ratings/images/shopping-merchant-rating-2.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-store-ratings-vs-product-ratings/images/shopping-merchant-rating.png"
+  to     = "/notes/google-store-ratings-vs-product-ratings/images/shopping-merchant-rating.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-store-ratings-vs-product-ratings/images/product-rating-rich-result.png"
+  to     = "/notes/google-store-ratings-vs-product-ratings/images/product-rating-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-store-ratings-vs-product-ratings/images/store-rating-rich-result.png"
+  to     = "/notes/google-store-ratings-vs-product-ratings/images/store-rating-rich-result.webp"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/notes/google-store-ratings-vs-product-ratings/images/schema-source.png"
+  to     = "/notes/google-store-ratings-vs-product-ratings/images/schema-source.webp"
+  status = 301
+  force  = true
+
 # ── Edge Function: server-side auth gate for GMC Feed Analyzer ───────
 [[edge_functions]]
   function = "gmc-gate"
