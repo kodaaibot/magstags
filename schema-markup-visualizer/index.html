@@ -381,7 +381,7 @@
     </div>
 
     <div class="input-panel active" id="tab-paste">
-      <textarea class="text-area" id="json-input" placeholder='Paste your JSON-LD here — the contents of a <script type="application/ld+json"> tag...'></textarea>
+      <textarea class="text-area" id="json-input" placeholder='Paste your JSON-LD here — the contents of a &lt;script type=&quot;application/ld+json&quot;&gt; tag...'></textarea>
       <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
         <button class="btn" onclick="parseFromPaste()">Visualize</button>
         <button class="sample-link" onclick="loadSample()">Load sample schema</button>
@@ -604,19 +604,56 @@ function clearStatus() {
 // Parse from paste
 // ═══════════════════════════════════════════
 function tryRepairJSON(raw) {
-  var fixed = raw;
+  // 0. Pre-clean: strip &lt;script&gt; wrapper, curly/smart quotes, HTML entities
+  function preclean(s) {
+    // Strip <script type="application/ld+json">...<\/script> wrapper (case-insensitive)
+    s = s.replace(new RegExp('<script[^>]*type\\s*=\\s*["\']application\\/ld\\+json["\'][^>]*>([\\s\\S]*?)<\/' + 'script>', 'i'), function(_, inner) { return inner; });
+    // Also strip bare <script ...> and <\/script> lines (for partial pastes)
+    s = s.replace(/^\s*<script[^>]*>\s*/i, '').replace(new RegExp('\\s*<\\/' + 'script>\\s*$', 'i'), '');
+    // HTML entities that break JSON: &quot; &apos; &amp; &lt; &gt;
+    s = s.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    // Smart/curly double quotes → straight double quotes
+    s = s.replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]/g, '"');
+    // Smart/curly single quotes → straight single quotes
+    s = s.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'");
+    return s.trim();
+  }
+
+  // 0b. Handle multiple JSON-LD blocks joined by &lt;/script&gt;&lt;script&gt; separators
+  // e.g. pasting two consecutive &lt;script type="application/ld+json"&gt; blocks from DevTools
+  var multiBlockRe = new RegExp('<\\/' + 'script>\\s*<script[^>]*type\\s*=\\s*["\']application\\/ld\\+json["\'][^>]*>', 'gi');
+  if (multiBlockRe.test(raw)) {
+    // First try to extract full &lt;script&gt;...&lt;/script&gt; blocks
+    var extractRe = new RegExp('<script[^>]*type\\s*=\\s*["\']application\\/ld\\+json["\'][^>]*>([\\s\\S]*?)<\\/' + 'script>', 'gi');
+    var blocks = [], bm;
+    while ((bm = extractRe.exec(raw)) !== null) {
+      try { blocks.push(JSON.parse(bm[1].trim())); } catch(e) {}
+    }
+    // If that found nothing (input starts with JSON, not <script>), split on the separator
+    if (blocks.length === 0) {
+      var splitRe = new RegExp('<\\/' + 'script>\\s*(?:<script[^>]*>)?', 'gi');
+      var parts = raw.split(splitRe);
+      parts.forEach(function(part) {
+        var cleaned = part.replace(/^\s*<script[^>]*>\s*/i, '').trim();
+        if (cleaned) try { blocks.push(JSON.parse(cleaned)); } catch(e) {}
+      });
+    }
+    if (blocks.length > 0) return blocks.length === 1 ? blocks[0] : blocks;
+  }
+
+  var fixed = preclean(raw);
+  // Try direct parse after pre-clean
+  try { return JSON.parse(fixed); } catch(e) {}
   // 1. Remove trailing commas before } or ]
-  fixed = fixed.replace(/,\s*([\]}])/g, '$1');
-  try { return JSON.parse(fixed); } catch(e) {}
+  var noTrailing = fixed.replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(noTrailing); } catch(e) {}
   // 2. Replace single-quoted keys/values with double quotes
-  //    Match ':' preceded by single-quoted key or followed by single-quoted value
-  fixed = raw.replace(/'/g, '"');
-  fixed = fixed.replace(/,\s*([\]}])/g, '$1');
-  try { return JSON.parse(fixed); } catch(e) {}
+  var noSingle = fixed.replace(/'/g, '"').replace(/,\s*([\]}])/g, '$1');
+  try { return JSON.parse(noSingle); } catch(e) {}
   // 3. Try wrapping in array (multiple objects pasted)
-  try { return JSON.parse('[' + fixed + ']'); } catch(e) {}
+  try { return JSON.parse('[' + noSingle + ']'); } catch(e) {}
   // 4. Remove JS-style line comments (only at line start, not inside URLs)
-  var noComments = raw.replace(/^\s*\/\/[^\n]*/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+  var noComments = fixed.replace(/^\s*\/\/[^\n]*/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
   noComments = noComments.replace(/,\s*([\]}])/g, '$1');
   try { return JSON.parse(noComments); } catch(e) {}
   return null;
@@ -631,12 +668,20 @@ function parseFromPaste() {
     if (!Array.isArray(data)) data = [data];
     renderSchemas(data, raw);
   } catch (e) {
-    // Strict parse failed — try to repair
+    // Strict parse failed — try to repair (handles &lt;script&gt; wrappers, smart quotes, HTML entities, etc.)
     var repaired = tryRepairJSON(raw);
     if (repaired) {
       if (!Array.isArray(repaired)) repaired = [repaired];
-      showStatus('Warning: Invalid JSON was auto-repaired — ' + e.message + '. Check values for accuracy.', 'warning');
-      renderSchemas(repaired, raw);
+      // Only show warning if the original was actually malformed (not just had a wrapper stripped)
+      var cleanedRaw = raw.replace(/<script[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>/i, '').replace(new RegExp('<\\/' + 'script>', 'i'), '').trim();
+      try {
+        JSON.parse(cleanedRaw);
+        // If cleaned version parses fine, no warning needed — just a wrapper was stripped
+        renderSchemas(repaired, JSON.stringify(repaired, null, 2));
+      } catch(_) {
+        showStatus('Warning: Input was auto-repaired — ' + e.message + '. Check values for accuracy.', 'warning');
+        renderSchemas(repaired, JSON.stringify(repaired, null, 2));
+      }
     } else {
       showStatus('Invalid JSON: ' + e.message, 'error');
     }
@@ -674,7 +719,7 @@ async function fetchFromUrl() {
       return;
     }
 
-    var regex = /<script[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+    var regex = new RegExp('<script[^>]*type\\s*=\\s*["\']application\\/ld\\+json["\'][^>]*>([\\s\\S]*?)<\\/' + 'script>', 'gi');
     var schemas = [];
     var match;
     while ((match = regex.exec(html)) !== null) {

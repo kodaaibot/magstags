@@ -25,13 +25,12 @@
     .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
     .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
     .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
-    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
     .post-lead{font-size:17px;line-height:1.7;color:var(--text-3);margin-bottom:36px;font-style:italic;border-left:3px solid var(--border);padding-left:18px}
     .post-body p{margin-bottom:22px}
     .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
     .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
     .post-body strong{color:var(--text-1);font-weight:600}
-    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);padding:1px 5px;border-radius:4px;color:var(--text-2);word-break:break-all}
     .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
     .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
     .post-body li{margin-bottom:10px;line-height:1.75}
@@ -42,12 +41,11 @@
     .post-callout strong{color:var(--text-1)}
     .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
     html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
-    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
     .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
     .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
     .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
     .post-table tr:last-child td{border-bottom:none}
-    .post-table code{font-size:11px}
     .post-table .col-label{font-weight:600;color:var(--text-1);white-space:nowrap}
     .priority-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
     @media(max-width:640px){.priority-grid{grid-template-columns:1fr}}
@@ -259,7 +257,7 @@
         <figcaption style="font-size:13px;color:var(--text-4);padding:10px 14px;background:var(--surface)">"Free delivery over $49 · 30-day returns" in an organic search result. This annotation is powered by <code>ShippingDetails</code> and <code>ReturnPolicy</code> schema, visible before a user clicks.</figcaption>
       </figure>
 
-      <p> "Free delivery over £20", "Free returns", "Get it by Thu Apr 3", the lines that appear beneath the price on Shopping tiles, and since April 2023, also in an expanded section below the meta description on organic product page results. These come from <code>ShippingDetails</code> (<code>shippingRate</code> + <code>deliveryTime</code>) and <code>ReturnPolicy</code> (<code>returnPolicyCategory</code> + <code>merchantReturnDays</code>) in your schema, cross-referenced with your Merchant Center feed. The lowest implementation effort of the four. Most competitors don't have it, and it shows directly in the result, before a click.</p>
+      <p> "Free delivery over £20", "Free returns", "Get it by Thu Apr 3", the lines that appear beneath the price on Shopping tiles, and since April 2023, also in an expanded section below the meta description on organic product page results. These come from <code>ShippingDetails</code> (<code>shippingRate</code> + <code>deliveryTime</code>) and <code>ReturnPolicy</code> (<code>returnPolicyCategory</code> + <code>merchantReturnDays</code>) in your schema, cross-referenced with your Merchant Center feed. The lowest implementation effort of the four. Most competitors don't have it, and it shows directly in the result, before a click. For a full breakdown of what the <a href="/notes/google-ecommerce-rich-results/#delivery-price">Delivery Price</a> and <a href="/notes/google-ecommerce-rich-results/#returns-policy">Returns Policy</a> rich results look like in SERPs and the exact triggers for each, see the eCommerce Rich Results guide.</p>
 
       <h2 id="prioritisation">The prioritisation order</h2>
 
@@ -290,7 +288,7 @@
           <p class="priority-card-num">Priority 4</p>
           <h3>BreadcrumbList + AggregateRating</h3>
           <p><strong>BreadcrumbList:</strong> Low effort, improves SERP display, helps Google understand site hierarchy. Every page template should have this.</p>
-          <p><strong>AggregateRating:</strong> Only implement if you have genuine first-party reviews. Google has penalised sites for manipulative use. If you're importing third-party scores and displaying them as your own, don't.</p>
+          <p><strong>AggregateRating:</strong> Only implement if you have genuine first-party reviews. Google has penalised sites for manipulative use. If you're importing third-party scores and displaying them as your own, don't. Note that <code>AggregateRating</code> schema is separate from the Merchant Center Product Ratings programme — they draw from different data and appear in different placements. See <a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings</a> for the full distinction.</p>
         </div>
       </div>
 
@@ -319,7 +317,7 @@
       <p>Sale pricing is where the freshness problem gets acute and the consequences get serious. A price mismatch between your schema or feed and what's on the page isn't just a rich result suppression, it can lead to product disapprovals and, in persistent cases, account suspension.</p>
 
       <h3>How schema.org handles sale prices</h3>
-      <p> There's no <code>salePrice</code> property in schema.org. When a product is on sale, you update <code>price</code> to the sale price and add <code>priceValidUntil</code> with the sale end date. Google uses <code>priceValidUntil</code> to determine eligibility for price drop annotations in Shopping. Without it, the reduced price is treated as the new regular price rather than a temporary promotion.</p>
+      <p> There's no <code>salePrice</code> property in schema.org. When a product is on sale, you update <code>price</code> to the sale price and add <code>priceValidUntil</code> with the sale end date. Google uses <code>priceValidUntil</code> to determine eligibility for <a href="/notes/google-ecommerce-rich-results/#price-drop">price drop annotations</a> in Shopping. Without it, the reduced price is treated as the new regular price rather than a temporary promotion.</p>
 
       <h3>Strikethrough pricing</h3>
       <p> The original price shown crossed out next to the sale price in Shopping results is driven by Google's price tracking — Google records historical prices and displays the drop when the current price is lower. You can signal the original price using <code>PriceSpecification</code> with a <code>priceType</code> of <code>https://schema.org/ListPrice</code> alongside the current <code>Offer</code> price, which is the standard implementation for "was/now" pricing. Many platforms set the current sale price correctly but omit the original price markup entirely.</p>

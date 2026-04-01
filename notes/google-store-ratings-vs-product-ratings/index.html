@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/google-store-ratings-vs-product-ratings/">
+  <meta name="description" content="Google Store Ratings and Product Ratings both show stars in search — but they measure different things, come from different data sources, and require completely different setup. Here's how they actually work.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Google Store Ratings vs Product Ratings: How Each Works | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--text-1)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .post-callout-red{background:#FEF2F2;border-left:3px solid #DC2626;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#7F1D1D}
+    html.dark .post-callout-red{background:#450a0a;border-color:#991b1b;color:#fca5a5}
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
+    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left;white-space:nowrap}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table .col-label{font-weight:600;color:var(--text-1)}
+    .rating-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin:12px 0}
+    .rating-card-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border-radius:99px;margin:0 0 10px 0}
+    .rating-card-tag.store{background:#eff6ff;color:#1e40af;border:1px solid #93c5fd}
+    .rating-card-tag.product{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+    html.dark .rating-card-tag.store{background:#0f1e3d;color:#93c5fd;border-color:#1e40af}
+    html.dark .rating-card-tag.product{background:#052e16;color:#4ade80;border-color:#166534}
+    .rating-card h3{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text-1);margin:0 0 8px 0}
+    .rating-card p{font-size:15px;color:var(--text-2);line-height:1.7;margin:0 0 8px 0}
+    .rating-card p:last-child{margin:0}
+    .faq-block{margin:52px 0}
+    .faq-block h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
+    .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+    .faq-item:first-of-type{border-top:1px solid var(--border)}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:10px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
+    .faq-a a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-1);margin:0 0 20px 0}
+    .sources ul{padding-left:0;list-style:none}
+    .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
+    .sources a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--text-2);font-weight:600}
+    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+    .ct-content{min-width:0}
+    .ct-toc{position:sticky;top:80px;padding-top:60px}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
+    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
+    @media(max-width:960px){.ct-layout{grid-template-columns:1fr;gap:0}.ct-toc{position:static;padding-top:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.ct-toc-list{border-left:none;flex-direction:row;flex-wrap:wrap;gap:4px 16px}.ct-toc-list li a{border-left:none;padding:6px 0;font-size:13px}}
+  </style>
+  <meta property="og:title" content="Google Store Ratings vs Product Ratings: How Each Works | MagsTags">
+  <meta property="og:description" content="Google Store Ratings and Product Ratings both show stars in search — but they measure different things, come from different data sources, and require completely different setup. Here's how they actually work.">
+  <meta property="og:url" content="https://www.magstags.com/notes/google-store-ratings-vs-product-ratings/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google Store Ratings vs Product Ratings: How Each Works | MagsTags">
+  <meta name="twitter:description" content="Google Store Ratings and Product Ratings both show stars in search — but they measure different things, come from different data sources, and require completely different setup.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Google Store Ratings vs Product Ratings: How Each Works",
+    "description": "Google Store Ratings and Product Ratings both show stars in search — but they measure different things, come from different data sources, and require completely different setup. Here's how they actually work.",
+    "url": "https://www.magstags.com/notes/google-store-ratings-vs-product-ratings/",
+    "datePublished": "2026-03-30",
+    "dateModified": "2026-03-30",
+    "author": {"@type":"Person","name":"Mags Sikora","url":"https://www.magstags.com/mags-sikora/"},
+    "publisher": {"@type":"Organization","name":"MagsTags","url":"https://www.magstags.com/"},
+    "image": "https://www.magstags.com/og-image.png",
+    "mainEntityOfPage": {"@type":"WebPage","@id":"https://www.magstags.com/notes/google-store-ratings-vs-product-ratings/"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://www.magstags.com/"},
+      {"@type":"ListItem","position":2,"name":"Notes","item":"https://www.magstags.com/notes/"},
+      {"@type":"ListItem","position":3,"name":"Google Store Ratings vs Product Ratings","item":"https://www.magstags.com/notes/google-store-ratings-vs-product-ratings/"}
+    ]
+  }
+  </script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a><span>›</span>
+      <a href="/notes/">Notes</a><span>›</span>
+      <span>Store Ratings vs Product Ratings</span>
+    </nav>
+
+    <span class="post-category">Google Shopping</span>
+    <h1 class="post-h1">Google Store Ratings vs Product Ratings: How Each Works, Where Each Shows, and What You Actually Control</h1>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>30 March 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>12 min read</span>
+    </div>
+
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+
+      <p>In Google Shopping results, two different star ratings can appear: one reflecting reviews of a specific product, the other reflecting the merchant's overall reputation as a business. Same visual format, same five-star scale. Different data, different eligibility rules, different setup entirely. Google loves a good star. It just doesn't always make it obvious which star is doing what.</p>
+
+      <p><strong>Google Store Ratings</strong> and <strong>Google Product Ratings</strong> are easy to conflate. Same star format, similar name, both tied to Merchant Center. They are not the same thing. They measure different things, draw from different sources, and require different setup. Getting one does not get you the other.</p>
+
+      <p>This article covers how each system works: where the data comes from, what triggers display, what you can actually influence, and how the two relate on the same results page.</p>
+
+      <h2 id="quick-comparison">The difference at a glance</h2>
+
+      <p>Before going deeper, here is the core distinction in one table.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <colgroup>
+            <col style="width:22%">
+            <col style="width:39%">
+            <col style="width:39%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Store Ratings</th>
+              <th>Product Ratings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">What it measures</td>
+              <td>Overall experience with your business: service, shipping, returns</td>
+              <td>Quality of a specific product, based on buyer reviews of that item</td>
+            </tr>
+            <tr>
+              <td class="col-label">Data source</td>
+              <td>Google-approved review partners, Google Customer Reviews, Google's own surveys</td>
+              <td><strong>Shopping ads &amp; free listings:</strong> your product review feed (XML, submitted to Merchant Center), approved third-party aggregators (Bazaarvoice, Trustpilot product reviews, Yotpo, etc.), reviews from other retailers for the same GTIN. <strong>Organic search snippets only:</strong> <code>AggregateRating</code> schema on your product pages (independent of Merchant Center, does not feed Shopping ads or free listings)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Matched by</td>
+              <td>Your domain / merchant URL</td>
+              <td>GTIN (primary signal), MPN + brand, or product URL. GTINs give the most reliable matching; alternatives result in fewer reviews correctly associated</td>
+            </tr>
+            <tr>
+              <td class="col-label">Minimum threshold</td>
+              <td>100 reviews, 3.5 stars or above (text ads); no minimum stated for organic Shopping</td>
+              <td><strong>Shopping ads:</strong> 50 reviews total across catalogue, programme enrolment required; up to 2 weeks onboarding delay. <strong>Free listings:</strong> no enrolment required. Google may show aggregated reviews automatically; enrolment increases match likelihood</td>
+            </tr>
+            <tr>
+              <td class="col-label">Where it appears</td>
+              <td>Google Search text ads, Shopping ads, free product listings in organic search, Google Shopping tab</td>
+              <td>Shopping ads (programme enrolment required); free product listings (may appear without enrolment); product knowledge panels; occasionally organic search snippets (via <code>AggregateRating</code> schema)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Old name</td>
+              <td>Google Seller Ratings (renamed 2023)</td>
+              <td>Product Ratings (unchanged)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Setup required</td>
+              <td>Review collection via approved partner or Google Customer Reviews; automatic once eligible</td>
+              <td><strong>Shopping ads:</strong> application to Product Ratings programme in Merchant Center + review feed submission required. <strong>Free listings:</strong> no application required. Google may show aggregated reviews automatically; enrolment increases match likelihood. <strong>Organic snippets:</strong> <code>AggregateRating</code> schema on product pages (separate system, no application needed)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Who controls the score</td>
+              <td>Google aggregates from all sources; you influence via review collection strategy</td>
+              <td>Google aggregates from multiple sources: merchants, review aggregators, review sites, and Google users. GTIN accuracy determines how reliably reviews are matched to your products</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="store-ratings">Google Store Ratings</h2>
+
+      <p>Store Ratings (formerly Google Seller Ratings, renamed in 2023) are a business-level trust signal. They represent how customers rate their overall experience with your store: not any individual product, but the transaction as a whole. Shipping speed, customer service quality, returns handling, packaging.</p>
+
+      <p>When Store Ratings were known as Seller Ratings, the name implied they were purely an ads feature. That was largely true until October 2024, when Google expanded Store Ratings to show in organic search results as well, initially in the US, then rolling out to Australia, Canada, India and the UK. The stars now appear next to your domain name in organic product-related search results, not just on paid placements.</p>
+
+      <figure style="margin:28px 0">
+        <img src="images/store-rating-rich-result.png" srcset="images/store-rating-rich-result.png 2x" alt="Google SERP showing a Nike store rating on a category listing page — 4.7 stars from 7.2K reviews, labelled store rating" width="535" height="158" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block">
+        <figcaption style="font-size:12px;color:var(--text-4);margin-top:8px;line-height:1.6">Nike store rating on a Pegasus category page. 4.7 ★ from 7.2K reviews, explicitly labelled "store rating" — domain-level, not product-level.</figcaption>
+      </figure>
+
+      <h3 id="store-ratings-data">Where the data comes from</h3>
+
+      <p>Google builds your Store Rating from three sources:</p>
+
+      <ul>
+        <li><strong>Google-approved review partners</strong> — platforms like Trustpilot, Feefo, Yotpo, Shopper Approved, and others that are whitelisted by Google and submit aggregated store review data directly. If your customers review you on one of these platforms, those reviews feed into your Store Rating automatically once you meet the threshold.</li>
+        <li><strong>Google Customer Reviews</strong> — Google's own post-purchase survey programme. After a transaction, Google can email your customers a short satisfaction survey. Responses feed directly into your Store Rating. You enable this inside Merchant Center by adding a survey opt-in snippet to your order confirmation page.</li>
+        <li><strong>Google's own data signals</strong> — Google also uses its own shopping data and customer feedback mechanisms. The exact weighting is not published.</li>
+      </ul>
+
+      <p>Google does not disclose the precise aggregation formula. Because of course it doesn't. What it does state: reviews must be genuine (no incentivised or solicited reviews that violate policies), must be about your store (not your products), and must come through an approved channel. You cannot submit reviews directly to Google yourself.</p>
+
+      <h3 id="store-ratings-thresholds">Eligibility thresholds</h3>
+
+      <p>For Store Ratings to appear on Google Search text ads, the documented requirements are:</p>
+
+      <ul>
+        <li>At least 100 unique reviews in the past 12 months</li>
+        <li>An average rating of 3.5 stars or above</li>
+        <li>Your domain must be identifiable to Google as a seller</li>
+      </ul>
+
+      <p>For organic search placements (the October 2024 expansion), Google has not published a separate threshold. In practice, the same review volume and quality signal appears to apply. Google rarely makes these things straightforward.</p>
+
+      <div class="post-callout">
+        <strong>The 100-review threshold is per domain, not per review partner.</strong> Reviews from all connected approved partners and Google Customer Reviews are combined toward the total. A merchant using Trustpilot with 60 reviews and Google Customer Reviews with 50 reviews is likely eligible, not stuck at 60.
+      </div>
+
+      <h3 id="store-ratings-placements">Where Store Ratings appear</h3>
+
+      <ul>
+        <li><strong>Google Search text ads</strong> — displayed as a star rating and review count beneath your ad headline, as an automated ad asset (previously called an extension). You don't add it manually; Google adds it when you're eligible.</li>
+        <li><strong>Google Shopping ads</strong> — displayed alongside your product listings in the Shopping tab and Shopping carousel.</li>
+        <li><strong>Free product listings in organic search</strong> — since the 2024 expansion, Store Ratings appear next to your merchant name in organic shopping results.</li>
+        <li><strong>Google Shopping tab</strong> — visible on both paid and free listings when browsing the Shopping tab directly.</li>
+      </ul>
+
+      <p>Store Ratings are automated. You do not add them to your campaigns or configure placements. Google decides when and where to show them based on eligibility. The only thing you control is which review partners you use and how actively you collect reviews.</p>
+
+      <p>In organic search, Store Ratings appear most visibly on category, collection, and PLP-type queries: pages where Google is surfacing a merchant's range rather than a single product. On individual product pages, Product Ratings tend to dominate the star signal because they reflect reviews for that specific item. The practical implication: if your brand ranks for category-level queries ("Nike running shoes", "men's trail trainers"), Store Ratings are what shoppers will see next to your result. Which is a good reason to take review collection seriously, even if the 100-review threshold feels like a lot when you're at 47.</p>
+
+      <h2 id="product-ratings">Google Product Ratings</h2>
+
+      <p>Product Ratings operate at the product level: individual items, not your business as a whole. A rating of 4.7 stars on a Nike running shoe reflects what buyers think of that specific shoe. It says nothing about whether Nike shipped it on time.</p>
+
+      <p>There are two separate systems that produce product-level stars in Google search. They look the same in results. They are not the same. Google has not gone out of its way to explain the difference:</p>
+
+      <ul>
+        <li><strong><code>AggregateRating</code> schema markup</strong> — the SEO path. You add structured data to your product pages using <code>schema.org/AggregateRating</code>, and Google can use it to display star ratings in organic search result snippets. This requires no Merchant Center programme, no application, no feed. It reflects the reviews you have collected and marked up on your own pages. See the full guide to <a href="/notes/ecommerce-structured-data-serp-features/">ecommerce structured data and rich results</a> for implementation detail.</li>
+        <li><strong>Merchant Center Product Ratings programme</strong> — the Shopping path. A formal programme you apply to join. Once approved, you submit a product review feed (XML) to Merchant Center, and Google displays aggregated ratings on your Shopping ads and free listings. This is separate from schema and operates independently.</li>
+      </ul>
+
+      <figure style="margin:28px 0">
+        <img src="images/product-rating-rich-result.png" srcset="images/product-rating-rich-result.png 2x" alt="Google SERP showing a product-level rating for Nike Texas Pegasus 41 — 4.9 stars from 7 reviews on a product page" width="538" height="167" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block">
+        <figcaption style="font-size:12px;color:var(--text-4);margin-top:8px;line-height:1.6">Product rating (4.9 ★, 7 reviews) on a Nike PDP. Product-level, specific to this SKU — entirely separate from the store rating shown above.</figcaption>
+      </figure>
+
+      <h3 id="product-ratings-data">Where the data comes from</h3>
+
+      <p>The data source depends on which system is producing the stars:</p>
+
+      <p><strong>For organic search snippets (<code>AggregateRating</code> schema):</strong> the data comes from your own on-site reviews, marked up with <code>schema.org/AggregateRating</code> on your product pages. Google reads your structured data and may use it to display a star rating in organic results. You control this entirely: the reviews are yours, the markup is on your pages, no third party is involved.</p>
+
+      <p><strong>For Shopping ads and free listings (Merchant Center programme):</strong> Google aggregates from multiple sources:</p>
+
+      <ul>
+        <li><strong>Your product review feed</strong> — submitted directly to Merchant Center in XML format following Google's product reviews feed specification.</li>
+        <li><strong>Approved third-party aggregators</strong> — platforms like Bazaarvoice, PowerReviews, Trustpilot (product reviews module), and Yotpo that are approved to submit product review data to Google on your behalf.</li>
+        <li><strong>Other approved sources</strong> — Google states that star ratings are compiled from "merchants, review aggregators, review sites, and Google users." GTIN accuracy is critical here: Google uses GTINs as the primary matching signal to aggregate reviews for the same product across sources. Missing or inaccurate GTINs mean fewer reviews get matched to your listing. See <a href="/notes/product-identifiers-seo/">GTIN and product identifiers for ecommerce</a> for a full breakdown of identifier types and how to audit coverage.</li>
+      </ul>
+
+      <div class="post-callout-warn">
+        <strong>You do not have full control over your Merchant Center Product Ratings score.</strong> Google aggregates from multiple sources: merchants, review aggregators, review sites, and Google users. The displayed rating may include reviews you did not collect and have never seen. This is by design: the rating reflects the product, not your fulfilment specifically. If that feels like a one-way relationship, that's because it is. <code>AggregateRating</code> schema, by contrast, reflects only the reviews you have marked up on your own pages — fully yours.
+      </div>
+
+      <h3 id="same-url-two-ratings">The same product URL can show two different star ratings in Google</h3>
+
+      <p>In the organic blue-link result, the stars come from <code>AggregateRating</code> schema on your product page: your reviews, your markup, fully under your control. In the Shopping result for the same URL, the stars come from the Merchant Center programme, aggregated from multiple sources by Google. Both can be visible in the same SERP for the same product.</p>
+
+      <p>If the scores differ, that is why. They are drawing from different data, built by different systems, with no connection to each other. It is not a bug. It is just Google running two separate rating systems in parallel and not going out of its way to flag the discrepancy.</p>
+
+      <p>Here is a real example. The NikeSKIMS Yoga Mat sold on SKIMS.com:</p>
+
+      <figure style="margin:24px 0">
+        <img src="images/organic-blue-link-rating.png" alt="Organic Google search result for the NikeSKIMS Yoga Mat on SKIMS.com showing 5.0 stars from 19 reviews — from AggregateRating schema markup" width="600" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block">
+        <figcaption style="font-size:12px;color:var(--text-4);margin-top:8px;line-height:1.6"><strong>Organic blue-link result:</strong> 5.0 ★ from 19 reviews — driven by <code>AggregateRating</code> schema on SKIMS.com. Only SKIMS' own reviews, exactly as marked up.</figcaption>
+      </figure>
+      <figure style="margin:24px 0">
+        <img src="images/shopping-merchant-rating-browse.png" alt="Google Shopping Browse Products carousel showing Nike SKIMS Yoga Mat at 4.8 stars from 24 reviews — aggregated by Google from multiple sources including Nike.com" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block">
+        <figcaption style="font-size:12px;color:var(--text-4);margin-top:8px;line-height:1.6"><strong>Shopping result, same product:</strong> 4.8 ★ from 24 reviews — aggregated by Google from multiple sources, including reviews left on store.nike.com. Different data, different score.</figcaption>
+      </figure>
+
+      <p>The Shopping result pulls in reviews from Nike.com alongside SKIMS' own, giving 24 reviews at 4.8. The organic snippet reflects only the 19 reviews SKIMS has marked up in their schema, giving 5.0. Same product, same URL, different stars. The data behind them comes from entirely different places.</p>
+
+      <figure style="margin:24px 0">
+        <img src="images/shopping-aggregated-sources-proof.jpg" alt="Google Shopping User Reviews panel for the NikeSKIMS Yoga Mat showing 4.8 stars from 24 reviews, with a review by Claudia attributed to store.nike.com — proving Google aggregates from multiple sources" width="900" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block">
+        <figcaption style="font-size:12px;color:var(--text-4);margin-top:8px;line-height:1.6">The Shopping User Reviews panel for the same product: 4.8 ★ from 24 reviews. The review by Claudia is attributed to <strong>store.nike.com</strong> — not SKIMS. Google is aggregating across sources, and those reviews are pulling the score down from SKIMS' own 5.0.</figcaption>
+      </figure>
+
+      <figure style="margin:28px 0">
+        <img src="images/schema-source.png" alt="SKIMS product page with Chrome DevTools showing AggregateRating schema markup: ratingValue 5, ratingCount 19 — confirming the source of the organic result's stars" width="900" loading="lazy" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--border);display:block">
+        <figcaption style="font-size:12px;color:var(--text-4);margin-top:8px;line-height:1.6">The <code>AggregateRating</code> schema on SKIMS.com: <code>ratingValue: "5"</code>, <code>ratingCount: "19"</code>. This is what powers the organic snippet stars — and only this.</figcaption>
+      </figure>
+
+      <h3 id="product-ratings-matching">How Google matches reviews to products</h3>
+
+      <p>The matching logic depends on how precisely the product can be identified:</p>
+
+      <ul>
+        <li><strong>GTIN match</strong> — the most reliable. A globally unique barcode number identifies the exact product regardless of who sells it. Reviews from any source for that GTIN are aggregated together. This is why accurate GTIN submission in your Merchant Center feed matters for ratings, not just for Shopping eligibility.</li>
+        <li><strong>MPN + brand match</strong> — used when no GTIN is available. Less precise than GTIN matching because MPNs are only unique within a manufacturer's range, not globally.</li>
+        <li><strong>Product URL</strong> — a fallback when no identifier is available. Limits aggregation to reviews specifically about your listing.</li>
+      </ul>
+
+      <p>The specificity of the search query also affects what gets aggregated. A specific search (brand + model + colour) will pull ratings aggregated only for that exact product. A generic search will show ratings where applicable across a broader set of results. For products with variants (sizes, colours), how you structure your schema (<a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup schema</a>) affects which GTIN is associated with which listing.</p>
+
+      <h3 id="product-ratings-thresholds">Eligibility thresholds</h3>
+
+      <ul>
+        <li>At least <strong>50 reviews in total across all your products</strong> — required to participate. There may be a delay of up to 2 weeks after sign-up before ratings start appearing while your account is onboarded.</li>
+        <li><strong>Accurate product identifiers matter for eligibility</strong> — GTIN accuracy, consistent MPN and brand names across your product and review feeds, and completeness of product data all affect whether reviews are correctly matched and displayed. Discrepancies between feeds can prevent reviews from appearing. The <a href="/merchant-listing-schema-generator/">Merchant Listing schema generator</a> can help you validate identifier fields in your structured data.</li>
+        <li><strong>Programme participation is required for Shopping ads.</strong> For free listings, Google may display aggregated product reviews compiled from multiple sources regardless of whether you have applied — participation is not required for free listings, but it increases the likelihood of reviews being matched to your products.</li>
+      </ul>
+
+      <h3 id="product-ratings-placements">Where Product Ratings appear</h3>
+
+      <ul>
+        <li><strong>Google Shopping ads</strong> — star ratings beneath the product image, title and price in Shopping carousel results. Requires programme enrolment and an approved review feed.</li>
+        <li><strong>Free product listings</strong> — Shopping tab and organic Shopping results. Google may display aggregated product reviews here even without programme enrolment, compiled from multiple sources. Enrolment increases the likelihood of reviews being matched to your listings.</li>
+        <li><strong>Product knowledge panels</strong> — when a product has a knowledge panel in Google Search, aggregated ratings may appear there.</li>
+        <li><strong>Organic search result snippets</strong> — star ratings in organic snippets come from <code>AggregateRating</code> schema on your product pages, not from the Merchant Center Product Ratings programme. These are separate systems.</li>
+      </ul>
+
+      <h2 id="same-serp-different-signals">Two ratings, one results page</h2>
+
+      <p>On a competitive shopping query, both types of rating can appear in the same set of results, sometimes on the same listing. A Shopping result for Nike trainers can show a Store Rating (4.8 stars, Nike's overall store experience) alongside a Product Rating (4.6 stars, this specific trainer model). Same star format, completely different data.</p>
+
+      <p>The practical implication: a merchant can have a high Store Rating and a low Product Rating, or vice versa. A retailer with excellent customer service but a flawed product will show that in the data. A retailer with a great product but poor logistics will show that too. They are independent signals that Google uses for independent purposes.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Placement</th>
+              <th>Store Rating shown?</th>
+              <th>Product Rating shown?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Google Search text ads</td>
+              <td>Yes, automated asset</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td class="col-label">Google Shopping ads (carousel)</td>
+              <td>Yes</td>
+              <td>Yes, programme enrolment required</td>
+            </tr>
+            <tr>
+              <td class="col-label">Free product listings (Shopping tab)</td>
+              <td>Yes</td>
+              <td>Yes, may appear without enrolment; enrolment increases likelihood</td>
+            </tr>
+            <tr>
+              <td class="col-label">Organic search results (product queries)</td>
+              <td>Yes (since Oct 2024 expansion)</td>
+              <td>Occasionally, via <code>AggregateRating</code> schema (independent of Merchant Center programme)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Product knowledge panels</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Rich result snippets (structured data)</td>
+              <td>No</td>
+              <td>Yes, via <code>AggregateRating</code> schema on product pages (separate from Merchant Center programme)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="what-you-control">What you actually control</h2>
+
+      <p>Both rating types are ultimately aggregated and displayed by Google. But your level of influence differs significantly between them.</p>
+
+      <div class="rating-card">
+        <span class="rating-card-tag store">Store Ratings</span>
+        <h3>Higher merchant influence</h3>
+        <p>Store Ratings reflect your customers' experience with your business, something you can meaningfully shape. What you control:</p>
+        <ul>
+          <li><strong>Which review partners you use</strong> — choose approved platforms that fit your review collection workflow</li>
+          <li><strong>Google Customer Reviews</strong> — enable it in Merchant Center and add the opt-in snippet to your order confirmation page</li>
+          <li><strong>Post-purchase review requests</strong> — follow-up emails or SMS where platform policies allow</li>
+          <li><strong>The underlying experience</strong> — shipping speed, returns handling, customer service responsiveness; these determine what reviews say, not just how many you get</li>
+        </ul>
+        <p>You cannot submit reviews directly or manufacture them. But the review collection infrastructure and the business operations behind it are yours to control.</p>
+      </div>
+
+      <div class="rating-card">
+        <span class="rating-card-tag product">Product Ratings</span>
+        <h3>Partial merchant influence</h3>
+        <p>What you control:</p>
+        <ul>
+          <li><strong>Your review feed</strong> — which products you collect reviews for, how you collect them, which approved platform you use</li>
+          <li><strong>GTIN accuracy in your Merchant Center feed</strong> — clean identifiers ensure Google matches your reviews to the right products, not a similar one</li>
+          <li><strong><code>AggregateRating</code> schema on your product pages</strong> — the organic snippet stars are entirely yours; they reflect only the reviews you have marked up</li>
+        </ul>
+        <p>What you cannot control: for the Merchant Center programme, Google aggregates from multiple sources: merchants, review aggregators, review sites, and Google users. The displayed rating reflects the product, not any individual seller's fulfilment. GTIN accuracy is what determines how much of that aggregated signal flows to your listing; poor identifiers mean fewer reviews matched, not more control.</p>
+      </div>
+
+      <h2 id="setup">Setting up each programme</h2>
+
+      <h3>Setting up Store Ratings</h3>
+
+      <p>Store Ratings are not something you switch on directly. The process is:</p>
+
+      <ol>
+        <li>Choose an approved review collection method: a Google-approved third-party review partner (Trustpilot, Feefo, Yotpo, Shopper Approved, and others) or Google Customer Reviews.</li>
+        <li>If using Google Customer Reviews: enable it in Merchant Center under "Programs", then add the survey opt-in snippet to your order confirmation page.</li>
+        <li>If using a third-party partner: the platform handles the feed submission to Google once you connect your Merchant Center account. Each platform has different integration steps.</li>
+        <li>Collect at least 100 reviews with a 3.5+ average. Once eligible, Google adds the Store Rating automatically to your ads and organic placements — no campaign-level configuration needed.</li>
+      </ol>
+
+      <p>There is no application form for Store Ratings. Eligibility is assessed automatically.</p>
+
+      <h3>Setting up Product Ratings</h3>
+
+      <p>To show Product Ratings on <strong>Shopping ads</strong>, you must enrol in the programme. For <strong>free listings</strong>, Google may show aggregated reviews without enrolment, but enrolling and submitting a feed makes matching more reliable. The enrolment steps are:</p>
+
+      <ol>
+        <li><strong>Option A — use a supported review aggregator:</strong> if you already work with a platform like Bazaarvoice, Trustpilot, Yotpo, or PowerReviews, ask them to submit your product reviews to Google on your behalf. No sign-up form required on your end.</li>
+        <li><strong>Option B — submit directly:</strong> in Google Merchant Center, go to <strong>Programs</strong> and sign up for Product Ratings. Once enrolled, prepare your product review feed in XML format (following Google's product reviews feed specification) and submit it to Merchant Center. Monthly updates are required; more frequent uploads are recommended.</li>
+        <li>Either way, allow up to 2 weeks after your first submission for ratings to start appearing. Reviews take up to 7–10 days to sync after upload.</li>
+      </ol>
+
+      <div class="post-callout">
+        <strong>Policy note:</strong> Google requires you to submit all reviews, including negative ones. You cannot selectively submit only positive reviews. Attempting to do so is a policy violation that can result in removal from the programme.
+      </div>
+
+      <h2 id="review-platforms">Which review platforms support which programme</h2>
+
+      <p>Not all review platforms support both programmes. Google Customer Reviews, for instance, can contribute to Store Ratings but has limited product-level capability for Product Ratings. Most major review platforms support both, but it's worth confirming before committing to a platform for both use cases.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Store Ratings feed</th>
+              <th>Product Ratings feed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Google Customer Reviews</td>
+              <td>Yes</td>
+              <td>Limited (survey-based)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Trustpilot</td>
+              <td>Yes</td>
+              <td>Yes (product reviews module)</td>
+            </tr>
+            <tr>
+              <td class="col-label">Yotpo</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Feefo</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Bazaarvoice</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">PowerReviews</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Shopper Approved</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Bazaarvoice and PowerReviews are enterprise product review platforms with no store-level review feed to Google. They focus entirely on product review syndication. If Store Ratings are a priority, they are not sufficient on their own.</p>
+
+      <h2 id="priority">Which to prioritise</h2>
+
+      <p>If you are starting from zero and can only work on one programme at a time, the decision depends on where you're running and what you're optimising for.</p>
+
+      <p><strong>Prioritise Store Ratings if:</strong> you're running Google Search text ads (Store Ratings improve CTR on text ads directly), you sell across a broad product range (a single store-level trust signal covers everything rather than needing per-product reviews), or you're in a category where service differentiation matters: fashion returns, high-ticket items, subscriptions.</p>
+
+      <p><strong>Prioritise Product Ratings if:</strong> you're competing in the Shopping tab where product-level stars are the dominant trust signal on the listing itself, your products have GTINs and are sold by multiple retailers (positive product ratings aggregate across all of them, giving you a lift from the market), or you're in a category where product quality is the primary purchase driver.</p>
+
+      <p><strong>In practice, most merchants want both.</strong> They answer different questions a buyer has at the same moment: "Is this product good?" (Product Rating) and "Is this store going to be a nightmare to deal with?" (Store Rating). On a Shopping result page, both signals are visible simultaneously, and a competitor who has both, when you have neither, is at a meaningful advantage. Google will not remind you of this unprompted.</p>
+
+      <div class="faq-block">
+        <h2 id="faq">Frequently asked questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-q">Are Google Seller Ratings the same as Google Store Ratings?</div>
+          <div class="faq-a">Yes. Google renamed Seller Ratings to Store Ratings in 2023. The programme is identical — same eligibility requirements, same data sources, same placements. The name changed to reflect the feature's expansion beyond ads into organic search results.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Can I have a Store Rating without running Google Ads?</div>
+          <div class="faq-a">Yes. Since the October 2024 expansion, Store Ratings also appear in organic search results for product queries, not just on ads. You do not need to be running paid campaigns to accumulate reviews or to have your Store Rating displayed organically. You do need a Merchant Center account with eligible free product listings.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">My products have reviews on my site. Why don't they show as Product Ratings on Google?</div>
+          <div class="faq-a">On-site reviews do not automatically feed into Google's Product Ratings programme. You need to either submit a product review feed in the correct XML format to Merchant Center (after approval), or use an approved review aggregator that submits the feed on your behalf. Schema.org <code>AggregateRating</code> markup on your product pages is separate — it can trigger star ratings in organic results but does not feed the Merchant Center Product Ratings programme.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">A competitor selling the same product has better Product Ratings than me. How?</div>
+          <div class="faq-a">Google aggregates Product Ratings from multiple sources: merchants, review aggregators, review sites, and Google users. The rating reflects the product, not a specific seller. GTIN accuracy is the key variable — if your product and review feeds have accurate, consistent GTINs, Google can correctly match reviews to your listing. If your GTIN data is clean and your competitor's rating is still higher, the difference is likely review volume, recency, or sources Google has indexed for that product.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Does schema.org AggregateRating markup affect Store Ratings or Product Ratings?</div>
+          <div class="faq-a">No, not directly. <code>schema.org/AggregateRating</code> on your product pages is separate from both programmes. It can enable star ratings in organic search snippets for your own pages, but it does not contribute to Google's Merchant Center Product Ratings and has no relationship to Store Ratings. They are independent systems with different data inputs.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How long does it take to become eligible for Store Ratings?</div>
+          <div class="faq-a">It depends entirely on your review collection velocity. The threshold is 100 reviews in the last 12 months with a 3.5+ average. A merchant collecting 10–15 reviews per month will reach eligibility in roughly 7–10 months. Using multiple approved review partners simultaneously (e.g. Trustpilot plus Google Customer Reviews) means reviews from both count toward the total, which can accelerate eligibility.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Can I use structured data to improve my Product Ratings on Google Shopping?</div>
+          <div class="faq-a">Not directly. <code>Product</code> schema on your pages does not feed into the Merchant Center Product Ratings programme. What structured data <em>does</em> affect is your product's eligibility for rich results in organic search (via <code>AggregateRating</code> markup) — a different placement from Shopping. For Shopping Product Ratings, the feed submitted to Merchant Center is what matters, not your on-page schema.</div>
+        </div>
+      </div>
+
+      <div class="sources">
+        <h2>Sources</h2>
+        <ul>
+          <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/190657" target="_blank" rel="noopener">Store ratings overview</a></li>
+          <li><strong>Google Ads Help:</strong> <a href="https://support.google.com/google-ads/answer/2375474" target="_blank" rel="noopener">About store ratings</a></li>
+          <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/14620705" target="_blank" rel="noopener">Product Ratings basics</a></li>
+          <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/14549080" target="_blank" rel="noopener">Product Ratings eligibility</a></li>
+          <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/6098512" target="_blank" rel="noopener">Product Ratings policies</a></li>
+          <li><strong>Google Search Central Blog:</strong> <a href="https://developers.google.com/search/blog/2024/10/store-ratings" target="_blank" rel="noopener">Bringing Store ratings on Search to more countries (October 2024)</a></li>
+          <li><strong>Google for Developers:</strong> <a href="https://developers.google.com/product-review-feeds" target="_blank" rel="noopener">Product Review Feeds specification</a></li>
+          <li><strong>MagsTags:</strong> <a href="/notes/google-ecommerce-rich-results/">Google eCommerce Rich Results 2026: Complete Guide</a> — full coverage of all rich result types including Store and Product Ratings in context</li>
+          <li><strong>MagsTags:</strong> <a href="/notes/product-identifiers-seo/">GTIN and product identifiers for ecommerce SEO</a> — GTIN, MPN, SKU and brand: what each field does and how to audit coverage</li>
+          <li><strong>MagsTags:</strong> <a href="/notes/ecommerce-structured-data-serp-features/">Ecommerce structured data and rich results</a> — implementation guide for product schema at scale, including AggregateRating</li>
+          <li><strong>MagsTags:</strong> <a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup schema</a> — when to use each type and how variants affect identifier matching</li>
+          <li><strong>MagsTags:</strong> <a href="/merchant-listing-schema-generator/">Merchant Listing schema generator</a> — generate and validate product structured data with GTIN and identifier fields</li>
+        </ul>
+      </div>
+
+      <div class="author-card">
+        <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="56" height="56">
+        <div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+    <nav class="ct-toc" aria-label="Table of contents">
+      <div class="ct-toc-label">On this page</div>
+      <ol class="ct-toc-list">
+        <li><a href="#quick-comparison">Quick comparison</a></li>
+        <li><a href="#store-ratings">Store Ratings</a></li>
+        <li><a href="#store-ratings-data">Data sources</a></li>
+        <li><a href="#store-ratings-thresholds">Eligibility</a></li>
+        <li><a href="#store-ratings-placements">Placements</a></li>
+        <li><a href="#product-ratings">Product Ratings</a></li>
+        <li><a href="#product-ratings-data">Data sources</a></li>
+        <li><a href="#same-url-two-ratings">Same URL, two ratings</a></li>
+        <li><a href="#product-ratings-matching">Matching logic</a></li>
+        <li><a href="#product-ratings-thresholds">Eligibility</a></li>
+        <li><a href="#same-serp-different-signals">Same SERP</a></li>
+        <li><a href="#what-you-control">What you control</a></li>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#review-platforms">Review platforms</a></li>
+        <li><a href="#priority">Which to prioritise</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </nav>
+
+  </div>
+</div>
+
+<script src="/header.js"></script>
+<footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+  </footer>
+<script src="/cookie-consent.js"></script>
+<script>
+(function() {
+  var ids = ['quick-comparison','store-ratings','product-ratings','same-serp-different-signals','what-you-control','setup','review-platforms','priority','faq'];
+  var links = document.querySelectorAll('.ct-toc-list a');
+  if (!links.length) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        links.forEach(function(l) { l.classList.remove('active'); });
+        var active = document.querySelector('.ct-toc-list a[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  ids.forEach(function(id) { var el = document.getElementById(id); if (el) observer.observe(el); });
+})();
+</script>
+</body>
+</html>

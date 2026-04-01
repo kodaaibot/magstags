@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { background: #f0eeec; font-family: 'Inter', sans-serif; padding: 40px; display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start; }
+  .option { text-align: center; }
+  .sizes { display: flex; gap: 16px; align-items: flex-end; justify-content: center; margin-bottom: 12px; }
+  .sz-label { font-size: 11px; color: #857f7a; margin-top: 6px; }
+  .name { font-size: 13px; font-weight: 600; color: #111009; margin-top: 8px; }
+  .bg-dark { background: #0f0e0d; padding: 8px; border-radius: 8px; display: inline-flex; align-items: flex-end; gap: 12px; }
+</style>
+</head>
+<body>
+
+<!-- C1: teal bg, white, normal -->
+<div class="option">
+  <div class="sizes">
+    <div><svg width="64" height="64" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">64px</div></div>
+    <div><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">32px</div></div>
+    <div><svg width="16" height="16" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">16px</div></div>
+    <div class="bg-dark"><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg></div>
+  </div>
+  <div class="name">C1 — teal, normal</div>
+</div>
+
+<!-- C3: teal bg, larger bolder -->
+<div class="option">
+  <div class="sizes">
+    <div><svg width="64" height="64" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="15" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">64px</div></div>
+    <div><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="15" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">32px</div></div>
+    <div><svg width="16" height="16" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="15" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">16px</div></div>
+    <div class="bg-dark"><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0E7490"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="15" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg></div>
+  </div>
+  <div class="name">C3 — teal, bold large</div>
+</div>
+
+<!-- C2: dark bg, teal text, normal -->
+<div class="option">
+  <div class="sizes">
+    <div><svg width="64" height="64" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">64px</div></div>
+    <div><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">32px</div></div>
+    <div><svg width="16" height="16" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">16px</div></div>
+    <div class="bg-dark"><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg></div>
+  </div>
+  <div class="name">C2 — dark, teal text</div>
+</div>
+
+<!-- C5: dark bg, teal text, smaller (font-size 10) -->
+<div class="option">
+  <div class="sizes">
+    <div><svg width="64" height="64" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="10" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">64px</div></div>
+    <div><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="10" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">32px</div></div>
+    <div><svg width="16" height="16" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="10" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">16px</div></div>
+    <div class="bg-dark"><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#111009"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="10" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg></div>
+  </div>
+  <div class="name">C5 — dark, small text</div>
+</div>
+
+<!-- C6: dark bg, teal text, smaller with more padding feel (font 11, lighter teal) -->
+<div class="option">
+  <div class="sizes">
+    <div><svg width="64" height="64" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f1a1d"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="11" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">64px</div></div>
+    <div><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f1a1d"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="11" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">32px</div></div>
+    <div><svg width="16" height="16" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f1a1d"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="11" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg><div class="sz-label">16px</div></div>
+    <div class="bg-dark"><svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f1a1d"/><text x="16" y="16" font-family="'Courier New',monospace" font-size="11" font-weight="700" fill="#22D3EE" text-anchor="middle" dominant-baseline="central">&lt;/&gt;</text></svg></div>
+  </div>
+  <div class="name">C6 — dark teal bg, small</div>
+</div>
+
+</body>
+</html>

@@ -25,13 +25,12 @@
     .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
     .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
     .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
-    .post-body{font-size:18px;line-height:1.85;color:var(--text-2)}
+    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
     .post-lead{font-size:17px;line-height:1.7;color:var(--text-3);margin-bottom:36px;font-style:italic;border-left:3px solid var(--border);padding-left:18px}
     .post-body p{margin-bottom:22px}
     .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
     .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
     .post-body strong{color:var(--text-1);font-weight:600}
-    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);padding:1px 5px;border-radius:4px;color:var(--text-2);word-break:break-all}
     .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
     .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
     .post-body li{margin-bottom:10px;line-height:1.75}
@@ -44,12 +43,11 @@
     .post-body a:hover{color:var(--text-1)}
 
     /* Tables */
-    .post-table-wrap{margin:28px 0;overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
     .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
     .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
     .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
     .post-table tr:last-child td{border-bottom:none}
-    .post-table code{font-size:11px}
     .post-table .col-label{font-weight:600;color:var(--text-1);white-space:nowrap}
 
     /* Diagrams */
@@ -279,7 +277,7 @@
 
       <p><strong>Product Snippet</strong>: available to any page that describes a product: reviews, editorial, aggregators, and merchant pages. The focus is on ratings, reviews, and basic pricing. This is what gives you star ratings and price ranges in organic search results.</p>
 
-      <p><strong>Merchant Listing</strong>: only available on pages where a customer can actually buy the product. The focus shifts to offer details: price, availability, shipping, returns. This is what gets you into Google Shopping surfaces, Popular Products, and price drop badges.</p>
+      <p><strong>Merchant Listing</strong>: only available on pages where a customer can actually buy the product. The focus shifts to offer details: price, availability, shipping, returns. This is what gets you into Google Shopping surfaces, Popular Products, and <a href="/notes/google-ecommerce-rich-results/#price-drop">price drop badges</a>.</p>
 
       <p>A merchant product page can qualify for both. Adding the required Merchant Listing properties (price, availability, a valid <code>Offer</code>) also makes the page eligible for Product Snippets. There's no conflict between them; Merchant Listing is a superset.</p>
 
@@ -293,7 +291,7 @@
 
       <p><code>ProductGroup</code> exists for one purpose: to tell Google that multiple <code>Product</code> entities are variations of the same parent item. A T-shirt in five colours. A laptop in three storage configurations. A sofa in two fabrics. (The full implementation guide is on the <a href="/product-variants-schema/">Product Variants schema page</a>.)</p>
 
-      <p>Without <code>ProductGroup</code>, Google sees each variant as a separate, unrelated product. It has no way to associate the blue version with the red version, or to know that both cost the same and share the same reviews. With <code>ProductGroup</code>, Google can present those variants together, colour swatches in Shopping, variant-specific pricing, and a unified product identity across its knowledge graph.</p>
+      <p>Without <code>ProductGroup</code>, Google sees each variant as a separate, unrelated product. It has no way to associate the blue version with the red version, or to know that both cost the same and share the same reviews. With <code>ProductGroup</code>, Google can present those variants together, colour swatches in Shopping, variant-specific pricing, and a unified product identity across its knowledge graph. This also affects how product reviews are matched in the Merchant Center Product Ratings programme — each variant carries its own GTIN, and Google uses GTINs as the primary signal to aggregate ratings. See <a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings</a> for how review aggregation works across sources.</p>
 
       <p><code>ProductGroup</code> takes three key properties that <code>Product</code> doesn't have:</p>
 
