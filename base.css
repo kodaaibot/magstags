@@ -11,7 +11,7 @@
   --bg2: #F5EDE7;
   --surface: #fafaf7;
   --border: #ddd9d3;
-  --teal: #0E7490;
+  --teal: #1ab6db;
   --teal-light: #E0F2FE;
   --mint: #0891B2;
   --mint-light: #E0F2FE;
@@ -28,7 +28,7 @@
   --amber: #d97706;
   --amber-bg: #fffbeb;
   --amber-border: #fde68a;
-  --paid-color: #0E7490;
+  --paid-color: #1ab6db;
   --radius: 20px;
 }
 html.dark {

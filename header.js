@@ -6,11 +6,16 @@
     'header{background:var(--surface);border-bottom:1px solid var(--border);padding:0;height:56px;display:flex;align-items:center;position:sticky;top:0;z-index:100}',
     '.header-inner{max-width:1320px;margin:0 auto;width:100%;padding:0 36px;display:flex;align-items:center;justify-content:space-between}',
     '.logo{display:flex;align-items:center;gap:10px;text-decoration:none}',
+    '.logo:hover{text-decoration:none}',
+    '.logo:hover .logo-name{text-decoration:none}',
     '.logo-name{font-family:"DM Serif Display",Georgia,serif;font-size:28px;font-weight:400;color:#000;margin:0 0 8px;letter-spacing:-.02em;padding-top:20px;padding-bottom:10px}',
     'html.dark .logo-name{color:#fff}',
     '.logo-lab{display:inline-block}',
     '.logo-lab .ls1{font-size:.72em;color:var(--teal);vertical-align:top;margin-top:-3px;margin-left:0;line-height:1}',
     '.logo-lab .ls2{font-size:.38em;color:var(--teal);vertical-align:top;margin-top:0;margin-left:1px;line-height:1}',
+    /* Logo hover — cycling [word] */
+    '.logo-cycle{display:inline-block;min-width:48px;text-align:left;transition:opacity .12s}',
+    '.logo-cycle.fade{opacity:0}',
     '.header-right{display:flex;align-items:center;gap:10px}',
     /* Coffee nav button */
     '.coffee-nav-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:99px;background:var(--bg2);border:1px solid var(--border);cursor:pointer;text-decoration:none;transition:all .15s}',
@@ -40,7 +45,7 @@
     '<header>',
     '  <div class="header-inner">',
     '    <a href="/" class="logo">',
-    '      <span class="logo-name">mags [tags] <span class="logo-lab"><span class="ls1">\u2726</span><span class="ls2">\u2726</span></span></span>',
+    '      <span class="logo-name">mags [<span class="logo-cycle" id="logoCycle">tags</span>] <span class="logo-lab"><span class="ls1">\u2726</span><span class="ls2">\u2726</span></span></span>',
     '    </a>',
     '    <div class="header-right">',
     '      <a class="coffee-nav-btn" href="' + coffeeUrl + '" target="_blank" rel="noopener" title="Buy me a coffee" aria-label="Buy me a coffee">',
@@ -64,6 +69,38 @@
   ].join('\n');
 
   document.body.insertAdjacentHTML('afterbegin', html);
+
+  // ── Logo hover — cycling [word] ──────────────────────────────────────────
+  var _cycleWords = ['href', 'meta', 'serp', 'schema', 'title', 'h1', 'tags'];
+  var _cycleEl = document.getElementById('logoCycle');
+  var _cycleIdx = 0;
+  var _cycleTimer = null;
+
+  function _cycleNext() {
+    _cycleEl.classList.add('fade');
+    setTimeout(function () {
+      _cycleIdx = (_cycleIdx + 1) % (_cycleWords.length - 1); // stop before last 'tags'
+      _cycleEl.textContent = _cycleWords[_cycleIdx];
+      _cycleEl.classList.remove('fade');
+    }, 120);
+  }
+
+  var _logoEl = document.querySelector('.logo');
+  if (_logoEl && _cycleEl) {
+    _logoEl.addEventListener('mouseenter', function () {
+      _cycleIdx = 0;
+      _cycleNext();
+      _cycleTimer = setInterval(_cycleNext, 500);
+    });
+    _logoEl.addEventListener('mouseleave', function () {
+      clearInterval(_cycleTimer);
+      _cycleEl.classList.add('fade');
+      setTimeout(function () {
+        _cycleEl.textContent = 'tags';
+        _cycleEl.classList.remove('fade');
+      }, 120);
+    });
+  }
 
   // ── Theme ────────────────────────────────────────────────────────────────
   var _dark = localStorage.getItem('theme') === 'dark';

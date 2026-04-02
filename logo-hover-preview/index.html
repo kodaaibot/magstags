@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Hover Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #2ABFBF;
+    --bg: #f9f9f7;
+    --surface: #fff;
+    --border: rgba(0,0,0,.08);
+    --text: #111;
+    --text-2: #555;
+    --text-3: #888;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 48px 24px;
+    min-height: 100vh;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--text-2);
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--text-3);
+    margin-bottom: 48px;
+  }
+
+  .demo-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 28px;
+    max-width: 680px;
+  }
+  .demo-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 20px;
+  }
+  .demo-label span {
+    color: var(--teal);
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 16px;
+  }
+
+  /* ── Base logo style ── */
+  .logo-name {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #000;
+    letter-spacing: -.02em;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    text-decoration: none;
+    cursor: default;
+    user-select: none;
+    position: relative;
+  }
+  .ls1 { font-size: .72em; color: var(--teal); }
+  .ls2 { font-size: .38em; color: var(--teal); margin-left: 1px; }
+
+  /* ──────────────────────────────────────────────
+     OPTION A — Keyword chip burst
+  ────────────────────────────────────────────── */
+  .logo-a {
+    position: relative;
+    display: inline-block;
+  }
+  .chip-container {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+  .chip {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--teal);
+    color: #fff;
+    padding: 3px 9px;
+    border-radius: 99px;
+    opacity: 0;
+    transform: translateY(0px);
+    transition: none;
+  }
+  .logo-a:hover .chip {
+    opacity: 1;
+    transform: translateY(-12px);
+  }
+  .logo-a:hover .chip:nth-child(1) { transition: opacity .2s .05s, transform .3s .05s ease-out; }
+  .logo-a:hover .chip:nth-child(2) { transition: opacity .2s .12s, transform .3s .12s ease-out; }
+  .logo-a:hover .chip:nth-child(3) { transition: opacity .2s .19s, transform .3s .19s ease-out; }
+  .logo-a:hover .chip:nth-child(4) { transition: opacity .2s .26s, transform .3s .26s ease-out; }
+  .logo-a:hover .chip:nth-child(5) { transition: opacity .2s .33s, transform .3s .33s ease-out; }
+
+
+  /* ──────────────────────────────────────────────
+     OPTION B — [tags] cycles
+  ────────────────────────────────────────────── */
+  .logo-b .bracket-word {
+    display: inline-block;
+    color: var(--teal);
+    transition: opacity .15s;
+    font-family: 'DM Serif Display', serif;
+  }
+  .cycle-word {
+    display: inline-block;
+    min-width: 48px;
+    text-align: center;
+  }
+
+
+  /* ──────────────────────────────────────────────
+     OPTION C — Fake SERP snippet
+  ────────────────────────────────────────────── */
+  .logo-c-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .serp-card {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 360px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.1);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    z-index: 10;
+    font-family: 'Inter', sans-serif;
+  }
+  .logo-c-wrap:hover .serp-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .serp-breadcrumb {
+    font-size: 12px;
+    color: #1a73e8;
+    margin-bottom: 2px;
+  }
+  .serp-breadcrumb .serp-domain { color: #202124; font-weight: 500; }
+  .serp-title {
+    font-size: 18px;
+    color: #1a0dab;
+    font-weight: 400;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    font-family: 'Inter', sans-serif;
+  }
+  .serp-desc {
+    font-size: 13px;
+    color: #4d5156;
+    line-height: 1.5;
+  }
+  .serp-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 10px 0;
+  }
+  .serp-verdict {
+    font-size: 11px;
+    color: var(--text-3);
+    font-style: italic;
+  }
+
+
+  /* ──────────────────────────────────────────────
+     OPTION D — Console tooltip
+  ────────────────────────────────────────────── */
+  .logo-d-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .console-box {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    background: #1e1e2e;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    z-index: 10;
+    box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  }
+  .logo-d-wrap:hover .console-box {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .console-dots {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+  .console-dots span {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .console-dots .d1 { background: #ff5f56; }
+  .console-dots .d2 { background: #ffbd2e; }
+  .console-dots .d3 { background: #27c93f; }
+  .console-line { margin-bottom: 4px; }
+  .c-prompt { color: var(--teal); }
+  .c-fn { color: #82aaff; }
+  .c-str { color: #c3e88d; }
+  .c-comment { color: #636d83; }
+  .c-return { color: #f78c6c; }
+  .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 13px;
+    background: var(--teal);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Logo hover options</h1>
+<p class="subtitle">Hover over each logo to preview the effect</p>
+
+<!-- OPTION A -->
+<div class="demo-section">
+  <div class="demo-label">Option <span>A</span> — Keyword chip burst</div>
+  <div class="logo-a">
+    <div class="chip-container">
+      <div class="chip">hreflang</div>
+      <div class="chip">E-E-A-T</div>
+      <div class="chip">canonical</div>
+      <div class="chip">&lt;meta&gt;</div>
+      <div class="chip">crawl budget</div>
+    </div>
+    <span class="logo-name">mags [tags] <span class="ls1">✦</span><span class="ls2">✦</span></span>
+  </div>
+  <p class="hint">Chips float up when you hover, then drop back on mouseout.</p>
+</div>
+
+<!-- OPTION B -->
+<div class="demo-section">
+  <div class="demo-label">Option <span>B</span> — [tags] cycles through SEO terms</div>
+  <span class="logo-name logo-b">mags <span class="bracket-word">[<span class="cycle-word" id="cycleWord">tags</span>]</span> <span class="ls1">✦</span><span class="ls2">✦</span></span>
+  <p class="hint">Hover the logo — the word inside the brackets cycles: tags → href → meta → serp → schema → back.</p>
+</div>
+
+<!-- OPTION C -->
+<div class="demo-section">
+  <div class="demo-label">Option <span>C</span> — Fake SERP snippet</div>
+  <div class="logo-c-wrap">
+    <span class="logo-name">mags [tags] <span class="ls1">✦</span><span class="ls2">✦</span></span>
+    <div class="serp-card">
+      <div class="serp-breadcrumb"><span class="serp-domain">magstags.com</span> › notes</div>
+      <div class="serp-title">Mags Tags — SEO Tools & Notes</div>
+      <div class="serp-desc">Practical SEO tools, experiments, and unfiltered notes on search. No filler. Not optimised for robots.</div>
+      <div class="serp-divider"></div>
+      <div class="serp-verdict">✦ Indexed. Crawled. Occasionally ranking.</div>
+    </div>
+  </div>
+  <p class="hint">A mini Google result card drops down on hover.</p>
+</div>
+
+<!-- OPTION D -->
+<div class="demo-section">
+  <div class="demo-label">Option <span>D</span> — Console / DevTools tooltip</div>
+  <div class="logo-d-wrap">
+    <span class="logo-name">mags [tags] <span class="ls1">✦</span><span class="ls2">✦</span></span>
+    <div class="console-box">
+      <div class="console-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="console-line"><span class="c-prompt">›</span> <span class="c-fn">console</span>.log(<span class="c-str">"indexing..."</span>)</div>
+      <div class="console-line"><span class="c-return">200 OK</span> <span class="c-comment">// crawled 42ms ago</span></div>
+      <div class="console-line"><span class="c-comment">// no noindex. nice.</span><span class="cursor"></span></div>
+    </div>
+  </div>
+  <p class="hint">A little terminal box with a blinking cursor drops down on hover.</p>
+</div>
+
+<script>
+  // Option B — cycling words
+  const words = ['tags', 'href', 'meta', 'serp', 'schema', 'title', 'tags'];
+  const el = document.getElementById('cycleWord');
+  const logoB = document.querySelector('.logo-b');
+  let interval = null;
+  let idx = 0;
+
+  logoB.addEventListener('mouseenter', () => {
+    idx = 0;
+    interval = setInterval(() => {
+      idx = (idx + 1) % (words.length - 1);
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.textContent = words[idx];
+        el.style.opacity = '1';
+      }, 120);
+    }, 500);
+  });
+
+  logoB.addEventListener('mouseleave', () => {
+    clearInterval(interval);
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.textContent = 'tags';
+      el.style.opacity = '1';
+    }, 120);
+  });
+</script>
+</body>
+</html>
