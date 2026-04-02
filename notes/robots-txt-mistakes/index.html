@@ -62,13 +62,19 @@
     .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
 
     /* ── Author bio ── */
-    .author-card{display:flex;align-items:flex-start;gap:16px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
-    .author-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
-    .author-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px}
-    .author-name a{color:inherit;text-decoration:none}
-    .author-name a:hover{color:var(--teal)}
-    .author-role{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:8px}
-    .author-bio{font-size:14px;color:var(--text-3);line-height:1.65}
+    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--border);border-radius:0;}
+    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-4);margin-bottom:20px;}
+    .author-inner{display:flex;align-items:flex-start;gap:24px;}
+    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border);}
+    .author-details{flex:1;min-width:0;}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px;}
+    .author-name a{color:inherit;text-decoration:none;}
+    .author-name a:hover{color:var(--teal);}
+    .author-role{font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px;}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:16px;}
+    .author-links{display:flex;gap:12px;flex-wrap:wrap;}
+    .author-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-3);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:99px;transition:all .15s;}
+    .author-link:hover{border-color:var(--teal);color:var(--teal);}
 
     /* ── Back link ── */
     .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
@@ -218,13 +224,30 @@ Disallow: /</pre>
 
       <!-- Author bio -->
       <div class="author-card">
-        <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="56" height="56">
-        <div>
-          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
-          <div class="author-role">Freelance SEO Consultant, SEO Director</div>
-          <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
-        </div>
-      </div>
+            <div class="author-label">This article was written by</div>
+            <div class="author-inner">
+            <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="80" height="80">
+            <div class="author-details">
+              <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+              <div class="author-role">Freelance SEO Consultant · SEO Director at Intrepid Digital</div>
+              <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+              <div class="author-links">
+                <a href="/mags-sikora/" class="author-link">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  About me
+                </a>
+                <a href="https://www.linkedin.com/in/magdalenasikora/" class="author-link" target="_blank" rel="noopener nofollow">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                  LinkedIn
+                </a>
+                <a href="https://x.com/magssikora" class="author-link" target="_blank" rel="noopener nofollow">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  X
+                </a>
+              </div>
+            </div>
+            </div>
+          </div>
 
         </div>
       </div>
