@@ -117,6 +117,11 @@
       .learn-section { padding: 32px 16px 32px; }
       .coffee-bar { padding: 32px 16px; }
     }
+    @media (max-width: 700px) {
+      .featured-post { grid-template-columns: 1fr !important; }
+      .featured-post img { height: 200px !important; width: 100% !important; }
+      .featured-post-body { padding: 20px !important; }
+    }
   </style>
   <meta property="og:title" content="MagsTags | SEO & E-commerce Toolkit">
   <meta property="og:description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
@@ -141,8 +146,24 @@
 <section class="hero">
   <div class="hero-eyebrow">SEO &amp; E-commerce Toolkit</div>
   <h1 class="hero-title">Let the tools do<br>the <em>boring part.</em></h1>
+  <div style="font-size: 14px; color: var(--text-2); margin-bottom: 20px; font-weight: 500; letter-spacing: -0.01em;">By Mags Sikora · Senior SEO Consultant</div>
   <p class="hero-sub">For people who voluntarily work in an industry where the rules change without warning, the documentation is vague on purpose, and 'it depends' is a valid answer. Welcome.</p>
+</section>
 
+<!-- Featured post -->
+<section style="max-width:1320px;margin:0 auto;padding:0 36px 72px;">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-4);margin-bottom:16px;">Latest note</div>
+  <a href="/notes/google-favourite-brands/" class="featured-post" style="display:grid;grid-template-columns:420px 1fr;gap:0;align-items:stretch;background:var(--surface);border:1px solid rgba(0,0,0,.08);border-radius:20px;overflow:hidden;text-decoration:none;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 4px 24px rgba(0,0,0,.08)'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)';this.style.boxShadow=''">
+    <div style="padding:20px 0 20px 20px;display:flex;align-items:center;">
+      <img src="/notes/google-favourite-brands/img/favourite-brands-serp.webp" alt="Google Favourite Shopping Brand" style="width:100%;height:280px;object-fit:cover;object-position:top center;display:block;border-radius:12px;">
+    </div>
+    <div class="featured-post-body" style="padding:36px 40px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:12px;">Google SERP Tests</div>
+      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:26px;font-weight:400;color:var(--text-1);line-height:1.3;margin-bottom:14px;">Google Favourite Shopping Brand — Personalisation in Search</div>
+      <div style="font-size:14px;color:var(--text-3);line-height:1.65;margin-bottom:20px;">Google appears to be testing brand-level personalisation in shopping results. Users can save favourite brands via an in-SERP widget, and those choices shape which products appear for generic queries.</div>
+      <div style="font-size:12px;color:var(--text-4);">1 Apr 2026 · 5 min read</div>
+    </div>
+  </a>
 </section>
 
 <section class="tools-section">
@@ -522,7 +543,9 @@
   </div>
 </section>
 
-<!-- Notes section -->
+
+
+<!-- Notes section — full list -->
 <section class="notes-section">
   <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
     <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal)"><a href="/notes/" style="color:var(--teal);text-decoration:none">Notes</a></p>
