@@ -42,7 +42,7 @@
     .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
 
     .tool-card { border: 1px solid var(--border); border-radius: 20px; padding: 28px 32px; background: var(--surface); display: block; transition: all .2s; position: relative; cursor: pointer; }
-    .tool-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .tool-card:hover { border-color: rgba(0,0,0,.15); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
     .tool-name a { color: inherit; text-decoration: none; }
     .tool-name a::after { content: ''; position: absolute; inset: 0; border-radius: 20px; }
     .tool-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
@@ -77,21 +77,21 @@
 
     /* ── Notes editorial list ── */
     .notes-section { max-width: 1320px; margin: 0 auto; padding: 0 36px 80px; }
-    .notes-list { border-top: 1px solid var(--border); }
-    .notes-row { display: flex; gap: 28px; padding: 22px 0; border-bottom: 1px solid var(--border); position: relative; cursor: pointer; transition: background .15s; }
-    .notes-row:hover { background: transparent; }
+    .notes-list { max-width: 960px; margin-left: auto; margin-right: auto; }
+    .notes-row { display: grid; grid-template-columns: 96px 1fr 72px; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border); position: relative; cursor: pointer; align-items: start; }
+    .notes-row:first-child { border-top: 1px solid var(--border); }
     .notes-row:hover .notes-row-title a { color: var(--teal); }
-    .notes-row-date { font-size: 12px; color: var(--text-4); min-width: 88px; padding-top: 3px; flex-shrink: 0; line-height: 1.4; }
-    .notes-row-body { flex: 1; min-width: 0; }
-    .notes-row-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 5px; }
-    .notes-row-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; line-height: 1.3; }
+    .notes-row-date { font-size: 12px; color: var(--text-4); line-height: 1.4; padding-top: 2px; }
+    .notes-row-body { min-width: 0; }
+    .notes-row-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 6px; }
+    .notes-row-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-1); line-height: 1.35; margin-bottom: 6px; }
     .notes-row-title a { color: inherit; text-decoration: none; transition: color .15s; }
     .notes-stretch { position: absolute; inset: 0; }
-    .notes-row-excerpt { font-size: 13px; color: var(--text-3); line-height: 1.55; margin-bottom: 8px; }
-    .notes-row-meta { font-size: 11px; color: var(--text-4); }
-    @media (max-width: 560px) {
-      .notes-row { flex-direction: column; gap: 6px; }
-      .notes-row-date { min-width: unset; }
+    .notes-row-excerpt { font-size: 13px; color: var(--text-3); line-height: 1.55; }
+    .notes-row-meta { font-size: 11px; color: var(--text-4); text-align: right; padding-top: 2px; }
+    @media (max-width: 660px) {
+      .notes-row { grid-template-columns: 1fr; gap: 4px; }
+      .notes-row-meta { text-align: left; }
       .notes-section { padding: 0 20px 60px; }
     }
 
@@ -108,7 +108,7 @@
     /* ── Account dropdown ── */
     .learn-intro { margin-bottom: 28px; max-width: 50%; }
     @media (max-width: 700px) { .learn-intro { max-width: 100%; } }
-    .learn-section { padding: 56px 36px; max-width: 1320px; margin: 0 auto; }
+    .learn-section { padding: 56px 36px 96px; max-width: 1320px; margin: 0 auto; }
     @media (max-width: 600px) {
       main { padding: 0 0 60px; }
       .hero { padding: 32px 16px 32px; }
@@ -121,6 +121,9 @@
       .featured-post { grid-template-columns: 1fr !important; }
       .featured-post img { height: 200px !important; width: 100% !important; }
       .featured-post-body { padding: 20px !important; }
+    }
+    @media (max-width: 860px) {
+      .learn-section { grid-template-columns: 1fr !important; gap: 32px !important; }
     }
   </style>
   <meta property="og:title" content="MagsTags | SEO & E-commerce Toolkit">
@@ -153,7 +156,7 @@
 <!-- Featured post -->
 <section style="max-width:1320px;margin:0 auto;padding:0 36px 72px;">
   <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-4);margin-bottom:16px;">Latest note</div>
-  <a href="/notes/google-favourite-brands/" class="featured-post" style="display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;background:var(--surface);border:1px solid rgba(0,0,0,.08);border-radius:20px;overflow:hidden;text-decoration:none;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 4px 24px rgba(0,0,0,.08)'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)';this.style.boxShadow=''">
+  <a href="/notes/google-favourite-brands/" class="featured-post" style="display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;background:var(--surface);border:1px solid rgba(0,0,0,.08);border-radius:20px;overflow:hidden;text-decoration:none;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 32px rgba(0,0,0,.1)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)';this.style.boxShadow='';this.style.transform=''">
     <!-- Left: image with padding, no background -->
     <div style="display:flex;align-items:center;justify-content:center;padding:24px;">
       <img src="/notes/google-favourite-brands/img/favourite-brands-serp.webp" alt="Google Favourite Shopping Brand" style="width:100%;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.1);display:block;object-fit:cover;object-position:top;">
@@ -164,7 +167,7 @@
         <span style="font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;background:var(--mint-light);color:var(--teal);">Google SERP Tests</span>
         <span style="font-size:11px;font-weight:600;padding:4px 12px;border-radius:99px;background:var(--bg2);color:var(--text-3);border:1px solid var(--border);">Analysis</span>
       </div>
-      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:28px;font-weight:400;color:var(--text-1);line-height:1.25;margin-bottom:16px;">Google Favourite Shopping Brand — Personalisation in Search</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:600;color:var(--text-1);line-height:1.25;margin-bottom:16px;letter-spacing:-.02em;">Google Favourite Shopping Brand - Personalisation in Search</div>
       <div style="font-size:14px;color:var(--text-3);line-height:1.65;margin-bottom:24px;">Google appears to be testing brand-level personalisation in shopping results. Users can save favourite brands via an in-SERP widget, and those choices shape which products appear for generic queries.</div>
       <div style="display:flex;gap:18px;align-items:center;">
         <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-4);">
@@ -523,32 +526,34 @@
 </section>
 
 <!-- Learning section -->
-<section class="learn-section">
-  <div class="learn-intro">
-    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:10px"><a href="/learn-seo/" style="color:var(--teal);text-decoration:none">Learn SEO</a></p>
-    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:28px;font-weight:400;color:var(--text-1);margin-bottom:10px">Structured data: technically optional, practically essential, officially documented in a way that helps a solid few.</h2>
-    <p style="font-size:15px;color:var(--text-3);line-height:1.6">These guides skip the preamble. Which type to use, what each field actually does, and how to generate clean JSON-LD — without watching a Google I/O keynote to figure it out.</p>
+<section class="learn-section" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
+  <!-- Left: heading + description -->
+  <div>
+    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:14px"><a href="/learn-seo/" style="color:var(--teal);text-decoration:none">Learn SEO</a></p>
+    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:32px;font-weight:400;color:var(--text-1);margin-bottom:16px;line-height:1.25">Structured data: technically optional, practically essential, officially documented in a way that helps a solid few.</h2>
+    <p style="font-size:15px;color:var(--text-3);line-height:1.65">These guides skip the preamble. Which type to use, what each field actually does, and how to generate clean JSON-LD — without watching a Google I/O keynote to figure it out.</p>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='var(--teal)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+  <!-- Right: 2×2 card grid -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">Overview</div>
       <div style="font-size:15px;font-weight:700;"><a href="/product-schema/" style="color:var(--text-1);text-decoration:none;">Product Schema Markup<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
       <div style="font-size:13px;color:var(--text-3);line-height:1.5">Introduction to the two main classes of Product structured data, plus ProductGroup for variants.</div>
       <div style="font-size:12px;font-weight:600;color:var(--teal);margin-top:auto">Read guide →</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='var(--teal)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">Class 1</div>
       <div style="font-size:15px;font-weight:700;"><a href="/product-snippet-schema/" style="color:var(--text-1);text-decoration:none;">Product Snippet Schema<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
       <div style="font-size:13px;color:var(--text-3);line-height:1.5">Star ratings, reviews, pros/cons, and pricing in organic search. For any product page.</div>
       <div style="font-size:12px;font-weight:600;color:var(--teal);margin-top:auto">Read guide →</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='var(--teal)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">Class 2</div>
       <div style="font-size:15px;font-weight:700;"><a href="/merchant-listing-schema/" style="color:var(--text-1);text-decoration:none;">Merchant Listing Schema<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
       <div style="font-size:13px;color:var(--text-3);line-height:1.5">Shopping panel, Popular products, price drop alerts, and shipping info. For merchant pages.</div>
       <div style="font-size:12px;font-weight:600;color:var(--teal);margin-top:auto">Read guide →</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='var(--teal)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.transform=''">
+    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">+ Variants</div>
       <div style="font-size:15px;font-weight:700;"><a href="/product-variants-schema/" style="color:var(--text-1);text-decoration:none;">Product Variants Schema<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
       <div style="font-size:13px;color:var(--text-3);line-height:1.5">Colour swatches and variant pricing in Google Shopping. Uses ProductGroup with hasVariant.</div>
@@ -561,11 +566,13 @@
 
 <!-- Notes section — full list -->
 <section class="notes-section">
-  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
-    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal)"><a href="/notes/" style="color:var(--teal);text-decoration:none">Notes</a></p>
-    <a href="/notes/" style="font-size:12px;color:var(--text-4);text-decoration:none;">All posts →</a>
+  <div style="max-width:960px;margin:0 auto 28px;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
+      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin:0"><a href="/notes/" style="color:var(--teal);text-decoration:none">Notes</a></p>
+      <a href="/notes/" style="font-size:12px;color:var(--text-4);text-decoration:none;">All posts →</a>
+    </div>
+    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:26px;font-weight:400;color:var(--text-1);line-height:1.3;margin:0">Practical SEO writing. No content for content's sake. Promise.</h2>
   </div>
-  <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:26px;font-weight:400;color:var(--text-1);margin-bottom:28px;line-height:1.3">Practical SEO writing. No content for content's sake. Promise.</h2>
 
   <div class="notes-list">
 
@@ -575,9 +582,8 @@
         <div class="notes-row-cat">Google SERP Tests</div>
         <div class="notes-row-title"><a href="/notes/google-favourite-brands/">Google Favourite Shopping Brand - Personalisation in Search<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">Google appears to be testing brand-level personalisation in shopping results. Users can save favourite brands via an in-SERP widget, and those choices shape which products appear for generic queries.</div>
-        <div class="notes-row-meta">5 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">5 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">30 Mar 2026</div>
@@ -585,9 +591,8 @@
         <div class="notes-row-cat">Google Shopping</div>
         <div class="notes-row-title"><a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings: How Each Works<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">Two rating systems, two data sources, two separate setups. Why the same product URL can show different stars in organic and Shopping.</div>
-        <div class="notes-row-meta">12 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">12 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">29 Mar 2026</div>
@@ -595,9 +600,8 @@
         <div class="notes-row-cat">Ecommerce SEO</div>
         <div class="notes-row-title"><a href="/notes/google-ecommerce-rich-results/">Google eCommerce Rich Results 2026: Complete Guide<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">Which features need a Merchant Center feed, which use structured data, and one eligibility rule that's widely misrepresented.</div>
-        <div class="notes-row-meta">15 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">15 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">27 Mar 2026</div>
@@ -605,9 +609,8 @@
         <div class="notes-row-cat">Structured Data</div>
         <div class="notes-row-title"><a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Schema Markup: Rich Results, Google Shopping &amp; Scale in 2026<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">What earns rich results, sale price schema, and the alignment problem most teams never solve.</div>
-        <div class="notes-row-meta">18 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">18 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">27 Mar 2026</div>
@@ -615,9 +618,8 @@
         <div class="notes-row-cat">Structured Data</div>
         <div class="notes-row-title"><a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">What breaks when SKUs land in the GTIN field, and how to audit at scale.</div>
-        <div class="notes-row-meta">14 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">14 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">22 Mar 2026</div>
@@ -625,9 +627,8 @@
         <div class="notes-row-cat">Agentic Commerce</div>
         <div class="notes-row-title"><a href="/notes/what-is-agentic-commerce/">What Is Agentic Commerce? How AI Agents Change the Shopping Journey<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">What agentic commerce actually means, how the shopping journey changes, which AI agents are live, and what they evaluate in your product data.</div>
-        <div class="notes-row-meta">16 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">16 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">22 Mar 2026</div>
@@ -635,9 +636,8 @@
         <div class="notes-row-cat">Agentic Commerce</div>
         <div class="notes-row-title"><a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">The practitioner's audit for making your product data discoverable by AI shopping agents — schema markup, GMC feeds, PDP content, and the alignment layer between them.</div>
-        <div class="notes-row-meta">18 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">18 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">21 Mar 2026</div>
@@ -645,9 +645,8 @@
         <div class="notes-row-cat">Structured Data</div>
         <div class="notes-row-title"><a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup Schema: When to Use Which<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">One wraps variants, the other describes products. Mixing them up breaks things silently.</div>
-        <div class="notes-row-meta">10 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">10 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">20 Mar 2026</div>
@@ -655,9 +654,8 @@
         <div class="notes-row-cat">Technical SEO</div>
         <div class="notes-row-title"><a href="/notes/mega-menus-seo/">Mega Menus &amp; SEO: A Decision Framework for When They Help and When They Hurt<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">Link equity dilution, the Reasonable Surfer model, anchor text uniformity, and a practical decision tree.</div>
-        <div class="notes-row-meta">14 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">14 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">19 Mar 2026</div>
@@ -665,9 +663,8 @@
         <div class="notes-row-cat">Technical SEO</div>
         <div class="notes-row-title"><a href="/notes/crawl-budget-enterprise/">Crawl Budget Management for Large Websites: The Enterprise Guide<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">At 10M+ URLs, crawl budget is an active allocation problem. Log files, faceted nav decisions, JS rendering gaps, and the crawl vs. indexation distinction most guides miss.</div>
-        <div class="notes-row-meta">18 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">18 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">16 Mar 2026</div>
@@ -675,9 +672,8 @@
         <div class="notes-row-cat">Personal</div>
         <div class="notes-row-title"><a href="/notes/bill-slawski/">Bill Slawski<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">There is a feeling you get when a film you have been waiting for is finally about to start. That is what it felt like to open a new Bill Slawski post.</div>
-        <div class="notes-row-meta">3 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">3 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">16 Mar 2026</div>
@@ -685,9 +681,8 @@
         <div class="notes-row-cat">International SEO</div>
         <div class="notes-row-title"><a href="/notes/hreflang-canonical-conflict/">When Hreflang and Canonicals Conflict<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">When they point in different directions, Google picks one and ignores the other. Here's what breaks, why it cascades, and how to find it.</div>
-        <div class="notes-row-meta">7 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">7 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">10 Mar 2026</div>
@@ -695,9 +690,8 @@
         <div class="notes-row-cat">Technical SEO</div>
         <div class="notes-row-title"><a href="/notes/robots-txt-mistakes/">Robots.txt Mistakes<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">Most robots.txt problems aren't caused by bad intentions — they're caused by good intentions applied at the wrong layer.</div>
-        <div class="notes-row-meta">5 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">5 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">28 Feb 2026</div>
@@ -705,9 +699,8 @@
         <div class="notes-row-cat">International SEO</div>
         <div class="notes-row-title"><a href="/notes/hreflang-mistakes/">Hreflang in 2026: The Mistakes That Keep Coming Back<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">What changed, what stayed the same, and what still breaks international SEO implementations at scale.</div>
-        <div class="notes-row-meta">7 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">7 min read</div></div>
 
     <div class="notes-row">
       <div class="notes-row-date">15 Feb 2026</div>
@@ -715,9 +708,8 @@
         <div class="notes-row-cat">Google Search Console</div>
         <div class="notes-row-title"><a href="/notes/gsc-regex-deep-dive/">GSC Regex: Moving Past the Basics<span class="notes-stretch"></span></a></div>
         <div class="notes-row-excerpt">RE2 syntax, URL and query filtering patterns, and the shortcuts that actually save time in day-to-day SEO work.</div>
-        <div class="notes-row-meta">6 min read</div>
-      </div>
-    </div>
+        </div>
+      <div class="notes-row-meta">6 min read</div></div>
 
   </div>
 </section>
