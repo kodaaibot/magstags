@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomy of a Perfectly Optimised PDP: Google + LLM Signals | MagsTags</title>
+<meta name="description" content="A visual breakdown of every element on a high-performing product page. What Google reads, what LLMs parse, where most PDPs fail, and how to fix it.">
+<link rel="canonical" href="https://www.magstags.com/notes/anatomy-pdp-seo-llm/">
+<meta property="og:title" content="Anatomy of a Perfectly Optimised PDP">
+<meta property="og:description" content="What Google reads. What LLMs parse. Where most PDPs break.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/base.css">
+<style>
+* { box-sizing: border-box; }
+
+/* ── Hero ─────────────────────────────────────── */
+.pdp-hero {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 72px 48px 40px;
+}
+.pdp-hero-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 14px;
+}
+.pdp-hero h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(30px, 4.5vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-bottom: 18px;
+}
+.pdp-hero-sub {
+  font-size: 16px;
+  color: var(--text-2);
+  line-height: 1.7;
+  max-width: 580px;
+  margin-bottom: 0;
+}
+
+/* ── Intro ────────────────────────────────────── */
+.pdp-intro {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 48px 40px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--border);
+}
+.pdp-intro p { margin-bottom: 12px; }
+.pdp-intro p:last-child { margin-bottom: 0; }
+
+/* ── Hint ─────────────────────────────────────── */
+.pdp-hint {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px 48px 0;
+  font-size: 12px;
+  color: var(--teal);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+}
+
+/* ── Mock PDP ─────────────────────────────────── */
+.mock-wrap {
+  max-width: 960px;
+  margin: 16px auto 0;
+  padding: 0 48px;
+}
+
+.browser-chrome {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  padding: 8px 12px;
+}
+.chrome-top { display: flex; align-items: center; gap: 8px; }
+.chrome-dots { display: flex; gap: 4px; }
+.chrome-dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+.chrome-url {
+  flex: 1;
+  background: var(--bg2, #f0eeec);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mock-page {
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* Clickable zones — teal hover */
+[data-zone] {
+  cursor: pointer;
+  transition: background .15s, box-shadow .15s;
+  position: relative;
+}
+[data-zone]:hover { background: rgba(26,182,219,.04); }
+[data-zone].zone-active {
+  background: rgba(26,182,219,.06);
+  box-shadow: inset 3px 0 0 var(--teal);
+}
+
+/* Number badge on zones */
+.zone-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .15s;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(26,182,219,.35);
+}
+[data-zone]:hover .zone-badge,
+[data-zone].zone-active .zone-badge { opacity: 1; }
+
+/* Breadcrumb */
+.mock-breadcrumb {
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--text-3);
+  background: var(--bg2, #f8f7f5);
+}
+.mock-breadcrumb a { color: var(--text-2); text-decoration: none; }
+
+/* Grid */
+.mock-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 600px) { .mock-grid { grid-template-columns: 1fr; } }
+
+/* Image col */
+.mock-img-col {
+  padding: 16px;
+  border-right: 1px solid var(--border);
+  background: var(--bg2, #f8f7f5);
+}
+.mock-main-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: var(--bg2, #f0eeec);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  margin-bottom: 8px;
+}
+.mock-thumbs { display: flex; gap: 5px; }
+.mock-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--bg2, #f0eeec);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mock-thumb.on { border-color: var(--teal); }
+
+/* Info col */
+.mock-info-col { padding: 16px; }
+
+.mock-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.mock-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+.mock-rating a { color: var(--text-2); text-decoration: underline; font-size: 10px; }
+.mock-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.mock-price {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+.mock-was { font-size: 12px; color: var(--text-3); text-decoration: line-through; }
+.mock-sale {
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--bg2, #f0eeec);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.mock-stock { font-size: 11px; color: var(--text-2); margin-bottom: 10px; }
+.mock-var { margin-bottom: 8px; }
+.mock-var-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.mock-var-opts { display: flex; gap: 4px; flex-wrap: wrap; }
+.mock-var-opt {
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 10px;
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+}
+.mock-var-opt.sel { border-color: var(--teal); color: var(--teal); font-weight: 600; background: rgba(26,182,219,.06); }
+.mock-cta {
+  background: var(--teal);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+  font-size: 11px;
+  font-family: 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Below-fold sections */
+.mock-section {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+}
+.mock-section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.mock-desc-text {
+  font-size: 10px;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+.mock-spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 20px;
+}
+.mock-spec-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+}
+.mock-spec-key { color: var(--text-3); }
+.mock-rev-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mock-rev-big {
+  font-size: 26px;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text);
+  line-height: 1;
+}
+.mock-rev-bars { flex: 1; }
+.mock-rev-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+.mock-rev-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mock-rev-bar-fill {
+  height: 100%;
+  background: var(--text-2);
+  border-radius: 2px;
+}
+.mock-related-grid { display: flex; gap: 6px; }
+.mock-related-card {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 9px;
+  color: var(--text-3);
+  background: var(--bg2, #f8f7f5);
+  text-align: center;
+}
+.mock-related-card .rc-emoji { font-size: 14px; display: block; margin-bottom: 2px; }
+.mock-related-card .rc-name { color: var(--text-2); }
+.mock-related-card .rc-price { color: var(--text); font-weight: 600; margin-top: 2px; display: block; }
+.mock-code-row {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--text-3);
+  line-height: 1.7;
+}
+.mock-code-row span { color: var(--teal); font-weight: 500; }
+
+/* ── Divider ──────────────────────────────────── */
+.anatomy-divider {
+  max-width: 960px;
+  margin: 56px auto 0;
+  padding: 0 48px;
+  border-top: 1px solid var(--border);
+  padding-top: 56px;
+}
+.anatomy-divider-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.anatomy-divider-sub {
+  font-size: 15px;
+  color: var(--text-3);
+  margin-bottom: 0;
+}
+
+/* ── Zone cards ───────────────────────────────── */
+.zones-list {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 48px 80px;
+}
+.zone-card {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 80px;
+  transition: none;
+}
+.zone-card.card-highlight {
+  background: none;
+}
+.zone-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.zone-card-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: .05em;
+  flex-shrink: 0;
+  min-width: 24px;
+}
+.zone-card-name {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.2;
+}
+.zone-card-sub {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 3px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Three consistent sections per card */
+.zone-block {
+  margin-bottom: 16px;
+}
+.zone-block:last-of-type { margin-bottom: 0; }
+.zone-block-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 6px;
+}
+.zone-block-body {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-2);
+}
+.zone-block-body strong { color: var(--text); font-weight: 600; }
+.zone-block-body p { margin-bottom: 8px; }
+.zone-block-body p:last-child { margin-bottom: 0; }
+
+/* Failure note */
+.zone-fail {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+  background: rgba(26,182,219,.03);
+}
+.zone-fail-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 5px;
+}
+
+/* ── Footer ───────────────────────────────────── */
+.post-footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 48px 64px;
+}
+
+/* mock-section-title teal */
+.mock-section-title { color: var(--teal) !important; }
+
+/* Zone body lists + code */
+.zone-block-body ul { padding-left: 18px; margin: 6px 0 10px; }
+.zone-block-body li { margin-bottom: 5px; }
+.zone-block-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: var(--bg2, #f0eeec);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text-2);
+}
+html.dark .zone-block-body code { background: rgba(255,255,255,.08); }
+
+/* ── View switcher ────────────────────────────── */
+.view-switcher {
+  max-width: 960px;
+  margin: 24px auto 0;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: all .15s;
+}
+.view-btn:hover { border-color: var(--teal); color: var(--text-2); }
+.view-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+.view-btn svg { opacity: .7; }
+.view-btn.active svg { opacity: 1; }
+
+/* ── Code view ────────────────────────────────── */
+.code-view {
+  display: none;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: #16141200;
+  overflow: hidden;
+}
+.code-view.visible { display: block; }
+.mock-page.hidden { display: none; }
+
+.code-block {
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .15s;
+  position: relative;
+}
+.code-block:last-child { border-bottom: none; }
+.code-block:hover { background: rgba(26,182,219,.04); }
+.code-block.zone-active {
+  background: rgba(26,182,219,.06);
+  box-shadow: inset 3px 0 0 var(--teal);
+}
+.code-block:hover .zone-badge,
+.code-block.zone-active .zone-badge { opacity: 1; }
+
+.code-block-label {
+  padding: 8px 16px 4px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+pre.code-snippet {
+  margin: 0;
+  padding: 0 16px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--text-2);
+  overflow-x: auto;
+  white-space: pre;
+  background: none;
+}
+pre.code-snippet .ck  { color: var(--text-3); }      /* key / tag */
+pre.code-snippet .cv  { color: var(--teal); }        /* value */
+pre.code-snippet .cs  { color: var(--text-3); }      /* comment */
+pre.code-snippet .cx  { color: var(--text); font-weight: 500; } /* important */
+html.dark pre.code-snippet { color: var(--text-2); }
+
+@media (max-width: 768px) {
+  .pdp-hero, .pdp-intro, .pdp-hint, .mock-wrap, .anatomy-divider, .zones-list, .post-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+</style>
+</head>
+<body>
+<script src="/header.js"></script>
+<main>
+<article>
+
+  <div class="pdp-hero">
+    <div class="pdp-hero-eyebrow">Technical SEO · E-commerce</div>
+    <h1>Anatomy of a Perfectly Optimised PDP</h1>
+    <p class="pdp-hero-sub">Every element of a high-performing product page — what Google reads, what LLMs parse, and where most sites break.</p>
+  </div>
+
+  <div class="pdp-intro">
+    <p>Product detail pages are the primary battleground in ecommerce SEO. Google treats them as standalone ranking opportunities. LLM agents prefer them to category pages. Users need them to answer "should I buy this?"</p>
+    <p>Most PDPs fail to do all three simultaneously. They optimise for human visitors, miss critical schema signals for Google, and leave product data too thin or inconsistent for LLMs to parse reliably.</p>
+    <p>This page breaks down every element — front-end to technical layer — and explains what each one does, what breaks when it's missing, and how it reads differently to Google versus an AI agent.</p>
+  </div>
+
+  <!-- VIEW SWITCHER -->
+  <div class="view-switcher">
+    <button class="view-btn active" id="btn-page" onclick="switchView('page')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      Page
+    </button>
+    <button class="view-btn" id="btn-code" onclick="switchView('code')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Source
+    </button>
+  </div>
+
+  <p class="pdp-hint" id="view-hint">↓ Click any element to jump to that section</p>
+
+  <!-- MOCK PDP -->
+  <div class="mock-wrap">
+
+    <div class="browser-chrome" id="main-chrome">
+      <div class="chrome-top">
+        <div class="chrome-dots"><span></span><span></span><span></span></div>
+        <div class="chrome-url" id="chrome-url-text">example-store.com/clothing/jackets/mens-merino-wool-jacket</div>
+      </div>
+    </div>
+
+    <div class="mock-page" id="mock-page-wrap">
+
+      <!-- Breadcrumb -->
+      <div data-zone="breadcrumb" class="mock-breadcrumb">
+        <a href="#">Home</a> › <a href="#">Clothing</a> › <a href="#">Jackets</a> › Men's Merino Wool Jacket
+        <div class="zone-badge">9</div>
+      </div>
+
+      <div class="mock-grid">
+
+        <!-- Images -->
+        <div class="mock-img-col" data-zone="images">
+          <div class="mock-main-img">🧥</div>
+          <div class="mock-thumbs">
+            <div class="mock-thumb on">🧥</div>
+            <div class="mock-thumb">⬛</div>
+            <div class="mock-thumb">🟩</div>
+            <div class="mock-thumb">🟫</div>
+          </div>
+          <div class="zone-badge">3</div>
+        </div>
+
+        <div class="mock-info-col">
+
+          <!-- Title -->
+          <div data-zone="title" style="position:relative;padding:4px 0 8px">
+            <div class="mock-title">Men's Merino Wool Jacket — Premium Weight Winter Outerwear</div>
+            <div class="zone-badge">1</div>
+          </div>
+
+          <!-- Reviews (rating line) -->
+          <div data-zone="reviews" style="position:relative">
+            <div class="mock-rating">
+              ★★★★★ 4.8 <a href="#">342 reviews</a>
+            </div>
+            <div class="zone-badge">7</div>
+          </div>
+
+          <!-- Price -->
+          <div data-zone="price" style="position:relative;padding:4px 0 2px">
+            <div class="mock-price-row">
+              <span class="mock-price">$189</span>
+              <span class="mock-was">$249</span>
+              <span class="mock-sale">24% off</span>
+            </div>
+            <div class="mock-stock">✓ In stock — ships in 1–2 days</div>
+            <div class="zone-badge">4</div>
+          </div>
+
+          <!-- Short description (in-column, before variants) -->
+          <div data-zone="description" style="position:relative;padding:8px 0 4px;font-size:11px;color:var(--text-2);line-height:1.55;border-top:1px solid var(--border);margin-top:6px">
+            <span style="font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">Short description</span><br>
+            A mid-weight merino wool jacket for cold-weather commutes and weekend wear. Slim fit. Machine washable. Made in Portugal.
+            <div class="zone-badge">5</div>
+          </div>
+
+          <!-- Variants -->
+          <div data-zone="variants" style="position:relative">
+            <div class="mock-var">
+              <div class="mock-var-label">Size</div>
+              <div class="mock-var-opts">
+                <div class="mock-var-opt">XS</div>
+                <div class="mock-var-opt">S</div>
+                <div class="mock-var-opt sel">M</div>
+                <div class="mock-var-opt">L</div>
+                <div class="mock-var-opt">XL</div>
+              </div>
+            </div>
+            <div class="mock-var">
+              <div class="mock-var-label">Colour</div>
+              <div class="mock-var-opts">
+                <div class="mock-var-opt sel">Navy</div>
+                <div class="mock-var-opt">Charcoal</div>
+                <div class="mock-var-opt">Olive</div>
+              </div>
+            </div>
+            <button class="mock-cta">Add to Cart</button>
+            <div class="zone-badge">8</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Description (full, below the grid) -->
+      <div data-zone="description" class="mock-section" style="position:relative">
+        <div class="mock-section-title">Product Description</div>
+        <div class="mock-desc-text"><strong style="font-size:10px;color:var(--text-3);font-family:'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:700">Full description</strong><br>100% ZQ-certified merino wool at 280gsm — warm enough for winter commutes, light enough to layer under a shell. Moisture-wicking and temperature-regulating, so it handles both heated offices and cold platforms. Slim cut through the torso and shoulders, designed to sit cleanly over a shirt or light knit. Machine washable at 30°C. Does not pill with regular use.<br><br>Best paired with the <a href="#" style="color:var(--teal);text-decoration:none">Merino Rollneck</a> as a mid-layer, or worn under the <a href="#" style="color:var(--teal);text-decoration:none">Waterproof Overshell</a> on wet days. For a warmer option, see the <a href="#" style="color:var(--teal);text-decoration:none">Premium Cashmere Jacket</a>.</div>
+        <div class="zone-badge">5</div>
+      </div>
+
+      <!-- Specs -->
+      <div data-zone="specs" class="mock-section" style="position:relative">
+        <div class="mock-section-title">Specifications</div>
+        <div class="mock-spec-grid">
+          <div class="mock-spec-row"><span class="mock-spec-key">Material</span><span>100% Merino Wool</span></div>
+          <div class="mock-spec-row"><span class="mock-spec-key">Weight</span><span>280gsm</span></div>
+          <div class="mock-spec-row"><span class="mock-spec-key">Fit</span><span>Slim</span></div>
+          <div class="mock-spec-row"><span class="mock-spec-key">Care</span><span>Machine wash 30°C</span></div>
+          <div class="mock-spec-row"><span class="mock-spec-key">Origin</span><span>Made in Portugal</span></div>
+          <div class="mock-spec-row"><span class="mock-spec-key">GTIN</span><span>5012345678901</span></div>
+        </div>
+        <div class="zone-badge">6</div>
+      </div>
+
+      <!-- Reviews full section -->
+      <div data-zone="reviews" class="mock-section" style="position:relative">
+        <div class="mock-section-title">Customer Reviews</div>
+        <div class="mock-rev-summary">
+          <div class="mock-rev-big">4.8</div>
+          <div class="mock-rev-bars">
+            <div class="mock-rev-bar-row">5★ <div class="mock-rev-bar"><div class="mock-rev-bar-fill" style="width:78%"></div></div></div>
+            <div class="mock-rev-bar-row">4★ <div class="mock-rev-bar"><div class="mock-rev-bar-fill" style="width:16%"></div></div></div>
+            <div class="mock-rev-bar-row">3★ <div class="mock-rev-bar"><div class="mock-rev-bar-fill" style="width:4%"></div></div></div>
+          </div>
+        </div>
+        <div class="zone-badge">7</div>
+      </div>
+
+      <!-- Internal links -->
+      <div data-zone="internal" class="mock-section" style="position:relative">
+        <div class="mock-section-title">Complete the look</div>
+        <div class="mock-related-grid">
+          <div class="mock-related-card"><span class="rc-emoji">🧣</span><span class="rc-name">Merino Rollneck</span><span class="rc-price">$89</span></div>
+          <div class="mock-related-card"><span class="rc-emoji">🌧️</span><span class="rc-name">Waterproof Overshell</span><span class="rc-price">$249</span></div>
+          <div class="mock-related-card"><span class="rc-emoji">🧥</span><span class="rc-name">Premium Cashmere Jacket ↑</span><span class="rc-price">$320</span></div>
+        </div>
+        <div class="zone-badge">10</div>
+      </div>
+
+      <!-- Schema -->
+      <div data-zone="schema" class="mock-section" style="position:relative;background:var(--bg2,#f8f7f5)">
+        <div class="mock-section-title">Structured Data (JSON-LD)</div>
+        <div class="mock-code-row">
+          @type: <span>Product</span> · ProductGroup · MerchantListing<br>
+          offers.price: <span>189.00</span> · availability: <span>InStock</span><br>
+          aggregateRating.ratingValue: <span>4.8</span> · reviewCount: <span>342</span>
+        </div>
+        <div class="zone-badge">11</div>
+      </div>
+
+      <!-- Feed -->
+      <div data-zone="feed" class="mock-section" style="position:relative;background:var(--bg2,#f8f7f5)">
+        <div class="mock-section-title">GMC Feed Sync</div>
+        <div class="mock-code-row">
+          price: <span>189.00 ✓</span> · availability: <span>in_stock ✓</span> · gtin: <span>5012345678901 ✓</span> · description: <span>↻ pending</span>
+        </div>
+        <div class="zone-badge">12</div>
+      </div>
+
+    </div><!-- /mock-page -->
+
+    <!-- Title tag (below browser, separate) -->
+    <div id="titletag-note" data-zone="titletag" style="position:relative;margin-top:8px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface)">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);margin-bottom:4px">SERP — Page Title Tag</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-2)">Men's Merino Wool Jacket | Winter Outerwear | Brand</div>
+      <div class="zone-badge">2</div>
+    </div>
+
+    <!-- CODE VIEW (hidden by default) -->
+    <div class="code-view" id="code-view">
+
+      <div class="code-block" data-zone="titletag">
+        <div class="code-block-label">Title tag + Meta</div>
+        <pre class="code-snippet"><span class="ck">&lt;title&gt;</span><span class="cv">Men's Merino Wool Jacket | Winter Outerwear | Brand</span><span class="ck">&lt;/title&gt;</span>
+<span class="ck">&lt;meta name=</span><span class="cv">"description"</span><span class="ck"> content=</span><span class="cv">"Premium 280gsm merino wool jacket for cold-weather commuting
+and layering. Slim fit, machine washable, made in Portugal. Free shipping."</span><span class="ck">/&gt;</span>
+<span class="ck">&lt;link rel=</span><span class="cv">"canonical"</span><span class="ck"> href=</span><span class="cv">"https://example-store.com/clothing/jackets/mens-merino-wool-jacket"</span><span class="ck">/&gt;</span></pre>
+        <div class="zone-badge">2</div>
+      </div>
+
+      <div class="code-block" data-zone="breadcrumb">
+        <div class="code-block-label">Breadcrumb HTML</div>
+        <pre class="code-snippet"><span class="ck">&lt;nav aria-label=</span><span class="cv">"breadcrumb"</span><span class="ck">&gt;</span>
+  <span class="ck">&lt;ol&gt;</span>
+    <span class="ck">&lt;li&gt;&lt;a href=</span><span class="cv">"/"</span><span class="ck">&gt;</span>Home<span class="ck">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="ck">&lt;li&gt;&lt;a href=</span><span class="cv">"/clothing/"</span><span class="ck">&gt;</span>Clothing<span class="ck">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="ck">&lt;li&gt;&lt;a href=</span><span class="cv">"/clothing/jackets/"</span><span class="ck">&gt;</span>Jackets<span class="ck">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="ck">&lt;li aria-current=</span><span class="cv">"page"</span><span class="ck">&gt;</span><span class="cx">Men's Merino Wool Jacket</span><span class="ck">&lt;/li&gt;</span>
+  <span class="ck">&lt;/ol&gt;</span>
+<span class="ck">&lt;/nav&gt;</span></pre>
+        <div class="zone-badge">9</div>
+      </div>
+
+      <div class="code-block" data-zone="title">
+        <div class="code-block-label">H1 + Price (must be real HTML — not JS-rendered)</div>
+        <pre class="code-snippet"><span class="ck">&lt;h1&gt;</span><span class="cx">Men's Merino Wool Jacket — Premium Weight Winter Outerwear</span><span class="ck">&lt;/h1&gt;</span>
+
+<span class="ck">&lt;span class=</span><span class="cv">"price"</span><span class="ck">&gt;</span><span class="cx">$189.00</span><span class="ck">&lt;/span&gt;</span>
+<span class="ck">&lt;span class=</span><span class="cv">"availability"</span><span class="ck">&gt;</span>In stock — ships in 1–2 days<span class="ck">&lt;/span&gt;</span>
+
+<span class="cs">// ⚠ Price MUST be in server-rendered HTML — not JS-injected.</span></pre>
+        <div class="zone-badge">1</div>
+      </div>
+
+      <div class="code-block" data-zone="description">
+        <div class="code-block-label">Short description + Full description</div>
+        <pre class="code-snippet"><span class="cs">&lt;!-- Short description: above the fold, 1–2 sentences, scannable --&gt;</span>
+<span class="ck">&lt;p class=</span><span class="cv">"product-short-desc"</span><span class="ck">&gt;</span>
+  <span class="cx">A mid-weight merino wool jacket for cold-weather commutes and weekend wear.
+  Slim fit. Machine washable. Made in Portugal.</span>
+<span class="ck">&lt;/p&gt;</span>
+
+<span class="cs">&lt;!-- Full description: use case, material, pairing, differentiation --&gt;</span>
+<span class="ck">&lt;div class=</span><span class="cv">"product-description"</span><span class="ck">&gt;</span>
+  <span class="ck">&lt;p&gt;</span><span class="cx">100% ZQ-certified merino wool at 280gsm — warm enough for winter commutes,
+  light enough to layer under a shell...</span><span class="ck">&lt;/p&gt;</span>
+  <span class="ck">&lt;ul&gt;</span>
+    <span class="ck">&lt;li&gt;</span>Moisture-wicking, temperature-regulating<span class="ck">&lt;/li&gt;</span>
+    <span class="ck">&lt;li&gt;</span>Machine wash 30°C, does not pill<span class="ck">&lt;/li&gt;</span>
+    <span class="ck">&lt;li&gt;</span>Slim cut, designed to layer over a shirt<span class="ck">&lt;/li&gt;</span>
+  <span class="ck">&lt;/ul&gt;</span>
+  <span class="cs">&lt;!-- Named internal links — product relationship signal for LLMs --&gt;</span>
+  <span class="ck">&lt;p&gt;</span>Pairs well with the <span class="ck">&lt;a href=</span><span class="cv">"/products/merino-rollneck"</span><span class="ck">&gt;</span><span class="cx">Merino Rollneck</span><span class="ck">&lt;/a&gt;</span>
+  or under the <span class="ck">&lt;a href=</span><span class="cv">"/products/waterproof-overshell"</span><span class="ck">&gt;</span><span class="cx">Waterproof Overshell</span><span class="ck">&lt;/a&gt;</span>.<span class="ck">&lt;/p&gt;</span>
+<span class="ck">&lt;/div&gt;</span>
+
+<span class="cs">// ⚠ On Shopify: avoid H2/H3 tags inside the description field —
+// they can cause duplicate heading structure depending on your theme.</span></pre>
+        <div class="zone-badge">5</div>
+      </div>
+
+      <div class="code-block" data-zone="images">
+        <div class="code-block-label">Image markup + alt text</div>
+        <pre class="code-snippet"><span class="ck">&lt;img</span>
+  <span class="ck">src=</span><span class="cv">"mens-merino-wool-jacket-navy-front.jpg"</span>
+  <span class="ck">alt=</span><span class="cv">"Men's navy merino wool jacket, slim fit, front view, white background"</span>
+  <span class="ck">width=</span><span class="cv">"800"</span>
+  <span class="ck">height=</span><span class="cv">"1000"</span>
+  <span class="ck">loading=</span><span class="cv">"eager"</span>
+<span class="ck">/&gt;</span>
+
+<span class="cs">// Hero image: white background, straight-on, no props
+// Required for Google Shopping + virtual try-on eligibility
+// File name: attribute-colour-angle.jpg — not IMG_4823.jpg</span></pre>
+        <div class="zone-badge">3</div>
+      </div>
+
+      <div class="code-block" data-zone="reviews">
+        <div class="code-block-label">Rating HTML (must match schema)</div>
+        <pre class="code-snippet"><span class="ck">&lt;div class=</span><span class="cv">"aggregate-rating"</span><span class="ck">&gt;</span>
+  <span class="ck">&lt;span class=</span><span class="cv">"rating-value"</span><span class="ck">&gt;</span><span class="cx">4.8</span><span class="ck">&lt;/span&gt;</span>
+  <span class="ck">&lt;span class=</span><span class="cv">"rating-count"</span><span class="ck">&gt;</span>342 reviews<span class="ck">&lt;/span&gt;</span>
+<span class="ck">&lt;/div&gt;</span>
+
+<span class="cs">// ⚠ If schema says ratingValue: 4.8 but this number doesn't
+// appear in rendered HTML, Google treats it as hidden markup.
+// Rich results will be suppressed.</span></pre>
+        <div class="zone-badge">7</div>
+      </div>
+
+      <div class="code-block" data-zone="schema">
+        <div class="code-block-label">JSON-LD — Product + ProductGroup + MerchantListing</div>
+        <pre class="code-snippet"><span class="ck">&lt;script type=</span><span class="cv">"application/ld+json"</span><span class="ck">&gt;</span>
+{
+  <span class="ck">"@context"</span>: <span class="cv">"https://schema.org"</span>,
+  <span class="ck">"@type"</span>: <span class="cv">"ProductGroup"</span>,
+  <span class="ck">"name"</span>: <span class="cv">"Men's Merino Wool Jacket"</span>,
+  <span class="ck">"description"</span>: <span class="cv">"Mid-weight merino wool jacket for cold-weather commutes..."</span>,
+  <span class="ck">"brand"</span>: { <span class="ck">"@type"</span>: <span class="cv">"Brand"</span>, <span class="ck">"name"</span>: <span class="cv">"Brand"</span> },
+  <span class="ck">"variesBy"</span>: [<span class="cv">"https://schema.org/color"</span>, <span class="cv">"https://schema.org/size"</span>],
+  <span class="ck">"hasVariant"</span>: [{
+    <span class="ck">"@type"</span>: [<span class="cv">"Product"</span>, <span class="cv">"MerchantListing"</span>],
+    <span class="ck">"name"</span>: <span class="cv">"Men's Merino Wool Jacket — Navy, M"</span>,
+    <span class="ck">"sku"</span>: <span class="cv">"MWJ-NAV-M"</span>,
+    <span class="ck">"gtin13"</span>: <span class="cv">"5012345678901"</span>,
+    <span class="ck">"color"</span>: <span class="cv">"Navy"</span>,
+    <span class="ck">"size"</span>: <span class="cv">"M"</span>,
+    <span class="ck">"image"</span>: <span class="cv">"https://example-store.com/img/mens-merino-wool-jacket-navy-front.jpg"</span>,
+    <span class="ck">"offers"</span>: {
+      <span class="ck">"@type"</span>: <span class="cv">"Offer"</span>,
+      <span class="ck">"price"</span>: <span class="cv">"189.00"</span>,
+      <span class="ck">"priceCurrency"</span>: <span class="cv">"USD"</span>,
+      <span class="ck">"priceValidUntil"</span>: <span class="cv">"2026-06-30"</span>,
+      <span class="ck">"availability"</span>: <span class="cv">"https://schema.org/InStock"</span>,
+      <span class="ck">"hasMerchantReturnPolicy"</span>: { <span class="ck">"@type"</span>: <span class="cv">"MerchantReturnPolicy"</span>, <span class="ck">"applicableCountry"</span>: <span class="cv">"US"</span>, <span class="ck">"returnPolicyCategory"</span>: <span class="cv">"https://schema.org/MerchantReturnFiniteReturnWindow"</span>, <span class="ck">"merchantReturnDays"</span>: <span class="cv">30</span> },
+      <span class="ck">"shippingDetails"</span>: { <span class="ck">"@type"</span>: <span class="cv">"OfferShippingDetails"</span>, <span class="ck">"shippingRate"</span>: { <span class="ck">"@type"</span>: <span class="cv">"MonetaryAmount"</span>, <span class="ck">"value"</span>: <span class="cv">"0"</span>, <span class="ck">"currency"</span>: <span class="cv">"USD"</span> }, <span class="ck">"deliveryTime"</span>: { <span class="ck">"@type"</span>: <span class="cv">"ShippingDeliveryTime"</span>, <span class="ck">"businessDays"</span>: { <span class="ck">"@type"</span>: <span class="cv">"OpeningHoursSpecification"</span>, <span class="ck">"dayOfWeek"</span>: [<span class="cv">"Monday"</span>,<span class="cv">"Tuesday"</span>,<span class="cv">"Wednesday"</span>,<span class="cv">"Thursday"</span>,<span class="cv">"Friday"</span>] }, <span class="ck">"handlingTime"</span>: { <span class="ck">"@type"</span>: <span class="cv">"QuantitativeValue"</span>, <span class="ck">"minValue"</span>: <span class="cv">0</span>, <span class="ck">"maxValue"</span>: <span class="cv">1</span>, <span class="ck">"unitCode"</span>: <span class="cv">"DAY"</span> }, <span class="ck">"transitTime"</span>: { <span class="ck">"@type"</span>: <span class="cv">"QuantitativeValue"</span>, <span class="ck">"minValue"</span>: <span class="cv">1</span>, <span class="ck">"maxValue"</span>: <span class="cv">2</span>, <span class="ck">"unitCode"</span>: <span class="cv">"DAY"</span> } } }
+    },
+    <span class="ck">"aggregateRating"</span>: {
+      <span class="ck">"@type"</span>: <span class="cv">"AggregateRating"</span>,
+      <span class="ck">"ratingValue"</span>: <span class="cv">"4.8"</span>,
+      <span class="ck">"reviewCount"</span>: <span class="cv">"342"</span>
+    }
+  }]
+}
+<span class="ck">&lt;/script&gt;</span></pre>
+        <div class="zone-badge">11</div>
+      </div>
+
+      <div class="code-block" data-zone="feed">
+        <div class="code-block-label">GMC Feed (key fields — must match page exactly)</div>
+        <pre class="code-snippet"><span class="ck">id</span>:                   <span class="cv">MWJ-NAV-M</span>
+<span class="ck">title</span>:                 <span class="cv">Men's Merino Wool Jacket Navy - Size M</span>
+<span class="ck">description</span>:          <span class="cv">Mid-weight merino wool jacket for cold-weather commuting...</span>
+<span class="ck">link</span>:                  <span class="cv">https://example-store.com/clothing/jackets/mens-merino-wool-jacket</span>
+<span class="ck">image_link</span>:           <span class="cv">https://example-store.com/img/mens-merino-wool-jacket-navy-front.jpg</span>
+<span class="ck">price</span>:                 <span class="cv">189.00 USD</span>          <span class="cs">← must match page price exactly</span>
+<span class="ck">sale_price</span>:           <span class="cv">189.00 USD</span>
+<span class="ck">availability</span>:         <span class="cv">in_stock</span>             <span class="cs">← must match schema availability</span>
+<span class="ck">brand</span>:                 <span class="cv">Brand</span>
+<span class="ck">gtin</span>:                  <span class="cv">5012345678901</span>        <span class="cs">← prefer GTIN over SKU-only</span>
+<span class="ck">item_group_id</span>:        <span class="cv">MWJ</span>                  <span class="cs">← links all variants to parent product</span>
+<span class="ck">color</span>:                 <span class="cv">Navy</span>
+<span class="ck">size</span>:                  <span class="cv">M</span>
+<span class="ck">google_product_category</span>: <span class="cv">Apparel &amp; Accessories > Clothing > Outerwear</span></pre>
+        <div class="zone-badge">12</div>
+      </div>
+
+    </div><!-- /code-view -->
+
+  </div><!-- /mock-wrap -->
+
+  <!-- Section divider -->
+  <div class="anatomy-divider">
+    <div class="anatomy-divider-title">The breakdown</div>
+    <p class="anatomy-divider-sub">Each element explained — what it signals, what breaks when it's missing, and how Google and LLMs read it differently.</p>
+  </div>
+
+  <!-- ZONE CARDS -->
+  <div class="zones-list">
+
+    <div class="zone-card" id="zone-title">
+      <div class="zone-card-header">
+        <span class="zone-card-num">01</span>
+        <div>
+          <div class="zone-card-name">Product Title / H1</div>
+          <div class="zone-card-sub">The most important on-page signal</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>The H1 is the first thing Google and LLMs evaluate when deciding what a page is about. It sets the primary topic, anchors semantic relevance across the whole page, and determines whether your product is a candidate for a given query before any other element is considered.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p>Structure: <strong>primary attribute + product type + key differentiator</strong>. Lead with what users search for, not what the brand calls it internally.</p>
+          <ul>
+            <li>Include material, audience, or use case where it's a search signal: "Men's Merino Wool Jacket" beats "The Ridgefield Jacket"</li>
+            <li>Don't repeat the exact same string as the title tag — they should complement each other, not duplicate</li>
+            <li>One H1 per page, in server-rendered HTML — never injected via JS after load</li>
+            <li>Keep it under ~70 characters so it renders cleanly in most SERP formats when Google uses it as the title</li>
+          </ul>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> uses the H1 as a primary topical signal and cross-references it against the title tag. Significant mismatch between H1 and title tag can cause Google to rewrite your SERP title.</p>
+          <p><strong>LLMs</strong> treat the H1 as the most authoritative label for the product. A query like "warm jacket for layering under a shell" will match "Men's Merino Wool Jacket — Premium Weight Winter Outerwear" far more reliably than "The Ridgefield" or "Style #MW-0042".</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Using the manufacturer's internal model code or a branded product name with no descriptive context. "The Ridgefield" or "Style 2042-B" is invisible to both Google and LLMs for any non-branded query.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-titletag">
+      <div class="zone-card-header">
+        <span class="zone-card-num">02</span>
+        <div>
+          <div class="zone-card-name">Page Title Tag</div>
+          <div class="zone-card-sub">What Google shows in search results</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>The <code>&lt;title&gt;</code> tag is the clickable blue link in SERPs. It's a direct ranking signal, a primary driver of click-through rate, and the text Google uses when it can't determine a better label from your H1 or page content. Google may rewrite it — but giving it a clean, well-structured title reduces rewrites significantly.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <ul>
+            <li>Keep under <strong>60 characters</strong> — beyond that, mobile SERPs truncate with an ellipsis</li>
+            <li>Front-load the primary keyword: product type and key attribute first, brand last</li>
+            <li>Format: <strong>Primary keyword | Secondary descriptor | Brand</strong></li>
+            <li>Don't use your brand as the first word unless users are specifically searching for you by name</li>
+            <li>Avoid filler words: "Shop", "Buy", "Best", "Amazing" add nothing and waste characters</li>
+          </ul>
+          <p>Example: <strong>Men's Merino Wool Jacket | Winter Outerwear | Brand</strong> outperforms <strong>Brand | Shop Premium Men's Jackets Online</strong> for every non-branded query.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> uses the title tag as a direct ranking signal and displays it in SERPs. It also cross-checks it against H1 and body content — if they conflict significantly, Google rewrites the title using its own judgment.</p>
+          <p><strong>LLMs</strong> don't parse title tags the way Google does, but pages with well-structured, keyword-relevant titles tend to rank better and therefore appear more often in training data and retrieval contexts.</p>
+          <p><strong>On Shopify:</strong> By default, Shopify constructs title tags as "Product Name — Store Name". This puts the brand first and often leaves little room for descriptive keywords. You can override this in theme Liquid (<code>product.title | append: ' | ' | append: shop.name</code>) or via a third-party SEO app. The default template is rarely optimal for non-branded product searches.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Brand-first title tags across an entire catalogue — a single theme setting that costs every product page its best keyword position. On Shopify this is the default and most stores never change it.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-images">
+      <div class="zone-card-header">
+        <span class="zone-card-num">03</span>
+        <div>
+          <div class="zone-card-name">Product Images & Alt Text</div>
+          <div class="zone-card-sub">File names, backgrounds, angles, virtual try-on</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Product images are crawlable content with multiple ranking surfaces: Google Image Search, Google Shopping panels, and Google's virtual try-on feature. The file name, alt text, and image format all carry signals. LLMs use alt text as the primary mechanism for "reading" a product's visual characteristics.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p><strong>Background and format:</strong></p>
+          <ul>
+            <li>Hero image: white or light-grey background — required for Google Shopping eligibility and Google's virtual try-on feature</li>
+            <li>Virtual try-on additionally requires: straight-on front-facing shot, model or no-model (both accepted), no busy backgrounds, no text overlays</li>
+            <li>WebP format preferred for page speed; provide width/height attributes to prevent layout shift</li>
+          </ul>
+          <p><strong>Multiple angles:</strong></p>
+          <ul>
+            <li>Front view (hero — white bg)</li>
+            <li>Back view</li>
+            <li>Close-up of material/detail</li>
+            <li>Lifestyle shot (worn in context)</li>
+            <li>Scale reference where relevant (furniture, accessories)</li>
+          </ul>
+          <p><strong>File naming:</strong> <code>mens-merino-wool-jacket-navy-front.jpg</code> — not <code>IMG_4823.jpg</code>. Attribute first, colour second, angle third.</p>
+          <p><strong>Alt text:</strong> Describe what's literally in the image. "Men's navy merino wool jacket, slim fit, front view" — not keyword lists, not empty, not "product image".</p>
+          <p><strong>On Shopify:</strong> Shopify generates image URLs with a CDN hash, so file names are preserved in the URL path — name files correctly before uploading. Alt text is set per-image in the media editor, or via the Storefront API / bulk CSV. It does not inherit from the product title automatically.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> uses images for Image Search ranking, Shopping product carousels, and virtual try-on. Image quality and background compliance directly affects Shopping feed approval.</p>
+          <p><strong>LLMs</strong> cannot "see" images but read alt text and file names as proxies for visual content. Material type, colour, and fit language in alt text feeds directly into AI shopping agent recommendations when a user asks "what's a good warm navy jacket?"</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Empty alt text ("") or generic alt text ("product image") on all images, combined with auto-generated file names from the camera roll. Google's image crawler gets nothing. LLMs have no visual context to work with.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-price">
+      <div class="zone-card-header">
+        <span class="zone-card-num">04</span>
+        <div>
+          <div class="zone-card-name">Price & Availability</div>
+          <div class="zone-card-sub">Page, schema, and feed must be identical</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Price and availability are the most time-sensitive signals on any PDP and the most common source of Shopping disapprovals. They feed Shopping ads, free listings, and LLM agent recommendations — all of which depend on exact, real-time accuracy across three sources simultaneously: the visible page, the schema markup, and the GMC feed.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p><strong>On-page:</strong></p>
+          <ul>
+            <li>Price must be in server-rendered HTML — not injected by JavaScript after load. Google's crawler may not execute JS that renders pricing.</li>
+            <li>Display price prominently above the fold, in plain text with the currency symbol</li>
+            <li>Stock status must also be human-readable HTML: "In stock", "Only 3 left", "Out of stock"</li>
+          </ul>
+          <p><strong>In schema:</strong></p>
+          <ul>
+            <li>Use <code>offers.price</code>, <code>offers.priceCurrency</code>, <code>offers.availability</code></li>
+            <li>For sale pricing, set <code>offers.priceValidUntil</code> — without it, when the sale ends, Google may flag a price mismatch</li>
+            <li>Availability values: use full schema.org URIs — <code>https://schema.org/InStock</code>, not just "InStock"</li>
+          </ul>
+          <p><strong>In GMC feed:</strong></p>
+          <ul>
+            <li>Price must match the page exactly, including currency format: <code>189.00 USD</code></li>
+            <li>Use <code>sale_price</code> alongside <code>price</code> for promotional pricing — don't just lower the <code>price</code> field</li>
+            <li>Availability values: <code>in_stock</code>, <code>out_of_stock</code>, <code>preorder</code> — match what's on the page</li>
+          </ul>
+          <p><strong>On Shopify:</strong> Shopify's default theme and product JSON includes price in the page HTML, but uses JavaScript to update prices when variants are selected. The base price renders server-side; variant-specific prices may be JS-driven. If you're using a headless or heavily customised theme, verify with Google's Mobile-Friendly Test or a server-side render check that prices appear in the raw HTML.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> cross-checks page price, schema price, and feed price. Any conflict — even a currency formatting difference — can trigger a Shopping disapproval. It also checks price against competitor pages to detect unrealistic pricing claims.</p>
+          <p><strong>LLMs</strong> (ChatGPT Shopping, Perplexity, Google's AI Mode) draw product data from feeds and indexed pages. A stale feed means AI agents surface the wrong price to users in an active buying moment — potentially sending them to a competitor when they see the correct price on your page.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Running a flash sale by lowering the page price and schema without updating the GMC feed. Google sees the discrepancy within hours and disapproves the listing. The sale runs, but Shopping visibility drops to zero for its entire duration.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-description">
+      <div class="zone-card-header">
+        <span class="zone-card-num">05</span>
+        <div>
+          <div class="zone-card-name">Product Description</div>
+          <div class="zone-card-sub">Who it's for, what it does, why it's different</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>The product description is the primary body content Google indexes for long-tail query matching and the main signal LLMs use to understand use case, fit, and audience. Most descriptions fail because they're either copied from manufacturers (duplicate content) or written as keyword lists (unreadable to humans and machines alike).</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p>Write to answer five questions a buyer actually has:</p>
+          <ul>
+            <li><strong>What is it made of?</strong> Material, construction, origin — specific, not vague ("100% ZQ-certified merino wool, 280gsm", not "premium fabric")</li>
+            <li><strong>Who is it for?</strong> Use case and audience — "for cold-weather commuting and weekend wear", not "for everyone"</li>
+            <li><strong>What does it do?</strong> Functional benefits — "moisture-wicking, temperature-regulating, machine washable"</li>
+            <li><strong>What does it pair with?</strong> Named product links — "pairs well with the Merino Rollneck or the Waterproof Overshell" — this is both useful UX and a product-relationship signal for LLMs</li>
+            <li><strong>What makes it different?</strong> The one thing your competitors' descriptions don't say</li>
+          </ul>
+          <p>Format matters: a short opening paragraph (2–3 sentences) followed by a bulleted feature list performs better for both readability and LLM parsing than a wall of prose.</p>
+          <p><strong>On Shopify:</strong> The description field accepts rich HTML. Use the native editor or Liquid to structure it properly — opening paragraph, then a <code>&lt;ul&gt;</code> for features. Avoid using heading tags (H2/H3) inside the description field; they can create duplicate heading structure issues depending on your theme.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> uses description content for topical relevance and long-tail query matching. Unique, specific descriptions improve the chance of ranking for queries like "merino wool jacket machine washable slim fit" — queries that generic descriptions can't match.</p>
+          <p><strong>LLMs</strong> use the description as the primary source for intent matching. A query like "warm jacket I can layer under a shell and also machine wash" will match a rich description and fail to match a generic one. The more specific the language about use cases, the better LLM agents can recommend your product for real-world queries.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Manufacturer descriptions used verbatim across all retailer sites. Google identifies duplicate content across domains and doesn't reward it. More importantly, identical descriptions give LLMs no reason to prefer your product page over a competitor's — you're just one of many copies.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-specs">
+      <div class="zone-card-header">
+        <span class="zone-card-num">06</span>
+        <div>
+          <div class="zone-card-name">Product Specifications</div>
+          <div class="zone-card-sub">Structured attributes machines can parse reliably</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Structured specifications are the machine-readable layer of product data. Where the description answers "what is it for", specs answer "exactly what is it". They map directly to schema.org Product properties, GMC feed attributes, and LLM comparison queries — and they only work when they're consistent across a catalogue.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p><strong>Format:</strong></p>
+          <ul>
+            <li>Use a table or definition list (<code>&lt;dl&gt;</code>/<code>&lt;dt&gt;</code>/<code>&lt;dd&gt;</code>) — not specs buried in prose</li>
+            <li>Label names must be consistent across the entire catalogue — "Material" everywhere, not "Fabric" on some, "Composition" on others, "Made from" on a third</li>
+            <li>Values should be precise and unambiguous: "280gsm" not "medium weight", "machine wash 30°C" not "easy care"</li>
+          </ul>
+          <p><strong>Key fields to include (where applicable):</strong></p>
+          <ul>
+            <li>Material / composition</li>
+            <li>Weight / dimensions</li>
+            <li>Fit / sizing notes (e.g. "runs true to size", "slim through torso")</li>
+            <li>Care instructions</li>
+            <li>Country of manufacture</li>
+            <li>GTIN / barcode — include this visibly on the page where possible; it strengthens feed and schema alignment</li>
+          </ul>
+          <p><strong>On Shopify:</strong> Product metafields are the correct place for structured specs. Use Shopify's native metafield definitions (available in the admin since 2022) to create typed metafields (e.g. single_line_text_field, number_decimal) and surface them in your theme via <code>product.metafields</code>. This keeps spec data structured and reusable across feeds, apps, and schema generation — far better than putting everything in the description body.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> extracts structured product attributes from spec tables and maps them to schema.org properties. Consistent structured data across a catalogue improves eligibility for product-specific rich results.</p>
+          <p><strong>LLMs</strong> use spec data to answer comparative queries: "which jacket is warmest?", "is this machine washable?", "what's the weight of this fabric?" — queries that require structured, numeric, or categorical data. A prose description cannot answer these reliably. A spec table can.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Inconsistent attribute naming across a product catalogue — a natural consequence of content being added by multiple people over years without a controlled vocabulary. LLMs cannot reliably compare "Fabric: merino wool" against "Material: 100% wool" to determine they're the same thing.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-reviews">
+      <div class="zone-card-header">
+        <span class="zone-card-num">07</span>
+        <div>
+          <div class="zone-card-name">Reviews & Ratings</div>
+          <div class="zone-card-sub">Star snippets, trust signals, LLM sentiment data</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Ratings and reviews serve three jobs simultaneously: social proof for users deciding whether to buy, structured quality signals for Google's Shopping and SERP ranking systems, and real-world sentiment data for LLMs building product recommendations. The aggregate rating drives star snippets in SERPs. Individual review text teaches LLMs what this product is actually like to own.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <ul>
+            <li>Display the aggregate rating in <strong>server-rendered HTML</strong> above the fold — the number must be visible in the raw page source, not injected by JavaScript</li>
+            <li>Mark up with <code>AggregateRating</code> schema: <code>ratingValue</code> and <code>reviewCount</code> are required. The value in schema must match the value on the page — not a rounded version, not a different scale</li>
+            <li>Include at least a few individual review bodies in server-rendered HTML. Review apps that load entirely via JavaScript (AJAX after DOM ready) may not be crawled by Google</li>
+            <li>Individual reviews should use <code>Review</code> schema with <code>author</code>, <code>reviewRating</code>, and <code>reviewBody</code></li>
+          </ul>
+          <p><strong>On Shopify:</strong> Shopify's native Product Reviews app (now deprecated in favour of native review metafields in some themes) and most third-party review apps (Judge.me, Yotpo, Okendo, Stamped) render reviews via JavaScript by default. Check whether your reviews are in the server-rendered HTML using "View Page Source" — not Inspect, which shows the rendered DOM. If reviews only appear in the rendered DOM, Google may not consistently crawl them.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> shows star ratings in SERPs when AggregateRating schema is present and valid, the rating value appears on the page, and the page isn't on a blocked category (Google restricts star snippets on certain product types). Stars in SERPs typically improve CTR by 15–20% on product pages.</p>
+          <p><strong>LLMs</strong> use review text to understand product nuance that specs and descriptions don't capture: "runs small — size up", "warm but not bulky, good for layering", "the zip sticks after six months". This context feeds directly into LLM shopping recommendations for users asking "what do people say about this jacket?"</p>
+        </div>
+      </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Marking up a rating in schema that isn't visible on the rendered page. If your schema says 4.8, the number 4.8 must appear in the HTML. Google treats hidden markup as manipulative and will suppress rich results for that page — and potentially others on the same domain.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-variants">
+      <div class="zone-card-header">
+        <span class="zone-card-num">08</span>
+        <div>
+          <div class="zone-card-name">Variants (Size, Colour)</div>
+          <div class="zone-card-sub">ProductGroup schema + canonical strategy</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Product variants — size, colour, material — multiply your URL count and create one of the most common crawl budget problems in ecommerce. Without a clear strategy, you're asking Google to crawl thousands of near-duplicate pages that dilute crawl budget, split authority, and generate thin-content signals across the catalogue.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p><strong>Schema strategy:</strong></p>
+          <ul>
+            <li>Use <code>ProductGroup</code> schema at the parent level to declare that all size/colour variants belong to the same product</li>
+            <li>Set <code>variesBy</code> to declare what changes: <code>https://schema.org/color</code>, <code>https://schema.org/size</code></li>
+            <li>Each variant inside <code>hasVariant</code> should be a <code>Product</code> (or <code>Product</code> + <code>MerchantListing</code>) with its own GTIN, image, and offer</li>
+          </ul>
+          <p><strong>URL + canonical strategy:</strong></p>
+          <ul>
+            <li>Canonical all variant URLs (<code>?colour=navy&size=M</code>) to the base product URL</li>
+            <li>If colour variants have meaningfully different content (different images, different descriptions), consider separate indexed pages — but still link them via ProductGroup schema</li>
+            <li>Never let faceted navigation or filter parameters generate thousands of indexable variant URLs without canonicals</li>
+          </ul>
+          <p><strong>GMC feed:</strong> Each variant is a separate row with a unique GTIN or SKU, its own image URL, and the correct colour/size values. Link all variants to the parent product with <code>item_group_id</code>.</p>
+          <p><strong>On Shopify:</strong> Shopify generates variant URLs as <code>/products/jacket?variant=12345</code>. By default, Shopify sets a self-referencing canonical on each variant URL — meaning each variant page is treated as indexable. This is a known crawl budget concern for large catalogues. You can override canonicals in your theme Liquid to point all variants to the base product URL (<code>product.url</code>), but test carefully as it may affect Shopping feed performance.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> crawls every variant URL it discovers. A catalogue of 500 products in 8 colours and 6 sizes = 24,000 crawlable pages, most of them near-duplicate. This consumes crawl budget that could be spent on new or updated pages.</p>
+          <p><strong>LLMs</strong> need <code>ProductGroup</code> schema to understand that "navy, size M" and "charcoal, size L" are the same jacket — not two different products. Without it, they may treat them independently and fail to answer queries like "does this come in olive?"</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Indexing colour variant pages without ProductGroup schema and without canonicals. Each colour ranks for slightly different queries but splits link equity. LLMs see fragmented product data instead of a coherent product with options.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-breadcrumb">
+      <div class="zone-card-header">
+        <span class="zone-card-num">09</span>
+        <div>
+          <div class="zone-card-name">Breadcrumb Navigation</div>
+          <div class="zone-card-sub">Hierarchy signal + BreadcrumbList schema</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Breadcrumbs tell Google and LLMs where a product sits in the site hierarchy. Google shows the breadcrumb path below your SERP title in search results — a clean, logical path signals good site architecture and makes your result look more trustworthy. A truncated or broken breadcrumb path in SERPs is often the first sign of structural problems.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <ul>
+            <li>Include breadcrumbs in both visible HTML <strong>and</strong> <code>BreadcrumbList</code> schema — both matter</li>
+            <li>Logical depth: Home › Category › Subcategory › Product — don't flatten to Home › Product</li>
+            <li>Each item in the breadcrumb should be an anchor link to that category level — not just text</li>
+            <li>BreadcrumbList schema: use <code>ListItem</code> with <code>position</code>, <code>name</code>, and <code>item</code> (URL) for each level</li>
+            <li>The final breadcrumb item (current page) doesn't need a URL in schema, but must have a name</li>
+          </ul>
+          <p><strong>On Shopify:</strong> Shopify themes typically generate breadcrumbs automatically via the <code>collections</code> object — but the path shown depends on how the user navigated to the page, not a canonical category assignment. A product in multiple collections may show different breadcrumbs to different users, which can cause inconsistent BreadcrumbList schema. To fix this, either assign a primary collection and generate breadcrumbs from that, or hardcode the canonical category path in your schema.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> displays the BreadcrumbList in SERPs directly below the title and uses it as a structural signal for site architecture. It prefers the schema-defined path over the navigation-rendered path when they conflict.</p>
+          <p><strong>LLMs</strong> use the breadcrumb path to understand category hierarchy — classifying "this is a jacket, in men's outerwear, under clothing" without relying on the product title alone. This is particularly useful for ambiguous product names.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        BreadcrumbList schema that doesn't match the visible breadcrumb HTML. Google resolves the conflict in its own favour — usually suppressing the SERP breadcrumb entirely. On Shopify, this happens frequently when a product is in multiple collections and schema is generated dynamically from the referrer.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-internal">
+      <div class="zone-card-header">
+        <span class="zone-card-num">10</span>
+        <div>
+          <div class="zone-card-name">Internal Linking</div>
+          <div class="zone-card-sub">Basket value, crawlability, product relationship graph</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Internal links on a PDP serve three simultaneous purposes: keeping products in Google's crawl graph and distributing PageRank, increasing average order value through deliberate upgrade and pairing paths, and teaching LLMs which products are related, complementary, or interchangeable across your catalogue.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p>Think in three link types — each has a different purpose:</p>
+          <ul>
+            <li><strong>Pair it with</strong> — complementary products that sell well together and share semantic context. "Pairs well with the Merino Rollneck" creates a product relationship signal for LLMs.</li>
+            <li><strong>Upgrade</strong> — a higher-margin or premium version of this product. "Upgrade to the Premium Cashmere Jacket" is an explicit AOV signal and a product hierarchy signal.</li>
+            <li><strong>Category link</strong> — a link back up to the parent category ("All Men's Jackets"). Keeps the product in the crawl graph and reinforces hierarchy.</li>
+          </ul>
+          <p><strong>Anchor text matters:</strong> "Waterproof Overshell" tells Google and LLMs what the linked product is. "See similar" tells them nothing. Descriptive anchors are the mechanism by which LLMs build your product relationship map.</p>
+          <p><strong>On Shopify:</strong> The "Related products" and "You might also like" sections in most Shopify themes are generated algorithmically based on tags or collection membership. They often have generic anchor text and no editorial logic. Replace or supplement these with manually curated link sections — especially for high-value products — even if it means a metafield-driven template override.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> uses internal links to determine crawl priority and PageRank flow within a catalogue. PDPs with no internal links pointing to them — orphaned pages — lose PageRank and may be crawled infrequently. Internal links from PDPs to related PDPs also create topical clusters.</p>
+          <p><strong>LLMs</strong> use anchor text and link patterns to understand which products are related, which are substitutes, and which are upgrades — directly informing multi-product recommendations. A catalogue where every PDP links meaningfully to 2–3 related products creates a far richer product graph than one relying on generic "you might also like" carousels.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Algorithmic "related products" with no editorial intent, generic anchor text, and no upgrade path. The section exists but does nothing for SEO, nothing for LLM product graph, and only weakly contributes to AOV. It's a placeholder that looks complete but isn't.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-schema">
+      <div class="zone-card-header">
+        <span class="zone-card-num">11</span>
+        <div>
+          <div class="zone-card-name">Product Schema (JSON-LD)</div>
+          <div class="zone-card-sub">Three types, distinct purposes — pick the right one</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Schema markup is the machine-readable layer that makes your product data legible to Google and LLMs. Without it, Google treats a product page as a generic webpage — no rich results, no Shopping eligibility. LLMs see unstructured HTML instead of typed product properties. Schema is not optional for competitive ecommerce SEO in 2026.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p><strong>The three Product schema types:</strong></p>
+          <ul>
+            <li><strong>Product</strong> — base type. Use for simple, single-variant products. Minimum required fields for Google Rich Results: <code>name</code>, <code>image</code>, <code>description</code>, <code>offers</code> (price, priceCurrency, availability), <code>aggregateRating</code>.</li>
+            <li><strong>MerchantListing</strong> — an extension of Product that adds seller-specific signals. Required fields for Google's free Shopping listings: <code>shippingDetails</code> (rate + delivery time) and <code>hasMerchantReturnPolicy</code>. Without these, your product may not qualify for free Shopping surfaces.</li>
+            <li><strong>ProductGroup</strong> — parent type for variant products. Declares that multiple Product nodes (colours, sizes) are variants of the same item. Required properties: <code>variesBy</code> (what changes), <code>hasVariant</code> (array of Product nodes). Each child variant should have its own GTIN, image, and offer.</li>
+          </ul>
+          <p><strong>Key rules:</strong></p>
+          <ul>
+            <li>All schema values must match the visible page content — price in schema must equal price on the page</li>
+            <li>Use full schema.org URIs for enum values: <code>https://schema.org/InStock</code>, not just "InStock"</li>
+            <li>Place JSON-LD in <code>&lt;script type="application/ld+json"&gt;</code> in the <code>&lt;head&gt;</code> or body — both are valid, head is preferred</li>
+            <li>Use Google's <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Rich Results Test</a> to validate structure, then manually verify data accuracy</li>
+          </ul>
+          <p><strong>On Shopify:</strong> Shopify themes generate Product schema automatically from product data, but the default output is usually incomplete — it often omits <code>shippingDetails</code> and <code>hasMerchantReturnPolicy</code> (required for MerchantListing), and doesn't output <code>ProductGroup</code> for variants. To get complete schema, you need to either modify the theme Liquid directly or use a dedicated schema app. Always check what your theme actually outputs with Rich Results Test before assuming it's correct.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> uses schema to power Rich Results (star snippets, price in SERPs, availability badges) and Shopping eligibility. The Rich Results Test validates structure, but semantic correctness — correct prices, valid GTINs, matching availability — is what Google checks at crawl time. Structural validity is the floor, not the ceiling.</p>
+          <p><strong>LLMs</strong> treat structured data as the highest-confidence source for product attributes — more reliable than prose descriptions. When schema and body copy conflict, LLMs typically defer to schema. This makes schema accuracy critical: stale or wrong schema directly corrupts LLM product recommendations.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Passing the Rich Results Test and assuming schema is correct. The test validates JSON structure only — it doesn't check whether your price matches the page, whether your GTIN is real, or whether your availability value is current. Those are the checks that matter for Shopping and LLM accuracy.
+      </div>
+    </div>
+
+    <div class="zone-card" id="zone-feed">
+      <div class="zone-card-header">
+        <span class="zone-card-num">12</span>
+        <div>
+          <div class="zone-card-name">Feed Alignment (GMC)</div>
+          <div class="zone-card-sub">Page ↔ schema ↔ feed — all three must be consistent</div>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">What it does</div>
+        <div class="zone-block-body"><p>Your product page doesn't exist in isolation. Google cross-references your PDP, its structured data, and your GMC feed against each other as part of Shopping eligibility checks. A clean page and valid schema can still trigger a disapproval if the feed data conflicts with either. The feed is also what LLM shopping agents query directly — it's your product data as seen by AI.</p></div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Best practice</div>
+        <div class="zone-block-body">
+          <p><strong>Fields that must match exactly (page = schema = feed):</strong></p>
+          <ul>
+            <li><strong>Price</strong> — including currency format: <code>189.00 USD</code>, not <code>$189</code> or <code>189</code></li>
+            <li><strong>Availability</strong> — feed value <code>in_stock</code> must match schema <code>https://schema.org/InStock</code> and the text on the page</li>
+            <li><strong>Main image URL</strong> — the feed image must be the same URL as the primary product image (or a direct equivalent)</li>
+            <li><strong>GTIN</strong> — if present on the page or in schema, include it in the feed</li>
+          </ul>
+          <p><strong>Fields that should be consistent (can differ in format, not substance):</strong></p>
+          <ul>
+            <li>Title — feed title can be shorter, but must describe the same product</li>
+            <li>Description — feed allows up to 5,000 characters; keep it aligned with page copy, not a different version</li>
+          </ul>
+          <p><strong>GTINs vs. SKUs:</strong> Google strongly prefers GTINs (UPC, EAN, ISBN, JAN) over retailer-assigned SKUs. Products without GTINs may have reduced visibility in free Shopping listings and Shopping ads. If your manufacturer provides GTINs, use them — don't replace them with internal SKUs.</p>
+          <p><strong>On Shopify:</strong> The Google &amp; YouTube Shopify app (formerly Google channel) syncs your product catalogue to Google Merchant Centre automatically, pulling data from product fields and metafields. By default it maps product title, description, price, and images. GTINs must be stored in the Barcode field (found in the variant editor) or a dedicated metafield — they don't sync automatically from custom product fields. Set up feed rules in GMC to transform or supplement data where Shopify's default output isn't sufficient.</p>
+        </div>
+      </div>
+      <div class="zone-block">
+        <div class="zone-block-label">Google vs. LLMs</div>
+        <div class="zone-block-body">
+          <p><strong>Google</strong> checks page, schema, and feed for consistency on every crawl cycle. Mismatches trigger disapprovals. Common triggers: price changed on the website without a feed update, out-of-stock status not reflected in the feed, or a promotional price that expired but the feed still shows the sale price.</p>
+          <p><strong>LLMs</strong> — ChatGPT Shopping, Perplexity, and Google's AI Mode — query product data primarily from feeds and indexed pages, not from real-time page scraping. A stale feed means users asking "what's the price of this jacket?" get the wrong answer from an AI that's confidently wrong. Keeping the feed in sync is how you stay accurately represented in AI-powered shopping surfaces.</p>
+        </div>
+      </div>
+      <div class="zone-fail">
+        <div class="zone-fail-label">Common failure</div>
+        Using retailer-assigned SKUs as the only product identifier in the feed, with no GTINs. Google accepts this but treats these products as lower-confidence matches for Shopping queries. Compounding this with a feed sync frequency of 24+ hours means any price or stock change leaves a window where the feed is wrong — and that window is when Google is most likely to check.
+      </div>
+    </div>
+
+  </div><!-- /zones-list -->
+
+  <div class="post-footer">
+    <div class="author-card">
+      <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="56" height="56">
+      <div>
+        <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+        <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+        <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Specialises in technical architecture, structured data, and the intersection of traditional SEO and agentic commerce.</p>
+      </div>
+    </div>
+    <footer>
+      <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy</a></p>
+      <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+    </footer>
+  </div>
+
+</article>
+</main>
+
+<script>
+(function() {
+  var zoneMap = {
+    title:       'zone-title',
+    titletag:    'zone-titletag',
+    images:      'zone-images',
+    price:       'zone-price',
+    description: 'zone-description',
+    specs:       'zone-specs',
+    reviews:     'zone-reviews',
+    variants:    'zone-variants',
+    breadcrumb:  'zone-breadcrumb',
+    internal:    'zone-internal',
+    schema:      'zone-schema',
+    feed:        'zone-feed'
+  };
+
+  // ── View switcher ──────────────────────────────
+  var currentView = 'page';
+
+  window.switchView = function(view) {
+    currentView = view;
+    var mockPage   = document.getElementById('mock-page-wrap');
+    var titleNote  = document.getElementById('titletag-note');
+    var codeView   = document.getElementById('code-view');
+    var hint       = document.getElementById('view-hint');
+    var btnPage    = document.getElementById('btn-page');
+    var btnCode    = document.getElementById('btn-code');
+    var urlText    = document.getElementById('chrome-url-text');
+
+    if (view === 'page') {
+      mockPage.style.display  = '';
+      titleNote.style.display = '';
+      codeView.classList.remove('visible');
+      urlText.textContent = 'example-store.com/clothing/jackets/mens-merino-wool-jacket';
+      hint.textContent = '↓ Click any element to jump to that section';
+      btnPage.classList.add('active');
+      btnCode.classList.remove('active');
+    } else {
+      mockPage.style.display  = 'none';
+      titleNote.style.display = 'none';
+      codeView.classList.add('visible');
+      urlText.textContent = 'view-source:example-store.com/clothing/jackets/mens-merino-wool-jacket';
+      hint.textContent = '↓ Click any code block to jump to that section';
+      btnCode.classList.add('active');
+      btnPage.classList.remove('active');
+    }
+    // clear active zones on switch
+    document.querySelectorAll('.zone-active').forEach(function(el) {
+      el.classList.remove('zone-active');
+    });
+  };
+
+  // ── Zone activation ────────────────────────────
+  function activate(zoneKey) {
+    var cardId = zoneMap[zoneKey];
+    if (!cardId) return;
+    var card = document.getElementById(cardId);
+    if (!card) return;
+
+    // Clear all active
+    document.querySelectorAll('.zone-active').forEach(function(el) {
+      el.classList.remove('zone-active');
+    });
+
+    // Activate all matching zone elements in current view
+    var container = currentView === 'page'
+      ? document.getElementById('mock-page-wrap')
+      : document.getElementById('code-view');
+
+    if (container) {
+      container.querySelectorAll('[data-zone="' + zoneKey + '"]').forEach(function(el) {
+        el.classList.add('zone-active');
+      });
+    }
+    // Also activate titletag-note if in page view
+    var titleNote = document.getElementById('titletag-note');
+    if (titleNote && currentView === 'page' && zoneKey === 'titletag') {
+      titleNote.classList.add('zone-active');
+    }
+
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.querySelectorAll('[data-zone]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      activate(this.getAttribute('data-zone'));
+    });
+  });
+
+  // Variant tap
+  document.querySelectorAll('.mock-var-opt').forEach(function(opt) {
+    opt.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var siblings = this.closest('.mock-var-opts').querySelectorAll('.mock-var-opt');
+      siblings.forEach(function(s) { s.classList.remove('sel'); });
+      this.classList.add('sel');
+    });
+  });
+})();
+</script>
+</body>
+</html>

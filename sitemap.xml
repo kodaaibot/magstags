@@ -152,9 +152,15 @@
   <!-- About & contact -->
   <url>
     <loc>https://www.magstags.com/mags-sikora/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.magstags.com/services/</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/contact/</loc>
