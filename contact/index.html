@@ -164,6 +164,55 @@
   </div>
 </main>
 
+<script>
+  // Math spam check
+  (function(){
+    const form = document.getElementById('contact-form');
+    const mathQuestion = document.getElementById('math-question');
+    const mathAnswer = document.getElementById('math-answer');
+    const mathError = document.getElementById('math-error');
+    const submitBtn = document.getElementById('submit-btn');
+    let correctAnswer = 0;
+
+    function generateMath() {
+      const a = Math.floor(Math.random() * 10) + 1;
+      const b = Math.floor(Math.random() * 10) + 1;
+      correctAnswer = a + b;
+      mathQuestion.textContent = `${a} + ${b} = ?`;
+      mathAnswer.value = '';
+      mathError.style.display = 'none';
+    }
+
+    function validateMath() {
+      const userAnswer = parseInt(mathAnswer.value, 10);
+      if (userAnswer !== correctAnswer) {
+        mathError.style.display = 'block';
+        mathAnswer.classList.add('err');
+        return false;
+      }
+      mathError.style.display = 'none';
+      mathAnswer.classList.remove('err');
+      return true;
+    }
+
+    // Generate on load
+    generateMath();
+
+    // Validate on input change
+    mathAnswer.addEventListener('change', function(){
+      if (this.value) validateMath();
+    });
+
+    // Validate on submit
+    form.addEventListener('submit', function(e){
+      if (!validateMath()) {
+        e.preventDefault();
+        mathAnswer.focus();
+      }
+    });
+  })();
+</script>
+
 <script src="/header.js"></script>
 <script src="/footer.js"></script>
 <script src="/cookie-consent.js"></script>
