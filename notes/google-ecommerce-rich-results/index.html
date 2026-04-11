@@ -94,14 +94,57 @@
     .author-link:hover{border-color:var(--teal);color:var(--teal);}
     .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
     .ct-content{min-width:0}
-    .ct-toc{position:sticky;top:80px;padding-top:60px}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
     .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
     .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
     .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
     .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
     .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
     @media(max-width:960px){.ct-layout{grid-template-columns:1fr;gap:0}.ct-toc{position:static;padding-top:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.ct-toc-list{border-left:none;flex-direction:row;flex-wrap:wrap;gap:4px 16px}.ct-toc-list li a{border-left:none;padding:6px 0;font-size:13px}}
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Google eCommerce Rich Results 2026: Complete Guide | MagsTags">
   <meta property="og:description" content="Complete guide to Google eCommerce rich results in 2026: which features need a Merchant Center feed, which use structured data, which ones Google controls automatically, and a key eligibility mistake most guides get wrong.">
   <meta property="og:url" content="https://www.magstags.com/notes/google-ecommerce-rich-results/">
@@ -192,6 +235,7 @@
     ]
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -552,7 +596,7 @@
 
           <p>These two features are often confused because they look similar in SERPs. They work completely differently.</p>
 
-          <h3>Sale price annotations — you control these</h3>
+          <h3 id="sale-price-annotations-you-control-these">Sale price annotations — you control these</h3>
 
           <p>Sale price annotations are triggered by submitting the <code>sale_price</code> attribute alongside the regular <code>price</code> in your Merchant Center feed. Google displays the sale price as the active price with the original shown with a strikethrough, plus a sale badge. To qualify:</p>
 
@@ -565,7 +609,7 @@
 
           <p>On the structured data side: use <code>StrikethroughPrice</code> as the <code>priceType</code> on the original price in your <code>UnitPriceSpecification</code> to mark it as a reference price for the strikethrough display. Include <code>priceValidUntil</code> so Google reads the sale as temporary.</p>
 
-          <h3>Price drop badges — Google controls these</h3>
+          <h3 id="price-drop-badges-google-controls-these">Price drop badges — Google controls these</h3>
 
           <p>Price drop badges are automatic. Google observes price changes for the product over time and computes whether a drop qualifies. It is not a simple formula you can game. Even when all conditions are met, price drops are not guaranteed to show. You cannot trigger it; you can only create the conditions for it by keeping feed pricing accurate and stable. You can, however, check Merchant Center obsessively to see if it appeared. That part is very controllable.</p>
 
@@ -731,7 +775,7 @@
 
         <!-- FAQ -->
         <div class="faq-block">
-          <h2>Frequently asked questions</h2>
+          <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 
           <div class="faq-item">
             <div class="faq-q">Can I get eCommerce rich results without a Merchant Center account?</div>
@@ -767,7 +811,7 @@
 
         <!-- Sources -->
         <div class="sources">
-          <h2>Sources</h2>
+          <h2 id="sources">Sources</h2>
           <ul>
             <li><strong>Google Search Central</strong>: <a href="https://developers.google.com/search/docs/appearance/structured-data/product-snippet" rel="noopener noreferrer" target="_blank">Product Snippet Structured Data (Pros and Cons eligibility)</a></li>
             <li><strong>Google Search Central</strong>: <a href="https://developers.google.com/search/docs/appearance/structured-data/return-policy" rel="noopener noreferrer" target="_blank">Merchant Return Policy Structured Data</a></li>

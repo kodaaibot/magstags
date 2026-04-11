@@ -579,7 +579,51 @@ html.dark pre.code-snippet { color: var(--text-2); }
     padding-right: 20px;
   }
 }
+
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
 </style>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script src="/header.js"></script>

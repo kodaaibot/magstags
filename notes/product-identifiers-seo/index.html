@@ -88,14 +88,57 @@
     .author-link:hover{border-color:var(--teal);color:var(--teal);}
     .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
     .ct-content{min-width:0}
-    .ct-toc{position:sticky;top:80px;padding-top:60px}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
     .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
     .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
     .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
     .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
     .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
     @media(max-width:960px){.ct-layout{grid-template-columns:1fr;gap:0}.ct-toc{position:static;padding-top:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.ct-toc-list{border-left:none;flex-direction:row;flex-wrap:wrap;gap:4px 16px}.ct-toc-list li a{border-left:none;padding:6px 0;font-size:13px}}
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand | MagsTags">
   <meta property="og:description" content="GTIN, MPN, SKU and brand — what each field actually does, what breaks when they're wrong, and how to audit identifier coverage across a large ecommerce catalogue.">
   <meta property="og:url" content="https://www.magstags.com/notes/product-identifiers-seo/">
@@ -132,6 +175,7 @@
     ]
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -174,45 +218,45 @@
 
       <div class="id-card">
         <span class="id-card-tag global">Global standard</span>
-        <h3>GTIN, Global Trade Item Number</h3>
+        <h3 id="gtin-global-trade-item-number">GTIN, Global Trade Item Number</h3>
         <p>A unique product identifier (UPI) assigned by the manufacturer, registered with GS1, globally unique. The same GTIN identifies a product whether you're selling it, your competitor is, or a retailer in another country is. Google uses it to match your listing to a known product entity in its knowledge graph, price comparisons, Shopping knowledge panels, AI Overview signals all depend on that match.</p>
         <p><strong>Types:</strong> UPC (GTIN-12, 12 digits, North America), EAN (GTIN-13, 13 digits, outside North America), JAN (GTIN-13, 8 or 13 digits, Japan only), ISBN-13 (books), GTIN-14 (multipacks), GTIN-8 (small products). GTINs are the numbers printed beneath the barcode on retail packaging. In schema, use <code>gtin</code> (generic) or the specific subtype (<code>gtin12</code>, <code>gtin13</code>, etc.).</p>
       </div>
 
       <div class="id-card">
         <span class="id-card-tag mfr">Manufacturer assigned</span>
-        <h3>MPN, Manufacturer Part Number</h3>
+        <h3 id="mpn-manufacturer-part-number">MPN, Manufacturer Part Number</h3>
         <p>A unique product identifier (UPI) assigned by the manufacturer for their own catalogue. Alphanumeric, 1–70 characters. Unique within a manufacturer's range, not globally. Required for all products without a GTIN. Always submitted alongside <code>brand</code>: neither alone is sufficient for matching. Schema.org property: <code>Product.mpn</code>.</p>
       </div>
 
       <div class="id-card">
         <span class="id-card-tag mfr">Context required</span>
-        <h3>Brand</h3>
+        <h3 id="brand">Brand</h3>
         <p>Required for products with a clearly associated manufacturer. On its own, it does not identify a specific product, it gives Google a manufacturer name but no product-level match. Always paired with MPN when GTIN isn't available. String, 1–70 characters. Schema.org property: <code>Product.brand</code> (type: <code>Brand</code>).</p>
       </div>
 
       <div class="id-card">
         <span class="id-card-tag internal">Internal only</span>
-        <h3>SKU, Stock Keeping Unit</h3>
+        <h3 id="sku-stock-keeping-unit">SKU, Stock Keeping Unit</h3>
         <p>Your internal product code. It belongs to your catalogue management system. Google does not use it for product matching, rich results eligibility, or Shopping performance. In schema, the <code>sku</code> property is supported but not used for matching. In Merchant Center, your SKU typically maps to <code>id [id]</code>: your primary item identifier. It does not go in <code>gtin [gtin]</code>.</p>
       </div>
 
       <h2 id="what-breaks">What actually breaks: Google Shopping, Merchant Center, and silent underperformance</h2>
 
-      <h3>Internal SKUs in the GTIN field</h3>
+      <h3 id="internal-skus-in-the-gtin-field">Internal SKUs in the GTIN field</h3>
       <p>The most common issue in feed audits. It gets through Merchant Center validation because the system doesn't always reject invalid GTINs on ingestion, it flags them later, or not at all if the value happens to pass a loose format check.</p>
       <p>The result: products appear in Google Shopping but never get matched to a product entity. No price comparison panel. No Shopping knowledge panel. Weaker signals for AI Overviews on product queries. You won't see this as a clear error, it's silent underperformance.</p>
 
-      <h3>Missing GTINs on products that have them</h3>
+      <h3 id="missing-gtins-on-products-that-have-them">Missing GTINs on products that have them</h3>
       <p>Google states this explicitly: products with an assigned GTIN submitted without one may have limited visibility. In practice, Google Shopping impressions are lower than they should be relative to competitors selling the same product. The product exists in the feed, it shows, but it's not being matched with full confidence. No diagnostics warning. You find it by comparing impression share against competitors for identical products.</p>
 
-      <h3>MPN without brand (or brand without MPN)</h3>
+      <h3 id="mpn-without-brand-or-brand-without-mpn">MPN without brand (or brand without MPN)</h3>
       <p>Submitting MPN alone gives Google an alphanumeric string with no manufacturer context. Some MPNs are short enough that they could belong to dozens of manufacturers. Without brand to anchor it, the identifier is effectively useless for matching. The reverse is also true: brand without MPN tells Google who makes the product, not which product. Submit both or neither.</p>
 
-      <h3>Copying GTINs from similar products</h3>
+      <h3 id="copying-gtins-from-similar-products">Copying GTINs from similar products</h3>
       <p>If you can't find the GTIN, it's tempting to use the GTIN of a similar variant. This leads to disapprovals. A GTIN mismatch, where your submitted GTIN doesn't match the product Google expects to find at that URL, is one of the harder errors to diagnose because it doesn't always produce an explicit error. It produces silence: no match, no Shopping features, no explanation in Merchant Center diagnostics.</p>
 
-      <h3>SKU in schema vs item ID in the feed</h3>
+      <h3 id="sku-in-schema-vs-item-id-in-the-feed">SKU in schema vs item ID in the feed</h3>
       <p>This one doesn't break rich results, but it creates a data reconciliation problem that gets painful at scale. In schema markup, the <code>sku</code> property outputs your internal product reference. In Merchant Center, the <code>id [id]</code> attribute is your primary item identifier, and most teams map their internal SKU to that field.</p>
       <p>These two values should be consistent. When they aren't, schema says <code>PROD-001-BLK</code>, feed item ID says <code>1234567</code>: you lose the ability to trace a Search Console rich result error back to the specific feed item. When Merchant Center flags a product for a price mismatch or identifier issue, you need to match it to a URL. When Search Console flags a structured data issue, you need to match it to a feed item. Inconsistent internal references across schema and feed make that cross-referencing significantly harder, especially on catalogues with thousands of SKUs.</p>
 
@@ -326,7 +370,7 @@
       </div>
 
       <div class="faq-block">
-        <h2>Frequently asked questions</h2>
+        <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 
         <div class="faq-item">
           <div class="faq-q">Can I use my internal SKU as the GTIN?</div>
@@ -360,7 +404,7 @@
       </div>
 
       <div class="sources">
-        <h2>Sources</h2>
+        <h2 id="sources">Sources</h2>
         <ul>
           <li><strong>Google Merchant Center:</strong> <a href="https://support.google.com/merchants/answer/160161" target="_blank" rel="noopener">About unique product identifiers</a></li>
           <li><strong>Google Merchant Center:</strong> <a href="https://support.google.com/merchants/answer/6324461" target="_blank" rel="noopener">GTIN [gtin] attribute reference</a></li>

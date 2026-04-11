@@ -73,7 +73,7 @@
     /* Table of Contents */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; max-height: calc(100vh - 80px); overflow-y: auto; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
     .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
@@ -108,7 +108,50 @@
     .journey-flow .jf-stage:last-child,.journey-flow .jf-cell:last-child{border-bottom:none}
     .journey-flow .jf-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
     @media(max-width:640px){.journey-flow{grid-template-columns:1fr;}.journey-flow .jf-header:first-child{display:none}.journey-flow .jf-cell{border-left:none}}
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="What Is Agentic Commerce? How AI Agents Change the Shopping Journey | MagsTags">
   <meta property="og:description" content="What is agentic commerce? It's when AI agents handle product discovery, comparison, and checkout on behalf of the consumer. Here's how the shopping journey changes — with examples from ChatGPT, Google, Perplexity, and Amazon.">
   <meta property="og:url" content="https://www.magstags.com/notes/what-is-agentic-commerce/">
@@ -195,6 +238,7 @@
     ]
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -300,7 +344,7 @@
 
       <p>That second point is the one that changes the game for SEO and e-commerce teams. Your PDP, your carefully optimised product page, your hero images, your brand story: the agent may never see any of it. What the agent sees is your data. Feeds, schema markup, and structured attributes.</p>
 
-      <h3>The marketing funnel doesn't apply here</h3>
+      <h3 id="the-marketing-funnel-doesnt-apply-here">The marketing funnel doesn't apply here</h3>
 
       <p>The traditional e-commerce funnel (awareness, consideration, decision, purchase) assumes the customer moves through distinct stages, and your marketing touches them at each one. Display ads build awareness. Content marketing handles consideration. Retargeting nudges the decision. The PDP closes the sale. Entire teams, budgets, and attribution models are built around this progression.</p>
 
@@ -348,7 +392,7 @@
 
       <p>This isn't theoretical. The agents are live, they have users, and they're processing product data right now.</p>
 
-      <h3>ChatGPT + Instant Checkout (OpenAI)</h3>
+      <h3 id="chatgpt-instant-checkout-openai">ChatGPT + Instant Checkout (OpenAI)</h3>
 
       <p>OpenAI launched "Buy it in ChatGPT" in February 2026, powered by the <strong>Agentic Commerce Protocol (ACP)</strong>, an open standard co-developed with Stripe. Users can search for products, see carousels, compare options, and complete checkout without leaving the chat interface. OpenAI charges merchants a 4% transaction fee on completed purchases.</p>
 
@@ -356,17 +400,17 @@
 
       <p>At launch, over a million Shopify merchants were in the onboarding queue, with early partners including Glossier, SKIMS, Spanx, and Vuori.</p>
 
-      <h3>Google AI Shopping + UCP</h3>
+      <h3 id="google-ai-shopping-ucp">Google AI Shopping + UCP</h3>
 
       <p>Google announced the <strong>Universal Commerce Protocol (UCP)</strong> at the National Retail Federation conference in January 2026. It's an open-source standard built in collaboration with Shopify, Wayfair, Target, Walmart, and endorsed by over 20 global partners including Mastercard, Visa, and Stripe.</p>
 
       <p>UCP powers AI-assisted shopping across Google Search's AI mode and Gemini. Like ACP, it enables checkout within the AI interface. But Google has the advantage of already having the product data. Every merchant with a Google Merchant Center feed is already in Google's index. The UCP roadmap includes multi-item checkout, cart management, loyalty programmes, and post-order workflows.</p>
 
-      <h3>Perplexity Buy with Pro</h3>
+      <h3 id="perplexity-buy-with-pro">Perplexity Buy with Pro</h3>
 
       <p>Perplexity launched its shopping feature for Pro users, with one-click checkout and free shipping through merchant partners. The <strong>Perplexity Merchant Program</strong> (essentially their version of Merchant Center) lets businesses share product catalogues including reviews, prices, and specs. Shopping queries on Perplexity have increased fivefold since launch. Their integration with Shopify gives them access to product data across Shopify-powered businesses globally.</p>
 
-      <h3>Amazon Rufus</h3>
+      <h3 id="amazon-rufus">Amazon Rufus</h3>
 
       <p>Amazon's AI shopping assistant has been used by over 250 million customers, with interactions up 210% year over year. Rufus is trained on Amazon's entire product catalogue, customer reviews, and community Q&amp;A posts. The latest capabilities include a price tracker and auto-buy. Customers set a target price and Rufus automatically completes the purchase when the price drops. This is agentic commerce in its most literal form: the agent executes the transaction without the customer being present.</p>
 
@@ -429,7 +473,7 @@
 
       <p>The practical takeaway: you'll likely need to support both. The good news is that the underlying product data (the feeds, the schema, the attributes) is the same for both protocols. The differences are in the transaction layer, not the data layer. Get your product data right once, and you're eligible for both.</p>
 
-      <h3>The payment layer underneath</h3>
+      <h3 id="the-payment-layer-underneath">The payment layer underneath</h3>
 
       <p>Underneath ACP and UCP sits the payment infrastructure that actually moves money. Google's <strong>Agent Payments Protocol (AP2)</strong> handles delegated authentication, letting the agent complete a purchase using stored credentials without the consumer re-entering card details. Visa has introduced AI-ready tokenised credentials specifically for agent-initiated transactions. Stripe processes ACP payments for ChatGPT. These systems use delegated authentication and audit trails to maintain transaction transparency, because the entity initiating the payment isn't a human clicking "buy." It's a machine acting on their behalf. For merchants, the integration is handled through your existing payment provider in most cases. You don't need a new payments stack, but your provider needs to support the protocol.</p>
 

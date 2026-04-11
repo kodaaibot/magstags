@@ -46,7 +46,50 @@
     .author-link:hover{border-color:var(--teal);color:var(--teal);}
     .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
     .post-back:hover{color:var(--teal)}
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Bill Slawski | MagsTags">
   <meta property="og:description" content="Bill Slawski covered Google patents the way nobody else did. I sent him questions, shyly, and he always replied. This is me, a bit late, saying thank you.">
   <meta property="og:url" content="https://www.magstags.com/notes/bill-slawski/">
@@ -79,6 +122,7 @@
     }
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <div id="blog-content">

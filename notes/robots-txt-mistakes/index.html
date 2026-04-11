@@ -54,7 +54,7 @@
     /* ── TOC Sidebar ── */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; max-height: calc(100vh - 80px); overflow-y: auto; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
     .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
@@ -80,7 +80,50 @@
     .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
     .post-back:hover{color:var(--teal)}
     @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Robots.txt Mistakes | MagsTags">
   <meta property="og:description" content="Most robots.txt problems aren't caused by bad intentions; they're caused by good intentions applied at the wrong layer. What breaks at scale and why it matters.">
   <meta property="og:url" content="https://www.magstags.com/notes/robots-txt-mistakes/">
@@ -113,6 +156,7 @@
     }
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>

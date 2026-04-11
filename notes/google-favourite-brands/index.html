@@ -58,7 +58,7 @@
     .post-back:hover{color:var(--teal)}
     .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
     .ct-content{min-width:0}
-    .ct-toc{position:sticky;top:80px;padding-top:60px}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
     .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
     .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
     .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
@@ -72,7 +72,50 @@
     .faq-item:last-child{border-bottom:1px solid var(--border)}
     .faq-q{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:var(--text-1);margin-bottom:10px}
     .faq-a{font-size:15px;color:var(--text-2);line-height:1.75}
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Google Favourite Shopping Brand - Personalisation in Search | MagsTags">
   <meta property="og:description" content="Google is testing a Favourite Brands widget in shopping search results. Users pick their preferred brands in Shopping preferences, and results are personalised to match. Here's what it looks like and what brands should do about it.">
   <meta property="og:url" content="https://www.magstags.com/notes/google-favourite-brands/">
@@ -105,6 +148,7 @@
     }
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -189,15 +233,15 @@
 
           <p>Even at the testing stage, the signal here is worth acting on. This is Google building a declared-interest channel between users and brands, and brands that move early on user awareness will have an advantage when (if) it becomes stable.</p>
 
-          <h3>Make your audience aware the feature exists, starting with social</h3>
+          <h3 id="make-your-audience-aware-the-feature-exists-starting-with-social">Make your audience aware the feature exists, starting with social</h3>
 
           <p>Most users will not know they can save favourite brands in Google. The people most likely to add you are the ones already following you. Brand social accounts are the obvious first move: an Instagram story, a TikTok, a pinned post on X. <em>"Did you know you can save us as a favourite brand on Google so our products show up when you search?"</em> is a concrete, zero-friction ask directed at an audience that has already chosen to follow you. Pair it with a newsletter mention and you are covering both the scroll-and-tap crowd and the inbox-loyal customers in one push.</p>
 
-          <h3>Add a CTA where loyalty signals already exist</h3>
+          <h3 id="add-a-cta-where-loyalty-signals-already-exist">Add a CTA where loyalty signals already exist</h3>
 
           <p>Your best candidates for brand-saving are existing customers: loyalty programme members, repeat buyers, email subscribers. These people are already choosing you over alternatives. A prompt at post-purchase, in a loyalty confirmation email, or on your account page asking them to add you in Google Shopping preferences is a natural extension of that relationship. Google has not yet provided a direct link to add a specific brand, so for now you are directing users to Shopping preferences and asking them to search for and save you manually. Worth noting that, given this is still a test, that extra step is the reality brands are working with today.</p>
 
-          <h3>Treat it like a new loyalty channel</h3>
+          <h3 id="treat-it-like-a-new-loyalty-channel">Treat it like a new loyalty channel</h3>
 
           <p>Google Shopping preferences already integrates with loyalty programmes directly. Users can connect their loyalty accounts in the same settings panel where they save brands. If your brand has a loyalty programme, there is a second hook here: getting users to connect their accounts means Google can potentially factor programme membership into shopping recommendations. Both signals point in the same direction. Being present in a user's Shopping preferences is a form of persistent, declared affinity that affects organic visibility.</p>
 

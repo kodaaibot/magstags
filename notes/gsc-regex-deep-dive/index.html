@@ -64,14 +64,57 @@
     .post-back:hover{color:var(--teal)}
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; max-height: calc(100vh - 80px); overflow-y: auto; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
     .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
     .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
     .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
     @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="GSC Regex: Moving Past the Basics | MagsTags">
   <meta property="og:description" content="A practical guide to RE2 regex in Google Search Console — URL filtering, query segmentation, and the patterns that actually save time in day-to-day SEO work.">
   <meta property="og:url" content="https://www.magstags.com/notes/gsc-regex-deep-dive/">
@@ -104,6 +147,7 @@
     }
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -159,7 +203,7 @@
 
       <p>The most useful thing regex gives you in GSC is the ability to define what a query segment actually means, rather than just filtering by keyword string.</p>
 
-      <h3>Informational vs transactional</h3>
+      <h3 id="informational-vs-transactional">Informational vs transactional</h3>
 
       <p>Informational queries typically contain certain trigger words. You can filter for these across the entire query dataset:</p>
 
@@ -167,13 +211,13 @@
 
       <p>This gives you a clean view of your informational traffic. Combine it with the <em>Does not match regex</em> version to isolate your transactional and commercial segments. The split is never perfect, but it's a significant improvement over eyeballing page by page.</p>
 
-      <h3>Question queries</h3>
+      <h3 id="question-queries">Question queries</h3>
 
       <pre>^(how|what|why|when|where|who|is|are|can|does|do|should)\s</pre>
 
       <p>The anchor (<code>^</code>) and trailing space (<code>\s</code>) tighten this considerably, you're catching queries that start with these words rather than just containing them anywhere. Useful for identifying featured snippet and PAA opportunities.</p>
 
-      <h3>Long-tail filtering by word count</h3>
+      <h3 id="long-tail-filtering-by-word-count">Long-tail filtering by word count</h3>
 
       <p>GSC doesn't have a word count field, but regex can approximate it. To find queries with at least four words:</p>
 

@@ -73,7 +73,7 @@
     /* Table of Contents */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; max-height: calc(100vh - 80px); overflow-y: auto; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
     .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
@@ -151,6 +151,7 @@
     ]
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -438,7 +439,50 @@
             .arch-label{font-family:'Space Grotesk',system-ui,sans-serif;font-size:11px;fill:var(--teal,#1ab6db);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
             .arch-arrow{stroke:var(--text-1,#111);stroke-width:1.5;fill:none;marker-end:url(#arrowhead)}
             .arch-heading{font-family:'Space Grotesk',system-ui,sans-serif;font-size:14px;fill:var(--text-1,#111);font-weight:700;text-anchor:middle}
-          </style>
+          
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
           <defs>
             <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
               <polygon points="0 0, 8 3, 0 6" fill="var(--text-1,#111)"/>
@@ -496,7 +540,7 @@
         <p class="post-diagram-caption">Two implementation patterns for variant markup</p>
       </div>
 
-      <h3>Single-page (all variants on one URL)</h3>
+      <h3 id="single-page-all-variants-on-one-url">Single-page (all variants on one URL)</h3>
 
       <p>The most common e-commerce pattern. A product page at <code>/shoes/trail-runner/</code> with a colour dropdown. The URL doesn't change when you select a different colour, or it appends a parameter like <code>?color=blue</code>.</p>
 
@@ -540,7 +584,7 @@
   ]
 }</pre>
 
-      <h3>Multi-page (each variant has its own URL)</h3>
+      <h3 id="multi-page-each-variant-has-its-own-url">Multi-page (each variant has its own URL)</h3>
 
       <p>Less common, but you see it on sites where each colour or configuration has a dedicated page: <code>/shoes/trail-runner-green/</code> and <code>/shoes/trail-runner-blue/</code>.</p>
 
@@ -664,13 +708,13 @@
 
       <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 
-      <h3>Do I need ProductGroup schema for a product with no variants?</h3>
+      <h3 id="do-i-need-productgroup-schema-for-a-product-with-no-variants">Do I need ProductGroup schema for a product with no variants?</h3>
       <p>No. <code>ProductGroup</code> exists to group variations of the same product, different colours, sizes, or materials. If a product has no selectable variants, use <code>Product</code> markup alone. Wrapping a single-SKU product in <code>ProductGroup</code> adds complexity without triggering any additional Google features.</p>
 
-      <h3>Does ProductGroup replace Product schema?</h3>
+      <h3 id="does-productgroup-replace-product-schema">Does ProductGroup replace Product schema?</h3>
       <p>No. <code>ProductGroup</code> wraps <code>Product</code>: it does not replace it. Each variant inside a <code>ProductGroup</code> is still a full <code>Product</code> object with its own SKU, GTIN, price, image, and availability. <code>ProductGroup</code> provides the parent container; <code>Product</code> provides the purchasable items.</p>
 
-      <h3>What is the difference between hasVariant and isVariantOf?</h3>
+      <h3 id="what-is-the-difference-between-hasvariant-and-isvariantof">What is the difference between hasVariant and isVariantOf?</h3>
       <p><code>hasVariant</code> is used in nested structures where the <code>ProductGroup</code> contains variant <code>Product</code> objects directly. <code>isVariantOf</code> is used in flat structures where each variant <code>Product</code> is a separate JSON-LD object that links back to the <code>ProductGroup</code> via a shared <code>@id</code>. Both are valid, <code>hasVariant</code> is more common for single-page implementations, <code>isVariantOf</code> is typical for multi-page setups where each variant has its own URL.</p>
 
       <a href="/notes/" class="post-back">← Back to Notes</a>

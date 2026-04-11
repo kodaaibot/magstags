@@ -67,7 +67,7 @@
     /* Content layout — two-column with sticky TOC */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; max-height: calc(100vh - 80px); overflow-y: auto; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
     .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
@@ -79,7 +79,50 @@
       .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; }
       .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; }
     }
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Crawl Budget Management for Large Websites | MagsTags">
   <meta property="og:description" content="How enterprise SEO teams actually manage crawl budget at scale — log files, faceted navigation, JavaScript rendering gaps, and the crawl vs. indexation distinction most guides miss.">
   <meta property="og:url" content="https://www.magstags.com/notes/crawl-budget-enterprise/">
@@ -112,6 +155,7 @@
     }
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -184,7 +228,7 @@
 
       <p>Server logs are not sampled. Every request Googlebot makes to your server generates a log entry, the URL, the timestamp, the response code, the time to first byte. If you're managing crawl budget seriously on a large site, logs are the primary diagnostic tool, and GSC is a sanity check.</p>
 
-      <h3>What to look for in crawl logs</h3>
+      <h3 id="what-to-look-for-in-crawl-logs">What to look for in crawl logs</h3>
 
       <p>The most valuable analysis you can run on server logs is matching crawl frequency by URL segment against your business priority model. Concretely, this means:</p>
 
@@ -209,7 +253,7 @@
 
       <p>Each of these is a distinct problem with a distinct solution. They're listed here roughly in order of how much crawl capacity they typically consume, based on the patterns that appear most frequently in large-site audits.</p>
 
-      <h3>1. Faceted navigation generating unbounded URL space</h3>
+      <h3 id="1-faceted-navigation-generating-unbounded-url-space">1. Faceted navigation generating unbounded URL space</h3>
 
       <p>This is the most common and most severe crawl waste problem on large e-commerce and marketplace sites. A product category with ten filter dimensions, colour, size, brand, material, price range, availability, rating, shipping, region, condition, can mathematically generate billions of URL permutations. Even with a modest inventory, a faceted nav that appends parameters to URLs creates an indexable URL space that is orders of magnitude larger than your actual product count.</p>
 
@@ -233,7 +277,7 @@
         <strong>Don't use URL Parameters in GSC to "fix" this.</strong> The URL Parameters tool in Google Search Console has been deprecated and no longer affects how Google crawls your site. If you're relying on it, you're not actually managing the problem.
       </div>
 
-      <h3>2. JavaScript rendering queue delay</h3>
+      <h3 id="2-javascript-rendering-queue-delay">2. JavaScript rendering queue delay</h3>
 
       <p>Google's crawling infrastructure operates in two waves. In the first wave, Googlebot fetches the raw HTML of a page. In the second wave, which happens on a separate queue, using a separate pool of resources, it renders the JavaScript and processes the fully-rendered DOM. The gap between these two waves can be hours, days, or in some documented cases, weeks.</p>
 
@@ -245,25 +289,25 @@
 
       <p>For enterprise sites running React, Next.js, Angular, or similar frameworks: the default configuration of most of these frameworks serves a nearly empty HTML shell with JavaScript that populates the page client-side. Unless SSR or prerendering is explicitly implemented, Googlebot's first-wave crawl is capturing very little of your content.</p>
 
-      <h3>3. Session IDs and tracking parameters in URLs</h3>
+      <h3 id="3-session-ids-and-tracking-parameters-in-urls">3. Session IDs and tracking parameters in URLs</h3>
 
       <p>Any mechanism that appends a unique identifier to a URL, session IDs, click tracking parameters, A/B test variants, affiliate codes, UTM parameters when they're accidentally included in internal links, creates duplicate crawlable URL space. Each variant is a distinct URL from Googlebot's perspective, even if the content is identical.</p>
 
       <p>The fix for tracking parameters is to ensure they're stripped or canonicalized consistently. Internal links should never include UTM parameters. Session IDs in URLs should be replaced with cookie-based session management wherever possible. If parameters must exist for technical reasons, they should be handled via canonical tags or robots.txt depending on whether they affect page content.</p>
 
-      <h3>4. Redirect chains consuming crawl capacity</h3>
+      <h3 id="4-redirect-chains-consuming-crawl-capacity">4. Redirect chains consuming crawl capacity</h3>
 
       <p>Every redirect hop in a chain consumes a separate crawl request. A URL that redirects through three intermediate URLs before reaching its destination costs four crawl requests to resolve. At scale, when you have thousands of pages with multi-hop redirect chains, often the result of historical migrations or CMS slug changes, this is significant crawl waste.</p>
 
       <p>The audit is straightforward: crawl your site and filter for redirect chains of depth 2 or more. The fix is equally straightforward in principle: collapse chains to direct 301 redirects from original URL to final destination. The challenge in enterprise environments is that historical redirect chains are often distributed across different systems (application-level redirects, CDN rules, server configuration) and no single team has a complete picture.</p>
 
-      <h3>5. Thin and near-duplicate pagination</h3>
+      <h3 id="5-thin-and-near-duplicate-pagination">5. Thin and near-duplicate pagination</h3>
 
       <p>Paginated content (search results, category listings, blog archives) is a persistent crawl waste problem on large sites. Page 47 of a category listing has minimal unique content and minimal search value. If your pagination generates hundreds of pages per category and you have thousands of categories, you have a significant crawl budget drain from pages that will never rank and rarely get clicked.</p>
 
       <p>The appropriate handling depends on whether your pagination carries unique content or internal linking value. For most e-commerce pagination, <code>rel="next"</code> and <code>rel="prev"</code> (though deprecated by Google in 2019) have been replaced with a pragmatic approach: canonicalize pagination to the root category where the paginated content is truly redundant, and noindex deep pagination pages. The first two pages of a category listing are often worth keeping indexable. Pages beyond that rarely are.</p>
 
-      <h3>6. Orphaned pages with no internal links</h3>
+      <h3 id="6-orphaned-pages-with-no-internal-links">6. Orphaned pages with no internal links</h3>
 
       <p>Pages that exist in your database and are included in your sitemap but have no internal links pointing to them are difficult for Googlebot to find and assign value to. At enterprise scale, particularly on platforms with complex CMS architectures, regional variants, or legacy content, orphaned page populations can be surprisingly large.</p>
 
@@ -271,7 +315,7 @@
 
       <p>The audit requires cross-referencing your sitemap (or a full crawl) against your internal link graph. Pages that appear in one but not the other are your orphan population. The remediation is either to add internal links (if the content is valuable) or to remove the pages and update the sitemap (if it isn't).</p>
 
-      <h3>7. Staging, test, or development environments accessible to Googlebot</h3>
+      <h3 id="7-staging-test-or-development-environments-accessible-to-googlebot">7. Staging, test, or development environments accessible to Googlebot</h3>
 
       <p>This happens more often than most teams admit. A staging environment that isn't properly blocked by robots.txt or authentication, particularly if it's linked from the production site, even accidentally, becomes visible to Googlebot. If staging URLs are indexed, you now have duplicate content at scale and crawl waste on a non-production environment.</p>
 
@@ -302,7 +346,7 @@
         <strong>The hub page principle:</strong> For sites with deep content archives, hub pages, dedicated pages that aggregate and link to content within a topic cluster, serve a dual purpose. They improve user navigation and they concentrate internal link signals on the content you most want crawled and indexed. A well-structured hub page can meaningfully increase crawl frequency for the content it links to.
       </div>
 
-      <h3>The HTML sitemap as crawl infrastructure</h3>
+      <h3 id="the-html-sitemap-as-crawl-infrastructure">The HTML sitemap as crawl infrastructure</h3>
 
       <p>There's a principle that gets overlooked in most internal linking discussions: <strong>your homepage, category pages, and navigation should not function as the sole mechanism for distributing link equity across a million-page site.</strong> No navigation can link to every URL. No homepage can carry crawl signals to the long tail. If your only route to deep pages is through a chain of navigation clicks, your deep pages are structurally deprived of crawl frequency.</p>
 
@@ -368,7 +412,7 @@
 
       <p>Crawl budget management isn't a one-time audit. It requires ongoing monitoring because your site changes, new pages, new templates, new platform features, new marketing campaigns that generate parametric URLs, and because Googlebot's behaviour on your site shifts in response to those changes and to broader algorithm updates.</p>
 
-      <h3>Weekly checks</h3>
+      <h3 id="weekly-checks">Weekly checks</h3>
 
       <ul>
         <li>GSC Crawl Stats: total daily crawl requests, trend over the past 28 days. A sudden increase can indicate a new source of URL bloat. A sudden decrease can indicate a server performance issue suppressing crawl rate.</li>
@@ -376,7 +420,7 @@
         <li>Log file quick check: response code distribution for Googlebot requests. The ratio of 200s to 3xxs, 4xxs, and 5xxs should be stable. Material shifts indicate infrastructure changes affecting crawl efficiency.</li>
       </ul>
 
-      <h3>Monthly checks</h3>
+      <h3 id="monthly-checks">Monthly checks</h3>
 
       <ul>
         <li>Crawl frequency by URL segment: pull 30 days of log data and compare crawl frequency per segment against your priority model. Are your highest-value pages being crawled at the frequency you'd expect?</li>
@@ -385,7 +429,7 @@
         <li>Orphan check: cross-reference sitemap against internal link graph. Flag any URLs present in the sitemap with zero internal links.</li>
       </ul>
 
-      <h3>Triggers for an urgent crawl audit</h3>
+      <h3 id="triggers-for-an-urgent-crawl-audit">Triggers for an urgent crawl audit</h3>
 
       <ul>
         <li>Significant drop in crawl requests without a corresponding robots.txt change</li>

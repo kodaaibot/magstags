@@ -105,14 +105,57 @@
     .post-back:hover{color:var(--teal)}
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; max-height: calc(100vh - 80px); overflow-y: auto; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
     .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
     .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
     .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
     @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Mega Menus &amp; SEO | MagsTags">
   <meta property="og:description" content="A decision framework for when mega menus help and when they hurt. Link equity dilution, the Reasonable Surfer model, anchor text uniformity, and what to do instead.">
   <meta property="og:url" content="https://www.magstags.com/notes/mega-menus-seo/">
@@ -145,6 +188,7 @@
     }
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -264,13 +308,13 @@
 
       <div class="compare-grid">
         <div class="compare-col yes">
-          <h3>✓ Works well when</h3>
+          <h3 id="works-well-when">✓ Works well when</h3>
           <p><strong>Small to medium sites with a manageable taxonomy.</strong> 6 top-level categories, 30 subcategories. Link count is reasonable, equity dilution is minimal, hierarchy is clear.</p>
           <p><strong>Cross-category discovery is the primary journey.</strong> Department stores, marketplaces, travel aggregators where users genuinely move between unrelated sections in a single session, confirmed by analytics.</p>
           <p><strong>The menu is selective, not exhaustive.</strong> Top-level categories and a curated set of high-value subcategories only. Navigation, not promotion.</p>
         </div>
         <div class="compare-col no">
-          <h3>✗ Causes problems when</h3>
+          <h3 id="causes-problems-when">✗ Causes problems when</h3>
           <p><strong>Large e-commerce with deep taxonomies.</strong> Hundreds of subcategories, thousands of product types. Link count becomes unmanageable, anchor text uniform, site structure flattens.</p>
           <p><strong>The menu is identical across every section.</strong> Running shoes and formal wear see the same nav. Noise, not clarity, for users and search engines alike.</p>
           <p><strong>Topical clusters are your SEO strategy.</strong> A mega menu drowns contextual signals in navigational noise at precisely the scale where those signals matter most.</p>
@@ -286,7 +330,7 @@
         <div class="step-item">
           <div class="step-num">1</div>
           <div class="step-body">
-            <h3>How many distinct destinations does the mega menu link to?</h3>
+            <h3 id="how-many-distinct-destinations-does-the-mega-menu-link-to">How many distinct destinations does the mega menu link to?</h3>
             <p><strong>Under 40:</strong> unlikely to cause material issues. Group by topic, use descriptive anchor text.</p>
             <p><strong>40 to 100:</strong> the risk zone. Audit click-through rates on every link. If more than half get negligible clicks, you're paying an equity cost for no user value.</p>
             <p><strong>Over 100:</strong> almost certainly causing dilution. The question becomes whether you can justify the cost, not whether the cost exists.</p>
@@ -295,7 +339,7 @@
         <div class="step-item">
           <div class="step-num">2</div>
           <div class="step-body">
-            <h3>Does the menu content vary by section or page type?</h3>
+            <h3 id="does-the-menu-content-vary-by-section-or-page-type">Does the menu content vary by section or page type?</h3>
             <p><strong>If yes,</strong> the menu on the shoes section shows shoe subcategories, clothing shows clothing subcategories. You're contextualising the navigation, which significantly reduces the anchor text uniformity problem.</p>
             <p><strong>If no,</strong> every page shows the same complete menu regardless of context. Every problem in this post applies at full scale.</p>
           </div>
@@ -303,14 +347,14 @@
         <div class="step-item">
           <div class="step-num">3</div>
           <div class="step-body">
-            <h3>Are your highest-value pages receiving concentrated link equity from contextually relevant pages?</h3>
+            <h3 id="are-your-highest-value-pages-receiving-concentrated-link-equity-from-contextually-relevant-pages">Are your highest-value pages receiving concentrated link equity from contextually relevant pages?</h3>
             <p>Pull your internal link data. For your top 20 revenue-driving pages, what percentage of inbound internal links come from the mega menu versus in-content contextual links? If the mega menu dominates, those pages are receiving high volume but low-quality signals, many links, same generic anchor text, no topical relationship.</p>
           </div>
         </div>
         <div class="step-item">
           <div class="step-num">4</div>
           <div class="step-body">
-            <h3>Does your analytics data support the navigation's breadth?</h3>
+            <h3 id="does-your-analytics-data-support-the-navigations-breadth">Does your analytics data support the navigation's breadth?</h3>
             <p>Check click-through rates on every mega menu link over a 90-day window. If more than half receive fewer than 0.5% of total navigation clicks, those links are serving nobody. Remove them and link contextually from relevant pages instead.</p>
           </div>
         </div>
@@ -321,22 +365,22 @@
       <div class="alt-grid">
         <div class="alt-card">
           <svg class="alt-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          <h3>Lean nav + hub pages</h3>
+          <h3 id="lean-nav-hub-pages">Lean nav + hub pages</h3>
           <p>Global nav links to 5–8 top-level categories. Each has a hub page linking to subcategories, filters, and key content. Same destinations in two clicks, equity flowing through a hierarchy Google can interpret.</p>
         </div>
         <div class="alt-card">
           <svg class="alt-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          <h3>Section-specific subnavigation</h3>
+          <h3 id="section-specific-subnavigation">Section-specific subnavigation</h3>
           <p>Each section has its own contextual subnav instead of a global mega menu. Shoes section shows shoe subcategories. Blog shows topic clusters. Anchor text and targets stay relevant to where the user is.</p>
         </div>
         <div class="alt-card">
           <svg class="alt-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          <h3>Contextual in-content linking</h3>
+          <h3 id="contextual-in-content-linking">Contextual in-content linking</h3>
           <p>Links in body content with varied anchor text carry more topical signal than any navigation link. A link to "Women's Running Shoes" from a marathon training post outperforms the same link in a mega menu on your returns page.</p>
         </div>
         <div class="alt-card">
           <svg class="alt-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
-          <h3>HTML sitemap as crawl infrastructure</h3>
+          <h3 id="html-sitemap-as-crawl-infrastructure">HTML sitemap as crawl infrastructure</h3>
           <p>A well-structured HTML sitemap gives Googlebot a crawl path to every significant URL without distributing those links across every page. Every URL in your XML sitemap should have at least one internal link, this is how you guarantee it.</p>
         </div>
       </div>

@@ -73,7 +73,7 @@
     /* Table of Contents */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-    .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
+    .ct-toc { position: sticky; top: 80px; padding-top: 60px; max-height: calc(100vh - 80px); overflow-y: auto; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
     .ct-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); }
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
@@ -99,7 +99,50 @@
     .compare-col ul{padding-left:18px;margin:0}
     .compare-col li{margin-bottom:6px;font-size:15px}
     @media(max-width:640px){.compare-grid{grid-template-columns:1fr}}
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data | MagsTags">
   <meta property="og:description" content="Agentic commerce optimization starts with your product data. Audit your schema markup, GMC feeds, and PDP content to make products discoverable by AI shopping agents.">
   <meta property="og:url" content="https://www.magstags.com/notes/agentic-commerce-optimization/">
@@ -186,6 +229,7 @@
     ]
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -275,7 +319,7 @@
 
       <p>Here's the audit I'd run. Check each property against your actual markup (not what your CMS documentation says it outputs, but what actually appears in the rendered HTML). Use the Rich Results Test or view source.</p>
 
-      <h3>Product-level properties: the baseline</h3>
+      <h3 id="product-level-properties-the-baseline">Product-level properties: the baseline</h3>
 
       <div class="post-table-wrap">
         <table class="post-table">
@@ -321,7 +365,7 @@
         </table>
       </div>
 
-      <h3>Offer-level properties: where money lives</h3>
+      <h3 id="offer-level-properties-where-money-lives">Offer-level properties: where money lives</h3>
 
       <div class="post-table-wrap">
         <table class="post-table">
@@ -398,7 +442,7 @@
 
       <p>For agents, this is significant because shipping and returns are comparison signals. When a user asks an agent to find a product with free shipping and easy returns, the agent needs structured data to evaluate that. If your competitor's schema includes <code>shippingRate: 0, currency: GBP, transitTime: 1-3 days</code> and yours doesn't mention shipping at all, the agent has no basis to include your product in a "free shipping" filtered result.</p>
 
-      <h3>ShippingService: define once, reference everywhere</h3>
+      <h3 id="shippingservice-define-once-reference-everywhere">ShippingService: define once, reference everywhere</h3>
 
 <pre>{
   "@context": "https://schema.org/",
@@ -443,7 +487,7 @@
   }
 }</pre>
 
-      <h3>MerchantReturnPolicy: same pattern</h3>
+      <h3 id="merchantreturnpolicy-same-pattern">MerchantReturnPolicy: same pattern</h3>
 
 <pre>"hasMerchantReturnPolicy": {
   "@type": "MerchantReturnPolicy",
@@ -526,7 +570,7 @@
 
       <div class="compare-grid">
         <div class="compare-col no">
-          <h4>What agents can't use</h4>
+          <h4 id="what-agents-cant-use">What agents can't use</h4>
           <ul>
             <li>"Premium quality you can feel"</li>
             <li>"Designed for the modern adventurer"</li>
@@ -535,7 +579,7 @@
           </ul>
         </div>
         <div class="compare-col yes">
-          <h4>What agents can parse</h4>
+          <h4 id="what-agents-can-parse">What agents can parse</h4>
           <ul>
             <li>"400 thread count, 100% Egyptian cotton"</li>
             <li>"Waterproof to 10,000mm, seam-sealed"</li>
@@ -579,7 +623,7 @@
 
       <p>60% of matched carousel products came from Google's top 10 organic shopping results. Ranking well in Google Shopping isn't just correlated with ChatGPT visibility; it's the primary pathway to it.</p>
 
-      <h3>The ACP feed: a parallel channel, not a replacement</h3>
+      <h3 id="the-acp-feed-a-parallel-channel-not-a-replacement">The ACP feed: a parallel channel, not a replacement</h3>
 
       <p>That said, OpenAI's Agentic Commerce Protocol (ACP), launched with Stripe in September 2025, does introduce a separate product feed specification. At launch, over one million Shopify merchants were in the onboarding queue. The ACP feed isn't a copy of your GMC feed; it's optimised for LLM-driven product understanding rather than Shopping ad placement.</p>
 
@@ -601,7 +645,7 @@
 
       <p>Here's the sequence I'd follow. Start with your top 20 revenue-driving SKUs. Get them right, then scale the patterns across the catalogue.</p>
 
-      <h3>Schema markup (per product page)</h3>
+      <h3 id="schema-markup-per-product-page">Schema markup (per product page)</h3>
 
       <ol>
         <li>Is the schema dynamically generated from product data, or hardcoded?</li>
@@ -616,7 +660,7 @@
         <li>Does <code>description</code> in schema contain attribute-rich content (not just a marketing tagline)?</li>
       </ol>
 
-      <h3>Organization-level markup</h3>
+      <h3 id="organization-level-markup">Organization-level markup</h3>
 
       <ol>
         <li>Is <code>ShippingService</code> defined at Organization level with a referenceable <code>@id</code>?</li>
@@ -624,7 +668,7 @@
         <li>Do product-level Offers reference these policies via <code>@id</code>?</li>
       </ol>
 
-      <h3>Feed alignment</h3>
+      <h3 id="feed-alignment">Feed alignment</h3>
 
       <ol>
         <li>Do feed <code>id</code> values match schema <code>sku</code> values?</li>
@@ -635,7 +679,7 @@
         <li>If the feed has variant data, does the schema also have variant-level markup?</li>
       </ol>
 
-      <h3>PDP content</h3>
+      <h3 id="pdp-content">PDP content</h3>
 
       <ol>
         <li>Does the product description include explicit material, use case, and specification attributes?</li>
@@ -643,7 +687,7 @@
         <li>Are key attributes (size, material, compatibility) in text, not just in images or PDFs?</li>
       </ol>
 
-      <h3>Governance</h3>
+      <h3 id="governance">Governance</h3>
 
       <ol>
         <li>Do schema and feed pull from the same canonical data source?</li>

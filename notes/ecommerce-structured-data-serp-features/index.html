@@ -87,14 +87,57 @@
     .author-link:hover{border-color:var(--teal);color:var(--teal);}
     .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
     .ct-content{min-width:0}
-    .ct-toc{position:sticky;top:80px;padding-top:60px}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
     .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
     .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
     .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
     .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
     .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
     @media(max-width:960px){.ct-layout{grid-template-columns:1fr;gap:0}.ct-toc{position:static;padding-top:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.ct-toc-list{border-left:none;flex-direction:row;flex-wrap:wrap;gap:4px 16px}.ct-toc-list li a{border-left:none;padding:6px 0;font-size:13px}}
-  </style>
+  
+    /* Nested ToC styling */
+    .ct-toc-list ol {
+      border-left: 1px solid var(--border);
+      margin-left: 14px;
+      padding-left: 0;
+    }
+    .ct-toc-list ol li a {
+      font-size: 12px;
+      padding: 6px 0 6px 16px;
+      color: var(--text-4);
+    }
+    .ct-toc-list ol li a:hover {
+      color: var(--teal);
+      border-left-color: var(--teal);
+    }
+    .ct-toc-list ol li a.active {
+      color: var(--teal);
+      font-weight: 600;
+    }
+    /* Third level (h4) */
+    .ct-toc-list ol ol {
+      margin-left: 12px;
+    }
+    .ct-toc-list ol ol li a {
+      font-size: 11px;
+      padding: 4px 0 4px 16px;
+      color: var(--text-4);
+    }
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
   <meta property="og:title" content="E-commerce Schema Markup: Rich Results, Google Shopping &amp; Scale in 2026 | MagsTags">
   <meta property="og:description" content="Most ecommerce sites implement schema wrong or implement the wrong schema. The practitioner guide to product structured data at scale: what earns rich results, what to prioritise first, and what to deprioritise.">
   <meta property="og:url" content="https://www.magstags.com/notes/ecommerce-structured-data-serp-features/">
@@ -178,6 +221,7 @@
     ]
   }
   </script>
+<script src="/toc-generator.js"></script>
 </head>
 <body>
 <script>
@@ -226,7 +270,7 @@
 
       <p>Four SERP features are available to ecommerce sites through structured data. Each has a specific schema requirement. Miss the schema, miss the feature.</p>
 
-      <h3>Price and availability annotations in organic results</h3>
+      <h3 id="price-and-availability-annotations-in-organic-results">Price and availability annotations in organic results</h3>
       <p> Price, star rating, and review count directly in the search result, before a user clicks anything. That's what Merchant Listing schema does when implemented correctly.</p>
 
       <figure style="margin:24px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden">
@@ -236,7 +280,7 @@
 
       <p>This requires a <code>Product</code> with a valid <code>Offer</code>: <code>price</code>, <code>priceCurrency</code>, <code>availability</code>, and for purchase pages, <code>AggregateRating</code> if you have reviews. Use <a href="/merchant-listing-schema/">Merchant Listing schema</a> on direct purchase pages. <a href="/merchant-listing-schema-generator/">Generate the JSON-LD here</a>.</p>
 
-      <h3>Free product listings in Google Shopping</h3>
+      <h3 id="free-product-listings-in-google-shopping">Free product listings in Google Shopping</h3>
       <p> The unpaid product tiles in the Shopping tab, price, retailer, delivery, and star ratings, all without a paid ad.</p>
 
       <figure style="margin:24px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden">
@@ -246,7 +290,7 @@
 
       <p>Merchant Listing schema is the on-page signal; your Merchant Center feed is the other. Both need to agree on price, availability, and identifiers. Google uses GTIN, MPN, and brand to match your listing to a known product entity, not your internal SKU. For the full breakdown: <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO</a>.</p>
 
-      <h3>Variant-level Shopping features</h3>
+      <h3 id="variant-level-shopping-features">Variant-level Shopping features</h3>
       <p> Colour swatches, size selectors, and variant-specific pricing directly in Shopping results, before a user lands on your site.</p>
 
       <figure style="margin:24px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden">
@@ -256,7 +300,7 @@
 
       <p>If all variants are on a single URL: <a href="/product-variants-schema/">ProductGroup with hasVariant</a>, each variant as a nested <code>Product</code> with its own <code>Offer</code>, image, and identifier. If each variant has its own URL: <code>isVariantOf</code> on each variant page linking back to the <code>ProductGroup</code> via a shared <code>@id</code>. Most enterprise sites haven't implemented either correctly and are leaving visible CTR gains in Shopping on the table.</p>
 
-      <h3>Shipping and returns annotations</h3>
+      <h3 id="shipping-and-returns-annotations">Shipping and returns annotations</h3>
 
       <figure style="margin:0 0 24px;border:1px solid var(--border);border-radius:10px;overflow:hidden">
         <img src="/notes/ecommerce-structured-data-serp-features/google-organic-search-shipping-returns-annotation-schema-example.webp" alt="Google organic search result for Macy's Women's Wide-Leg Jeans showing shipping and returns annotation: Free delivery over $49 and 30-day returns displayed in the search snippet" style="width:100%;display:block">
@@ -272,27 +316,27 @@
       <div class="priority-grid">
         <div class="priority-card">
           <p class="priority-card-num">Priority 1</p>
-          <h3>Product + Offer with required properties</h3>
+          <h3 id="product-offer-with-required-properties">Product + Offer with required properties</h3>
           <p>No price, no rich results. Get this right across 100% of PDPs before doing anything else. Required: <code>name</code>, <code>image</code>, <code>offers</code> with <code>price</code>, <code>priceCurrency</code>, <code>availability</code>.</p>
           <p>If your template is missing any of these on any page type (bundle pages, gift cards, pre-order items) fix that first.</p>
           <p>On editorial or review pages rather than direct purchase pages, use <a href="/product-snippet-schema/">Product Snippet schema</a> instead. <a href="/product-snippet-schema-generator/">Generate it here</a>.</p>
         </div>
         <div class="priority-card">
           <p class="priority-card-num">Priority 2</p>
-          <h3>ShippingDetails + ReturnPolicy</h3>
+          <h3 id="shippingdetails-returnpolicy">ShippingDetails + ReturnPolicy</h3>
           <p>Low implementation cost, direct SERP feature. Most competitors don't have it.</p>
           <p>Two properties trigger delivery date annotations: <code>shippingRate</code> and <code>deliveryTime</code>. The return policy annotation requires <code>returnPolicyCategory</code> and <code>merchantReturnDays</code>. Neither requires a dev sprint if your shipping and returns policy is consistent.</p>
         </div>
         <div class="priority-card">
           <p class="priority-card-num">Priority 3</p>
-          <h3>ProductGroup + hasVariant</h3>
+          <h3 id="productgroup-hasvariant">ProductGroup + hasVariant</h3>
           <p>High value for variant-heavy catalogues. The payoff is colour swatches, size-specific pricing in Shopping, and correct variant-to-query matching. The implementation depends on your URL structure: if all variants live on one URL, use <code>ProductGroup</code> with nested <code>hasVariant</code> Product entities. If each variant has its own URL, use <code>isVariantOf</code> on each variant page linking back to the <code>ProductGroup</code> via a shared <code>@id</code>. Not both, one or the other, depending on your architecture.</p>
           <p>Start with your highest-traffic categories before rolling out site-wide.</p>
           <p>Full implementation guide: <a href="/product-variants-schema/">Product Variants Schema Markup</a>.</p>
         </div>
         <div class="priority-card">
           <p class="priority-card-num">Priority 4</p>
-          <h3>BreadcrumbList + AggregateRating</h3>
+          <h3 id="breadcrumblist-aggregaterating">BreadcrumbList + AggregateRating</h3>
           <p><strong>BreadcrumbList:</strong> Low effort, improves SERP display, helps Google understand site hierarchy. Every page template should have this.</p>
           <p><strong>AggregateRating:</strong> Only implement if you have genuine first-party reviews. Google has penalised sites for manipulative use. If you're importing third-party scores and displaying them as your own, don't. Note that <code>AggregateRating</code> schema is separate from the Merchant Center Product Ratings programme — they draw from different data and appear in different placements. See <a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings</a> for the full distinction.</p>
         </div>
@@ -322,13 +366,13 @@
 
       <p>Sale pricing is where the freshness problem gets acute and the consequences get serious. A price mismatch between your schema or feed and what's on the page isn't just a rich result suppression, it can lead to product disapprovals and, in persistent cases, account suspension.</p>
 
-      <h3>How schema.org handles sale prices</h3>
+      <h3 id="how-schemaorg-handles-sale-prices">How schema.org handles sale prices</h3>
       <p> There's no <code>salePrice</code> property in schema.org. When a product is on sale, you update <code>price</code> to the sale price and add <code>priceValidUntil</code> with the sale end date. Google uses <code>priceValidUntil</code> to determine eligibility for <a href="/notes/google-ecommerce-rich-results/#price-drop">price drop annotations</a> in Shopping. Without it, the reduced price is treated as the new regular price rather than a temporary promotion.</p>
 
-      <h3>Strikethrough pricing</h3>
+      <h3 id="strikethrough-pricing">Strikethrough pricing</h3>
       <p> The original price shown crossed out next to the sale price in Shopping results is driven by Google's price tracking — Google records historical prices and displays the drop when the current price is lower. You can signal the original price using <code>PriceSpecification</code> with a <code>priceType</code> of <code>https://schema.org/ListPrice</code> alongside the current <code>Offer</code> price, which is the standard implementation for "was/now" pricing. Many platforms set the current sale price correctly but omit the original price markup entirely.</p>
 
-      <h3>The mismatch that causes disapprovals</h3>
+      <h3 id="the-mismatch-that-causes-disapprovals">The mismatch that causes disapprovals</h3>
 
       <figure style="margin:0 0 24px;border:1px solid var(--border);border-radius:10px;overflow:hidden">
         <img src="/notes/ecommerce-structured-data-serp-features/google-merchant-center-price-mismatch-feed-vs-landing-page.webp" alt="Google animation showing price mismatch between Merchant Center product data feed and product landing page for the same shoe, feed shows one price, landing page shows a different price" style="width:100%;display:block">
@@ -343,13 +387,13 @@
 
       <p>The most common sale price failure pattern at enterprise scale: the sale is live on the page, the schema is updated, but the Merchant Center feed is on a daily upload cycle and still shows the pre-sale price. Or the reverse: the feed is updated but the page is serving cached HTML with the old price. Either way, Google sees a mismatch and acts on it.</p>
 
-      <h3>The <code>sale_price_effective_date</code> timezone trap</h3>
+      <h3 id="the-codesale_price_effective_datecode-timezone-trap">The <code>sale_price_effective_date</code> timezone trap</h3>
       <p> If you're using the <code>sale_price [sale_price]</code> attribute in your Merchant Center feed, the active period must be specified with <code>sale_price_effective_date [sale_price_effective_date]</code>, and the timezone must be correct. A wrong start date or timezone offset means the wrong price is shown in Shopping ads and listings during the sale window. This is a silent error: the feed uploads without error, the product doesn't disapprove, but the displayed price is wrong.</p>
 
-      <h3>Bulk quantities and minimum order requirements</h3>
+      <h3 id="bulk-quantities-and-minimum-order-requirements">Bulk quantities and minimum order requirements</h3>
       <p> If your products are sold in bulk or have a minimum order quantity, the price submitted must reflect the total for the minimum number of items. A product listed at £2 per unit with a minimum order of 10 should be submitted as £20. Submitting the unit price when the page shows the minimum order price is a mismatch by definition.</p>
 
-      <h3>If you spot a price mismatch in Merchant Center diagnostics</h3>
+      <h3 id="if-you-spot-a-price-mismatch-in-merchant-center-diagnostics">If you spot a price mismatch in Merchant Center diagnostics</h3>
       <p> check the notification timestamp first. Merchant Center reports mismatches at a specific point in time, the product may have been corrected and reapproved since the report was generated. Check the current approval status in the "All products" page before spending time investigating a resolved issue.</p>
 
       <h2 id="product-vs-productgroup">Product vs ProductGroup: the decision at scale</h2>
@@ -446,7 +490,7 @@
       <p>Ten questions. Most enterprise teams can't answer all of them. The ones they can't answer are the implementation priorities.</p>
 
       <div class="faq-block">
-        <h2>Frequently asked questions</h2>
+        <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 
         <div class="faq-item">
           <div class="faq-q">Does Google guarantee rich results if my schema is valid?</div>
@@ -485,7 +529,7 @@
       </div>
 
       <div class="sources">
-        <h2>Sources and further reading</h2>
+        <h2 id="sources-and-further-reading">Sources and further reading</h2>
         <ul>
           <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/specialty/ecommerce/include-structured-data-relevant-to-ecommerce" target="_blank" rel="noopener">Structured Data for Ecommerce Sites</a> — official documentation on supported schema types</li>
           <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/product-variants" target="_blank" rel="noopener">Product Variant Structured Data</a> — ProductGroup and hasVariant implementation guide</li>
