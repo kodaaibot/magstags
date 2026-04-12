@@ -468,17 +468,338 @@
       padding: 4px 0 4px 16px;
       color: var(--text-4);
     }
-        @media(max-width:960px) {
-      .ct-layout { grid-template-columns: 1fr; gap: 0; }
-      .ct-toc { position: static; padding: 0; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 32px; order: -1; max-height: none; overflow-y: visible; overflow: hidden; }
-      .ct-toc-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--surface); border: none; padding: 14px 16px; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-1); cursor: pointer; text-align: left; }
-      .ct-toc-toggle .ct-toc-arrow { font-size: 11px; color: var(--text-4); transition: transform .2s; }
-      .ct-toc-toggle.open .ct-toc-arrow { transform: rotate(180deg); }
-      .ct-toc-label { display: none; }
-      .ct-toc-list { border-left: none; flex-direction: column; flex-wrap: nowrap; gap: 0; border-top: 1px solid var(--border); display: none; padding: 8px 0; }
-      .ct-toc-list.open { display: flex; }
-      .ct-toc-list li a { border-left: none; padding: 8px 16px; font-size: 13px; }
-    })();
+    @media(max-width:960px){
+      .ct-toc-list ol {
+        border-left: none;
+        margin-left: 0;
+      }
+      .ct-toc-list ol li a {
+        border-left: none;
+        padding: 4px 0;
+      }
+      .ct-toc-list ol ol {
+        margin-left: 0;
+      }
+    }
+
+</style>
+          <defs>
+            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="var(--text-1,#111)"/>
+            </marker>
+          </defs>
+
+          <!-- LEFT: Single-page -->
+          <text x="170" y="20" class="arch-heading">Single-page (hasVariant)</text>
+          <rect x="30" y="35" width="280" height="250" class="arch-group"/>
+          <text x="60" y="52" class="arch-label">ProductGroup</text>
+          <text x="170" y="70" class="arch-text-sm">/shoes/trail-runner/</text>
+          <rect x="55" y="84" width="100" height="60" class="arch-box"/>
+          <text x="105" y="108" class="arch-text">Product</text>
+          <text x="105" y="122" class="arch-text-sm">Green</text>
+          <rect x="185" y="84" width="100" height="60" class="arch-box"/>
+          <text x="235" y="108" class="arch-text">Product</text>
+          <text x="235" y="122" class="arch-text-sm">Blue</text>
+          <text x="170" y="172" class="arch-text-sm">hasVariant ↑</text>
+          <!-- Offer boxes -->
+          <rect x="55" y="190" width="100" height="36" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="105" y="212" class="arch-text-sm">Offer £129</text>
+          <rect x="185" y="190" width="100" height="36" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="235" y="212" class="arch-text-sm">Offer £129</text>
+          <line x1="105" y1="144" x2="105" y2="190" class="arch-arrow"/>
+          <line x1="235" y1="144" x2="235" y2="190" class="arch-arrow"/>
+          <text x="170" y="260" class="arch-text-sm">One JSON-LD block, one page</text>
+
+          <!-- RIGHT: Multi-page -->
+          <text x="510" y="20" class="arch-heading">Multi-page (isVariantOf)</text>
+          <!-- Page 1 -->
+          <rect x="390" y="35" width="110" height="120" class="arch-box"/>
+          <text x="445" y="55" class="arch-text">Product</text>
+          <text x="445" y="69" class="arch-text-sm">Green</text>
+          <text x="445" y="90" class="arch-text-sm" style="font-size:9px">/trail-runner-green/</text>
+          <rect x="405" y="100" width="80" height="28" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="445" y="119" class="arch-text-sm">Offer £129</text>
+          <!-- Page 2 -->
+          <rect x="530" y="35" width="110" height="120" class="arch-box"/>
+          <text x="585" y="55" class="arch-text">Product</text>
+          <text x="585" y="69" class="arch-text-sm">Blue</text>
+          <text x="585" y="90" class="arch-text-sm" style="font-size:9px">/trail-runner-blue/</text>
+          <rect x="545" y="100" width="80" height="28" class="arch-box" style="stroke-dasharray:4 2"/>
+          <text x="585" y="119" class="arch-text-sm">Offer £129</text>
+          <!-- Shared ProductGroup reference -->
+          <rect x="420" y="210" width="200" height="50" class="arch-group"/>
+          <text x="440" y="228" class="arch-label">ProductGroup</text>
+          <text x="520" y="246" class="arch-text-sm">@id: …/trail-runner/#group</text>
+          <!-- isVariantOf arrows -->
+          <line x1="445" y1="155" x2="480" y2="210" class="arch-arrow"/>
+          <line x1="585" y1="155" x2="560" y2="210" class="arch-arrow"/>
+          <text x="440" y="185" class="arch-text-sm">isVariantOf</text>
+          <text x="590" y="185" class="arch-text-sm">isVariantOf</text>
+          <text x="520" y="285" class="arch-text-sm">Separate JSON-LD per page, linked by @id</text>
+        </svg>
+        <p class="post-diagram-caption">Two implementation patterns for variant markup</p>
+      </div>
+
+      <h3 id="single-page-all-variants-on-one-url">Single-page (all variants on one URL)</h3>
+
+      <p>The most common e-commerce pattern. A product page at <code>/shoes/trail-runner/</code> with a colour dropdown. The URL doesn't change when you select a different colour, or it appends a parameter like <code>?color=blue</code>.</p>
+
+      <p>For this setup, the <code>ProductGroup</code> and all its variant <code>Product</code> objects live in the same JSON-LD block on the same page. The canonical URL should be the base URL without variant parameters, that's the URL that represents the ProductGroup as a whole.</p>
+
+      <pre>{
+  "@context": "https://schema.org/",
+  "@type": "ProductGroup",
+  "name": "Trail Runner Pro",
+  "productGroupID": "TR-PRO-2026",
+  "variesBy": ["https://schema.org/color"],
+  "hasVariant": [
+    {
+      "@type": "Product",
+      "name": "Trail Runner Pro, Forest Green",
+      "color": "Forest Green",
+      "sku": "TR-PRO-GRN",
+      "gtin13": "5901234123457",
+      "image": "https://example.com/img/tr-pro-green.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": 129.00,
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Trail Runner Pro, Slate Blue",
+      "color": "Slate Blue",
+      "sku": "TR-PRO-BLU",
+      "gtin13": "5901234123464",
+      "image": "https://example.com/img/tr-pro-blue.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": 129.00,
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  ]
+}</pre>
+
+      <h3 id="multi-page-each-variant-has-its-own-url">Multi-page (each variant has its own URL)</h3>
+
+      <p>Less common, but you see it on sites where each colour or configuration has a dedicated page: <code>/shoes/trail-runner-green/</code> and <code>/shoes/trail-runner-blue/</code>.</p>
+
+      <p>Here each page carries its own <code>Product</code> markup and links back to the group using <code>isVariantOf</code>. There's no single page that holds the <code>ProductGroup</code>: each variant page references the group ID so Google can assemble the cluster from individual pages.</p>
+
+      <p>This is harder to get right. Every page needs to reference the same <code>productGroupID</code>. Every page needs valid <code>isVariantOf</code> pointing at a consistent <code>ProductGroup</code> entity. And canonicals matter here: each variant page must be self-canonical. If you canonical the blue page to the green page, you've collapsed the variant back into a single product and the group breaks.</p>
+
+      <p>Here's what the JSON-LD looks like on each variant page, note <code>isVariantOf</code> linking back to the group via a shared <code>@id</code>:</p>
+
+      <pre>{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Trail Runner Pro, Forest Green",
+  "color": "Forest Green",
+  "sku": "TR-PRO-GRN",
+  "gtin13": "5901234123457",
+  "image": "https://example.com/img/tr-pro-green.jpg",
+  "isVariantOf": {
+    "@type": "ProductGroup",
+    "@id": "https://example.com/shoes/trail-runner/#group",
+    "name": "Trail Runner Pro",
+    "productGroupID": "TR-PRO-2026",
+    "variesBy": ["https://schema.org/color"]
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": 129.00,
+    "priceCurrency": "GBP",
+    "availability": "https://schema.org/InStock",
+    "url": "https://example.com/shoes/trail-runner-green/"
+  }
+}</pre>
+
+      <div class="post-callout-warn">
+        <strong>Sound familiar?</strong> This is the same canonical conflict pattern from the <a href="/notes/hreflang-canonical-conflict/">hreflang post</a>. Canonical pointing elsewhere kills the signal. For variants, it kills the group membership.
+      </div>
+
+      <h2 id="what-actually-breaks">What actually breaks when you get this wrong</h2>
+
+      <p>The frustrating thing about structured data errors in this area is that they're mostly silent. The markup validates. The Rich Results Test shows a green tick. But the features you expected don't appear.</p>
+
+      <p><strong>Using Product alone when you should use ProductGroup:</strong> Google treats each variant as a separate, unrelated product. No colour swatches. No variant grouping in Shopping. If a user searches for "trail runner blue," Google might surface the green variant because it doesn't know the blue one exists as a related option.</p>
+
+      <p><strong>Using ProductGroup for a product with no variants:</strong> Google may ignore the wrapper entirely and just read the single <code>Product</code> inside it. No harm, but also no benefit. It's unnecessary complexity in your templates that makes debugging harder when something actually breaks.</p>
+
+      <p><strong>Using plain text values in variesBy instead of schema.org URIs:</strong> This is the most common implementation error I see. Writing <code>"variesBy": "Color"</code> instead of <code>"variesBy": "https://schema.org/color"</code>. Valid JSON-LD. Passes syntax checks. But Google doesn't trigger Shopping swatches from plain text values. It needs the full URI to map the variation dimension to its internal product graph.</p>
+
+      <p><strong>Missing offers on individual variants:</strong> The <code>ProductGroup</code> itself doesn't carry an <code>Offer</code>. Each variant <code>Product</code> needs its own. If you put the price on the group and omit it from the variants, Google has a group with no buyable items inside it.</p>
+
+      <p><strong>Inconsistent productGroupID across pages:</strong> On multi-page implementations, if even one variant page references a different <code>productGroupID</code>: a typo, a template variable that resolves differently, a staging value that leaked to production, that variant falls out of the group. Google can't match it to the others.</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Mistake</th>
+              <th>What happens</th>
+              <th>Validates?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Product alone for variants</td>
+              <td>No colour swatches, no variant grouping in Shopping</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">ProductGroup with no variants</td>
+              <td>Google ignores the wrapper, no benefit, added complexity</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Plain text in variesBy</td>
+              <td>No Shopping swatches, Google needs full URIs</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Offer on group, not variants</td>
+              <td>Group has no buyable items, no Shopping features</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td class="col-label">Mismatched productGroupID</td>
+              <td>Variant falls out of the group silently</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="post-diagram-caption" style="text-align:left;margin-top:-16px;margin-bottom:28px">Every mistake above passes validation. That's the problem.</p>
+
+      <h2 id="gmc-feed-relationship">The relationship to your GMC feed</h2>
+
+      <p>This is worth mentioning because it comes up in every e-commerce audit. Your Google Merchant Center product feed also has a concept of "item group ID" that groups variants together. Google cross-references feed data with on-page structured data.</p>
+
+      <p>When your structured data's <code>productGroupID</code> matches your feed's <code>item_group_id</code>, Google has a consistent signal from two sources. When they don't match (or when one exists and the other doesn't) you're relying on Google to figure out the relationship on its own. It sometimes will. It sometimes won't.</p>
+
+      <p>The strongest implementations align both: the <code>productGroupID</code> in your schema matches the <code>item_group_id</code> in your feed, and the <code>sku</code> on each variant <code>Product</code> matches the <code>id</code> of the corresponding feed item. If you're already maintaining a GMC feed, you can audit this alignment with the <a href="/gmc-feed-analyzer/">feed analyzer</a>.</p>
+
+      <h2 id="practical-checklist">A practical checklist</h2>
+
+      <p>Before shipping product structured data on an e-commerce site, run through these:</p>
+
+      <ol>
+        <li>Every product page has <code>Product</code> markup with a valid <code>Offer</code> including price, currency, and availability.</li>
+        <li>Products with selectable variants (colour, size, material) use <code>ProductGroup</code> as a wrapper.</li>
+        <li><code>variesBy</code> uses full schema.org URIs, not plain text strings.</li>
+        <li>Each variant inside the group has its own SKU, GTIN, image, and offer, not inherited from the parent.</li>
+        <li><code>productGroupID</code> is consistent across all pages and matches your GMC feed's <code>item_group_id</code>.</li>
+        <li>Products without variants use <code>Product</code> alone. No empty <code>ProductGroup</code> wrapper.</li>
+        <li>Every page with structured data has a self-referential canonical.</li>
+        <li>Schema prices match the visible page price and the checkout price.</li>
+        <li>Run the output through the <a href="https://search.google.com/test/rich-results" rel="noopener">Rich Results Test</a> and the <a href="https://validator.schema.org/" rel="noopener">schema.org validator</a>, green ticks don't guarantee Shopping features, but errors guarantee you won't get them.</li>
+      </ol>
+
+      <h2 id="note-on-platforms">A note on platforms</h2>
+
+      <p>Shopify handles single-page variants natively, toggle a colour, the URL stays the same. Apps like JSON-LD for SEO map this to <code>ProductGroup</code> using <code>inProductGroupWithID</code> to link variants to the parent product ID. On WooCommerce, variable products map naturally to <code>ProductGroup</code>, but the option slugs need a mapping layer to translate them into schema.org URIs (e.g. mapping the <code>pa_color</code> attribute to <code>https://schema.org/color</code>). Most headless setups using separate variant URLs will need the flat <code>isVariantOf</code> structure shown above.</p>
+
+      <p>If those nine things on the checklist are true, you're ahead of most e-commerce sites I audit. The generators for <a href="/ecommerce-schema-generator/">Product Snippet, Merchant Listing, and Product Variants</a> will produce valid output for all three patterns; the hard part isn't generating the markup, it's making sure your templates produce the right pattern for the right product type at scale.</p>
+
+      <h2 id="frequently-asked-questions">Frequently asked questions</h2>
+
+      <h3 id="do-i-need-productgroup-schema-for-a-product-with-no-variants">Do I need ProductGroup schema for a product with no variants?</h3>
+      <p>No. <code>ProductGroup</code> exists to group variations of the same product, different colours, sizes, or materials. If a product has no selectable variants, use <code>Product</code> markup alone. Wrapping a single-SKU product in <code>ProductGroup</code> adds complexity without triggering any additional Google features.</p>
+
+      <h3 id="does-productgroup-replace-product-schema">Does ProductGroup replace Product schema?</h3>
+      <p>No. <code>ProductGroup</code> wraps <code>Product</code>: it does not replace it. Each variant inside a <code>ProductGroup</code> is still a full <code>Product</code> object with its own SKU, GTIN, price, image, and availability. <code>ProductGroup</code> provides the parent container; <code>Product</code> provides the purchasable items.</p>
+
+      <h3 id="what-is-the-difference-between-hasvariant-and-isvariantof">What is the difference between hasVariant and isVariantOf?</h3>
+      <p><code>hasVariant</code> is used in nested structures where the <code>ProductGroup</code> contains variant <code>Product</code> objects directly. <code>isVariantOf</code> is used in flat structures where each variant <code>Product</code> is a separate JSON-LD object that links back to the <code>ProductGroup</code> via a shared <code>@id</code>. Both are valid, <code>hasVariant</code> is more common for single-page implementations, <code>isVariantOf</code> is typical for multi-page setups where each variant has its own URL.</p>
+
+      <a href="/notes/" class="post-back">← Back to Notes</a>
+        </div>
+      </div>
+      <aside class="ct-toc">
+        <div class="ct-toc-label">On this page</div>
+        <ul class="ct-toc-list">
+          <li><a href="#product-the-thing-itself">Product</a></li>
+          <li><a href="#productgroup-the-parent-of-variants">ProductGroup</a></li>
+          <li><a href="#the-decision-tree">Decision tree</a></li>
+          <li><a href="#single-page-vs-multi-page-variants">Single vs multi-page</a></li>
+          <li><a href="#what-actually-breaks">What breaks</a></li>
+          <li><a href="#gmc-feed-relationship">GMC feed</a></li>
+          <li><a href="#practical-checklist">Checklist</a></li>
+          <li><a href="#note-on-platforms">Platforms</a></li>
+          <li><a href="#frequently-asked-questions">FAQs</a></li>
+        </ul>
+      </aside>
+    </div>
+
+      <div class="author-card">
+            <div class="author-label">This article was written by</div>
+            <div class="author-inner">
+            <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="80" height="80">
+            <div class="author-details">
+              <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+              <div class="author-role">Freelance SEO Consultant · SEO Director at Intrepid Digital</div>
+              <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+              <div class="author-links">
+                <a href="/mags-sikora/" class="author-link">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  About me
+                </a>
+                <a href="https://www.linkedin.com/in/magdalenasikora/" class="author-link" target="_blank" rel="noopener nofollow">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                  LinkedIn
+                </a>
+                <a href="https://x.com/magssikora" class="author-link" target="_blank" rel="noopener nofollow">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  X
+                </a>
+              </div>
+            </div>
+            </div>
+          </div>
+
+    </div>
+  </div>
+
+</div>
+<script src="/header.js"></script>
+<footer>
+    <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
+    <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+  </footer>
+<script src="/cookie-consent.js"></script><script>document.addEventListener('DOMContentLoaded', function () { BlogAuth.run(); });</script>
+<script>
+(function() {
+  const headings = document.querySelectorAll('.post-body h2[id]');
+  const tocLinks = document.querySelectorAll('.ct-toc-list a');
+
+  function updateActiveLink() {
+    let activeHeading = null;
+    for (const heading of headings) {
+      const rect = heading.getBoundingClientRect();
+      if (rect.top <= 150) {
+        activeHeading = heading;
+      } else {
+        break;
+      }
+    }
+
+    tocLinks.forEach(link => link.classList.remove('active'));
+    if (activeHeading) {
+      const activeLink = document.querySelector(`.ct-toc-list a[href="#${activeHeading.id}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', updateActiveLink);
+  updateActiveLink();
+})();
 </script>
 </body>
 </html>
