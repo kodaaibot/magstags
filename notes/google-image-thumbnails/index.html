@@ -76,7 +76,7 @@
     .ct-toc-list li.toc-sub a { padding-left: 28px; font-size: 12px; opacity: .8; }
     .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
     .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
-    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } }
+    @media(max-width:960px) { .ct-layout { grid-template-columns: 1fr; gap: 0; } .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); order: -1; max-height: none; overflow-y: visible; } .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; } .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; } .ct-toc-list li.toc-sub a { padding-left: 0; } }
 
     .faq-block{margin-top:52px}
     .faq-item{padding:20px 0;border-bottom:1px solid var(--border)}
