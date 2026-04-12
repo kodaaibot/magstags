@@ -41,11 +41,10 @@
     .profile-cta-btn.secondary:hover{border-color:var(--teal);color:var(--teal)}
 
     /* Social links */
-    .social-links{display:flex;flex-direction:column;gap:8px}
-    .social-link{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:13px;font-weight:500;color:var(--text-2);padding:8px 12px;border-radius:9px;border:1px solid var(--border);background:var(--surface);transition:border-color .15s,color .15s}
+    .social-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px}
+    .social-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;text-decoration:none;color:var(--text-3);border-radius:8px;border:1px solid var(--border);background:var(--surface);transition:border-color .15s,color .15s}
     .social-link:hover{border-color:var(--teal);color:var(--teal)}
-    .social-link svg{flex-shrink:0;opacity:.7}
-    .social-link:hover svg{opacity:1}
+    .social-link svg{flex-shrink:0}
 
     /* ── Bio content ── */
     .profile-bio{padding-top:4px}
@@ -105,25 +104,17 @@
       </a>
 
       <nav class="social-links" aria-label="Social links">
-        <a href="https://www.linkedin.com/in/magdalenasikora/" class="social-link" target="_blank" rel="noopener">
-          <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/magdalenasikora/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.44c.98 0 1.79-.77 1.79-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-          LinkedIn
         </a>
-        <a href="https://x.com/magssikora" class="social-link" target="_blank" rel="noopener">
-          <!-- X / Twitter -->
+        <a href="https://x.com/magssikora" class="social-link" target="_blank" rel="noopener" aria-label="X (Twitter)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          X (Twitter)
         </a>
-        <a href="https://www.youtube.com/c/Sheknowsdigital" class="social-link" target="_blank" rel="noopener">
-          <!-- YouTube -->
+        <a href="https://www.youtube.com/c/Sheknowsdigital" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.84 12l-6.09 3.52z"/></svg>
-          YouTube
         </a>
-        <a href="https://www.sheknowsdigital.com/" class="social-link" target="_blank" rel="noopener">
-          <!-- Globe -->
+        <a href="https://www.sheknowsdigital.com/" class="social-link" target="_blank" rel="noopener" aria-label="She Knows Digital">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          She Knows Digital
         </a>
       </nav>
 
