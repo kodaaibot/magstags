@@ -624,7 +624,7 @@
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
   ids.forEach(function(id) { var el = document.getElementById(id); if (el) observer.observe(el); });
-})();
+
   // Mobile accordion
   var toggle = document.getElementById("ct-toc-toggle");
   var list = document.querySelector(".ct-toc-list");
@@ -642,6 +642,7 @@
       });
     });
   }
+})();
 
 </script>
 </body>
