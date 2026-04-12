@@ -327,6 +327,7 @@
       </div>
 
       <nav class="ct-toc">
+        <button class="ct-toc-toggle" id="ct-toc-toggle" aria-expanded="false" aria-controls="ct-toc-list">Contents <span class="ct-toc-arrow">&#9660;</span></button>
         <div class="ct-toc-label">On this page</div>
         <ul class="ct-toc-list">
           <li><a href="#what-i-saw">What I saw</a></li>
@@ -373,6 +374,24 @@
   window.addEventListener('scroll', updateActiveLink);
   updateActiveLink();
 })();
+  // Mobile accordion
+  var toggle = document.getElementById('ct-toc-toggle');
+  var list = document.querySelector('.ct-toc-list');
+  if(toggle && list){
+    toggle.addEventListener('click', function(){
+      var open = list.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
+    });
+    list.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        list.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
 </script>
 </body>
 </html>
