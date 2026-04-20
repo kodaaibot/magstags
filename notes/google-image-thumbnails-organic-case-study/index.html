@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.magstags.com/notes/google-image-thumbnails-organic-case-study/">
+<meta name="description" content="Case study: I analyzed 9,718 organic results across 293 fashion keywords to understand thumbnail presence. Mobile serves 92% more image thumbnails than desktop. Here's what Google actually shows.">
+<meta property="og:title" content="Google Image Thumbnails Organic Results Case Study | MagsTags">
+<meta property="og:description" content="293 fashion keywords, two devices, two US locations, 9,718 organic results. Mobile serves 92% more images than desktop. Here's what Google actually shows.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.magstags.com/notes/google-image-thumbnails-organic-case-study/">
+<meta property="og:image" content="https://www.magstags.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+<link rel="apple-touch-icon" href="/favicon-apple.png">
+<script src="/theme-init.js"></script>
+<link rel="stylesheet" href="/base.css">
+<title>Google Image Thumbnails Organic Results Case Study | MagsTags</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Menlo&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Google Image Thumbnails for Organic Results: Case Study",
+  "description": "293 fashion keywords, two devices, two US locations, 9,718 organic results scanned via API. Mobile serves 92% more images than desktop.",
+  "author": {
+    "@type": "Person",
+    "name": "Mags Sikora",
+    "url": "https://www.magstags.com/mags-sikora/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MagsTags",
+    "url": "https://www.magstags.com"
+  },
+  "datePublished": "2026-04-15",
+  "url": "https://www.magstags.com/notes/google-image-thumbnails-organic-case-study/"
+}
+</script>
+
+<style>
+/* ── Page-level colour overrides ── */
+:root {
+  --teal: #0E7490;
+  --mint: #0891B2;
+  --orange: #D97706;
+  --orange-light: #FEF3C7;
+  --green-light: #dcfce7;
+}
+html.dark {
+  --teal: #38bdf8;
+  --mint: #67E8F9;
+  --orange: #fbbf24;
+  --orange-light: #451a03;
+  --green-light: #14532d;
+}
+
+/* ── Two-column layout ── */
+.study-outer { max-width: 1040px; margin: 0 auto; padding: 40px 24px 0; display: flex; gap: 48px; align-items: flex-start; }
+.study-sidebar { width: 196px; flex-shrink: 0; position: sticky; top: 72px; }
+.study-sidebar .series-nav { background: none; border: none; border-radius: 0; padding: 0; margin: 0; }
+@media (max-width: 900px) { .study-sidebar { display: none; } }
+
+/* ── Breadcrumb ── */
+.breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.breadcrumb a{color:var(--text-4);text-decoration:none}
+.breadcrumb a:hover{color:var(--teal)}
+.breadcrumb span{opacity:.5}
+
+/* ── Research badge ── */
+.research-badge{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--orange-light);color:var(--orange);margin-bottom:6px}
+
+/* ── Study layout ── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text-2); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; }
+
+main { padding: 48px 36px 80px; }
+
+.article-meta { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-4); margin-bottom: 16px; }
+.article-meta span { color: var(--teal); }
+
+h1 { font-family: 'DM Serif Display', serif; font-size: clamp(30px, 4.5vw, 42px); font-weight: 400; color: var(--text-1); line-height: 1.2; margin-bottom: 18px; }
+
+.article-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; margin-bottom: 14px; max-width: 680px; }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(22px, 3vw, 30px); font-weight: 400; letter-spacing: -.02em; color: var(--text-1); margin: 48px 0 16px; }
+
+h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; color: var(--text-1); margin: 36px 0 12px; }
+
+p { font-size: 15px; color: var(--text-3); line-height: 1.7; margin-bottom: 18px; max-width: 680px; }
+
+a { color: var(--teal); }
+a:hover { color: var(--text-1); }
+
+/* Quotable blocks */
+.quotable { background: var(--surface); border-left: 3px solid var(--teal); padding: 20px 24px; border-radius: 0 12px 12px 0; margin: 28px 0; }
+.quotable p { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 500; color: var(--text-1); line-height: 1.5; margin: 0; max-width: 100%; }
+.quotable .source { font-size: 12px; color: var(--text-4); margin-top: 8px; font-family: 'Inter', sans-serif; font-weight: 400; }
+
+/* Stat cards */
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0 32px; }
+@media (max-width: 600px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; text-align: center; }
+.stat-card .stat-number { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 600; color: var(--teal); display: block; margin-bottom: 4px; }
+.stat-card .stat-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-4); }
+.stat-card--mobile { border-top: 3px solid var(--teal); }
+.stat-card--mobile .stat-number { color: var(--teal); }
+.stat-card--desktop { border-top: 3px solid var(--border); }
+.stat-card--desktop .stat-number { color: var(--text-3); }
+.stat-card .device-badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 3px 10px; border-radius: 99px; margin-bottom: 10px; }
+.stat-card--mobile .device-badge { background: var(--mint-light); color: var(--teal); }
+.stat-card--desktop .device-badge { background: var(--bg2); color: var(--text-4); }
+
+/* Data tables */
+.ct-table-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; overflow-x: auto; margin: 24px 0 32px; }
+.ct-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ct-table thead th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-4); background: var(--surface); border-bottom: 1px solid var(--border); }
+.ct-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--text-3); vertical-align: top; }
+.ct-table tr:last-child td { border-bottom: none; }
+.ct-table .num { text-align: right; font-family: 'Menlo', monospace; font-size: 12px; }
+.ct-table .highlight { color: var(--teal); font-weight: 600; }
+.ct-table .dim { color: var(--text-4); }
+.ct-table .warn { color: var(--orange); font-weight: 600; }
+.ct-table .good { color: var(--green); font-weight: 600; }
+
+/* Callout */
+.ct-callout { display: flex; gap: 14px; padding: 18px 20px; border-radius: 12px; margin: 28px 0; }
+.ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
+.ct-callout--orange { background: var(--orange-light); border: 1px solid rgba(217,119,6,.2); }
+.ct-callout-icon { font-size: 16px; flex-shrink: 0; }
+.ct-callout-body { flex: 1; }
+.ct-callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 4px; }
+.ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0 0 10px; line-height: 1.6; max-width: 100%; }
+.ct-callout-body p:last-child { margin-bottom: 0; }
+.ct-callout-body code { font-family: 'Menlo', monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+
+/* Intent position tabs */
+.pos-tabs { margin: 28px 0 8px; }
+.pos-tab-bar { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 0; }
+.pos-tab-btn { padding: 9px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-4); background: transparent; border: 1px solid var(--border); border-bottom: none; border-radius: 10px 10px 0 0; cursor: pointer; transition: all .15s; white-space: nowrap; }
+.pos-tab-btn:hover { color: var(--text-2); background: var(--bg2); }
+.pos-tab-btn.active { color: var(--teal); background: var(--surface); border-color: var(--border); position: relative; z-index: 1; }
+.pos-tab-panel { display: none; }
+.pos-tab-panel.active { display: block; }
+.pos-tab-panel .ct-table-wrap { margin-top: 0; border-top-left-radius: 0; }
+.pos-tab-note { font-size: 12px; color: var(--text-4); margin: 6px 0 18px; font-style: italic; }
+.ct-table .small-sample { font-size: 10px; color: var(--text-4); font-weight: 400; margin-left: 4px; }
+
+/* CTA */
+.ct-cta { text-align: center; padding: 48px 24px; max-width: 600px; margin: 0 auto; }
+.ct-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; color: var(--text-1); }
+.ct-cta p { font-size: 14px; color: var(--text-3); margin: 8px auto 24px; text-align: center; }
+
+/* Author card */
+.study-author { margin-top: 0; padding: 40px 0 0; border-top: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start; }
+.study-author-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); flex-shrink: 0; }
+.study-author-name { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; }
+.study-author-name a { color: inherit; text-decoration: none; }
+.study-author-name a:hover { color: var(--teal); }
+.study-author-role { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px; }
+.study-author-bio { font-size: 14px; color: var(--text-3); line-height: 1.65; margin-bottom: 0; max-width: 100%; }
+
+/* Series nav */
+.page-layout { display: flex; gap: 48px; align-items: flex-start; }
+.series-sidebar { width: 200px; flex-shrink: 0; position: sticky; top: 88px; }
+.series-sidebar-inner { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; }
+.series-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 12px; }
+.series-item { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border-radius: 8px; margin-bottom: 2px; text-decoration: none; transition: background .12s; }
+.series-item:hover { background: var(--bg); }
+.series-item.active { background: rgba(14,116,144,.07); pointer-events: none; }
+.series-item.dim { opacity: .5; pointer-events: none; }
+.series-item-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); }
+.series-item.active .series-item-type { color: var(--teal); }
+.series-item-name { font-size: 12px; font-weight: 600; color: var(--text-2); line-height: 1.3; }
+.series-item.active .series-item-name { color: var(--teal); }
+.container { max-width: 860px; padding: 0 24px; }
+.page-content { flex: 1; min-width: 0; }
+@media (max-width: 860px) { .series-sidebar { display: none; } }
+
+/* Footer */
+footer { border-top: 1px solid var(--border); margin-top: 64px; padding: 32px 24px; text-align: center; font-size: 13px; color: var(--text-4); }
+footer a { color: inherit; text-decoration: none; opacity: .8; }
+footer a:hover { color: var(--teal); opacity: 1; }
+</style>
+</head>
+<body>
+<script src="/header.js"></script>
+
+<main>
+<div class="page-layout">
+
+<aside class="series-sidebar">
+  <div class="series-sidebar-inner">
+    <div class="series-label">In this series</div>
+    <a href="/notes/google-image-thumbnails/" class="series-item">
+      <span class="series-item-type">Part 1</span>
+      <span class="series-item-name">Google Image Thumbnails - The Technical Reference</span>
+    </a>
+    <div class="series-item active">
+      <span class="series-item-type">Part 2</span>
+      <span class="series-item-name">Organic Thumbnail Case Study: 9,718 Listings</span>
+    </div>
+    <div class="series-item dim">
+      <span class="series-item-type">Part 3</span>
+      <span class="series-item-name">Qualitative thumbnail research - coming soon</span>
+    </div>
+  </div>
+</aside>
+
+<div class="page-content">
+<div class="container">
+
+<nav class="breadcrumb">
+  <a href="/">Home</a>
+  <span>›</span>
+  <a href="/notes/">Notes</a>
+  <span>›</span>
+  <span style="color:var(--text-3)">Google Image Thumbnail Case Study</span>
+</nav>
+
+<span class="research-badge">Original Research</span>
+<span class="article-meta" style="display:block;margin-top:8px">By <a href="/mags-sikora/" style="color:var(--teal);font-weight:700;text-decoration:none">Mags Sikora</a> · <span>April 2026</span></span>
+
+<h1>Google Image Thumbnails for Organic Results: Case Study</h1>
+<p style="font-size:22px;font-weight:400;color:var(--text-3);line-height:1.4;margin-top:8px;margin-bottom:0;">I Checked 9,718 Listings. Here’s What Google Actually Shows.</p>
+
+<p class="article-lead">Thumbnail presence in organic results is hard to measure at scale - so I ran my own test to understand it better: 293 non-branded women's fashion keywords, both devices, two US locations, 9,718 organic listings scanned via API. The short version: mobile gets nearly twice the visual real estate. The longer version is more interesting.</p>
+
+<p style="font-size: 14px; color: var(--text-4);">Companion piece: <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">Google Image Thumbnails in Organic - The Technical Reference</a> covers the how - what to implement so Google can actually pull your images. This article covers the what - which keywords, intents, and positions get thumbnails. Part 2 will crawl these domains and analyse what Google is actually pulling.</p>
+
+<hr>
+
+<div class="ct-callout ct-callout--teal">
+  <div class="ct-callout-icon">📌</div>
+  <div class="ct-callout-body">
+    <div class="ct-callout-title">A note on scope</div>
+    <p>The numbers below are shaped by the keywords I chose. Different seeds, different patterns, different categories would produce different rates. This is a structured sample of one vertical, not a universal benchmark. Treat it as a directional snapshot - useful for spotting patterns and relative differences, not as ground truth for "what percentage of all Google results have thumbnails."</p>
+  </div>
+</div>
+
+<h2>How I tested this</h2>
+
+<p>I built a keyword set using a seed × pattern system: 39 product seeds (leggings, midi dress, blazer, ankle boots - across 9 fashion categories) crossed with 8 search modifier patterns that people type. That's 312 possible combinations, but 19 were dropped - all from the "fit + seed" pattern (e.g. "high waisted blazer", "high waisted ankle boots") where the modifier produces a query nobody actually searches. The remaining 293 keywords all reflect real search behaviour.</p>
+
+<p>The patterns ranged from bare product terms ("leggings") through colour modifiers ("black leggings"), "best" queries ("best leggings"), year-qualified reviews ("best leggings 2026"), outfit styling ("leggings outfit ideas"), and how-to queries ("how to style leggings"). This gave me systematic coverage across four intent groups: product + modifier, product, comparison, and informational.</p>
+
+<p>I hit each keyword against Google's live organic results via the DataForSEO API, running separate mobile and desktop crawls. I ran the full set twice: once geo-locked to the US nationally, then again locked to Los Angeles to check for geo variation.</p>
+
+<p>Combined dataset: 9,718 organic results and 19,968 images catalogued across both locations. The US national numbers (4,823 results, 9,741 images) form the primary analysis. LA data (4,895 results, 10,227 images) is used for the geo comparison section.</p>
+
+<div class="stat-row">
+  <div class="stat-card">
+    <span class="stat-number">293</span>
+    <span class="stat-label">Keywords tested</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">4</span>
+    <span class="stat-label">Intent types</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">8</span>
+    <span class="stat-label">Search patterns</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">9</span>
+    <span class="stat-label">Fashion categories</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">9,718</span>
+    <span class="stat-label">Organic listings checked</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">19,968</span>
+    <span class="stat-label">Images catalogued</span>
+  </div>
+</div>
+
+<h2>Mobile leads</h2>
+
+<p><a href="https://www.semrush.com/sensor/" style="color: var(--teal); font-weight: 600;">Semrush Sensor</a> data (April 2026) puts image thumbnails at 49% of US desktop SERPs and 71% of mobile across all categories. Shopping is higher: 77% desktop, 88% mobile. So thumbnails aren't rare. But "thumbnails appear a lot" doesn't tell you which keywords get them, which intents trigger them, or how many images Google attaches per listing. That's where it gets more granular.</p>
+
+<p>Across all nine categories and all four intent types in this dataset, mobile serves more thumbnails on average. At the individual pattern level there's one exception - "fit + seed" queries where desktop edges ahead - but the overall direction is consistent.</p>
+
+<div class="stat-row">
+  <div class="stat-card stat-card--mobile">
+    <span class="device-badge">Mobile</span>
+    <span class="stat-number">79%</span>
+    <span class="stat-label">Thumbnail rate</span>
+  </div>
+  <div class="stat-card stat-card--desktop">
+    <span class="device-badge">Desktop</span>
+    <span class="stat-number">72%</span>
+    <span class="stat-label">Thumbnail rate</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">+7pt</span>
+    <span class="stat-label">Mobile advantage</span>
+  </div>
+</div>
+
+<h3>Mobile gets almost twice the visual real estate</h3>
+
+<p>But the thumbnail rate only tells half the story. Among organic results that have thumbnails, count the total images. Across the same 293 keywords, mobile served 6,409 total images where desktop served 3,332. That's 92% more images on mobile than desktop.</p>
+
+<p>What this means visually: mobile displays image strips - multiple product photos in a horizontal scroll - for each listing. Desktop shows fewer images per listing, or a single image. Here's what that looks like in practice:</p>
+
+<img src="/notes/google-image-thumbnails-organic-case-study/serp-mobile-vs-desktop.png" alt="Mobile SERP shows 2-6 images per listing, desktop shows fewer images per listing" style="max-width: 100%; border: 1px solid var(--border); border-radius: 14px; margin: 32px 0;">
+
+<p style="font-size: 13px; color: var(--text-4); margin-bottom: 32px;">Mobile shows different thumbnail layout options - image strips, individual images, and product variations. Desktop uses a more compact display.</p>
+
+<p>When a mobile listing gets a thumbnail, it gets more images. Desktop shows fewer.</p>
+
+<div class="stat-row">
+  <div class="stat-card stat-card--mobile">
+    <span class="device-badge">Mobile</span>
+    <span class="stat-number">3.45</span>
+    <span class="stat-label">Avg images per thumbnail listing</span>
+  </div>
+  <div class="stat-card stat-card--desktop">
+    <span class="device-badge">Desktop</span>
+    <span class="stat-number">1.88</span>
+    <span class="stat-label">Avg images per thumbnail listing</span>
+  </div>
+</div>
+
+<p>If you're only optimising your product images for desktop, you're missing where most of your visual real estate actually lives.</p>
+
+<h2>Search intent changes everything</h2>
+
+<p>This is where the pattern-based keyword approach pays off. Because I ran identical product terms through different search modifiers, I can isolate how intent affects thumbnail treatment. I grouped the 8 patterns into four categories based on search behaviour: product + modifier (colour, fit, gender prefix), product (bare seed), comparison ("best" queries), and informational (how-to, outfit ideas).</p>
+
+<div class="ct-table-wrap">
+  <table class="ct-table">
+    <thead>
+      <tr><th>Intent Type</th><th>Mobile Thumb %</th><th>M: Avg Imgs</th><th>Desktop Thumb %</th><th>D: Avg Imgs</th><th>M-D Gap</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Product + Modifier</td><td class="num good">83%</td><td class="num">2.93</td><td class="num good">81%</td><td class="num">1.63</td><td class="num">+2pt</td></tr>
+      <tr><td>Product</td><td class="num good">81%</td><td class="num">2.80</td><td class="num">77%</td><td class="num">1.47</td><td class="num">+4pt</td></tr>
+      <tr><td>Comparison</td><td class="num">80%</td><td class="num">2.68</td><td class="num warn">60%</td><td class="num">1.10</td><td class="num highlight">+20pt</td></tr>
+      <tr><td>Informational</td><td class="num warn">70%</td><td class="num">2.39</td><td class="num warn">67%</td><td class="num">1.12</td><td class="num">+3pt</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Product + modifier queries - where the search already specifies colour, fit, or gender - lead on both devices. The group averages 83% mobile and 81% desktop across 98 keywords, with the tightest gap of any intent type at just +2pt. When the query is that specific, Google serves a visual SERP on both devices with minimal difference between them.</p>
+
+<p>Comparison queries are where things get interesting. Mobile serves thumbnails at 80% - close to the product groups. But desktop drops to 60%. A 20-point gap from the same keywords.</p>
+
+<p>Informational queries ("how to style leggings", "leggings outfit ideas") sit at 70% mobile - the lowest of any group. These SERPs pull in Pinterest, editorial sites, and social content where thumbnails are shown less often.</p>
+
+<h2>Which modifiers move the needle?</h2>
+
+<p>The four intent groups tell you what type of query wins. The eight search patterns tell you which specific modifiers make the difference.</p>
+
+<div class="ct-table-wrap">
+  <table class="ct-table">
+    <thead>
+      <tr><th>Search Pattern</th><th>Example</th><th>Mobile %</th><th>Desktop %</th><th>Gap</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Colour + seed</td><td class="dim">black leggings</td><td class="num good">86%</td><td class="num good">85%</td><td class="num">+1pt</td></tr>
+      <tr><td>Gender prefix</td><td class="dim">women's leggings</td><td class="num">82%</td><td class="num">78%</td><td class="num">+4pt</td></tr>
+      <tr><td>Bare seed</td><td class="dim">leggings</td><td class="num">81%</td><td class="num">77%</td><td class="num">+4pt</td></tr>
+      <tr><td>"Best" + seed</td><td class="dim">best leggings</td><td class="num">80%</td><td class="num">74%</td><td class="num">+6pt</td></tr>
+      <tr><td>"Best" + year</td><td class="dim">best leggings 2026</td><td class="num">80%</td><td class="num warn">46%</td><td class="num highlight">+34pt</td></tr>
+      <tr><td>Fit + seed</td><td class="dim">high waisted leggings</td><td class="num">79%</td><td class="num">80%</td><td class="num">-1pt</td></tr>
+      <tr><td>How to style</td><td class="dim">how to style leggings</td><td class="num">73%</td><td class="num">72%</td><td class="num">+1pt</td></tr>
+      <tr><td>Outfit ideas</td><td class="dim">leggings outfit ideas</td><td class="num warn">67%</td><td class="num warn">63%</td><td class="num">+4pt</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="quotable">
+  <p>"Best + year" queries drop from 80% on mobile to 46% on desktop. The same keyword, same product - Google just decides desktop users searching "best leggings 2026" want text, not images.</p>
+  <div class="source">34 percentage point gap - largest of any pattern tested</div>
+</div>
+
+<p>Colour-qualified queries ("black leggings", "black blazer") are the thumbnail champions: 86% mobile, 85% desktop, and the tightest mobile-desktop gap of just 1 point.</p>
+
+<p>The "fit + seed" pattern is the only one where desktop actually beats mobile (80% vs 79%). Queries like "high waisted jeans" signal a specific product attribute that may map well to structured data on desktop product pages.</p>
+
+<p>"Outfit ideas" sits at the bottom with 67% mobile - consistent with the informational intent group trailing across the board.</p>
+
+<p>The pattern across both the intent and modifier tables: the closer a query is to the bottom of the funnel, the more thumbnail listings Google shows - on both devices. Specific product queries lead. Informational queries trail. If your pages target purchase-ready keywords, thumbnails are almost a given. If you're targeting top-of-funnel styling content, expect less visual treatment.</p>
+
+<h2>Which categories get the most visual treatment?</h2>
+
+<p>Intent and modifier tell you how the query is phrased. Category tells you what the product actually is - and that matters too.</p>
+
+<div class="ct-table-wrap">
+  <table class="ct-table">
+    <thead>
+      <tr><th>Category</th><th>Mobile %</th><th>Desktop %</th><th>Gap</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Bottoms</td><td class="num good">83%</td><td class="num good">78%</td><td class="num">+5pt</td></tr>
+      <tr><td>Swimwear</td><td class="num good">82%</td><td class="num">77%</td><td class="num">+5pt</td></tr>
+      <tr><td>Knitwear & Loungewear</td><td class="num">81%</td><td class="num">71%</td><td class="num">+10pt</td></tr>
+      <tr><td>Footwear</td><td class="num">80%</td><td class="num">69%</td><td class="num highlight">+11pt</td></tr>
+      <tr><td>Outerwear</td><td class="num">79%</td><td class="num">74%</td><td class="num">+5pt</td></tr>
+      <tr><td>Activewear</td><td class="num">78%</td><td class="num">67%</td><td class="num highlight">+11pt</td></tr>
+      <tr><td>Tops</td><td class="num">76%</td><td class="num">65%</td><td class="num highlight">+11pt</td></tr>
+      <tr><td>Dresses</td><td class="num">76%</td><td class="num">74%</td><td class="num">+2pt</td></tr>
+      <tr><td>Denim</td><td class="num">73%</td><td class="num dim">68%</td><td class="num">+5pt</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Bottoms and swimwear lead mobile. But the interesting column is the gap. Tops and activewear have the widest mobile-desktop difference at +11 points each. Dresses have the narrowest at just 2 points - apparently Google treats dress queries as equally visual on both devices.</p>
+
+<h2>Position matters - but not how you'd expect</h2>
+
+<div class="quotable">
+  <p>Positions 1 and 2 get the highest thumbnail rates on mobile: 86% and 85% respectively. After that, it drops to a fairly consistent 76-79% for positions 3 through 9.</p>
+</div>
+
+<div class="ct-table-wrap">
+  <table class="ct-table">
+    <thead>
+      <tr><th>Position</th><th>Mobile Thumb %</th><th>Mobile Avg Imgs</th><th>Desktop Thumb %</th><th>Desktop Avg Imgs</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>#1</td><td class="num highlight">86%</td><td class="num">3.02</td><td class="num">77%</td><td class="num">1.13</td></tr>
+      <tr><td>#2</td><td class="num highlight">85%</td><td class="num">2.81</td><td class="num highlight">80%</td><td class="num">1.40</td></tr>
+      <tr><td>#3</td><td class="num">77%</td><td class="num">2.78</td><td class="num">71%</td><td class="num">1.23</td></tr>
+      <tr><td>#4</td><td class="num">76%</td><td class="num">2.48</td><td class="num">70%</td><td class="num">1.34</td></tr>
+      <tr><td>#5</td><td class="num">76%</td><td class="num">2.43</td><td class="num">68%</td><td class="num">1.37</td></tr>
+      <tr><td>#6</td><td class="num">78%</td><td class="num">2.89</td><td class="num">70%</td><td class="num">1.39</td></tr>
+      <tr><td>#7</td><td class="num">77%</td><td class="num">2.66</td><td class="num">67%</td><td class="num">1.42</td></tr>
+      <tr><td>#8</td><td class="num">79%</td><td class="num">2.74</td><td class="num dim">68%</td><td class="num">1.37</td></tr>
+      <tr><td>#9</td><td class="num">77%</td><td class="num">2.86</td><td class="num dim">70%</td><td class="num">1.36</td></tr>
+      <tr><td>#10</td><td class="num">78%</td><td class="num">2.31</td><td class="num highlight">90%</td><td class="num">2.20</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>The interesting finding: the number of images per result doesn't decay with position on mobile. Positions 3 through 9 range from 2.43 to 2.89 images per listing - that's a 0.46 spread across seven positions. Position #5 (2.43) gets fewer images than position #9 (2.86). There's no consistent drop-off.</p>
+
+<p>On mobile, the thumbnail advantage isn't about ranking higher - it's about having images at all. Positions 3-9 all get similar visual treatment.</p>
+
+<p>Desktop tells a different story. Positions 3-9 hover around 67-71% thumbnail rates, meaningfully lower than positions 1-2. Position #10 spikes to 90% on desktop, but that's based on just 40 results - too small to read into. If you're ranking mid-page on desktop without thumbnails, you're a text listing surrounded by visual ones.</p>
+
+<h3>Position by intent type</h3>
+
+<p>The overall position table mixes all search intents together. Here's what happens when you split it by intent - the patterns are strikingly different.</p>
+
+<div class="pos-tabs">
+  <div class="pos-tab-bar">
+    <button class="pos-tab-btn active" data-tab="pos-all">All intents</button>
+    <button class="pos-tab-btn" data-tab="pos-prodmod">Product + Modifier</button>
+    <button class="pos-tab-btn" data-tab="pos-prod">Product</button>
+    <button class="pos-tab-btn" data-tab="pos-comp">Comparison</button>
+    <button class="pos-tab-btn" data-tab="pos-info">Informational</button>
+  </div>
+
+  <div id="pos-all" class="pos-tab-panel active">
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead>
+          <tr><th>Position</th><th>Mobile Thumb %</th><th>Desktop Thumb %</th><th>M-D Gap</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#1</td><td class="num highlight">86%</td><td class="num">77%</td><td class="num">+9pt</td></tr>
+          <tr><td>#2</td><td class="num highlight">85%</td><td class="num highlight">80%</td><td class="num">+5pt</td></tr>
+          <tr><td>#3</td><td class="num">77%</td><td class="num">71%</td><td class="num">+6pt</td></tr>
+          <tr><td>#4</td><td class="num">76%</td><td class="num">70%</td><td class="num">+6pt</td></tr>
+          <tr><td>#5</td><td class="num">76%</td><td class="num">68%</td><td class="num">+8pt</td></tr>
+          <tr><td>#6</td><td class="num">78%</td><td class="num">70%</td><td class="num">+8pt</td></tr>
+          <tr><td>#7</td><td class="num">77%</td><td class="num">67%</td><td class="num">+10pt</td></tr>
+          <tr><td>#8</td><td class="num">79%</td><td class="num dim">68%</td><td class="num">+11pt</td></tr>
+          <tr><td>#9</td><td class="num">77%</td><td class="num dim">70%</td><td class="num">+7pt</td></tr>
+          <tr><td>#10</td><td class="num">78%</td><td class="num highlight">90%<span class="small-sample">*</span></td><td class="num">-12pt</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pos-tab-note">* Position #10 desktop based on 40 results - small sample.</p>
+  </div>
+
+  <div id="pos-prodmod" class="pos-tab-panel">
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead>
+          <tr><th>Position</th><th>Mobile %</th><th>Desktop %</th><th>M-D Gap</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#1</td><td class="num">81%</td><td class="num">78%</td><td class="num">+3pt</td></tr>
+          <tr><td>#2</td><td class="num highlight">91%</td><td class="num highlight">90%</td><td class="num">+1pt</td></tr>
+          <tr><td>#3</td><td class="num">83%</td><td class="num">84%</td><td class="num">-1pt</td></tr>
+          <tr><td>#4</td><td class="num">82%</td><td class="num">83%</td><td class="num">-1pt</td></tr>
+          <tr><td>#5</td><td class="num">84%</td><td class="num">81%</td><td class="num">+3pt</td></tr>
+          <tr><td>#6</td><td class="num">82%</td><td class="num">81%</td><td class="num">+1pt</td></tr>
+          <tr><td>#7</td><td class="num">84%</td><td class="num">76%</td><td class="num">+8pt</td></tr>
+          <tr><td>#8</td><td class="num">82%</td><td class="num">75%</td><td class="num">+7pt</td></tr>
+          <tr><td>#9</td><td class="num">74%<span class="small-sample">(62)</span></td><td class="num">81%<span class="small-sample">(79)</span></td><td class="num">-7pt</td></tr>
+          <tr><td>#10</td><td class="num dim">75%<span class="small-sample">(16)</span></td><td class="num dim">91%<span class="small-sample">(23)</span></td><td class="num">-16pt</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pos-tab-note">98 keywords. Numbers in parentheses = keyword count where fewer than 98 returned results at that position.</p>
+  </div>
+
+  <div id="pos-prod" class="pos-tab-panel">
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead>
+          <tr><th>Position</th><th>Mobile %</th><th>Desktop %</th><th>M-D Gap</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#1</td><td class="num good">87%</td><td class="num">79%</td><td class="num">+8pt</td></tr>
+          <tr><td>#2</td><td class="num">85%</td><td class="num good">87%</td><td class="num">-2pt</td></tr>
+          <tr><td>#3</td><td class="num good">87%</td><td class="num">85%</td><td class="num">+2pt</td></tr>
+          <tr><td>#4</td><td class="num good">87%</td><td class="num">72%</td><td class="num">+15pt</td></tr>
+          <tr><td>#5</td><td class="num">77%</td><td class="num">79%</td><td class="num">-2pt</td></tr>
+          <tr><td>#6</td><td class="num">79%</td><td class="num">72%</td><td class="num">+7pt</td></tr>
+          <tr><td>#7</td><td class="num">72%</td><td class="num">79%</td><td class="num">-7pt</td></tr>
+          <tr><td>#8</td><td class="num">73%<span class="small-sample">(37)</span></td><td class="num">68%<span class="small-sample">(38)</span></td><td class="num">+5pt</td></tr>
+          <tr><td>#9</td><td class="num">82%<span class="small-sample">(28)</span></td><td class="num warn">59%<span class="small-sample">(29)</span></td><td class="num highlight">+23pt</td></tr>
+          <tr><td>#10</td><td class="num dim">75%<span class="small-sample">(4)</span></td><td class="num dim">100%<span class="small-sample">(6)</span></td><td class="num dim">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pos-tab-note">39 keywords. Positions 8-10 have reduced samples. Position #10 too small to interpret reliably.</p>
+  </div>
+
+  <div id="pos-comp" class="pos-tab-panel">
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead>
+          <tr><th>Position</th><th>Mobile %</th><th>Desktop %</th><th>M-D Gap</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#1</td><td class="num highlight">87%</td><td class="num warn">64%</td><td class="num highlight">+23pt</td></tr>
+          <tr><td>#2</td><td class="num highlight">87%</td><td class="num warn">67%</td><td class="num highlight">+20pt</td></tr>
+          <tr><td>#3</td><td class="num">82%</td><td class="num warn">55%</td><td class="num highlight">+27pt</td></tr>
+          <tr><td>#4</td><td class="num">72%</td><td class="num warn">59%</td><td class="num">+13pt</td></tr>
+          <tr><td>#5</td><td class="num">81%</td><td class="num warn">55%</td><td class="num highlight">+26pt</td></tr>
+          <tr><td>#6</td><td class="num">78%</td><td class="num warn">60%</td><td class="num">+18pt</td></tr>
+          <tr><td>#7</td><td class="num">76%</td><td class="num">62%</td><td class="num">+14pt</td></tr>
+          <tr><td>#8</td><td class="num">81%<span class="small-sample">(64)</span></td><td class="num">62%<span class="small-sample">(73)</span></td><td class="num">+19pt</td></tr>
+          <tr><td>#9</td><td class="num">79%<span class="small-sample">(29)</span></td><td class="num warn">57%<span class="small-sample">(51)</span></td><td class="num highlight">+22pt</td></tr>
+          <tr><td>#10</td><td class="num dim">100%<span class="small-sample">(8)</span></td><td class="num dim">82%<span class="small-sample">(11)</span></td><td class="num dim">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pos-tab-note">78 keywords. Desktop consistently 13-27 points below mobile at every position. Position #10 too small to interpret.</p>
+  </div>
+
+  <div id="pos-info" class="pos-tab-panel">
+    <div class="ct-table-wrap">
+      <table class="ct-table">
+        <thead>
+          <tr><th>Position</th><th>Mobile %</th><th>Desktop %</th><th>M-D Gap</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#1</td><td class="num highlight">90%</td><td class="num highlight">88%</td><td class="num">+2pt</td></tr>
+          <tr><td>#2</td><td class="num">74%</td><td class="num">76%</td><td class="num">-2pt</td></tr>
+          <tr><td>#3</td><td class="num warn">62%</td><td class="num warn">63%</td><td class="num">-1pt</td></tr>
+          <tr><td>#4</td><td class="num warn">67%</td><td class="num warn">64%</td><td class="num">+3pt</td></tr>
+          <tr><td>#5</td><td class="num warn">62%<span class="small-sample">(76)</span></td><td class="num warn">60%</td><td class="num">+2pt</td></tr>
+          <tr><td>#6</td><td class="num">69%<span class="small-sample">(59)</span></td><td class="num">64%<span class="small-sample">(77)</span></td><td class="num">+5pt</td></tr>
+          <tr><td>#7</td><td class="num warn">62%<span class="small-sample">(32)</span></td><td class="num warn">52%<span class="small-sample">(61)</span></td><td class="num">+10pt</td></tr>
+          <tr><td>#8</td><td class="num dim">69%<span class="small-sample">(13)</span></td><td class="num warn">60%<span class="small-sample">(30)</span></td><td class="num">+9pt</td></tr>
+          <tr><td>#9</td><td class="num dim">78%<span class="small-sample">(9)</span></td><td class="num dim">83%<span class="small-sample">(6)</span></td><td class="num dim">-</td></tr>
+          <tr><td>#10</td><td class="num dim">50%<span class="small-sample">(4)</span></td><td class="num dim">-</td><td class="num dim">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pos-tab-note">78 keywords. Informational SERPs are shorter - many keywords return fewer than 10 organic results. Positions 7+ have very small samples.</p>
+  </div>
+</div>
+
+<p>The comparison tab is the standout. Mobile thumbnail rates stay above 70% at every position, while desktop hovers around 55-65%. That 20-point intent gap from the summary table isn't a quirk of averaging - it's consistent across every SERP position.</p>
+
+<p>Informational queries tell a different story: position #1 dominates at ~90% on both devices, then drops steeply. By position #3, you're already below 63%. If you're ranking third for "how to style leggings," the thumbnail odds are basically a coin flip.</p>
+
+<p>Product + modifier queries are the most stable - 75-91% across all positions on both devices, with barely any mobile-desktop gap until position #7.</p>
+
+<h2>What the data is actually telling you</h2>
+
+<p>Thumbnails aren't a bonus feature. At 80-85% of organic listings for product queries, they're the baseline. Your page isn't competing to earn a thumbnail - it's failing to keep one.</p>
+
+<p>The position data makes this concrete. Positions 3-9 on mobile get roughly the same image treatment - a 0.45-image spread across seven positions. A competitor at #7 with a thumbnail looks visually equivalent to you at #3 without one. Google isn't amplifying your ranking advantage. It's flattening it.</p>
+
+<p>The cost is highest where it matters most. Colour + product queries hit 86% mobile thumbnail rate. These are purchase-intent searches - people comparing products before they click. Being a text result next to an image grid at a lower position is a bad trade at exactly the wrong moment.</p>
+
+<p>One place where this flips: comparison queries on desktop drop to 60%. Less than two-thirds of listings have images. "Best [product] 2026" on desktop is one of the few places where getting thumbnails right is a genuine differentiator - not just keeping pace.</p>
+
+<p>Being text-only in a visual SERP isn't neutral. It's a gift to everyone around you.</p>
+
+<h2>Who's winning the thumbnail game?</h2>
+
+<p>Not who you'd expect. And it looks different depending on the device.</p>
+
+<h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--teal); margin: 32px 0 12px;">Mobile</h3>
+
+<div class="ct-table-wrap">
+  <table class="ct-table">
+    <thead>
+      <tr><th>Domain</th><th>Appearances</th><th>Thumb Rate</th><th>Avg Position</th><th>Avg Imgs/Thumb</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>nordstrom.com</td><td class="num">65</td><td class="num good">98%</td><td class="num">4.4</td><td class="num good">5.2</td></tr>
+      <tr><td>macys.com</td><td class="num">71</td><td class="num good">96%</td><td class="num">5.2</td><td class="num good">4.9</td></tr>
+      <tr><td>hm.com</td><td class="num">48</td><td class="num good">94%</td><td class="num">4.4</td><td class="num">1.7</td></tr>
+      <tr><td>asos.com</td><td class="num">29</td><td class="num good">93%</td><td class="num">5.5</td><td class="num good">4.1</td></tr>
+      <tr><td>vogue.com</td><td class="num">67</td><td class="num good">93%</td><td class="num">4.3</td><td class="num">2.7</td></tr>
+      <tr><td>instyle.com</td><td class="num">37</td><td class="num">92%</td><td class="num">4.0</td><td class="num">3.4</td></tr>
+      <tr><td>glamour.com</td><td class="num">33</td><td class="num">88%</td><td class="num">4.1</td><td class="num">4.0</td></tr>
+      <tr><td>anthropologie.com</td><td class="num">28</td><td class="num">82%</td><td class="num">5.4</td><td class="num">3.7</td></tr>
+      <tr><td>abercrombie.com</td><td class="num">34</td><td class="num">79%</td><td class="num">4.4</td><td class="num good">4.4</td></tr>
+      <tr><td>express.com</td><td class="num">41</td><td class="num">78%</td><td class="num">3.9</td><td class="num good">4.2</td></tr>
+      <tr><td>whowhatwear.com</td><td class="num">68</td><td class="num">74%</td><td class="num">4.0</td><td class="num">4.0</td></tr>
+      <tr><td>amazon.com</td><td class="num">137</td><td class="num">73%</td><td class="num">3.9</td><td class="num">2.8</td></tr>
+      <tr><td>pinterest.com</td><td class="num">164</td><td class="num warn">54%</td><td class="num">3.5</td><td class="num">3.7</td></tr>
+      <tr><td>reddit.com</td><td class="num">102</td><td class="num warn">16%</td><td class="num">4.8</td><td class="num dim">1.0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-3); margin: 32px 0 12px;">Desktop</h3>
+
+<div class="ct-table-wrap">
+  <table class="ct-table">
+    <thead>
+      <tr><th>Domain</th><th>Appearances</th><th>Thumb Rate</th><th>Avg Position</th><th>Avg Imgs/Thumb</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>hm.com</td><td class="num">52</td><td class="num good">92%</td><td class="num">4.8</td><td class="num">1.0</td></tr>
+      <tr><td>macys.com</td><td class="num">73</td><td class="num good">90%</td><td class="num">5.3</td><td class="num">1.7</td></tr>
+      <tr><td>nordstrom.com</td><td class="num">69</td><td class="num good">88%</td><td class="num">4.5</td><td class="num">1.6</td></tr>
+      <tr><td>abercrombie.com</td><td class="num">33</td><td class="num">79%</td><td class="num">4.7</td><td class="num">1.4</td></tr>
+      <tr><td>instyle.com</td><td class="num">43</td><td class="num">77%</td><td class="num">4.5</td><td class="num">2.9</td></tr>
+      <tr><td>vogue.com</td><td class="num">63</td><td class="num">75%</td><td class="num">4.0</td><td class="num">1.7</td></tr>
+      <tr><td>express.com</td><td class="num">45</td><td class="num">71%</td><td class="num">4.0</td><td class="num">1.5</td></tr>
+      <tr><td>amazon.com</td><td class="num">137</td><td class="num">68%</td><td class="num">4.2</td><td class="num">2.3</td></tr>
+      <tr><td>glamour.com</td><td class="num">37</td><td class="num">68%</td><td class="num">4.5</td><td class="num">2.3</td></tr>
+      <tr><td>anthropologie.com</td><td class="num">31</td><td class="num">65%</td><td class="num">5.5</td><td class="num">1.0</td></tr>
+      <tr><td>whowhatwear.com</td><td class="num">71</td><td class="num">62%</td><td class="num">4.2</td><td class="num">2.4</td></tr>
+      <tr><td>pinterest.com</td><td class="num">169</td><td class="num warn">51%</td><td class="num">3.8</td><td class="num">1.0</td></tr>
+      <tr><td>reddit.com</td><td class="num">101</td><td class="num warn">24%</td><td class="num">5.0</td><td class="num dim">1.0</td></tr>
+      <tr><td>youtube.com</td><td class="num">35</td><td class="num warn">0%</td><td class="num dim">6.6</td><td class="num dim">0.0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Nordstrom leads mobile at 98% with the richest image treatment - 5.2 images per thumbnail result. Macy's is close behind at 96%. On desktop, H&M takes the top spot at 92%, though with just 1.0 image per thumbnail. The image counts drop across the board on desktop - Nordstrom goes from 5.2 to 1.6, Macy's from 4.9 to 1.7.</p>
+
+<p><em>Note: themomedit.com (27 mobile, 30 desktop appearances) and asos.com (29 mobile, 26 desktop) both have small sample sizes. Their rates - themomedit.com at 100%/90%, asos.com at 93%/88% - are directionally interesting but shouldn't be weighted equally with domains that appear 60+ times.</em></p>
+
+<div class="quotable">
+  <p>Pinterest ranks highest by appearances on both devices but only shows thumbnails around half the time. It gets the real estate. It doesn't always get the visual treatment.</p>
+</div>
+
+<p>Reddit sits at 16% mobile, 24% desktop. YouTube: 0% on desktop (35 appearances). Google doesn't serve video thumbnails in standard organic results for fashion queries - those live in the video carousel.</p>
+
+<p>Amazon sits at 73% mobile, 68% desktop - surprisingly low for the world's largest online retailer. Nordstrom and Macy's get images on 96-98% of their mobile appearances. Same keywords, same intent, meaningfully different implementation.</p>
+
+<h2>Does location matter?</h2>
+
+<p>The LA scan returned 4,895 organic results (vs 4,823 for US national) and 10,227 images (vs 9,741). Slightly more results and more images - LA's retail-dense market surfaces a marginally richer SERP.</p>
+
+<p>But on the thumbnail rates themselves: not much difference on mobile. LA mobile thumbnail rates are within ±5 points of national for every category. Desktop shows slightly more variation - Footwear in LA is 6.4 points higher than national, Swimwear 5.5 points higher. This likely reflects LA's local retail ecosystem surfacing different merchant results on desktop.</p>
+
+<p>The overall rates: LA mobile 79% vs US national 79%. LA desktop 74% vs US national 72%. Close enough that running a single national crawl gives you representative data for most purposes. If you're doing client work for a brand with strong local presence, city-level targeting is worth running separately.</p>
+
+<h2>What actually triggers a thumbnail?</h2>
+
+<div class="quotable">
+  <p>The SERP data tells me who gets thumbnails and who doesn't. It doesn't tell me why. Nordstrom at 98% mobile and Amazon at 73% - on the same keywords, same intent - there's clearly something different about their image implementation. But what exactly? That's coming in Part 3: qualitative thumbnail research.</p>
+</div>
+
+<p>This is where the <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">technical reference</a> picks up. The short answer: Google needs to find your images, trust them, and match them to the query. That means real <code>&lt;img&gt;</code> elements in the HTML (not CSS backgrounds), images that don't depend on JavaScript to render, proper <code>og:image</code> and Product schema pointing to high-quality photos, <code>max-image-preview:large</code> in your robots meta, and descriptive alt text. Miss any of these and you're invisible - even if the page looks image-rich to a human.</p>
+
+<p>The multi-image treatment (the horizontal strip of product images) is harder to trigger. Schema isn't the deciding factor. CMS doesn't matter. What matters is having 7+ relevant, indexable product images early in the HTML, each showing a single product on a non-transparent background. I'm running a separate case study measuring schema presence against the multi-image treatment across e-commerce verticals.</p>
+
+<p>The full technical breakdown - HTML layer, JS rendering issues, responsive image fallbacks, format requirements, alt text quality, and the multi-image treatment - is in <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">Google Image Thumbnails in Organic - The Technical Reference</a>.</p>
+
+<h2>What to do with this</h2>
+
+<p>The data tells you where thumbnails show up. It doesn't tell you how to get them. That's implementation, and it's all on your side.</p>
+
+<p><strong>Start with mobile.</strong> This dataset served 92% more images on mobile than desktop across the same 293 keywords. If your mobile product pages ship smaller images, fewer of them, or heavier lazy-loading than desktop - that's where you're losing the most visual real estate. Not the hero. Not the metadata. The product imagery itself.</p>
+
+<p><strong>Then the robots meta.</strong> <code>max-image-preview:none</code> turns thumbnails off. <code>standard</code> - or leaving the tag out - is the default: standard-size previews, no more. <code>large</code> is what unlocks full-width previews and the multi-image strip. If you're running standard because that's what the CMS shipped with, you're capping yourself below what Google would actually show. Five-minute check.</p>
+
+<p><strong>Then og:image.</strong> If your og:image is a logo or placeholder, Google is more likely to skip showing thumbnails entirely if there is no strong product image on the page. A logo-default og:image signals weak visual content, and Google treats it as a reason not to surface images. If your CMS stamps the brand logo into every product page's og:image, swap it for the primary product photo. Perhaps one-line config, significant impact.</p>
+
+<p>For the full technical checklist - HTML requirements, JS rendering, responsive images, the multi-image treatment - see the <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">technical reference</a>.</p>
+
+<hr>
+
+<div class="ct-callout ct-callout--orange">
+  <div class="ct-callout-icon">📊</div>
+  <div class="ct-callout-body">
+    <div class="ct-callout-title">Methodology note</div>
+    <p>Data collected April 2026 via DataForSEO Live Advanced API. 293 non-branded keywords × 2 devices × 2 locations. 9 women's fashion categories, 8 search patterns, 4 intent groups (product + modifier, product, comparison, informational). 312 possible keyword combinations; 19 dropped from the "fit + seed" pattern where the modifier produced queries nobody actually searches. US national: 4,823 organic listings, 9,741 images. Los Angeles: 4,895 organic listings, 10,227 images.</p>
+    <p><strong>On "US national":</strong> DataForSEO uses Google's Geographical Targeting system. Setting the location to "United States" (location code 2840) does not return a national average - it returns what Google serves to a user whose location signal is the US with no specific city. Think of it as a non-localised US SERP rather than an aggregation across cities. The LA crawl used city-level targeting, which introduces local retail and geo-specific ranking signals. The two datasets are not a national average vs a city sample - they're two different location signals producing two different SERPs.</p>
+    <p>Thumbnail presence determined by the <code>images</code> array in DataForSEO's organic result objects. Image counts reflect the number of image elements associated with each organic listing, not the total images on the destination page. The headline thumbnail rates (79% mobile, 72% desktop) are per-listing counts - total results with thumbnails divided by total results. Category, pattern, and intent breakdowns use per-keyword averages, giving each keyword equal weight regardless of how many organic results it returned. Full dataset available on request.</p>
+  </div>
+</div>
+
+</div><!-- /.container -->
+</div><!-- /.page-content -->
+</div><!-- /.page-layout -->
+</main>
+
+<div class="ct-cta">
+  <h2>Run this for your vertical</h2>
+  <p>The methodology works for any product category. If you want to know what Google's actually showing for your keywords, now you know how to check.</p>
+</div>
+
+<div style="max-width:760px;margin:0 auto;padding:0 24px 64px">
+  <div class="study-author">
+    <img class="study-author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora">
+    <div>
+      <div class="study-author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+      <div class="study-author-role">Freelance SEO Consultant, SEO Director</div>
+      <p class="study-author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 MagsTags · <a href="/">Home</a> · <a href="/notes/">Notes</a> · <a href="/contact/">Contact</a> · <a href="/mags-sikora/">About me</a> · <a href="/disclaimer/">Disclaimer</a> · <a href="/privacy-policy/">Privacy Policy</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px"><a href="/sitemap/">Sitemap</a></p>
+</footer>
+
+<script>
+document.querySelectorAll('.pos-tab-bar').forEach(bar => {
+  bar.addEventListener('click', e => {
+    const btn = e.target.closest('.pos-tab-btn');
+    if (!btn) return;
+    const tabs = bar.closest('.pos-tabs');
+    bar.querySelectorAll('.pos-tab-btn').forEach(b => b.classList.remove('active'));
+    tabs.querySelectorAll('.pos-tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    tabs.querySelector('#' + btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

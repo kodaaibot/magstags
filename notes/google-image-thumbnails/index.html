@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-  <title>Google Image Thumbnails: Best Practice Guide | MagsTags</title>
+  <title>Google Image Thumbnails: Best Practice Guide (2026) | MagsTags</title>
   <meta name="description" content="Why your page doesn't get image thumbnails in Google Search. Best practices covering max-image-preview, primaryImageOfPage, og:image, text result images, multi-image thumbnail treatments, and the Discover specs Google buries in a separate doc.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,18 +114,29 @@
     .post-figure-img{width:100%;height:auto;display:block}
     .post-figure-caption{font-size:13px;color:var(--text-3);padding:12px 16px;line-height:1.5;border-top:1px solid var(--border)}
     @media(max-width:768px){.post-figure{grid-template-columns:1fr}}
+
+    /* Related articles */
+    .related-articles{margin:56px 0 0;padding-top:40px;border-top:1px solid var(--border)}
+    .related-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-4);margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .related-card{padding:20px 22px;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:border-color .15s,box-shadow .15s}
+    .related-card:hover{border-color:var(--teal);box-shadow:0 2px 12px rgba(14,116,144,.08)}
+    .related-card-title{display:block;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:8px;line-height:1.4;text-decoration:none}
+    .related-card-title:hover{color:var(--teal)}
+    .related-card-desc{font-size:13px;color:var(--text-3);line-height:1.55}
+    @media(max-width:640px){.related-grid{grid-template-columns:1fr}}
   </style>
 
   <meta property="og:title" content="Google Image Thumbnails: Best Practice Guide | MagsTags">
   <meta property="og:description" content="Why your page doesn't get image thumbnails in Google Search or Discover. Covers max-image-preview, primaryImageOfPage, og:image, CSS images, multi-image treatments, and the Discover image specs.">
   <meta property="og:url" content="https://www.magstags.com/notes/google-image-thumbnails/">
   <meta property="og:type" content="article">
-  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:image" content="https://www.magstags.com/notes/google-image-thumbnails/og-image-thumbnails.png">
   <meta property="og:site_name" content="MagsTags">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Google Image Thumbnails: Best Practice Guide | MagsTags">
-  <meta name="twitter:description" content="Why your page doesn't get image thumbnails in Google Search or Discover. A diagnostic guide covering every signal Google documents — and some it doesn't.">
-  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <meta name="twitter:description" content="Why your page doesn't get image thumbnails in Google Search or Discover. A diagnostic guide covering every signal Google documents, including some it doesn't.">
+  <meta name="twitter:image" content="https://www.magstags.com/notes/google-image-thumbnails/og-image-thumbnails.png">
 
   <script type="application/ld+json">
   {
@@ -180,7 +191,7 @@
         "name": "Why doesn't my page show any image thumbnails even though it has images?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The most common causes are: images loaded only via JavaScript (no src attribute, only data-src), images delivered as CSS background-image (not indexed by Google), noimageindex in the robots meta tag, images behind authentication or blocked by robots.txt, or images that are too low quality or too small. Start by disabling JavaScript in your browser and checking whether images are still visible — if they disappear, that's likely your issue."
+          "text": "The most common causes are: images loaded only via JavaScript (no src attribute, only data-src), images delivered as CSS background-image (not indexed by Google), noimageindex in the robots meta tag, images behind authentication or blocked by robots.txt, or images that are too low quality or too small. Start by disabling JavaScript in your browser and checking whether images are still visible. If they disappear, that's likely your issue."
         }
       },
       {
@@ -188,7 +199,7 @@
         "name": "Is max-image-preview:large required for Google Search thumbnails?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "For standard organic search thumbnails, no — Google can show thumbnails without it. But for Discover, it is effectively required. Google's Discover documentation states that large images need to be enabled by the max-image-preview:large setting. Since you want to be eligible for both surfaces, setting it is a baseline recommendation."
+          "text": "For standard organic search thumbnails, no. Google can show thumbnails without it. But for Discover, it is effectively required. Google's Discover documentation states that large images need to be enabled by the max-image-preview:large setting. Since you want to be eligible for both surfaces, setting it is a baseline recommendation."
         }
       },
       {
@@ -196,7 +207,7 @@
         "name": "How many images do I need on a page for the multi-image thumbnail treatment?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "There is no official number from Google, but research suggests at least 7 relevant images gives Google enough to work with. The exact number depends on image orientation — portrait images require more to fill the snippet space on desktop. The images also need to be relevant to the page content and query, not just present on the page."
+          "text": "There is no official number from Google, but research suggests at least 7 relevant images gives Google enough to work with. The exact number depends on image orientation: portrait images require more to fill the snippet space on desktop. The images also need to be relevant to the page content and query, not just present on the page."
         }
       }
     ]
@@ -234,9 +245,9 @@
       <div class="ct-content">
         <div class="post-body">
 
-      <p class="post-lead">For the SEO with 40 product images on the page and zero in the SERP. And for the developer with a ticket that just says “fix thumbnails.”</p>
+      <p class="post-lead">For the SEO with 40 product images on the page and zero in the SERP. And for the developer with a ticket that just says "fix thumbnails."</p>
 
-      <p>Google's image thumbnail guidance spans the <a href="https://developers.google.com/search/docs/appearance/google-images">image SEO best practices</a>, the <a href="https://developers.google.com/search/docs/appearance/discover">Discover guidelines</a>, and various structured data docs — none of which directly answer the question most people arrive with: why is my page not getting the multi-image thumbnail treatment when the result underneath it is?</p>
+      <p>Google's image thumbnail guidance spans the <a href="https://developers.google.com/search/docs/appearance/google-images">image SEO best practices</a>, the <a href="https://developers.google.com/search/docs/appearance/discover">Discover guidelines</a>, and various structured data docs, none of which directly answer the question most people arrive with: why is my page not getting the multi-image thumbnail treatment when the result underneath it is?</p>
 
       <p>This post stitches the documentation together, adds what independent field research has found, fills in the gaps Google leaves out, and gives you a diagnostic sequence for working out where your page falls short.</p>
 
@@ -263,12 +274,12 @@
         </div>
       </div>
 
-      <h2 id="types">The three thumbnail treatments (and what you're actually chasing)</h2>
+      <h2 id="types">The two thumbnail treatments (and what you're actually chasing)</h2>
 
-      <p>Google shows one of three things for organic results: multiple images in a horizontal row, a single image beside the snippet, or nothing. Google's official name for all of these is <strong>text result images</strong> — that's the term used in their documentation and the one to search if you're trying to find Google's own guidance. No dedicated feature page. No validation tool. No structured data trigger. Compare that to the <a href="/notes/google-ecommerce-rich-results/">rich results documentation</a>, which comes with schema specs, a testing tool, and a dedicated search gallery, and the message is clear: Google isn't particularly interested in helping you get these.</p>
+      <p>Google shows one of two thumbnail treatments for organic results: multiple images in a horizontal row, or a single image beside the snippet. For many pages, it shows neither. Google's official name for all of these is <strong>text result images</strong>: that's the term used in their documentation and the one to search if you're trying to find Google's own guidance. No dedicated feature page. No validation tool. No structured data trigger. Compare that to the <a href="/notes/google-ecommerce-rich-results/">rich results documentation</a>, which comes with schema specs, a testing tool, and a dedicated search gallery, and the message is clear: Google isn't particularly interested in helping you get these.</p>
 
       <div class="post-callout">
-        <strong>The official term:</strong> Google calls these <strong>text result images</strong> in their Search documentation. If you're searching Google's own docs or Search Console help, that's the phrase to use — not "image thumbnails" or "SERP thumbnails", which don't appear in Google's official terminology.
+        <strong>The official term:</strong> Google calls these <strong>text result images</strong> in their Search documentation. If you're searching Google's own docs or Search Console help, that's the phrase to use, not “image thumbnails” or “SERP thumbnails”, which don't appear in Google's official terminology.
       </div>
 
       <h3 id="multi-image-treatment">Multi-image treatment</h3>
@@ -332,7 +343,7 @@
 
       <p>What matters for your diagnostic is knowing which treatment your page <em>should</em> qualify for and which it currently gets. A category page showing zero thumbnails is a fundamentally different problem from one showing a single thumbnail when competitors show seven. The fixes are different. The severity is different. More on this in the diagnostic section.</p>
 
-      <h2 id="metadata">Image thumbnail metadata: what Google uses to choose <em>which</em> image to show</h2>
+      <h2 id="metadata">Metadata layer: telling Google which image to show</h2>
 
       <p>Google's image selection for thumbnails is automated. They take into account, in their words, "a number of different sources" to select which image is shown. You can influence that selection. Google's documentation names three specific metadata sources for image thumbnail best practices.</p>
 
@@ -345,17 +356,17 @@
       <p>Google's documentation is explicit about what this image should <em>not</em> be: a generic image (your site logo), an image with overlaid text, or anything with an extreme aspect ratio.</p>
 
       <div class="post-callout-warn">
-        <strong>The logo problem is everywhere and it's costing real CTR.</strong> A significant number of enterprise e-commerce sites have <code>og:image</code> set to the site logo across every page template — including category pages that have hundreds of product images Google could use instead. Google won't show a logo as a thumbnail. Its own documentation says not to use generic images. So what actually happens is nothing: no thumbnail at all. Google ignores the declared image, doesn't find a suitable alternative signal, and the result gets no visual treatment. Check your category page templates: View Source, search for <code>og:image</code>, and check what URL is actually set.
+        <strong>The logo problem is everywhere and it's costing real CTR.</strong> A significant number of enterprise e-commerce sites have <code>og:image</code> set to the site logo across every page template, including category pages that have hundreds of product images Google could use instead. Google won't show a logo as a thumbnail. Its own documentation says not to use generic images. So what actually happens is nothing: no thumbnail at all. Google ignores the declared image, doesn't find a suitable alternative signal, and the result gets no visual treatment. Check your category page templates: View Source, search for <code>og:image</code>, and check what URL is actually set.
       </div>
 
       <h4>What Nike could do better</h4>
 
-      <p>Nike's Women's Running Shoes category page has 77 products on it. View Source and search for <code>og:image</code>: it's set to <code>android-icon-192x192.png</code> — their Android app icon. A 192&times;192px swoosh. Google sees that, finds it unsuitable as a thumbnail, and shows nothing. Meanwhile Adidas, directly below on the same SERP, gets a product image.</p>
+      <p>Nike's Women's Running Shoes category page has 77 products on it. View Source and search for <code>og:image</code>: it's set to <code>android-icon-192x192.png</code> (their Android app icon). A 192&times;192px swoosh. Google sees that, finds it unsuitable as a thumbnail, and shows nothing. Meanwhile Adidas, directly below on the same SERP, gets a product image.</p>
 
       <div class="post-figure">
         <div class="post-figure-item">
           <img src="nike-og-image-source.png" alt="Nike Women's Running Shoes category page with Chrome DevTools open showing og:image meta tag set to android-icon-192x192.png instead of a product image" class="post-figure-img">
-          <div class="post-figure-caption">Nike's <code>og:image</code> — their Android app icon, not a running shoe.</div>
+          <div class="post-figure-caption">Nike's <code>og:image</code>: their Android app icon, not a running shoe.</div>
         </div>
         <div class="post-figure-item">
           <img src="nike-og-image-logo.png" alt="Nike android-icon-192x192.png opened directly in browser, showing a 192x192 pixel Nike swoosh logo" class="post-figure-img">
@@ -372,7 +383,7 @@
 
       <h3 id="primary-image">primaryImageOfPage</h3>
 
-      <p>Explicitly named in Google's documentation. Almost universally ignored. That's the full summary. <code>primaryImageOfPage</code> is a schema.org property that tells Google which image you want as the thumbnail — and it's not buried in a footnote, it's in the main guidance, with a code example:</p>
+      <p>Explicitly named in Google's documentation. Almost universally ignored. That's the full summary. <code>primaryImageOfPage</code> is a schema.org property that tells Google which image you want as the thumbnail, and it's not buried in a footnote, it's in the main guidance, with a code example:</p>
 
 <pre>{
   "@context": "https://schema.org",
@@ -410,58 +421,9 @@
         <strong>While you're in the robots meta tag, check for <code>noimageindex</code>.</strong> If it's there, Google won't index any images on the page. No indexing means no thumbnails, no image search results, nothing. This sometimes gets added by CMS plugins or security configurations without anyone realising. A site I audited last year had <code>noimageindex</code> on every page because a developer had copied a robots meta template from a staging environment where it made sense. It had been there for eight months. Nobody noticed because nobody was looking at image indexing.
       </div>
 
-      <h2 id="discover-specs">The Discover image specs that Google buries in a separate doc</h2>
+      <h2 id="html-images">HTML layer: what Google can find and index</h2>
 
-      <p>The Discover documentation lives on a completely separate page from the image SEO documentation. They share zero cross-links that I can find. The Discover page contains concrete image specifications directly relevant to thumbnail display, easy to miss if you went straight to the image SEO doc and stopped there.</p>
-
-      <p>The specs:</p>
-
-      <div class="post-table-wrap">
-        <table class="post-table">
-          <thead>
-            <tr>
-              <th>Requirement</th>
-              <th>Specification</th>
-              <th>What this means in practice</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="col-label">Minimum width</td>
-              <td>1200px</td>
-              <td>Below this, Discover won't use your image for the large card format. Period.</td>
-            </tr>
-            <tr>
-              <td class="col-label">Minimum total pixels</td>
-              <td>&gt; 300,000</td>
-              <td>Width &times; height. A 1280&times;720 image = 921,600 total pixels. Passes easily. A 600&times;400 image = 240,000. Doesn't pass.</td>
-            </tr>
-            <tr>
-              <td class="col-label">Recommended aspect ratio</td>
-              <td>16:9</td>
-              <td>Discover cards are landscape. Google crops automatically, but auto-crops of portrait images lose the subject. If you crop yourself, optimise for landscape.</td>
-            </tr>
-            <tr>
-              <td class="col-label">Robots directive</td>
-              <td>max-image-preview:large</td>
-              <td>See previous section. Without this, large Discover cards are off the table regardless of image quality.</td>
-            </tr>
-            <tr>
-              <td class="col-label">Image declaration</td>
-              <td>og:image or schema.org image</td>
-              <td>Google needs to know which image to use. Specify it explicitly or Google picks for you. Google picks badly.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p>The 16:9 aspect ratio recommendation deserves specific attention. Discover renders images as horizontal cards. If your og:image is a tall portrait product shot — common in fashion — Google will auto-crop it to landscape, and the result often cuts off the product at the waist or removes the product entirely, leaving a white background with a disembodied shoe. If you're doing your own crop, make sure the important content is centred and survives a 16:9 frame. Test it. Open your og:image, mentally crop it to 16:9. Does it still make sense? If the answer is "it's mostly whitespace with half a handbag," that's what Discover will show.</p>
-
-      <p>Worth noting: auto-resizing every image to 16:9 in your CMS isn't the same as composing for it. A 16:9 mechanical crop of a square product image with padding is worse than a well-composed landscape photo at a slightly different ratio. The spec is about final image quality, not a checkbox to tick.</p>
-
-      <h2 id="html-images">The HTML layer: what Google can actually find and index</h2>
-
-      <p>Everything above is about telling Google which image to <em>prefer</em>. But Google needs to <em>find</em> your images first. This is where most thumbnail issues actually originate — the gap between "the page has images" and "Google can see the images".</p>
+      <p>Everything above is about telling Google which image to <em>prefer</em>. But Google needs to <em>find</em> your images first. This is where most thumbnail issues actually originate: the gap between "the page has images" and "Google can see the images".</p>
 
       <h3 id="img-elements">Google only indexes HTML &lt;img&gt; elements</h3>
 
@@ -507,15 +469,13 @@
 
       <p>A <code>&lt;picture&gt;</code> element with multiple <code>&lt;source&gt;</code> tags but no <code>&lt;img&gt;</code> child is invalid HTML and invisible to crawlers that don't support <code>&lt;picture&gt;</code>. Google's crawler supports it, but Bing's may not process it the same way. The fallback <code>&lt;img&gt;</code> costs nothing and eliminates the risk.</p>
 
-      <h3 id="image-quality">Formats, quality, and the images Google refuses to show</h3>
+      <h3 id="image-quality">Formats and quality</h3>
 
-      <p>Google explicitly lists the image formats it supports: BMP, GIF, JPEG, PNG, WebP, SVG, and AVIF. Anything else won't be indexed. Google's guidance is to match the file extension to the actual format — <code>.webp</code> for WebP, <code>.jpg</code> for JPEG. They describe this as a good idea rather than a hard requirement, but it's a simple thing to get right.</p>
+      <p>Google explicitly lists the image formats it supports: BMP, GIF, JPEG, PNG, WebP, SVG, and AVIF. Anything else won't be indexed. Google's guidance is to match the file extension to the actual format: <code>.webp</code> for WebP, <code>.jpg</code> for JPEG. They describe this as a good idea rather than a hard requirement, but it's a simple thing to get right.</p>
 
-      <p>On quality: Google's search results already reduce image quality when rendering thumbnails. If the source image is low resolution — say, 150×150px product thumbnails designed for a compact grid — the resulting SERP thumbnail may look bad enough that Google opts not to display it at all. Increasing image resolution on category pages is one of the higher-leverage fixes available if you're at Stage 1 and image delivery isn't the problem.</p>
+      <p>On quality: Google's search results already reduce image quality when rendering thumbnails. If the source image is low resolution (say, 150×150px product thumbnails designed for a compact grid), the resulting SERP thumbnail may look bad enough that Google opts not to display it at all. Increasing image resolution on category pages is one of the higher-leverage fixes available if you're at Stage 1 and image delivery isn't the problem.</p>
 
       <p>For format choice: WebP and AVIF offer better quality at smaller file sizes than JPEG or PNG. For e-commerce product images, WebP is the pragmatic default in 2026. AVIF has better compression but slightly lower browser support. Both are indexed by Google. Both produce better thumbnails at equivalent file sizes because the source image quality is higher.</p>
-
-      <h3 id="alt-text">Alt text</h3>
 
       <p>Google's documentation says it uses alt text "along with computer vision algorithms and the contents of the page to understand the subject matter of the image." Missing alt text doesn't always prevent thumbnail display, but it removes one of the signals Google uses to match an image to a query. For e-commerce category pages where thumbnails directly affect CTR, leaving alt text empty is leaving signal on the table for no reason.</p>
 
@@ -555,7 +515,66 @@
         </table>
       </div>
 
+      <h4 id="text-in-images">Text in images</h4>
+
+      <p>Google's documentation says to avoid text-heavy images in your og:image and schema markup. This is common in e-commerce for obvious reasons: marketing teams have strong feelings about "50% OFF" and "NEW ARRIVAL" and "FREE SHIPPING". Those are valid feelings. Just not for the image you're asking Google to use as the thumbnail.</p>
+
+      <p>For the images on your page, that's fine. Promotional overlays on product images in the HTML don't prevent Google from indexing them. But for your <code>og:image</code> and <code>primaryImageOfPage</code>, the image you're explicitly telling Google to use as the thumbnail, use a clean product image. No sale badges. No promotional text. No marketing overlays.</p>
+
+      <p>The reason is practical: thumbnails render small. Text that's legible at 800px is unreadable at 60px. A thumbnail that's 40% text overlay looks like a smudge in the SERP. Google knows this. That's why they recommend against it. Use the clean product image for your metadata. Use the promotional version on the page where it renders at full size.</p>
+
+      <h3 id="alt-text">Alt text</h3>
+
       <p>For category pages with hundreds of product images, alt text is usually generated from the product title. That's fine. <code>alt="Nike Air Max 90 - Red/White - Men's"</code> is descriptive and generated from existing product data. The issue is category pages where alt text is entirely missing because the template doesn't output it, or where every image has the same alt text (the category name) because nobody thought to pass the product title through.</p>
+
+      <h2 id="discover-specs">Discover layer: image specs for the Discover feed</h2>
+
+      <p>The Discover documentation lives on a completely separate page from the image SEO documentation. They share zero cross-links that I can find. The Discover page contains concrete image specifications directly relevant to thumbnail display, easy to miss if you went straight to the image SEO doc and stopped there.</p>
+
+      <p>The specs:</p>
+
+      <div class="post-table-wrap">
+        <table class="post-table">
+          <thead>
+            <tr>
+              <th>Requirement</th>
+              <th>Specification</th>
+              <th>What this means in practice</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Minimum width</td>
+              <td>1200px</td>
+              <td>Below this, Discover won't use your image for the large card format. Period.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Minimum total pixels</td>
+              <td>&gt; 300,000</td>
+              <td>Width &times; height. A 1280&times;720 image = 921,600 total pixels. Passes easily. A 600&times;400 image = 240,000. Doesn't pass.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Recommended aspect ratio</td>
+              <td>16:9</td>
+              <td>Discover cards are landscape. Google crops automatically, but auto-crops of portrait images lose the subject. If you crop yourself, optimise for landscape.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Robots directive</td>
+              <td>max-image-preview:large</td>
+              <td>Covered in the metadata section above. Without this, large Discover cards are off the table regardless of image quality.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Image declaration</td>
+              <td>og:image or schema.org image</td>
+              <td>Google needs to know which image to use. Specify it explicitly or Google picks for you. Google picks badly.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The 16:9 aspect ratio recommendation deserves specific attention. Discover renders images as horizontal cards. If your og:image is a tall portrait product shot (common in fashion), Google will auto-crop it to landscape, and the result often cuts off the product at the waist or removes the product entirely, leaving a white background with a disembodied shoe. If you're doing your own crop, make sure the important content is centred and survives a 16:9 frame. Test it. Open your og:image, mentally crop it to 16:9. Does it still make sense? If the answer is "it's mostly whitespace with half a handbag," that's what Discover will show.</p>
+
+      <p>Worth noting: auto-resizing every image to 16:9 in your CMS isn't the same as composing for it. A 16:9 mechanical crop of a square product image with padding is worse than a well-composed landscape photo at a slightly different ratio. The spec is about final image quality, not a checkbox to tick.</p>
 
       <h2 id="multi-image">The multi-image treatment: what actually drives it</h2>
 
@@ -579,7 +598,7 @@
 
       <p>Magento sites appear with particularly good coverage of the multi-image treatment in field research. That likely reflects Magento's default category page templates, which render product images as server-side HTML <code>&lt;img&gt;</code> elements rather than client-side rendered components. It's the implementation pattern, not the platform brand.</p>
 
-      <h3>The factors that do seem to matter</h3>
+      <h3>Multi-image treatment: what the page needs</h3>
 
       <p>Cross-referencing field research with Google's own documentation, these are the factors that appear to influence the multi-image treatment:</p>
 
@@ -592,17 +611,15 @@
         <li><strong>Image indexability:</strong> All of the HTML-layer factors covered above. If Google can't find the images (CSS backgrounds, JS-only rendering, blocked by robots.txt), the multi-image treatment is impossible regardless of everything else.</li>
       </ul>
 
-      <div class="post-callout">
-        <strong>The SERP filter (now lifted):</strong> Google previously capped multi-image thumbnails at 4 results per page. That filter has since been removed. More than 4 results can now show the treatment on the same SERP. One less variable to worry about.
-      </div>
 
-      <h2 id="severity">Start here: where is it breaking?</h2>
+
+      <h2 id="severity">Audit step 1: Where is it breaking?</h2>
 
       <p>Thumbnail problems fall into three categories: Google can't access the images at all, Google has them but won't show them, or Google shows them inconsistently. Each has a different fix. Working out which category you're in before changing anything saves a lot of time.</p>
 
       <h3>Google can't access or index the images</h3>
 
-      <p>The most fundamental failure. Google has no images to work with. They don't appear in Google Image Search for the page URL. You can confirm this by running <code>site:yourdomain.com/your-page</code> in Google Images — if nothing comes back, Google hasn't indexed anything from that page.</p>
+      <p>The most fundamental failure. Google has no images to work with. They don't appear in Google Image Search for the page URL. You can confirm this by running <code>site:yourdomain.com/your-page</code> in Google Images. If nothing comes back, Google hasn't indexed anything from that page.</p>
 
       <p>This can be page-specific (one template, one delivery pattern) or site-wide. To check site-wide: set Google to show 100 results per page and run <code>site:yourdomain.com [query]</code> across your top 10 ranking queries. Zero thumbnails across multiple different queries points to an architectural problem: something in how the site delivers images globally, not one rogue template.</p>
 
@@ -618,9 +635,9 @@
 
       <h3>Thumbnails appear in site: searches but not in regular results</h3>
 
-      <p>Google previously limited multi-image thumbnails to 4 results per SERP, so a page that qualified could still get no treatment if 4 competitors above it already had it. That cap has since been removed. If your page shows the multi-image treatment in a <code>site:</code> search, it should surface in regular results too — assuming it qualifies and the query is competitive enough to trigger the format.</p>
+      <p>Google previously limited multi-image thumbnails to 4 results per SERP, so a page that qualified could still get no treatment if 4 competitors above it already had it. That cap has since been removed. If your page shows the multi-image treatment in a <code>site:</code> search, it should surface in regular results too, assuming it qualifies and the query is competitive enough to trigger the format.</p>
 
-      <h2 id="diagnostic">The diagnostic sequence</h2>
+      <h2 id="diagnostic">Audit step 2: The diagnostic sequence</h2>
 
       <div class="diag-flow">
         <div class="diag-step">
@@ -629,11 +646,11 @@
         </div>
         <div class="diag-step">
           <span class="diag-num">2</span>
-          <div><strong>Disable JavaScript and reload.</strong> Chrome DevTools → Settings → Debugger → Disable JavaScript. Reload the page. Do product images load? If they vanish, your images are JavaScript-dependent — the single most common cause of image indexing failures. Move critical images to server-rendered HTML with real <code>src</code> attributes.</div>
+          <div><strong>Disable JavaScript and reload.</strong> Chrome DevTools → Settings → Debugger → Disable JavaScript. Reload the page. Do product images load? If they vanish, your images are JavaScript-dependent, the single most common cause of image indexing failures. Move critical images to server-rendered HTML with real <code>src</code> attributes.</div>
         </div>
         <div class="diag-step">
           <span class="diag-num">3</span>
-          <div><strong>Check image indexing with site: operator.</strong> Search <code>site:yourdomain.com/page-path</code> in Google Images. No results: Google can't access the images — go to step 1. Images in Image Search but not in web snippets: selection problem — go to steps 5 and 6. Images appearing in both: eligibility or ranking, largely a non-issue since the SERP cap was lifted.</div>
+          <div><strong>Check image indexing with site: operator.</strong> Search <code>site:yourdomain.com/page-path</code> in Google Images. No results: Google can't access the images: go to step 1. Images in Image Search but not in web snippets: selection problem, go to steps 5 and 6. Images appearing in both: eligibility or ranking, largely a non-issue since the SERP cap was lifted.</div>
         </div>
         <div class="diag-step">
           <span class="diag-num">4</span>
@@ -653,9 +670,11 @@
         </div>
       </div>
 
-      <p>For the metadata and HTML-layer checks (steps 4, 5, and 6), the <a href="/image-thumbnail-checker/">Image Thumbnail Checker</a> handles them without you needing to view-source anything — audits og:image, schema markup, max-image-preview, image count, alt text coverage, CSS background images, responsive image fallbacks, and Discover readiness in a few seconds. Steps 1, 2, 3, and 7 require Google directly and can't be automated.</p>
+      <p>For the metadata and HTML-layer checks (steps 4, 5, and 6), the <a href="/image-thumbnail-checker/">Image Thumbnail Checker</a> handles them without you needing to view-source anything: it audits og:image, schema markup, max-image-preview, image count, alt text coverage, CSS background images, responsive image fallbacks, and Discover readiness in a few seconds. Steps 1, 2, 3, and 7 require Google directly and can't be automated.</p>
 
-      <h2 id="image-sitemaps">Image sitemaps: the fix people forget exists</h2>
+      <h2 id="large-site">Large-site considerations</h2>
+
+      <h3 id="image-sitemaps">Image sitemaps</h3>
 
       <p>Google's image SEO documentation mentions image sitemaps as a way to surface images that Google might not otherwise discover. For most sites this doesn't matter, because Google finds images through normal HTML crawling. But for sites with CDN-hosted images on a different domain, image sitemaps can be the difference between indexed and not.</p>
 
@@ -665,15 +684,7 @@
 
       <p>The implementation is straightforward. Add <code>&lt;image:image&gt;</code> elements inside your existing <code>&lt;url&gt;</code> entries, or create a separate image sitemap and reference it from your sitemap index. Google's documentation has the full format.</p>
 
-      <h2 id="text-in-images">Text in images: the mistake that's everywhere</h2>
-
-      <p>Google's documentation says to avoid text-heavy images in your og:image and schema markup. This is common in e-commerce for obvious reasons: marketing teams have strong feelings about "50% OFF" and "NEW ARRIVAL" and "FREE SHIPPING". Those are valid feelings. Just not for the image you're asking Google to use as the thumbnail.</p>
-
-      <p>For the images on your page, that's fine. Promotional overlays on product images in the HTML don't prevent Google from indexing them. But for your <code>og:image</code> and <code>primaryImageOfPage</code>, the image you're explicitly telling Google to use as the thumbnail, use a clean product image. No sale badges. No promotional text. No marketing overlays.</p>
-
-      <p>The reason is practical: thumbnails render small. Text that's legible at 800px is unreadable at 60px. A thumbnail that's 40% text overlay looks like a smudge in the SERP. Google knows this. That's why they recommend against it. Use the clean product image for your metadata. Use the promotional version on the page where it renders at full size.</p>
-
-      <h2 id="crawl-budget">Image crawl budget: the enterprise-scale concern</h2>
+      <h3 id="crawl-budget">Image crawl budget</h3>
 
       <p>Google's image SEO documentation includes a note that most guides skip: "If an image is referenced on multiple pages within a larger website, consider the site's overall crawl budget. In particular, consistently reference the image with the same URL, so that Google can cache and reuse the image without needing to request it multiple times."</p>
 
@@ -710,7 +721,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-q">Can image sitemaps help with missing thumbnails?</div>
-          <div class="faq-a">If Google isn't indexing your images at all — and particularly if they're hosted on a CDN or separate domain — yes. Image sitemaps explicitly declare image URLs to Google. They won't fix JavaScript rendering issues or CSS delivery problems, but they can help Google discover images it wouldn't find through HTML crawling alone.</div>
+          <div class="faq-a">If Google isn't indexing your images at all, particularly if they're hosted on a CDN or separate domain: yes. Image sitemaps explicitly declare image URLs to Google. They won't fix JavaScript rendering issues or CSS delivery problems, but they can help Google discover images it wouldn't find through HTML crawling alone.</div>
         </div>
       </div>
 
@@ -731,25 +742,43 @@
           <li class="toc-sub"><a href="#og-image">og:image</a></li>
           <li class="toc-sub"><a href="#primary-image">primaryImageOfPage</a></li>
           <li class="toc-sub"><a href="#max-image-preview">max-image-preview</a></li>
-          <li><a href="#discover-specs">Discover image specs</a></li>
-          <li><a href="#html-images">HTML image layer</a></li>
+          <li><a href="#html-images">HTML layer</a></li>
           <li class="toc-sub"><a href="#img-elements">CSS vs &lt;img&gt;</a></li>
           <li class="toc-sub"><a href="#js-rendering">JavaScript-dependent images</a></li>
           <li class="toc-sub"><a href="#responsive">Responsive images</a></li>
           <li class="toc-sub"><a href="#image-quality">Formats &amp; quality</a></li>
+          <li class="toc-sub"><a href="#text-in-images">Text in images</a></li>
           <li class="toc-sub"><a href="#alt-text">Alt text</a></li>
+          <li><a href="#discover-specs">Discover layer</a></li>
           <li><a href="#multi-image">What drives multi-image</a></li>
-          <li><a href="#severity">Where is it breaking?</a></li>
-          <li><a href="#diagnostic">Thumbnail diagnostic</a></li>
-          <li><a href="#image-sitemaps">Image sitemaps</a></li>
-          <li><a href="#text-in-images">Text in images</a></li>
-          <li><a href="#crawl-budget">Image crawl budget</a></li>
+          <li><a href="#severity">Audit step 1: Where is it breaking?</a></li>
+          <li><a href="#diagnostic">Audit step 2: Diagnostic sequence</a></li>
+          <li><a href="#large-site">Large-site considerations</a></li>
+          <li class="toc-sub"><a href="#image-sitemaps">Image sitemaps</a></li>
+          <li class="toc-sub"><a href="#crawl-budget">Image crawl budget</a></li>
           <li><a href="#faq">FAQ</a></li>
         </ul>
       </aside>
 
     </div><!-- /ct-layout -->
 
+        <div class="related-articles">
+      <div class="related-label">Related articles</div>
+      <div class="related-grid">
+        <div class="related-card">
+          <a href="/notes/google-ecommerce-rich-results/" class="related-card-title">Google eCommerce Rich Results 2026: Complete Guide</a>
+          <div class="related-card-desc">Which features need a Merchant Center feed, which use structured data, and the eligibility mistake most guides miss.</div>
+        </div>
+        <div class="related-card">
+          <a href="/notes/ecommerce-structured-data-serp-features/" class="related-card-title">E-commerce Schema Markup: Rich Results, Google Shopping &amp; Scale</a>
+          <div class="related-card-desc">The practitioner guide to product structured data: what earns rich results, what to prioritise, what to skip.</div>
+        </div>
+        <div class="related-card">
+          <a href="/notes/google-store-ratings-vs-product-ratings/" class="related-card-title">Google Store Ratings vs Product Ratings: How Each Works</a>
+          <div class="related-card-desc">Both show stars in search but measure different things and require completely different setup.</div>
+        </div>
+      </div>
+    </div>
     <div class="author-card">
           <div class="author-label">This article was written by</div>
           <div class="author-inner">
