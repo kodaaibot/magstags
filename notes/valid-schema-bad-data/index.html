@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/valid-schema-bad-data/">
+  <meta name="description" content="Product schema suppression and disappearing rich results are almost always a data problem, not a markup problem. Five failure patterns, no errors, no flags.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>When Your Schema Is Valid But Your Data Isn't | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--text-1)}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
+    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left;white-space:nowrap}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table .col-label{font-weight:600;color:var(--text-1)}
+    /* Failure cards */
+    .failure-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin:12px 0}
+    .failure-card-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border-radius:99px;margin:0 0 10px 0}
+    .failure-card-tag.price{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
+    .failure-card-tag.identifier{background:#eff6ff;color:#1e40af;border:1px solid #93c5fd}
+    .failure-card-tag.rating{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+    .failure-card-tag.image{background:#fdf4ff;color:#6b21a8;border:1px solid #d8b4fe}
+    html.dark .failure-card-tag.price{background:#3d0000;color:#fca5a5;border-color:#991b1b}
+    html.dark .failure-card-tag.identifier{background:#0f1e3d;color:#93c5fd;border-color:#1e40af}
+    html.dark .failure-card-tag.rating{background:#052e16;color:#4ade80;border-color:#166534}
+    html.dark .failure-card-tag.image{background:#2d0a4e;color:#d8b4fe;border-color:#6b21a8}
+    .failure-card h3{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text-1);margin:0 0 8px 0}
+    .failure-card p{font-size:15px;color:var(--text-2);line-height:1.7;margin:0 0 8px 0}
+    .failure-card p:last-child{margin:0}
+    /* 3-layer model */
+    .layer-model{margin:32px 0;display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    .layer-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:0;border-bottom:1px solid var(--border)}
+    .layer-row:last-child{border-bottom:none}
+    .layer-row.header{background:var(--bg2)}
+    .layer-cell{padding:14px 18px;font-size:14px;line-height:1.6;color:var(--text-2);border-right:1px solid var(--border)}
+    .layer-cell:last-child{border-right:none}
+    .layer-cell.label{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text-1);font-size:13px}
+    .layer-cell.header-cell{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)}
+    .layer-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-bottom:4px}
+    .layer-badge.html{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
+    .layer-badge.schema{background:#eff6ff;color:#1e40af;border:1px solid #93c5fd}
+    .layer-badge.feed{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+    html.dark .layer-badge.html{background:#3d0000;color:#fca5a5;border-color:#991b1b}
+    html.dark .layer-badge.schema{background:#0f1e3d;color:#93c5fd;border-color:#1e40af}
+    html.dark .layer-badge.feed{background:#052e16;color:#4ade80;border-color:#166534}
+    @media(max-width:640px){.layer-row{grid-template-columns:1fr}.layer-cell{border-right:none;border-bottom:1px solid var(--border)}.layer-cell:last-child{border-bottom:none}}
+    /* Retrieval block */
+    .retrieval-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:32px 0}
+    .retrieval-block-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-4);margin-bottom:12px}
+    .retrieval-block ul{padding-left:0;list-style:none;margin:0}
+    .retrieval-block ul li{font-size:14px;line-height:1.7;color:var(--text-2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+    .retrieval-block ul li:last-child{border-bottom:none}
+    .retrieval-block ul li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+    /* Audit steps */
+    .audit-steps{counter-reset:audit;list-style:none;padding:0;margin:28px 0}
+    .audit-steps li{counter-increment:audit;display:flex;gap:14px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border);font-size:16px;line-height:1.7;color:var(--text-2)}
+    .audit-steps li:last-child{border-bottom:none}
+    .audit-steps li::before{content:counter(audit);flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px;font-family:'Space Grotesk',sans-serif}
+    .audit-steps li strong{color:var(--text-1);font-weight:600;display:block;margin-bottom:4px}
+    /* FAQ */
+    .faq-block{margin:52px 0}
+    .faq-block h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
+    .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+    .faq-item:first-of-type{border-top:1px solid var(--border)}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:10px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
+    .faq-a a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    /* Sources */
+    .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-1);margin:0 0 20px 0}
+    .sources ul{padding-left:0;list-style:none}
+    .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
+    .sources a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--text-2);font-weight:600}
+    /* Author */
+    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--border);border-radius:0}
+    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-4);margin-bottom:20px}
+    .author-inner{display:flex;align-items:flex-start;gap:24px}
+    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-details{flex:1;min-width:0}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:16px}
+    /* TOC */
+    .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+    .ct-content{min-width:0}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
+    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
+    .ct-toc-toggle{display:none}
+    @media(max-width:960px){
+      .ct-layout{grid-template-columns:1fr;gap:0}
+      .ct-toc{position:static;padding:0;border:1px solid var(--border);border-radius:10px;margin-bottom:32px;order:-1;max-height:none;overflow-y:visible;overflow:hidden}
+      .ct-toc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--surface);border:none;padding:14px 16px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text-1);cursor:pointer;text-align:left}
+      .ct-toc-toggle .ct-toc-arrow{font-size:11px;color:var(--text-4);transition:transform .2s}
+      .ct-toc-toggle.open .ct-toc-arrow{transform:rotate(180deg)}
+      .ct-toc-label{display:none}
+      .ct-toc-list{border-left:none;flex-direction:column;flex-wrap:nowrap;gap:0;border-top:1px solid var(--border);display:none;padding:8px 0}
+      .ct-toc-list.open{display:flex}
+      .ct-toc-list li a{border-left:none;padding:8px 16px;font-size:13px}
+    }
+    .ct-toc-list ol{border-left:1px solid var(--border);margin-left:14px;padding-left:0}
+    .ct-toc-list ol li a{font-size:12px;padding:6px 0 6px 16px;color:var(--text-4)}
+    .ct-toc-list ol li a:hover,.ct-toc-list ol li a.active{color:var(--teal);border-left-color:var(--teal)}
+    .ct-toc-list ol li a.active{font-weight:600}
+    @media(max-width:960px){
+      .ct-toc-list ol{border-left:none;margin-left:0}
+      .ct-toc-list ol li a{border-left:none;padding:4px 0}
+    }
+  </style>
+  <meta property="og:title" content="When Your Schema Is Valid But Your Data Isn't | MagsTags">
+  <meta property="og:description" content="Product schema suppression and disappearing rich results are almost always a data problem, not a markup problem. Five failure patterns that produce no errors, raise no flags, and still cost you.">
+  <meta property="og:url" content="https://www.magstags.com/notes/valid-schema-bad-data/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When Your Schema Is Valid But Your Data Isn't | MagsTags">
+  <meta name="twitter:description" content="Product schema suppression and disappearing rich results are almost always a data problem, not a markup problem. Five failure patterns that produce no errors and raise no flags.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "When Your Schema Is Valid But Your Data Isn't",
+    "description": "The Rich Results Test validates syntax. Google evaluates trust. Your schema can pass every validator while losing rich results, triggering Merchant Center disapprovals, and weakening AI retrieval confidence — because the data is stale, inconsistent, or misaligned across three separate layers.",
+    "url": "https://www.magstags.com/notes/valid-schema-bad-data/",
+    "datePublished": "2026-05-18",
+    "dateModified": "2026-05-18",
+    "author": {"@type":"Person","name":"Mags Sikora","url":"https://www.magstags.com/mags-sikora/"},
+    "publisher": {"@type":"Organization","name":"MagsTags","url":"https://www.magstags.com/"},
+    "image": "https://www.magstags.com/og-image.png",
+    "mainEntityOfPage": {"@type":"WebPage","@id":"https://www.magstags.com/notes/valid-schema-bad-data/"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://www.magstags.com/"},
+      {"@type":"ListItem","position":2,"name":"Notes","item":"https://www.magstags.com/notes/"},
+      {"@type":"ListItem","position":3,"name":"When Your Schema Is Valid But Your Data Isn't","item":"https://www.magstags.com/notes/valid-schema-bad-data/"}
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why did my rich results disappear even though my schema is valid?",
+        "acceptedAnswer": {"@type":"Answer","text":"The Rich Results Test validates structure, not accuracy. A pass means your JSON-LD is parseable and required properties are present. It does not check whether the price matches the page, availability is current, or your GTIN agrees with your Merchant Center feed. Google evaluates those separately. A pass in the validator means you cleared the lowest bar. It doesn't mean the data is right."}
+      },
+      {
+        "@type": "Question",
+        "name": "What is schema suppression and how is it different from a Merchant Center disapproval?",
+        "acceptedAnswer": {"@type":"Answer","text":"A Merchant Center disapproval removes the product from Google Shopping until resolved — typically triggered by price or availability mismatch between feed and landing page. Schema suppression is quieter: Google stops using your structured data for a specific feature without flagging an error. It happens when schema data contradicts what Googlebot finds on the page. No disapproval in Merchant Center. No warning in Search Console. The rich result simply stops appearing."}
+      },
+      {
+        "@type": "Question",
+        "name": "Does a GTIN mismatch between schema and Merchant Center feed cause a disapproval?",
+        "acceptedAnswer": {"@type":"Answer","text":"Not a direct disapproval, but a conflicting signals problem. If schema and feed carry different GTINs, Google has two competing claims about which product entity your page represents. In practice: weaker Shopping performance, missed price comparison features, and reduced eligibility for AI Overviews on product queries. Neither value is flagged as wrong. Both are weighted lower."}
+      },
+      {
+        "@type": "Question",
+        "name": "What causes flash sale products to disapprove in Merchant Center?",
+        "acceptedAnswer": {"@type":"Answer","text":"The most common cause: the sale price is live on the page, but the Merchant Center feed is on a fixed upload schedule and still carries the pre-sale price. Googlebot crawls the page, sees the new price, compares it to the feed price, and flags a mismatch. Products disapprove until the feed refreshes and the next crawl confirms alignment. The fix is to trigger a feed refresh as part of the sale launch process, not wait for the regular cycle."}
+      },
+      {
+        "@type": "Question",
+        "name": "How often should I audit product schema data accuracy?",
+        "acceptedAnswer": {"@type":"Answer","text":"Price and availability: after every pricing event — sale launches, clearances, restocks. Identifiers: after any platform update, feed migration, or template change. Image URLs: monthly on a crawl sample. Ratings: quarterly. The goal is catching drift early — the longer a mismatch sits, the more data Google accumulates from the wrong signal."}
+      }
+    ]
+  }
+  </script>
+  <script src="/toc-generator.js"></script>
+</head>
+<body>
+<script>
+  (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
+</script>
+
+<div id="blog-content">
+  <div class="post-wrap">
+
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>When Your Schema Is Valid But Your Data Isn't</span>
+    </nav>
+
+    <span class="post-category">Structured Data</span>
+    <h1 class="post-h1">When Your Schema Is Valid But Your Data Isn't</h1>
+
+    <p style="font-size:17px;color:var(--text-3);line-height:1.65;margin-bottom:24px;">For anyone who has run the Rich Results Test, seen zero errors, and then watched rich results disappear — or had products repeatedly disapprove in Merchant Center without an explanation that makes sense. Schema suppression tends to work like that.</p>
+
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>18 May 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>13 min read</span>
+    </div>
+
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+
+          <p>Your schema can be technically valid and still fail commercially.</p>
+
+          <p>The Rich Results Test validates structure. Google evaluates trust. That means your Product schema can pass every validator while still losing rich results, triggering Merchant Center disapprovals, suppressing Shopping visibility, and weakening AI retrieval confidence — because the underlying product data is stale, inconsistent, or contradictory across your page HTML, your schema, and your Merchant Center feed.</p>
+
+          <p>This article covers the hidden data-layer failures most ecommerce teams never audit: the ones that produce no errors, raise no flags, and quietly cost you. Specifically: price and availability staleness, GTIN and identifier mismatches, AggregateRating data problems, image compliance failures, and thin schema, along with the 3-Layer Product Data Alignment Model that explains why these failures are systematic rather than random, an operational audit checklist, and five concrete failure scenarios from real ecommerce environments.</p>
+
+          <h2 id="what-the-test-validates">What the Rich Results Test Actually Validates</h2>
+
+          <p>The Rich Results Test validates syntax, not truth. It checks that your JSON-LD is parseable, that required properties are present, and that values are the correct type. <code>price</code> is a number. <code>priceCurrency</code> is a string. <code>availability</code> is an <code>ItemAvailability</code> enum — accepted as a short value like <code>InStock</code> or a full schema.org URL. Pass those checks and you get a green tick.</p>
+
+          <p>That green tick does not mean Google will use the data. It means the data can be read. Those are different things.</p>
+
+          <p>After the crawl, Google runs its own verification layer: comparing the price in your schema against the price on the page, checking availability against what a user would actually encounter, cross-referencing your identifiers against the Merchant Center feed. Those checks happen after the green tick, and they are the ones that determine whether the data gets used.</p>
+
+          <div class="retrieval-block">
+            <div class="retrieval-block-label">Common causes of schema suppression and Merchant Center disapproval</div>
+            <ul>
+              <li>Stale or cached price in schema not matching the live page price</li>
+              <li>Availability set to <code>InStock</code> for out-of-stock products</li>
+              <li>GTIN field containing an internal SKU or incorrectly formatted identifier</li>
+              <li>Schema GTIN and Merchant Center feed GTIN disagreeing</li>
+              <li>Schema image URL returning a 404, redirect chain, or undersized image</li>
+              <li>AggregateRating values not matching the review count visible on the page</li>
+              <li>Price or availability updated on the page but not yet in schema or feed</li>
+              <li>Missing recommended properties: <code>shippingDetails</code>, <code>returnPolicy</code>, <code>AggregateRating</code>, <code>brand</code>
+            </ul>
+          </div>
+
+          <h2 id="four-failures">5 Product Data Failures: Suppression, Disapproval, and Silent Underperformance</h2>
+
+          <h3 id="price-availability">1. Price and Availability Staleness</h3>
+
+          <div class="failure-card">
+            <span class="failure-card-tag price">Price</span>
+            <h3>Three sources have to agree: page HTML, schema, and Merchant Center feed</h3>
+            <p>When any of them diverge, Google acts. A feed vs. page mismatch triggers a Merchant Center disapproval. A schema vs. page mismatch triggers suppression — the rich result stops appearing. No error in Search Console, and nothing flagged in Merchant Center.</p>
+          </div>
+
+          <p>The <strong>flash sale failure pattern</strong> is the most common version at scale. The sale goes live. The page price updates dynamically. The static JSON-LD was generated at the last build. The Merchant Center feed is on a 24-hour upload cycle. During the sale launch window, the three sources fall out of alignment. Products disapprove. Rich results drop. Reapproval typically happens on the next crawl once alignment is restored, but the damage window during a high-traffic promotion is real.</p>
+
+          <p><strong>JavaScript-rendered prices</strong> create a quieter version of the same problem. Googlebot reads your pre-render HTML first, then renders the JavaScript. If your schema is generated from the same cached layer as the pre-render HTML, you can have a schema-to-page mismatch even though the displayed price is correct. The fix is ensuring the live price is available in the static HTML response, not only in the JavaScript output.</p>
+
+          <div class="post-callout-warn">
+            <strong>Availability staleness at template level.</strong> A template that hardcodes <code>InStock</code> regardless of actual stock status — because nobody updated it when the product range changed — reduces Google's data confidence across every page using that template. There is no disapproval, no warning, and no per-URL flag in Search Console. You find it in a crawl, or you don't find it.
+          </div>
+
+          <h3 id="identifier-mismatches">2. GTIN and Identifier Mismatches</h3>
+
+          <div class="failure-card">
+            <span class="failure-card-tag identifier">Identifier</span>
+            <h3>A value that passes format validation but belongs to a different product, or to no product at all</h3>
+            <p>The most common version: an internal SKU in the GTIN field, 12 numeric characters, passing the format check, doing nothing useful for product matching.</p>
+          </div>
+
+          <div class="post-callout">
+            <strong>Where your internal SKU does belong:</strong> in the <code>sku</code> property of your Product schema, and in the <code>id [id]</code> attribute of your Merchant Center feed. That is exactly what those fields are for. The failure is SKU ending up in the <code>gtin</code> field in either place, which is where Google looks for a globally unique product identifier, not an internal reference.
+          </div>
+
+          <p>GTIN is how Google matches your product to a known entity in its knowledge graph. Get it right and your listing gets price comparison features, Shopping knowledge panels, and stronger AI Overview eligibility. Get it wrong and the product appears without being matched — no price comparison, no knowledge panel, weaker signals across the board.</p>
+
+          <p>The <strong>schema vs. feed drift</strong> problem is subtler. GTINs live in two places: your JSON-LD and your Merchant Center feed, maintained by different teams on different update cycles. A GTIN corrected in the feed after a supplier update doesn't automatically update the page template. A product relaunch that changes the identifier gets the feed updated; the schema is generated from a CDN-cached data layer that nobody flushed. Neither produces an error. Google just sees two sources disagreeing and applies a lower confidence score to both.</p>
+
+          <p>The practical check: pull 20 high-traffic PDPs and compare the <code>gtin</code> in the schema against the <code>gtin [gtin]</code> in the Merchant Center feed for the same product. They should be identical. For full identifier field definitions and format requirements: <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO</a>.</p>
+
+          <h3 id="rating-data">3. AggregateRating Data Problems</h3>
+
+          <div class="failure-card">
+            <span class="failure-card-tag rating">Ratings</span>
+            <h3>AggregateRating is probably the most misrepresented property in product schema</h3>
+            <p>Not maliciously. From stale pipelines, third-party integrations that bleed into the wrong context, and cached counts that stopped updating at some point and nobody noticed.</p>
+          </div>
+
+          <p>Three patterns cause suppression:</p>
+
+          <p><strong>ReviewCount that doesn't match the page.</strong> Schema says 1,247. The page shows 23. The 1,247 comes from a legacy feed that aggregated reviews across all channels — marketplace, email, direct — before the methodology changed. Google crawls the page, sees 23, compares it to 1,247 in the schema, and stops trusting the schema. The annotation disappears.</p>
+
+          <p><strong>Store ratings in a product context.</strong> A Trustpilot merchant score presented as a product-level <code>AggregateRating</code> in your <code>Product</code> schema. A store rating reflects what customers thought of buying from you. A product rating reflects what customers thought of a specific item. Google knows the difference. For the full distinction: <a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings: How Each Works</a>.</p>
+
+          <p><strong>RatingValue that doesn't match the page.</strong> Schema says 4.8. The page says 4.2. One was cached. The other wasn't. Google takes the conservative position and suppresses the annotation rather than surfacing data it can't verify independently. The rule: schema values must match what a user can visibly see on the page at the time of crawl.</p>
+
+          <h3 id="image-compliance">4. Image Compliance Failures</h3>
+
+          <div class="failure-card">
+            <span class="failure-card-tag image">Image</span>
+            <h3>The schema <code>image</code> property is what Google uses for Product rich results, Discover, and AI retrieval</h3>
+            <p>Not the first image on the page. Not the hero image in your HTML. The URL in the <code>image</code> property of your Product schema. Google Shopping listings use <code>image_link</code> from the Merchant Center feed — but schema <code>image</code> matters for organic rich results, Discover, and increasingly for AI retrieval confidence. When that URL is wrong, too small, or broken, you lose visibility across all three. Quietly.</p>
+          </div>
+
+          <ul>
+            <li><strong>404s from CDN migrations.</strong> The product image moved to a new path. The HTML was updated. The schema wasn't. Google can't fetch the image, no thumbnail appears, and nothing flags it in Search Console.</li>
+            <li><strong>Dimensions below Google's minimums.</strong> The validator doesn't enforce dimensions. For schema <code>image</code>, Google's stated minimum for rich results is 160×90px, but the practical minimum for Discover and AI retrieval is higher. For Merchant Center's <code>image_link</code>: 100×100px (non-apparel), 250×250px (apparel). Both Google and Merchant Center recommend 800×800px. An undersized image passes validation and still causes features to be withheld.</li>
+            <li><strong>Wrong image on variant pages.</strong> Where all variants share a single URL, the <code>image</code> property sometimes points to a generic shot rather than the variant being described. Google may show the wrong product in Shopping, or none at all.</li>
+            <li><strong>Redirect chains.</strong> The image URL resolves — eventually — through multiple redirects. Google follows them, but long chains create uncertainty and images can be skipped during high-volume crawls.</li>
+          </ul>
+
+          <h3 id="thin-schema">5. Thin Schema: Missing Recommended Properties</h3>
+
+          <div class="failure-card">
+            <span class="failure-card-tag" style="background:#fff7ed;color:#9a3412;border:1px solid #fdba74;">Completeness</span>
+            <h3>Schema that passes validation but omits properties Google uses to serve features</h3>
+            <p>Required properties get you into the system. Recommended properties determine how well you perform once you're in it. Missing them isn't an error — it's an invisible opportunity cost.</p>
+          </div>
+
+          <p>The properties most commonly absent, and most commercially relevant:</p>
+
+          <ul>
+            <li><strong><code>shippingDetails</code> and <code>returnPolicy</code>.</strong> These generate the shipping and returns annotations in organic results — "Free delivery over £20 · 30-day returns" appearing beneath your meta description before a click. Optional by spec. In practice, the lowest-effort rich result improvement on most ecommerce sites, because few competitors have implemented it correctly.</li>
+            <li><strong><code>AggregateRating</code> when reviews exist on the page.</strong> If your product page displays star ratings and review counts, and your schema doesn't include <code>AggregateRating</code>, you're leaving the most visible organic annotation off the table. The validator has no opinion on this. It will pass your schema with no rating data even if the page is full of reviews.</li>
+            <li><strong><code>description</code>.</strong> Not required for rich results. Used by Google as a content signal for AI Overviews, Discover, and Shopping knowledge panels. On large catalogues it's frequently absent or populated with a truncated string from a legacy feed that predates the current product range.</li>
+            <li><strong><code>priceValidUntil</code>.</strong> Required for Merchant Listing schema when a price has an expiry. Without it on a promotional price, Google has no signal the price is time-limited.</li>
+            <li><strong><code>brand</code> on products without a GTIN.</strong> Without a GTIN, <code>brand</code> combined with <code>mpn</code> is the fallback matching mechanism. Missing <code>brand</code> on a private-label or own-brand product means Google has no manufacturer context and no GTIN; matching confidence drops significantly. For the full identifier hierarchy: <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO</a>.</li>
+            <li><strong>Variant properties for selectable variants.</strong> <code>color</code>, <code>size</code>, <code>material</code>, and <code>pattern</code> properties on individual variant nodes are what enable colour swatches and size selectors in Google Shopping product panels. Omitting them produces valid schema that just never generates variant-level Shopping features.</li>
+          </ul>
+
+          <div class="post-callout">
+            <strong>How to find thin schema at scale:</strong> crawl a sample of your PDPs and extract the full list of properties present in each Product schema block. Build a count of which recommended properties are present vs. absent across the sample. Missing <code>shippingDetails</code> on 80% of pages is a template fix, not a page-by-page fix. The pattern is what matters.
+          </div>
+
+          <h2 id="three-layer-model">The 3-Layer Product Data Alignment Model</h2>
+
+          <p>Most product data failures don't happen in one place. They happen because the same data is being maintained in three separate systems, by separate teams, on separate update cycles. When any two layers disagree, you get disapprovals, suppression, or a lower-confidence match that nobody tracks.</p>
+
+          <div class="layer-model">
+            <div class="layer-row header">
+              <div class="layer-cell header-cell">Layer</div>
+              <div class="layer-cell header-cell">Purpose &amp; owner</div>
+              <div class="layer-cell header-cell">How it fails</div>
+            </div>
+            <div class="layer-row">
+              <div class="layer-cell label"><span class="layer-badge html">Layer 1</span><br>Rendered Page State</div>
+              <div class="layer-cell">The product data visible to users once the page is rendered — whether server-rendered HTML, JavaScript-rendered content, or a hybrid of both. This is what Google compares against schema and feed data during verification.</div>
+              <div class="layer-cell">Caching, JavaScript rendering delays, hydration timing, SSR/CSR hybrid architectures, frontend experiments where Googlebot and users receive different content (note: deliberately serving different prices to Googlebot is cloaking — a policy violation, not just a failure mode).</div>
+            </div>
+            <div class="layer-row">
+              <div class="layer-cell label"><span class="layer-badge schema">Layer 2</span><br>Structured Data</div>
+              <div class="layer-cell">Machine-readable interpretation. Owned by SEO / platform team. What Google parses for rich results and AI retrieval.</div>
+              <div class="layer-cell">Static templates, build-time generation from stale data, manual updates that don't propagate to all page types.</div>
+            </div>
+            <div class="layer-row">
+              <div class="layer-cell label"><span class="layer-badge feed">Layer 3</span><br>Merchant Center Feed</div>
+              <div class="layer-cell">Shopping ingestion layer. Owned by ecommerce / merchandising team. What Google uses to serve Shopping listings and ads.</div>
+              <div class="layer-cell">Upload frequency misaligned with pricing events, feed transform errors, missing or incorrectly mapped attributes.</div>
+            </div>
+          </div>
+
+          <p>The failure mode this creates is systematic, not random. Fixing one layer without checking the other two is the reason the same disapproval keeps reappearing. A Merchant Center price mismatch gets resolved by updating the feed. Three days later it reappears — because a promotion updated the page price without triggering a feed refresh. The fix needs to happen at the process level, not the data level.</p>
+
+          <p>This is also why schema audits that only check syntax miss the actual problem. The three layers need to be checked against each other, not just internally. The audit checklist below is structured to do exactly that.</p>
+
+          <h2 id="ai-trust">Why This Is Now an AI Trust Problem, Not Just an SEO Problem</h2>
+
+          <p>Rich results are one consequence of bad product data. They are no longer the biggest one.</p>
+
+          <p>AI shopping agents — the systems used in Google's AI Overviews, ChatGPT shopping, Perplexity product recommendations, and the agentic commerce layer being built into most major search interfaces — retrieve product data from structured markup to inform purchase decisions. Based on how these systems behave, they appear to favour product data that is internally consistent across page, schema, and feed. Inconsistency is a low-confidence signal for the same reason it is for Google: it means one of your sources is wrong, and there is no way to know which one.</p>
+
+          <p>A product with valid but inaccurate schema isn't just at risk of losing rich results. It's at risk of being skipped by systems that have no obligation to surface data they can't verify. That's a different kind of visibility problem than anything in your Search Console report.</p>
+
+          <p>The validator pass is the floor. What's above it — data consistency, feed alignment, identifier accuracy — is increasingly what determines whether your products surface in AI-assisted shopping at all. For the broader context: <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data</a>.</p>
+
+          <h2 id="symptoms">Symptoms You'll Actually See</h2>
+
+          <p>These failures don't announce themselves as schema errors. They show up as operational signals in other systems, usually without an obvious cause.</p>
+
+          <div class="post-table-wrap">
+            <table class="post-table">
+              <thead>
+                <tr>
+                  <th>What you observe</th>
+                  <th>Likely cause</th>
+                  <th>Where to check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Rich results were showing and then stopped</td><td>Schema vs. page mismatch (price, availability, or rating)</td><td>Search Console Rich Results report → compare schema to live page</td></tr>
+                <tr><td>Products intermittently disapprove in Merchant Center</td><td>Price or availability out of sync between feed and page</td><td>Merchant Center Diagnostics → check price at time of disapproval</td></tr>
+                <tr><td>Shopping CTR or impression share dropped after a sale ended</td><td>Feed still showing sale price after promotion ended on page</td><td>Compare feed <code>sale_price_effective_date</code> to page</td></tr>
+                <tr><td>Variant swatches or size selectors missing in Shopping panels</td><td>Missing <code>color</code>, <code>size</code>, or <code>hasVariant</code> properties on variant schema</td><td>Crawl schema on variant pages; check for <code>ProductGroup</code> structure</td></tr>
+                <tr><td>Star rating annotations disappeared from organic results</td><td>AggregateRating mismatch or third-party score in wrong schema context</td><td>Compare schema <code>reviewCount</code> + <code>ratingValue</code> to visible page values</td></tr>
+                <tr><td>Products approved in Merchant Center but Shopping traffic lower than expected</td><td>GTIN mismatch between schema and feed; product not matching to entity</td><td>Pull 20 PDPs, compare <code>gtin</code> in schema vs. feed line by line</td></tr>
+                <tr><td>Shipping/returns annotations absent despite implementation</td><td>Missing <code>shippingDetails</code> or <code>returnPolicy</code>; or Merchant Center feed not aligned</td><td>Rich Results Test on a PDP; check schema for <code>OfferShippingDetails</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 id="audit-checklist">The Audit Checklist</h2>
+
+          <p>Start with 20 high-traffic PDPs, not 200. The goal is to identify systematic failures in your template or pipeline. Individual bad URLs are noise. Patterns are signal.</p>
+
+          <ol class="audit-steps">
+            <li>
+              <div>
+                <strong>Price spot-check (all three layers)</strong>
+                For each URL: compare the <code>price</code> in the JSON-LD, the price in the page HTML, and the <code>price [price]</code> in the Merchant Center feed. All three should be identical. Repeat for sale prices: check <code>priceValidUntil</code> in schema and <code>sale_price_effective_date</code> in the feed, and confirm the promotion is actually live on the page. Any mismatch is a disapproval or suppression candidate.
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Availability check</strong>
+                Compare <code>schema:availability</code> to actual stock status for each URL. Flag <code>InStock</code> on out-of-stock products and <code>OutOfStock</code> on purchasable ones. Check which products had a stock status change in the last 30 days — these carry the highest schema lag risk.
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>GTIN format and cross-layer comparison</strong>
+                Extract the <code>gtin</code> from schema and compare against <code>gtin [gtin]</code> in the Merchant Center feed. They should be identical. Check format: GTINs are numeric only, 8, 12, 13, or 14 digits. Values containing letters, or starting with <code>02</code>, <code>04</code>, or <code>2</code> are GS1-reserved for internal/restricted use and are not usable for Google product matching even if they pass format validation. Use the <a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a> for bulk checks across your full feed.
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Image URL audit</strong>
+                Extract the <code>image</code> URL from each Product schema block and check: HTTP response code (looking for 404s and redirect chains), dimensions (800×800px recommended; anything below 160×90px will be rejected for rich results), and whether the image matches the primary product described on the page. Screaming Frog can extract schema image URLs and check response codes in a single crawl.
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Rating consistency check</strong>
+                For any URL with <code>AggregateRating</code>: compare <code>ratingValue</code> and <code>reviewCount</code> in schema against the values visibly displayed on the page. Identify the data source for each: live review system, daily snapshot, or static template. Flag anything where the two can fall out of sync.
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Cross-layer failure pattern analysis</strong>
+                After steps 1–5: categorise failures by layer. Schema-only failures indicate static templates or stale build-time data. Feed-only failures indicate upload frequency or transform issues. Failures in both layers simultaneously usually mean the wrong data is being fed into multiple systems from a single upstream source. That's the one worth escalating.
+              </div>
+            </li>
+          </ol>
+
+          <h2 id="scenarios">Common Failure Scenarios</h2>
+
+          <p>The five failures above aren't theoretical. These are the patterns that appear most frequently in real ecommerce audits.</p>
+
+          <div class="faq-block">
+
+            <div class="faq-item">
+              <div class="faq-q">Flash sale launch with a daily feed cycle</div>
+              <div class="faq-a">Sale goes live at midnight. Page price updates immediately. Static JSON-LD was generated at the last platform build, a week prior. Merchant Center feed refreshes at 06:00. Between midnight and 06:00, the page, schema, and feed carry three different prices. Products disapprove. Rich results drop. Reapproval happens on the next crawl after the feed refreshes — but the peak traffic window for the sale has passed. <strong>Fix:</strong> trigger feed refresh and schema regeneration as part of the sale launch process, not on a fixed schedule.</div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">Headless commerce cache drift after a restock</div>
+              <div class="faq-a">Product goes out of stock. Schema is updated to <code>OutOfStock</code>. Product is restocked two days later. Page HTML updates immediately. Schema is generated from a CDN-cached data layer with a 12-hour TTL. Schema continues to say <code>OutOfStock</code> for 12 hours after the restock. No disapproval — the mismatch direction is availability correct on page, wrong in schema. The availability annotation in organic results disappears or is suppressed for those 12 hours. No flag anywhere. <strong>Fix:</strong> stock status changes should trigger a schema cache invalidation, not wait for the TTL.</div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">CDN migration without schema update</div>
+              <div class="faq-a">Platform migrates product images to a new CDN with a different URL structure. HTML image tags are updated in the migration. JSON-LD schema is generated from a product data template that hardcodes the old CDN domain. Schema <code>image</code> URLs return 404s. Product rich result images disappear. Shopping thumbnail annotations drop. Nothing in Search Console flags image 404s as a structured data issue — it appears in a crawl, not in the Rich Results report. Takes weeks to identify without proactive monitoring. <strong>Fix:</strong> include schema <code>image</code> URLs in post-migration crawl checks.</div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">Review provider switch with cached AggregateRating</div>
+              <div class="faq-a">Site migrates to a new review provider. New provider loads reviews via JavaScript. Schema <code>AggregateRating</code> is still generated from the old provider's API, which stopped syncing at the point of migration. Schema says 1,104 reviews, 4.7 rating. Page now displays 38 reviews from the new provider, 4.4 rating. Google crawls the page, sees 38 and 4.4, compares to the 1,104 and 4.7 in schema, and suppresses the rating annotation. No error in Merchant Center, no warning in Search Console. <strong>Fix:</strong> review provider migrations require a schema data source audit, not just a front-end integration check.</div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">Feed GTIN update not reflected in schema after a product relaunch</div>
+              <div class="faq-a">Product relaunches under a revised variant structure with new GTINs. Merchant Center feed is updated. Schema is generated from a product information management (PIM) system on a weekly sync cycle. For five days, schema carries old GTINs; feed carries new ones. Google sees conflicting identifier signals during the relaunch window — exactly when Shopping impression share for the product matters most. Neither the old nor new GTIN is flagged as wrong. Both are just trusted less. <strong>Fix:</strong> product relaunches should trigger an immediate PIM-to-schema sync, not wait for the weekly cycle.</div>
+            </div>
+
+          </div>
+
+          <div class="post-callout" style="margin-top:40px;">
+            The pattern across all five scenarios is the same. The failure isn't visible in any single system. Merchant Center looks clean. Search Console raises nothing. The validator passes. The problem only exists at the intersection of all three layers — which is exactly where Google, Shopping, and AI retrieval systems operate.
+          </div>
+
+          <h2 id="conclusion" style="margin-top:56px;">Conclusion</h2>
+
+          <p style="font-size:17px;line-height:1.75;color:var(--text-2);">The validator checks whether the markup is technically valid. What actually determines whether products surface consistently across organic search, Shopping, and AI-driven experiences is whether the underlying data stays accurate, current, and aligned across the page, schema, and Merchant Center feed.</p>
+
+          <p style="font-size:17px;line-height:1.75;color:var(--text-2);">Getting the implementation live is step one. Keeping those three layers aligned over time is the operational discipline most ecommerce teams never fully solve. That is where the real gap is.</p>
+
+          <div class="sources">
+            <h2>Sources and further reading</h2>
+            <ul>
+              <li><strong>Related on MagsTags:</strong> <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand</a> — identifier field definitions, format requirements, and the schema vs. feed alignment gap</li>
+              <li><strong>Related on MagsTags:</strong> <a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings: How Each Works</a> — the difference between product-level AggregateRating and merchant-level seller ratings</li>
+              <li><strong>Related on MagsTags:</strong> <a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Structured Data: Rich Results, Google Shopping and What Actually Moves the Needle at Scale</a> — the broader three-layer alignment framework</li>
+              <li><strong>Related on MagsTags:</strong> <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data</a> — AI agent trust signals and product data requirements</li>
+              <li><strong>Tool:</strong> <a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a> — bulk identifier and attribute checks across your Merchant Center feed</li>
+              <li><strong>Tool:</strong> <a href="/merchant-listing-schema-generator/">Merchant Listing Schema Generator</a> — generate correct JSON-LD for price, availability, shipping, and returns</li>
+              <li><strong>Google:</strong> <a href="https://support.google.com/merchants/answer/9236841" rel="noopener noreferrer" target="_blank">Price mismatch — Merchant Center Help</a></li>
+              <li><strong>Google:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/product" rel="noopener noreferrer" target="_blank">Product structured data — Google Search Central</a></li>
+            </ul>
+          </div>
+
+          <div class="author-card">
+            <div class="author-label">Written by</div>
+            <div class="author-inner">
+              <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="80" height="80">
+              <div class="author-details">
+                <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+                <div class="author-role">Freelance SEO Consultant, SEO Director</div>
+                <p class="author-bio">Senior SEO Strategist with 18+ years leading search programmes for enterprise and global businesses. Director of SEO at Intrepid Digital. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="ct-toc">
+        <button class="ct-toc-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.nextElementSibling.classList.toggle('open')">
+          On this page <span class="ct-toc-arrow">▼</span>
+        </button>
+        <div class="ct-toc-label">On this page</div>
+        <ol class="ct-toc-list">
+          <li><a href="#what-the-test-validates">What the Rich Results Test Validates</a></li>
+          <li><a href="#four-failures">5 Product Data Failures</a>
+            <ol>
+              <li><a href="#price-availability">Price and availability staleness</a></li>
+              <li><a href="#identifier-mismatches">GTIN and identifier mismatches</a></li>
+              <li><a href="#rating-data">AggregateRating data problems</a></li>
+              <li><a href="#image-compliance">Image compliance failures</a></li>
+              <li><a href="#thin-schema">Thin schema: missing recommended properties</a></li>
+            </ol>
+          </li>
+          <li><a href="#three-layer-model">The 3-Layer Alignment Model</a></li>
+          <li><a href="#ai-trust">AI Trust, Not Just SEO</a></li>
+          <li><a href="#symptoms">Symptoms</a></li>
+          <li><a href="#audit-checklist">Audit Checklist</a></li>
+          <li><a href="#scenarios">Failure Scenarios</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</div>
+<footer>
+  <p>© 2026 MagsTags · <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a> · <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a> · <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a> · <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a> · <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a> · <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a></p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center"><a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a></p>
+</footer>
+<script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
+<script src="/header.js"></script>
+<script src="/blog-auth.js"></script>
+</body>
+</html>

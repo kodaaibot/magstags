@@ -314,4 +314,11 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://www.magstags.com/notes/valid-schema-bad-data/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
