@@ -372,6 +372,76 @@
 
           <p>Most product data failures don't happen in one place. They happen because the same data is being maintained in three separate systems, by separate teams, on separate update cycles. When any two layers disagree, you get disapprovals, suppression, or a lower-confidence match that nobody tracks.</p>
 
+          <figure class="ct-figure" role="group" aria-labelledby="three-layer-title">
+            <div class="ct-figure-frame">
+              <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="three-layer-title three-layer-desc">
+                <title id="three-layer-title">The 3-Layer Product Data Alignment Model</title>
+                <desc id="three-layer-desc">A triangle diagram showing three data layers — Rendered Page State, Structured Data, and Merchant Center Feed — and the specific failure mode that occurs along each edge when those two layers fall out of alignment.</desc>
+                <defs>
+                  <style>
+                    .diagram-heading{font-family:'Space Grotesk',system-ui,sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;fill:#111009;text-anchor:middle}
+                    .diagram-sub{font-family:'Inter',system-ui,sans-serif;font-size:12px;fill:#504c49;text-anchor:middle}
+                    .layer-box{fill:#ffffff;stroke:#ddd9d3;stroke-width:1}
+                    .layer-accent{fill:#0E7490}
+                    .layer-label-svg{font-family:'Inter',system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;fill:#857f7a}
+                    .layer-title-svg{font-family:'Space Grotesk',system-ui,sans-serif;font-size:17px;font-weight:600;fill:#111009}
+                    .layer-body-svg{font-family:'Inter',system-ui,sans-serif;font-size:12.5px;fill:#504c49}
+                    .layer-owner-svg{font-family:'Inter',system-ui,sans-serif;font-size:11px;font-style:italic;fill:#857f7a}
+                    .edge-line{stroke:#0E7490;stroke-width:1.5;fill:none}
+                    .edge-label-bg{fill:#E0F2FE;stroke:rgba(14,116,144,.25);stroke-width:1}
+                    .edge-label-title-svg{font-family:'Inter',system-ui,sans-serif;font-size:11.5px;font-weight:700;fill:#0E7490}
+                    .edge-label-sub-svg{font-family:'Menlo','Courier New',monospace;font-size:10.5px;fill:#504c49}
+                  </style>
+                </defs>
+                <text class="diagram-heading" x="400" y="30">The 3-Layer Alignment Model</text>
+                <text class="diagram-sub" x="400" y="50">Google compares the same value across all three layers at crawl time</text>
+                <line class="edge-line" x1="330" y1="180" x2="200" y2="420" />
+                <line class="edge-line" x1="470" y1="180" x2="600" y2="420" />
+                <line class="edge-line" x1="280" y1="470" x2="520" y2="470" />
+                <g>
+                  <rect class="layer-box" x="280" y="80" width="240" height="100" rx="14" />
+                  <rect class="layer-accent" x="280" y="80" width="3" height="100" />
+                  <text class="layer-label-svg" x="298" y="106">Layer 1</text>
+                  <text class="layer-title-svg" x="298" y="130">Rendered Page State</text>
+                  <text class="layer-body-svg" x="298" y="151">What a user sees after render</text>
+                  <text class="layer-owner-svg" x="298" y="169">Owner: engineering / frontend</text>
+                </g>
+                <g>
+                  <rect class="layer-box" x="40" y="420" width="240" height="100" rx="14" />
+                  <rect class="layer-accent" x="40" y="420" width="3" height="100" />
+                  <text class="layer-label-svg" x="58" y="446">Layer 2</text>
+                  <text class="layer-title-svg" x="58" y="470">Structured Data</text>
+                  <text class="layer-body-svg" x="58" y="491">JSON-LD Google parses</text>
+                  <text class="layer-owner-svg" x="58" y="509">Owner: SEO / platform</text>
+                </g>
+                <g>
+                  <rect class="layer-box" x="520" y="420" width="240" height="100" rx="14" />
+                  <rect class="layer-accent" x="520" y="420" width="3" height="100" />
+                  <text class="layer-label-svg" x="538" y="446">Layer 3</text>
+                  <text class="layer-title-svg" x="538" y="470">Merchant Center Feed</text>
+                  <text class="layer-body-svg" x="538" y="491">Shopping ingestion data</text>
+                  <text class="layer-owner-svg" x="538" y="509">Owner: ecommerce / merch</text>
+                </g>
+                <g transform="translate(135,270)">
+                  <rect class="edge-label-bg" x="0" y="0" width="190" height="54" rx="10" />
+                  <text class="edge-label-title-svg" x="14" y="23">Rich result suppression</text>
+                  <text class="edge-label-sub-svg" x="14" y="42">page &#8800; schema</text>
+                </g>
+                <g transform="translate(475,270)">
+                  <rect class="edge-label-bg" x="0" y="0" width="190" height="54" rx="10" />
+                  <text class="edge-label-title-svg" x="14" y="23">Merchant Center disapproval</text>
+                  <text class="edge-label-sub-svg" x="14" y="42">page &#8800; feed</text>
+                </g>
+                <g transform="translate(280,549)">
+                  <rect class="edge-label-bg" x="0" y="0" width="240" height="34" rx="10" />
+                  <text class="edge-label-title-svg" x="14" y="17">Lower entity match confidence</text>
+                  <text class="edge-label-sub-svg" x="14" y="29">schema &#8800; feed</text>
+                </g>
+              </svg>
+            </div>
+            <figcaption style="font-size:13px;color:var(--text-4);line-height:1.7;margin-top:14px;max-width:680px;">The same product data lives in three places, maintained by different teams on different update cycles. A mismatch on any edge produces a different failure mode — and none of them show up as a validator error. The fix is operational: align the layers, not the markup.</figcaption>
+          </figure>
+
           <div class="layer-model">
             <div class="layer-row header">
               <div class="layer-cell header-cell">Layer</div>
