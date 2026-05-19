@@ -401,3 +401,15 @@ force = true
 [redirects.conditions]
 
 [redirects.headers]
+
+[[redirects]]
+from = "/schema-extractor/"
+to = "/schema-extractor-chrome-extension/"
+status = 301.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

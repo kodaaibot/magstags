@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/extension-privacy/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+
+  <title>Privacy Policy — Schema.org Structured Data Extractor | MagsTags</title>
+  <meta name="description" content="Privacy policy for the Schema.org Structured Data Extractor Chrome extension. No data is collected, transmitted, or stored on remote servers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    .page-title{font-family:'Space Grotesk',sans-serif;font-size:32px;color:var(--text-1);margin-bottom:8px}
+    .page-meta{font-size:13px;color:var(--text-4);margin-bottom:48px}
+    .legal-body h2{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:var(--text-1);margin:40px 0 12px}
+    .legal-body h2:first-child{margin-top:0}
+    .legal-body p{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:14px}
+    .legal-body ul{padding-left:20px;margin-bottom:14px}
+    .legal-body ul li{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:3px}
+    @media(max-width:600px){main{padding:24px 16px 60px}}
+  </style>
+  <meta property="og:title" content="Privacy Policy — Schema.org Structured Data Extractor | MagsTags">
+  <meta property="og:description" content="Privacy policy for the Schema.org Structured Data Extractor Chrome extension. No data is collected, transmitted, or stored on remote servers.">
+  <meta property="og:url" content="https://www.magstags.com/extension-privacy/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy Policy — Schema.org Structured Data Extractor | MagsTags">
+  <meta name="twitter:description" content="Privacy policy for the Schema.org Structured Data Extractor Chrome extension. No data is collected, transmitted, or stored on remote servers.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+</head>
+<body>
+<script>(function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')})();</script>
+<main>
+  <h1 class="page-title">Privacy Policy — Schema.org Structured Data Extractor</h1>
+  <p class="page-meta">Last updated: May 2026</p>
+  <div class="legal-body">
+
+    <p>The Schema.org Structured Data Extractor extension does not collect, transmit, or store any user data on remote servers.</p>
+
+    <h2>Data the Extension Reads</h2>
+    <p>The extension reads structured data markup (JSON-LD scripts, microdata attributes, and RDFa attributes) from the current page's DOM when:</p>
+    <ul>
+      <li>A content script counts items on each page you visit, to display the count as a badge on the toolbar icon</li>
+      <li>You click the toolbar icon, in which case the full extracted data is displayed in a viewer tab on your device</li>
+    </ul>
+
+    <h2>Data Stored Locally</h2>
+    <p>The extension uses <code>chrome.storage.local</code> to temporarily pass extracted data from the background service worker to the viewer tab. This data is stored only on your device, is not transmitted anywhere, and is overwritten each time you click the icon.</p>
+
+    <h2>Network Requests</h2>
+    <p>The extension makes no network requests on its own. The only external navigation occurs when you click the "Visualize" button, which opens <a href="/schema-markup-visualizer/" style="color:var(--teal)">magstags.com/schema-markup-visualizer/</a> in a new tab. The schema data is placed on your clipboard at that point; you paste it manually into the visualizer. No data is sent to magstags.com or any other server by the extension itself.</p>
+
+    <h2>Third-Party Services</h2>
+    <p>None. No analytics, no telemetry, no error reporting services, no remote APIs.</p>
+
+    <h2>Contact</h2>
+    <p>mags.sikora [at] googlemail.com</p>
+
+  </div>
+</main>
+<script src="/header.js"></script>
+<script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
+</body>
+</html>

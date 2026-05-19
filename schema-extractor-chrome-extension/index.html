@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Schema Extractor — JSON-LD, Microdata &amp; RDFa Chrome Extension | MagsTags</title>
+  <meta name="description" content="Free Chrome extension that extracts JSON-LD, Microdata, and RDFa structured data from any page. Toolbar badge shows item count. One click to view, copy, download, or send to the Schema Markup Visualizer.">
+  <link rel="canonical" href="https://www.magstags.com/schema-extractor-chrome-extension/">
+  <meta property="og:title" content="Schema Extractor — JSON-LD, Microdata &amp; RDFa Chrome Extension">
+  <meta property="og:description" content="Free Chrome extension that extracts structured data from any page. Toolbar badge, tabbed viewer, export to JSON or CSV. No view-source required.">
+  <meta property="og:url" content="https://www.magstags.com/schema-extractor-chrome-extension/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Schema Extractor — JSON-LD, Microdata &amp; RDFa Chrome Extension">
+  <meta name="twitter:description" content="Free Chrome extension that extracts structured data from any page. Toolbar badge, tabbed viewer, export to JSON or CSV.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "Schema Extractor: JSON-LD, Microdata, RDFa",
+    "description": "Chrome extension that extracts JSON-LD, Microdata, and RDFa structured data from any page. Toolbar badge shows item count. One click opens a tabbed viewer with copy, download, and visualizer integration.",
+    "url": "https://www.magstags.com/schema-extractor-chrome-extension/",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "inLanguage": "en-US",
+    "creator": { "@type": "Organization", "name": "MagsTags", "url": "https://www.magstags.com/" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": [
+      "JSON-LD extraction from script blocks",
+      "Microdata extraction with itemscope/itemtype/itemprop support",
+      "RDFa Lite extraction with vocab/typeof/property support",
+      "Toolbar badge showing structured data item count",
+      "Tabbed viewer for all three formats",
+      "5-stat summary panel per item",
+      "Copy, download, or send to Schema Markup Visualizer",
+      "Full-page JSON and CSV export",
+      "Zero network requests, zero data collection"
+    ],
+    "image": "https://www.magstags.com/og-image.png"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+      { "@type": "ListItem", "position": 2, "name": "SEO Tools", "item": "https://www.magstags.com/seo-tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Schema Extractor", "item": "https://www.magstags.com/schema-extractor-chrome-extension/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What structured data formats does the extension support?",
+        "acceptedAnswer": { "@type": "Answer", "text": "All three formats Google parses: JSON-LD (from script type=application/ld+json blocks), Microdata (itemscope, itemtype, itemprop, itemref), and RDFa Lite (vocab, typeof, property, resource, about). Microdata and RDFa are normalised to JSON-LD shape on extraction so the same viewer handles all three." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the extension collect or transmit any data?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The extension reads structured data from the current page's DOM and stores it locally using chrome.storage.local to pass data between the service worker and viewer tab. Nothing is sent to any server. The only external navigation is when you click Visualize, which opens magstags.com in a new tab — and even then, the data is placed on your clipboard. You paste it yourself. Full privacy policy at magstags.com/extension-privacy/." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the toolbar badge number mean?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It shows the total number of structured data items detected on the current page — across all three formats. A badge of 0 (or no badge) means no markup was found. Useful for scanning a site without opening DevTools on every page." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the 5-stat summary panel?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Each extracted item shows a summary with five data points: schema type, total properties, nesting depth, whether an @id is present, and the source format (JSON-LD / Microdata / RDFa). Quick triage without reading the full object." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the Visualize button work?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Clicking Visualize copies the item's JSON to your clipboard and opens the Schema Markup Visualizer at magstags.com in a new tab. You paste the JSON into the visualizer to see the full interactive tree, type badges, and property inventory. No data is sent automatically — you control the paste." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the CSV export contain?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The CSV export downloads all structured data found on the page as a flat CSV file — one row per property/value pair. Designed for batch audits: load multiple page exports into a single Google Sheet and compare schema coverage across your site." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is Microdata handled differently from JSON-LD?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Microdata is embedded in the HTML as attributes rather than a separate script block, which means you can't grab it in one copy-paste. The extension walks the DOM, collects all itemscope elements and their itemprop descendants (including itemref lookups), and normalises the result to JSON-LD shape with @context, @type, @id, and nested objects. The same viewer and the same visualizer handle it identically to JSON-LD." }
+      },
+      {
+        "@type": "Question",
+        "name": "Which Chrome versions does the extension support?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The extension uses Manifest V3, which is required for all new Chrome Web Store submissions. It runs on Chrome and any Chromium-based browser that supports MV3 — including Edge, Brave, and Arc." }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
+      --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #857f7a;
+      --teal: #1ab6db; --mint: #0891B2; --mint-light: #E0F2FE;
+      --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09);
+    }
+    html.dark {
+      --bg: #111110; --bg2: #191817; --surface: #1e1c1a; --surface-alt: #242220;
+      --border: rgba(255,255,255,.08); --text-1: #f5f2ee; --text-2: #c8c4be;
+      --text-3: #857f79; --text-4: #4a4743; --teal: #22D3EE; --mint: #67E8F9;
+      --mint-light: rgba(14,116,144,.14);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
+    }
+
+    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 0; }
+    @media (max-width: 768px) { main { padding: 24px 20px 0; } }
+
+    /* ─── Breadcrumb ─── */
+    .breadcrumb { font-size: 12px; color: var(--text-4); margin-bottom: 28px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--text-4); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--teal); }
+    .breadcrumb-sep { opacity: .5; }
+
+    /* ─── Hero ─── */
+    .hero { margin-bottom: 56px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 4px 12px; border-radius: 99px; font-weight: 600; background: var(--mint-light); color: var(--teal); margin-bottom: 16px; }
+    .hero-icon { font-size: 13px; }
+    .hero-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 42px; font-weight: 400; color: var(--text-1); margin-bottom: 16px; line-height: 1.2; max-width: 760px; }
+    .hero-sub { font-size: 16px; color: var(--text-3); max-width: 600px; line-height: 1.65; margin-bottom: 8px; }
+    .hero-tagline { font-size: 13px; color: var(--text-4); font-style: italic; margin-bottom: 32px; }
+    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .btn-install { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; text-decoration: none; padding: 13px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; transition: opacity .15s; }
+    .btn-install:hover { opacity: .85; }
+    .btn-install svg { flex-shrink: 0; }
+    .btn-privacy { color: var(--text-4); font-size: 13px; text-decoration: none; }
+    .btn-privacy:hover { color: var(--teal); }
+    .hero-meta { display: flex; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
+    .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-4); }
+    .hero-meta-item span { color: var(--text-3); font-weight: 500; }
+
+    /* ─── Content wrapper ─── */
+    .ct-wrap { max-width: 1320px; margin: 0 auto; padding: 0 36px 100px; }
+    @media (max-width: 640px) { .ct-wrap { padding: 0 16px 60px; } }
+
+    /* ─── Sections ─── */
+    .ct-section { margin-bottom: 64px; }
+    .ct-section-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); margin-bottom: 10px; }
+    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: var(--text-1); margin-bottom: 16px; }
+    .ct-lead { font-size: 15px; color: var(--text-2); line-height: 1.7; max-width: 760px; }
+    .ct-body { font-size: 14px; color: var(--text-3); line-height: 1.75; max-width: 760px; }
+    .ct-body code, .ct-lead code { font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; font-family: 'Menlo','Monaco','Courier New',monospace; color: var(--text-2); }
+
+    /* ─── Card grid ─── */
+    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 28px; }
+    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; }
+    .ct-card-icon { font-size: 22px; margin-bottom: 12px; }
+    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
+    .ct-card p { font-size: 13.5px; color: var(--text-3); line-height: 1.65; margin: 0; }
+
+    /* ─── Formats table ─── */
+    .formats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+    @media (max-width: 640px) { .formats-grid { grid-template-columns: 1fr; } }
+    .format-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; }
+    .format-mark { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 22px; font-weight: 700; color: var(--teal); margin-bottom: 10px; display: block; }
+    .format-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
+    .format-desc { font-size: 13px; color: var(--text-3); line-height: 1.65; margin-bottom: 14px; }
+    .format-attrs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .format-attr { font-size: 11px; font-family: 'Menlo','Monaco','Courier New',monospace; background: var(--bg2); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; color: var(--text-3); }
+
+    /* ─── Steps ─── */
+    .steps { display: flex; flex-direction: column; gap: 0; margin-top: 28px; }
+    .step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--mint-light); color: var(--teal); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+    .step-content h3 { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
+    .step-content p { font-size: 13.5px; color: var(--text-3); line-height: 1.65; margin: 0; }
+
+    /* ─── Related tools ─── */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 24px; }
+    .tool-link-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; text-decoration: none; display: block; transition: border-color .15s, box-shadow .15s; }
+    .tool-link-card:hover { border-color: var(--teal); box-shadow: var(--shadow-md); }
+    .tool-link-name { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .tool-link-desc { font-size: 12px; color: var(--text-4); line-height: 1.55; }
+
+    /* ─── FAQ ─── */
+    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 28px; }
+    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
+    .ct-faq summary::-webkit-details-marker { display: none; }
+    .ct-faq summary::after { content: '▾'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+    .ct-faq details[open] summary::after { transform: rotate(180deg); }
+    .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
+    .ct-faq summary:hover { background: var(--bg2); }
+    .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
+    .ct-faq-body a { color: var(--teal); }
+
+    /* ─── CTA ─── */
+    .ct-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px 48px; margin-bottom: 0; text-align: center; }
+    .ct-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
+    .ct-cta p { font-size: 14px; color: var(--text-3); margin-bottom: 24px; }
+    .ct-cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; transition: opacity .15s; }
+    .ct-cta-link-primary:hover { opacity: .85; }
+    .ct-cta-link-secondary { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 500; transition: opacity .15s; }
+    .ct-cta-link-secondary:hover { opacity: .7; }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 30px; }
+      .ct-cta { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+<script src="/header.js"></script>
+
+<main>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
+    <span>Schema Extractor</span>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge">
+      <span class="hero-icon">{}</span>
+      Free Chrome Extension
+    </div>
+    <h1 class="hero-title">Schema Extractor: JSON-LD, Microdata &amp; RDFa</h1>
+    <p class="hero-sub">Extracts all structured data from any page — JSON-LD, Microdata, and RDFa — and shows it in a clean tabbed viewer. The toolbar badge tells you what's on a page before you click. No DevTools. No view-source.</p>
+    <p class="hero-tagline">Rich results don't happen by accident. For SEOs who know valid ≠ correct.</p>
+    <div class="hero-actions">
+      <!-- Replace href with Chrome Web Store URL once published -->
+      <a href="https://chromewebstore.google.com" target="_blank" rel="noopener" class="btn-install">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Add to Chrome — it's free
+      </a>
+      <a href="/extension-privacy/" class="btn-privacy">Privacy policy ↗</a>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">✦ <span>Manifest V3</span></div>
+      <div class="hero-meta-item">✦ <span>Zero dependencies</span></div>
+      <div class="hero-meta-item">✦ <span>No data collected</span></div>
+      <div class="hero-meta-item">✦ <span>v1.8.0</span></div>
+    </div>
+  </div>
+</main>
+
+<div class="ct-wrap">
+
+  <!-- What it does -->
+  <section class="ct-section" id="what-it-does">
+    <span class="ct-section-label">What it does</span>
+    <h2 class="ct-h2">Structured data audit, without the archaeology</h2>
+    <p class="ct-lead">Auditing structured data on a page currently means opening DevTools, hunting for the right <code>&lt;script type="application/ld+json"&gt;</code> buried between GTM snippets, copying it, and pasting it somewhere readable. For Microdata or RDFa it's worse — there's no single block to grab. You view-source and parse it mentally.</p>
+    <p class="ct-body" style="margin-top:16px">The Schema Extractor handles all three formats in one click. The toolbar badge shows item count as you browse — no clicks needed to know whether a page has markup. Click the icon to open a full viewer with every item extracted, summarised, and ready to copy, download, or send to the visualizer. The CSV export turns multi-page audits into a single Sheets workbook.</p>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <div class="ct-card-icon">🔢</div>
+        <div class="ct-card-title">Toolbar badge</div>
+        <p>Counts structured data items on every page you visit and shows the total on the toolbar icon. Know what's on a page before you open anything. Zero-badge means no markup — move on.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon">📑</div>
+        <div class="ct-card-title">Tabbed viewer</div>
+        <p>Click the icon to open a dedicated viewer tab. JSON-LD, Microdata, and RDFa each get their own tab. Every item shows a 5-stat summary panel — type, properties, depth, @id, source format.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon">📋</div>
+        <div class="ct-card-title">Copy &amp; download</div>
+        <p>Copy any item to clipboard, download as JSON, or export the full page as CSV. Per-item and full-page controls. The CSV is built for batch audits — one export per page, all into one Sheet.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon">🌲</div>
+        <div class="ct-card-title">Visualizer integration</div>
+        <p>Hit Visualize on any item and it opens in the <a href="/schema-markup-visualizer/" style="color:var(--teal)">Schema Markup Visualizer</a> — full interactive tree, type badges, nesting depth. The data goes to your clipboard; you paste it in. Nothing is sent automatically.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon">🔒</div>
+        <div class="ct-card-title">Completely private</div>
+        <p>No analytics. No telemetry. No remote APIs. Extracted data lives in <code>chrome.storage.local</code> — on your device only, overwritten on each use. See the <a href="/extension-privacy/" style="color:var(--teal)">full privacy policy</a>.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon">⚡</div>
+        <div class="ct-card-title">Zero build step</div>
+        <p>Vanilla JS, HTML, CSS. Manifest V3. No npm, no bundler, no dependencies. Eight files, ~700 lines of code. Loads instantly. Works on Chrome, Edge, Brave, Arc — any Chromium-based browser with MV3 support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="ct-section" id="how-it-works">
+    <span class="ct-section-label">How it works</span>
+    <h2 class="ct-h2">Three steps, one click</h2>
+    <p class="ct-lead">Install it once. After that, structured data extraction is always one click away — no setup, no accounts, no config.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Install the extension</h3>
+          <p>Add it from the Chrome Web Store. No permissions beyond the current tab — it doesn't read your browsing history or access any data beyond structured markup on the active page.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Browse normally — the badge does the work</h3>
+          <p>As you visit pages, the toolbar badge updates with the structured data item count. A number tells you markup is present. No badge means no markup found. Scan a whole site without clicking into anything.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Click the icon to extract and inspect</h3>
+          <p>Click the toolbar icon to open the viewer in a new tab. All three formats — JSON-LD, Microdata, RDFa — are shown in separate tabs with per-item summaries and controls. Copy, download, or send any item to the Schema Markup Visualizer for a full interactive tree.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formats -->
+  <section class="ct-section" id="formats">
+    <span class="ct-section-label">Supported formats</span>
+    <h2 class="ct-h2">All three formats Google reads</h2>
+    <p class="ct-lead">Google's structured data parser handles JSON-LD, Microdata, and RDFa. Most tools only handle JSON-LD. This one handles all three — and normalises Microdata and RDFa to the same JSON-LD shape so the viewer and visualizer work identically regardless of format.</p>
+    <div class="formats-grid">
+      <div class="format-card">
+        <span class="format-mark">{}</span>
+        <div class="format-name">JSON-LD</div>
+        <p class="format-desc">Extracted from <code>&lt;script type="application/ld+json"&gt;</code> blocks. The format Google recommends and the one SEOs spend the most time in.</p>
+        <div class="format-attrs">
+          <span class="format-attr">@context</span>
+          <span class="format-attr">@type</span>
+          <span class="format-attr">@id</span>
+          <span class="format-attr">@graph</span>
+        </div>
+      </div>
+      <div class="format-card">
+        <span class="format-mark">&lt;&gt;</span>
+        <div class="format-name">Microdata</div>
+        <p class="format-desc">Parsed from HTML attributes. Includes lenient <code>content=</code> attribute handling that matches how Google's own parser reads non-meta elements.</p>
+        <div class="format-attrs">
+          <span class="format-attr">itemscope</span>
+          <span class="format-attr">itemtype</span>
+          <span class="format-attr">itemprop</span>
+          <span class="format-attr">itemref</span>
+        </div>
+      </div>
+      <div class="format-card">
+        <span class="format-mark">≈</span>
+        <div class="format-name">RDFa Lite</div>
+        <p class="format-desc">Extracted from RDFa Lite attributes. Normalised to JSON-LD shape on extraction — same renderer, same visualizer, same export format as the other two.</p>
+        <div class="format-attrs">
+          <span class="format-attr">vocab</span>
+          <span class="format-attr">typeof</span>
+          <span class="format-attr">property</span>
+          <span class="format-attr">resource</span>
+          <span class="format-attr">about</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="ct-section" id="faq">
+    <span class="ct-section-label">Common questions</span>
+    <h2 class="ct-h2">Frequently asked questions</h2>
+    <div class="ct-faq">
+      <details open>
+        <summary>What structured data formats does the extension support?</summary>
+        <div class="ct-faq-body">All three formats Google parses: JSON-LD (from <code>&lt;script type="application/ld+json"&gt;</code> blocks), Microdata (<code>itemscope</code>, <code>itemtype</code>, <code>itemprop</code>, <code>itemref</code>), and RDFa Lite (<code>vocab</code>, <code>typeof</code>, <code>property</code>, <code>resource</code>, <code>about</code>). Microdata and RDFa are normalised to JSON-LD shape on extraction so the same viewer and the same visualizer handle all three identically.</div>
+      </details>
+      <details>
+        <summary>Does the extension collect or transmit any data?</summary>
+        <div class="ct-faq-body">No. The extension reads structured data from the current page's DOM and stores it locally using <code>chrome.storage.local</code> to pass data between the service worker and the viewer tab. Nothing is sent to any server — including magstags.com. The only external navigation is when you click Visualize, which opens the Schema Markup Visualizer in a new tab and places the data on your clipboard. You paste it yourself. <a href="/extension-privacy/">Full privacy policy here.</a></div>
+      </details>
+      <details>
+        <summary>What does the toolbar badge number mean?</summary>
+        <div class="ct-faq-body">It shows the total number of structured data items detected on the current page, across all three formats. A badge of 0 (or no badge) means no markup was found. Useful for scanning a site quickly — you can tell which pages have schema before opening anything.</div>
+      </details>
+      <details>
+        <summary>What is the 5-stat summary panel?</summary>
+        <div class="ct-faq-body">Each extracted item shows a summary with five data points: schema type, total properties, nesting depth, whether an <code>@id</code> is present, and the source format (JSON-LD / Microdata / RDFa). Quick triage — you see what matters without reading the full object every time.</div>
+      </details>
+      <details>
+        <summary>How does the Visualize button work?</summary>
+        <div class="ct-faq-body">Clicking Visualize copies the item's JSON to your clipboard and opens the <a href="/schema-markup-visualizer/">Schema Markup Visualizer</a> in a new tab. Paste the JSON into the visualizer to see the full interactive tree with type badges, property inventory, and nesting depth. No data is sent automatically — you control the paste.</div>
+      </details>
+      <details>
+        <summary>What does the CSV export contain?</summary>
+        <div class="ct-faq-body">The CSV export downloads all structured data found on the page as a flat file — one row per property/value pair. Designed for batch audits: export multiple pages and load them into a single Google Sheet to compare schema coverage across your site without opening DevTools once.</div>
+      </details>
+      <details>
+        <summary>How is Microdata handled?</summary>
+        <div class="ct-faq-body">Microdata is embedded in HTML as attributes rather than a separate script block, which means you can't grab it in one copy-paste. The extension walks the DOM, collects all <code>itemscope</code> elements and their <code>itemprop</code> descendants (including <code>itemref</code> lookups and lenient <code>content=</code> handling on non-meta elements), and normalises the result to JSON-LD shape. The viewer and visualizer handle it identically to JSON-LD.</div>
+      </details>
+      <details>
+        <summary>Which browsers does the extension support?</summary>
+        <div class="ct-faq-body">The extension uses Manifest V3, required for all new Chrome Web Store submissions. It runs on Chrome and any Chromium-based browser that supports MV3 — including Edge, Brave, and Arc.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Related tools -->
+  <section class="ct-section" id="related-tools">
+    <span class="ct-section-label">Related tools</span>
+    <h2 class="ct-h2">Tools that work alongside the extension</h2>
+    <p class="ct-lead">The extension extracts. These tools tell you what the markup means, whether it's right, and how to generate more of it.</p>
+    <div class="tools-grid">
+      <a href="/schema-markup-visualizer/" class="tool-link-card">
+        <div class="tool-link-name">Schema Markup Visualizer →</div>
+        <div class="tool-link-desc">Paste JSON-LD or fetch from any URL. See your structured data as an interactive tree with type badges, property counts, and nesting depth. The visualizer the extension's Visualize button opens.</div>
+      </a>
+      <a href="/schema-comparison-tool/" class="tool-link-card">
+        <div class="tool-link-name">Schema Comparison Tool →</div>
+        <div class="tool-link-desc">Paste two schemas — your own or a competitor's — and see a side-by-side diff. Before/After and Structural modes. Useful after you've extracted with the extension and want to compare pages.</div>
+      </a>
+      <a href="/ecommerce-schema-generator/" class="tool-link-card">
+        <div class="tool-link-name">E-commerce Schema Generator →</div>
+        <div class="tool-link-desc">Generate Product, Offer, and AggregateRating markup from a form. Pairs with the extractor: extract what you have, compare with what you should have, generate the corrected version.</div>
+      </a>
+      <a href="/product-snippet-schema-generator/" class="tool-link-card">
+        <div class="tool-link-name">Product Snippet Schema Generator →</div>
+        <div class="tool-link-desc">Generate Google-eligible Product Snippet markup. Use the extractor to audit existing pages, then generate corrected or expanded markup here.</div>
+      </a>
+      <a href="/merchant-listing-schema-generator/" class="tool-link-card">
+        <div class="tool-link-name">Merchant Listing Schema Generator →</div>
+        <div class="tool-link-desc">Build Merchant Listing-eligible schema for Google Shopping. Extract what's on your PDPs, identify gaps, generate the correct markup.</div>
+      </a>
+      <a href="/product-variants-schema-generator/" class="tool-link-card">
+        <div class="tool-link-name">Product Variants Schema Generator →</div>
+        <div class="tool-link-desc">Generate ProductGroup + hasVariant markup for variant products. Extract and inspect existing variant schemas to check depth and structure before rebuilding.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="ct-cta">
+    <h2>Add the Schema Extractor to Chrome</h2>
+    <p>Free, private, zero dependencies. Structured data on any page, one click away.</p>
+    <div class="ct-cta-actions">
+      <!-- Replace href with Chrome Web Store URL once published -->
+      <a href="https://chromewebstore.google.com" target="_blank" rel="noopener" class="ct-cta-link-primary">Add to Chrome — it's free ↗</a>
+      <a href="/schema-markup-visualizer/" class="ct-cta-link-secondary">Schema Markup Visualizer →</a>
+    </div>
+  </div>
+
+</div><!-- end .ct-wrap -->
+
+<script src="/footer.js"></script>
+<script src="/cookie-consent.js"></script>
+</body>
+</html>
