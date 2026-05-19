@@ -2,6 +2,8 @@
 (function () {
   var linkStyle = 'color:inherit;text-decoration:none;opacity:.8';
   var links = [
+    ['Home', '/'],
+    ['Notes', '/notes/'],
     ['Contact', '/contact/'],
     ['About me', '/mags-sikora/'],
     ['Disclaimer', '/disclaimer/'],
