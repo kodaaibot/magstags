@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/google-shipping-return-settings/">
+  <meta name="description" content="Shipping and return policies can be configured in multiple places with Google. Here's how Merchant Center, Search Console, merchant listing markup, and organisation markup interact, and which one wins.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Google Shipping and Return Settings: All Your Options, and What Takes Precedence | MagsTags</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Post layout ── */
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    /* ── Breadcrumb ── */
+    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--text-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb span{opacity:.5}
+    /* ── Post header ── */
+    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
+    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
+    /* ── Body ── */
+    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
+    .post-lead{font-size:20px;line-height:1.7;color:var(--text-2);margin-bottom:36px;font-weight:400}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:1px 6px;color:var(--teal)}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--teal)}
+    .post-body a{color:var(--teal);text-decoration:none}
+    .post-body a:hover{text-decoration:underline}
+    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
+    .post-callout strong{color:var(--text-1)}
+    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
+    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
+    /* ── Precedence table ── */
+    .precedence-list{list-style:none;padding:0;margin:28px 0;counter-reset:prec}
+    .precedence-list li{counter-increment:prec;display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;background:var(--surface)}
+    .precedence-list li::before{content:counter(prec);display:flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;flex-shrink:0;margin-top:1px}
+    .prec-label{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:2px}
+    .prec-desc{font-size:13px;color:var(--text-3);line-height:1.5}
+    .prec-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:99px;margin-left:8px;vertical-align:middle}
+    .prec-badge.strongest{background:#DCFCE7;color:#15803D}
+    html.dark .prec-badge.strongest{background:#14532d;color:#4ade80}
+    .prec-badge.weakest{background:#FEE2E2;color:#B91C1C}
+    html.dark .prec-badge.weakest{background:#450a0a;color:#f87171}
+    /* ── Decision table ── */
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
+    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-1);background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;text-align:left;white-space:nowrap}
+    .post-table td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top;font-size:14px;line-height:1.6}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table .col-label{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--text-1);white-space:nowrap}
+    .post-table .col-pick{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--teal);white-space:nowrap}
+    .post-table tr.is-exit td{color:var(--text-4);font-style:italic}
+    @media(max-width:600px){
+      .post-table th,.post-table td{padding:10px 12px;font-size:13px}
+      .post-table .col-label,.post-table .col-pick{white-space:normal}
+    }
+    /* ── FAQ ── */
+    .faq-block{margin-top:52px}
+    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-1);margin:32px 0 10px;line-height:1.35}
+    .faq-a{font-size:15px;color:var(--text-2);line-height:1.8}
+    /* ── Sources ── */
+    .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-1);margin:0 0 20px 0}
+    .sources ul{padding-left:0;list-style:none}
+    .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
+    .sources a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--text-2);font-weight:600}
+    /* ── TOC Sidebar ── */
+    .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+    .ct-content{min-width:0}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
+    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
+    /* ── Author bio ── */
+    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--border);border-radius:0}
+    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-4);margin-bottom:20px}
+    .author-inner{display:flex;align-items:flex-start;gap:24px}
+    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-details{flex:1;min-width:0}
+    .author-name{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--teal)}
+    .author-role{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px}
+    .author-bio{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:16px}
+    .author-links{display:flex;gap:12px;flex-wrap:wrap}
+    .author-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-3);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:99px;transition:all .15s}
+    .author-link:hover{border-color:var(--teal);color:var(--teal)}
+    /* ── Related articles ── */
+    .related-articles{margin-top:56px;padding-top:40px;border-top:1px solid var(--border)}
+    .related-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-4);margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .related-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+    .related-card-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1);text-decoration:none;display:block;margin-bottom:8px;line-height:1.4}
+    .related-card-title:hover{color:var(--teal)}
+    .related-card-desc{font-size:12px;color:var(--text-3);line-height:1.6}
+    /* ── Back link ── */
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--teal)}
+    .ct-toc-toggle{display:none}
+    @media(max-width:960px){
+      .ct-layout{grid-template-columns:1fr;gap:0}
+      .ct-toc{position:static;padding:0;border:1px solid var(--border);border-radius:10px;margin-bottom:32px;order:-1;max-height:none;overflow-y:visible;overflow:hidden}
+      .ct-toc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--surface);border:none;padding:14px 16px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text-1);cursor:pointer;text-align:left}
+      .ct-toc-toggle .ct-toc-arrow{font-size:11px;color:var(--text-4);transition:transform .2s}
+      .ct-toc-toggle.open .ct-toc-arrow{transform:rotate(180deg)}
+      .ct-toc-label{display:none}
+      .ct-toc-list{border-left:none;flex-direction:column;flex-wrap:nowrap;gap:0;border-top:1px solid var(--border);display:none;padding:8px 0}
+      .ct-toc-list.open{display:flex}
+      .ct-toc-list li a{border-left:none;padding:8px 16px;font-size:13px}
+    }
+  </style>
+  <meta property="og:title" content="Google Shipping and Return Settings: All Your Options, and What Takes Precedence | MagsTags">
+  <meta property="og:description" content="Shipping and return policies can be configured in multiple places with Google. Here's how GMC, Search Console, merchant listing markup, and organisation markup interact, and which one wins.">
+  <meta property="og:url" content="https://www.magstags.com/notes/google-shipping-return-settings/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google Shipping and Return Settings: All Your Options, and What Takes Precedence | MagsTags">
+  <meta name="twitter:description" content="Shipping and return policies can be configured in multiple places with Google. Here's how GMC, Search Console, merchant listing markup, and organisation markup interact, and which one wins.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Google Shipping and Return Settings: All Your Options, and What Takes Precedence",
+    "description": "Shipping and return policies can be configured in multiple places with Google. Here's how GMC, Search Console, merchant listing markup, and organisation markup interact, and which one wins.",
+    "url": "https://www.magstags.com/notes/google-shipping-return-settings/",
+    "datePublished": "2026-05-28",
+    "dateModified": "2026-05-28",
+    "image": "https://www.magstags.com/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com"
+    }
+  }
+  </script>
+  <script src="/toc-generator.js"></script>
+</head>
+<body>
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
+  })();
+</script>
+<div id="blog-content">
+  <div class="post-wrap">
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Google Shipping and Return Settings</span>
+    </nav>
+    <span class="post-category">Ecommerce SEO</span>
+    <h1 class="post-h1">Google Shipping and Return Settings: All Your Options, and What Takes Precedence</h1>
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>28 May 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>12 min read</span>
+    </div>
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+          <p class="post-lead">Shipping and return policies can be configured in multiple places with Google, and the interactions between those places are not always obvious. If you're getting into conflicts, seeing stale data surfaced, or just trying to understand which method is right for your setup, here's how it all fits together.</p>
+          <p>The reason this gets complicated is that Google surfaces shipping and return information across multiple products (Shopping ads, free listings, product rich results), and each product has slightly different data requirements and ingestion paths. There is no single "shipping settings" field. There are five distinct configuration layers, each with its own scope and authority.</p>
+          <h2 id="five-layers">The five configuration layers</h2>
+          <p>Before getting into the details of each, it's useful to have the full picture. Google can read your shipping and return information from:</p>
+          <ol>
+            <li><strong>Product-level feed attributes in Merchant Center:</strong> set per-product in your submitted feed.</li>
+            <li><strong>Programmatic <a href="https://developers.google.com/merchant/api" target="_blank" rel="noopener">Merchant API v1</a>:</strong> settings written via the API, mostly by feed management platforms and automation tools.</li>
+            <li><strong>Account-level settings in Merchant Center or Search Console:</strong> the same layer in precedence, but GMC has primacy. Anything set in Search Console auto-syncs into Merchant Center; once a policy is created or edited in MC, it can only be managed there, and Search Console shows it as a read-only reference for 30 days.</li>
+            <li><strong>Product-level merchant listing markup:</strong> <code>shippingDetails</code> and <code>hasMerchantReturnPolicy</code> in structured data on individual product pages.</li>
+            <li><strong>Organisation-level markup:</strong> return policy defined at site level in Organisation schema. The fallback signal.</li>
+          </ol>
+          <p>Each layer has a different scope and a different relationship to the others. The right combination depends on your stack, how often your policies change, and whether you're running Shopping campaigns or relying on free listings and rich results.</p>
+          <h2 id="merchant-center-settings">Merchant Center: the canonical home for Shopping</h2>
+          <p>If you're running Google Shopping campaigns or want your products to appear in free listings with accurate shipping and return information, Merchant Center is where that data lives. You configure <a href="https://support.google.com/merchants/answer/6069284" target="_blank" rel="noopener">shipping settings</a> and <a href="https://support.google.com/merchants/answer/10220642" target="_blank" rel="noopener">return policies</a> under the relevant account settings sections.</p>
+          <p>Account-level settings in GMC apply to your entire product catalogue by default. You define shipping services (carrier, regions, rates, transit times), return windows, conditions, and fees. These settings are what Google uses to populate the shipping and returns annotations you see on Shopping listings.</p>
+          <p>The main advantage of GMC settings over markup is control and visibility. You can preview how policies will display, and changes take effect across your entire catalogue without touching individual product pages or feeds.</p>
+          <div class="post-callout">
+            <strong>For most retailers running Shopping:</strong> GMC settings are the primary source. Markup can complement them, but it won't override GMC data when both are present.
+          </div>
+          <h2 id="search-console-settings">Search Console: an alternative that auto-syncs to GMC</h2>
+          <p>This is the least-known option and the source of the most confusion I see. You can configure shipping and return policies directly in Search Console under <strong>Settings</strong>, and Google will automatically push those settings to Merchant Center.</p>
+          <p>This matters in a few scenarios:</p>
+          <ul>
+            <li>You have a verified Search Console property but haven't completed full GMC onboarding</li>
+            <li>You want a simpler UI for managing policies without navigating GMC's more complex settings structure</li>
+            <li>You manage multiple properties and find SC a cleaner entry point</li>
+          </ul>
+          <p>The key point is that SC settings and GMC settings are not separate databases. They converge, but with a primacy rule. Anything you set in Search Console auto-syncs into Merchant Center. Once a policy is touched in MC after that, it belongs to MC: Search Console can no longer edit it, and shows the policy as a read-only reference for 30 days.</p>
+          <div class="post-callout-warn">
+            <strong>If your GMC policies changed unexpectedly after a recent Search Console edit,</strong> the auto-push is the cause. Once you then edit the policy in MC, the SC version becomes read-only. The Search Console UI is the entry point, not the system of record.
+          </div>
+          <h2 id="merchant-listing-markup">Merchant listing markup: product-level signals</h2>
+          <p>Shipping and return information can also be embedded directly in your product pages via structured data. The relevant properties are <code>shippingDetails</code> and <code>hasMerchantReturnPolicy</code>, used in <a href="/merchant-listing-schema/">merchant listing markup</a> on individual product pages.</p>
+          <p>This approach puts the data in the page itself, which can be useful when:</p>
+          <ul>
+            <li>You don't have a GMC account but want shipping and returns to appear in product rich results</li>
+            <li>Policies vary significantly by product and you want per-product precision in the markup</li>
+            <li>You want markup to act as a backup signal when feed data isn't present</li>
+          </ul>
+          <p>The limitation is maintenance. Every time a policy changes (new return window, updated shipping costs, expanded regions), you either update every affected product page or accept that your markup is stale. For catalogues with frequent policy changes, this overhead is real.</p>
+          <p>To generate the correct markup for your product pages, use the <a href="/merchant-listing-schema-generator/">Merchant Listing Schema Generator</a>.</p>
+          <h2 id="organisation-markup">Organisation markup: the weakest signal</h2>
+          <p>It's also possible to define return policies at the site level using <a href="https://developers.google.com/search/docs/appearance/structured-data/organization" target="_blank" rel="noopener">Organisation schema</a>. This applies a single policy to the entire site rather than individual products.</p>
+          <p>This is the weakest configuration in the hierarchy. Google treats organisation-level signals as a fallback: useful when no other data is available, but easily overridden by anything more specific. If you have GMC settings, a product feed, or product-level markup, organisation markup won't make a material difference to what Google shows.</p>
+          <p>Where it can help: smaller retailers without a GMC account and without product-level markup who want some policy signal present. It's better than nothing, but it's not a substitute for the approaches above.</p>
+          <h2 id="precedence">What Google uses when you define multiple configurations</h2>
+          <p>This is the part that trips people up. When shipping or return data exists in more than one place, Google follows a strict order of precedence. Stronger sources override weaker ones completely. There is no blending.</p>
+          <ul class="precedence-list">
+            <li>
+              <div>
+                <div class="prec-label">Product-level feed attributes in Merchant Center <span class="prec-badge strongest">Strongest</span></div>
+                <div class="prec-desc">The <code>shipping</code> and <code>return_policy_label</code> attributes set on individual products in your submitted feed. These override everything else for that specific product.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="prec-label">Merchant API v1 (programmatic)</div>
+                <div class="prec-desc">Shipping and return configuration written programmatically via the API. Used by feed management platforms and automation tools.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="prec-label">Settings in Merchant Center or Search Console</div>
+                <div class="prec-desc">Account-level policies. The two converge, but GMC has primacy: once a policy is created or edited in Merchant Center, it can only be managed there. Search Console shows it as a read-only reference for 30 days.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="prec-label">Product-level merchant listing markup</div>
+                <div class="prec-desc"><code>shippingDetails</code> and <code>hasMerchantReturnPolicy</code> in structured data on individual product pages.</div>
+              </div>
+            </li>
+            <li>
+              <div>
+                <div class="prec-label">Organisation-level markup <span class="prec-badge weakest">Weakest</span></div>
+                <div class="prec-desc">Return policy defined at site level in Organisation schema. Only used when no higher-precedence source exists.</div>
+              </div>
+            </li>
+          </ul>
+          <p>The practical implication: if you have a product feed with <code>shipping</code> attributes set, your structured data values for shipping are functionally invisible to Google Shopping. The feed wins. Markup can still support rich results independently, but for Shopping purposes it's been overridden.</p>
+          <p>This also means that cleaning up a conflict isn't always about fixing the markup. It's about understanding which layer is actually winning and whether that layer has correct data.</p>
+
+          <h2 id="silent-failure">The silent failure mode</h2>
+          <p>This is the failure mode that costs people the most time, because nothing about it looks like a failure.</p>
+          <p>You implement Merchant Listing markup. It validates in the Rich Results Test. The product page passes Search Console's structured data checks. Nothing breaks. There is no error, no warning, and no indication that anything is wrong.</p>
+          <p>Six months later, someone notices that the rich result in Shopping is showing free delivery while the website charges £4.99. Or worse: a listing is rejected for a mismatch nobody knew existed. The investigation eventually traces back to an account-level shipping rate set in Merchant Center years ago, never updated, quietly overriding every line of markup since.</p>
+          <p>The markup didn't fail. It was never the source of truth in the first place. Nothing in the validation tooling tells you that.</p>
+
+          <h2 id="worked-example">A worked example</h2>
+          <p>A UK retailer has all four layers populated:</p>
+          <ul>
+            <li>A Merchant Center feed with <code>shipping(country:GB, price:4.99 GBP, service:Standard)</code> on most SKUs</li>
+            <li>A Search Console shipping policy of "Free over £50, otherwise £3.99" set last year</li>
+            <li>Product-level JSON-LD with <code>OfferShippingDetails</code> returning £2.99 for orders under 1kg</li>
+            <li>An <code>Organization</code> block with a generic <code>shippingDetails</code> of "£4.99 standard UK shipping"</li>
+          </ul>
+          <p>Which one shows up in the rich result?</p>
+          <p>The feed value: £4.99. For any SKU covered by the feed, the Search Console policy is ignored, the JSON-LD is ignored, and the Organisation markup is ignored. For SKUs not in the feed, the Search Console policy takes over. The markup only ever drives the rich result for SKUs in neither layer, which on most ecommerce sites is effectively zero products.</p>
+          <p>Now consider the scenario where the merchandising team runs a feed-level promotion that drops shipping to £2.99, the dev team updates the feed, and the on-site shipping rule never gets touched. Customers click the listing expecting £2.99 and find £4.99 at checkout. Google's documentation is explicit about what happens next: a listing can be rejected if Google finds a lower shipping cost on the listing than on the website. The direction of the mismatch matters. Listing cheaper than site is rejection territory; site cheaper than listing is not. Either way, the gap between them is what gets flagged.</p>
+
+          <div class="post-callout-warn">
+            <strong>Same currency, same number, same conditions.</strong> If the rich result shows one shipping figure and the checkout shows another, listing rejection is the automated consequence. There is no grace window and no approximation.
+          </div>
+
+          <h2 id="where-each-layer-fits">Where each layer is the right source of truth</h2>
+          <p>No single layer is correct for every retailer. The right home for shipping and return data depends on your catalogue size, how often policies change, and whether you operate a feed at all.</p>
+
+          <h3 id="feed-source">When the feed is the right source</h3>
+          <ul>
+            <li>You sell more than a handful of SKUs and shipping varies by weight, category, or region</li>
+            <li>You run frequent promotions that affect shipping costs or thresholds</li>
+            <li>You already operate a Merchant Center feed, at which point the feed becomes the practical canonical source whether that was intentional or not</li>
+          </ul>
+
+          <h3 id="account-source">When Search Console or Merchant Center account-level is the right source</h3>
+          <ul>
+            <li>You have one shipping policy per country and it rarely changes</li>
+            <li>You do not have a feed, do not want one, and just need policies attached to your domain for free listings</li>
+            <li>Your return window and cost are consistent across products</li>
+          </ul>
+
+          <h3 id="markup-source">When product-level markup is the right source</h3>
+          <ul>
+            <li>You have no Merchant Center account at all and Search Console settings are too coarse for your catalogue</li>
+            <li>You want a defensive signal for AI Overviews, third-party indexers, and merchant listings outside Google's Shopping graph</li>
+            <li>You want a single canonical place. Your CMS already has shipping logic, and mirroring it in markup keeps the data auditable in one spot</li>
+          </ul>
+
+          <h3 id="common-conflicts">Where conflicts most often appear</h3>
+          <ul>
+            <li>You implement markup <em>and</em> a feed, then update only one. The feed wins, the markup goes stale</li>
+            <li>You set policies in both Merchant Center and Search Console, edit the MC version, and wonder why the Search Console UI still shows the old one. It will, with a note that the policy is now managed in MC, for 30 days</li>
+            <li>You submit return policies and assume they are live. Returns require manual verification and take 10 to 13 days. Shipping is auto-approved on submission. Schedule launches accordingly</li>
+            <li>You declare shipping costs on <code>Organization</code> and assume that covers product pages. It does not. Organisation-level is the weakest signal and only applies when nothing higher-precedence exists</li>
+          </ul>
+
+          <h2 id="decision-tree">The decision tree</h2>
+          <p>Work through in order. Stop at the first match.</p>
+          <div class="post-table-wrap">
+            <table class="post-table">
+              <thead>
+                <tr>
+                  <th>If this describes you</th>
+                  <th>Source of truth</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-label">Merchant Center + product feed</td>
+                  <td class="col-pick">Feed-level</td>
+                  <td>Set policies at the feed level for fed SKUs. Account-level GMC settings cover any SKUs not in the feed. Markup is optional for non-Google surfaces.</td>
+                </tr>
+                <tr>
+                  <td class="col-label">Merchant Center, no feed</td>
+                  <td class="col-pick">Account-level MC</td>
+                  <td>Use the account-level Merchant Center settings. Skip markup unless you have a specific non-Google reason.</td>
+                </tr>
+                <tr>
+                  <td class="col-label">No MC, simple policies</td>
+                  <td class="col-pick">Search Console</td>
+                  <td><strong>Settings &rsaquo; Shopping &rsaquo; Shipping and returns</strong>. Counts for free listings. Returns verify in 10 to 13 days.</td>
+                </tr>
+                <tr>
+                  <td class="col-label">No MC, complex policies</td>
+                  <td class="col-pick">Product-level markup</td>
+                  <td>Per-category return windows, regional cost tiers. Maintain it, and plan to migrate to Merchant Center when you can.</td>
+                </tr>
+                <tr class="is-exit">
+                  <td class="col-label">None of the above</td>
+                  <td><em>none</em></td>
+                  <td>You probably do not have an ecommerce site.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 id="what-to-do-instead">What to do instead of "implement schema and forget"</h2>
+          <p>The single most useful principle: decide where the source of truth lives, then make every other layer either inherit from it or stay out of the way.</p>
+          <p>Concretely, that means a few habits:</p>
+          <ul>
+            <li><strong>Pick one canonical system.</strong> Feed, Search Console, or markup. Document the decision. Tell the team. The cost of <em>which</em> system you pick is much smaller than the cost of leaving the choice implicit.</li>
+            <li><strong>If you have a Merchant Center feed, deprecate manually set policies in Search Console.</strong> They will not be honoured for fed products anyway, and keeping them around creates a drift surface no one wants to audit six months later.</li>
+            <li><strong>If you keep markup as a safety net, audit it on every shipping price change.</strong> A simple monthly diff between your <code>OfferShippingDetails</code> values and your Merchant Center feed values catches drift before Google does.</li>
+            <li><strong>Match the on-site shipping cost to the listing exactly.</strong> Not approximately. Same currency, same number, same conditions. Recovering a rejected listing is straightforward but slow, and the impressions lost during the recovery window do not come back.</li>
+            <li><strong>Treat returns and shipping as separate launches.</strong> Returns verify slower than shipping. If you are launching a new return policy, set it up around two weeks before you need it live. Shipping you can set the morning of.</li>
+          </ul>
+
+          <h2 id="making-the-change">Making the change without breaking what works</h2>
+          <p>If you are currently signalling shipping in three or four places and want to consolidate, the migration is not particularly complex, but it does need to happen in order.</p>
+          <ol>
+            <li><strong>Audit current state.</strong> Pick three representative products. For each, manually compare the feed value, the Merchant Center account-level value, the Search Console value, the JSON-LD value, and the on-site checkout value. List them in a sheet. The number of cells that do not match will be larger than you expect.</li>
+            <li><strong>Decide the canonical source.</strong> Use the decision tree above.</li>
+            <li><strong>Update the canonical source first.</strong> Confirm it propagates: typically 24 to 48 hours for feed-level changes, longer if your re-crawl backlog is long.</li>
+            <li><strong>Then strip or align the weaker signals.</strong> Remove conflicting account-level policies. Update markup to match, or remove it entirely. Update <code>Organization</code> markup to a plausible site-wide fallback or leave it out.</li>
+            <li><strong>Re-test.</strong> Pull a sample of products through the Rich Results Test. Check Merchant Center diagnostics for shipping or returns warnings. Verify the live rich result in a real search query.</li>
+          </ol>
+          <p>There is no shortcut and no tool that handles this end-to-end. The cleanup is the project.</p>
+
+          <h2 id="search-console-route">A closer look at the Search Console route</h2>
+          <p>For sites without a Merchant Center account, the Search Console <strong>Shipping and returns</strong> settings (under <strong>Settings &rsaquo; Shopping</strong>) are a useful addition. They give you a Merchant Center-grade signal without the overhead of running a feed. The forms are limited (one shipping policy per country, flat or "free over X" cost models, basic return windows), but for a long tail of merchants that is enough.</p>
+          <p>A few things worth knowing before you commit to this route:</p>
+          <ul>
+            <li>Owner or full user access on the Search Console property is required</li>
+            <li>If you also have a Merchant Center account, you must associate the two. Policies created in MC then appear in Search Console as a read-only link for 30 days. After that, they are managed only in MC. This is intentional and worth knowing before someone goes hunting for them in the wrong interface</li>
+            <li>Returns require manual verification. You submit them, wait 10 to 13 days, then check the status. Shipping is auto-approved on submission</li>
+            <li>Anything you set in Search Console is automatically pushed to Merchant Center if the accounts are linked. That is useful for keeping a single source of truth without operating the feed yourself</li>
+          </ul>
+
+          <h2 id="beyond-google">Beyond Google: the durable principle</h2>
+          <p>The precedence ladder above is specific to Google. The principle underneath it, alignment between feed, schema, and front-end, outlasts any specific platform. Other automated buyers, including AI shopping agents, compare the same layers, and when the layers disagree the rational response is to trust none of them. Consolidating to one canonical source is not a Google-only fix. It is what keeps the catalogue legible to whichever system reads it next.</p>
+
+          <div class="faq-block">
+            <h2 id="faq">Frequently asked questions</h2>
+            <p class="faq-q">Can I rely on Search Console settings if I sell internationally?</p>
+            <p class="faq-a">You can, but you have to set a policy per country. There is no "rest of world" wildcard. Once you are over five or six markets, the maintenance overhead starts to favour a Merchant Center feed.</p>
+            <p class="faq-q">What about returns for digital products?</p>
+            <p class="faq-a">Mark them as <code>MerchantReturnNotPermitted</code> in either the policy UI or your markup. Do not leave the field blank. Blank reads as "policy not declared" and can suppress the merchant listing enhancement entirely.</p>
+            <p class="faq-q">My Merchant Center policy was edited yesterday and Search Console still shows the old version. What happened?</p>
+            <p class="faq-a">Search Console shows MC-managed policies for 30 days as a read-only reference. Edits in MC do not flow back to that view. Manage policies in Merchant Center going forward. The Search Console view is a courtesy, not a sync.</p>
+          </div>
+
+          <div class="post-callout" style="margin-top:48px;">
+            <strong>Shipping and returns is a source-of-truth problem, not a markup problem.</strong> Google reads from up to five places, in order, and uses the first one it finds. The job is to pick which place that is, make the on-site experience match it exactly, and accept that the other four are either inherited or quietly ignored. That is not less work than "just implement schema." It is the work you would have done anyway, surfaced.
+          </div>
+
+          <div class="sources">
+            <h2>Sources and further reading</h2>
+            <ul>
+              <li><strong>Related on MagsTags:</strong> <a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a>. The broader pattern of silent failures across page, schema, and feed layers.</li>
+              <li><strong>Related on MagsTags:</strong> <a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Structured Data: Rich Results, Google Shopping and What Actually Moves the Needle at Scale</a>. The three-layer alignment framework this post sits inside.</li>
+              <li><strong>Related on MagsTags:</strong> <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand</a>. Feed vs. markup alignment for the identifier side of the same problem.</li>
+              <li><strong>Tool:</strong> <a href="/merchant-listing-schema-generator/">Merchant Listing Schema Generator</a>. Generate correct JSON-LD for <code>OfferShippingDetails</code> and <code>MerchantReturnPolicy</code>.</li>
+              <li><strong>Tool:</strong> <a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a>. Audit shipping, returns, and identifier attributes across a Merchant Center feed.</li>
+              <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/6069284" rel="noopener noreferrer" target="_blank">Shipping settings</a></li>
+              <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/10220642" rel="noopener noreferrer" target="_blank">Return policies</a></li>
+              <li><strong>Google Search Console Help:</strong> <a href="https://support.google.com/webmasters/answer/14907594" rel="noopener noreferrer" target="_blank">Add shipping and return policies in Search Console</a></li>
+              <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/merchant-listing" rel="noopener noreferrer" target="_blank">Merchant listing (product snippet) structured data</a></li>
+              <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/organization" rel="noopener noreferrer" target="_blank">Organization structured data</a></li>
+            </ul>
+          </div>
+
+          <div class="author-card">
+            <div class="author-label">Written by</div>
+            <div class="author-inner">
+              <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="80" height="80">
+              <div class="author-details">
+                <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+                <div class="author-role">Senior SEO Consultant, SEO Director</div>
+                <p class="author-bio">Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="ct-toc">
+        <button class="ct-toc-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.nextElementSibling.classList.toggle('open')">
+          On this page <span class="ct-toc-arrow">▼</span>
+        </button>
+        <div class="ct-toc-label">On this page</div>
+        <ol class="ct-toc-list">
+          <li><a href="#five-layers">The five configuration layers</a></li>
+          <li><a href="#merchant-center-settings">Merchant Center</a></li>
+          <li><a href="#search-console-settings">Search Console</a></li>
+          <li><a href="#merchant-listing-markup">Merchant listing markup</a></li>
+          <li><a href="#organisation-markup">Organisation markup</a></li>
+          <li><a href="#precedence">What takes precedence</a></li>
+          <li><a href="#silent-failure">The silent failure mode</a></li>
+          <li><a href="#worked-example">A worked example</a></li>
+          <li><a href="#where-each-layer-fits">Where each layer fits</a></li>
+          <li><a href="#decision-tree">The decision tree</a></li>
+          <li><a href="#what-to-do-instead">What to do instead</a></li>
+          <li><a href="#making-the-change">Making the change</a></li>
+          <li><a href="#search-console-route">The Search Console route</a></li>
+          <li><a href="#beyond-google">Beyond Google</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</div>
+<footer>
+  <p style="text-align:center;font-size:12px;color:var(--text-4)">
+    &copy; 2026 MagsTags
+    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
+    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
+    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
+    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
+    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
+    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
+    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
+    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
+  </p>
+  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
+    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
+  </p>
+</footer>
+<script src="/cookie-consent.js"></script>
+<script src="/header.js"></script>
+<script src="/blog-auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img">
+<title>Stacked shipping labels: precedence of Google shipping configurations</title>
+<desc>Editorial illustration showing four stacked shipping labels representing the four layers of Google shipping and returns configuration. The front label is solid teal (the winning source of truth); the three behind it fade progressively to suggest the lower-precedence layers.</desc>
+<defs>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap');
+.serif { font-family: 'DM Serif Display', 'Georgia', serif; }
+.sans { font-family: 'Space Grotesk', 'Helvetica Neue', sans-serif; }
+</style>
+<symbol id="lbl-light" viewBox="0 0 280 380">
+<rect width="280" height="380" rx="12" fill="currentColor" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
+<rect width="280" height="48" rx="12" fill="rgba(0,0,0,0.18)"/>
+<rect y="36" width="280" height="12" fill="rgba(0,0,0,0.18)"/>
+<rect x="22" y="80" width="200" height="9" rx="2" fill="rgba(0,0,0,0.55)"/>
+<rect x="22" y="100" width="160" height="6" rx="2" fill="rgba(0,0,0,0.4)"/>
+<rect x="22" y="116" width="180" height="6" rx="2" fill="rgba(0,0,0,0.4)"/>
+<rect x="22" y="132" width="130" height="6" rx="2" fill="rgba(0,0,0,0.4)"/>
+<rect x="22" y="172" width="110" height="24" rx="4" fill="rgba(0,0,0,0.18)"/>
+<g transform="translate(22, 226)" fill="rgba(0,0,0,0.72)">
+<rect width="3" height="60"/>
+<rect x="7" width="7" height="60"/>
+<rect x="18" width="3" height="60"/>
+<rect x="25" width="9" height="60"/>
+<rect x="38" width="3" height="60"/>
+<rect x="45" width="6" height="60"/>
+<rect x="55" width="9" height="60"/>
+<rect x="68" width="3" height="60"/>
+<rect x="75" width="6" height="60"/>
+<rect x="85" width="3" height="60"/>
+<rect x="92" width="9" height="60"/>
+<rect x="105" width="3" height="60"/>
+<rect x="112" width="6" height="60"/>
+<rect x="122" width="3" height="60"/>
+<rect x="129" width="9" height="60"/>
+<rect x="142" width="3" height="60"/>
+<rect x="149" width="6" height="60"/>
+<rect x="159" width="3" height="60"/>
+<rect x="166" width="9" height="60"/>
+<rect x="179" width="3" height="60"/>
+<rect x="186" width="6" height="60"/>
+<rect x="196" width="3" height="60"/>
+<rect x="203" width="9" height="60"/>
+</g>
+<g transform="translate(22, 312)" fill="rgba(0,0,0,0.4)">
+<rect width="20" height="18" rx="2"/>
+<rect x="26" width="20" height="18" rx="2"/>
+<rect x="52" width="20" height="18" rx="2"/>
+<rect x="78" width="20" height="18" rx="2"/>
+<rect x="104" width="20" height="18" rx="2"/>
+<rect x="130" width="20" height="18" rx="2"/>
+<rect x="156" width="20" height="18" rx="2"/>
+</g>
+</symbol>
+<symbol id="lbl-dark" viewBox="0 0 280 380">
+<rect width="280" height="380" rx="12" fill="currentColor"/>
+<rect width="280" height="48" rx="12" fill="rgba(0,0,0,0.22)"/>
+<rect y="36" width="280" height="12" fill="rgba(0,0,0,0.22)"/>
+<rect x="22" y="80" width="200" height="9" rx="2" fill="rgba(255,255,255,0.95)"/>
+<rect x="22" y="100" width="160" height="6" rx="2" fill="rgba(255,255,255,0.7)"/>
+<rect x="22" y="116" width="180" height="6" rx="2" fill="rgba(255,255,255,0.7)"/>
+<rect x="22" y="132" width="130" height="6" rx="2" fill="rgba(255,255,255,0.7)"/>
+<rect x="22" y="172" width="110" height="24" rx="4" fill="rgba(255,255,255,0.2)"/>
+<g transform="translate(22, 226)" fill="rgba(255,255,255,0.92)">
+<rect width="3" height="60"/>
+<rect x="7" width="7" height="60"/>
+<rect x="18" width="3" height="60"/>
+<rect x="25" width="9" height="60"/>
+<rect x="38" width="3" height="60"/>
+<rect x="45" width="6" height="60"/>
+<rect x="55" width="9" height="60"/>
+<rect x="68" width="3" height="60"/>
+<rect x="75" width="6" height="60"/>
+<rect x="85" width="3" height="60"/>
+<rect x="92" width="9" height="60"/>
+<rect x="105" width="3" height="60"/>
+<rect x="112" width="6" height="60"/>
+<rect x="122" width="3" height="60"/>
+<rect x="129" width="9" height="60"/>
+<rect x="142" width="3" height="60"/>
+<rect x="149" width="6" height="60"/>
+<rect x="159" width="3" height="60"/>
+<rect x="166" width="9" height="60"/>
+<rect x="179" width="3" height="60"/>
+<rect x="186" width="6" height="60"/>
+<rect x="196" width="3" height="60"/>
+<rect x="203" width="9" height="60"/>
+</g>
+<g transform="translate(22, 312)" fill="rgba(255,255,255,0.6)">
+<rect width="20" height="18" rx="2"/>
+<rect x="26" width="20" height="18" rx="2"/>
+<rect x="52" width="20" height="18" rx="2"/>
+<rect x="78" width="20" height="18" rx="2"/>
+<rect x="104" width="20" height="18" rx="2"/>
+<rect x="130" width="20" height="18" rx="2"/>
+<rect x="156" width="20" height="18" rx="2"/>
+</g>
+</symbol>
+</defs>
+<rect width="1200" height="630" fill="#f0eeec"/>
+<text x="80" y="200" class="sans" font-size="11" font-weight="700" letter-spacing="1.5" fill="#857f7a">NOTES &#183; E-COMMERCE SEO</text>
+<text x="80" y="270" class="serif" font-size="50" fill="#111009">Google Shipping</text>
+<text x="80" y="326" class="serif" font-size="50" fill="#111009">&amp; Returns</text>
+<text x="80" y="380" class="sans" font-size="17" font-weight="500" fill="#504c49">What takes precedence.</text>
+<text x="80" y="555" class="sans" font-size="13" font-weight="700" fill="#0E7490">magstags.com</text>
+<g color="#d6d2cb" opacity="0.4"><use href="#lbl-light" x="760" y="155" width="280" height="380"/></g>
+<g color="#dcd8d2" opacity="0.65"><use href="#lbl-light" x="735" y="135" width="280" height="380"/></g>
+<g color="#f0eae0" opacity="0.9"><use href="#lbl-light" x="710" y="115" width="280" height="380"/></g>
+<g color="#0E7490"><use href="#lbl-dark" x="685" y="95" width="280" height="380"/></g>
+<rect x="893" y="115" width="60" height="22" rx="11" fill="#FFFFFF" fill-opacity="0.22"/>
+<text x="923" y="130" class="sans" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">WINS</text>
+</svg>
