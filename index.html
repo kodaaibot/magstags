@@ -26,15 +26,33 @@
     .theme-btn:hover { color: var(--text-1); border-color: var(--text-3); }
 
     /* ── Hero ── */
-    .hero { max-width: 1320px; margin: 0 auto; padding: 80px 36px 72px; text-align: center; }
+    .hero { max-width: 1320px; margin: 0 auto; padding: 80px 36px 72px; }
     .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 24px; }
-    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 400; line-height: 1.1; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero-byline { font-size: 14px; color: var(--text-2); margin-bottom: 20px; font-weight: 500; letter-spacing: -0.01em; }
+    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 400; line-height: 1.1; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 20px; max-width: 720px; }
     .hero-title em { font-style: normal; color: var(--teal); font-family: 'DM Serif Display', Georgia, serif; }
-    .hero-sub { font-size: 16px; color: var(--text-3); line-height: 1.7; max-width: 480px; margin-bottom: 36px; margin-left: auto; margin-right: auto; }
+    .hero-sub { font-size: 16px; color: var(--text-3); line-height: 1.7; max-width: 560px; margin-bottom: 36px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
     .hero-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--text-1); color: var(--surface); padding: 12px 24px; border-radius: 99px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all .15s; letter-spacing: -.01em; }
     .hero-cta:hover { background: var(--text-2); }
     .hero-cta svg { transition: transform .15s; }
     .hero-cta:hover svg { transform: translateX(2px); }
+    .hero-cta-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--text-2); padding: 12px 22px; border-radius: 99px; border: 1px solid var(--border); font-size: 13px; font-weight: 600; text-decoration: none; transition: all .15s; letter-spacing: -.01em; }
+    .hero-cta-secondary:hover { border-color: var(--text-3); color: var(--text-1); }
+
+    /* ── Featured post ── */
+    .featured-post { display: block; background: var(--surface); border: 1px solid rgba(0,0,0,.08); border-radius: 20px; overflow: hidden; text-decoration: none; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .featured-post:hover, .featured-post:focus-within { border-color: rgba(0,0,0,.15); box-shadow: 0 8px 32px rgba(0,0,0,.1); transform: translateY(-2px); }
+
+    /* ── Hub cards (Learning section) ── */
+    .hub-card { display: flex; flex-direction: column; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; position: relative; cursor: pointer; transition: border-color .15s, box-shadow .15s, transform .1s; }
+    .hub-card:hover, .hub-card:focus-within { border-color: rgba(0,0,0,.15); box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
+    .hub-card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); }
+    .hub-card-title { font-size: 15px; font-weight: 700; margin: 0; line-height: 1.3; }
+    .hub-card-title a { color: var(--text-1); text-decoration: none; }
+    .hub-card-title a::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
+    .hub-card-desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
+    .hub-card-cta { font-size: 12px; font-weight: 600; color: var(--teal); margin-top: auto; }
 
 
     /* ── Tools ── */
@@ -55,21 +73,11 @@
     .tool-badge-soon { background: var(--bg2); color: var(--text-4); border: 1px solid var(--border); }
     .tool-badge-ext { background: #FEF3C7; color: #D97706; }
     html.dark .tool-badge-ext { background: rgba(225,29,72,.12); color: #E11D48; }
-    .filter-bar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
-    .filter-groups { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-    .filter-label { font-size:11px; font-weight:600; color:var(--text-4); text-transform:uppercase; letter-spacing:.06em; margin-right:2px; }
-    .filter-divider { width:1px; height:18px; background:var(--border); margin:0 4px; }
-    .fpill { font-size:12px; font-weight:500; padding:5px 13px; border-radius:99px; border:1px solid var(--border); background:transparent; color:var(--text-3); cursor:pointer; font-family:'Inter',sans-serif; transition:all .15s; }
-    .fpill:hover { border-color:var(--teal); color:var(--teal); }
-    .fpill.active { background:var(--mint-light); color:var(--teal); border-color:var(--teal); font-weight:600; }
-    .filter-clear { font-size:11px; color:var(--text-4); background:none; border:none; cursor:pointer; font-family:'Inter',sans-serif; text-decoration:underline; padding:4px; transition:color .15s; }
-    .filter-clear:hover { color:var(--text-2); }
-    .tool-card[style*="display: none"], .tool-card[style*="display:none"] { display:none !important; }
+    /* filter-bar, .filter-groups, .fpill — now in base.css */
     .tool-name { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; letter-spacing: -.01em; }
     .tool-card:hover .tool-name { color: var(--teal); }
     .tool-desc { font-size: 13px; color: var(--text-3); line-height: 1.6; margin-bottom: 20px; }
     .tool-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-    .tool-tag { font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 500; background: var(--bg2); color: var(--text-3); border: 1px solid var(--border); }
 
     .tool-card-muted { border: 1px dashed var(--border); border-radius: 20px; padding: 28px 32px; opacity: 0.5; }
     .tool-card-muted .tool-name { color: var(--text-3); font-size: 15px; font-weight: 500; }
@@ -85,7 +93,7 @@
     .notes-row-date { font-size: 12px; color: var(--text-4); line-height: 1.4; padding-top: 2px; }
     .notes-row-body { min-width: 0; }
     .notes-row-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 6px; }
-    .notes-row-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-1); line-height: 1.35; margin-bottom: 6px; }
+    .notes-row-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-1); line-height: 1.35; margin: 0 0 6px; }
     .notes-row-title a { color: inherit; text-decoration: none; transition: color .15s; }
     .notes-stretch { position: absolute; inset: 0; }
     .notes-row-excerpt { font-size: 13px; color: var(--text-3); line-height: 1.55; }
@@ -197,30 +205,31 @@
 </head>
 <body>
 
-
-<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-  </div>
-</div>
-
 <main id="main-content">
 
 <section class="hero">
   <div class="hero-eyebrow">SEO &amp; E-commerce Toolkit</div>
   <h1 class="hero-title">Let the tools do<br>the <em>boring part.</em></h1>
-  <div style="font-size: 14px; color: var(--text-2); margin-bottom: 20px; font-weight: 500; letter-spacing: -0.01em; text-align: center;">By Mags Sikora · Senior SEO Consultant</div>
+  <div class="hero-byline">By Mags Sikora · Senior SEO Consultant</div>
   <p class="hero-sub">For people who voluntarily work in an industry where the rules change without warning, the documentation is vague on purpose, and 'it depends' is a valid answer. Welcome.</p>
+  <div class="hero-actions">
+    <a class="hero-cta" href="#tools">Browse the toolkit
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <a class="hero-cta-secondary" href="/notes/">Read the notes</a>
+  </div>
 </section>
 
 
 <!-- Featured post -->
 <section style="max-width:1320px;margin:0 auto;padding:0 36px 72px;">
   <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-4);margin-bottom:16px;">Latest note</div>
-  <a href="/notes/google-shipping-return-settings/" class="featured-post" style="display:block;background:var(--surface);border:1px solid rgba(0,0,0,.08);border-radius:20px;overflow:hidden;text-decoration:none;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 32px rgba(0,0,0,.1)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(0,0,0,.08)';this.style.boxShadow='';this.style.transform=''">
+  <a href="/notes/google-shipping-return-settings/" class="featured-post">
     <div class="featured-post-body" style="padding:40px 44px;display:flex;flex-direction:column;justify-content:center;">
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:18px;">
         <span style="font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;background:var(--mint-light);color:var(--teal);">Ecommerce SEO</span>
       </div>
-      <div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:600;color:var(--text-1);line-height:1.25;margin-bottom:16px;letter-spacing:-.02em;">Google Shipping and Return Settings: All Your Options, and What Takes Precedence</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:600;color:var(--text-1);line-height:1.25;margin:0 0 16px;letter-spacing:-.02em;">Google Shipping and Return Settings: All Your Options, and What Takes Precedence</h2>
       <div style="font-size:14px;color:var(--text-3);line-height:1.65;margin-bottom:24px;">Five places to configure shipping and returns for Google: feed, Merchant API, MC/SC settings, markup, and Organisation schema. Here&#x27;s which one wins.</div>
       <div style="display:flex;gap:18px;align-items:center;">
         <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-4);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>12 min read</span>
@@ -231,30 +240,22 @@
 
 </section>
 
-<section class="tools-section">
+<section class="tools-section" id="tools">
+  <div class="section-marker"><span class="num">01</span><span class="line"></span>Toolkit</div>
   <div class="filter-bar">
     <p class="section-label" style="margin-bottom:0">All tools</p>
-    <div class="filter-groups">
-      <div class="filter-group">
-        <span class="filter-label">Type</span>
-        <button class="fpill" data-group="type" data-value="seo" onclick="toggleFilter(this)">SEO</button>
-        <button class="fpill" data-group="type" data-value="productivity" onclick="toggleFilter(this)">Productivity</button>
-      </div>
-      <div class="filter-divider"></div>
-      <div class="filter-group">
-        <span class="filter-label">Price</span>
-        <button class="fpill" data-group="price" data-value="free" onclick="toggleFilter(this)">Free</button>
-        <button class="fpill" data-group="price" data-value="paid" onclick="toggleFilter(this)">Paid</button>
-      </div>
-      <button class="filter-clear" id="filter-clear" onclick="clearFilters()" style="display:none">Clear</button>
+    <div class="filter-groups" role="tablist" aria-label="Filter tools by category">
+      <button class="fpill is-active" data-category="all"        role="tab" aria-selected="true">All</button>
+      <button class="fpill"           data-category="schema"     role="tab" aria-selected="false">Schema</button>
+      <button class="fpill"           data-category="technical"  role="tab" aria-selected="false">Technical SEO</button>
+      <button class="fpill"           data-category="feed"       role="tab" aria-selected="false">Feed &amp; Data</button>
+      <button class="fpill"           data-category="productivity" role="tab" aria-selected="false">Productivity</button>
     </div>
   </div>
 
-  <!-- ── Schema tools ── -->
-  <p class="section-label">Schema tools</p>
-  <div class="tools-grid" style="margin-bottom:48px">
+  <div class="tools-grid">
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -273,7 +274,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -292,7 +293,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -311,7 +312,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -330,7 +331,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -349,7 +350,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -368,13 +369,7 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- ── Technical SEO ── -->
-  <p class="section-label">Technical SEO</p>
-  <div class="tools-grid" style="margin-bottom:48px">
-
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -393,7 +388,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -412,7 +407,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -430,7 +425,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -450,7 +445,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -468,7 +463,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="seo" data-price="free">
+    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -487,13 +482,7 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- ── Feed & Data ── -->
-  <p class="section-label">Feed &amp; Data</p>
-  <div class="tools-grid" style="margin-bottom:48px">
-
-    <div id="gmc-card" class="tool-card" data-type="seo" data-price="paid">
+    <div id="gmc-card" class="tool-card" data-category="feed" data-type="seo" data-price="paid">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -513,13 +502,7 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- ── External tools ── -->
-  <p class="section-label">External tools</p>
-  <div class="tools-grid">
-
-    <div class="tool-card" data-type="seo" data-price="paid">
+    <div class="tool-card" data-category="productivity" data-type="seo" data-price="paid">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -538,7 +521,7 @@
       </div>
     </div>
 
-    <div class="tool-card" data-type="productivity" data-price="paid">
+    <div class="tool-card" data-category="productivity" data-type="productivity" data-price="paid">
       <div class="tool-card-top">
         <div class="tool-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -577,46 +560,46 @@
 <section class="learn-section" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
   <!-- Left: heading + description -->
   <div>
-    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:14px"><a href="/learn-seo/" style="color:var(--teal);text-decoration:none">Learn SEO</a></p>
+    <a class="section-marker" href="/learn-seo/"><span class="num">02</span><span class="line"></span>Learn SEO</a>
     <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:32px;font-weight:400;color:var(--text-1);margin-bottom:16px;line-height:1.25">Structured data: technically optional, practically essential, officially documented in a way that helps a solid few.</h2>
     <p style="font-size:15px;color:var(--text-3);line-height:1.65">These guides skip the preamble. Which type to use, what each field actually does, and how to generate clean JSON-LD — without watching a Google I/O keynote to figure it out.</p>
   </div>
   <!-- Right: 2×2 card grid -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">Overview</div>
-      <div style="font-size:15px;font-weight:700;"><a href="/product-schema/" style="color:var(--text-1);text-decoration:none;">Product Schema Markup<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
-      <div style="font-size:13px;color:var(--text-3);line-height:1.5">Introduction to the two main classes of Product structured data, plus ProductGroup for variants.</div>
-      <div style="font-size:12px;font-weight:600;color:var(--teal);margin-top:auto">Read guide →</div>
+    <div class="hub-card">
+      <div class="hub-card-label">Overview</div>
+      <h3 class="hub-card-title"><a href="/product-schema/">Product Schema Markup</a></h3>
+      <div class="hub-card-desc">Introduction to the two main classes of Product structured data, plus ProductGroup for variants.</div>
+      <div class="hub-card-cta">Read guide →</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">Class 1</div>
-      <div style="font-size:15px;font-weight:700;"><a href="/product-snippet-schema/" style="color:var(--text-1);text-decoration:none;">Product Snippet Schema<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
-      <div style="font-size:13px;color:var(--text-3);line-height:1.5">Star ratings, reviews, pros/cons, and pricing in organic search. For any product page.</div>
-      <div style="font-size:12px;font-weight:600;color:var(--teal);margin-top:auto">Read guide →</div>
+    <div class="hub-card">
+      <div class="hub-card-label">Class 1</div>
+      <h3 class="hub-card-title"><a href="/product-snippet-schema/">Product Snippet Schema</a></h3>
+      <div class="hub-card-desc">Star ratings, reviews, pros/cons, and pricing in organic search. For any product page.</div>
+      <div class="hub-card-cta">Read guide →</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">Class 2</div>
-      <div style="font-size:15px;font-weight:700;"><a href="/merchant-listing-schema/" style="color:var(--text-1);text-decoration:none;">Merchant Listing Schema<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
-      <div style="font-size:13px;color:var(--text-3);line-height:1.5">Shopping panel, Popular products, price drop alerts, and shipping info. For merchant pages.</div>
-      <div style="font-size:12px;font-weight:600;color:var(--teal);margin-top:auto">Read guide →</div>
+    <div class="hub-card">
+      <div class="hub-card-label">Class 2</div>
+      <h3 class="hub-card-title"><a href="/merchant-listing-schema/">Merchant Listing Schema</a></h3>
+      <div class="hub-card-desc">Shopping panel, Popular products, price drop alerts, and shipping info. For merchant pages.</div>
+      <div class="hub-card-cta">Read guide →</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:border-color .15s,transform .1s;position:relative;cursor:pointer;" onmouseover="this.style.borderColor='rgba(0,0,0,.15)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='';this.style.boxShadow='';this.style.transform=''">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal)">+ Variants</div>
-      <div style="font-size:15px;font-weight:700;"><a href="/product-variants-schema/" style="color:var(--text-1);text-decoration:none;">Product Variants Schema<span style="position:absolute;inset:0;border-radius:16px;"></span></a></div>
-      <div style="font-size:13px;color:var(--text-3);line-height:1.5">Colour swatches and variant pricing in Google Shopping. Uses ProductGroup with hasVariant.</div>
-      <div style="font-size:12px;font-weight:600;color:var(--teal);margin-top:auto">Read guide →</div>
+    <div class="hub-card">
+      <div class="hub-card-label">+ Variants</div>
+      <h3 class="hub-card-title"><a href="/product-variants-schema/">Product Variants Schema</a></h3>
+      <div class="hub-card-desc">Colour swatches and variant pricing in Google Shopping. Uses ProductGroup with hasVariant.</div>
+      <div class="hub-card-cta">Read guide →</div>
     </div>
   </div>
 </section>
 
 
 
-<!-- Notes section — full list -->
-<section class="notes-section">
+<!-- Notes section — latest 6 (full archive at /notes/) -->
+<section class="notes-section" id="notes">
   <div style="max-width:960px;margin:0 auto 28px;">
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;">
-      <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin:0"><a href="/notes/" style="color:var(--teal);text-decoration:none">Notes</a></p>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <a class="section-marker" href="/notes/" style="margin-bottom:0"><span class="num">03</span><span class="line"></span>Notes</a>
       <a href="/notes/" style="font-size:12px;color:var(--text-4);text-decoration:none;">All posts →</a>
     </div>
     <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:26px;font-weight:400;color:var(--text-1);line-height:1.3;margin:0">Practical SEO writing. No content for content's sake. Promise.</h2>
@@ -627,7 +610,7 @@
         <div class="notes-row-date">28 May 2026</div>
         <div class="notes-row-body">
           <div class="notes-row-cat">Ecommerce SEO</div>
-          <div class="notes-row-title"><a href="/notes/google-shipping-return-settings/">Google Shipping and Return Settings: All Your Options, and What Takes Precedence<span class="notes-stretch"></span></a></div>
+          <h3 class="notes-row-title"><a href="/notes/google-shipping-return-settings/">Google Shipping and Return Settings: All Your Options, and What Takes Precedence<span class="notes-stretch"></span></a></h3>
           <div class="notes-row-excerpt">Five places to configure shipping and returns for Google: feed, Merchant API, MC/SC settings, markup, and Organisation schema. Here&#x27;s which one wins.</div>
           <div class="notes-row-meta">12 min read</div>
         </div>
@@ -638,7 +621,7 @@
       <div class="notes-row-date">18 May 2026</div>
       <div class="notes-row-body">
         <div class="notes-row-cat">Structured Data</div>
-        <div class="notes-row-title"><a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't<span class="notes-stretch"></span></a></div>
+        <h3 class="notes-row-title"><a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't<span class="notes-stretch"></span></a></h3>
         <div class="notes-row-excerpt">Product schema suppression, disappearing rich results, and Merchant Center disapprovals are almost always a data problem. Five failure patterns, a 3-layer alignment model, and an operational audit checklist.</div>
         <div class="notes-row-meta">13 min read</div>
       </div>
@@ -648,7 +631,7 @@
       <div class="notes-row-date">19 Apr 2026</div>
       <div class="notes-row-body">
         <div class="notes-row-cat">Original Research</div>
-        <div class="notes-row-title"><a href="/notes/google-image-thumbnails-organic-case-study/">Google Image Thumbnails for Organic Results: Case Study<span class="notes-stretch"></span></a></div>
+        <h3 class="notes-row-title"><a href="/notes/google-image-thumbnails-organic-case-study/">Google Image Thumbnails for Organic Results: Case Study<span class="notes-stretch"></span></a></h3>
         <div class="notes-row-excerpt">Analysis of 9,718 organic results across 293 fashion keywords. Mobile serves 92% more image thumbnails than desktop. Which intents, modifiers, and categories get visual treatment.</div>
         <div class="notes-row-meta">18 min read</div>
       </div>
@@ -658,7 +641,7 @@
       <div class="notes-row-date">12 Apr 2026</div>
       <div class="notes-row-body">
         <div class="notes-row-cat">Technical SEO</div>
-        <div class="notes-row-title"><a href="/notes/google-image-thumbnails/">Google Image Thumbnails: Best Practice Guide<span class="notes-stretch"></span></a></div>
+        <h3 class="notes-row-title"><a href="/notes/google-image-thumbnails/">Google Image Thumbnails: Best Practice Guide<span class="notes-stretch"></span></a></h3>
         <div class="notes-row-excerpt">What drives image thumbnail display in Google Search. Covers max-image-preview, og:image best practices, the multi-image treatment, text result images, and a diagnostic sequence for finding where your page falls short.</div>
         <div class="notes-row-meta">22 min read</div>
       </div>
@@ -668,7 +651,7 @@
       <div class="notes-row-date">1 Apr 2026</div>
       <div class="notes-row-body">
         <div class="notes-row-cat">Google SERP Tests</div>
-        <div class="notes-row-title"><a href="/notes/google-favourite-brands/">Google Favourite Shopping Brand - Personalisation in Search<span class="notes-stretch"></span></a></div>
+        <h3 class="notes-row-title"><a href="/notes/google-favourite-brands/">Google Favourite Shopping Brand - Personalisation in Search<span class="notes-stretch"></span></a></h3>
         <div class="notes-row-excerpt">Google appears to be testing brand-level personalisation in shopping results. Users can save favourite brands via an in-SERP widget, and those choices shape which products appear for generic queries.</div>
         </div>
       <div class="notes-row-meta">5 min read</div></div>
@@ -677,127 +660,10 @@
       <div class="notes-row-date">30 Mar 2026</div>
       <div class="notes-row-body">
         <div class="notes-row-cat">Google Shopping</div>
-        <div class="notes-row-title"><a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings: How Each Works<span class="notes-stretch"></span></a></div>
+        <h3 class="notes-row-title"><a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings: How Each Works<span class="notes-stretch"></span></a></h3>
         <div class="notes-row-excerpt">Two rating systems, two data sources, two separate setups. Why the same product URL can show different stars in organic and Shopping.</div>
         </div>
       <div class="notes-row-meta">12 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">29 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Ecommerce SEO</div>
-        <div class="notes-row-title"><a href="/notes/google-ecommerce-rich-results/">Google eCommerce Rich Results 2026: Complete Guide<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">Which features need a Merchant Center feed, which use structured data, and one eligibility rule that's widely misrepresented.</div>
-        </div>
-      <div class="notes-row-meta">15 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">27 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Structured Data</div>
-        <div class="notes-row-title"><a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Schema Markup: Rich Results, Google Shopping &amp; Scale in 2026<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">What earns rich results, sale price schema, and the alignment problem most teams never solve.</div>
-        </div>
-      <div class="notes-row-meta">18 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">27 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Structured Data</div>
-        <div class="notes-row-title"><a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">What breaks when SKUs land in the GTIN field, and how to audit at scale.</div>
-        </div>
-      <div class="notes-row-meta">14 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">22 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Agentic Commerce</div>
-        <div class="notes-row-title"><a href="/notes/what-is-agentic-commerce/">What Is Agentic Commerce? How AI Agents Change the Shopping Journey<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">What agentic commerce actually means, how the shopping journey changes, which AI agents are live, and what they evaluate in your product data.</div>
-        </div>
-      <div class="notes-row-meta">16 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">22 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Agentic Commerce</div>
-        <div class="notes-row-title"><a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">The practitioner's audit for making your product data discoverable by AI shopping agents — schema markup, GMC feeds, PDP content, and the alignment layer between them.</div>
-        </div>
-      <div class="notes-row-meta">18 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">21 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Structured Data</div>
-        <div class="notes-row-title"><a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup Schema: When to Use Which<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">One wraps variants, the other describes products. Mixing them up breaks things silently.</div>
-        </div>
-      <div class="notes-row-meta">10 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">20 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Technical SEO</div>
-        <div class="notes-row-title"><a href="/notes/mega-menus-seo/">Mega Menus &amp; SEO: A Decision Framework for When They Help and When They Hurt<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">Link equity dilution, the Reasonable Surfer model, anchor text uniformity, and a practical decision tree.</div>
-        </div>
-      <div class="notes-row-meta">14 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">19 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Technical SEO</div>
-        <div class="notes-row-title"><a href="/notes/crawl-budget-enterprise/">Crawl Budget Management for Large Websites: The Enterprise Guide<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">At 10M+ URLs, crawl budget is an active allocation problem. Log files, faceted nav decisions, JS rendering gaps, and the crawl vs. indexation distinction most guides miss.</div>
-        </div>
-      <div class="notes-row-meta">18 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">16 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Personal</div>
-        <div class="notes-row-title"><a href="/notes/bill-slawski/">Bill Slawski<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">There is a feeling you get when a film you have been waiting for is finally about to start. That is what it felt like to open a new Bill Slawski post.</div>
-        </div>
-      <div class="notes-row-meta">3 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">16 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">International SEO</div>
-        <div class="notes-row-title"><a href="/notes/hreflang-canonical-conflict/">When Hreflang and Canonicals Conflict<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">When they point in different directions, Google picks one and ignores the other. Here's what breaks, why it cascades, and how to find it.</div>
-        </div>
-      <div class="notes-row-meta">7 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">10 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Technical SEO</div>
-        <div class="notes-row-title"><a href="/notes/robots-txt-mistakes/">Robots.txt Mistakes<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">Most robots.txt problems aren't caused by bad intentions — they're caused by good intentions applied at the wrong layer.</div>
-        </div>
-      <div class="notes-row-meta">5 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">28 Feb 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">International SEO</div>
-        <div class="notes-row-title"><a href="/notes/hreflang-mistakes/">Hreflang in 2026: The Mistakes That Keep Coming Back<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">What changed, what stayed the same, and what still breaks international SEO implementations at scale.</div>
-        </div>
-      <div class="notes-row-meta">7 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">15 Feb 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Google Search Console</div>
-        <div class="notes-row-title"><a href="/notes/gsc-regex-deep-dive/">GSC Regex: Moving Past the Basics<span class="notes-stretch"></span></a></div>
-        <div class="notes-row-excerpt">RE2 syntax, URL and query filtering patterns, and the shortcuts that actually save time in day-to-day SEO work.</div>
-        </div>
-      <div class="notes-row-meta">6 min read</div></div>
 
   </div>
 </section>
@@ -810,40 +676,24 @@
 </section>
 
 <script>
-  // ── Filter logic ──────────────────────────────────────────────────────────
-  var fState = { type: new Set(), price: new Set() };
-  function getNavUrl() {
-    var types=[...fState.type], prices=[...fState.price];
-    if (types.length>1||prices.length>1) return null;
-    var t=types[0]||'', p=prices[0]||'';
-    if(t==='seo' &&p==='free') return '/free-seo-tools/';
-    if(t==='seo' &&p==='paid') return '/paid-seo-tools/';
-    if(t==='seo' &&p==='')    return '/seo-tools/';
-    if(t===''    &&p==='free') return '/free-seo-tools/';
-    if(t===''    &&p==='paid') return '/paid-seo-tools/';
-    return null;
-  }
-  function toggleFilter(btn) {
-    var group=btn.dataset.group, value=btn.dataset.value;
-    if(fState[group].has(value)){fState[group].delete(value);btn.classList.remove('active');}
-    else{fState[group].add(value);btn.classList.add('active');}
-    var url=getNavUrl();
-    if(url){window.location.href=url;return;}
-    applyClientFilter();
-    document.getElementById('filter-clear').style.display=(fState.type.size>0||fState.price.size>0)?'':'none';
-  }
-  function applyClientFilter() {
-    var types=[...fState.type], prices=[...fState.price];
-    document.querySelectorAll('[data-type]').forEach(function(c){
-      c.style.display=(types.length===0||types.includes(c.dataset.type))&&(prices.length===0||prices.includes(c.dataset.price))?'':'none';
+  // ── Tool filter (single-select segmented control) ───────────────────────
+  (function() {
+    var pills = document.querySelectorAll('.tools-section .fpill');
+    var cards = document.querySelectorAll('.tools-section .tool-card[data-category]');
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        var cat = pill.dataset.category;
+        pills.forEach(function(p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        cards.forEach(function(card) {
+          card.hidden = !(cat === 'all' || card.dataset.category === cat);
+        });
+      });
     });
-  }
-  function clearFilters() {
-    fState.type.clear();fState.price.clear();
-    document.querySelectorAll('.fpill').forEach(function(p){p.classList.remove('active');});
-    document.querySelectorAll('[data-type]').forEach(function(c){c.style.display='';});
-    document.getElementById('filter-clear').style.display='none';
-  }
+  })();
 </script>
 
 </main>

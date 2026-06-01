@@ -54,7 +54,7 @@
       --text-1:        #111009;
       --text-2:        #26221f;
       --text-3:        #504c49;
-      --text-4:        #857f7a;
+      --text-4:        #6b6661;
       --teal:          #1ab6db;
       --mint:          #0891B2;
       --mint-light:    #E0F2FE;
@@ -81,7 +81,7 @@
       --text-1:        #f5f2ee;
       --text-2:        #c8c4be;
       --text-3:        #857f79;
-      --text-4:        #4a4743;
+      --text-4:        #8a847d;
       --teal:          #22D3EE;
       --mint:          #67E8F9;
       --mint-light:    rgba(14,116,144,.14);
@@ -123,6 +123,12 @@
     .page-hero { margin-bottom: 36px; }
     .page-hero-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
     .page-hero-sub { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 560px; }
+    .tool-status { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 10px; margin-bottom: 36px; }
+    .tool-status-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--amber); flex-shrink: 0; padding-top: 2px; white-space: nowrap; }
+    .tool-status-body { font-size: 13.5px; color: var(--text-2); line-height: 1.65; margin: 0; max-width: 640px; }
+    html.dark .tool-status { background: rgba(217,119,6,.08); border-color: rgba(217,119,6,.25); }
+    html.dark .tool-status-label { color: var(--amber); }
+    @media (max-width: 560px) { .tool-status { flex-direction: column; gap: 6px; } }
 
     /* ─── Cards ─── */
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px 32px; margin-bottom: 14px; transition: background .25s, border-color .25s; }
@@ -448,6 +454,11 @@
       <p class="page-hero-sub">The tool that does what the GMC dashboard should.</p>
     <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
     <p class="page-hero-sub">Upload your feed, get a prioritised list of what's broken, why it's broken, and what to fix first. No 'contact support.' No waiting 48 hours for a re-review. Just answers.</p>
+    </div>
+
+    <div class="tool-status" role="status">
+      <div class="tool-status-label">Under construction</div>
+      <p class="tool-status-body">Some checks run, others are still being wired up. What's not ready is marked 'coming' rather than silently passing or failing. Use what's here. The rest is on the way.</p>
     </div>
 
     <div class="card">

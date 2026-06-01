@@ -18,7 +18,7 @@
   --text-1: #111009;
   --text-2: #26221f;
   --text-3: #504c49;
-  --text-4: #857f7a;
+  --text-4: #6b6661;
   --green: #16a34a;
   --green-bg: #f0fdf4;
   --green-border: #bbf7d0;
@@ -39,7 +39,7 @@ html.dark {
   --text-1: #f5f2ee;
   --text-2: #d4cfc9;
   --text-3: #9e9890;
-  --text-4: #6b6560;
+  --text-4: #8a847d;
   --teal-light: #164e63;
   --mint-light: #164e63;
   --green-bg: #14532d;
@@ -159,4 +159,135 @@ pre code {
   border: none;
   border-top: 1px solid var(--border);
   margin: 20px 0;
+}
+
+/* ── Filter bar / segmented control (sitewide) ────────────────────────── */
+.filter-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.filter-groups { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; padding: 4px; border: 1px solid var(--border); border-radius: 99px; background: var(--surface); }
+.fpill { font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 99px; border: 1px solid transparent; background: transparent; color: var(--text-3); cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s, color .15s; }
+.fpill:hover { color: var(--text-1); }
+.fpill.is-active { background: var(--text-1); color: var(--surface); border-color: var(--text-1); font-weight: 600; }
+[hidden] { display: none !important; }
+
+/* ── Tool tags (in-card category labels — NOT interactive) ───────────── */
+.tool-tag {
+  font-family: 'Menlo', 'Monaco', 'SF Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg2);
+  color: var(--text-3);
+  letter-spacing: .02em;
+  white-space: nowrap;
+  display: inline-block;
+}
+html.dark .tool-tag { background: rgba(255,255,255,.04); color: var(--text-3); }
+
+/* ── Related-tool callout (end of notes, cross-links to toolkit) ──────── */
+.related-tool {
+  margin: 64px 0 0;
+  padding: 26px 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  position: relative;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
+}
+.related-tool:hover, .related-tool:focus-within {
+  border-color: rgba(0,0,0,.15);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
+.related-tool-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--text-4);
+  margin-bottom: 8px;
+}
+.related-tool-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  margin: 0 0 8px;
+}
+.related-tool-title a { color: var(--text-1); text-decoration: none; transition: color .15s; }
+.related-tool-title a:hover { color: var(--teal); text-decoration: none; }
+.related-tool-title a::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
+.related-tool-desc {
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 560px;
+}
+@media (max-width: 600px) {
+  .related-tool { padding: 22px 20px; margin-top: 48px; }
+  .related-tool-title { font-size: 19px; }
+}
+
+/* ── Section markers (numbered + line, sitewide component) ───────────── */
+.section-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 32px;
+  text-decoration: none;
+}
+.section-marker .num {
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.section-marker .line {
+  flex: none;
+  width: 56px;
+  height: 1px;
+  background: var(--border);
+  transition: background .15s, width .15s;
+}
+a.section-marker:hover { color: var(--teal); text-decoration: none; }
+a.section-marker:hover .num { color: var(--teal); }
+a.section-marker:hover .line { background: var(--teal); width: 72px; }
+
+/* ── Accessibility: keyboard focus ────────────────────────────────────── */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* Cards already have rounded corners — match the radius so the ring sits flush */
+.tool-card:focus-within,
+.hub-card:focus-within,
+.featured-post:focus-within {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+/* ── Accessibility: respect reduced-motion preference ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Kill lift-on-hover transforms so the page stays still */
+  .tool-card:hover,
+  .hub-card:hover, .hub-card:focus-within,
+  .featured-post:hover, .featured-post:focus-within,
+  .coffee-btn:hover {
+    transform: none !important;
+  }
 }

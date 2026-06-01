@@ -17,6 +17,18 @@
     '.logo-cycle{display:inline-block;min-width:48px;text-align:left;transition:opacity .12s}',
     '.logo-cycle.fade{opacity:0}',
     '.header-right{display:flex;align-items:center;gap:10px}',
+    /* Primary nav links */
+    '.nav-links{display:flex;align-items:center;gap:24px;margin-right:14px}',
+    '.nav-link{font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .15s}',
+    '.nav-link:hover{color:var(--teal);text-decoration:none}',
+    /* Work-with-Mags CTA — orange brand button */
+    '.nav-cta{display:inline-flex;align-items:center;padding:8px 18px;border-radius:99px;background:#d97706;color:#fff;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:-.01em;transition:background .15s,transform .1s;margin-right:6px}',
+    '.nav-cta:hover{background:#b45309;color:#fff;text-decoration:none;transform:translateY(-1px)}',
+    'html.dark .nav-cta{background:#f59e0b;color:#1a1612}',
+    'html.dark .nav-cta:hover{background:#fbbf24}',
+    /* Collapse text nav on mobile, keep the CTA visible */
+    '@media (max-width:760px){.nav-links{display:none}}',
+    '@media (max-width:480px){.nav-cta{padding:7px 14px;font-size:12px}}',
     /* Coffee nav button */
     '.coffee-nav-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:99px;background:var(--bg2);border:1px solid var(--border);cursor:pointer;text-decoration:none;transition:all .15s}',
     '.coffee-nav-btn:hover{border-color:var(--teal)}',
@@ -48,6 +60,12 @@
     '      <span class="logo-name">mags [<span class="logo-cycle" id="logoCycle">tags</span>] <span class="logo-lab"><span class="ls1">\u2726</span><span class="ls2">\u2726</span></span></span>',
     '    </a>',
     '    <div class="header-right">',
+    '      <nav class="nav-links" aria-label="Primary">',
+    '        <a class="nav-link" href="/#tools">Tools</a>',
+    '        <a class="nav-link" href="/notes/">Notes</a>',
+    '        <a class="nav-link" href="/mags-sikora/">About</a>',
+    '      </nav>',
+    '      <a class="nav-cta" href="/contact/">Work with Mags</a>',
     '      <a class="coffee-nav-btn" href="' + coffeeUrl + '" target="_blank" rel="noopener" title="Buy me a coffee" aria-label="Buy me a coffee">',
     '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">',
     '          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>',

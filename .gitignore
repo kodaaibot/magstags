@@ -1,6 +1,7 @@
-# OS
+# OS / FS
 .DS_Store
 Thumbs.db
+.fuse_hidden*
 
 # Sensitive / non-website files
 *.pickle
