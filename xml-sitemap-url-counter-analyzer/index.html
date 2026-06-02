@@ -9,7 +9,6 @@
   <meta property="og:title" content="XML Sitemap Counter & Analyzer | MagsTags">
   <meta property="og:description" content="URL counts, duplicate detection, directory breakdown, per-sitemap split, lastmod coverage — from a single sitemap URL. Follows index files automatically.">
   <meta property="og:url" content="https://www.magstags.com/xml-sitemap-url-counter-analyzer/">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -47,35 +46,32 @@
     ]
   }
   </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-
   <style>
-
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; }
-
     .mode-tabs { display: flex; gap: 4px; background: var(--bg); border-radius: 10px; padding: 4px; margin-bottom: 22px; width: fit-content; }
     .mode-tab { padding: 7px 18px; border-radius: 7px; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
     .mode-tab.active { background: var(--surface); color: var(--teal); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
     .mode-tab:hover:not(.active) { color: var(--text-1); }
-
     .result-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin: 16px 0 16px; }
     .result-tab { padding: 10px 20px; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; border-bottom: 2px solid transparent; margin-bottom: -1px; }
     .result-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
     .result-tab:hover:not(.active) { color: var(--text-1); border-bottom-color: var(--border); }
-
     label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
-    .url-input { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
+    .url-input { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; background: var(--field); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
     .url-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); }
     .url-input::placeholder { color: var(--text-4); }
-    textarea.xml-input { width: 100%; min-height: 180px; resize: vertical; padding: 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.6; background: var(--bg); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
+    textarea.xml-input { width: 100%; min-height: 180px; resize: vertical; padding: 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; font-family: 'Courier New', monospace; line-height: 1.6; background: var(--field); color: var(--text-1); outline: none; transition: border-color .15s, box-shadow .15s; }
     textarea.xml-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); }
     textarea.xml-input::placeholder { color: var(--text-4); }
     .hint { font-size: 12px; color: var(--text-4); margin-top: 8px; line-height: 1.5; }
@@ -86,7 +82,6 @@
     .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
     .btn-secondary { padding: 11px 24px; background: var(--bg2); color: var(--text-2); border: 1px solid var(--border); border-radius: 99px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; white-space: nowrap; font-family: 'Inter', sans-serif; }
     .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
-
     /* Loading */
     .loading-bar { display: none; margin: 20px 0; }
     .loading-bar.active { display: block; }
@@ -94,21 +89,16 @@
     .loading-track { height: 4px; background: var(--bg2); border-radius: 99px; overflow: hidden; }
     .loading-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width .3s; width: 0%; }
     .loading-detail { font-size: 11px; color: var(--text-4); margin-top: 6px; font-family: 'Courier New', monospace; word-break: break-all; }
-
     /* Results */
     #results { display: none; }
-
     .total-banner { display: flex; align-items: center; gap: 16px; padding: 20px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 20px; flex-wrap: wrap; }
-    .total-number { font-family: 'DM Serif Display', Georgia, serif; font-size: 48px; color: var(--teal); line-height: 1; }
+    .total-number { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 48px; color: var(--teal); line-height: 1; }
     .total-label { font-size: 14px; color: var(--text-3); line-height: 1.4; }
     .total-label strong { color: var(--text-1); font-weight: 600; }
-
     .warning-banner { display: flex; gap: 10px; align-items: flex-start; padding: 14px 18px; background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 12px; margin-bottom: 16px; font-size: 13px; color: var(--amber); line-height: 1.5; }
     .error-banner { display: flex; gap: 10px; align-items: flex-start; padding: 14px 18px; background: var(--red-bg); border: 1px solid var(--red-border); border-radius: 12px; margin-bottom: 16px; font-size: 13px; color: var(--red); line-height: 1.5; }
     .warning-icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
-
     .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 10px; margin-top: 24px; }
-
     .breakdown-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .breakdown-table th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-4); padding: 12px 16px; background: var(--bg); border-bottom: 1px solid var(--border); }
     .breakdown-table td { padding: 10px 16px; font-size: 13px; color: var(--text-2); border-bottom: 1px solid var(--border); }
@@ -118,11 +108,9 @@
     .bar-cell { width: 120px; }
     .bar-track { height: 6px; background: var(--bg); border-radius: 99px; overflow: hidden; }
     .bar-fill { height: 100%; background: var(--teal); border-radius: 99px; transition: width .3s; }
-
     .lastmod-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
     .lastmod-stat { font-size: 12px; color: var(--text-3); }
     .lastmod-stat strong { color: var(--text-1); }
-
     .view-more-row { text-align: center; padding: 10px 0; }
     .view-more-btn { background: none; border: none; color: var(--teal); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; padding: 6px 16px; transition: opacity .15s; }
     .view-more-btn:hover { opacity: .7; }
@@ -132,19 +120,15 @@
     .breakdown-table th.sortable::after { content: '⇅'; margin-left: 4px; font-size: 10px; opacity: .4; }
     .breakdown-table th.sortable.sort-asc::after { content: '↑'; opacity: 1; color: var(--teal); }
     .breakdown-table th.sortable.sort-desc::after { content: '↓'; opacity: 1; color: var(--teal); }
-
     .export-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
     .btn-copy { padding: 8px 18px; background: var(--teal); color: #fff; border: none; border-radius: 99px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity .15s; }
     .btn-copy:hover { opacity: .88; }
-
-
     /* ── Content sections (GSC-style) ── */
     .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
     .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
     .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
     .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
-
     /* Steps with timeline */
     .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
     .ct-steps::before { content: ''; position: absolute; left: 19px; top: 28px; bottom: 28px; width: 1px; background: var(--border); }
@@ -153,14 +137,12 @@
     .ct-step-body h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; padding-top: 10px; }
     .ct-step-body p { font-size: 14px; color: var(--text-3); line-height: 1.65; margin: 0; }
     .ct-step-body strong { color: var(--text-1); }
-
     /* Feature cards */
     .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
     .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
     .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
-    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
     .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-
     /* Callout */
     .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
     .ct-callout--amber { background: #FEF9C3; border: 1px solid rgba(217,119,6,.2); }
@@ -168,7 +150,6 @@
     .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
     .ct-callout-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
     .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
-
     /* FAQ accordion */
     .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
     .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
@@ -180,11 +161,9 @@
     .ct-faq summary:hover { background: var(--bg2); }
     .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
     .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
-
     /* Content layout — two-column with sticky TOC */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-
     /* Floating sticky TOC */
     .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
@@ -192,45 +171,53 @@
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
     .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
     .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
-
     @media(max-width:960px) {
       .ct-layout { grid-template-columns: 1fr; gap: 0; }
       .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
       .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; }
       .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; }
     }
-
     @media(max-width:768px) { .ct-wrap { padding: 0 16px 60px; } }
-
     @media(max-width:600px) {
-      main { padding: 16px 16px 60px; }
-      .input-row { flex-direction: column; align-items: stretch; }
+    .input-row { flex-direction: column; align-items: stretch; }
       .total-banner { flex-direction: column; gap: 8px; text-align: center; }
       .breakdown-table .bar-cell { display: none; }
     }
   </style>
 </head>
 <body>
-<script src="/header.js"></script>
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <main id="main-content">
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a><span class="breadcrumb-sep">›</span>
     <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
     <span>Sitemap URL Counter</span>
   </nav>
-
-  <h1>XML Sitemap URL Counter &amp; Analyzer</h1>
+  <div class="tool-hero">
+  <h1 class="tool-title">XML Sitemap URL Counter &amp; Analyzer</h1>
+</div>
   <p class="tagline">Because opening 47 child sitemaps in browser tabs is not a workflow. This is the script you'd write — except you don't have to.</p>
   <p class="voice">Paste the URL here — it follows every child, counts the URLs, breaks them down by directory, flags duplicates, checks lastmod coverage, and gives you a summary you can copy straight into the audit doc.</p>
   <hr class="section-hr">
-
   <div class="tool-card">
     <div class="mode-tabs">
       <button class="mode-tab active" id="tab-url" onclick="setMode('url')">Fetch URL</button>
       <button class="mode-tab" id="tab-paste" onclick="setMode('paste')">Paste XML</button>
     </div>
-
     <!-- URL mode (primary) -->
     <div id="mode-url">
       <label for="sitemap-url">Sitemap URL</label>
@@ -240,7 +227,6 @@
       </div>
       <p class="hint">Works with both <code>&lt;urlset&gt;</code> sitemaps and <code>&lt;sitemapindex&gt;</code> files. Index files are followed automatically.</p>
     </div>
-
     <!-- Paste mode (fallback) -->
     <div id="mode-paste" style="display:none">
       <label for="xml-input">Paste your sitemap XML</label>
@@ -256,24 +242,18 @@
       </div>
     </div>
   </div>
-
   <!-- Progress bar -->
   <div class="loading-bar" id="loading">
     <div class="loading-status" id="loading-status">Fetching sitemap…</div>
     <div class="loading-track"><div class="loading-fill" id="loading-fill"></div></div>
     <div class="loading-detail" id="loading-detail"></div>
   </div>
-
   <div id="results"></div>
-
-
 </main>
-
 <!-- ═══════════════ CONTENT SECTIONS ═══════════════ -->
 <div class="ct-wrap">
 <div class="ct-layout">
   <div class="ct-content">
-
   <!-- ─── 1. HOW TO USE ─── -->
   <div class="ct-section" id="how-to-use">
     <span class="ct-section-label">Step by step</span>
@@ -310,7 +290,6 @@
       </div>
     </div>
   </div>
-
   <!-- ─── 2. USE CASES ─── -->
   <div class="ct-section" id="use-cases">
     <span class="ct-section-label">When to use it</span>
@@ -339,7 +318,6 @@
       </div>
     </div>
   </div>
-
   <!-- ─── 3. HOW XML SITEMAPS WORK & WHAT THIS COUNTS ─── -->
   <div class="ct-section" id="how-sitemaps-work">
     <span class="ct-section-label">How it works</span>
@@ -371,48 +349,38 @@
       </div>
     </div>
   </div>
-
   <!-- ─── 5. FAQ ─── -->
   <div class="ct-section" id="faq">
     <span class="ct-section-label">Common questions</span>
     <h2 class="ct-h2">Frequently Asked Questions</h2>
     <div class="ct-faq">
-
       <details>
         <summary>How many URLs should be in my sitemap?</summary>
         <div class="ct-faq-body">As many as you have indexable pages — and no more. Every URL in your sitemap should return a 200 status, have a self-referencing canonical, and not be blocked by robots.txt or noindex. If your sitemap count is much higher than your indexed page count in Search Console, that gap is worth investigating further — use GSC's index coverage report to find out what's being excluded and why.</div>
       </details>
-
       <details>
         <summary>Where do I find my sitemap URL?</summary>
         <div class="ct-faq-body">Check <code>yourdomain.com/robots.txt</code> — most sites declare their sitemap there with a <code>Sitemap:</code> directive. If it's not there, try <code>/sitemap.xml</code>, <code>/sitemap_index.xml</code>, or check Google Search Console under Sitemaps. WordPress sites usually generate theirs at <code>/wp-sitemap.xml</code> or via a plugin like Yoast at <code>/sitemap_index.xml</code>.</div>
       </details>
-
       <details>
         <summary>Does this tool fetch sitemaps from my server?</summary>
         <div class="ct-faq-body">Yes — when you use the URL mode, the tool fetches your sitemap through a lightweight proxy. The proxy reads the XML and passes it to your browser for parsing. No data is stored. If you'd rather not have anything fetched, use the Paste XML mode and paste the raw XML directly.</div>
       </details>
-
       <details>
         <summary>Why is my URL count different from what Google shows as indexed?</summary>
         <div class="ct-faq-body">This tool counts URLs in your sitemap — what you're <strong>submitting</strong>. Google's index count is what they've <strong>chosen to index</strong>. The two numbers are almost never the same. Google may not index every URL you submit (thin content, duplicates, low quality), and it may index pages you didn't include in your sitemap (discovered through links). The gap between the two is one of the most useful things to investigate in a technical audit.</div>
       </details>
-
       <details>
         <summary>Can I count URLs in a gzipped sitemap?</summary>
         <div class="ct-faq-body">Not directly — the tool handles plain XML. If your sitemaps are served as <code>.xml.gz</code>, you'll need to decompress them first. Most browsers will do this automatically if you open the URL directly, so try pasting the URL — the server may serve it decompressed. Otherwise, download, decompress, and use Paste XML mode.</div>
       </details>
-
       <details>
         <summary>What does the older than 1 year lastmod warning mean?</summary>
         <div class="ct-faq-body">It means URLs in your sitemap have a <code>&lt;lastmod&gt;</code> date more than 12 months old. That's not inherently a problem — some pages genuinely don't change. But if a large percentage of your sitemap has stale lastmod dates, Google may deprioritise recrawling those URLs. If the content <strong>has</strong> been updated but the lastmod hasn't, your CMS isn't updating the timestamps correctly.</div>
       </details>
-
     </div>
   </div>
-
   </div><!-- end .ct-content -->
-
   <nav class="ct-toc" aria-label="Table of contents">
     <div class="ct-toc-label">On this page</div>
     <ol class="ct-toc-list">
@@ -425,34 +393,13 @@
 </div><!-- end .ct-layout -->
 </div><!-- end .ct-wrap -->
 <!-- ═══════════════ END CONTENT SECTIONS ═══════════════ -->
-
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
-
 <script>
 (function() {
-
   /* ── Proxy endpoint ── */
   var PROXY = '/.netlify/functions/fetch-sitemap?url=';
-
   /* ── State ── */
   var allResults = [];   // { name, urls:[], lastmods:[], type:'urlset'|'index', childLocs:[] }
-
   /* ── Mode switching ── */
   window.setMode = function(mode) {
     document.getElementById('mode-url').style.display = mode === 'url' ? '' : 'none';
@@ -460,17 +407,14 @@
     document.getElementById('tab-url').classList.toggle('active', mode === 'url');
     document.getElementById('tab-paste').classList.toggle('active', mode === 'paste');
   };
-
   /* ── Parse XML string ── */
   function parseXml(xmlStr) {
     var parser = new DOMParser();
     var doc = parser.parseFromString(xmlStr, 'text/xml');
     var err = doc.querySelector('parsererror');
     if (err) return { error: 'Invalid XML: ' + (err.textContent || '').substring(0, 200) };
-
     var root = doc.documentElement;
     var tag = (root.localName || root.nodeName.replace(/^.*:/, '')).toLowerCase();
-
     if (tag === 'sitemapindex') {
       var smEls = doc.querySelectorAll('sitemap');
       var locs = [], lms = [];
@@ -482,7 +426,6 @@
       }
       return { type: 'index', childLocs: locs, childLastmods: lms };
     }
-
     if (tag === 'urlset') {
       var urlEls = doc.querySelectorAll('url');
       var urls = [], lastmods = [];
@@ -494,10 +437,8 @@
       }
       return { type: 'urlset', urls: urls, lastmods: lastmods };
     }
-
     return { error: 'Unrecognised root element: <' + tag + '>. Expected <urlset> or <sitemapindex>.' };
   }
-
   /* ── Fetch a single URL via proxy ── */
   async function fetchXml(url) {
     var resp = await fetch(PROXY + encodeURIComponent(url));
@@ -508,7 +449,6 @@
     }
     return await resp.text();
   }
-
   /* ── Progress helpers ── */
   function showLoading(msg, detail, pct) {
     var el = document.getElementById('loading');
@@ -518,38 +458,30 @@
     document.getElementById('loading-fill').style.width = (pct || 0) + '%';
   }
   function hideLoading() { document.getElementById('loading').classList.remove('active'); }
-
   /* ── Main: Fetch URL and count ── */
   window.fetchAndCount = async function() {
     var urlInput = document.getElementById('sitemap-url');
     var url = urlInput.value.trim();
     if (!url) { urlInput.focus(); return; }
-
     // Auto-prepend https if missing
     if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-
     allResults = [];
     document.getElementById('results').style.display = 'none';
     document.getElementById('results').innerHTML = '';
     document.getElementById('btn-fetch').disabled = true;
-
     try {
       showLoading('Fetching sitemap…', url, 5);
       var xml = await fetchXml(url);
       var parsed = parseXml(xml);
-
       if (parsed.error) { showError(parsed.error); hideLoading(); document.getElementById('btn-fetch').disabled = false; return; }
-
       if (parsed.type === 'urlset') {
         // Simple case — single sitemap
         allResults.push({ name: url, type: 'urlset', urls: parsed.urls, lastmods: parsed.lastmods });
         showLoading('Done', parsed.urls.length + ' URLs found', 100);
-
       } else if (parsed.type === 'index') {
         // Sitemap index — fetch every child
         var children = parsed.childLocs.filter(function(l) { return l; });
         allResults.push({ name: url, type: 'index', childLocs: children, childLastmods: parsed.childLastmods, urls: [], lastmods: [] });
-
         var errors = [];
         // Fetch children in batches of 5 for performance
         var batchSize = 5;
@@ -561,7 +493,6 @@
             batch[0],
             pct
           );
-
           var promises = batch.map(function(childUrl) {
             return fetchXml(childUrl).then(function(childXml) {
               var childParsed = parseXml(childXml);
@@ -579,36 +510,27 @@
               errors.push(childUrl + ': ' + err.message);
             });
           });
-
           await Promise.all(promises);
         }
-
         if (errors.length > 0) {
           allResults.push({ type: 'errors', errors: errors });
         }
-
         showLoading('Done', 'All sitemaps processed', 100);
       }
-
       render();
-
     } catch(err) {
       showError('Failed to fetch: ' + err.message);
     }
-
     hideLoading();
     document.getElementById('btn-fetch').disabled = false;
   };
-
   /* ── Analyse pasted XML ── */
   window.analyseFromPaste = function() {
     var xml = document.getElementById('xml-input').value.trim();
     if (!xml) return;
-
     allResults = [];
     var parsed = parseXml(xml);
     if (parsed.error) { showError(parsed.error); return; }
-
     if (parsed.type === 'urlset') {
       allResults.push({ name: 'Pasted sitemap', type: 'urlset', urls: parsed.urls, lastmods: parsed.lastmods });
     } else if (parsed.type === 'index') {
@@ -616,7 +538,6 @@
     }
     render();
   };
-
   /* ── Directory breakdown ── */
   function getDirectoryBreakdown(urls) {
     var dirs = {};
@@ -633,7 +554,6 @@
     return Object.keys(dirs).map(function(k) { return { dir: k, count: dirs[k] }; })
       .sort(function(a, b) { return b.count - a.count; });
   }
-
   /* ── Lastmod stats ── */
   function getLastmodStats(lastmods) {
     var withLm = lastmods.filter(function(l) { return l !== null; });
@@ -652,42 +572,34 @@
       staleCount: stale
     };
   }
-
   /* ── Render results ── */
   function render() {
     var urlsets = allResults.filter(function(r) { return r.type === 'urlset'; });
     var indexes = allResults.filter(function(r) { return r.type === 'index'; });
     var errSets = allResults.filter(function(r) { return r.type === 'errors'; });
-
     var allUrls = [];
     var allLastmods = [];
     urlsets.forEach(function(s) { allUrls = allUrls.concat(s.urls); allLastmods = allLastmods.concat(s.lastmods); });
-
     var totalUrls = allUrls.length;
     var seen = {};
     var dupes = 0;
     allUrls.forEach(function(u) { if (seen[u]) dupes++; seen[u] = true; });
     var uniqueUrls = Object.keys(seen);
     var uniqueCount = uniqueUrls.length;
-
     var warnings = [];
     urlsets.forEach(function(s) {
       if (s.urls.length > 50000) warnings.push(shortName(s.name) + ' has ' + s.urls.length.toLocaleString() + ' URLs — exceeds 50,000 limit.');
     });
     if (dupes > 0) warnings.push(dupes.toLocaleString() + ' duplicate URL' + (dupes > 1 ? 's' : '') + ' across sitemaps.');
-
     /* Is this a sitemap index or a single sitemap? */
     var isIndex = indexes.length > 0;
     var totalChildren = 0;
     if (isIndex) indexes.forEach(function(idx) { totalChildren += idx.childLocs.length; });
-
     var html = '';
-
     /* Lastmod + directory stats for summary */
     var lm = allLastmods.length > 0 ? getLastmodStats(allLastmods) : null;
     var dirs = uniqueUrls.length > 0 ? getDirectoryBreakdown(uniqueUrls) : [];
     var dominant = dirs.length > 0 && uniqueCount > 0 && (dirs[0].count / uniqueCount * 100) >= 40 ? dirs[0] : null;
-
     /* Total banner */
     html += '<div class="total-banner">';
     html += '<div class="total-number">' + uniqueCount.toLocaleString() + '</div>';
@@ -709,29 +621,24 @@
       html += '<br><strong>' + esc(dominant.dir) + '</strong> accounts for ' + domPct + '% of URLs';
     }
     html += '</div></div>';
-
     /* Warnings */
     warnings.forEach(function(w) {
       html += '<div class="warning-banner"><span class="warning-icon">&#9888;</span><span>' + esc(w) + '</span></div>';
     });
-
     /* Fetch errors */
     errSets.forEach(function(es) {
       es.errors.forEach(function(e) {
         html += '<div class="error-banner"><span class="warning-icon">&#10005;</span><span>' + esc(e) + '</span></div>';
       });
     });
-
     /* Tabbed breakdown: Directory / Per-sitemap */
     var hasDir = uniqueUrls.length > 0;
     var hasSitemaps = urlsets.length > 1;
-
     if (hasDir || hasSitemaps) {
       html += '<div class="result-tabs">';
       if (hasDir) html += '<button class="result-tab active" onclick="switchResultTab(\'dir\',this)">By directory</button>';
       if (hasSitemaps) html += '<button class="result-tab' + (hasDir ? '' : ' active') + '" onclick="switchResultTab(\'sitemap\',this)">Per sitemap</button>';
       html += '</div>';
-
       /* Directory tab */
       if (hasDir) {
         var maxDir = dirs.length > 0 ? dirs[0].count : 1;
@@ -749,7 +656,6 @@
         if (dirs.length > 20) html += '<div class="view-more-row"><button class="view-more-btn" onclick="toggleRows(\'table-dir\',this)">View all ' + dirs.length + ' directories</button></div>';
         html += '</div>';
       }
-
       /* Per-sitemap tab */
       if (hasSitemaps) {
         html += '<div id="tab-sitemap" class="result-tab-panel"' + (hasDir ? ' style="display:none"' : '') + '>';
@@ -766,8 +672,6 @@
         html += '</div>';
       }
     }
-
-
     /* Export */
     if (allUrls.length > 0) {
       html += '<div class="export-row">';
@@ -775,13 +679,11 @@
       html += '<button class="btn-copy" style="background:var(--bg2);color:var(--text-2);border:1px solid var(--border)" onclick="copyUrls()">Copy all URLs</button>';
       html += '</div>';
     }
-
     var el = document.getElementById('results');
     el.innerHTML = html;
     el.style.display = 'block';
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-
   /* ── Short name for display ── */
   function shortName(url) {
     try {
@@ -789,7 +691,6 @@
       return u.pathname + (u.search || '');
     } catch(e) { return url; }
   }
-
   /* ── Copy functions ── */
   window.copyReport = function() {
     var urlsets = allResults.filter(function(r) { return r.type === 'urlset'; });
@@ -797,14 +698,12 @@
     urlsets.forEach(function(s) { allUrls = allUrls.concat(s.urls); });
     var seen = {};
     allUrls.forEach(function(u) { seen[u] = true; });
-
     var uniqueUrls = Object.keys(seen);
     var lines = ['XML Sitemap Analysis Report', 'Generated: ' + new Date().toISOString().split('T')[0], ''];
     lines.push('Unique URLs: ' + uniqueUrls.length.toLocaleString());
     if (allUrls.length !== uniqueUrls.length) lines.push('Total (incl. duplicates): ' + allUrls.length.toLocaleString());
     lines.push('Sitemaps processed: ' + urlsets.length);
     lines.push('');
-
     var dirs = getDirectoryBreakdown(uniqueUrls);
     if (dirs.length) {
       lines.push('Directory breakdown:');
@@ -814,22 +713,18 @@
       });
       lines.push('');
     }
-
     if (urlsets.length > 1) {
       lines.push('Per-sitemap:');
       urlsets.forEach(function(s) { lines.push('  ' + s.name + '  ' + s.urls.length.toLocaleString()); });
       lines.push('');
     }
-
     navigator.clipboard.writeText(lines.join('\n')).then(function() { toast('Report copied'); });
   };
-
   window.copyUrls = function() {
     var allUrls = [];
     allResults.filter(function(r) { return r.type === 'urlset'; }).forEach(function(s) { allUrls = allUrls.concat(s.urls); });
     navigator.clipboard.writeText(allUrls.join('\n')).then(function() { toast(allUrls.length + ' URLs copied'); });
   };
-
   /* ── Clear ── */
   window.switchResultTab = function(tab, btn) {
     var panels = document.querySelectorAll('.result-tab-panel');
@@ -840,7 +735,6 @@
     for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
     btn.classList.add('active');
   };
-
   window.toggleRows = function(tableId, btn) {
     var rows = document.querySelectorAll('#' + tableId + ' .hidden-row');
     var showing = rows.length > 0 && rows[0].style.display === 'table-row';
@@ -849,24 +743,20 @@
     if (showing) btn.textContent = 'View all ' + rows.length + ' more';
     else btn.textContent = 'Show less';
   };
-
   window.sortTable = function(tableId, colIdx, type, th) {
     var table = document.getElementById(tableId);
     var tbody = table.querySelector('tbody');
     var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
     var headers = table.querySelectorAll('th.sortable');
-
     /* Determine sort direction */
     var isDesc = th.classList.contains('sort-desc');
     var isAsc = th.classList.contains('sort-asc');
     var newDir = isDesc ? 'asc' : 'desc';
-
     /* Reset all headers in this table */
     for (var i = 0; i < headers.length; i++) {
       headers[i].classList.remove('sort-asc', 'sort-desc');
     }
     th.classList.add('sort-' + newDir);
-
     /* Sort rows */
     rows.sort(function(a, b) {
       var aText = a.cells[colIdx].textContent.trim();
@@ -883,14 +773,12 @@
       if (aVal > bVal) return newDir === 'asc' ? 1 : -1;
       return 0;
     });
-
     /* Re-append rows and re-apply hidden-row visibility */
     for (var j = 0; j < rows.length; j++) {
       rows[j].classList.remove('hidden-row');
       rows[j].style.display = '';
       tbody.appendChild(rows[j]);
     }
-
     /* Reset view-more if it exists */
     var viewMoreBtn = table.parentNode.querySelector('.view-more-btn');
     if (viewMoreBtn) {
@@ -901,7 +789,6 @@
       viewMoreBtn.textContent = 'View all ' + (rows.length - 20) + ' more';
     }
   };
-
   window.clearAll = function() {
     allResults = [];
     document.getElementById('xml-input').value = '';
@@ -910,16 +797,13 @@
     document.getElementById('results').innerHTML = '';
     hideLoading();
   };
-
   /* ── Utilities ── */
   function showError(msg) {
     var el = document.getElementById('results');
     el.innerHTML = '<div class="error-banner"><span class="warning-icon">&#10005;</span><span>' + esc(msg) + '</span></div>';
     el.style.display = 'block';
   }
-
   function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
   function toast(msg) {
     var t = document.createElement('div');
     t.textContent = msg;
@@ -927,7 +811,6 @@
     document.body.appendChild(t);
     setTimeout(function() { t.remove(); }, 2000);
   }
-
   // ─── TOC scroll spy ──────────────────────────────────────────────────────────
   (function() {
     var ids = ['how-to-use','use-cases','how-sitemaps-work','faq'];
@@ -946,8 +829,34 @@
     window.addEventListener('scroll', update, { passive: true });
     update();
   })();
-
 })();
+</script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
 </script>
 </body>
 </html>

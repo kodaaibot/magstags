@@ -95,9 +95,11 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     :root {
       --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
       --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #6b6661;
@@ -125,28 +127,24 @@
       --diff-removed: #f87171; --diff-removed-bg: rgba(248,113,113,.1);
       --diff-changed: #fbbf24; --diff-changed-bg: rgba(251,191,36,.1);
     }
-
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-    @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
-
+    @media (max-width: 768px) {
+    }
     .tool-hero { margin-bottom: 24px; }
-    .tool-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .tool-title { font-family: 'IBM Plex Mono','Menlo',monospace;  font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
     .tool-badge-free { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 99px; background: var(--mint-light, #E0F2FE); color: var(--teal); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
     .tool-subtitle { font-size: 15px; color: var(--text-3); max-width: 640px; line-height: 1.6; }
     .tool-subtitle code { font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; font-family: 'Menlo', 'Monaco', 'Courier New', monospace; color: var(--text-2); }
-
     /* ─── Input area ─── */
     .input-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
     }
     @media (max-width: 768px) { .input-grid { grid-template-columns: 1fr; } }
-
     .input-box {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      background: var(--field); border: 1px solid var(--border); border-radius: 16px;
       padding: 16px; display: flex; flex-direction: column; gap: 10px;
     }
     .input-box-label {
-      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600;
+      font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 13px; font-weight: 600;
       color: var(--text-2); display: flex; align-items: center; gap: 8px;
     }
     .label-badge {
@@ -156,7 +154,6 @@
     }
     .label-a { background: var(--teal); }
     .label-b { background: var(--purple); }
-
     .text-area {
       width: 100%; background: var(--bg); border: 1px solid var(--border);
       border-radius: 10px; color: var(--text-1); padding: 10px 14px;
@@ -166,13 +163,11 @@
     }
     .text-area:focus { border-color: var(--teal); }
     .text-area::placeholder { color: var(--text-4); }
-
     .sample-link {
       color: var(--teal); cursor: pointer; font-size: 11px;
       text-decoration: underline; background: none; border: none;
       font-family: 'Inter', sans-serif; padding: 0;
     }
-
     .btn {
       padding: 10px 24px; background: var(--teal); color: #fff; border: none;
       border-radius: 99px; font-size: 13px; font-weight: 600; cursor: pointer;
@@ -186,13 +181,12 @@
     .btn-ghost:hover { border-color: var(--teal); color: var(--teal); opacity: 1; }
     .btn-sm { padding: 5px 14px; font-size: 12px; }
     .btn-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 4px; }
-
     /* ─── Mode toggle ─── */
     .input-tabs {
       display: flex; gap: 6px; justify-content: center; margin-bottom: 12px;
     }
     .input-tab {
-      padding: 6px 18px; background: var(--surface); border: 1px solid var(--border);
+      padding: 6px 18px; background: var(--field); border: 1px solid var(--border);
       border-radius: 99px; font-size: 12px; font-weight: 500; cursor: pointer;
       font-family: 'Inter', sans-serif; color: var(--text-3); transition: all .15s;
     }
@@ -200,17 +194,14 @@
     .input-tab.active {
       background: var(--teal); color: #fff; border-color: var(--teal);
     }
-
     /* ─── Status ─── */
     .status { margin-top: 8px; padding: 8px 14px; border-radius: 10px; font-size: 12px; display: none; }
     .status.error { display: block; background: var(--red-light); border: 1px solid var(--red); color: var(--red); }
     .status.info { display: block; background: rgba(14,116,144,.08); border: 1px solid var(--teal); color: var(--teal); }
     .status.warning { display: block; background: rgba(217,119,6,.1); border: 1px solid #d97706; color: #b45309; }
     [data-theme="dark"] .status.warning { background: rgba(217,119,6,.12); border-color: #f59e0b; color: #fbbf24; }
-
     /* ─── Results ─── */
     #results { display: none; margin-top: 20px; }
-
     /* ─── Summary panel ─── */
     .summary-panel {
       background: var(--surface); border: 1px solid var(--border);
@@ -232,7 +223,6 @@
     .summary-tab.active .tab-count { background: rgba(14,116,144,.12); color: var(--teal); }
     .summary-content { display: none; padding: 14px 18px; }
     .summary-content.active { display: block; }
-
     .overview-grid { display: flex; gap: 28px; flex-wrap: wrap; }
     .overview-stat { display: flex; flex-direction: column; gap: 1px; }
     .stat-value { font-size: 22px; font-weight: 700; line-height: 1.2; }
@@ -241,7 +231,6 @@
     .stat-green { color: var(--diff-added); }
     .stat-red { color: var(--diff-removed); }
     .stat-amber { color: var(--diff-changed); }
-
     .diff-list { display: flex; flex-direction: column; gap: 4px; }
     .diff-item {
       display: flex; align-items: baseline; gap: 8px; padding: 4px 10px;
@@ -262,13 +251,11 @@
     html.dark .diff-badge.changed { color: #111; }
     .diff-path { color: var(--text-2); word-break: break-all; }
     .diff-vals { color: var(--text-4); font-size: 11px; }
-
     /* ─── Side-by-side diff trees ─── */
     .diff-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
     }
     @media (max-width: 768px) { .diff-grid { grid-template-columns: 1fr; } }
-
     .diff-tree-col {
       background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
       padding: 12px 16px; overflow-x: auto; min-height: 80px;
@@ -276,14 +263,12 @@
       font-size: 12px; line-height: 1.8;
     }
     .diff-tree-header {
-      font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600;
+      font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 600;
       color: var(--text-3); margin-bottom: 8px; padding-bottom: 6px;
       border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px;
     }
-
     .toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
     .toolbar .spacer { flex: 1; }
-
     /* ─── Connector-line rows ─── */
     .tree-line {
       display: flex; align-items: flex-start; white-space: nowrap;
@@ -292,7 +277,6 @@
     .tree-line:hover { background: var(--bg2); }
     .tree-line.expandable { cursor: pointer; }
     .tree-line.expandable:hover { background: rgba(14,116,144,.06); }
-
     /* Diff highlights on tree lines */
     .tree-line.diff-add { background: var(--diff-added-bg); }
     .tree-line.diff-add:hover { background: var(--diff-added-bg); filter: brightness(0.97); }
@@ -307,7 +291,7 @@
     }
     .type-block-header {
       display: flex; align-items: center; gap: 8px; padding: 10px 14px;
-      border-bottom: 1px solid var(--border); font-family: 'Space Grotesk', sans-serif;
+      border-bottom: 1px solid var(--border); font-family: 'IBM Plex Mono','Menlo',monospace;
     }
     .type-block-badge {
       font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
@@ -324,7 +308,6 @@
       border-radius: 6px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
     }
     .type-block-prop strong { color: var(--text-1); }
-
     /* ─── Property comparison table ─── */
     .prop-compare-table {
       width: 100%; border-collapse: collapse; font-size: 11px;
@@ -353,7 +336,6 @@
     .prop-dot.both { background: var(--teal); }
     .prop-dot.a-only { background: var(--diff-removed); }
     .prop-dot.b-only { background: var(--diff-added); }
-
     /* ─── Value type badges ─── */
     .vtype-badge {
       display: inline-block; font-size: 9px; font-weight: 600; padding: 1px 6px;
@@ -368,7 +350,6 @@
     .vtype-arr { background: rgba(14,116,144,.08); color: var(--mint); }
     .vtype-obj { background: rgba(107,114,128,.1); color: var(--text-3); }
     .vtype-warn { background: rgba(220,38,38,.1); color: var(--diff-removed); }
-
     /* ─── Property rows ─── */
     .prop-row {
       display: flex; align-items: center; padding: 4px 14px; font-size: 12px;
@@ -380,7 +361,6 @@
     .prop-row.prop-mismatch { background: var(--diff-changed-bg); }
     .prop-name { color: var(--text-2); }
     .prop-nested { border-left: 2px solid var(--border); margin-left: 20px; }
-
     /* ─── Property sections inside shared type cards ─── */
     .prop-section { margin-bottom: 4px; }
     .prop-section:last-child { margin-bottom: 0; }
@@ -391,11 +371,9 @@
     .label-a-only { color: var(--diff-removed); }
     .label-b-only { color: var(--diff-added); }
     .label-both { color: var(--teal); }
-
     /* ─── Type block body ─── */
     .type-block-body { padding: 6px 0; }
     .type-block-body.compact-body { padding: 4px 0; }
-
     /* ─── Stat pills ─── */
     .type-block-stat-pills { display: flex; gap: 6px; margin-left: 12px; }
     .pill {
@@ -405,7 +383,6 @@
     .pill-both { background: rgba(14,116,144,.1); color: var(--teal); }
     .pill-a { background: var(--diff-removed-bg); color: var(--diff-removed); }
     .pill-b { background: var(--diff-added-bg); color: var(--diff-added); }
-
     /* ─── Full match collapse ─── */
     .type-block-card.full-match .type-block-body { display: none; }
     .type-block-card.full-match .clickable-header { cursor: pointer; }
@@ -415,10 +392,8 @@
     }
     .type-block-card.full-match.expanded .type-block-body { display: block; }
     .type-block-card.full-match.expanded .clickable-header::after { transform: rotate(90deg); }
-
     .tree-line.structural-unique { background: var(--diff-added-bg); }
     .tree-line.structural-unique:hover { background: var(--diff-added-bg); filter: brightness(0.97); }
-
     .guide {
       color: var(--border); flex-shrink: 0; white-space: pre;
       user-select: none; letter-spacing: -0.5px;
@@ -431,7 +406,6 @@
     }
     .chev.open { transform: rotate(90deg); }
     .chev.hidden { visibility: hidden; }
-
     .key { color: var(--purple); }
     .sep { color: var(--text-4); }
     .val-string { color: var(--green); }
@@ -442,7 +416,6 @@
     .val-url:hover { opacity: .7; }
     .arr-index { color: var(--text-4); opacity: .7; }
     .summary { color: var(--text-4); font-style: italic; font-size: 11px; }
-
     .type-tag {
       display: inline-block; padding: 1px 7px; border-radius: 5px;
       font-size: 10px; font-weight: 700; margin-left: 4px;
@@ -458,7 +431,6 @@
     .type-ShippingDeliveryTime, .type-DefinedRegion { background: rgba(14,116,144,.08); color: var(--teal); }
     .type-QuantitativeValue { background: var(--bg2); color: var(--text-4); }
     .type-default { background: var(--bg2); color: var(--text-4); }
-
     .spinner {
       display: inline-block; width: 12px; height: 12px;
       border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
@@ -466,23 +438,21 @@
       margin-right: 6px; vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     @media (max-width: 640px) {
       .diff-tree-col { font-size: 11px; padding: 8px; }
       .overview-grid { gap: 16px; }
     }
-
     /* ─── Content sections (ct-* design system) ─── */
     .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
     .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
     .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
     .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
     .ct-body { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 680px; }
     .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
     .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
     .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
-    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 8px; }
+    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 8px; }
     .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
     .ct-callout { display: flex; gap: 14px; padding: 18px 20px; border-radius: 12px; margin-top: 28px; }
     .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
@@ -503,7 +473,7 @@
     .ct-faq details[open] summary { background: var(--surface); color: var(--teal); }
     .ct-faq-body { padding: 0 22px 18px; font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
     .ct-cta { text-align: center; padding: 48px 24px; max-width: 600px; margin: 0 auto; }
-    .ct-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; }
+    .ct-cta h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 22px; font-weight: 600; }
     .ct-cta p { font-size: 14px; color: var(--text-3); margin: 8px 0 24px; }
     .ct-cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 99px; background: var(--teal); color: white; font-size: 13px; font-weight: 600; text-decoration: none; transition: background .15s; }
@@ -511,15 +481,27 @@
   </style>
 </head>
 <body>
-<script src="/header.js"></script>
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <main id="main-content">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a><span class="breadcrumb-sep">›</span>
       <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
       <span>Schema Comparison Tool</span>
     </nav>
-
     <div class="tool-hero">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
         <h1 class="tool-title" style="margin-bottom:0">Schema Comparison Tool</h1>
@@ -529,7 +511,6 @@
       <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
       <p class="tool-subtitle">Paste two JSON-LD blocks or fetch them from URLs. See what's been added, removed, or changed — side by side, colour-coded, with Before/After or Structural mode depending on whether you're checking your own work or sizing up a competitor. No logins. No diff tool that requires a PhD. Just the differences.</p>
     </div>
-
     <!-- Two paste boxes -->
     <div class="input-grid">
       <div class="input-box">
@@ -543,22 +524,17 @@
         <button class="sample-link" onclick="loadSampleB()">Load sample</button>
       </div>
     </div>
-
     <!-- Mode toggle -->
     <div class="input-tabs">
       <button class="input-tab active" data-mode="before-after" onclick="switchMode('before-after')">Before / After</button>
       <button class="input-tab" data-mode="structural" onclick="switchMode('structural')">Structural</button>
     </div>
-
     <div class="btn-row">
       <button class="btn" onclick="runCompare()">Compare</button>
       <button class="btn btn-ghost" onclick="swapInputs()">⇄ Swap A / B</button>
     </div>
-
     <div class="status" id="status"></div>
-
     <div id="results">
-
       <!-- Summary panel -->
       <div class="summary-panel">
         <div class="summary-tabs" id="summary-tabs">
@@ -580,13 +556,11 @@
           <div class="diff-list" id="changed-list"></div>
         </div>
       </div>
-
       <div class="toolbar">
         <div class="spacer"></div>
         <button class="btn btn-ghost btn-sm" onclick="expandAll()">Expand all</button>
         <button class="btn btn-ghost btn-sm" onclick="collapseAll()">Collapse all</button>
       </div>
-
       <!-- Side-by-side trees -->
       <div class="diff-grid">
         <div class="diff-tree-col" id="tree-a">
@@ -597,11 +571,8 @@
         </div>
       </div>
     </div>
-
 </main>
-
 <div class="ct-wrap">
-
   <section class="ct-section">
     <span class="ct-section-label">Background</span>
     <h2 class="ct-h2">Why comparing schemas manually is a bad afternoon</h2>
@@ -630,7 +601,6 @@
       </div>
     </div>
   </section>
-
   <section class="ct-section">
     <span class="ct-section-label">Use cases</span>
     <h2 class="ct-h2">When this saves you from tab-switching</h2>
@@ -654,7 +624,6 @@
       </div>
     </div>
   </section>
-
   <section class="ct-section">
     <span class="ct-section-label">How it works</span>
     <h2 class="ct-h2">Two modes, one goal: show you what's different</h2>
@@ -677,7 +646,6 @@
       </div>
     </div>
   </section>
-
   <section class="ct-section">
     <span class="ct-section-label">Know the limits</span>
     <h2 class="ct-h2">What this tool does and doesn't do</h2>
@@ -713,7 +681,6 @@
       </div>
     </div>
   </section>
-
   <section class="ct-section">
     <span class="ct-section-label">Common questions</span>
     <h2 class="ct-h2">Frequently asked questions</h2>
@@ -744,9 +711,7 @@
       </details>
     </div>
   </section>
-
 </div>
-
 <div class="ct-cta">
   <h2>Done comparing? Keep going.</h2>
   <p>Visualize a single schema in detail, or generate one from scratch.</p>
@@ -756,30 +721,12 @@
     <a href="/product-schema/" class="ct-cta-link-secondary">Product Schema Guide &#x2197;</a>
   </div>
 </div>
-
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
 <script>
 // ═══════════════════════════════════════════
 // Global state
 // ═══════════════════════════════════════════
 var currentMode = 'before-after';
-
 // ═══════════════════════════════════════════
 // Mode switching
 // ═══════════════════════════════════════════
@@ -787,7 +734,6 @@ function switchMode(mode) {
   currentMode = mode;
   document.querySelectorAll('.input-tab').forEach(function(btn) { btn.classList.remove('active'); });
   document.querySelector('[data-mode="' + mode + '"]').classList.add('active');
-
   // Update labels based on mode
   if (mode === 'before-after') {
     document.getElementById('label-a-text').textContent = 'Schema A (baseline)';
@@ -806,13 +752,11 @@ function switchMode(mode) {
     document.getElementById('tab-label-removed').textContent = 'Only in B';
     document.getElementById('tab-label-changed').textContent = 'Shared';
   }
-
   // Rerun compare if results exist
   if (document.getElementById('results').style.display === 'block') {
     runCompare();
   }
 }
-
 // ═══════════════════════════════════════════
 // Summary tab switching
 // ═══════════════════════════════════════════
@@ -825,7 +769,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('sc-' + btn.dataset.stab).classList.add('active');
     });
   });
-
   // Delegate click for collapsible full-match type cards
   document.addEventListener('click', function(e) {
     var header = e.target.closest('.full-match .clickable-header');
@@ -834,7 +777,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
-
 // ═══════════════════════════════════════════
 // Status
 // ═══════════════════════════════════════════
@@ -846,7 +788,6 @@ function clearStatus() {
   var el = document.getElementById('status');
   el.className = 'status'; el.textContent = '';
 }
-
 // ═══════════════════════════════════════════
 // JSON repair (reused from visualizer)
 // ═══════════════════════════════════════════
@@ -863,7 +804,6 @@ function tryRepairJSON(raw) {
   try { return JSON.parse(noComments); } catch(e) {}
   return null;
 }
-
 function smartParse(raw, label) {
   try {
     return { data: JSON.parse(raw), warning: null };
@@ -873,14 +813,12 @@ function smartParse(raw, label) {
     return { data: null, warning: null, error: label + ': ' + e.message };
   }
 }
-
 // ═══════════════════════════════════════════
 // Extract type → property detail map (structural mode)
 // Returns { TypeName: { propName: { path, valueType, childType, nested } } }
 // ═══════════════════════════════════════════
 function extractTypeProperties(obj) {
   var typeMap = {};  // { typeName: { propName: infoObj } }
-
   function classifyValue(val) {
     if (val === null || val === undefined) return 'null';
     if (typeof val === 'boolean') return 'boolean';
@@ -895,7 +833,6 @@ function extractTypeProperties(obj) {
     if (typeof val === 'object') return 'object';
     return 'unknown';
   }
-
   function getChildType(val) {
     if (val && typeof val === 'object' && !Array.isArray(val) && val['@type']) {
       return Array.isArray(val['@type']) ? val['@type'].join('/') : val['@type'];
@@ -909,7 +846,6 @@ function extractTypeProperties(obj) {
     }
     return null;
   }
-
   // Collect nested property paths for non-typed objects
   function collectNested(val, prefix) {
     var nested = [];
@@ -933,15 +869,12 @@ function extractTypeProperties(obj) {
     });
     return nested;
   }
-
   function walk(val) {
     if (val === null || val === undefined) return;
-
     if (Array.isArray(val)) {
       val.forEach(function(item) { walk(item); });
       return;
     }
-
     if (typeof val === 'object') {
       if (val['@type']) {
         var types = Array.isArray(val['@type']) ? val['@type'] : [val['@type']];
@@ -968,22 +901,18 @@ function extractTypeProperties(obj) {
           });
         });
       }
-
       Object.keys(val).forEach(function(key) {
         walk(val[key]);
       });
     }
   }
-
   walk(obj);
   return typeMap;
 }
-
 // Helper: get sorted property names from typeMap entry
 function getTypePropNames(typeEntry) {
   return Object.keys(typeEntry).sort();
 }
-
 // ═══════════════════════════════════════════
 // Flatten schema to path → value map
 // ═══════════════════════════════════════════
@@ -1013,7 +942,6 @@ function flattenSchema(obj, prefix) {
   map[prefix || '(root)'] = String(obj);
   return map;
 }
-
 // ═══════════════════════════════════════════
 // Compute diff between two flattened schemas
 // ═══════════════════════════════════════════
@@ -1022,7 +950,6 @@ function computeDiff(flatA, flatB) {
   var removed = [];
   var changed = [];
   var unchanged = [];
-
   Object.keys(flatA).forEach(function(path) {
     if (!(path in flatB)) {
       removed.push({ path: path, valA: flatA[path] });
@@ -1037,10 +964,8 @@ function computeDiff(flatA, flatB) {
       added.push({ path: path, valB: flatB[path] });
     }
   });
-
   return { added: added, removed: removed, changed: changed, unchanged: unchanged };
 }
-
 // Build a set of paths that should be highlighted
 function buildDiffSets(diff) {
   var addedPaths = {};
@@ -1051,7 +976,6 @@ function buildDiffSets(diff) {
   diff.changed.forEach(function(d) { changedPaths[d.path] = true; });
   return { added: addedPaths, removed: removedPaths, changed: changedPaths };
 }
-
 // ═══════════════════════════════════════════
 // Run comparison
 // ═══════════════════════════════════════════
@@ -1059,36 +983,27 @@ function runCompare() {
   clearStatus();
   var rawA = document.getElementById('input-a').value.trim();
   var rawB = document.getElementById('input-b').value.trim();
-
   if (!rawA || !rawB) { showStatus('Paste JSON-LD into both Schema A and Schema B.', 'error'); return; }
-
   var parsedA = smartParse(rawA, 'Schema A');
   var parsedB = smartParse(rawB, 'Schema B');
-
   if (parsedA.error) { showStatus('Schema A — Invalid JSON: ' + parsedA.error, 'error'); return; }
   if (parsedB.error) { showStatus('Schema B — Invalid JSON: ' + parsedB.error, 'error'); return; }
-
   var warnings = [parsedA.warning, parsedB.warning].filter(Boolean);
   if (warnings.length) showStatus('Warning: ' + warnings.join(' | '), 'warning');
-
   var dataA = parsedA.data;
   var dataB = parsedB.data;
   if (!Array.isArray(dataA)) dataA = [dataA];
   if (!Array.isArray(dataB)) dataB = [dataB];
-
   var schemaA = dataA.length === 1 ? dataA[0] : dataA;
   var schemaB = dataB.length === 1 ? dataB[0] : dataB;
-
   // Show results
   document.getElementById('results').style.display = 'block';
-
   if (currentMode === 'before-after') {
     runCompareBeforeAfter(schemaA, schemaB);
   } else {
     runCompareStructural(schemaA, schemaB);
   }
 }
-
 // ═══════════════════════════════════════════
 // Before/After Mode
 // ═══════════════════════════════════════════
@@ -1097,7 +1012,6 @@ function runCompareBeforeAfter(schemaA, schemaB) {
   var flatB = flattenSchema(schemaB);
   var diff = computeDiff(flatA, flatB);
   var sets = buildDiffSets(diff);
-
   // Overview
   var total = diff.added.length + diff.removed.length + diff.changed.length + diff.unchanged.length;
   var identical = diff.added.length === 0 && diff.removed.length === 0 && diff.changed.length === 0;
@@ -1108,39 +1022,33 @@ function runCompareBeforeAfter(schemaA, schemaB) {
     '<div class="overview-stat"><span class="stat-value stat-teal">' + diff.unchanged.length + '</span><span class="stat-label">Unchanged</span></div>' +
     '<div class="overview-stat"><span class="stat-value" style="color:var(--text-4)">' + total + '</span><span class="stat-label">Total paths</span></div>' +
     (identical ? '<div style="margin-top:8px;color:var(--teal);font-size:13px;font-weight:600;">✓ Schemas are identical</div>' : '');
-
   // Tabs counts
   document.getElementById('added-count').textContent = diff.added.length;
   document.getElementById('removed-count').textContent = diff.removed.length;
   document.getElementById('changed-count').textContent = diff.changed.length;
-
   // Added list
   document.getElementById('added-list').innerHTML = diff.added.length === 0
     ? '<div style="color:var(--text-4);font-size:12px;">No properties added.</div>'
     : diff.added.map(function(d) {
         return '<div class="diff-item added"><span class="diff-badge added">+</span><span class="diff-path">' + esc(d.path) + '</span><span class="diff-vals">' + esc(truncate(d.valB)) + '</span></div>';
       }).join('');
-
   // Removed list
   document.getElementById('removed-list').innerHTML = diff.removed.length === 0
     ? '<div style="color:var(--text-4);font-size:12px;">No properties removed.</div>'
     : diff.removed.map(function(d) {
         return '<div class="diff-item removed"><span class="diff-badge removed">−</span><span class="diff-path">' + esc(d.path) + '</span><span class="diff-vals">' + esc(truncate(d.valA)) + '</span></div>';
       }).join('');
-
   // Changed list
   document.getElementById('changed-list').innerHTML = diff.changed.length === 0
     ? '<div style="color:var(--text-4);font-size:12px;">No changed values.</div>'
     : diff.changed.map(function(d) {
         return '<div class="diff-item changed"><span class="diff-badge changed">≠</span><span class="diff-path">' + esc(d.path) + '</span><span class="diff-vals">' + esc(truncate(d.valA)) + ' → ' + esc(truncate(d.valB)) + '</span></div>';
       }).join('');
-
   // Reset summary tabs
   document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
   document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
   document.querySelector('[data-stab="overview"]').classList.add('active');
   document.getElementById('sc-overview').classList.add('active');
-
   // Build trees
   var treeA = document.getElementById('tree-a');
   var treeB = document.getElementById('tree-b');
@@ -1148,31 +1056,25 @@ function runCompareBeforeAfter(schemaA, schemaB) {
   var headerB = treeB.querySelector('.diff-tree-header').outerHTML;
   treeA.innerHTML = headerA;
   treeB.innerHTML = headerB;
-
   buildDiffTree(treeA, schemaA, null, null, true, true, '', sets.removed, sets.changed, 'a');
   buildDiffTree(treeB, schemaB, null, null, true, true, '', sets.added, sets.changed, 'b');
 }
-
 // ═══════════════════════════════════════════
 // Structural Mode
 // ═══════════════════════════════════════════
 function runCompareStructural(schemaA, schemaB) {
   var typesA = extractTypeProperties(schemaA);
   var typesB = extractTypeProperties(schemaB);
-
   var propsA = function(t) { return getTypePropNames(typesA[t]); };
   var propsB = function(t) { return getTypePropNames(typesB[t]); };
-
   // Find types in each
   var allTypes = new Set();
   Object.keys(typesA).forEach(function(t) { allTypes.add(t); });
   Object.keys(typesB).forEach(function(t) { allTypes.add(t); });
   allTypes = Array.from(allTypes).sort();
-
   var onlyA = [];
   var onlyB = [];
   var shared = [];
-
   allTypes.forEach(function(t) {
     if (t in typesA && !(t in typesB)) {
       onlyA.push(t);
@@ -1182,14 +1084,12 @@ function runCompareStructural(schemaA, schemaB) {
       shared.push(t);
     }
   });
-
   // Build per-type stats with full property detail
   var totalUniqueProps = new Set();
   var sharedPropCount = 0;
   var onlyInACount = 0;
   var onlyInBCount = 0;
   var perTypeStats = [];
-
   shared.forEach(function(t) {
     var namesA = propsA(t);
     var namesB = propsB(t);
@@ -1198,7 +1098,6 @@ function runCompareStructural(schemaA, schemaB) {
     var inBoth = [];
     var inAOnly = [];
     var inBOnly = [];
-
     namesA.forEach(function(p) {
       totalUniqueProps.add(t + '.' + p);
       if (setB.has(p)) { inBoth.push(p); } else { inAOnly.push(p); }
@@ -1207,11 +1106,9 @@ function runCompareStructural(schemaA, schemaB) {
       totalUniqueProps.add(t + '.' + p);
       if (!setA.has(p)) { inBOnly.push(p); }
     });
-
     sharedPropCount += inBoth.length;
     onlyInACount += inAOnly.length;
     onlyInBCount += inBOnly.length;
-
     perTypeStats.push({
       type: t,
       inBoth: inBoth.sort(),
@@ -1221,21 +1118,17 @@ function runCompareStructural(schemaA, schemaB) {
       detailB: typesB[t]
     });
   });
-
   var coveragePercent = totalUniqueProps.size > 0 ? Math.round((sharedPropCount / totalUniqueProps.size) * 100) : 0;
-
   // Count total props in only-A and only-B types
   var onlyAProps = 0;
   onlyA.forEach(function(t) { onlyAProps += getTypePropNames(typesA[t]).length; });
   var onlyBProps = 0;
   onlyB.forEach(function(t) { onlyBProps += getTypePropNames(typesB[t]).length; });
-
   // Total property counts per side
   var totalPropsA = 0;
   Object.keys(typesA).forEach(function(t) { totalPropsA += getTypePropNames(typesA[t]).length; });
   var totalPropsB = 0;
   Object.keys(typesB).forEach(function(t) { totalPropsB += getTypePropNames(typesB[t]).length; });
-
   // Overview — comprehensive stats
   document.getElementById('overview-grid').innerHTML =
     '<div class="overview-stat"><span class="stat-value stat-teal">' + shared.length + '</span><span class="stat-label">Shared types</span></div>' +
@@ -1243,12 +1136,10 @@ function runCompareStructural(schemaA, schemaB) {
     '<div class="overview-stat"><span class="stat-value stat-green">' + onlyB.length + ' <small style="font-size:11px;font-weight:400;color:var(--text-4)">(' + onlyBProps + ' props)</small></span><span class="stat-label">Types only in B</span></div>' +
     '<div class="overview-stat"><span class="stat-value" style="color:var(--text-1)">' + coveragePercent + '%</span><span class="stat-label">Property overlap</span></div>' +
     '<div class="overview-stat"><span class="stat-value stat-amber">' + totalPropsA + ' / ' + totalPropsB + '</span><span class="stat-label">Total props A / B</span></div>';
-
   // Update tab counts
   document.getElementById('added-count').textContent = onlyA.length;
   document.getElementById('removed-count').textContent = onlyB.length;
   document.getElementById('changed-count').textContent = shared.length;
-
   // Helper: render property with type badge
   function propHtml(propName, detail, typeName) {
     var vt = detail ? detail.valueType : 'unknown';
@@ -1285,7 +1176,6 @@ function runCompareStructural(schemaA, schemaB) {
     }
     return html;
   }
-
   // Only in A — types with their properties + value types
   document.getElementById('added-list').innerHTML = onlyA.length === 0
     ? '<div style="color:var(--text-4);font-size:12px;">No types unique to Schema A.</div>'
@@ -1298,7 +1188,6 @@ function runCompareStructural(schemaA, schemaB) {
           }).join('') + '</div>' +
         '</div>';
       }).join('');
-
   // Only in B
   document.getElementById('removed-list').innerHTML = onlyB.length === 0
     ? '<div style="color:var(--text-4);font-size:12px;">No types unique to Schema B.</div>'
@@ -1311,7 +1200,6 @@ function runCompareStructural(schemaA, schemaB) {
           }).join('') + '</div>' +
         '</div>';
       }).join('');
-
   // Shared types — thorough per-type comparison
   document.getElementById('changed-list').innerHTML = shared.length === 0
     ? '<div style="color:var(--text-4);font-size:12px;">No shared types.</div>'
@@ -1320,7 +1208,6 @@ function runCompareStructural(schemaA, schemaB) {
         var match = totalProps > 0 ? Math.round((s.inBoth.length / totalProps) * 100) : 100;
         var matchColor = match === 100 ? 'var(--diff-added)' : match >= 50 ? 'var(--diff-changed)' : 'var(--diff-removed)';
         var isFullMatch = s.inAOnly.length === 0 && s.inBOnly.length === 0;
-
         var html = '<div class="type-block-card' + (isFullMatch ? ' full-match' : '') + '">' +
           '<div class="type-block-header' + (isFullMatch ? ' clickable-header' : '') + '">' +
             '<span class="type-block-name">' + esc(s.type) + '</span>' +
@@ -1331,7 +1218,6 @@ function runCompareStructural(schemaA, schemaB) {
             '</span>' +
             '<span class="type-block-match" style="color:' + matchColor + '">' + match + '%</span>' +
           '</div>';
-
         // Compact line for 100% match types
         if (isFullMatch) {
           html += '<div class="type-block-body compact-body">';
@@ -1344,7 +1230,6 @@ function runCompareStructural(schemaA, schemaB) {
         } else {
           // Full three-column comparison for types with differences
           html += '<div class="type-block-body">';
-
           // Properties only in A
           if (s.inAOnly.length > 0) {
             html += '<div class="prop-section"><div class="prop-section-label label-a-only">Only in A (' + s.inAOnly.length + ')</div>';
@@ -1353,7 +1238,6 @@ function runCompareStructural(schemaA, schemaB) {
             });
             html += '</div>';
           }
-
           // Properties only in B
           if (s.inBOnly.length > 0) {
             html += '<div class="prop-section"><div class="prop-section-label label-b-only">Only in B (' + s.inBOnly.length + ')</div>';
@@ -1362,7 +1246,6 @@ function runCompareStructural(schemaA, schemaB) {
             });
             html += '</div>';
           }
-
           // Shared properties — compare value types between A and B
           if (s.inBoth.length > 0) {
             html += '<div class="prop-section"><div class="prop-section-label label-both">Shared (' + s.inBoth.length + ')</div>';
@@ -1372,7 +1255,6 @@ function runCompareStructural(schemaA, schemaB) {
               var typeMismatch = detA && detB && detA.valueType !== detB.valueType;
               var childMismatch = detA && detB && detA.childType !== detB.childType;
               var hasMismatch = typeMismatch || childMismatch;
-
               // Compare nested sub-properties if both are objects
               var nestedA = detA ? detA.nested : [];
               var nestedB = detB ? detB.nested : [];
@@ -1391,7 +1273,6 @@ function runCompareStructural(schemaA, schemaB) {
                   if (!(path in pathsA)) { nestedOnlyB.push(path); }
                 });
               }
-
               html += '<div class="prop-row' + (hasMismatch ? ' prop-mismatch' : '') + '"><span class="prop-name">' + esc(p) + '</span>';
               if (detA && detA.childType) {
                 html += ' <span class="vtype-badge vtype-ref">\u2192 ' + esc(detA.childType) + '</span>';
@@ -1411,7 +1292,6 @@ function runCompareStructural(schemaA, schemaB) {
                 }
               }
               html += '</div>';
-
               // Show nested sub-property diff
               if (nestedOnlyA.length > 0 || nestedOnlyB.length > 0) {
                 html += '<div class="prop-nested">';
@@ -1426,20 +1306,16 @@ function runCompareStructural(schemaA, schemaB) {
             });
             html += '</div>';
           }
-
           html += '</div>';
         }
-
         html += '</div>';
         return html;
       }).join('');
-
   // Reset summary tabs
   document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
   document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
   document.querySelector('[data-stab="overview"]').classList.add('active');
   document.getElementById('sc-overview').classList.add('active');
-
   // Build structural trees (show which properties are unique)
   var treeA = document.getElementById('tree-a');
   var treeB = document.getElementById('tree-b');
@@ -1447,50 +1323,41 @@ function runCompareStructural(schemaA, schemaB) {
   var headerB = treeB.querySelector('.diff-tree-header').outerHTML;
   treeA.innerHTML = headerA;
   treeB.innerHTML = headerB;
-
   // Build sets of unique properties for highlighting
   var uniquePropsA = {};
   var uniquePropsB = {};
-
   shared.forEach(function(t) {
     var namesA = getTypePropNames(typesA[t]);
     var namesB = getTypePropNames(typesB[t]);
     var setA = new Set(namesA);
     var setB = new Set(namesB);
-
     namesA.forEach(function(p) {
       if (!setB.has(p)) {
         uniquePropsA[t + '.' + p] = true;
       }
     });
-
     namesB.forEach(function(p) {
       if (!setA.has(p)) {
         uniquePropsB[t + '.' + p] = true;
       }
     });
   });
-
   buildStructuralTree(treeA, schemaA, null, null, true, true, '', uniquePropsA, 'a', typesA, typesB, shared);
   buildStructuralTree(treeB, schemaB, null, null, true, true, '', uniquePropsB, 'b', typesB, typesA, shared);
 }
-
 // ═══════════════════════════════════════════
 // Build structural tree (connector lines + highlights)
 // ═══════════════════════════════════════════
 function buildStructuralTree(parent, value, prefix, keyLabel, isLast, startOpen, currentPath, uniqueSet, side, currentTypeMap, otherTypeMap, sharedTypes, currentType) {
   var isRoot = prefix === null;
-
   if (value !== null && typeof value === 'object') {
     var isArr = Array.isArray(value);
     var entries = isArr ? value.map(function(v, i) { return [i, v]; }) : Object.entries(value);
     var schemaType = !isArr && value['@type']
       ? (Array.isArray(value['@type']) ? value['@type'].join('/') : value['@type'])
       : null;
-
     var headerLine = document.createElement('div');
     headerLine.className = 'tree-line expandable';
-
     // Structural highlight: if this property key is unique to this side's type
     var objPropKey = currentType && keyLabel ? (currentType + '.' + keyLabel) : null;
     if (objPropKey && objPropKey in uniqueSet) {
@@ -1500,44 +1367,35 @@ function buildStructuralTree(parent, value, prefix, keyLabel, isLast, startOpen,
     if (schemaType && sharedTypes && sharedTypes.indexOf(schemaType) === -1 && !(schemaType in otherTypeMap)) {
       headerLine.classList.add('structural-unique');
     }
-
     var guide = document.createElement('span');
     guide.className = 'guide';
     guide.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
     headerLine.appendChild(guide);
-
     var chev = document.createElement('span');
     chev.className = 'chev' + (startOpen ? ' open' : '');
     chev.textContent = '\u25B6';
     headerLine.appendChild(chev);
-
     if (keyLabel !== null && keyLabel !== undefined) {
       var k = document.createElement('span');
       if (typeof keyLabel === 'number') { k.className = 'arr-index'; k.textContent = '[' + keyLabel + ']'; }
       else { k.className = 'key'; k.textContent = keyLabel; }
       headerLine.appendChild(k);
     }
-
     var summary = document.createElement('span');
     summary.className = 'summary';
     summary.textContent = isArr ? ' [' + value.length + ']' : ' {' + entries.length + '}';
     headerLine.appendChild(summary);
-
     if (schemaType) {
       var badge = document.createElement('span');
       badge.className = 'type-tag ' + getTypeClass(schemaType);
       badge.textContent = schemaType;
       headerLine.appendChild(badge);
     }
-
     parent.appendChild(headerLine);
-
     var childContainer = document.createElement('div');
     childContainer.className = 'tree-children';
     if (!startOpen) childContainer.style.display = 'none';
-
     var childPrefix = isRoot ? '' : (prefix + (isLast ? '   ' : '\u2502  '));
-
     entries.forEach(function(entry, idx) {
       var childIsLast = idx === entries.length - 1;
       var childKey = entry[0];
@@ -1546,34 +1404,27 @@ function buildStructuralTree(parent, value, prefix, keyLabel, isLast, startOpen,
         : (typeof childKey === 'number' ? '[' + childKey + ']' : String(childKey));
       buildStructuralTree(childContainer, entry[1], childPrefix, childKey, childIsLast, true, childPath, uniqueSet, side, currentTypeMap, otherTypeMap, sharedTypes, schemaType);
     });
-
     parent.appendChild(childContainer);
-
     headerLine.addEventListener('click', function() {
       chev.classList.toggle('open');
       childContainer.style.display = childContainer.style.display === 'none' ? '' : 'none';
     });
-
   } else {
     var line = document.createElement('div');
     line.className = 'tree-line';
-
     // In structural mode, highlight properties unique to this side
     var propKey = currentType && keyLabel ? (currentType + '.' + keyLabel) : null;
     if (propKey && propKey in uniqueSet) {
       line.classList.add('structural-unique');
     }
-
     var guide2 = document.createElement('span');
     guide2.className = 'guide';
     guide2.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
     line.appendChild(guide2);
-
     var chev2 = document.createElement('span');
     chev2.className = 'chev hidden';
     chev2.textContent = '\u25B6';
     line.appendChild(chev2);
-
     if (keyLabel !== null && keyLabel !== undefined) {
       var k2 = document.createElement('span');
       if (typeof keyLabel === 'number') { k2.className = 'arr-index'; k2.textContent = '[' + keyLabel + ']'; }
@@ -1583,7 +1434,6 @@ function buildStructuralTree(parent, value, prefix, keyLabel, isLast, startOpen,
       sep.className = 'sep'; sep.textContent = ': ';
       line.appendChild(sep);
     }
-
     var valSpan = document.createElement('span');
     if (value === null || value === undefined) {
       valSpan.className = 'val-null'; valSpan.textContent = 'null';
@@ -1602,66 +1452,53 @@ function buildStructuralTree(parent, value, prefix, keyLabel, isLast, startOpen,
     parent.appendChild(line);
   }
 }
-
 // ═══════════════════════════════════════════
 // Build diff tree (connector lines + highlights)
 // ═══════════════════════════════════════════
 function buildDiffTree(parent, value, prefix, keyLabel, isLast, startOpen, currentPath, highlightSet, changedSet, side) {
   var isRoot = prefix === null;
-
   if (value !== null && typeof value === 'object') {
     var isArr = Array.isArray(value);
     var entries = isArr ? value.map(function(v, i) { return [i, v]; }) : Object.entries(value);
     var schemaType = !isArr && value['@type']
       ? (Array.isArray(value['@type']) ? value['@type'].join('/') : value['@type'])
       : null;
-
     var headerLine = document.createElement('div');
     headerLine.className = 'tree-line expandable';
-
     // Check if entire subtree is highlighted
     var hasHighlight = anyPathStartsWith(currentPath, highlightSet);
     var hasChanged = anyPathStartsWith(currentPath, changedSet);
     if (hasHighlight && side === 'a') headerLine.classList.add('diff-remove');
     else if (hasHighlight && side === 'b') headerLine.classList.add('diff-add');
-
     var guide = document.createElement('span');
     guide.className = 'guide';
     guide.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
     headerLine.appendChild(guide);
-
     var chev = document.createElement('span');
     chev.className = 'chev' + (startOpen ? ' open' : '');
     chev.textContent = '\u25B6';
     headerLine.appendChild(chev);
-
     if (keyLabel !== null && keyLabel !== undefined) {
       var k = document.createElement('span');
       if (typeof keyLabel === 'number') { k.className = 'arr-index'; k.textContent = '[' + keyLabel + ']'; }
       else { k.className = 'key'; k.textContent = keyLabel; }
       headerLine.appendChild(k);
     }
-
     var summary = document.createElement('span');
     summary.className = 'summary';
     summary.textContent = isArr ? ' [' + value.length + ']' : ' {' + entries.length + '}';
     headerLine.appendChild(summary);
-
     if (schemaType) {
       var badge = document.createElement('span');
       badge.className = 'type-tag ' + getTypeClass(schemaType);
       badge.textContent = schemaType;
       headerLine.appendChild(badge);
     }
-
     parent.appendChild(headerLine);
-
     var childContainer = document.createElement('div');
     childContainer.className = 'tree-children';
     if (!startOpen) childContainer.style.display = 'none';
-
     var childPrefix = isRoot ? '' : (prefix + (isLast ? '   ' : '\u2502  '));
-
     entries.forEach(function(entry, idx) {
       var childIsLast = idx === entries.length - 1;
       var childKey = entry[0];
@@ -1670,35 +1507,28 @@ function buildDiffTree(parent, value, prefix, keyLabel, isLast, startOpen, curre
         : (typeof childKey === 'number' ? '[' + childKey + ']' : String(childKey));
       buildDiffTree(childContainer, entry[1], childPrefix, childKey, childIsLast, true, childPath, highlightSet, changedSet, side);
     });
-
     parent.appendChild(childContainer);
-
     headerLine.addEventListener('click', function() {
       chev.classList.toggle('open');
       childContainer.style.display = childContainer.style.display === 'none' ? '' : 'none';
     });
-
   } else {
     var line = document.createElement('div');
     line.className = 'tree-line';
-
     // Highlight leaf
     if (currentPath in highlightSet) {
       line.classList.add(side === 'a' ? 'diff-remove' : 'diff-add');
     } else if (currentPath in changedSet) {
       line.classList.add('diff-change');
     }
-
     var guide2 = document.createElement('span');
     guide2.className = 'guide';
     guide2.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
     line.appendChild(guide2);
-
     var chev2 = document.createElement('span');
     chev2.className = 'chev hidden';
     chev2.textContent = '\u25B6';
     line.appendChild(chev2);
-
     if (keyLabel !== null && keyLabel !== undefined) {
       var k2 = document.createElement('span');
       if (typeof keyLabel === 'number') { k2.className = 'arr-index'; k2.textContent = '[' + keyLabel + ']'; }
@@ -1708,7 +1538,6 @@ function buildDiffTree(parent, value, prefix, keyLabel, isLast, startOpen, curre
       sep.className = 'sep'; sep.textContent = ': ';
       line.appendChild(sep);
     }
-
     var valSpan = document.createElement('span');
     if (value === null || value === undefined) {
       valSpan.className = 'val-null'; valSpan.textContent = 'null';
@@ -1727,7 +1556,6 @@ function buildDiffTree(parent, value, prefix, keyLabel, isLast, startOpen, curre
     parent.appendChild(line);
   }
 }
-
 // ═══════════════════════════════════════════
 // Helpers
 // ═══════════════════════════════════════════
@@ -1740,7 +1568,6 @@ function getTypeClass(type) {
   ];
   return known.indexOf(base) !== -1 ? 'type-' + base : 'type-default';
 }
-
 function anyPathStartsWith(prefix, pathSet) {
   if (!prefix) return false;
   var keys = Object.keys(pathSet);
@@ -1749,17 +1576,14 @@ function anyPathStartsWith(prefix, pathSet) {
   }
   return false;
 }
-
 function esc(str) {
   var div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
 }
-
 function truncate(str) {
   return str && str.length > 60 ? str.slice(0, 60) + '\u2026' : (str || '');
 }
-
 // ═══════════════════════════════════════════
 // Toolbar
 // ═══════════════════════════════════════════
@@ -1774,13 +1598,11 @@ function collapseAll() {
   document.querySelectorAll('.diff-tree-col > .tree-children').forEach(function(c) { c.style.display = ''; });
   document.querySelectorAll('.diff-tree-col > .tree-line .chev:not(.hidden)').forEach(function(c) { c.classList.add('open'); });
 }
-
 function swapInputs() {
   var a = document.getElementById('input-a');
   var b = document.getElementById('input-b');
   var tmp = a.value; a.value = b.value; b.value = tmp;
 }
-
 // ═══════════════════════════════════════════
 // Sample schemas
 // ═══════════════════════════════════════════
@@ -1802,7 +1624,6 @@ function loadSampleA() {
     }
   }, null, 2);
 }
-
 function loadSampleB() {
   document.getElementById('input-b').value = JSON.stringify({
     "@context": "https://schema.org",
@@ -1828,6 +1649,33 @@ function loadSampleB() {
     }
   }, null, 2);
 }
+</script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
 </script>
 </body>
 </html>

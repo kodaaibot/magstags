@@ -7,15 +7,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
-
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-
   <title>Hreflang Tag Generator | MagsTags</title>
   <meta name="description" content="Generate correct hreflang tags in seconds. HTML, XML sitemap, and HTTP header formats. Each output block contains the full set of tags for every page — paste it onto each page to get bidirectionality right. Free, no signup.">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     :root {
       --bg:#f0eeec; --bg2:#F5EDE7; --surface:#fafaf7; --border:#ddd9d3;
       --text-1:#111009; --text-2:#26221f; --text-3:#504c49; --text-4:#6b6661;
@@ -28,38 +28,31 @@
       --teal:#22D3EE; --mint:#67E8F9; --mint-light:rgba(14,116,144,.14);
       --shadow-sm:0 1px 3px rgba(0,0,0,.5); --shadow-md:0 4px 16px rgba(0,0,0,.6);
     }
-
     /* Auth gate */
     .auth-btns{display:flex;gap:10px}
     .btn-primary{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:10px 22px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s}
     .btn-primary:hover{opacity:.85}
     .btn-ghost{background:transparent;color:#857f79;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 22px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}
     .btn-ghost:hover{border-color:rgba(255,255,255,.25);color:#f5f2ee}
-
     /* Header */
     #auth-user{font-size:12px;color:var(--text-4)}
     .theme-btn{background:none;border:1px solid var(--border);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-3);transition:all .15s}
     .theme-btn:hover{border-color:var(--teal);color:var(--teal)}
-
     /* Layout */
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
     .tool-header{margin-bottom:32px}
     .tool-badge-free{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;font-weight:600;background:var(--mint-light);color:var(--teal);margin-bottom:12px}
-    .tool-title{font-family:'DM Serif Display',Georgia,serif;font-size:36px;font-weight:400;color:var(--text-1);margin-bottom:8px}
+    .tool-title{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:400;color:var(--text-1);margin-bottom:8px}
     .tool-subtitle{font-size:15px;color:var(--text-3);max-width:640px;line-height:1.6}
     .tool-subtitle code{font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);padding:1px 5px;border-radius:4px;font-family:'Menlo','Monaco','Courier New',monospace;color:var(--text-2)}
-
     /* Two-column */
     .tool-body{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
     @media(max-width:900px){.tool-body{grid-template-columns:1fr}}
-
     /* Panel */
     .panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
     .panel-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .panel-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1)}
+    .panel-title{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:600;color:var(--text-1)}
     .panel-hint{font-size:11px;color:var(--text-4)}
     .panel-body{padding:20px}
-
     /* Group card */
     .group-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
     .group-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
@@ -67,47 +60,38 @@
     .group-label-input::placeholder{color:var(--text-4);font-weight:400}
     .remove-group-btn{background:none;border:none;cursor:pointer;color:var(--text-4);font-size:18px;line-height:1;padding:2px;transition:color .15s;flex-shrink:0}
     .remove-group-btn:hover{color:#ef4444}
-
     /* Row headers */
     .url-row-header{display:grid;grid-template-columns:1fr 100px 80px auto auto;gap:6px;margin-bottom:6px}
     .url-row-header span{font-size:10px;font-weight:600;color:var(--text-4);text-transform:uppercase;letter-spacing:.05em;padding-left:2px}
-
     /* URL rows */
     .url-rows{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
     .url-row{display:grid;grid-template-columns:1fr 100px 80px auto auto;gap:6px;align-items:center} @media(max-width:600px){.url-row-header{display:none} .url-row{grid-template-columns:1fr auto auto;gap:5px} .url-row .url-input{grid-column:1/-1;width:100%} .url-row .lang-sel{grid-column:1/2} .url-row .reg-sel{grid-column:2/3} .url-row .xd-label{grid-column:3/4}}
-    .url-input{width:100%;font-size:12px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-1);font-family:'Menlo','Monaco','Courier New',monospace;transition:border-color .15s;outline:none}
+    .url-input{width:100%;font-size:12px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background: var(--field);color:var(--text-1);font-family:'Menlo','Monaco','Courier New',monospace;transition:border-color .15s;outline:none}
     .url-input:focus{border-color:var(--teal)}
     .url-input::placeholder{color:var(--text-4);font-family:'Inter',sans-serif}
-    select.lang-sel,select.reg-sel{font-size:11px;padding:7px 5px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-1);font-family:inherit;outline:none;cursor:pointer;transition:border-color .15s;width:100%}
+    select.lang-sel,select.reg-sel{font-size:11px;padding:7px 5px;border:1px solid var(--border);border-radius:8px;background: var(--field);color:var(--text-1);font-family:inherit;outline:none;cursor:pointer;transition:border-color .15s;width:100%}
     select.lang-sel:focus,select.reg-sel:focus{border-color:var(--teal)}
     .xd-label{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-3);cursor:pointer;white-space:nowrap;user-select:none}
     .xd-label input[type=radio]{accent-color:var(--teal);cursor:pointer}
     .remove-url-btn{background:none;border:none;cursor:pointer;color:var(--text-4);padding:4px;transition:color .15s;line-height:1;display:flex;align-items:center}
     .remove-url-btn:hover{color:#ef4444}
-
     /* Validation */
     .val-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
     .val-item{font-size:11px;display:flex;align-items:center;gap:3px;font-weight:500}
     .val-ok{color:#16a34a} .val-warn{color:#d97706} .val-err{color:#dc2626}
-
     /* Buttons */
     .add-url-btn{font-size:12px;color:var(--teal);background:none;border:1px dashed var(--teal);border-radius:8px;padding:6px 12px;cursor:pointer;font-family:inherit;transition:all .15s;width:100%}
     .add-url-btn:hover{background:var(--mint-light)}
-
-
     /* Output */
     .fmt-tabs{display:flex;gap:4px;padding:12px 20px;border-bottom:1px solid var(--border);align-items:center}
     .fmt-label{font-size:11px;color:var(--text-4);font-weight:600;margin-right:6px}
     .fmt-tab{font-size:12px;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;border:none;font-family:inherit;background:transparent;color:var(--text-3);transition:all .15s}
     .fmt-tab.active{background:var(--mint-light);color:var(--teal)}
     .fmt-tab:hover:not(.active){background:var(--bg2);color:var(--text-2)}
-
     .output-body{padding:20px;max-height:680px;overflow-y:auto}
     .output-empty{text-align:center;padding:48px 20px;color:var(--text-4);font-size:13px;line-height:1.6}
-
     .output-group-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin:16px 0 8px}
     .output-group-label:first-child{margin-top:0}
-
     .out-block{background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden}
     .out-block-hd{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);gap:10px}
     .out-block-label{font-size:11px;font-family:'Menlo','Monaco','Courier New',monospace;color:var(--text-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
@@ -116,28 +100,22 @@
     .copy-btn:hover{border-color:var(--teal);color:var(--teal)}
     .copy-btn.copied{background:var(--mint-light);color:var(--teal);border-color:var(--teal)}
     pre.out-code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;line-height:1.75;padding:14px;color:var(--text-2);white-space:pre-wrap;word-break:break-all}
-
     .copy-all-btn{display:block;width:100%;font-size:12px;font-weight:600;padding:9px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-3);cursor:pointer;font-family:inherit;transition:all .15s;text-align:center;margin-bottom:14px}
     .copy-all-btn:hover{border-color:var(--teal);color:var(--teal)}
-
     .info-note{font-size:12px;color:var(--text-3);background:var(--bg2);border-radius:8px;padding:10px 14px;margin-top:14px;line-height:1.6}
     .info-note code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;background:var(--surface);padding:1px 4px;border-radius:4px;color:var(--text-2)}
-
-
     /* ── Content sections ─────────────────────────────────────────────────── */
     .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
     .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
     .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
     .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
-
     /* Intro cards */
     .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
     .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
     .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
-    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
     .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-
     /* Steps */
     .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
     .ct-steps::before { content: ''; position: absolute; left: 19px; top: 28px; bottom: 28px; width: 1px; background: var(--border); }
@@ -146,7 +124,6 @@
     .ct-step-body h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; padding-top: 10px; }
     .ct-step-body p { font-size: 14px; color: var(--text-3); line-height: 1.65; margin: 0; }
     .ct-step-body strong { color: var(--text-1); }
-
     /* Pattern tables */
     .ct-group-label { font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-4); padding: 20px 0 14px; display: block; border-bottom: 1px solid var(--border); }
     .ct-table-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; overflow-x: auto; margin-bottom: 32px; }
@@ -169,7 +146,6 @@
       .ct-table td:nth-child(2) { font-size: 12px; padding: 6px 16px; }
       .ct-table td:nth-child(3) { font-size: 12px; color: var(--text-3); padding-bottom: 12px; }
     }
-
     /* Callout */
     .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
     .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144),.2); }
@@ -180,7 +156,6 @@
     .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
     .ct-callout-body ul { font-size: 13px; color: var(--text-3); padding-left: 18px; margin-top: 6px; line-height: 1.7; }
     .ct-callout-body li { margin-bottom: 3px; }
-
     /* FAQ */
     .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
     .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
@@ -192,11 +167,9 @@
     .ct-faq summary:hover { background: var(--bg2); }
     .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
     .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
-
     /* Content layout — two-column with sticky TOC */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
     .ct-content { min-width: 0; }
-
     /* Floating sticky TOC */
     .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
@@ -204,32 +177,27 @@
     .ct-toc-list li a { display: block; padding: 8px 0 8px 16px; font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
     .ct-toc-list li a:hover { color: var(--teal); border-left-color: var(--teal); }
     .ct-toc-list li a.active { color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
-
     @media(max-width:960px) {
       .ct-layout { grid-template-columns: 1fr; gap: 0; }
       .ct-toc { position: static; padding-top: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
       .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; }
       .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; }
     }
-
     @media (max-width: 700px) {
       .ct-wrap { padding: 0 16px 60px; }
       .ct-steps::before { display: none; }
     }
-
     /* Page-specific styles */
-    .ct-h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:500;color:var(--text-1);margin-bottom:10px}
+    .ct-h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight:500;color:var(--text-1);margin-bottom:10px}
     .ct-body{font-size:14px;color:var(--text-2);line-height:1.75}
-
     /* Three cols */
     .ct-cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     @media(max-width:900px){.ct-cols-3{grid-template-columns:1fr}}
     .ct-col-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px}
     .ct-col-card-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:10px}
-    .ct-col-card h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:500;color:var(--text-1);margin-bottom:10px}
+    .ct-col-card h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight:500;color:var(--text-1);margin-bottom:10px}
     .ct-col-card p{font-size:14px;color:var(--text-2);line-height:1.65}
     .ct-col-card pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px;color:var(--text-2);line-height:1.7;overflow-x:auto;white-space:pre}
-
     /* Diagram */
     .ct-diagram{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:32px 0}
     @media(max-width:700px){.ct-diagram{grid-template-columns:1fr}}
@@ -238,23 +206,20 @@
     .ct-diagram-label.bad{color:#dc2626}
     .ct-diagram-label.good{color:#16a34a}
     .ct-diagram-caption{font-size:12px;color:var(--text-3);margin-top:14px;line-height:1.5}
-
     /* Bullets */
     .ct-bullets{list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:14px}
     .ct-bullets li{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--text-2);line-height:1.65}
     .ct-bullets li::before{content:'';width:6px;height:6px;border-radius:99px;background:var(--teal);flex-shrink:0;margin-top:8px}
     .ct-bullets li strong{color:var(--text-1)}
-
     /* CTA banner */
     .ct-cta{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center;margin:72px 0 0}
-    .ct-cta h2{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:400;color:var(--text-1);letter-spacing:-.02em;margin-bottom:12px}
+    .ct-cta h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:28px;font-weight:400;color:var(--text-1);letter-spacing:-.02em;margin-bottom:12px}
     .ct-cta p{font-size:15px;color:var(--text-3);max-width:560px;margin:0 auto 28px;line-height:1.7}
     .ct-cta-links{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
     .ct-cta-link-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;transition:opacity .15s}
     .ct-cta-link-primary:hover{opacity:.85}
     .ct-cta-link-secondary{display:inline-flex;align-items:center;gap:6px;color:var(--teal);text-decoration:none;font-size:14px;font-weight:500;transition:opacity .15s}
     .ct-cta-link-secondary:hover{opacity:.7}
-
       @media(max-width:600px){main{padding:24px 16px 60px}}
       @media(max-width:640px){
         .ct-table thead{display:none}
@@ -281,14 +246,32 @@
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
 </head>
 <body>
-
-  <div class="auth-btns">
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<div class="auth-btns">
   </div>
 </div>
-
-
-<main>
-  <p style="font-size:12px;color:var(--text-4);margin-bottom:20px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> Hreflang Generator</p>
+<main id="main-content">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/seo-tools/">SEO Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Hreflang Generator</span>
+        </nav>
   <div class="tool-header">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
       <h1 class="tool-title" style="margin-bottom:0">Hreflang Tag Generator</h1>
@@ -298,7 +281,6 @@
     <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
     <p class="tool-subtitle">Supports HTML, XML sitemap, and HTTP header formats. Each output gives you the full reciprocal set for every page in the group. Paste it on those pages and you're done. Also works beautifully for showing engineering and product teams exactly how it should be implemented — then kindly asking them to automate it.</p>
   </div>
-
   <div class="tool-body">
     <!-- Input panel -->
     <div class="panel">
@@ -310,7 +292,6 @@
         <div id="groups-container"></div>
       </div>
     </div>
-
     <!-- Output panel -->
     <div class="panel">
       <div class="fmt-tabs">
@@ -325,12 +306,9 @@
     </div>
   </div>
 </main>
-
-
 <div class="ct-wrap">
 <div class="ct-layout">
   <div class="ct-content">
-
   <!-- Section 3: How to use -->
   <section class="ct-section" id="how-to-use">
     <span class="ct-section-label">Step by step</span>
@@ -380,32 +358,27 @@
       </div>
     </div>
   </section>
-
   <!-- Section 4: What makes hreflang hard -->
   <section class="ct-section" id="hreflang-requirements">
     <span class="ct-section-label">Background</span>
     <h2 class="ct-h2">What makes correct hreflang hard — and how this tool handles it</h2>
     <p class="ct-lead">Hreflang is one of the most commonly broken international SEO signals. The rules are precise, and a mistake anywhere in the network can cause Google to ignore all your tags. Here are the three requirements that trip people up most often — and what this generator does about each one.</p>
-
     <div style="margin-bottom:40px">
       <h3 class="ct-h3">1. Bidirectional linking</h3>
       <p class="ct-body">If your English page points to your French page, the French page must also point back to the English page — and to every other language version. This has to be true for every page in the group. Miss one direction and Google can reject the entire set.</p>
       <p class="ct-body" style="margin-top:12px">This generator produces the correct full tag set for each page in a group — every output block includes tags pointing to all sibling pages, not just the one you're generating for. When you paste each block onto its respective page, the bidirectional network is complete. The work of making it bidirectional is yours — pasting the right block onto the right page — but the generator makes sure every block already contains everything it needs.</p>
     </div>
-
     <div style="margin-bottom:40px">
       <h3 class="ct-h3">2. Self-referencing</h3>
       <p class="ct-body">Each page must include a <code>hreflang</code> tag pointing to itself, alongside the tags pointing to its alternates. It sounds redundant but it's required — Google uses self-references to confirm the page belongs in the group.</p>
       <p class="ct-body" style="margin-top:12px">Each output block in this generator includes the self-referencing tag for that page. You don't need to add it manually — it's already in the code you copy.</p>
     </div>
-
     <div>
       <h3 class="ct-h3">3. The x-default attribute</h3>
       <p class="ct-body">The <code>x-default</code> tag tells Google which version of your page to show to users whose language or region isn't covered by your other tags. It's not technically required, but Google strongly recommends it — and without it, users in unmatched regions may see the wrong page.</p>
       <p class="ct-body" style="margin-top:12px">Set the x-default flag on any row in a group and the generator includes <code>hreflang="x-default"</code> in every output block for that group. The validation bar warns you if a group has no x-default set.</p>
     </div>
   </section>
-
   <!-- Section 5: Three ways to implement -->
   <section class="ct-section" id="implementation-methods">
     <span class="ct-section-label">Options</span>
@@ -454,7 +427,6 @@ Header add Link
   '&lt;.../en/&gt;;
    rel="alternate";
    hreflang="en"'
-
 # Nginx
 add_header Link
   '&lt;.../en/&gt;;
@@ -463,7 +435,6 @@ add_header Link
       </div>
     </div>
   </section>
-
   <!-- Section 6: Common mistakes -->
   <section class="ct-section" id="common-mistakes">
     <span class="ct-section-label">Pitfalls</span>
@@ -502,7 +473,6 @@ add_header Link
       </table>
     </div>
   </section>
-
   <!-- Section 7: When do you need hreflang -->
   <section class="ct-section" id="when-to-use">
     <span class="ct-section-label">Use cases</span>
@@ -515,7 +485,6 @@ add_header Link
     </ul>
     <p class="ct-body">Hreflang is not needed for pages that only exist in one language and don't have regional variants. Adding it unnecessarily creates maintenance overhead without any SEO benefit.</p>
   </section>
-
   <!-- Section 8: FAQ -->
   <section class="ct-section" id="faq">
     <span class="ct-section-label">Common questions</span>
@@ -555,7 +524,6 @@ add_header Link
       </details>
     </div>
   </section>
-
   <!-- Section 10: CTA -->
   <div class="ct-cta">
     <h2>Go beyond hreflang tags</h2>
@@ -565,16 +533,13 @@ add_header Link
       <a href="https://developers.google.com/search/docs/specialty/international/localization-with-hreflang" target="_blank" rel="noopener" class="ct-cta-link-secondary">Google's hreflang documentation ↗</a>
     </div>
   </div>
-
   <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
     <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-4);margin-bottom:10px">Sources</p>
     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
       <li><a href="https://developers.google.com/search/docs/specialty/international/localized-versions" target="_blank" rel="noopener" style="font-size:13px;color:var(--teal);text-decoration:none;font-family:'Menlo','Monaco','Courier New',monospace">developers.google.com — Localized versions of your site ↗</a></li>
     </ul>
   </div>
-
   </div><!-- end .ct-content -->
-
   <nav class="ct-toc" aria-label="Table of contents">
     <div class="ct-toc-label">On this page</div>
     <ol class="ct-toc-list">
@@ -588,13 +553,9 @@ add_header Link
   </nav>
 </div><!-- end .ct-layout -->
 </div><!-- end .ct-wrap -->
-
 <script>
 // ── Theme ──────────────────────────────────────────────────────────────────
-
 // ── Auth ───────────────────────────────────────────────────────────────────
-
-
 // ── Data ───────────────────────────────────────────────────────────────────
 const LANGS = [
   {c:'en',n:'English'},{c:'de',n:'German'},{c:'fr',n:'French'},{c:'it',n:'Italian'},
@@ -608,7 +569,6 @@ const LANGS = [
   {c:'ca',n:'Catalan'},{c:'lt',n:'Lithuanian'},{c:'lv',n:'Latvian'},{c:'et',n:'Estonian'},
   {c:'sl',n:'Slovenian'},{c:'sr',n:'Serbian'},{c:'fa',n:'Persian'},{c:'nb',n:'Norwegian Bokmål'},
 ];
-
 const REGIONS = [
   {c:'',n:'— none'},
   {c:'US',n:'United States'},{c:'GB',n:'United Kingdom'},{c:'CA',n:'Canada'},{c:'AU',n:'Australia'},
@@ -623,27 +583,21 @@ const REGIONS = [
   {c:'AR',n:'Argentina'},{c:'CL',n:'Chile'},{c:'CO',n:'Colombia'},{c:'TR',n:'Turkey'},
   {c:'PH',n:'Philippines'},{c:'VN',n:'Vietnam'},{c:'ID',n:'Indonesia'},{c:'MY',n:'Malaysia'},
 ];
-
 function langOpts(sel='en') {
   return LANGS.map(l => `<option value="${l.c}"${l.c===sel?' selected':''}>${l.c} – ${l.n}</option>`).join('');
 }
 function regOpts(sel='') {
   return REGIONS.map(r => `<option value="${r.c}"${r.c===sel?' selected':''}>${r.c||'— none'}${r.c?' – '+r.n:''}</option>`).join('');
 }
-
 // ── State ──────────────────────────────────────────────────────────────────
 let gid = 0, rid = 0;
 const newRow  = (groupId) => ({ id:++rid, gid:groupId, url:'', lang:'en', region:'', xd:false });
 const newGroup = ()       => { const id=++gid; return { id, name:'', rows:[newRow(id)] }; };
-
 let state = { groups:[newGroup()], format:'html' };
-
 // ── UI actions ─────────────────────────────────────────────────────────────
-
 function addUrl(gid)        { const g=state.groups.find(g=>g.id===gid); if(g){g.rows.push(newRow(gid)); renderGroups(); renderOutput();} }
 function removeUrl(gid,rid) { const g=state.groups.find(g=>g.id===gid); if(g&&g.rows.length>1){g.rows=g.rows.filter(r=>r.id!==rid); renderGroups(); renderOutput();} }
 function setFormat(f,btn)   { state.format=f; document.querySelectorAll('.fmt-tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); renderOutput(); }
-
 function syncState() {
   state.groups.forEach(g => {
     const el = id => document.getElementById(id);
@@ -657,9 +611,7 @@ function syncState() {
     });
   });
 }
-
 function handleChange() { syncState(); renderOutput(); }
-
 // ── Render inputs ──────────────────────────────────────────────────────────
 function renderGroups() {
   const c = document.getElementById('groups-container');
@@ -669,7 +621,6 @@ function renderGroups() {
     el.addEventListener('change', handleChange);
   });
 }
-
 function renderGroup(g) {
   const rows = g.rows.map(r => renderRow(g,r)).join('');
   const val = validateGroup(g);
@@ -684,7 +635,6 @@ function renderGroup(g) {
       ${valHtml}
     </div>`;
 }
-
 function renderRow(g, r) {
   return `
     <div class="url-row">
@@ -700,7 +650,6 @@ function renderRow(g, r) {
       </button>
     </div>`;
 }
-
 function validateGroup(g) {
   const filled = g.rows.filter(r => r.url && r.lang);
   const vals = [];
@@ -719,10 +668,8 @@ function validateGroup(g) {
     vals.push({cls:'val-err', icon:'✕', txt:'Duplicate lang/region'});
   return vals;
 }
-
 // ── Render output ──────────────────────────────────────────────────────────
 function hval(r) { return r.lang + (r.region ? '-' + r.region.toUpperCase() : ''); }
-
 function buildTags(g, fmt) {
   const rows = g.rows.filter(r => r.url && r.lang);
   const xd   = g.rows.find(r => r.xd && r.url);
@@ -744,7 +691,6 @@ function buildTags(g, fmt) {
   }
   return '';
 }
-
 function renderOutput() {
   const body = document.getElementById('output-body');
   const fmt  = state.format;
@@ -753,15 +699,12 @@ function renderOutput() {
     body.innerHTML = '<div class="output-empty">Fill in at least one URL and language above<br>to see your hreflang markup here.</div>';
     return;
   }
-
   let allText = '';
   let html = '';
-
   state.groups.forEach((g, gi) => {
     const filled = g.rows.filter(r => r.url && r.lang);
     if (!filled.length) return;
     const tags = buildTags(g, fmt);
-
     filled.forEach(r => {
       const bid = `blk-${g.id}-${r.id}`;
       const short = r.url.length > 55 ? '…' + r.url.slice(-52) : r.url;
@@ -781,10 +724,8 @@ function renderOutput() {
         </div>`;
     });
   });
-
   const totalBlocks = state.groups.reduce((s,g) => s + g.rows.filter(r=>r.url&&r.lang).length, 0);
   if (totalBlocks > 1) html = `<button class="copy-all-btn" onclick="copyAll()">Copy all blocks</button>` + html;
-
   const notes = {
     html: 'Paste inside the <code>&lt;head&gt;</code> of each page listed above. Every page in the group carries the full set — that\'s what makes it bidirectional.',
     sitemap: 'Place inside each <code>&lt;url&gt;</code> element. Add <code>xmlns:xhtml="http://www.w3.org/1999/xhtml"</code> to your root <code>&lt;urlset&gt;</code> tag.',
@@ -794,7 +735,6 @@ function renderOutput() {
   body.innerHTML = html;
   window._allOut = allText;
 }
-
 function copyBlock(id, btn) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -809,16 +749,13 @@ function copyAll() {
     if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy all blocks', 2000); }
   });
 }
-
 // ── Helpers ────────────────────────────────────────────────────────────────
 function eh(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function ea(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-
 // ── Init ───────────────────────────────────────────────────────────────────
 renderGroups();
 renderOutput();
 </script>
-
 <script>
 // ─── TOC scroll spy ──────────────────────────────────────────────────────────
 (function() {
@@ -839,24 +776,33 @@ renderOutput();
   update();
 })();
 </script>
-
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

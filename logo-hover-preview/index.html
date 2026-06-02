@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Logo Hover Preview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
   :root {
     --teal: #2ABFBF;
     --bg: #f9f9f7;
@@ -25,7 +28,7 @@
     min-height: 100vh;
   }
   h1 {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'IBM Plex Mono','Menlo',monospace;
     font-size: 22px;
     font-weight: 400;
     margin-bottom: 8px;
@@ -36,7 +39,6 @@
     color: var(--text-3);
     margin-bottom: 48px;
   }
-
   .demo-section {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -61,10 +63,9 @@
     color: var(--text-3);
     margin-top: 16px;
   }
-
   /* ── Base logo style ── */
   .logo-name {
-    font-family: 'DM Serif Display', Georgia, serif;
+    font-family: 'IBM Plex Mono','Menlo',monospace;
     font-size: 28px;
     font-weight: 400;
     color: #000;
@@ -79,7 +80,6 @@
   }
   .ls1 { font-size: .72em; color: var(--teal); }
   .ls2 { font-size: .38em; color: var(--teal); margin-left: 1px; }
-
   /* ──────────────────────────────────────────────
      OPTION A — Keyword chip burst
   ────────────────────────────────────────────── */
@@ -99,7 +99,7 @@
     white-space: nowrap;
   }
   .chip {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'IBM Plex Mono','Menlo',monospace;
     font-size: 11px;
     font-weight: 500;
     background: var(--teal);
@@ -119,8 +119,6 @@
   .logo-a:hover .chip:nth-child(3) { transition: opacity .2s .19s, transform .3s .19s ease-out; }
   .logo-a:hover .chip:nth-child(4) { transition: opacity .2s .26s, transform .3s .26s ease-out; }
   .logo-a:hover .chip:nth-child(5) { transition: opacity .2s .33s, transform .3s .33s ease-out; }
-
-
   /* ──────────────────────────────────────────────
      OPTION B — [tags] cycles
   ────────────────────────────────────────────── */
@@ -128,15 +126,13 @@
     display: inline-block;
     color: var(--teal);
     transition: opacity .15s;
-    font-family: 'DM Serif Display', serif;
+    font-family: 'IBM Plex Mono','Menlo',monospace;
   }
   .cycle-word {
     display: inline-block;
     min-width: 48px;
     text-align: center;
   }
-
-
   /* ──────────────────────────────────────────────
      OPTION C — Fake SERP snippet
   ────────────────────────────────────────────── */
@@ -170,8 +166,8 @@
     color: #1a73e8;
     margin-bottom: 2px;
   }
-  .serp-breadcrumb .serp-domain { color: #202124; font-weight: 500; }
-  .serp-title {
+  .serp-breadcrumb .serp-do
+    .serp-title {
     font-size: 18px;
     color: #1a0dab;
     font-weight: 400;
@@ -194,8 +190,6 @@
     color: var(--text-3);
     font-style: italic;
   }
-
-
   /* ──────────────────────────────────────────────
      OPTION D — Console tooltip
   ────────────────────────────────────────────── */
@@ -260,10 +254,23 @@
 </style>
 </head>
 <body>
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <h1>Logo hover options</h1>
 <p class="subtitle">Hover over each logo to preview the effect</p>
-
 <!-- OPTION A -->
 <div class="demo-section">
   <div class="demo-label">Option <span>A</span> — Keyword chip burst</div>
@@ -279,14 +286,12 @@
   </div>
   <p class="hint">Chips float up when you hover, then drop back on mouseout.</p>
 </div>
-
 <!-- OPTION B -->
 <div class="demo-section">
   <div class="demo-label">Option <span>B</span> — [tags] cycles through SEO terms</div>
   <span class="logo-name logo-b">mags <span class="bracket-word">[<span class="cycle-word" id="cycleWord">tags</span>]</span> <span class="ls1">✦</span><span class="ls2">✦</span></span>
   <p class="hint">Hover the logo — the word inside the brackets cycles: tags → href → meta → serp → schema → back.</p>
 </div>
-
 <!-- OPTION C -->
 <div class="demo-section">
   <div class="demo-label">Option <span>C</span> — Fake SERP snippet</div>
@@ -302,7 +307,6 @@
   </div>
   <p class="hint">A mini Google result card drops down on hover.</p>
 </div>
-
 <!-- OPTION D -->
 <div class="demo-section">
   <div class="demo-label">Option <span>D</span> — Console / DevTools tooltip</div>
@@ -317,7 +321,6 @@
   </div>
   <p class="hint">A little terminal box with a blinking cursor drops down on hover.</p>
 </div>
-
 <script>
   // Option B — cycling words
   const words = ['tags', 'href', 'meta', 'serp', 'schema', 'title', 'tags'];
@@ -325,7 +328,6 @@
   const logoB = document.querySelector('.logo-b');
   let interval = null;
   let idx = 0;
-
   logoB.addEventListener('mouseenter', () => {
     idx = 0;
     interval = setInterval(() => {
@@ -337,7 +339,6 @@
       }, 120);
     }, 500);
   });
-
   logoB.addEventListener('mouseleave', () => {
     clearInterval(interval);
     el.style.opacity = '0';
@@ -346,6 +347,33 @@
       el.style.opacity = '1';
     }, 120);
   });
+</script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
 </script>
 </body>
 </html>

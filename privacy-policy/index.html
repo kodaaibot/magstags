@@ -9,19 +9,21 @@
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-  
   <title>Privacy Policy | MagsTags</title>
   <meta name="description" content="Privacy policy for magstags.com.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-    .page-title{font-family:'Space Grotesk',sans-serif;font-size:32px;color:var(--text-1);margin-bottom:8px}
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+    
+    .page-title{font-family:'IBM Plex Mono','Menlo',monospace;font-size:32px;color:var(--text-1);margin-bottom:8px}
     .page-meta{font-size:13px;color:var(--text-4);margin-bottom:48px}
-    .legal-body h2{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:var(--text-1);margin:40px 0 12px;counter-increment:section}
+    .legal-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:17px;font-weight:600;color:var(--text-1);margin:40px 0 12px;counter-increment:section}
     .legal-body h2:first-child{margin-top:0}
-    .legal-body h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-2);margin:20px 0 8px}
+    .legal-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:600;color:var(--text-2);margin:20px 0 8px}
     .legal-body p{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:14px}
     .legal-body ul{padding-left:20px;margin-bottom:14px}
     .legal-body ul li{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:3px}
@@ -39,17 +41,30 @@
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
 </head>
 <body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <script>(function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')})();</script>
-<main>
+<main id="main-content">
   <h1 class="page-title">Privacy Policy</h1>
   <p class="page-meta">Last updated: March 2026</p>
   <div class="legal-body">
-
     <h2>1. Introduction</h2>
     <p>This Privacy Policy explains how this website ("Website", "we", "us", or "our") collects, uses, processes, and protects personal data when you access or use the Website and any tools, services, or features made available through it (collectively, the "Services").</p>
     <p>We are committed to protecting your personal data and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR) and other relevant European privacy regulations.</p>
     <p>By accessing or using the Website, you acknowledge that you have read and understood this Privacy Policy.</p>
-
     <h2>2. Information We Collect</h2>
     <h3>Information You Provide Voluntarily</h3>
     <p>You may provide information when you:</p>
@@ -68,7 +83,6 @@
       <li>data submitted through tools</li>
     </ul>
     <p>You should not submit sensitive personal data unless explicitly requested.</p>
-
     <h3>Automatically Collected Information</h3>
     <p>When you access the Website, certain information may automatically be collected through logs, cookies, or similar technologies, including:</p>
     <ul>
@@ -82,7 +96,6 @@
       <li>general geographic location (based on IP)</li>
     </ul>
     <p>This information is used to analyze website usage, improve functionality, maintain security, and detect abuse.</p>
-
     <h2>3. How We Use Your Data</h2>
     <p>We may process personal data for the following purposes:</p>
     <ul>
@@ -95,7 +108,6 @@
       <li>complying with legal obligations</li>
     </ul>
     <p>We do not sell personal data to third parties.</p>
-
     <h2>4. Legal Basis for Processing (GDPR)</h2>
     <p>We process personal data under the following legal bases:</p>
     <h3>Legitimate Interests</h3>
@@ -116,10 +128,8 @@
     <p>Users may withdraw consent at any time.</p>
     <h3>Legal Obligation</h3>
     <p>Processing necessary to comply with legal or regulatory requirements.</p>
-
     <h2>5. Cookies and Tracking Technologies</h2>
     <p>The Website uses cookies and similar technologies to ensure proper functionality, analyze traffic, improve performance, and support advertising services. For full details, please review our <a href="/cookie-policy/" style="color:var(--teal)">Cookie Policy</a>.</p>
-
     <h2>6. Third-Party Services</h2>
     <p>We may use trusted third-party services that process limited data on our behalf, including:</p>
     <ul>
@@ -129,17 +139,13 @@
       <li>content delivery networks</li>
     </ul>
     <p>These providers may process data in accordance with their own privacy policies and applicable laws. We do not control the privacy practices of third-party services.</p>
-
     <h2>7. Data Retention</h2>
     <p>Personal data will be retained only for as long as necessary to fulfill the purposes outlined in this policy unless a longer retention period is required by law. Automatically collected analytics data may be retained for aggregated statistical analysis.</p>
-
     <h2>8. Data Security</h2>
     <p>We implement appropriate technical and organizational security measures designed to protect personal data against unauthorized access, disclosure, alteration, or destruction.</p>
     <p>However, no internet-based system can be guaranteed to be completely secure, and users provide information at their own risk.</p>
-
     <h2>9. International Data Transfers</h2>
     <p>Some third-party providers may process data outside the European Economic Area (EEA). When this occurs, appropriate safeguards such as Standard Contractual Clauses (SCCs) or other lawful transfer mechanisms are implemented where required.</p>
-
     <h2>10. Your Rights Under GDPR</h2>
     <p>You have the following rights under the GDPR:</p>
     <ul>
@@ -152,32 +158,39 @@
       <li>right to withdraw consent at any time</li>
     </ul>
     <p>Requests may be submitted through the contact methods provided on the Website.</p>
-
     <h2>11. Children's Privacy</h2>
     <p>The Website and Services are not directed to individuals under the age of 16. We do not knowingly collect personal data from children.</p>
-
     <h2>12. Changes to This Policy</h2>
     <p>We may update this Privacy Policy periodically to reflect legal, operational, or technological changes. Continued use of the Website after updates constitutes acceptance of the revised policy.</p>
-
   </div>
 </main>
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

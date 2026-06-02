@@ -1,120 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://www.magstags.com/notes/">
-  <meta name="description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
-  <link rel="apple-touch-icon" href="/favicon-apple.png">
-
-  <script src="/theme-init.js"></script>
-  <link rel="stylesheet" href="/base.css">
-
-  <title>Notes | MagsTags</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --surface:    #FFFBF9;
-      --mint-light: #E0F2FE;
-    }
-    html.dark {
-      --surface:    #161513;
-      --mint-light: #164e63;
-    }
-
-    .gate-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;max-width:400px;width:100%;margin:24px}
-    .gate-icon{font-size:36px;margin-bottom:20px}
-
-    /* ── Layout ── */
-    #blog-content{display:block}
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-
-    /* ── Page header ── */
-    .blog-hero{margin-bottom:32px;padding-bottom:0}
-    .blog-hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:36px;font-weight:400;line-height:1.15;color:var(--text-1);margin-bottom:8px}
-    .blog-hero p{font-size:15px;color:var(--text-3);line-height:1.6}
-    .blog-hero-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:16px}
-    .post-count{font-size:13px;color:var(--text-4)}
-
-    /* ── Post grid ── */
-    .post-grid{display:block}
-
-    /* ── Post card ── */
-    .notes-list { border-top: 1px solid var(--border); }
-    .notes-row { display: flex; gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--border); position: relative; cursor: pointer; }
-    .notes-row:last-child { border-bottom: none; }
-    .notes-row:hover .notes-row-title a { color: var(--teal); }
-    .notes-row-date { font-size: 12px; color: var(--text-4); min-width: 96px; padding-top: 3px; flex-shrink: 0; line-height: 1.4; }
-    .notes-row-body { flex: 1; min-width: 0; }
-    .notes-row-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 6px; }
-    .notes-row-title { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-1); margin: 0 0 8px; line-height: 1.3; }
-    .notes-row-title a { color: inherit; text-decoration: none; transition: color .15s; }
-    .notes-stretch { position: absolute; inset: 0; }
-    .notes-row-excerpt { font-size: 14px; color: var(--text-3); line-height: 1.6; margin-bottom: 10px; }
-    .notes-row-meta { font-size: 11px; color: var(--text-4); }
-    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;margin-bottom:14px}
-    @media (max-width: 560px) {
-      .notes-row { flex-direction: column; gap: 6px; }
-      .notes-row-date { min-width: unset; }
-    }
-    .cat-technical{background:var(--mint-light);color:var(--teal)}
-    .cat-international{background:#FEF3C7;color:#92400E}
-    html.dark .cat-international{background:#422006;color:#fde68a}
-    .cat-analytics{background:#F3E8FF;color:#6D28D9}
-    html.dark .cat-analytics{background:#2e1065;color:#c4b5fd}
-    .post-title{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;color:var(--text-1);line-height:1.35;margin-bottom:12px}
-    .post-card:hover .post-title{color:var(--teal)}
-    .post-excerpt{font-size:14px;color:var(--text-3);line-height:1.65;flex:1;margin-bottom:20px}
-    .post-card-footer{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-4)}
-    .post-meta-left{display:flex;align-items:center;gap:12px}
-    .post-read-more{font-size:12px;font-weight:600;color:var(--teal)}
-
-  </style>
-  <meta property="og:title" content="Notes | MagsTags">
-  <meta property="og:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
-  <meta property="og:url" content="https://www.magstags.com/notes/">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.magstags.com/og-image.png">
-  <meta property="og:site_name" content="MagsTags">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Notes | MagsTags">
-  <meta name="twitter:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
-  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+<meta charset="UTF-8">
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('mt-theme') || localStorage.getItem('theme');
+      var dark = saved === 'dark' || (!saved && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+      var html = document.documentElement;
+      if (dark) { html.classList.add('dark'); html.setAttribute('data-theme', 'dark'); }
+      else { html.setAttribute('data-theme', 'light'); }
+    } catch(e) {}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes | MagsTags</title>
+<meta name="description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+<link rel="canonical" href="https://www.magstags.com/notes/">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+<link rel="apple-touch-icon" href="/favicon-apple.png">
+<link rel="stylesheet" href="/base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:title" content="Notes | MagsTags">
+<meta property="og:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+<meta property="og:url" content="https://www.magstags.com/notes/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.magstags.com/og-image.png">
+<meta property="og:site_name" content="MagsTags">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Notes | MagsTags">
+<meta name="twitter:description" content="The magstags blog — practical SEO writing on structured data, technical SEO, hreflang, and e-commerce search. No filler.">
+<meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+<style>
+    .post-lead { font-size: var(--t-lead); line-height: 1.55; color: var(--accent-2); margin-bottom: 36px; font-family: var(--font-display); max-width: 52ch; }
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+  /* ── Page layout ─────────────────────────────────────────────────────── */
+  .notes-page { padding: clamp(24px, 3vw, 48px) 0 var(--section-y); }
+  .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; letter-spacing: .04em; }
+  .breadcrumb a { color: var(--ink-4); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { opacity: .5; }
+  /* ── Hero ────────────────────────────────────────────────────────────── */
+  .notes-hero { margin-bottom: clamp(32px, 4vw, 56px); max-width: 720px; }
+  .notes-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .notes-eyebrow::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .notes-hero h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h1); line-height: 1.1; letter-spacing: -.02em; color: var(--ink-1); margin-bottom: 16px; }
+  .notes-hero p.lead { font-family: var(--font-display); font-size: clamp(14px, 1.1vw, 16px); line-height: 1.65; color: var(--ink-2); }
+  /* ── Filter bar (segmented control style) ────────────────────────────── */
+  .notes-filter-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; padding-bottom: 0; border-bottom: 1px solid var(--rule); }
+  .notes-filter { display: flex; gap: 0; flex-wrap: wrap; }
+  .notes-filter .fpill { padding: 14px 18px 14px 0; margin-right: 26px; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); transition: color .15s, border-color .15s; border-radius: 0; }
+  .notes-filter .fpill:hover { color: var(--ink-1); }
+  .notes-filter .fpill.is-active { color: var(--ink-1); border-bottom-color: var(--accent); background: transparent; font-weight: 600; }
+  .post-count { font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); }
+  /* ── Notes list rows ─────────────────────────────────────────────────── */
+  .notes-list { border-top: none; margin-top: 8px; }
+  .notes-row { display: flex; gap: 36px; padding: 28px 0; border-bottom: 1px solid var(--rule); position: relative; cursor: pointer; transition: background .12s; }
+  .notes-row:last-child { border-bottom: none; }
+  .notes-row:hover .notes-row-title a { color: var(--accent); }
+  .notes-row-date { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); min-width: 110px; padding-top: 4px; flex-shrink: 0; line-height: 1.4; letter-spacing: .04em; text-transform: uppercase; }
+  .notes-row-body { flex: 1; min-width: 0; }
+  .notes-row-cat { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: 8px; }
+  .notes-row-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--ink-1); margin: 0 0 10px; line-height: 1.3; letter-spacing: -.01em; }
+  .notes-row-title a { color: inherit; text-decoration: none; transition: color .15s; }
+  .notes-stretch { position: absolute; inset: 0; }
+  .notes-row-excerpt { font-size: 14.5px; color: var(--ink-3); line-height: 1.65; margin-bottom: 10px; max-width: 640px; }
+  .notes-row-meta { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .1em; }
+  @media (max-width: 640px) {
+    .notes-row { flex-direction: column; gap: 8px; padding: 24px 0; }
+    .notes-row-date { min-width: unset; }
+  }
+  /* ── Dark mode overrides ─────────────────────────────────────────────── */
+  html[data-theme="dark"] .breadcrumb,
+  html.dark .breadcrumb { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a,
+  html.dark .breadcrumb a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a:hover,
+  html.dark .breadcrumb a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .notes-eyebrow,
+  html.dark .notes-eyebrow { color: var(--accent-2); }
+  html[data-theme="dark"] .notes-eyebrow::before,
+  html.dark .notes-eyebrow::before { background: var(--accent-2); }
+  html[data-theme="dark"] .notes-hero h1,
+  html.dark .notes-hero h1 { color: var(--paper); }
+  html[data-theme="dark"] .notes-hero p.lead,
+  html.dark .notes-hero p.lead { color: var(--paper); }
+  html[data-theme="dark"] .notes-filter-bar,
+  html.dark .notes-filter-bar { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .notes-filter .fpill,
+  html.dark .notes-filter .fpill { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .notes-filter .fpill:hover,
+  html.dark .notes-filter .fpill:hover { color: var(--paper); }
+  html[data-theme="dark"] .notes-filter .fpill.is-active,
+  html.dark .notes-filter .fpill.is-active { color: var(--paper); border-bottom-color: var(--accent-2); }
+  html[data-theme="dark"] .post-count,
+  html.dark .post-count { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] .notes-row,
+  html.dark .notes-row { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .notes-row-date,
+  html.dark .notes-row-date { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] .notes-row-cat,
+  html.dark .notes-row-cat { color: var(--accent-2); }
+  html[data-theme="dark"] .notes-row-title,
+  html.dark .notes-row-title { color: var(--paper); }
+  html[data-theme="dark"] .notes-row:hover .notes-row-title a,
+  html.dark .notes-row:hover .notes-row-title a { color: var(--accent-2); }
+  html[data-theme="dark"] .notes-row-excerpt,
+  html.dark .notes-row-excerpt { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .notes-row-meta,
+  html.dark .notes-row-meta { color: rgba(245,241,234,.4); }
+</style>
 </head>
 <body>
-<!-- Blog content -->
-<div id="blog-content">
-  <main>
-    <nav style="font-size:13px;color:var(--text-4);margin-bottom:24px;display:flex;align-items:center;gap:6px">
-      <a href="/" style="color:var(--text-4);text-decoration:none">Home</a>
-      <span style="opacity:.5">›</span>
-      <span>Notes</span>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
     </nav>
-    <div class="blog-hero">
-      <div class="section-marker"><span class="line"></span>Notes</div>
-      <h1>Notes</h1>
-      <p>Thoughts on technical SEO, international search, and e-commerce. Written to share what I know, so I do not forget it. There is a stage of life where a woman opens the fridge twice just to remind herself what she came for. I am that woman. (If you are a woman, 44+: solidarity. We are in this together.)</p>
-      <div class="blog-hero-meta">
+  </div>
+</header>
+<main id="main-content">
+  <section class="notes-page">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Notes</span>
+      </nav>
+      <div class="notes-hero">
+        <span class="notes-eyebrow">Notes</span>
+        <h1>Notes</h1>
+        <p class="lead">Thoughts on technical SEO, international search, and e-commerce. Written to share what I know, so I do not forget it. There is a stage of life where a woman opens the fridge twice just to remind herself what she came for. I am that woman. (If you are a woman, 44+: solidarity. We are in this together.)</p>
+      </div>
+      <div class="notes-filter-bar">
+        <div class="notes-filter" role="tablist" aria-label="Filter notes by category">
+          <button class="fpill is-active" type="button" data-category="all"             role="tab" aria-selected="true">All</button>
+          <button class="fpill"           type="button" data-category="structured-data" role="tab" aria-selected="false">Structured data</button>
+          <button class="fpill"           type="button" data-category="ecommerce"       role="tab" aria-selected="false">E-commerce</button>
+          <button class="fpill"           type="button" data-category="technical"       role="tab" aria-selected="false">Technical SEO</button>
+          <button class="fpill"           type="button" data-category="international"   role="tab" aria-selected="false">International</button>
+        </div>
         <span class="post-count">19 posts</span>
       </div>
-    </div>
-
-        <div class="filter-bar" style="justify-content:flex-start;margin-bottom:24px;">
-          <div class="filter-groups" role="tablist" aria-label="Filter notes by category">
-            <button class="fpill is-active" data-category="all"             role="tab" aria-selected="true">All</button>
-            <button class="fpill"           data-category="structured-data" role="tab" aria-selected="false">Structured data</button>
-            <button class="fpill"           data-category="ecommerce"       role="tab" aria-selected="false">E-commerce</button>
-            <button class="fpill"           data-category="technical"       role="tab" aria-selected="false">Technical SEO</button>
-            <button class="fpill"           data-category="international"   role="tab" aria-selected="false">International</button>
-          </div>
-        </div>
-
-        <div class="notes-list">
-      <div class="notes-row" data-category="ecommerce">
+      <div class="notes-list">
+<div class="notes-row" data-category="ecommerce">
         <div class="notes-row-date">28 May 2026</div>
         <div class="notes-row-body">
           <div class="notes-row-cat">Ecommerce SEO</div>
@@ -123,8 +163,6 @@
           <div class="notes-row-meta">12 min read</div>
         </div>
       </div>
-
-
       <div class="notes-row" data-category="structured-data">
         <div class="notes-row-date">18 May 2026</div>
         <div class="notes-row-body">
@@ -134,7 +172,6 @@
           <div class="notes-row-meta">13 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="structured-data">
         <div class="notes-row-date">19 Apr 2026</div>
         <div class="notes-row-body">
@@ -144,7 +181,6 @@
           <div class="notes-row-meta">18 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="technical">
         <div class="notes-row-date">12 Apr 2026</div>
         <div class="notes-row-body">
@@ -154,7 +190,6 @@
           <div class="notes-row-meta">22 min read</div>
         </div>
       </div>
-
             <div class="notes-row" data-category="ecommerce">
         <div class="notes-row-date">1 Apr 2026</div>
         <div class="notes-row-body">
@@ -164,7 +199,6 @@
           <div class="notes-row-meta">5 min read</div>
         </div>
       </div>
-
             <div class="notes-row" data-category="ecommerce">
         <div class="notes-row-date">30 Mar 2026</div>
         <div class="notes-row-body">
@@ -174,7 +208,6 @@
           <div class="notes-row-meta">12 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="ecommerce">
         <div class="notes-row-date">29 Mar 2026</div>
         <div class="notes-row-body">
@@ -184,7 +217,6 @@
           <div class="notes-row-meta">15 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="structured-data">
         <div class="notes-row-date">27 Mar 2026</div>
         <div class="notes-row-body">
@@ -194,7 +226,6 @@
           <div class="notes-row-meta">18 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="structured-data">
         <div class="notes-row-date">27 Mar 2026</div>
         <div class="notes-row-body">
@@ -204,7 +235,6 @@
           <div class="notes-row-meta">14 min read</div>
         </div>
       </div>
-
 <div class="notes-row" data-category="ecommerce">
         <div class="notes-row-date">22 Mar 2026</div>
         <div class="notes-row-body">
@@ -214,7 +244,6 @@
           <div class="notes-row-meta">16 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="ecommerce">
         <div class="notes-row-date">22 Mar 2026</div>
         <div class="notes-row-body">
@@ -224,7 +253,6 @@
           <div class="notes-row-meta">18 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="structured-data">
         <div class="notes-row-date">21 Mar 2026</div>
         <div class="notes-row-body">
@@ -234,7 +262,6 @@
           <div class="notes-row-meta">10 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="technical">
         <div class="notes-row-date">20 Mar 2026</div>
         <div class="notes-row-body">
@@ -244,7 +271,6 @@
           <div class="notes-row-meta">14 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="technical">
         <div class="notes-row-date">19 Mar 2026</div>
         <div class="notes-row-body">
@@ -254,7 +280,6 @@
           <div class="notes-row-meta">18 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="personal">
         <div class="notes-row-date">16 Mar 2026</div>
         <div class="notes-row-body">
@@ -264,7 +289,6 @@
           <div class="notes-row-meta">3 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="international">
         <div class="notes-row-date">16 Mar 2026</div>
         <div class="notes-row-body">
@@ -274,7 +298,6 @@
           <div class="notes-row-meta">7 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="technical">
         <div class="notes-row-date">10 Mar 2026</div>
         <div class="notes-row-body">
@@ -284,7 +307,6 @@
           <div class="notes-row-meta">5 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="international">
         <div class="notes-row-date">28 Feb 2026</div>
         <div class="notes-row-body">
@@ -294,7 +316,6 @@
           <div class="notes-row-meta">7 min read</div>
         </div>
       </div>
-
       <div class="notes-row" data-category="technical">
         <div class="notes-row-date">15 Feb 2026</div>
         <div class="notes-row-body">
@@ -304,45 +325,52 @@
           <div class="notes-row-meta">6 min read</div>
         </div>
       </div>
-
+      </div>
     </div>
-  </main>
-</div>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
+  </section>
+</main>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
 </footer>
-<script src="/cookie-consent.js"></script>
-<script src="/header.js"></script>
 <script>
-  // ── Notes category filter (single-select segmented control) ──────────
-  (function() {
-    var pills = document.querySelectorAll('.filter-bar .fpill');
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+  // ── Notes category filter ────────────────────────────────────────────
+  (function(){
+    var pills = document.querySelectorAll('.notes-filter .fpill');
     var rows  = document.querySelectorAll('.notes-row[data-category]');
     var count = document.querySelector('.post-count');
     var totalText = count ? count.textContent : '';
-    pills.forEach(function(pill) {
-      pill.addEventListener('click', function() {
+    pills.forEach(function(pill){
+      pill.addEventListener('click', function(){
         var cat = pill.dataset.category;
-        pills.forEach(function(p) {
+        pills.forEach(function(p){
           var active = p === pill;
           p.classList.toggle('is-active', active);
           p.setAttribute('aria-selected', active ? 'true' : 'false');
         });
         var visible = 0;
-        rows.forEach(function(row) {
+        rows.forEach(function(row){
           var show = (cat === 'all' || row.dataset.category === cat);
           row.hidden = !show;
           if (show) visible++;
@@ -354,6 +382,6 @@
     });
   })();
 </script>
-
+<script src="/cookie-consent.js"></script>
 </body>
 </html>

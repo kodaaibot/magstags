@@ -7,15 +7,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
-
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-
   <title>Paid SEO Tools | MagsTags</title>
   <meta name="description" content="Professional SEO tools for enterprise and e-commerce teams. GMC Feed Analyzer and more.">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     :root {
       --purple:       #E11D48;
       --purple-light: #FFE4E6;
@@ -24,20 +24,15 @@
       --purple:       #E11D48;
       --purple-light: rgba(225,29,72,.15);
     }
-
     .page-wrap { width: 100%; }
-
     .page-hero { margin-bottom: 48px; }
     .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--purple); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; background: var(--purple-light); padding: 4px 12px; border-radius: 99px; }
-    .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; line-height: 1.15; color: var(--text-1); margin-bottom: 14px; }
+    .page-hero h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 36px; font-weight: 400; line-height: 1.15; color: var(--text-1); margin-bottom: 14px; }
     .page-hero p { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 480px; }
-
     .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-3); text-decoration: none; margin-bottom: 40px; transition: color .15s; }
     .back-link:hover { color: var(--purple); }
-
     .section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 20px; }
     .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-
     .tool-card { border: 1px solid var(--border); border-radius: 20px; padding: 28px 32px; background: var(--surface); text-decoration: none; display: block; transition: all .2s; position: relative; cursor: pointer; }
     .tool-card:hover { border-color: var(--purple); transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .tool-name a { color: inherit; text-decoration: none; }
@@ -48,12 +43,10 @@
     .tool-badge-paid { background: var(--purple-light); color: var(--purple); }
     .tool-badge-ext { background: #FEF3C7; color: #D97706; }
     html.dark .tool-badge-ext { background: rgba(225,29,72,.12); color: #E11D48; }
-    .tool-name { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; letter-spacing: -.01em; }
+    .tool-name { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; letter-spacing: -.01em; }
     .tool-card:hover .tool-name { color: var(--purple); }
     .tool-desc { font-size: 13px; color: var(--text-3); line-height: 1.6; margin-bottom: 20px; }
     .tool-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
     @media(max-width:600px){main{padding:24px 16px 60px}}
   </style>
   <meta property="og:title" content="Paid SEO Tools | MagsTags">
@@ -68,23 +61,37 @@
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
 </head>
 <body>
-
-
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <main id="main-content">
-
 <div class="page-wrap">
-  <p style="font-size:12px;color:var(--text-4);margin-bottom:24px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> Paid SEO Tools</p>
-
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/seo-tools/">SEO Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Paid SEO Tools</span>
+        </nav>
   <div class="page-hero">
     <div class="page-hero-eyebrow">Paid tools</div>
     <h1>Professional-grade tools.</h1>
     <p>These tools are part of the paid tier. Built for serious SEO and e-commerce work at scale.</p>
   </div>
-
   <p class="section-label">3 paid tools</p>
   <div class="tools-grid">
-
     <div class="tool-card">
       <div class="tool-card-top">
         <div class="tool-icon">
@@ -104,7 +111,6 @@
         <span class="tool-tag">Client-side</span>
       </div>
     </div>
-
     <div class="tool-card" target="_blank" rel="noopener noreferrer">>
       <div class="tool-card-top">
         <div class="tool-icon">
@@ -123,7 +129,6 @@
         <span class="tool-tag">No subscription</span>
       </div>
     </div>
-
     <div class="tool-card" target="_blank" rel="noopener noreferrer">>
       <div class="tool-card-top">
         <div class="tool-icon">
@@ -142,31 +147,39 @@
         <span class="tool-tag">Competitive intel</span>
       </div>
     </a>
-
   </div>
 </div>
-
 </main>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
-<script src="/header.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" crossorigin="anonymous"></script>
   <script src="/gmc-auth.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function(){ if(window.GmcAuth) GmcAuth.runListingMode(); });</script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

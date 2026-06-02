@@ -67,45 +67,54 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     :root {
-      --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
-      --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #6b6661;
-      --teal: #1ab6db; --mint: #0891B2; --mint-light: #E0F2FE;
-      --shadow-sm: 0 1px 3px rgba(26,24,22,.07); --shadow-md: 0 4px 16px rgba(26,24,22,.09);
-      --red: #c0392b; --red-light: #fdf0ee;
-      --green: #0a7c5c; --green-light: #edfdf5;
-      --amber: #92400e; --amber-light: #fffbeb;
-      --purple: #7c3aed; --purple-light: #f3f0ff;
-      --pink: #c026d3; --cyan-val: #0e7490;
+      /* Local overrides for this tool */
+      --surface-alt: var(--paper);
+      --shadow-sm: 0 1px 3px rgba(26,24,22,.07);
+      --shadow-md: 0 4px 16px rgba(26,24,22,.09);
+      /* JSON syntax-highlight roles — vivid editorial palette, curated to live alongside brand teal + saffron */
+      --teal-val:     var(--accent);                   /* strings, generic values */
+      --amber:        var(--accent-2);                 /* numbers */
+      --amber-light:  rgba(224,146,38,.1);
+      --green-val:    #059669;                         /* booleans true, depth-good */
+      --green-light:  rgba(5,150,105,.08);
+      --purple:       #7c3aed;                         /* type names (Product, Person, etc.) */
+      --purple-light: rgba(124,58,237,.08);
+      --pink:         #db2777;                         /* keys / property names */
+      --pink-light:   rgba(219,39,119,.08);
+      --cyan-val:     #0891B2;                         /* @context / @id / @type prefix */
+      --red:          #dc2626;                         /* errors, false */
+      --red-light:    rgba(220,38,38,.08);
     }
-    html.dark {
-      --bg: #111110; --bg2: #191817; --surface: #1e1c1a; --surface-alt: #242220;
-      --border: rgba(255,255,255,.08); --text-1: #f5f2ee; --text-2: #c8c4be;
-      --text-3: #857f79; --text-4: #8a847d; --teal: #22D3EE; --mint: #67E8F9;
-      --mint-light: rgba(14,116,144,.14);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
-      --red-light: rgba(192,57,43,.14); --green: #4ade80; --green-light: rgba(74,222,128,.1);
-      --amber: #fbbf24; --amber-light: rgba(251,191,36,.1);
-      --purple: #a78bfa; --purple-light: rgba(167,139,250,.1);
-      --pink: #e879f9; --cyan-val: #22d3ee;
+    html.dark, html[data-theme="dark"] {
+      --surface-alt: rgba(245,241,234,.04);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.5);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.6);
+      /* Dark variants — lighter saturations for AA contrast on dark bg */
+      --teal-val:     #22D3EE;
+      --amber:        #fbbf24;                         --amber-light:  rgba(251,191,36,.1);
+      --green-val:    #34d399;                         --green-light:  rgba(52,211,153,.1);
+      --purple:       #a78bfa;                         --purple-light: rgba(167,139,250,.1);
+      --pink:         #f472b6;                         --pink-light:   rgba(244,114,182,.1);
+      --cyan-val:     #22d3ee;
+      --red:          #fca5a5;                         --red-light:    rgba(252,165,165,.1);
     }
-
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-    @media (max-width: 768px) { main { padding: 24px 20px 60px; } }
-
+    @media (max-width: 768px) {
+    }
     .tool-header { margin-bottom: 32px; }
     .tool-badge-free { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 600; background: var(--mint-light); color: var(--teal); margin-bottom: 12px; }
-    .tool-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .tool-title { font-family: 'IBM Plex Mono','Menlo',monospace;  font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
     .tool-subtitle { font-size: 15px; color: var(--text-3); max-width: 640px; line-height: 1.6; }
     .tool-subtitle code { font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; font-family: 'Menlo', 'Monaco', 'Courier New', monospace; color: var(--text-2); }
-
     /* ─── Input tabs ─── */
     .input-tabs {
       display: flex; gap: 4px; margin-bottom: 16px;
-      background: var(--surface); border-radius: 99px; padding: 4px;
+      background: var(--field); border-radius: 99px; padding: 4px;
       width: fit-content; border: 1px solid var(--border); flex-wrap: wrap;
     }
     .input-tab {
@@ -115,13 +124,11 @@
     }
     .input-tab:hover { color: var(--text-1); }
     .input-tab.active { background: var(--teal); color: #fff; font-weight: 600; }
-
     .input-panel { display: none; }
     .input-panel.active { display: block; }
-
     /* ─── Form elements ─── */
     .text-input, .text-area {
-      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      width: 100%; background: var(--field); border: 1px solid var(--border);
       border-radius: 12px; color: var(--text-1); padding: 10px 14px;
       font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
       transition: border-color .15s;
@@ -131,9 +138,7 @@
       min-height: 140px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
       font-size: 12px; resize: vertical; line-height: 1.6;
     }
-
     .input-row { display: flex; gap: 8px; align-items: stretch; }
-
     .btn {
       padding: 9px 20px; background: var(--teal); color: #fff; border: none;
       border-radius: 99px; font-size: 13px; font-weight: 600; cursor: pointer;
@@ -141,31 +146,25 @@
     }
     .btn:hover { opacity: .85; }
     .btn:disabled { opacity: .4; cursor: not-allowed; }
-
     .btn-ghost {
       background: var(--surface); color: var(--text-2); border: 1px solid var(--border);
     }
     .btn-ghost:hover { border-color: var(--teal); color: var(--teal); opacity: 1; }
-
     .btn-sm { padding: 5px 14px; font-size: 12px; }
-
     .sample-link {
       color: var(--teal); cursor: pointer; font-size: 12px;
       text-decoration: underline; background: none; border: none;
       font-family: 'Inter', sans-serif;
     }
     .hint { color: var(--text-4); font-size: 11px; margin-top: 6px; }
-
     /* ─── Status ─── */
     .status { margin-top: 8px; padding: 8px 14px; border-radius: 10px; font-size: 12px; display: none; }
     .status.error { display: block; background: var(--red-light); border: 1px solid var(--red); color: var(--red); }
     .status.info { display: block; background: rgba(14,116,144,.08); border: 1px solid var(--teal); color: var(--teal); }
     .status.warning { display: block; background: rgba(217,119,6,.1); border: 1px solid #d97706; color: #b45309; }
     [data-theme="dark"] .status.warning { background: rgba(217,119,6,.12); border-color: #f59e0b; color: #fbbf24; }
-
     /* ─── Results ─── */
     #results { display: none; margin-top: 20px; }
-
     /* ─── Summary panel ─── */
     .summary-panel {
       background: var(--surface); border: 1px solid var(--border);
@@ -187,10 +186,8 @@
       font-size: 10px; padding: 1px 6px; border-radius: 99px; margin-left: 4px; font-weight: 600;
     }
     .summary-tab.active .tab-count { background: rgba(14,116,144,.12); color: var(--teal); }
-
     .summary-content { display: none; padding: 14px 18px; }
     .summary-content.active { display: block; }
-
     .overview-grid { display: flex; gap: 28px; flex-wrap: wrap; }
     .overview-stat { display: flex; flex-direction: column; gap: 1px; }
     .stat-value { font-size: 22px; font-weight: 700; line-height: 1.2; }
@@ -199,7 +196,6 @@
     .stat-green { color: var(--green); }
     .stat-purple { color: var(--purple); }
     .stat-amber { color: var(--amber); }
-
     .summary-list { display: flex; flex-wrap: wrap; gap: 6px; }
     .summary-list-item {
       display: inline-flex; align-items: center; gap: 6px;
@@ -212,13 +208,11 @@
       background: var(--surface); padding: 1px 5px; border-radius: 99px;
     }
     .item-name { font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-size: 11px; color: var(--purple); }
-
     /* ─── Toolbar ─── */
     .toolbar {
       display: flex; gap: 6px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;
     }
     .toolbar .spacer { flex: 1; }
-
     /* ─── Tree container ─── */
     .tree-wrap {
       background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
@@ -234,7 +228,6 @@
       display: block; margin-top: 8px; font-size: 12px;
       color: var(--text-4); opacity: .6;
     }
-
     /* ─── Connector-line rows ─── */
     .tree-line {
       display: flex; align-items: flex-start; white-space: nowrap;
@@ -243,13 +236,11 @@
     .tree-line:hover { background: var(--bg2); }
     .tree-line.expandable { cursor: pointer; }
     .tree-line.expandable:hover { background: rgba(14,116,144,.06); }
-
     .guide {
       color: var(--border); flex-shrink: 0; white-space: pre;
       user-select: none; letter-spacing: -0.5px;
     }
     html.dark .guide { color: rgba(255,255,255,.15); }
-
     .chev {
       display: inline-block; width: 14px; text-align: center;
       color: var(--text-4); font-size: 9px; flex-shrink: 0;
@@ -257,7 +248,6 @@
     }
     .chev.open { transform: rotate(90deg); }
     .chev.hidden { visibility: hidden; }
-
     .key { color: var(--purple); }
     .sep { color: var(--text-4); }
     .val-string { color: var(--green); }
@@ -268,13 +258,11 @@
     .val-url:hover { opacity: .7; }
     .arr-index { color: var(--text-4); opacity: .7; }
     .summary { color: var(--text-4); font-style: italic; font-size: 11px; }
-
     .type-tag {
       display: inline-block; padding: 1px 7px; border-radius: 5px;
       font-size: 10px; font-weight: 700; margin-left: 4px;
       vertical-align: baseline; font-family: 'Inter', sans-serif;
     }
-
     .type-Product, .type-ProductGroup { background: rgba(10,124,92,.1); color: var(--green); }
     .type-Offer, .type-AggregateOffer, .type-AggregateRating, .type-Review { background: rgba(146,64,14,.1); color: var(--amber); }
     .type-Organization { background: rgba(124,58,237,.1); color: var(--purple); }
@@ -285,7 +273,6 @@
     .type-ShippingDeliveryTime, .type-DefinedRegion { background: rgba(14,116,144,.08); color: var(--teal); }
     .type-QuantitativeValue { background: var(--bg2); color: var(--text-4); }
     .type-default { background: var(--bg2); color: var(--text-4); }
-
     /* ─── Raw panel ─── */
     .raw-panel { display: none; margin-top: 10px; }
     .raw-panel.visible { display: block; }
@@ -294,7 +281,6 @@
       padding: 14px; font-size: 11px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
       overflow-x: auto; max-height: 400px; overflow-y: auto; color: var(--text-3);
     }
-
     .spinner {
       display: inline-block; width: 12px; height: 12px;
       border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
@@ -302,27 +288,23 @@
       margin-right: 6px; vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     @media (max-width: 640px) {
       .tree-wrap { font-size: 11px; padding: 8px; }
       .overview-grid { gap: 16px; }
     }
-
     /* ─── Content sections (ct-* pattern) ─── */
     .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
     .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
     .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
     .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
     .ct-body { font-size: 14px; color: var(--text-2); line-height: 1.75; }
-
     /* Cards */
     .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
     .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
     .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
-    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
     .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-
     /* Callout */
     .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
     .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
@@ -330,7 +312,6 @@
     .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
     .ct-callout-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
     .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
-
     /* FAQ */
     .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
     .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
@@ -341,10 +322,9 @@
     .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
     .ct-faq summary:hover { background: var(--bg2); }
     .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
-
     /* CTA */
     .ct-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px; text-align: center; margin: 72px 0 0; }
-    .ct-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 400; color: var(--text-1); letter-spacing: -.02em; margin-bottom: 12px; }
+    .ct-cta h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 28px; font-weight: 400; color: var(--text-1); letter-spacing: -.02em; margin-bottom: 12px; }
     .ct-cta p { font-size: 15px; color: var(--text-3); max-width: 560px; margin: 0 auto 28px; line-height: 1.7; }
     .ct-cta-links { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
     .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; transition: opacity .15s; }
@@ -355,15 +335,27 @@
   </style>
 </head>
 <body>
-<script src="/header.js"></script>
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <main id="main-content">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a><span class="breadcrumb-sep">›</span>
       <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
       <span>Schema Markup Visualizer</span>
     </nav>
-
     <div class="tool-header">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
         <h1 class="tool-title" style="margin-bottom:0">Schema Markup Visualizer</h1>
@@ -373,13 +365,11 @@
       <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
       <p class="tool-subtitle">Paste your JSON-LD or fetch structured data from any URL. See it as an interactive tree with type badges, property counts, and nesting depth — so you can spot what's there, what's missing, and what's nested three levels deeper than it should be. No logins. No "upgrade to see results." Just the tree.</p>
     </div>
-
     <!-- Input tabs -->
     <div class="input-tabs">
       <button class="input-tab active" data-tab="paste">Paste JSON-LD</button>
       <button class="input-tab" data-tab="url">Fetch from URL</button>
     </div>
-
     <div class="input-panel active" id="tab-paste">
       <textarea class="text-area" id="json-input" placeholder='Paste your JSON-LD here — the contents of a &lt;script type=&quot;application/ld+json&quot;&gt; tag...'></textarea>
       <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
@@ -387,7 +377,6 @@
         <button class="sample-link" onclick="loadSample()">Load sample schema</button>
       </div>
     </div>
-
     <div class="input-panel" id="tab-url">
       <div class="input-row">
         <input type="text" class="text-input" id="url-input" placeholder="https://example.com/product-page">
@@ -398,11 +387,8 @@
         Some sites may block cross-origin requests.
       </p>
     </div>
-
     <div class="status" id="status"></div>
-
     <div id="results">
-
       <!-- Summary panel -->
       <div class="summary-panel">
         <div class="summary-tabs">
@@ -420,7 +406,6 @@
           <div class="summary-list" id="props-list"></div>
         </div>
       </div>
-
       <div class="toolbar">
         <div class="spacer"></div>
         <button class="btn btn-ghost btn-sm" onclick="expandAll()">Expand all</button>
@@ -428,23 +413,18 @@
         <button class="btn btn-ghost btn-sm" onclick="toggleRaw()">Raw JSON</button>
         <button class="btn btn-ghost btn-sm" onclick="copyTree()">Copy tree</button>
       </div>
-
       <div class="tree-wrap" id="tree-container">
         <div class="tree-empty">
           Paste or fetch schema to see the tree.
           <code>{ "@type": "Product", ... }</code>
         </div>
       </div>
-
       <div class="raw-panel" id="raw-panel">
         <pre id="raw-json"></pre>
       </div>
     </div>
-
   </main>
-
 <div class="ct-wrap">
-
   <section class="ct-section" id="what-is">
     <span class="ct-section-label">Background</span>
     <h2 class="ct-h2">What a structured data visualizer actually does</h2>
@@ -452,7 +432,6 @@
     <p class="ct-body" style="margin-top:16px">A schema markup visualizer takes that JSON-LD and turns it into a tree. Every <code>@type</code> gets a colour-coded badge. Every property is indented under its parent. Every nesting level is visible at a glance. Instead of counting braces and matching brackets, you see the structure the way Google sees it — hierarchical, typed, and explicit. The thing you were doing manually, except now you can stop.</p>
     <p class="ct-body" style="margin-top:12px">Paste your JSON-LD or enter a URL, and the tool builds an interactive tree with expand/collapse controls, a type and property inventory, and the nesting depth of your schema. It also auto-repairs common JSON issues — trailing commas, single quotes, stray comments — so malformed markup still renders instead of throwing an error and leaving you to figure out which of your 47 closing braces is the wrong one.</p>
   </section>
-
   <section class="ct-section" id="use-cases">
     <span class="ct-section-label">Use cases</span>
     <h2 class="ct-h2">When to use this tool</h2>
@@ -484,7 +463,6 @@
       </div>
     </div>
   </section>
-
   <section class="ct-section" id="how-it-works">
     <span class="ct-section-label">How it works</span>
     <h2 class="ct-h2">How the visualizer reads your schema</h2>
@@ -498,7 +476,6 @@
       </div>
     </div>
   </section>
-
   <section class="ct-section" id="what-to-look-for">
     <span class="ct-section-label">Inspection guide</span>
     <h2 class="ct-h2">What to look for in the tree</h2>
@@ -508,7 +485,6 @@
     <p class="ct-body" style="margin-top:12px"><strong>Type correctness.</strong> The tree badges each <code>@type</code> with a colour. Product, Offer, Organization, BreadcrumbList, AggregateRating — each gets its own tag. If you see a type you don't recognise, or one that shouldn't be there, you've found something worth investigating. CMS templates are creative like that.</p>
     <p class="ct-body" style="margin-top:12px"><strong>Depth and complexity.</strong> Some schemas nest 6 or 7 levels deep. Others are flat. Neither is inherently wrong, but if your ProductGroup → hasVariant → Product → offers → Offer chain goes deeper than you expected, the tree makes it visible. You can decide whether that's intentional or whether your template is generating wrapper objects nobody asked for.</p>
   </section>
-
   <section class="ct-section" id="faq">
     <span class="ct-section-label">Common questions</span>
     <h2 class="ct-h2">Frequently asked questions</h2>
@@ -547,7 +523,6 @@
       </details>
     </div>
   </section>
-
   <div class="ct-cta">
     <h2>More structured data tools</h2>
     <p>Visualize, compare, generate. The schema markup workflow, without the tab-switching.</p>
@@ -557,25 +532,7 @@
       <a href="/product-schema/" class="ct-cta-link-secondary">Product Schema Guide ↗</a>
     </div>
   </div>
-
 </div><!-- end .ct-wrap -->
-
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
 <script>
 // ═══════════════════════════════════════════
@@ -589,7 +546,6 @@ document.querySelectorAll('.input-tab').forEach(function(btn) {
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
   });
 });
-
 // ═══════════════════════════════════════════
 // Summary tab switching
 // ═══════════════════════════════════════════
@@ -601,7 +557,6 @@ document.querySelectorAll('.summary-tab').forEach(function(btn) {
     document.getElementById('sc-' + btn.dataset.stab).classList.add('active');
   });
 });
-
 // ═══════════════════════════════════════════
 // Status
 // ═══════════════════════════════════════════
@@ -614,7 +569,6 @@ function clearStatus() {
   var el = document.getElementById('status');
   el.className = 'status'; el.textContent = '';
 }
-
 // ═══════════════════════════════════════════
 // Parse from paste
 // ═══════════════════════════════════════════
@@ -633,7 +587,6 @@ function tryRepairJSON(raw) {
     s = s.replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'");
     return s.trim();
   }
-
   // 0b. Handle multiple JSON-LD blocks joined by &lt;/script&gt;&lt;script&gt; separators
   // e.g. pasting two consecutive &lt;script type="application/ld+json"&gt; blocks from DevTools
   var multiBlockRe = new RegExp('<\\/' + 'script>\\s*<script[^>]*type\\s*=\\s*["\']application\\/ld\\+json["\'][^>]*>', 'gi');
@@ -655,7 +608,6 @@ function tryRepairJSON(raw) {
     }
     if (blocks.length > 0) return blocks.length === 1 ? blocks[0] : blocks;
   }
-
   var fixed = preclean(raw);
   // Try direct parse after pre-clean
   try { return JSON.parse(fixed); } catch(e) {}
@@ -673,7 +625,6 @@ function tryRepairJSON(raw) {
   try { return JSON.parse(noComments); } catch(e) {}
   return null;
 }
-
 function parseFromPaste() {
   clearStatus();
   var raw = document.getElementById('json-input').value.trim();
@@ -702,7 +653,6 @@ function parseFromPaste() {
     }
   }
 }
-
 // ═══════════════════════════════════════════
 // Fetch from URL
 // ═══════════════════════════════════════════
@@ -710,17 +660,14 @@ async function fetchFromUrl() {
   clearStatus();
   var url = document.getElementById('url-input').value.trim();
   if (!url) { showStatus('Enter a URL first.', 'error'); return; }
-
   var btn = document.getElementById('fetch-btn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Fetching\u2026';
-
   try {
     var proxies = [
       function(u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
       function(u) { return 'https://corsproxy.io/?' + encodeURIComponent(u); }
     ];
-
     var html = null;
     for (var i = 0; i < proxies.length; i++) {
       try {
@@ -728,12 +675,10 @@ async function fetchFromUrl() {
         if (resp.ok) { html = await resp.text(); break; }
       } catch(e) {}
     }
-
     if (!html) {
       showStatus('Could not fetch the page. The site may block cross-origin requests. Try pasting the JSON-LD directly.', 'error');
       return;
     }
-
     var regex = new RegExp('<script[^>]*type\\s*=\\s*["\']application\\/ld\\+json["\'][^>]*>([\\s\\S]*?)<\\/' + 'script>', 'gi');
     var schemas = [];
     var match;
@@ -744,12 +689,10 @@ async function fetchFromUrl() {
         else schemas.push(parsed);
       } catch(e) {}
     }
-
     if (schemas.length === 0) {
       showStatus('No JSON-LD schema found on that page.', 'error');
       return;
     }
-
     showStatus('Found ' + schemas.length + ' schema block' + (schemas.length > 1 ? 's' : '') + ' on the page.', 'info');
     renderSchemas(schemas, JSON.stringify(schemas, null, 2));
   } catch (e) {
@@ -759,26 +702,21 @@ async function fetchFromUrl() {
     btn.innerHTML = 'Fetch &amp; Visualize';
   }
 }
-
 // ═══════════════════════════════════════════
 // Render schemas
 // ═══════════════════════════════════════════
 var maxDepth = 0;
-
 function renderSchemas(schemas, rawJson) {
   maxDepth = 0;
   var container = document.getElementById('tree-container');
   var results = document.getElementById('results');
-
   results.style.display = 'block';
   document.getElementById('raw-panel').classList.remove('visible');
-
   // Collect stats
   var types = {};
   var allProps = {};
   var totalProps = 0;
   var totalObjects = 0;
-
   function collectStats(obj, depth) {
     if (!obj || typeof obj !== 'object') return;
     if (depth > maxDepth) maxDepth = depth;
@@ -794,7 +732,6 @@ function renderSchemas(schemas, rawJson) {
     Object.values(obj).forEach(function(v) { collectStats(v, depth + 1); });
   }
   schemas.forEach(function(s) { collectStats(s, 0); });
-
   // Overview
   document.getElementById('overview-grid').innerHTML =
     '<div class="overview-stat"><span class="stat-value stat-purple">' + (maxDepth + 1) + '</span><span class="stat-label">Levels deep</span></div>' +
@@ -802,7 +739,6 @@ function renderSchemas(schemas, rawJson) {
     '<div class="overview-stat"><span class="stat-value stat-green">' + Object.keys(allProps).length + '</span><span class="stat-label">Unique properties</span></div>' +
     '<div class="overview-stat"><span class="stat-value stat-amber">' + totalObjects + '</span><span class="stat-label">Objects</span></div>' +
     '<div class="overview-stat"><span class="stat-value" style="color:var(--text-4)">' + schemas.length + '</span><span class="stat-label">Schema blocks</span></div>';
-
   // Types
   document.getElementById('types-count').textContent = Object.keys(types).length;
   document.getElementById('types-list').innerHTML = Object.entries(types)
@@ -810,7 +746,6 @@ function renderSchemas(schemas, rawJson) {
     .map(function(e) {
       return '<div class="summary-list-item"><span class="type-tag ' + getTypeClass(e[0]) + '" style="margin:0">' + e[0] + '</span><span class="item-count">\u00d7' + e[1] + '</span></div>';
     }).join('');
-
   // Properties
   document.getElementById('props-count').textContent = Object.keys(allProps).length;
   document.getElementById('props-list').innerHTML = Object.entries(allProps)
@@ -818,50 +753,41 @@ function renderSchemas(schemas, rawJson) {
     .map(function(e) {
       return '<div class="summary-list-item"><span class="item-name">' + e[0] + '</span><span class="item-count">\u00d7' + e[1] + '</span></div>';
     }).join('');
-
   // Reset summary tabs
   document.querySelectorAll('.summary-tab').forEach(function(b) { b.classList.remove('active'); });
   document.querySelectorAll('.summary-content').forEach(function(p) { p.classList.remove('active'); });
   document.querySelector('[data-stab="overview"]').classList.add('active');
   document.getElementById('sc-overview').classList.add('active');
-
   // Build tree
   container.innerHTML = '';
   schemas.forEach(function(schema, i) {
     var label = schemas.length > 1 ? 'Schema ' + (i + 1) : null;
     buildConnectorTree(container, schema, null, label, true, true);
   });
-
   // Raw JSON
   document.getElementById('raw-json').textContent = rawJson || JSON.stringify(schemas, null, 2);
 }
-
 // ═══════════════════════════════════════════
 // Build connector-line tree
 // ═══════════════════════════════════════════
 function buildConnectorTree(parent, value, prefix, keyLabel, isLast, startOpen) {
   var isRoot = prefix === null;
-
   if (value !== null && typeof value === 'object') {
     var isArr = Array.isArray(value);
     var entries = isArr ? value.map(function(v, i) { return [i, v]; }) : Object.entries(value);
     var schemaType = !isArr && value['@type']
       ? (Array.isArray(value['@type']) ? value['@type'].join('/') : value['@type'])
       : null;
-
     var headerLine = document.createElement('div');
     headerLine.className = 'tree-line expandable';
-
     var guide = document.createElement('span');
     guide.className = 'guide';
     guide.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
     headerLine.appendChild(guide);
-
     var chev = document.createElement('span');
     chev.className = 'chev' + (startOpen ? ' open' : '');
     chev.textContent = '\u25B6';
     headerLine.appendChild(chev);
-
     if (keyLabel !== null && keyLabel !== undefined) {
       var k = document.createElement('span');
       if (typeof keyLabel === 'number') {
@@ -873,56 +799,44 @@ function buildConnectorTree(parent, value, prefix, keyLabel, isLast, startOpen) 
       }
       headerLine.appendChild(k);
     }
-
     var summary = document.createElement('span');
     summary.className = 'summary';
     summary.textContent = isArr
       ? ' [' + value.length + ' item' + (value.length !== 1 ? 's' : '') + ']'
       : ' {' + entries.length + '}';
     headerLine.appendChild(summary);
-
     if (schemaType) {
       var badge = document.createElement('span');
       badge.className = 'type-tag ' + getTypeClass(schemaType);
       badge.textContent = schemaType;
       headerLine.appendChild(badge);
     }
-
     parent.appendChild(headerLine);
-
     var childContainer = document.createElement('div');
     childContainer.className = 'tree-children';
     if (!startOpen) childContainer.style.display = 'none';
-
     var childPrefix = isRoot ? '' : (prefix + (isLast ? '   ' : '\u2502  '));
-
     entries.forEach(function(entry, idx) {
       var childIsLast = idx === entries.length - 1;
       var childStartOpen = isImportantKey(entry[0]);
       buildConnectorTree(childContainer, entry[1], childPrefix, entry[0], childIsLast, childStartOpen);
     });
-
     parent.appendChild(childContainer);
-
     headerLine.addEventListener('click', function() {
       chev.classList.toggle('open');
       childContainer.style.display = childContainer.style.display === 'none' ? '' : 'none';
     });
-
   } else {
     var line = document.createElement('div');
     line.className = 'tree-line';
-
     var guide2 = document.createElement('span');
     guide2.className = 'guide';
     guide2.textContent = isRoot ? '' : (prefix + (isLast ? '\u2514\u2500 ' : '\u251C\u2500 '));
     line.appendChild(guide2);
-
     var chev2 = document.createElement('span');
     chev2.className = 'chev hidden';
     chev2.textContent = '\u25B6';
     line.appendChild(chev2);
-
     if (keyLabel !== null && keyLabel !== undefined) {
       var k2 = document.createElement('span');
       if (typeof keyLabel === 'number') {
@@ -933,13 +847,11 @@ function buildConnectorTree(parent, value, prefix, keyLabel, isLast, startOpen) 
         k2.textContent = keyLabel;
       }
       line.appendChild(k2);
-
       var sep = document.createElement('span');
       sep.className = 'sep';
       sep.textContent = ': ';
       line.appendChild(sep);
     }
-
     var valSpan = document.createElement('span');
     if (value === null || value === undefined) {
       valSpan.className = 'val-null'; valSpan.textContent = 'null';
@@ -956,12 +868,10 @@ function buildConnectorTree(parent, value, prefix, keyLabel, isLast, startOpen) 
       var str = String(value);
       valSpan.textContent = '"' + (str.length > 100 ? str.slice(0, 100) + '\u2026' : str) + '"';
     }
-
     line.appendChild(valSpan);
     parent.appendChild(line);
   }
 }
-
 // ═══════════════════════════════════════════
 // Helpers
 // ═══════════════════════════════════════════
@@ -974,14 +884,12 @@ function getTypeClass(type) {
   ];
   return known.indexOf(base) !== -1 ? 'type-' + base : 'type-default';
 }
-
 function isImportantKey(key) {
   var important = ['@graph','offers','hasVariant','mainEntity','itemListElement','brand','aggregateRating'];
   if (typeof key === 'string' && important.indexOf(key) !== -1) return true;
   if (typeof key === 'number') return true;
   return false;
 }
-
 // ═══════════════════════════════════════════
 // Toolbar actions
 // ═══════════════════════════════════════════
@@ -989,18 +897,15 @@ function expandAll() {
   document.querySelectorAll('.tree-children').forEach(function(c) { c.style.display = ''; });
   document.querySelectorAll('.chev:not(.hidden)').forEach(function(c) { c.classList.add('open'); });
 }
-
 function collapseAll() {
   document.querySelectorAll('.tree-children').forEach(function(c) { c.style.display = 'none'; });
   document.querySelectorAll('.chev:not(.hidden)').forEach(function(c) { c.classList.remove('open'); });
   document.querySelectorAll('#tree-container > .tree-children').forEach(function(c) { c.style.display = ''; });
   document.querySelectorAll('#tree-container > .tree-line .chev:not(.hidden)').forEach(function(c) { c.classList.add('open'); });
 }
-
 function toggleRaw() {
   document.getElementById('raw-panel').classList.toggle('visible');
 }
-
 function copyTree() {
   var lines = [];
   function walk(el) {
@@ -1025,7 +930,6 @@ function copyTree() {
     setTimeout(function() { btn.textContent = orig; }, 1500);
   });
 }
-
 // ═══════════════════════════════════════════
 // Sample schema
 // ═══════════════════════════════════════════
@@ -1075,7 +979,6 @@ function loadSample() {
   document.getElementById('json-input').value = JSON.stringify(sample, null, 2);
   parseFromPaste();
 }
-
 // ═══════════════════════════════════════════
 // Keyboard shortcuts
 // ═══════════════════════════════════════════
@@ -1086,5 +989,32 @@ document.getElementById('json-input').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) parseFromPaste();
 });
   </script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

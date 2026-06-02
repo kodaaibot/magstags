@@ -6,10 +6,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
-
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-
   <title>Learn SEO — Guides and Resources | MagsTags</title>
   <meta name="description" content="Practical SEO guides covering structured data, technical SEO, and e-commerce optimisation. Free resources for SEO specialists and developers.">
   <link rel="canonical" href="https://www.magstags.com/learn-seo/">
@@ -20,8 +18,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
   <meta property="og:type" content="website">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -38,12 +37,12 @@
     }
   }
   </script>
-
   <style>
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+    
     .page-hero { margin-bottom: 48px; }
     .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; background: rgba(14,116,144,.08); padding: 4px 12px; border-radius: 99px; }
-    .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.15; color: var(--text-1); margin-bottom: 14px; }
+    .page-hero h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.15; color: var(--text-1); margin-bottom: 14px; }
     .page-hero p { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 520px; }
     .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-4); margin-bottom: 16px; }
     .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 48px; }
@@ -61,110 +60,93 @@
     .guide-desc { font-size: 13px; color: var(--text-3); line-height: 1.55; }
     .guide-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
     .guide-tag { font-size: 11px; font-weight: 500; color: var(--text-4); background: var(--bg); border: 1px solid var(--border); border-radius: 99px; padding: 2px 10px; }
+
+    /* ── Hub card (single linked card replacing 4-up grid) ──────────── */
+    .hub-card { position: relative; display: flex; gap: clamp(20px, 3vw, 36px); align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: clamp(28px, 3.5vw, 40px); text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s; max-width: 760px; margin-bottom: 48px; }
+    .hub-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .hub-card-icon { flex-shrink: 0; width: 52px; height: 52px; background: rgba(14,116,144,.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+    .hub-card-body { display: flex; flex-direction: column; gap: 12px; }
+    .hub-card-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hub-card-badges .guide-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+    .hub-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(20px, 2.4vw, 26px); font-weight: 500; color: var(--text-1); line-height: 1.2; letter-spacing: -.015em; }
+    .hub-card:hover .hub-card-title { color: var(--teal); }
+    .hub-card-desc { font-size: 14px; color: var(--text-3); line-height: 1.65; max-width: 540px; }
+    .hub-card-cta { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); margin-top: 4px; }
+    .hub-card-cta::after { content: ''; position: absolute; inset: 0; border-radius: 20px; }
+    @media (max-width: 600px) { .hub-card { flex-direction: column; } }
+
     @media(max-width:600px){main{padding:24px 16px 60px}}
   </style>
 </head>
 <body>
-<main>
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a><span class="breadcrumb-sep">›</span>
     <span>Learn SEO</span>
   </nav>
-
   <div class="page-hero">
     <div class="page-hero-eyebrow">Guides &amp; resources</div>
     <h1>Learn SEO</h1>
     <p>Structured data, technical SEO, e-commerce optimisation. Written at various hours of the night by someone who's been in the validator, in the Search Console, and in the meeting where someone asked 'so why didn't we just run ads?'</p>
   </div>
-
   <p class="section-label">Structured Data</p>
-  <div class="guide-grid">
-
-    <div class="guide-card">
-      <div class="guide-card-top">
-        <div class="guide-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </div>
-        <span class="guide-badge guide-badge-overview">Overview</span>
-      </div>
-      <div class="guide-name"><a href="/product-schema/" style="color:inherit;text-decoration:none;">Product Schema Markup<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="guide-desc">Introduction to the two main classes of Product structured data — Product Snippets and Merchant Listings — plus ProductGroup for variants.</div>
-      <div class="guide-tags">
-        <span class="guide-tag">JSON-LD</span>
-        <span class="guide-tag">Rich results</span>
-        <span class="guide-tag">E-commerce</span>
-      </div>
+  <a href="/schema-for-seo/" class="hub-card">
+    <div class="hub-card-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
     </div>
-
-    <div class="guide-card">
-      <div class="guide-card-top">
-        <div class="guide-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <span class="guide-badge guide-badge-guide">Guide</span>
+    <div class="hub-card-body">
+      <div class="hub-card-badges">
+        <span class="guide-badge guide-badge-overview">Hub</span>
+        <span class="guide-badge guide-badge-guide">4 guides</span>
       </div>
-      <div class="guide-name"><a href="/product-snippet-schema/" style="color:inherit;text-decoration:none;">Product Snippet Schema<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="guide-desc">Star ratings, reviews, pros and cons, and pricing in organic Google Search. For editorial pages, aggregators, and merchant pages.</div>
-      <div class="guide-tags">
-        <span class="guide-tag">aggregateRating</span>
-        <span class="guide-tag">review</span>
-        <span class="guide-tag">Offer</span>
-      </div>
+      <div class="hub-card-title">Schema for SEO</div>
+      <p class="hub-card-desc">Product, Product Snippet, Merchant Listing, and ProductGroup — which class to use, what each field actually does, and how to generate clean JSON-LD.</p>
+      <span class="hub-card-cta">Read the schema guides →</span>
     </div>
-
-    <div class="guide-card">
-      <div class="guide-card-top">
-        <div class="guide-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="22" height="18" rx="2"/><path d="M1 9h22"/></svg>
-        </div>
-        <span class="guide-badge guide-badge-guide">Guide</span>
-      </div>
-      <div class="guide-name"><a href="/merchant-listing-schema/" style="color:inherit;text-decoration:none;">Merchant Listing Schema<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="guide-desc">Google Shopping, Popular Products, price drop alerts, shipping and returns info. For merchant pages where customers purchase directly.</div>
-      <div class="guide-tags">
-        <span class="guide-tag">Shopping</span>
-        <span class="guide-tag">Merchant Listing</span>
-        <span class="guide-tag">GTIN</span>
-      </div>
-    </div>
-
-    <div class="guide-card">
-      <div class="guide-card-top">
-        <div class="guide-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-        </div>
-        <span class="guide-badge guide-badge-guide">Guide</span>
-      </div>
-      <div class="guide-name"><a href="/product-variants-schema/" style="color:inherit;text-decoration:none;">ProductGroup &amp; Variants Schema<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="guide-desc">Colour swatches, size options, and variant-specific pricing in Google Shopping. Uses ProductGroup with hasVariant.</div>
-      <div class="guide-tags">
-        <span class="guide-tag">ProductGroup</span>
-        <span class="guide-tag">hasVariant</span>
-        <span class="guide-tag">variesBy</span>
-      </div>
-    </a>
-
-  </div>
-
+  </a>
 </main>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
-<script src="/header.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

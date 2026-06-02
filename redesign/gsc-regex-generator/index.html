@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('mt-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) {}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSC Regex Builder — MagsTags</title>
+<meta name="description" content="Build GSC regex filters without Googling the syntax. RE2-safe patterns for URL and query filtering in Google Search Console. Free, client-side.">
+<link rel="canonical" href="https://www.magstags.com/redesign/gsc-regex-generator/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens (forest variant) ──────────────────────────────────────────── */
+  :root {
+    --ink-1: #1a1916; --ink-2: #2d2a26; --ink-3: #58534c; --ink-4: #8a847a;
+    --paper: #f5f1ea; --paper-2: #ebe5d7; --rule: #d8d2c4;
+    --accent: #0E7490; --accent-2: #e09226;
+    --font-display: 'IBM Plex Mono', 'Menlo', monospace;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+    --font-reading: Georgia, 'Times New Roman', serif;
+    --t-h1: clamp(30px, 4vw, 48px);
+    --t-h2: clamp(22px, 2.4vw, 32px);
+    --t-h3: clamp(17px, 1.6vw, 20px);
+    --t-lead: clamp(17px, 1.4vw, 20px);
+    --t-body: 16px;
+    --gutter: clamp(20px, 4vw, 88px);
+    --section-y: clamp(56px, 7vw, 96px);
+    --max: 1200px;
+    --reading: 700px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); font-size: var(--t-body); line-height: 1.65; color: var(--ink-2); background: var(--paper); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
+  a:hover { color: var(--ink-1); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .reading { max-width: var(--reading); margin-left: 0; }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--ink-1); letter-spacing: -.02em; }
+  h1 { font-size: var(--t-h1); line-height: 1.1; font-weight: 400; }
+  h2 { font-size: var(--t-h2); line-height: 1.15; font-weight: 400; }
+  h3 { font-size: var(--t-h3); line-height: 1.3; font-weight: 500; }
+  /* ── Sticky header ───────────────────────────────────────────────────── */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(245,241,234,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; text-decoration: none; }
+  .wordmark em { font-style: italic; color: var(--accent); }
+  nav.primary { display: flex; gap: 32px; align-items: center; }
+  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; text-decoration: none; }
+  nav.primary a:hover { color: var(--accent); }
+  nav.primary .subscribe { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px; color: var(--ink-1); background: transparent; transition: background .15s, color .15s; }
+  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
+  @media (max-width: 800px) { nav.primary { gap: 18px; } nav.primary a:not(.subscribe) { display: none; } }
+  .draft-banner { background: var(--accent-2); color: var(--ink-1); padding: 8px 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
+  .draft-banner a { color: var(--ink-1); text-decoration: underline; }
+  /* ── Tool intro (theme-aware: light by default, dark via toggle) ────── */
+  /* Bottom padding tight — the next section's top padding handles the transition */
+  .tool-intro { background: var(--paper); color: var(--ink-2); padding: clamp(24px, 3vw, 48px) 0 clamp(20px, 2.5vw, 32px); }
+  .tool-hero { padding: 0 0 clamp(28px, 3vw, 40px); }
+  .tool-hero .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; letter-spacing: .04em; }
+  .tool-hero .breadcrumb a { color: var(--ink-4); text-decoration: none; }
+  .tool-hero .breadcrumb a:hover { color: var(--accent); }
+  .tool-hero .breadcrumb-sep { opacity: .5; }
+  .tool-tag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; padding: 4px 12px; border: 1px solid var(--accent-2); border-radius: 99px; color: var(--accent-2); margin-bottom: 20px; }
+  .tool-tag::before { content: '●'; font-size: 9px; }
+  .tool-hero h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h1); line-height: 1.1; letter-spacing: -.02em; color: var(--ink-1); margin-bottom: 14px; max-width: 20ch; }
+  .tool-hero h1 em { font-style: italic; color: var(--accent); font-weight: 500; }
+  .tool-hero .lead { font-size: var(--t-lead); line-height: 1.55; color: var(--accent-2); max-width: 560px; margin-bottom: 14px; font-family: var(--font-display); font-style: italic; font-weight: 400; }
+  .tool-hero hr { border: none; border-top: 1px solid var(--rule); margin: 14px 0; max-width: 560px; }
+  .tool-hero .functional { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-4); max-width: 560px; line-height: 1.6; }
+  .tool-hero .functional::before { content: '// '; color: var(--accent-2); }
+  /* Dark mode override for the tool-intro block */
+  html[data-theme="dark"] .tool-intro { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] .tool-hero .breadcrumb { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .tool-hero .breadcrumb a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .tool-hero .breadcrumb a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .tool-hero h1 { color: var(--paper); }
+  html[data-theme="dark"] .tool-hero hr { border-top-color: rgba(245,241,234,.12); }
+  html[data-theme="dark"] .tool-hero .functional { color: rgba(245,241,234,.55); }
+  /* ── Tool UI (sits inside .tool-intro on dark) ───────────────────────── */
+  /* Tool mockup — light by default, dark via theme toggle. Input/output fields look like proper interactive surfaces in both modes. */
+  .tool-ui { background: var(--paper-2); color: var(--ink-2); border: 1px solid var(--rule); border-radius: 8px; padding: clamp(28px, 3vw, 40px); margin: 36px 0 0; position: relative; }
+  .tool-ui-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+  .tool-ui-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); }
+  .tool-ui-note { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); }
+  .tool-ui-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 28px; align-items: start; }
+  @media (max-width: 760px) { .tool-ui-grid { grid-template-columns: 1fr; } }
+  .ui-input-block { display: flex; flex-direction: column; gap: 14px; }
+  .ui-field-label { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .ui-template-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ui-chip { font-family: var(--font-mono); font-size: 11px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 99px; color: var(--ink-2); background: var(--paper); cursor: pointer; transition: border-color .15s, color .15s; }
+  .ui-chip:hover { border-color: var(--accent-2); color: var(--ink-1); }
+  .ui-chip.is-active { background: var(--accent); color: var(--paper); border-color: var(--accent); font-weight: 600; }
+  .ui-input-field { background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px; color: var(--ink-1); font-family: var(--font-mono); font-size: 13px; outline: none; transition: border-color .15s; }
+  .ui-input-field:focus { border-color: var(--accent-2); }
+  .ui-output { background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 18px 20px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.8; color: var(--ink-1); position: relative; overflow-x: auto; }
+  .ui-output .k { color: var(--ink-1); }
+  .ui-output .s { color: var(--accent); }
+  .ui-output .p { color: var(--ink-4); }
+  .ui-output .c { color: var(--ink-4); font-style: italic; }
+  .ui-output-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; }
+  .ui-btn-copy { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: 99px; background: var(--accent); color: var(--paper); border: none; cursor: pointer; }
+  .ui-explain { margin-top: 14px; font-size: 13px; color: var(--ink-3); line-height: 1.55; padding-left: 18px; border-left: 2px solid var(--accent-2); }
+  .ui-explain code { font-family: var(--font-mono); font-size: 12px; background: var(--paper-2); padding: 1px 5px; border-radius: 3px; color: var(--ink-1); }
+  .ui-output-label { display: block; margin-bottom: 10px; }
+  /* Inline code inside pattern descriptions (sits on top of .ct-pattern paper-2 → use paper for contrast) */
+  .ct-pattern-desc code { font-family: var(--font-mono); font-size: 12px; background: var(--paper); padding: 1px 5px; border-radius: 3px; color: var(--accent); }
+  /* ── Section ─────────────────────────────────────────────────────────── */
+  .ct-wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .ct-section { padding: var(--section-y) 0; border-top: 1px solid var(--rule); }
+  .ct-section-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .ct-section-label::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .ct-h2 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h2); line-height: 1.15; letter-spacing: -.02em; color: var(--ink-1); margin-bottom: 16px; max-width: 22ch; scroll-margin-top: 110px; }
+  .ct-lead { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-3); max-width: var(--reading); margin-bottom: 24px; }
+  .ct-body { font-size: 15px; line-height: 1.7; color: var(--ink-2); max-width: var(--reading); }
+  .ct-body p { margin-bottom: 18px; }
+  .ct-body p strong { color: var(--ink-1); font-weight: 600; }
+  .ct-body ul, .ct-body ol { padding-left: 22px; margin-bottom: 22px; }
+  .ct-body li { margin-bottom: 8px; line-height: 1.7; }
+  .ct-body li::marker { color: var(--accent); }
+  .ct-body code { font-family: var(--font-mono); font-size: 13px; background: var(--paper-2); padding: 2px 6px; border-radius: 3px; color: var(--ink-1); }
+  /* ── Cards grid (Step by step) ───────────────────────────────────────── */
+  .ct-step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 32px; }
+  .ct-step { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 8px; }
+  .ct-step-num { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 36px; line-height: 1; color: var(--accent); letter-spacing: -.04em; margin-bottom: 8px; }
+  .ct-step h3 { font-size: 16px; margin: 0 0 6px; }
+  .ct-step p { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+  /* ── Pattern card (Copy-paste patterns) ──────────────────────────────── */
+  .ct-pattern-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+  /* Pattern cards — light by default, dark via toggle. Inner .ct-pattern-code stays dark in both (code surface) */
+  .ct-pattern { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 20px 24px; color: var(--ink-2); position: relative; }
+  .ct-pattern-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .ct-pattern-name { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--ink-1); letter-spacing: -.005em; }
+  .ct-pattern-cat { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); }
+  .ct-pattern-code { font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--accent); padding: 12px 14px; background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; overflow-x: auto; white-space: pre; }
+  .ct-pattern-desc { font-size: 13px; color: var(--ink-3); margin-top: 12px; line-height: 1.55; }
+  /* ── Cheat sheet grid (RE2 syntax reference) ─────────────────────────── */
+  .ct-cheat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 32px; }
+  .ct-cheat-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 20px; }
+  .ct-cheat-symbol { font-family: var(--font-mono); font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 6px; letter-spacing: -.02em; }
+  .ct-cheat-name { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--ink-1); margin-bottom: 6px; }
+  .ct-cheat-desc { font-size: 13px; line-height: 1.55; color: var(--ink-3); margin-bottom: 10px; }
+  .ct-cheat-example { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); background: var(--paper); padding: 6px 10px; border-radius: 3px; }
+  /* ── Limits grid ─────────────────────────────────────────────────────── */
+  .ct-limits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
+  .ct-limit { background: var(--paper-2); border-left: 3px solid var(--accent-2); padding: 22px 24px; border-radius: 0 4px 4px 0; }
+  .ct-limit-icon { font-family: var(--font-mono); font-size: 16px; color: var(--accent-2); margin-bottom: 12px; font-weight: 700; }
+  .ct-limit-title { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink-1); margin-bottom: 8px; }
+  .ct-limit p { font-size: 13.5px; line-height: 1.6; color: var(--ink-3); margin: 0; }
+  /* ── FAQ ─────────────────────────────────────────────────────────────── */
+  .ct-faq { display: flex; flex-direction: column; gap: 8px; margin-top: 32px; }
+  .ct-faq details { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; background: var(--paper-2); }
+  .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 15px; font-weight: 400; color: var(--ink-1); display: flex; align-items: center; justify-content: space-between; transition: color .12s; user-select: none; letter-spacing: -.01em; }
+  .ct-faq summary::-webkit-details-marker { display: none; }
+  .ct-faq summary::after { content: '+'; font-family: var(--font-mono); font-size: 18px; color: var(--accent); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+  .ct-faq details[open] summary::after { content: '−'; }
+  .ct-faq details[open] summary { color: var(--accent); }
+  .ct-faq-body { padding: 0 22px 20px; font-size: 14px; color: var(--ink-3); line-height: 1.7; }
+  .ct-faq-body code { font-family: var(--font-mono); font-size: 12.5px; background: var(--paper); padding: 2px 6px; border-radius: 3px; color: var(--ink-1); }
+  /* ── CTA ─────────────────────────────────────────────────────────────── */
+  .ct-cta { background: var(--ink-1); color: var(--paper); padding: clamp(40px, 5vw, 64px); border-radius: 4px; margin: var(--section-y) 0 0; text-align: center; }
+  .ct-cta h2 { color: var(--paper); margin-bottom: 14px; }
+  .ct-cta p { font-size: 16px; color: rgba(245,241,234,.7); margin: 0 auto 28px; max-width: 540px; line-height: 1.55; }
+  .ct-cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .ct-cta-link-primary, .ct-cta-link-secondary { font-family: var(--font-body); font-size: 13.5px; font-weight: 600; padding: 12px 22px; border-radius: 99px; text-decoration: none; transition: background .15s, transform .1s; display: inline-flex; align-items: center; gap: 6px; }
+  .ct-cta-link-primary { background: var(--accent-2); color: var(--ink-1); }
+  .ct-cta-link-primary:hover { transform: translateY(-1px); background: #f0a431; color: var(--ink-1); }
+  .ct-cta-link-secondary { background: transparent; color: var(--paper); border: 1px solid rgba(245,241,234,.3); }
+  .ct-cta-link-secondary:hover { border-color: var(--paper); color: var(--paper); }
+  /* ── Footer ──────────────────────────────────────────────────────────── */
+  footer.site { background: var(--ink-1); color: var(--paper-2); padding: clamp(48px, 6vw, 80px) 0 32px; }
+  .footer-base { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .footer-base a { color: var(--ink-4); text-decoration: none; }
+  .footer-base a:hover { color: var(--paper); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+  /* ── Theme toggle button (in header) ─────────────────────────────────── */
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
+  .theme-toggle svg { display: block; }
+  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
+  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  /* ── DARK MODE OVERRIDES (html[data-theme="dark"]) ───────────────────── */
+  html[data-theme="dark"] body { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] body a { color: var(--accent-2); }
+  html[data-theme="dark"] body a:hover { color: var(--paper); }
+  /* Header in dark */
+  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
+  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
+  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+  /* Article header */
+  html[data-theme="dark"] .breadcrumb { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .post-cat { color: var(--accent-2); border-color: var(--accent-2); }
+  html[data-theme="dark"] .post-h1 { color: var(--paper); }
+  html[data-theme="dark"] .article-subhead { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .post-meta { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .post-meta-dot { background: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .post-lead { color: var(--paper); }
+  html[data-theme="dark"] .article-byline { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .article-byline a { color: var(--paper); }
+  html[data-theme="dark"] .companion-note { background: rgba(245,241,234,.04); color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .article hr { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-badge { background: var(--accent-2); color: var(--ink-1); }
+  /* Article body */
+  html[data-theme="dark"] .article-body p { color: var(--paper-2); }
+  html[data-theme="dark"] .article-body p strong { color: var(--paper); }
+  html[data-theme="dark"] .article-body h2 { color: var(--paper); }
+  html[data-theme="dark"] .article-body h3 { color: var(--paper); }
+  html[data-theme="dark"] .article-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .article-body li::marker { color: var(--accent-2); }
+  /* Callouts */
+  html[data-theme="dark"] .callout { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .callout p { color: var(--paper-2); }
+  html[data-theme="dark"] .callout p strong { color: var(--paper); }
+  html[data-theme="dark"] .callout--warn { background: rgba(224,146,38,.14); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout--warn { background: rgba(224,146,38,.14); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout-icon { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout-title { color: var(--paper); }
+  html[data-theme="dark"] .ct-callout-body p { color: var(--paper-2); }
+  /* Pull quote / quotable */
+  html[data-theme="dark"] .pullquote { border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .pullquote blockquote { color: var(--paper); }
+  html[data-theme="dark"] .pullquote blockquote em { color: var(--accent-2); }
+  html[data-theme="dark"] .pullquote cite { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .pullquote cite a { color: var(--accent-2); }
+  html[data-theme="dark"] .quotable { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .quotable p { color: var(--paper); }
+  html[data-theme="dark"] .quotable .source { color: rgba(245,241,234,.55); }
+  /* Precedence list */
+  html[data-theme="dark"] .precedence-list > li { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .precedence-list > li::before { color: var(--accent-2); }
+  html[data-theme="dark"] .prec-label { color: var(--paper); }
+  html[data-theme="dark"] .prec-desc { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .prec-badge.strongest { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] .prec-badge.weakest { background: rgba(245,241,234,.15); color: rgba(245,241,234,.6); }
+  /* Tables */
+  html[data-theme="dark"] .ct-table-wrap { border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-table th { background: rgba(245,241,234,.04); color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-table td { border-bottom-color: rgba(245,241,234,.1); color: var(--paper-2); }
+  html[data-theme="dark"] .ct-table strong { color: var(--paper); }
+  html[data-theme="dark"] .ct-table .num { color: var(--paper-2); }
+  html[data-theme="dark"] .ct-table .highlight { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-table .dim { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ct-table .col-label { color: var(--paper); }
+  html[data-theme="dark"] .ct-table .col-pick { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-table .is-exit td { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ct-table .is-exit .col-pick { color: rgba(245,241,234,.4); }
+  /* Stat cards (case study) */
+  html[data-theme="dark"] .stat-row { background: rgba(245,241,234,.1); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .stat-card { background: rgba(245,241,234,.04); }
+  html[data-theme="dark"] .stat-number { color: var(--paper); }
+  html[data-theme="dark"] .stat-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .stat-card--mobile { background: rgba(224,146,38,.1); border-top-color: var(--accent-2); }
+  html[data-theme="dark"] .stat-card--mobile .stat-number { color: var(--accent-2); }
+  html[data-theme="dark"] .stat-card--desktop { background: rgba(245,241,234,.04); border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .stat-card--desktop .stat-number { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .device-badge { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .stat-card--mobile .device-badge { color: var(--accent-2); }
+  /* FAQ */
+  html[data-theme="dark"] .faq-block { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .faq-q { color: var(--paper); }
+  html[data-theme="dark"] .faq-q::before { color: var(--accent-2); }
+  html[data-theme="dark"] .faq-a { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .faq-a code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .ct-faq details { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-faq summary { color: var(--paper); }
+  html[data-theme="dark"] .ct-faq summary::after { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-faq details[open] summary { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-faq-body { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-faq-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  /* Sources */
+  html[data-theme="dark"] .sources { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .sources h2 { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .sources li::before { color: var(--accent-2); }
+  html[data-theme="dark"] .sources li strong { color: var(--paper); }
+  html[data-theme="dark"] .sources li { color: var(--paper-2); }
+  /* Related tool card */
+  html[data-theme="dark"] .related-tool { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .related-tool-tag { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool h3 a { color: var(--paper); }
+  html[data-theme="dark"] .related-tool:hover h3 a { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool-outcome { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .related-tool-cta { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool:hover { border-color: rgba(245,241,234,.25); }
+  /* Author card */
+  html[data-theme="dark"] .author-card { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .author-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .author-name { color: var(--paper); }
+  html[data-theme="dark"] .author-name a { color: var(--paper); }
+  html[data-theme="dark"] .author-name a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .author-role { color: var(--accent-2); }
+  html[data-theme="dark"] .author-bio { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .author-photo { background: rgba(245,241,234,.06); border-color: rgba(245,241,234,.1); color: rgba(245,241,234,.4); }
+  /* Series sidebar (case study) */
+  html[data-theme="dark"] .series-label { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .series-item { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .series-item-type { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .series-item-name { color: var(--paper); }
+  html[data-theme="dark"] .series-item.active .series-item-type { color: var(--accent-2); }
+  html[data-theme="dark"] .series-item.active .series-item-name { color: var(--accent-2); }
+  html[data-theme="dark"] .series-item.dim .series-item-name, html[data-theme="dark"] .series-item.dim .series-item-type { color: rgba(245,241,234,.4); }
+  /* TOC (right rail) */
+  html[data-theme="dark"] .ct-toc-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ct-toc-list { border-left-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-toc-list a { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-toc-list a:hover { color: var(--accent-2); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-toc-list a.active { color: var(--accent-2); border-left-color: var(--accent-2); }
+  /* Tool page editorial sections */
+  html[data-theme="dark"] .ct-section { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-section-label { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-section-label::before { background: var(--accent-2); }
+  html[data-theme="dark"] .ct-h2 { color: var(--paper); }
+  html[data-theme="dark"] .ct-lead { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .ct-body p { color: var(--paper-2); }
+  html[data-theme="dark"] .ct-body p strong { color: var(--paper); }
+  html[data-theme="dark"] .ct-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .ct-body li::marker { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-step { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-step-num { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-step h3 { color: var(--paper); }
+  html[data-theme="dark"] .ct-step p { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .tool-ui { background: #15130f; border-color: rgba(245,241,234,.08); color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] .tool-ui-head { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .tool-ui-note { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ui-field-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ui-chip { background: rgba(245,241,234,.03); border-color: rgba(245,241,234,.15); color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .ui-chip:hover { border-color: var(--accent-2); color: var(--paper); }
+  html[data-theme="dark"] .ui-chip.is-active { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  html[data-theme="dark"] .ui-input-field { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.12); color: rgba(245,241,234,.9); }
+  html[data-theme="dark"] .ui-output { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.12); color: rgba(245,241,234,.9); }
+  html[data-theme="dark"] .ui-output .k { color: rgba(245,241,234,.95); }
+  html[data-theme="dark"] .ui-output .s { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ui-output .p { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ui-output .c { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] .ui-btn-copy { background: var(--accent); color: var(--paper); }
+  html[data-theme="dark"] .ui-explain { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ui-explain code { background: rgba(245,241,234,.08); color: rgba(245,241,234,.95); }
+  html[data-theme="dark"] .ct-pattern-desc code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .ct-pattern { background: var(--ink-1); border-color: transparent; color: rgba(245,241,234,.85); }
+  html[data-theme="dark"] .ct-pattern-name { color: rgba(245,241,234,.95); }
+  html[data-theme="dark"] .ct-pattern-cat { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-pattern-code { background: rgba(245,241,234,.04); color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .ct-pattern-desc { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ct-cheat-card { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-cheat-symbol { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-cheat-name { color: var(--paper); }
+  html[data-theme="dark"] .ct-cheat-desc { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-cheat-example { background: rgba(245,241,234,.06); color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ct-limit { background: rgba(224,146,38,.1); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-limit-icon { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-limit-title { color: var(--paper); }
+  html[data-theme="dark"] .ct-limit p { color: rgba(245,241,234,.65); }
+  /* Footer */
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] .footer-base { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .footer-base a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .footer-base a:hover { color: var(--paper); }
+  /* ── Full footer (ported from homepage for cross-page consistency) ──── */
+  .wrap-footer { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
+  footer.site .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { footer.site .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
+  footer.site .footer-brand .wordmark { color: var(--ink-1); }
+  footer.site .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
+  footer.site .footer-col h5 { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 20px; }
+  footer.site .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; }
+  footer.site .footer-col a { color: var(--ink-2); font-size: 14px; text-decoration: none; }
+  footer.site .footer-col a:hover { color: var(--accent); }
+  footer.site .footer-base { margin-top: 80px; padding: 28px 0 0 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; max-width: none; }
+  footer.site .footer-base a { color: var(--ink-4); text-decoration: none; }
+  footer.site .footer-base a:hover { color: var(--ink-1); }
+  /* Dark-mode overrides for full footer */
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] footer.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] footer.site .footer-brand p { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] footer.site .footer-col h5 { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
+  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
+  html[data-theme="dark"] footer.site .footer-base { border-top-color: rgba(245,241,234,.12); color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a:hover { color: var(--paper); }
+</style>
+</head>
+<body>
+<div class="draft-banner">
+  Redesign prototype · tool page · forest variant · <a href="/redesign/">return to redesign home</a> · <a href="/">live site</a>
+</div>
+<header class="site">
+  <div class="site-inner">
+    <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/redesign/#research">Research</a>
+      <a href="/redesign/#guides">Guides</a>
+      <a href="/redesign/#tools">Tools</a>
+      <a href="/redesign/#about">About</a>
+      <a href="/redesign/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
+  <!-- ────────── Dark intro moment: hero + tool UI ────────── -->
+  <section class="tool-intro">
+    <section class="tool-hero">
+      <div class="wrap">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/redesign/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/redesign/#tools">Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>GSC Regex Builder</span>
+        </nav>
+        <span class="tool-tag">Tool · Diagnostics</span>
+        <h1>GSC Regex Builder</h1>
+        <p class="lead">Build GSC regex filters without Googling the syntax.</p>
+        <hr>
+        <p class="functional">22 RE2-safe templates, live tester, plain-English explanations. Client-side. No accounts. No nags.</p>
+      </div>
+    </section>
+    <!-- Tool UI (static representation) -->
+    <div class="wrap">
+      <div class="tool-ui">
+      <div class="tool-ui-head">
+        <span class="tool-ui-label">GSC.REGEX.BUILDER</span>
+        <span class="tool-ui-note">Prototype · live tool ports later</span>
+      </div>
+      <div class="tool-ui-grid">
+        <div class="ui-input-block">
+          <div>
+            <div class="ui-field-label">Step 1 · Pick a template</div>
+            <div class="ui-template-row">
+              <button type="button" class="ui-chip is-active">URL contains</button>
+              <button type="button" class="ui-chip">URL excludes</button>
+              <button type="button" class="ui-chip">Query contains</button>
+              <button type="button" class="ui-chip">Brand vs non-brand</button>
+              <button type="button" class="ui-chip">Subfolder</button>
+              <button type="button" class="ui-chip">+18 more</button>
+            </div>
+          </div>
+          <div>
+            <div class="ui-field-label">Step 2 · Parameters</div>
+            <input class="ui-input-field" type="text" value="/products/" placeholder="path or pattern">
+          </div>
+          <div>
+            <div class="ui-field-label">Step 3 · Exclude (optional)</div>
+            <input class="ui-input-field" type="text" value="/legacy/" placeholder="pattern to exclude">
+          </div>
+        </div>
+        <div>
+          <div class="ui-field-label ui-output-label">Generated RE2 pattern</div>
+          <div class="ui-output">
+            <div class="ui-output-actions">
+              <button type="button" class="ui-btn-copy">Copy</button>
+            </div>
+<pre style="margin:0;"><span class="c"># URLs under /products/ excluding /legacy/</span>
+<span class="k">^/products/</span><span class="p">(?!</span><span class="s">legacy/</span><span class="p">)</span><span class="k">.*$</span></pre>
+          </div>
+          <div class="ui-explain">
+            <strong>What this does:</strong> Matches any URL whose path starts with <code>/products/</code> and does NOT continue with <code>legacy/</code>. Paste this into GSC's Pages filter, set the dropdown to "Matching regex".
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+  <!-- ────────── /tool-intro ────────── -->
+  <!-- ────────── § 01 — Background ────────── -->
+  <section class="ct-section" id="background">
+    <div class="ct-wrap">
+      <span class="ct-section-label">01 · Background</span>
+      <h2 class="ct-h2">What is Google Search Console Regex?</h2>
+      <div class="ct-body reading">
+        <p>GSC's Performance report has a default filter that does <em>contains</em>, <em>equals</em>, and <em>not contains</em>. Useful for one URL or one keyword. Useless when you want to ask the report something like "all product pages except the legacy ones, in the UK, from organic, in the last 28 days".</p>
+        <p>The <strong>Matching regex</strong> option in the filter dropdown is what unlocks that. Once you switch to regex, you can describe URL or query sets that the standard filter can't reach — and you can do it in one filter row instead of stacking five.</p>
+        <p>The catch: GSC uses Google's RE2 implementation, not PCRE. Most of what you've memorised from JavaScript or Python <em>does</em> work. A handful of patterns (lookbehinds, backreferences, recursion) do not. The cheat sheet below lists what's safe.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ────────── § 02 — Step by step ────────── -->
+  <section class="ct-section" id="steps">
+    <div class="ct-wrap">
+      <span class="ct-section-label">02 · Step by step</span>
+      <h2 class="ct-h2">How to use the builder</h2>
+      <p class="ct-lead">Three steps. None of them require remembering regex syntax.</p>
+      <div class="ct-step-grid">
+        <article class="ct-step">
+          <span class="ct-step-num">01</span>
+          <h3>Pick a template</h3>
+          <p>22 patterns covering URL filtering, query filtering, brand/non-brand splits, subfolder analysis, and intent grouping. Click one to load it.</p>
+        </article>
+        <article class="ct-step">
+          <span class="ct-step-num">02</span>
+          <h3>Fill the parameters</h3>
+          <p>Each template asks for the path, keyword, or exclusion you care about. The regex updates live as you type.</p>
+        </article>
+        <article class="ct-step">
+          <span class="ct-step-num">03</span>
+          <h3>Copy &amp; paste into GSC</h3>
+          <p>Hit copy, open the Performance report's filter dropdown, switch to "Matching regex", paste. Done.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- ────────── § 03 — Copy-paste patterns ────────── -->
+  <section class="ct-section" id="patterns">
+    <div class="ct-wrap">
+      <span class="ct-section-label">03 · Copy-paste patterns</span>
+      <h2 class="ct-h2">Ready-made GSC regex patterns</h2>
+      <p class="ct-lead">Six patterns that cover ~80% of real GSC analysis. Paste, swap the placeholders, ship.</p>
+      <div class="ct-pattern-list">
+        <div class="ct-pattern">
+          <div class="ct-pattern-head">
+            <span class="ct-pattern-name">URLs under a subfolder</span>
+            <span class="ct-pattern-cat">Pages filter</span>
+          </div>
+          <div class="ct-pattern-code">^/products/.*$</div>
+          <p class="ct-pattern-desc">Anchored to the path. Swap <code>products</code> for your subfolder. The trailing <code>.*$</code> catches everything below.</p>
+        </div>
+        <div class="ct-pattern">
+          <div class="ct-pattern-head">
+            <span class="ct-pattern-name">Brand queries (case-insensitive)</span>
+            <span class="ct-pattern-cat">Queries filter</span>
+          </div>
+          <div class="ct-pattern-code">(?i)(magstags|mags\s+tags|magtags)</div>
+          <p class="ct-pattern-desc"><code>(?i)</code> turns on case-insensitive matching. List your brand spellings, including the common typos, separated by <code>|</code>.</p>
+        </div>
+        <div class="ct-pattern">
+          <div class="ct-pattern-head">
+            <span class="ct-pattern-name">Non-brand queries (inverse)</span>
+            <span class="ct-pattern-cat">Queries filter · Doesn't match</span>
+          </div>
+          <div class="ct-pattern-code">(?i)(magstags|mags\s+tags|magtags)</div>
+          <p class="ct-pattern-desc">Same pattern, different dropdown. Set the filter to "Queries doesn't match regex" to subtract brand traffic from total.</p>
+        </div>
+        <div class="ct-pattern">
+          <div class="ct-pattern-head">
+            <span class="ct-pattern-name">Commercial-intent queries</span>
+            <span class="ct-pattern-cat">Queries filter</span>
+          </div>
+          <div class="ct-pattern-code">(?i)(buy|price|cheap|review|near\s+me|best)</div>
+          <p class="ct-pattern-desc">Catches the high-intent modifiers people add. Add or remove tokens to match your vertical's signals.</p>
+        </div>
+        <div class="ct-pattern">
+          <div class="ct-pattern-head">
+            <span class="ct-pattern-name">Question queries</span>
+            <span class="ct-pattern-cat">Queries filter</span>
+          </div>
+          <div class="ct-pattern-code">^(how|what|why|when|where|who|which|is|are|does|can)\s.*$</div>
+          <p class="ct-pattern-desc">Starts-with match on the canonical English question words. Useful for splitting informational vs transactional traffic.</p>
+        </div>
+        <div class="ct-pattern">
+          <div class="ct-pattern-head">
+            <span class="ct-pattern-name">URLs with no query string</span>
+            <span class="ct-pattern-cat">Pages filter</span>
+          </div>
+          <div class="ct-pattern-code">^[^?]*$</div>
+          <p class="ct-pattern-desc">Matches paths that don't contain <code>?</code>. Useful for separating clean canonical URLs from faceted/parameterised duplicates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ────────── § 04 — RE2 cheat sheet ────────── -->
+  <section class="ct-section" id="cheat-sheet">
+    <div class="ct-wrap">
+      <span class="ct-section-label">04 · RE2 syntax reference</span>
+      <h2 class="ct-h2">GSC regex cheat sheet</h2>
+      <p class="ct-lead">The RE2 syntax that actually works inside Search Console. Bookmark this; the official Google docs hide it across three help articles.</p>
+      <div class="ct-cheat-grid">
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">^</div>
+          <div class="ct-cheat-name">Start of string</div>
+          <p class="ct-cheat-desc">Anchors the pattern to the beginning.</p>
+          <div class="ct-cheat-example">^/blog/</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">$</div>
+          <div class="ct-cheat-name">End of string</div>
+          <p class="ct-cheat-desc">Anchors the pattern to the end.</p>
+          <div class="ct-cheat-example">.html$</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">.*</div>
+          <div class="ct-cheat-name">Any characters</div>
+          <p class="ct-cheat-desc">Matches zero or more of anything.</p>
+          <div class="ct-cheat-example">^/uk/.*$</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">|</div>
+          <div class="ct-cheat-name">OR</div>
+          <p class="ct-cheat-desc">Either side matches.</p>
+          <div class="ct-cheat-example">buy|shop</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">(...)</div>
+          <div class="ct-cheat-name">Group</div>
+          <p class="ct-cheat-desc">Groups for alternation or quantifiers.</p>
+          <div class="ct-cheat-example">(uk|us|ca)</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">[abc]</div>
+          <div class="ct-cheat-name">Character class</div>
+          <p class="ct-cheat-desc">Any one of the listed characters.</p>
+          <div class="ct-cheat-example">[0-9]</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">(?i)</div>
+          <div class="ct-cheat-name">Case-insensitive</div>
+          <p class="ct-cheat-desc">Inline flag at the start of the pattern.</p>
+          <div class="ct-cheat-example">(?i)Black Friday</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">\s</div>
+          <div class="ct-cheat-name">Whitespace</div>
+          <p class="ct-cheat-desc">Matches a space, tab, or newline.</p>
+          <div class="ct-cheat-example">near\s+me</div>
+        </div>
+        <div class="ct-cheat-card">
+          <div class="ct-cheat-symbol">\d</div>
+          <div class="ct-cheat-name">Digit</div>
+          <p class="ct-cheat-desc">Matches 0–9.</p>
+          <div class="ct-cheat-example">2026|\d{4}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ────────── § 05 — Real-world scenarios ────────── -->
+  <section class="ct-section" id="scenarios">
+    <div class="ct-wrap">
+      <span class="ct-section-label">05 · Real-world scenarios</span>
+      <h2 class="ct-h2">5 ways to use GSC regex in your SEO workflow</h2>
+      <div class="ct-body reading">
+        <ol>
+          <li><strong>Brand vs non-brand split.</strong> Two filters, same pattern, opposite dropdowns. Pulls organic traffic minus brand awareness — the actual SEO contribution.</li>
+          <li><strong>Audit a faceted-nav explosion.</strong> Filter pages to <code>\?</code> to count parameterised URLs receiving impressions. The number is usually larger than people expect.</li>
+          <li><strong>Find pages losing clicks to AI Overviews.</strong> Filter queries to question-starters, then sort by impressions ÷ clicks ratio. The big-impression / low-CTR pages are the answers Google's summarising elsewhere.</li>
+          <li><strong>Spot regional cannibalisation.</strong> Filter pages to <code>^/(uk|us|au)/.*$</code>, then group queries by country. Finds the cases where /us/ pages rank in UK SERPs (or vice versa).</li>
+          <li><strong>Track post-migration redirects.</strong> Filter pages to the old subfolder. After redirects ship, the impression count there should bleed toward zero over 4–8 weeks. If it doesn't, your redirects aren't being followed cleanly.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  <!-- ────────── § 06 — Limits ────────── -->
+  <section class="ct-section" id="limits">
+    <div class="ct-wrap">
+      <span class="ct-section-label">06 · Know the limits</span>
+      <h2 class="ct-h2">What GSC regex cannot do</h2>
+      <p class="ct-lead">Four things that look like they should work but don't. Avoid wasting an afternoon.</p>
+      <div class="ct-limits-grid">
+        <div class="ct-limit">
+          <div class="ct-limit-icon">!</div>
+          <div class="ct-limit-title">No lookbehind</div>
+          <p>RE2 supports lookahead in some implementations, but GSC's variant drops <code>(?&lt;=...)</code> and <code>(?&lt;!...)</code>. Restructure with anchors instead.</p>
+        </div>
+        <div class="ct-limit">
+          <div class="ct-limit-icon">!</div>
+          <div class="ct-limit-title">No backreferences</div>
+          <p><code>\1</code>, <code>\2</code>, etc. are not supported. Match each segment independently if you need them.</p>
+        </div>
+        <div class="ct-limit">
+          <div class="ct-limit-icon">!</div>
+          <div class="ct-limit-title">Pattern length cap</div>
+          <p>GSC truncates patterns over ~4,096 characters silently. Long alternations get cut off — split into multiple filters or rebuild with character classes.</p>
+        </div>
+        <div class="ct-limit">
+          <div class="ct-limit-icon">!</div>
+          <div class="ct-limit-title">Position-aware filtering</div>
+          <p>Regex matches against the full URL or query, but you can't filter by "queries where position &gt; 10". Combine with the position column manually after export.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ────────── § 07 — FAQ ────────── -->
+  <section class="ct-section" id="faq">
+    <div class="ct-wrap">
+      <span class="ct-section-label">07 · Common questions</span>
+      <h2 class="ct-h2">Frequently asked questions</h2>
+      <div class="ct-faq">
+        <details>
+          <summary>Does GSC regex support PCRE features like lookbehind?</summary>
+          <div class="ct-faq-body">No. GSC uses Google's RE2 implementation, which trades some PCRE features for guaranteed linear-time matching. Lookbehind, backreferences, and recursion are not supported. Most everything else works.</div>
+        </details>
+        <details>
+          <summary>How do I do a case-insensitive match in GSC regex?</summary>
+          <div class="ct-faq-body">Prefix the pattern with <code>(?i)</code>. For example, <code>(?i)black friday</code> matches "Black Friday", "BLACK FRIDAY", "black FRIDAY", etc.</div>
+        </details>
+        <details>
+          <summary>Why does my long pattern stop working?</summary>
+          <div class="ct-faq-body">GSC silently truncates patterns over ~4,096 characters. Common cause: huge alternation lists. Either split into multiple filters or condense with character classes (<code>[a-z]</code> instead of <code>a|b|c|d|...</code>).</div>
+        </details>
+        <details>
+          <summary>Can I use regex on dimensions other than Page and Query?</summary>
+          <div class="ct-faq-body">No. Regex matching is only available on the Page and Query dimensions. For Country, Device, and Search Appearance, use the default filter dropdowns.</div>
+        </details>
+        <details>
+          <summary>Why doesn't my regex work in the Indexed Pages report?</summary>
+          <div class="ct-faq-body">The Performance report supports regex. Coverage, Sitemaps, and the Indexed Pages report use different filtering and do not support full regex — usually just substring matching.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+  <!-- ────────── CTA ────────── -->
+  <div class="wrap">
+    <div class="ct-cta">
+      <h2>Move on to the next tool</h2>
+      <p>Once you've nailed your GSC filters, the related tools below are the natural next steps for technical audits.</p>
+      <div class="ct-cta-links">
+        <a class="ct-cta-link-primary" href="/redesign/#tools">All tools →</a>
+        <a class="ct-cta-link-secondary" href="/notes/gsc-regex-deep-dive/">Read the deep dive</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Research</h5>
+        <ul>
+          <li><a href="/notes/">All notes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Guides</h5>
+        <ul>
+          <li><a href="/learn-seo/">Learn SEO</a></li>
+          <li><a href="/product-schema/">Product schema</a></li>
+          <li><a href="/merchant-listing-schema/">Merchant listing</a></li>
+          <li><a href="/product-variants-schema/">Product variants</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Tools</h5>
+        <ul>
+          <li><a href="/ecommerce-schema-generator/">Schema generators</a></li>
+          <li><a href="/gsc-regex-generator/">GSC regex</a></li>
+          <li><a href="/hreflang-generator/">Hreflang</a></li>
+          <li><a href="/free-seo-tools/">All tools →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Mags</h5>
+        <ul>
+          <li><a href="/mags-sikora/">About</a></li>
+          <li><a href="/contact/">Work with Mags</a></li>
+          <li><a href="/redesign/#newsletter">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('mt-theme', next); } catch(e) {}
+  };
+</script>
+</body>
+</html>

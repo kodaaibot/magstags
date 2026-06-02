@@ -13,58 +13,51 @@
   <meta name="description" content="Get in touch with Mags — questions, feedback, or collaboration enquiries.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+    
     .page-hero{margin-bottom:40px}
-    .page-hero h1{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:var(--text-1);margin-bottom:10px}
+    .page-hero h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:36px;font-weight:700;color:var(--text-1);margin-bottom:10px}
     .page-hero p{font-size:15px;color:var(--text-3);line-height:1.65;max-width:520px}
-
     .contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;max-width:920px}
     @media(max-width:700px){.contact-layout{grid-template-columns:1fr}}
-
     /* ── Form card ── */
     .form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 28px 32px}
-
     .field-group{margin-bottom:18px}
     .field-label{display:block;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
     .field-label .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-4)}
     .field-input,
-    .field-textarea{width:100%;font-size:14px;font-family:'Inter',sans-serif;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--text-1);outline:none;transition:border .15s;resize:none}
+    .field-textarea{width:100%;font-size:14px;font-family:'Inter',sans-serif;background: var(--field);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--text-1);outline:none;transition:border .15s;resize:none}
     .field-input:focus,.field-textarea:focus{border-color:var(--teal)}
     .field-input::placeholder,.field-textarea::placeholder{color:var(--text-4)}
     .field-input.err,.field-textarea.err{border-color:var(--paid-color)}
     .field-textarea{line-height:1.6;min-height:130px}
-
     /* Math validation */
     .math-row{display:flex;align-items:center;gap:10px}
     .math-question{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;font-weight:600;color:var(--teal);white-space:nowrap}
     .math-input{width:72px;text-align:center;font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px}
     .math-error{font-size:12px;color:var(--paid-color);margin-top:5px;display:none}
-
     /* Submit button */
     .btn-submit{width:100%;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s;margin-top:4px}
     .btn-submit:hover{opacity:.85}
     .btn-submit:disabled{opacity:.5;cursor:not-allowed}
-
     /* Success / error states */
     .form-success{display:none;text-align:center;padding:32px 20px}
     .form-success .icon{font-size:40px;margin-bottom:12px}
-    .form-success h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:8px}
+    .form-success h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:8px}
     .form-success p{font-size:14px;color:var(--text-3);line-height:1.6}
     .form-send-error{display:none;padding:12px 14px;background:var(--red-bg);border:1px solid var(--red-border);border-radius:9px;font-size:13px;color:var(--red);margin-top:12px;line-height:1.5}
     html.dark .form-send-error{background:var(--red-bg);border-color:var(--red-border);color:var(--red)}
-
     /* ── Info panel ── */
     .info-panel{display:flex;flex-direction:column;gap:16px}
     .info-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px}
-    .info-card-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:6px}
+    .info-card-title{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:6px}
     .info-card-body{font-size:13px;color:var(--text-3);line-height:1.65}
     .info-card-body a{color:var(--teal);text-decoration:none}
     .info-card-body a:hover{text-decoration:underline}
-
     footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--text-4)}
       @media(max-width:600px){main{padding:24px 16px 60px}}
   </style>
@@ -80,47 +73,54 @@
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
 </head>
 <body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <script>
   (function(){
     var s = localStorage.getItem('theme');
     if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
   })();
 </script>
-
 <main id="main-content">
   <div class="page-hero">
     <h1>Get in touch</h1>
     <p>These contact form submissions go directly to me — a real person who will read it, think about it, and write back. Here for the right reasons? Great. Questions about the tools, feedback, collaboration enquiries, interesting SEO problems — all in. Cold outreach or link exchange requests — respectfully, the bin.</p>
   </div>
-
   <div class="contact-layout">
-
     <!-- ── Form ── -->
     <div class="form-card">
       <form name="contact" id="contact-form" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="contact">
         <div style="display:none"><input name="bot-field" tabindex="-1" autocomplete="off"></div>
-
         <div class="field-group">
           <label class="field-label" for="field-name">Name</label>
           <input class="field-input" type="text" id="field-name" name="name" placeholder="Your name" autocomplete="name" required>
         </div>
-
         <div class="field-group">
           <label class="field-label" for="field-email">Email</label>
           <input class="field-input" type="email" id="field-email" name="email" placeholder="you@example.com" autocomplete="email" required>
         </div>
-
         <div class="field-group">
           <label class="field-label" for="field-subject">Subject</label>
           <input class="field-input" type="text" id="field-subject" name="subject" placeholder="What's this about?" required>
         </div>
-
         <div class="field-group">
           <label class="field-label" for="field-message">Message</label>
           <textarea class="field-textarea" id="field-message" name="message" placeholder="Your message…" required></textarea>
         </div>
-
         <div class="field-group">
           <label class="field-label">
             <span id="math-label-text">Spam check</span>
@@ -132,11 +132,9 @@
           </div>
           <div class="math-error" id="math-error">Wrong answer — try again</div>
         </div>
-
         <button class="btn-submit" type="submit" id="submit-btn">Send message</button>
         <div class="form-send-error" id="send-error">Something went wrong — please try again.</div>
       </form>
-
       <!-- Success state -->
       <div class="form-success" id="form-success">
         <div class="icon"></div>
@@ -144,7 +142,6 @@
         <p>Thanks — I'll get back to you as soon as I can.</p>
       </div>
     </div>
-
     <!-- ── Info ── -->
     <div class="info-panel">
       <div class="info-card">
@@ -160,10 +157,8 @@
         <div class="info-card-body">Tool feedback, bug reports, feature requests, collaboration, or general SEO and e-commerce questions.</div>
       </div>
     </div>
-
   </div>
 </main>
-
 <script>
   // Math spam check
   (function(){
@@ -173,7 +168,6 @@
     const mathError = document.getElementById('math-error');
     const submitBtn = document.getElementById('submit-btn');
     let correctAnswer = 0;
-
     function generateMath() {
       const a = Math.floor(Math.random() * 10) + 1;
       const b = Math.floor(Math.random() * 10) + 1;
@@ -182,7 +176,6 @@
       mathAnswer.value = '';
       mathError.style.display = 'none';
     }
-
     function validateMath() {
       const userAnswer = parseInt(mathAnswer.value, 10);
       if (userAnswer !== correctAnswer) {
@@ -194,15 +187,12 @@
       mathAnswer.classList.remove('err');
       return true;
     }
-
     // Generate on load
     generateMath();
-
     // Validate on input change
     mathAnswer.addEventListener('change', function(){
       if (this.value) validateMath();
     });
-
     // Validate on submit
     form.addEventListener('submit', function(e){
       if (!validateMath()) {
@@ -212,24 +202,33 @@
     });
   })();
 </script>
-
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

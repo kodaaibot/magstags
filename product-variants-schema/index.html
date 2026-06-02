@@ -15,13 +15,14 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -40,7 +41,6 @@
     }
   }
   </script>
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -129,14 +129,14 @@
     ]
   }
   </script>
-
   <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     .container { max-width: 860px; padding: 0 24px; }
     .breadcrumb { padding: 16px 0 0; font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
     .breadcrumb a { color: var(--text-4); } .breadcrumb a:hover { color: var(--teal); text-decoration: none; } .breadcrumb-sep { opacity: .5; }
     .hero { }
     .hero-label { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
-    .hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
+    .hero h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(28px, 5vw, 42px); font-weight: 400; line-height: 1.2; margin-bottom: 20px; }
     .hero-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
     .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s, transform .1s; }
     .hero-cta:hover { opacity: .88; transform: translateY(-1px); text-decoration: none; }
@@ -161,7 +161,7 @@
     .shopping-callout { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
     .shopping-callout-item { font-size: 11px; color: var(--teal); background: rgba(14,116,144,.08); border-radius: 99px; padding: 4px 12px; font-weight: 600; }
     .section { margin-top: 56px; }
-    .section-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 24px; font-weight: 400; margin-bottom: 20px; }
+    .section-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 24px; font-weight: 400; margin-bottom: 20px; }
     .section-lead { font-size: 15px; color: var(--text-3); margin-bottom: 24px; line-height: 1.7; }
     .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
     .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
@@ -190,14 +190,13 @@
     .nav-pill { font-size: 12px; font-weight: 600; color: var(--text-3); border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; text-decoration: none; transition: all .15s; }
     .nav-pill:hover { border-color: var(--teal); color: var(--teal); text-decoration: none; }
     .cta-section { margin-top: 56px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; text-align: center; }
-    .cta-section h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 26px; font-weight: 400; margin-bottom: 12px; }
+    .cta-section h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 26px; font-weight: 400; margin-bottom: 12px; }
     .cta-section p { font-size: 15px; color: var(--text-3); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; }
     .cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--teal); color: #fff; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s; }
     .cta-btn:hover { opacity: .88; text-decoration: none; }
     .cta-btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: none; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all .15s; }
     .cta-btn-outline:hover { background: rgba(14,116,144,.06); text-decoration: none; }
-
     /* Series sidebar */
     .page-layout { display: flex; gap: 48px; align-items: flex-start; }
     .series-sidebar { width: 200px; flex-shrink: 0; position: sticky; top: 88px; }
@@ -212,7 +211,6 @@
     .series-item.active .series-item-name { color: var(--teal); }
     .page-content { flex: 1; min-width: 0; }
     @media (max-width: 860px) { .series-sidebar { display: none; } }
-
       @media(max-width:600px){main{padding:24px 16px 60px}.container{padding:0}}
     .cta-badge { background: rgba(255,255,255,.25); border-radius: 99px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-left: 2px; }
     /* Code blocks */
@@ -238,7 +236,6 @@
     .challenge-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; }
     .challenge-fix { margin-top: 12px; font-size: 12px; color: var(--text-2); background: rgba(14,116,144,.05); border-left: 3px solid var(--teal); padding: 10px 14px; border-radius: 0 8px 8px 0; line-height: 1.6; }
     .challenge-fix strong { color: var(--teal); }
-
     /* Content layout */
     .ct-toc { margin-top: 16px; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
@@ -249,10 +246,23 @@
   </style>
 </head>
 <body>
-
-<main>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
 <div class="page-layout">
-
 <aside class="series-sidebar">
   <div class="series-sidebar-inner">
     <div class="series-label">Also in this series</div>
@@ -277,14 +287,12 @@
 </aside>
 <div class="page-content">
 <div class="container">
-
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a><span class="breadcrumb-sep">›</span>
     <a href="/learn-seo/">Learn SEO</a><span class="breadcrumb-sep">›</span>
     <a href="/product-schema/">Product Schema</a><span class="breadcrumb-sep">›</span>
     <span>Product Variants</span>
   </nav>
-
   <section class="hero">
     <p class="hero-label">Product Structured Data</p>
     <h1>ProductGroup &amp; Variants Schema Markup</h1>
@@ -295,7 +303,6 @@
     </a>
     <p class="hero-secondary">Single product, no variants? Use <a href="/product-snippet-schema/">Product Snippet</a> or <a href="/merchant-listing-schema/">Merchant Listing</a> schema instead.</p>
   </section>
-
   <!-- Shopping demo -->
   <div class="shopping-demo">
     <p class="demo-label">Product Variants in Google Shopping</p>
@@ -337,7 +344,6 @@
       <span class="shopping-callout-item">Size options</span>
     </div>
   </div>
-
   <!-- Benefits -->
   <section class="section" id="what-product-variants-unlocks">
     <h2 class="section-title">What Product Variants schema unlocks</h2>
@@ -364,7 +370,6 @@
       </div>
     </div>
   </section>
-
   <!-- Required fields -->
   <section class="section" id="key-properties">
     <h2 class="section-title">Key properties for Product Variants schema</h2>
@@ -394,16 +399,13 @@
         </tbody>
       </table>
     </div>
-
     <div style="margin-top:20px;background:rgba(14,116,144,.06);border:1px solid rgba(14,116,144,.18);border-radius:14px;padding:16px 20px;font-size:13px;color:var(--text-2);line-height:1.6;">
       <strong style="color:var(--teal)">Apparel and footwear:</strong> For apparel products in Google Shopping, <code>color</code>, <code>size</code>, and <code>brand</code> are required at the variant level. <code>suggestedGender</code> is strongly recommended. These requirements apply to the UK, US, Brazil, France, Germany, and Japan markets.
     </div>
-
     <div style="margin-top:14px;background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.18);border-radius:14px;padding:16px 20px;font-size:13px;color:var(--text-2);line-height:1.6;">
       <strong style="color:#dc2626">ProductGroup page vs. Merchant Listing variant pages:</strong> These are two different scenarios. <strong>ProductGroup on a product family page</strong> uses <code>hasVariant</code> to group variants for swatch eligibility. <strong>Individual variant as a separate purchase page</strong> needs full Merchant Listing markup (price, shipping, returns) plus <code>inProductGroupWithID</code> to link back to the group. Many sites need both: ProductGroup on the product page, Merchant Listing on each variant URL.
     </div>
   </section>
-
   <!-- How to implement -->
   <section class="section" id="how-to-implement">
     <h2 class="section-title">How to implement ProductVariant schema</h2>
@@ -449,11 +451,9 @@
       </div>
     </div>
   </section>
-
   <!-- JSON-LD examples -->
   <section class="section" id="json-ld-examples">
     <h2 class="section-title">JSON-LD examples</h2>
-
     <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:32px">Nested structure (recommended)</h3>
     <p class="section-lead" style="margin-bottom:0">All variants inside one <code>hasVariant</code> array. Simplest to implement, easiest to validate. Both <code>Product.url</code> and <code>offers.url</code> point to the variant URL — <code>Product.url</code> is the canonical page URL; <code>offers.url</code> is the purchase URL used for Merchant Listing matching. For ecommerce these are the same, but both should be set.</p>
     <div class="code-wrap">
@@ -517,7 +517,6 @@
   ]
 }</code></pre>
     </div>
-
     <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Flat structure (isVariantOf)</h3>
     <p class="section-lead" style="margin-bottom:0">ProductGroup and each variant are separate JSON-LD objects on the same page. Variants link back via <code>isVariantOf</code> referencing the ProductGroup's <code>@id</code>. Better for headless setups or large catalogues where variants render independently. Note: if each variant has its own separate URL (its own page), use <code>inProductGroupWithID</code> on each variant's Merchant Listing markup instead.</p>
     <div class="code-wrap">
@@ -579,7 +578,6 @@
   }
 ]</code></pre>
     </div>
-
     <h3 style="font-size:16px;font-weight:700;margin-bottom:10px;margin-top:36px">Shopify: product.liquid</h3>
     <p class="section-lead" style="margin-bottom:0">Generates ProductGroup schema dynamically from Shopify's native variant data. Add to your <code>product.liquid</code> template inside a <code>{% if product.variants.size > 1 %}</code> check. Include <code>variant.barcode</code> if you have GTINs stored in Shopify. <strong>Requires Shopify Online Store 2.0</strong> — uses the <code>image_url</code> filter. For legacy themes using Dawn 1.x or older, replace <code>image_url: width: 800</code> with <code>img_url: '800x'</code>. Note: if your product options don't include Color, Size, or Material (e.g. "Style", "Scent", "Finish"), the <code>variesBy</code> array will output empty — add a case for your custom options or the ProductGroup won't be eligible for Shopping swatches.</p>
     <div class="code-wrap">
@@ -648,7 +646,6 @@
 {% endif %}</code></pre>
     </div>
   </section>
-
   <!-- Challenges -->
   <section class="section" id="implementation-challenges">
     <h2 class="section-title">Common implementation challenges</h2>
@@ -681,7 +678,6 @@
       </div>
     </div>
   </section>
-
   <!-- FAQ -->
   <section class="section" id="faqs">
     <h2 class="section-title">Frequently asked questions</h2>
@@ -698,7 +694,6 @@
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can individual product variants have different sale prices in ProductGroup schema?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="faq-a">Yes — sale pricing is set at the variant's <code>offers</code> level, so individual variants can have different sale states. Use <code>priceSpecification</code> with a <code>UnitPriceSpecification</code> of type <code>https://schema.org/StrikethroughPrice</code> for the original price and <code>https://schema.org/SalePrice</code> for the discounted price. The main <code>price</code> field must equal the active (sale) price. See the <a href="/merchant-listing-schema/">Merchant Listing guide</a> for a full sale pricing example.</div></div>
     </div>
   </section>
-
   <section class="section" id="series">
     <h2 class="section-title">Also in this series</h2>
     <div class="nav-pills">
@@ -707,7 +702,6 @@
       <a href="/merchant-listing-schema/" class="nav-pill">Merchant Listing schema</a>
     </div>
   </section>
-
   <div class="cta-section" id="generate-schema">
     <h2>Generate valid Product Variants schema</h2>
     <p>Add variants, choose nested or flat output, and get clean JSON-LD in seconds. No account needed.</p>
@@ -716,46 +710,23 @@
       <a href="/merchant-listing-schema/" class="cta-btn-outline">Merchant Listing schema →</a>
     </div>
   </div>
-
 </div>
 </div>
 </div>
 </main>
-
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
-
 <script>
 function toggleFaq(btn){var item=btn.closest('.faq-item');var open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!open)item.classList.add('open');}
 function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');navigator.clipboard.writeText(code.textContent).then(function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},2000);});}
-
 // TOC scroll spy
 (function() {
   var toc = document.querySelector('.ct-toc-list');
   if (!toc) return;
-
   var links = toc.querySelectorAll('a');
   var sections = Array.from(links).map(function(link) {
     var id = link.getAttribute('href').slice(1);
     return document.getElementById(id);
   }).filter(Boolean);
-
   function updateActive() {
     var current = '';
     for (var i = 0; i < sections.length; i++) {
@@ -764,7 +735,6 @@ function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');
         current = sections[i].id;
       }
     }
-
     links.forEach(function(link) {
       link.classList.remove('active');
       if (link.getAttribute('href').slice(1) === current) {
@@ -772,10 +742,36 @@ function copyCode(btn){var code=btn.closest('.code-wrap').querySelector('code');
       }
     });
   }
-
   window.addEventListener('scroll', updateActive);
   updateActive();
 })();
+</script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
 </script>
 </body>
 </html>

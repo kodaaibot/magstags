@@ -1,771 +1,1243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://www.magstags.com/">
-  <meta name="google-site-verification" content="mlv2yk2QLD1yW-NkMpVaDJ7-g5rSBlxjLGxZhzA2Vtk" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
-  <link rel="apple-touch-icon" href="/favicon-apple.png">
+<meta charset="UTF-8">
+<script>
+  // Theme init — runs before stylesheet load to prevent FOUC
+  (function() {
+    try {
+      var saved = localStorage.getItem('mt-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) { /* localStorage unavailable, default light */ }
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MagsTags | SEO & E-commerce Toolkit</title>
+<meta name="description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
+<link rel="canonical" href="https://www.magstags.com/">
+<meta name="google-site-verification" content="mlv2yk2QLD1yW-NkMpVaDJ7-g5rSBlxjLGxZhzA2Vtk" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+<link rel="apple-touch-icon" href="/favicon-apple.png">
+<link rel="stylesheet" href="/base.css">
+<!-- Type stack: IBM Plex Mono (display + labels) + Inter (body) — dev/tech-leaning -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
 
-  <script src="/theme-init.js"></script>
-  <link rel="stylesheet" href="/base.css">
-
-  <title>MagsTags | SEO & E-commerce Toolkit</title>
-  <meta name="description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* ── Auth gate ── */
-
-    /* ── Header ── */
-    .logo-sep { color: var(--text-4); margin: 0 5px; }
-    .logo-sub { color: var(--text-3); font-size: 13px; }
-    .theme-btn { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 99px; font-size: 12px; font-weight: 500; background: var(--bg2); border: 1px solid var(--border); color: var(--text-3); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
-    .theme-btn:hover { color: var(--text-1); border-color: var(--text-3); }
-
-    /* ── Hero ── */
-    .hero { max-width: 1320px; margin: 0 auto; padding: 80px 36px 72px; }
-    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 24px; }
-    .hero-byline { font-size: 14px; color: var(--text-2); margin-bottom: 20px; font-weight: 500; letter-spacing: -0.01em; }
-    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 400; line-height: 1.1; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 20px; max-width: 720px; }
-    .hero-title em { font-style: normal; color: var(--teal); font-family: 'DM Serif Display', Georgia, serif; }
-    .hero-sub { font-size: 16px; color: var(--text-3); line-height: 1.7; max-width: 560px; margin-bottom: 36px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    .hero-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--text-1); color: var(--surface); padding: 12px 24px; border-radius: 99px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all .15s; letter-spacing: -.01em; }
-    .hero-cta:hover { background: var(--text-2); }
-    .hero-cta svg { transition: transform .15s; }
-    .hero-cta:hover svg { transform: translateX(2px); }
-    .hero-cta-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--text-2); padding: 12px 22px; border-radius: 99px; border: 1px solid var(--border); font-size: 13px; font-weight: 600; text-decoration: none; transition: all .15s; letter-spacing: -.01em; }
-    .hero-cta-secondary:hover { border-color: var(--text-3); color: var(--text-1); }
-
-    /* ── Featured post ── */
-    .featured-post { display: block; background: var(--surface); border: 1px solid rgba(0,0,0,.08); border-radius: 20px; overflow: hidden; text-decoration: none; transition: border-color .2s, box-shadow .2s, transform .2s; }
-    .featured-post:hover, .featured-post:focus-within { border-color: rgba(0,0,0,.15); box-shadow: 0 8px 32px rgba(0,0,0,.1); transform: translateY(-2px); }
-
-    /* ── Hub cards (Learning section) ── */
-    .hub-card { display: flex; flex-direction: column; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; position: relative; cursor: pointer; transition: border-color .15s, box-shadow .15s, transform .1s; }
-    .hub-card:hover, .hub-card:focus-within { border-color: rgba(0,0,0,.15); box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
-    .hub-card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); }
-    .hub-card-title { font-size: 15px; font-weight: 700; margin: 0; line-height: 1.3; }
-    .hub-card-title a { color: var(--text-1); text-decoration: none; }
-    .hub-card-title a::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
-    .hub-card-desc { font-size: 13px; color: var(--text-3); line-height: 1.5; }
-    .hub-card-cta { font-size: 12px; font-weight: 600; color: var(--teal); margin-top: auto; }
-
-
-    /* ── Tools ── */
-    .tools-section { max-width: 1320px; margin: 0 auto; padding: 0 36px 80px; }
-    .section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 20px; }
-    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-
-    .tool-card { border: 1px solid var(--border); border-radius: 20px; padding: 28px 32px; background: var(--surface); display: block; transition: all .2s; position: relative; cursor: pointer; }
-    .tool-card:hover { border-color: rgba(0,0,0,.15); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-    .tool-name a { color: inherit; text-decoration: none; }
-    .tool-name a::after { content: ''; position: absolute; inset: 0; border-radius: 20px; }
-    .tool-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-    .tool-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--bg2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; }
-    .tool-badge { font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 600; }
-    .tool-badge-free { background: var(--mint-light); color: var(--teal); }
-    .tool-badge-paid { background: #FFE4E6; color: #E11D48; }
-    html.dark .tool-badge-paid { background: rgba(225,29,72,.15); color: #E11D48; }
-    .tool-badge-soon { background: var(--bg2); color: var(--text-4); border: 1px solid var(--border); }
-    .tool-badge-ext { background: #FEF3C7; color: #D97706; }
-    html.dark .tool-badge-ext { background: rgba(225,29,72,.12); color: #E11D48; }
-    /* filter-bar, .filter-groups, .fpill — now in base.css */
-    .tool-name { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; letter-spacing: -.01em; }
-    .tool-card:hover .tool-name { color: var(--teal); }
-    .tool-desc { font-size: 13px; color: var(--text-3); line-height: 1.6; margin-bottom: 20px; }
-    .tool-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-
-    .tool-card-muted { border: 1px dashed var(--border); border-radius: 20px; padding: 28px 32px; opacity: 0.5; }
-    .tool-card-muted .tool-name { color: var(--text-3); font-size: 15px; font-weight: 500; }
-    .tool-card-muted .tool-desc { font-size: 13px; color: var(--text-4); }
-
-
-    /* ── Notes editorial list ── */
-    .notes-section { max-width: 1320px; margin: 0 auto; padding: 0 36px 80px; }
-    .notes-list { max-width: 960px; margin-left: auto; margin-right: auto; }
-    .notes-row { display: grid; grid-template-columns: 96px 1fr 72px; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border); position: relative; cursor: pointer; align-items: start; }
-    .notes-row:first-child { border-top: 1px solid var(--border); }
-    .notes-row:hover .notes-row-title a { color: var(--teal); }
-    .notes-row-date { font-size: 12px; color: var(--text-4); line-height: 1.4; padding-top: 2px; }
-    .notes-row-body { min-width: 0; }
-    .notes-row-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 6px; }
-    .notes-row-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text-1); line-height: 1.35; margin: 0 0 6px; }
-    .notes-row-title a { color: inherit; text-decoration: none; transition: color .15s; }
-    .notes-stretch { position: absolute; inset: 0; }
-    .notes-row-excerpt { font-size: 13px; color: var(--text-3); line-height: 1.55; }
-    .notes-row-meta { font-size: 11px; color: var(--text-4); text-align: right; padding-top: 2px; }
-    @media (max-width: 660px) {
-      .notes-row { grid-template-columns: 1fr; gap: 4px; }
-      .notes-row-meta { text-align: left; }
-      .notes-section { padding: 0 20px 60px; }
-    }
-
-    /* ── Footer ── */
-    .coffee-bar { padding: 56px 36px; text-align: center; }
-    .coffee-inner { max-width: 480px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 32px; }
-    .coffee-text { font-size: 14px; color: var(--text-3); line-height: 1.7; margin-bottom: 18px; }
-    .coffee-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 26px; border-radius: 99px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #fff; background: var(--teal); border: none; text-decoration: none; transition: opacity .15s, transform .1s; cursor: pointer; }
-    .coffee-btn:hover { opacity: .88; transform: translateY(-1px); }
-    footer { border-top: 1px solid var(--border); padding: 24px 36px; text-align: center; }
-    footer p { font-size: 12px; color: var(--text-4); }
-    #footer-auth { min-height: 16px; }
-
-    /* ── Account dropdown ── */
-    .learn-intro { margin-bottom: 28px; max-width: 50%; }
-    @media (max-width: 700px) { .learn-intro { max-width: 100%; } }
-    .learn-section { padding: 56px 36px 96px; max-width: 1320px; margin: 0 auto; }
-    @media (max-width: 600px) {
-      main { padding: 0 0 60px; }
-      .hero { padding: 32px 16px 32px; }
-      .hero-title { font-size: 34px; }
-      .tools-section { padding: 0 16px 48px; }
-      .learn-section { padding: 32px 16px 32px; }
-      .coffee-bar { padding: 32px 16px; }
-    }
-    @media (max-width: 700px) {
-      .featured-post { grid-template-columns: 1fr !important; }
-      .featured-post img { height: 200px !important; width: 100% !important; }
-      .featured-post-body { padding: 20px !important; }
-    }
-    @media (max-width: 860px) {
-      .learn-section { grid-template-columns: 1fr !important; gap: 32px !important; }
-    }
-  </style>
-  <meta property="og:title" content="MagsTags | SEO & E-commerce Toolkit">
-  <meta property="og:description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
-  <meta property="og:url" content="https://www.magstags.com/">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.magstags.com/og-image.png">
-  <meta property="og:site_name" content="MagsTags">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="MagsTags | SEO & E-commerce Toolkit">
-  <meta name="twitter:description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
-  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.magstags.com/#organization",
-        "name": "MagsTags",
-        "url": "https://www.magstags.com/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.magstags.com/favicon-512.png",
-          "width": 512,
-          "height": 512
-        },
-        "image": "https://www.magstags.com/og-image.png",
-        "description": "Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.",
-        "foundingDate": "2009",
-        "founder": { "@id": "https://www.magstags.com/mags-sikora/#person" },
-        "knowsAbout": [
-          "E-commerce SEO",
-          "Schema markup",
-          "Google Merchant Center",
-          "Structured data",
-          "Hreflang",
-          "Technical SEO"
-        ],
-        "sameAs": [
-          "https://www.linkedin.com/in/magdalenasikora/",
-          "https://x.com/magssikora",
-          "https://www.sheknowsdigital.com/"
-        ]
-      },
-      {
-        "@type": "Person",
-        "@id": "https://www.magstags.com/mags-sikora/#person",
-        "name": "Mags Sikora",
-        "url": "https://www.magstags.com/mags-sikora/",
-        "sameAs": [
-          "https://www.linkedin.com/in/magdalenasikora/",
-          "https://x.com/magssikora",
-          "https://www.sheknowsdigital.com/"
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.magstags.com/#website",
-        "url": "https://www.magstags.com/",
-        "name": "MagsTags",
-        "description": "Practical SEO tools and no-filler writing on structured data, technical SEO, and e-commerce search. No accounts, no paywalls.",
-        "publisher": { "@type": "Organization", "@id": "https://www.magstags.com/#organization" },
-        "inLanguage": "en"
-      }
-    ]
+  /* ── Tokens ──────────────────────────────────────────────────────────── */
+  :root {
+    --ink-1: #1a1916;
+    --ink-2: #2d2a26;
+    --ink-3: #58534c;
+    --ink-4: #8a847a;
+    --paper: #f5f1ea;
+    --paper-2: #ebe5d7;
+    --rule: #d8d2c4;
+    --accent: #0E7490;
+    --accent-2: #e09226;
+    --font-display: 'IBM Plex Mono', 'Menlo', monospace;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+    /* Type scale — tuned for IBM Plex Mono (wider per glyph than a serif) */
+    --t-display:   clamp(28px, 3.6vw, 48px);
+    --t-h1:        clamp(26px, 3.2vw, 42px);
+    --t-h2:        clamp(22px, 2.4vw, 32px);
+    --t-h3:        clamp(17px, 1.5vw, 20px);
+    --t-lead:      clamp(17px, 1.4vw, 20px);
+    --t-body:      16px;
+    --t-meta:      13px;
+    --t-eyebrow:   11px;
+    /* Spacing */
+    --gutter:      clamp(20px, 4vw, 88px);
+    --section-y:   clamp(80px, 12vw, 160px);
+    /* Layout */
+    --max:         1200px;
+    --reading:     640px;
   }
-  </script>
+  /* ── Reset ───────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  /* ── Base ────────────────────────────────────────────────────────────── */
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    font-size: var(--t-body);
+    line-height: 1.65;
+    color: var(--ink-2);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--accent); text-decoration: none; transition: color .15s; }
+  a:hover { color: var(--ink-1); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .reading { max-width: var(--reading); }
+  /* Eyebrow / small labels */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--t-eyebrow);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--ink-4);
+  }
+  .eyebrow--accent { color: var(--accent); }
+  /* Display headings — IBM Plex Mono, regular weight for a more delicate editorial feel */
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--ink-1); letter-spacing: -.02em; }
+  h1 { font-size: var(--t-h1); line-height: 1.1; }
+  h2 { font-size: var(--t-h2); line-height: 1.15; }
+  h3 { font-size: var(--t-h3); line-height: 1.25; font-weight: 500; }
+  /* ── Header ──────────────────────────────────────────────────────────── */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(245,241,234,.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; }
+  .wordmark em { font-style: italic; color: var(--accent); }
+  nav.primary { display: flex; gap: 32px; align-items: center; }
+  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; }
+  nav.primary a:hover { color: var(--accent); }
+  nav.primary .subscribe {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .08em;
+    padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px;
+    color: var(--ink-1); background: transparent;
+    transition: background .15s, color .15s;
+  }
+  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
+  @media (max-width: 800px) {
+    nav.primary { gap: 18px; }
+    nav.primary a:not(.subscribe) { display: none; }
+  }
+  /* ── Hero (dark moment — matches extension section aesthetic) ───────── */
+  .hero { padding: clamp(48px, 7vw, 96px) 0 clamp(64px, 8vw, 100px); }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 56px; } }
+  .hero-eyebrow { display: flex; gap: 14px; align-items: center; margin-bottom: 36px; }
+  .hero-eyebrow::after { content: ''; height: 1px; width: 56px; background: var(--ink-4); }
+  .hero .eyebrow { color: var(--ink-4); }
+  .hero .eyebrow--accent { color: var(--accent); }
+  .hero-statement {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: var(--t-display); line-height: 1.08; letter-spacing: -.02em;
+    color: var(--ink-1); max-width: 16ch;
+  }
+  .hero-statement em { font-style: italic; color: var(--accent); font-weight: 500; }
+  .hero-sub { margin-top: 32px; font-size: var(--t-lead); line-height: 1.55; color: var(--ink-3); max-width: 520px; }
+  .hero-meta { margin-top: 40px; display: flex; align-items: center; gap: 14px; }
+  .hero-meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .hero-meta .eyebrow { color: var(--ink-4); }
+  .hero-actions { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { font-family: var(--font-body); font-size: 13.5px; font-weight: 600; letter-spacing: -.005em; padding: 12px 22px; border-radius: 99px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: background .15s, border-color .15s, color .15s, transform .1s; cursor: pointer; }
+  /* Default btn styles for non-hero contexts */
+  .btn--primary { background: var(--ink-1); color: var(--paper); border: 1px solid var(--ink-1); }
+  .btn--primary:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); transform: translateY(-1px); }
+  /* Hero CTA — saffron in both modes (toolkit-launch announcement colour) */
+  .hero .btn--primary { background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); }
+  .hero .btn--primary:hover { background: #f0a431; border-color: #f0a431; color: var(--paper); transform: translateY(-1px); }
+  /* Tool-section primary buttons — teal in both modes (action / open-the-tool colour) */
+  .tool-featured .btn--primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  .tool-featured .btn--primary:hover { background: #0a5d75; border-color: #0a5d75; color: var(--paper); transform: translateY(-1px); }
+  .btn--secondary { background: transparent; color: var(--ink-2); border: 1px solid var(--rule); }
+  .btn--secondary:hover { border-color: var(--ink-2); color: var(--ink-1); }
+  /* ── Schema window (right column of hero) ────────────────────────────── */
+  /* Hero schema window — light cream + smaller padding/type (de-weighted). Dark in dark mode. */
+  .schema-window {
+    background: var(--paper-2); color: var(--ink-2);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 20px 24px;
+    position: relative;
+  }
+  .schema-window-head { display: flex; align-items: center; padding-bottom: 12px; }
+  .schema-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: .14em; color: var(--accent-2); text-transform: uppercase; }
+  .schema-code {
+    font-family: var(--font-mono);
+    font-size: 11.5px; line-height: 1.75;
+    color: var(--ink-2);
+    white-space: pre; overflow-x: auto;
+    padding: 2px 0 14px;
+  }
+  .schema-code .k { color: var(--ink-1); }
+  .schema-code .s { color: var(--accent); }
+  .schema-code .p { color: var(--ink-4); }
+  .schema-code .g { color: var(--accent-2); }
+  .schema-window-foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 12px; border-top: 1px solid var(--rule);
+    font-family: var(--font-mono); font-size: 9.5px;
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  .schema-foot-left  { color: var(--ink-4); font-weight: 500; }
+  .schema-foot-right { color: var(--accent-2); font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+  .schema-foot-dot   { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); }
+  /* ── Section primitives ──────────────────────────────────────────────── */
+  section { padding: var(--section-y) 0; }
+  .section-head { margin-bottom: clamp(40px, 6vw, 80px); max-width: 800px; }
+  .section-head .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .section-head .eyebrow::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .section-head h2 { margin-bottom: 16px; }
+  .section-head p { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-3); max-width: 580px; }
+  /* ── Brands layer (worked-with credentials) ──────────────────────────── */
+  .brands { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: clamp(48px, 6vw, 80px) 0; }
+  .brands-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  .brands-label::after { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .brands-list { display: flex; flex-wrap: wrap; align-items: center; row-gap: clamp(14px, 1.5vw, 20px); column-gap: clamp(20px, 3vw, 48px); }
+  .brands-list span { font-family: var(--font-display); font-weight: 400; font-size: clamp(17px, 1.8vw, 22px); letter-spacing: -.01em; color: var(--ink-1); white-space: nowrap; }
+  .brands-list .brands-sep { color: var(--rule); font-weight: 400; }
+  .brands-list .brands-more { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); }
+  /* ── Featured research (feature dominates, side items are list rows) ── */
+  .research-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: clamp(56px, 6vw, 96px); align-items: flex-start; }
+  @media (max-width: 960px) { .research-grid { grid-template-columns: 1fr; gap: 64px; } }
+  .research-feature {
+    display: flex; flex-direction: column;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: clamp(36px, 4vw, 56px);
+    position: relative;
+  }
+  .research-feature .meta-row { display: flex; gap: 14px; align-items: center; margin-bottom: 32px; flex-wrap: wrap; }
+  .research-feature .badge {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .14em; color: var(--accent);
+    padding: 5px 12px; border: 1px solid var(--accent); border-radius: 99px;
+  }
+  .research-feature .read-time { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: .08em; text-transform: uppercase; }
+  .research-feature h3 {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: clamp(26px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -.015em;
+    color: var(--ink-1); margin-bottom: 24px; max-width: 18ch;
+  }
+  .research-feature h3 a { color: inherit; }
+  .research-feature h3 a:hover { color: var(--accent); }
+  .research-feature p { font-size: 16px; line-height: 1.7; color: var(--ink-3); margin-bottom: 32px; max-width: 540px; }
+  .research-feature .author-line {
+    font-family: var(--font-mono); font-size: 11px; color: var(--ink-4);
+    display: flex; gap: 14px; align-items: center; padding-top: 24px;
+    border-top: 1px solid var(--rule); margin-top: auto;
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  /* Side items: tighter, more like editorial list rows */
+  .research-side { display: flex; flex-direction: column; }
+  .research-side-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .research-item { display: flex; flex-direction: column; gap: 8px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .research-item:last-child { border-bottom: none; }
+  .research-item .meta { display: flex; gap: 10px; align-items: center; }
+  .research-item .cat { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
+  .research-item .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); flex-shrink: 0; }
+  .research-item .date { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); letter-spacing: .04em; }
+  .research-item h4 { font-family: var(--font-display); font-weight: 500; font-size: 16px; line-height: 1.3; letter-spacing: -.01em; }
+  .research-item h4 a { color: var(--ink-1); }
+  .research-item h4 a:hover { color: var(--accent); }
+  .research-item p { display: none; } /* drop the excerpts in the side list — keep it tight */
+  /* ── Knowledge pillars ───────────────────────────────────────────────── */
+  .pillars { background: var(--paper-2); padding: var(--section-y) 0; }
+  .pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); margin-top: clamp(40px, 5vw, 64px); border: 1px solid var(--rule); }
+  .pillar { background: var(--paper-2); padding: clamp(40px, 5vw, 56px); display: flex; flex-direction: column; transition: background .2s; cursor: pointer; position: relative; min-height: 280px; }
+  .pillar:hover { background: var(--paper); }
+  .pillar-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: clamp(28px, 4vw, 48px); }
+  .pillar-num {
+    font-family: var(--font-display); font-style: italic; font-weight: 500;
+    font-size: clamp(36px, 5vw, 64px); line-height: 1; color: var(--ink-1);
+    letter-spacing: -.04em;
+    transition: color .2s;
+  }
+  .pillar:hover .pillar-num { color: var(--accent); }
+  .pillar-glyph {
+    width: 36px; height: 36px;
+    color: var(--accent);
+    flex-shrink: 0;
+    opacity: .85;
+    transition: opacity .2s, transform .2s;
+  }
+  .pillar:hover .pillar-glyph { opacity: 1; transform: translateX(2px); }
+  .pillar h3 { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.15; font-weight: 500; letter-spacing: -.015em; margin-bottom: 14px; }
+  .pillar p { font-size: 15px; line-height: 1.65; color: var(--ink-3); max-width: 420px; flex: 1; }
+  .pillar-link {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .14em;
+    color: var(--accent); margin-top: 24px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pillar a.stretched { position: absolute; inset: 0; text-indent: -999em; overflow: hidden; }
+  @media (max-width: 760px) { .pillars-grid { grid-template-columns: 1fr; } .pillar { min-height: auto; } }
+  /* ── Signature insight (pull quote) ──────────────────────────────────── */
+  .insight { padding: var(--section-y) 0; }
+  .insight-inner { max-width: 880px; margin: 0 auto; padding: 0 var(--gutter); position: relative; }
+  .insight blockquote {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(28px, 3.8vw, 46px); line-height: 1.2; letter-spacing: -.015em;
+    color: var(--ink-1); padding-left: clamp(36px, 4vw, 60px);
+    border-left: 2px solid var(--accent);
+  }
+  .insight blockquote em { font-style: italic; color: var(--accent); }
+  .insight cite {
+    display: block; margin-top: 32px; padding-left: clamp(36px, 4vw, 60px);
+    font-family: var(--font-mono); font-size: 12px; font-style: normal;
+    text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4);
+  }
+  .insight cite a { color: var(--accent); }
+  /* ── Tools section (tabbed featured+secondary layout) ────────────────── */
+  .tools { border-top: 1px solid var(--rule); }
+  .tools-head { max-width: 720px; margin-bottom: clamp(28px, 3vw, 40px); }
+  .tools-head h2 { margin: 14px 0 12px; }
+  .tools-head p { font-size: var(--t-lead); color: var(--ink-3); line-height: 1.55; max-width: 580px; }
+  /* Tab navigation — underline accent, scrolls on mobile */
+  .tools-tabs {
+    display: flex; gap: 4px; flex-wrap: nowrap;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: clamp(36px, 4vw, 56px);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .tools-tab {
+    font-family: var(--font-mono); font-size: 11.5px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase;
+    padding: 14px 22px; background: transparent; border: none;
+    color: var(--ink-3); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px; white-space: nowrap;
+    transition: color .15s, border-color .15s;
+  }
+  .tools-tab:hover { color: var(--ink-1); }
+  .tools-tab.is-active { color: var(--ink-1); border-bottom-color: var(--accent); font-weight: 600; }
+  .tools-panel { display: none; }
+  .tools-panel.is-active { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 3vw, 48px); align-items: flex-start; }
+  @media (max-width: 860px) { .tools-panel.is-active { grid-template-columns: 1fr; gap: 32px; } }
+  /* Featured card — light editorial card with a dark inset preview */
+  .tool-featured {
+    background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px;
+    padding: clamp(28px, 3.5vw, 44px);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .tool-featured-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+  .tool-featured h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.15; letter-spacing: -.02em; color: var(--ink-1); margin: 4px 0 0; }
+  .tool-featured-outcome { font-size: 16px; line-height: 1.45; color: var(--ink-3); margin-top: 6px; max-width: 480px; font-style: italic; }
+  .tool-featured-best-for { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); margin-top: 10px; }
+  .tool-featured-desc { font-size: 14.5px; line-height: 1.6; color: var(--ink-3); max-width: 460px; margin-top: 6px; }
+  .tool-featured .btn { align-self: flex-start; margin-top: 14px; }
+  /* Featured-tool code preview — light by default (paper, lighter than the surrounding paper-2 card), dark via toggle */
+  .tool-featured-preview {
+    margin-top: 22px;
+    background: var(--paper); color: var(--ink-2);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px 20px;
+    font-family: var(--font-mono); font-size: 11.5px;
+    line-height: 1.75;
+    overflow-x: auto;
+  }
+  .tool-featured-preview-label {
+    display: block; font-size: 9.5px; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 12px;
+  }
+  .tool-featured-preview pre { font-family: inherit; font-size: inherit; line-height: inherit; white-space: pre; color: var(--ink-2); }
+  .tool-featured-preview .k { color: var(--ink-1); }
+  .tool-featured-preview .s { color: var(--accent); }
+  .tool-featured-preview .p { color: var(--ink-4); }
+  .tool-featured-preview .c { color: var(--ink-4); font-style: italic; }
+  /* Secondary cards — tight list rows, outcome-led titles */
+  .tool-secondary-list { display: flex; flex-direction: column; border-top: 1px solid var(--rule); }
+  .tool-secondary {
+    position: relative;
+    padding: 22px 36px 22px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    display: block;
+    transition: padding-left .15s, background .15s;
+  }
+  .tool-secondary:hover { background: var(--paper-2); padding-left: 12px; }
+  .tool-secondary-cat {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .14em;
+    color: var(--accent); display: block; margin-bottom: 6px;
+  }
+  .tool-secondary h4 {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: 17px; line-height: 1.25; color: var(--ink-1);
+    letter-spacing: -.01em; margin: 0;
+  }
+  .tool-secondary .tool-outcome {
+    display: block; font-size: 13px;
+    color: var(--ink-3); margin-top: 6px; line-height: 1.45;
+  }
+  /* Paid badge — used in Others tab */
+  .tool-paid-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); padding: 3px 8px; border: 1px solid var(--accent-2); border-radius: 99px; margin-left: 8px; vertical-align: middle; }
+  .tool-secondary::after {
+    content: '→'; position: absolute; right: 6px; top: 50%;
+    transform: translateY(-50%); color: var(--ink-4); font-size: 18px;
+    transition: transform .15s, color .15s, right .15s;
+  }
+  .tool-secondary:hover::after { color: var(--accent); right: 0; }
+  /* "Coming soon" variant */
+  .tool-secondary--soon { cursor: default; opacity: .6; }
+  .tool-secondary--soon:hover { background: transparent; padding-left: 0; }
+  .tool-secondary--soon::after { content: 'SOON'; font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em; color: var(--ink-4); font-weight: 600; }
+  .tool-secondary--soon:hover::after { color: var(--ink-4); right: 6px; transform: translateY(-50%); }
+  /* Final link */
+  .tools-all-link {
+    display: inline-block; margin-top: clamp(40px, 5vw, 64px);
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .12em;
+    color: var(--accent);
+  }
+  .tools-all-link:hover { color: var(--ink-1); }
+  /* ── Chrome extension feature ────────────────────────────────────────── */
+  .extension { background: var(--paper-2); color: var(--ink-2); padding: var(--section-y) 0; }
+  .extension-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 5vw, 80px); align-items: center; }
+  @media (max-width: 900px) { .extension-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .extension .eyebrow { color: var(--ink-4); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .extension .eyebrow::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+  .extension-available { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); padding: 4px 10px; border: 1px solid var(--accent-2); border-radius: 99px; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+  .extension-available::before { content: '●'; font-size: 9px; }
+  .extension h2 { color: var(--ink-1); margin-bottom: 14px; font-size: clamp(26px, 3vw, 38px); }
+  .extension-sub { font-size: clamp(17px, 1.6vw, 20px); font-family: var(--font-display); font-style: italic; color: var(--accent-2); line-height: 1.4; margin-bottom: 24px; max-width: 28ch; font-weight: 400; }
+  .extension-desc { font-size: 15px; line-height: 1.65; color: var(--ink-3); max-width: 520px; margin-bottom: 18px; }
+  .extension-tagline { font-size: 13.5px; color: var(--ink-4); font-style: italic; margin-bottom: 32px; max-width: 520px; line-height: 1.6; }
+  .extension-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .btn-install { display: inline-flex; align-items: center; gap: 10px; padding: 13px 24px; border-radius: 99px; background: var(--accent-2); color: var(--paper); font-family: var(--font-body); font-size: 14px; font-weight: 700; text-decoration: none; transition: background .15s, transform .1s; letter-spacing: -.005em; }
+  .btn-install:hover { background: #f0a431; color: var(--paper); transform: translateY(-1px); text-decoration: none; }
+  .btn-install svg { color: var(--paper); flex-shrink: 0; }
+  .btn-secondary-dark { display: inline-flex; align-items: center; padding: 13px 22px; border-radius: 99px; border: 1px solid var(--rule); color: var(--ink-2); font-family: var(--font-body); font-size: 13.5px; font-weight: 600; text-decoration: none; transition: border-color .15s, color .15s; }
+  .btn-secondary-dark:hover { border-color: var(--ink-2); color: var(--ink-1); text-decoration: none; }
+  .extension-meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .1em; }
+  /* Browser-frame mockup — light cream + smaller padding/type, dark in dark mode */
+  /* Body is paper (lighter than the extension section's paper-2 bg) so it pops; chrome bar warmer, like a real browser toolbar */
+  .ext-browser { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+  .ext-browser-chrome { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+  .ext-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--rule); flex-shrink: 0; }
+  .ext-url { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); padding: 4px 12px; background: var(--paper); border-radius: 99px; flex: 1; margin: 0 8px; }
+  .ext-icon { width: 26px; height: 26px; border-radius: 6px; background: var(--accent-2); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--paper); position: relative; flex-shrink: 0; }
+  .ext-badge { position: absolute; top: -4px; right: -6px; background: var(--ink-1); color: var(--paper); font-family: var(--font-mono); font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 99px; min-width: 16px; text-align: center; letter-spacing: 0; }
+  .ext-popup { padding: 18px 22px; }
+  .ext-popup-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+  .ext-popup-title { font-family: var(--font-display); font-size: 11.5px; font-weight: 600; letter-spacing: .04em; color: var(--ink-1); text-transform: uppercase; }
+  .ext-popup-tabs { display: flex; gap: 6px; }
+  .ext-popup-tab { font-family: var(--font-mono); font-size: 9.5px; padding: 3px 8px; border-radius: 99px; color: var(--ink-4); border: 1px solid var(--rule); letter-spacing: .08em; text-transform: uppercase; }
+  .ext-popup-tab.active { background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); font-weight: 600; }
+  .ext-popup-code { font-family: var(--font-mono); font-size: 11.5px; line-height: 1.75; color: var(--ink-2); white-space: pre; overflow-x: auto; padding: 2px 0; }
+  .ext-popup-code .k { color: var(--ink-1); }
+  .ext-popup-code .s { color: var(--accent); }
+  .ext-popup-code .p { color: var(--ink-4); }
+  .ext-popup-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); }
+  .ext-popup-foot .ok { color: var(--accent-2); }
+  /* ── Founder section ─────────────────────────────────────────────────── */
+  .founder { background: var(--paper-2); color: var(--ink-2); padding: var(--section-y) 0; }
+  .founder-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(48px, 6vw, 96px); align-items: center; }
+  @media (max-width: 800px) { .founder-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .founder .eyebrow { color: var(--ink-4); }
+  .founder .eyebrow::before { background: var(--accent); }
+  .founder h2 { color: var(--ink-1); margin-bottom: 32px; }
+  .founder p { color: var(--ink-3); font-size: 17px; line-height: 1.7; max-width: 540px; margin-bottom: 22px; }
+  .founder a { color: var(--accent); }
+  .founder a:hover { color: var(--ink-1); }
+  .founder-portrait { display: block; width: 100%; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .portrait {
+    background: var(--paper); border-radius: 4px;
+    aspect-ratio: 1 / 1; width: 100%; height: auto;
+    object-fit: cover; object-position: center;
+    display: block;
+  }
+  .founder-credentials { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .credential-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 6px; }
+  .credential-value { font-family: var(--font-display); font-size: 20px; color: var(--ink-1); }
+  /* ── Newsletter ──────────────────────────────────────────────────────── */
+  .newsletter { padding: var(--section-y) 0; text-align: center; border-top: 1px solid var(--rule); }
+  .newsletter-inner { max-width: 640px; margin: 0 auto; padding: 0 var(--gutter); }
+  .newsletter .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  .newsletter .eyebrow::before, .newsletter .eyebrow::after { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .newsletter h2 { margin-bottom: 20px; }
+  .newsletter p { font-size: var(--t-lead); color: var(--ink-3); margin-bottom: 36px; }
+  .newsletter form { display: flex; gap: 12px; max-width: 440px; margin: 0 auto; }
+  .newsletter input {
+    flex: 1; padding: 14px 18px;
+    border: 1px solid var(--rule); border-radius: 99px;
+    background: var(--field); font: inherit; color: var(--ink-2);
+    outline: none; transition: border-color .15s;
+  }
+  .newsletter input:focus { border-color: var(--accent); }
+  .newsletter button {
+    padding: 14px 26px; border-radius: 99px; border: none;
+    background: var(--ink-1); color: var(--paper);
+    font-family: var(--font-body); font-weight: 600; font-size: 14px;
+    transition: background .15s;
+  }
+  .newsletter button:hover { background: var(--accent); }
+  .newsletter .micro { margin-top: 18px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .1em; }
+  @media (max-width: 560px) { .newsletter form { flex-direction: column; } .newsletter form input { text-align: center; } }
+  /* ── Footer ──────────────────────────────────────────────────────────── */
+  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
+  .footer-brand .wordmark { color: var(--ink-1); }
+  .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
+  .footer-col h5 {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a { color: var(--ink-2); font-size: 14px; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-base {
+    margin-top: 80px; padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--ink-4);
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+  .footer-base a { color: var(--ink-4); }
+  .footer-base a:hover { color: var(--ink-1); }
+  /* ── Utility ─────────────────────────────────────────────────────────── */
+  .rule-top { border-top: 1px solid var(--rule); }
+  .draft-banner {
+    background: var(--accent-2); color: var(--ink-1);
+    padding: 8px 16px; text-align: center;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .12em;
+  }
+  .draft-banner a { color: var(--ink-1); text-decoration: underline; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+  /* ── Theme toggle button (in header) ─────────────────────────────────── */
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
+  .theme-toggle svg { display: block; }
+  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
+  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  /* ── DARK MODE OVERRIDES (html[data-theme="dark"]) ───────────────────── */
+  html[data-theme="dark"] body { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] body a { color: var(--accent-2); }
+  html[data-theme="dark"] body a:hover { color: var(--paper); }
+  /* Header in dark */
+  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
+  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
+  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+  /* Hero in dark */
+  html[data-theme="dark"] .hero { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] .hero-eyebrow::after { background: rgba(245,241,234,.3); }
+  /* Schema window — restore dark terminal look in dark mode */
+  html[data-theme="dark"] .schema-window { background: #15130f; color: rgba(245,241,234,.78); border-color: rgba(245,241,234,.06); }
+  html[data-theme="dark"] .schema-code { color: rgba(245,241,234,.85); }
+  html[data-theme="dark"] .schema-code .k { color: rgba(245,241,234,.95); }
+  html[data-theme="dark"] .schema-code .s { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .schema-code .p { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .schema-window-foot { border-top-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] .schema-foot-left { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] .hero .eyebrow { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .hero .eyebrow--accent { color: var(--accent-2); }
+  html[data-theme="dark"] .hero-statement { color: var(--paper); }
+  html[data-theme="dark"] .hero-statement em { color: var(--accent-2); }
+  html[data-theme="dark"] .hero-sub { color: rgba(245,241,234,.72); }
+  html[data-theme="dark"] .hero-meta-dot { background: var(--accent-2); }
+  html[data-theme="dark"] .hero-meta .eyebrow { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .hero .btn--primary { background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); }
+  html[data-theme="dark"] .hero .btn--primary:hover { background: #f0a431; border-color: #f0a431; color: var(--paper); }
+  html[data-theme="dark"] .hero .btn--secondary { color: var(--paper); border-color: rgba(245,241,234,.3); }
+  html[data-theme="dark"] .hero .btn--secondary:hover { border-color: var(--paper); color: var(--paper); }
+  /* Brands in dark */
+  html[data-theme="dark"] .brands { border-top-color: rgba(245,241,234,.1); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .brands-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .brands-label::after { background: var(--accent-2); }
+  html[data-theme="dark"] .brands-list span { color: var(--paper); }
+  html[data-theme="dark"] .brands-list .brands-more { color: rgba(245,241,234,.45); }
+  /* Section heads in dark */
+  html[data-theme="dark"] .section-head .eyebrow { color: var(--accent-2); }
+  html[data-theme="dark"] .section-head .eyebrow::before { background: var(--accent-2); }
+  html[data-theme="dark"] .section-head h2 { color: var(--paper); }
+  html[data-theme="dark"] .section-head p { color: rgba(245,241,234,.7); }
+  /* Featured research in dark */
+  html[data-theme="dark"] .research-feature { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-feature .badge { color: var(--accent-2); border-color: var(--accent-2); }
+  html[data-theme="dark"] .research-feature .read-time { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .research-feature h3 a { color: var(--paper); }
+  html[data-theme="dark"] .research-feature h3 a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .research-feature p { color: rgba(245,241,234,.72); }
+  html[data-theme="dark"] .research-feature .author-line { color: rgba(245,241,234,.5); border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-side-label { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-item { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-item .cat { color: var(--accent-2); }
+  html[data-theme="dark"] .research-item .dot { background: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .research-item .date { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .research-item h4 a { color: var(--paper); }
+  html[data-theme="dark"] .research-item h4 a:hover { color: var(--accent-2); }
+  /* Extension in dark */
+  html[data-theme="dark"] .extension { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] .extension .eyebrow { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .extension h2 { color: var(--paper); }
+  html[data-theme="dark"] .extension-desc { color: rgba(245,241,234,.78); }
+  html[data-theme="dark"] .extension-tagline { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .btn-secondary-dark { border-color: rgba(245,241,234,.25); color: var(--paper); }
+  html[data-theme="dark"] .btn-secondary-dark:hover { border-color: var(--paper); color: var(--paper); }
+  html[data-theme="dark"] .extension-meta { color: rgba(245,241,234,.4); }
+  /* Schema-extractor browser mockup — restore dark terminal look in dark mode */
+  html[data-theme="dark"] .ext-browser { background: #15130f; border-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] .ext-browser-chrome { background: rgba(245,241,234,.04); border-bottom-color: rgba(245,241,234,.06); }
+  html[data-theme="dark"] .ext-dot { background: rgba(245,241,234,.18); }
+  html[data-theme="dark"] .ext-url { background: rgba(245,241,234,.04); color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ext-icon { color: var(--ink-1); }
+  html[data-theme="dark"] .ext-badge { background: var(--paper); color: var(--ink-1); }
+  html[data-theme="dark"] .ext-popup-head { border-bottom-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] .ext-popup-title { color: var(--paper); }
+  html[data-theme="dark"] .ext-popup-tab { color: rgba(245,241,234,.45); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ext-popup-tab.active { background: var(--accent-2); color: var(--ink-1); border-color: var(--accent-2); }
+  html[data-theme="dark"] .ext-popup-code { color: rgba(245,241,234,.85); }
+  html[data-theme="dark"] .ext-popup-code .k { color: rgba(245,241,234,.95); }
+  html[data-theme="dark"] .ext-popup-code .s { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .ext-popup-code .p { color: rgba(245,241,234,.35); }
+  html[data-theme="dark"] .ext-popup-foot { color: rgba(245,241,234,.4); border-top-color: rgba(245,241,234,.08); }
+  /* Insight in dark */
+  html[data-theme="dark"] .insight blockquote { color: var(--paper); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .insight blockquote em { color: var(--accent-2); }
+  html[data-theme="dark"] .insight cite { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .insight cite a { color: var(--accent-2); }
+  /* Tools in dark */
+  html[data-theme="dark"] .tools { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .tools-head h2 { color: var(--paper); }
+  html[data-theme="dark"] .tools-head p { color: rgba(245,241,234,.72); }
+  html[data-theme="dark"] .tools-tabs { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .tools-tab { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .tools-tab:hover { color: var(--paper); }
+  html[data-theme="dark"] .tools-tab.is-active { color: var(--paper); border-bottom-color: var(--accent-2); }
+  html[data-theme="dark"] .tool-featured { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .tool-featured-tag { color: var(--accent-2); }
+  html[data-theme="dark"] .tool-featured h3 { color: var(--paper); }
+  html[data-theme="dark"] .tool-featured-outcome { color: rgba(245,241,234,.72); }
+  html[data-theme="dark"] .tool-featured-best-for { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .tool-featured-desc { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .tool-featured .btn--primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  html[data-theme="dark"] .tool-featured .btn--primary:hover { background: #0a5d75; border-color: #0a5d75; color: var(--paper); }
+  html[data-theme="dark"] .tool-featured-preview { background: rgba(0,0,0,.35); border-color: rgba(245,241,234,.08); color: rgba(245,241,234,.78); }
+  html[data-theme="dark"] .tool-featured-preview pre { color: rgba(245,241,234,.78); }
+  html[data-theme="dark"] .tool-featured-preview .k { color: rgba(245,241,234,.95); }
+  html[data-theme="dark"] .tool-featured-preview .s { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .tool-featured-preview .p { color: rgba(245,241,234,.35); }
+  html[data-theme="dark"] .tool-featured-preview .c { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .tool-secondary-list { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .tool-secondary { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .tool-secondary:hover { background: rgba(245,241,234,.04); }
+  html[data-theme="dark"] .tool-secondary-cat { color: var(--accent-2); }
+  html[data-theme="dark"] .tool-secondary h4 a { color: var(--paper); }
+  html[data-theme="dark"] .tool-secondary:hover h4 a { color: var(--accent-2); }
+  html[data-theme="dark"] .tool-secondary .tool-name { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .tool-secondary::after { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .tool-secondary:hover::after { color: var(--accent-2); }
+  html[data-theme="dark"] .tool-secondary--soon::after { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .tools-all-link { color: var(--accent-2); }
+  html[data-theme="dark"] .tools-all-link:hover { color: var(--paper); }
+  html[data-theme="dark"] .tool-paid-badge { color: var(--accent-2); border-color: var(--accent-2); }
+  /* Founder in dark */
+  html[data-theme="dark"] .founder { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] .founder .eyebrow { color: var(--paper-2); }
+  html[data-theme="dark"] .founder .eyebrow::before { background: var(--accent-2); }
+  html[data-theme="dark"] .founder h2 { color: var(--paper); }
+  html[data-theme="dark"] .founder p { color: var(--paper-2); }
+  html[data-theme="dark"] .founder a { color: var(--accent-2); }
+  html[data-theme="dark"] .founder a:hover { color: var(--paper); }
+  html[data-theme="dark"] .founder-credentials { border-top-color: rgba(245,241,234,.15); }
+  html[data-theme="dark"] .credential-value { color: var(--paper); }
+  html[data-theme="dark"] .portrait { background: var(--paper-2); }
+  /* Newsletter in dark */
+  html[data-theme="dark"] .newsletter { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .newsletter .eyebrow { color: var(--accent-2); }
+  html[data-theme="dark"] .newsletter .eyebrow::before, html[data-theme="dark"] .newsletter .eyebrow::after { background: var(--accent-2); }
+  html[data-theme="dark"] .newsletter h2 { color: var(--paper); }
+  html[data-theme="dark"] .newsletter p { color: rgba(245,241,234,.72); }
+  html[data-theme="dark"] .newsletter input { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.15); color: var(--paper); }
+  html[data-theme="dark"] .newsletter input::placeholder { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .newsletter input:focus { border-color: var(--accent-2); }
+  html[data-theme="dark"] .newsletter button { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] .newsletter button:hover { background: #f0a431; }
+  html[data-theme="dark"] .newsletter .micro { color: rgba(245,241,234,.45); }
+  /* Footer in dark */
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] footer.site .footer-brand p { color: var(--ink-4); }
+  html[data-theme="dark"] footer.site .footer-col h5 { color: var(--ink-4); }
+  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
+  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
+  html[data-theme="dark"] .footer-base { border-top-color: rgba(245,241,234,.12); color: var(--ink-4); }
+  html[data-theme="dark"] .footer-base a { color: var(--ink-4); }
+  html[data-theme="dark"] .footer-base a:hover { color: var(--paper); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.magstags.com/#organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.magstags.com/favicon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://www.magstags.com/og-image.png",
+      "description": "Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.",
+      "foundingDate": "2009",
+      "founder": { "@id": "https://www.magstags.com/mags-sikora/#person" },
+      "knowsAbout": [
+        "E-commerce SEO",
+        "Schema markup",
+        "Google Merchant Center",
+        "Structured data",
+        "Hreflang",
+        "Technical SEO"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/magdalenasikora/",
+        "https://x.com/magssikora",
+        "https://www.sheknowsdigital.com/"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.magstags.com/mags-sikora/#person",
+      "name": "Mags Sikora",
+      "url": "https://www.magstags.com/mags-sikora/",
+      "sameAs": [
+        "https://www.linkedin.com/in/magdalenasikora/",
+        "https://x.com/magssikora",
+        "https://www.sheknowsdigital.com/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.magstags.com/#website",
+      "url": "https://www.magstags.com/",
+      "name": "MagsTags",
+      "description": "Practical SEO tools and no-filler writing on structured data, technical SEO, and e-commerce search. No accounts, no paywalls.",
+      "publisher": { "@type": "Organization", "@id": "https://www.magstags.com/#organization" },
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>
 </head>
 <body>
-
-<main id="main-content">
-
-<section class="hero">
-  <div class="hero-eyebrow">SEO &amp; E-commerce Toolkit</div>
-  <h1 class="hero-title">Let the tools do<br>the <em>boring part.</em></h1>
-  <div class="hero-byline">By Mags Sikora · Senior SEO Consultant</div>
-  <p class="hero-sub">For people who voluntarily work in an industry where the rules change without warning, the documentation is vague on purpose, and 'it depends' is a valid answer. Welcome.</p>
-  <div class="hero-actions">
-    <a class="hero-cta" href="#tools">Browse the toolkit
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </a>
-    <a class="hero-cta-secondary" href="/notes/">Read the notes</a>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
   </div>
-</section>
-
-
-<!-- Featured post -->
-<section style="max-width:1320px;margin:0 auto;padding:0 36px 72px;">
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-4);margin-bottom:16px;">Latest note</div>
-  <a href="/notes/google-shipping-return-settings/" class="featured-post">
-    <div class="featured-post-body" style="padding:40px 44px;display:flex;flex-direction:column;justify-content:center;">
-      <div style="display:flex;gap:8px;align-items:center;margin-bottom:18px;">
-        <span style="font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;background:var(--mint-light);color:var(--teal);">Ecommerce SEO</span>
+</header>
+<main>
+  <!-- ────────────────────────── 1. Editorial hero (split layout) ─────────── -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <div class="hero-eyebrow"><span class="eyebrow eyebrow--accent">SEO &amp; E-commerce Toolkit</span></div>
+        <!-- TODO: Mags — proposed title, replace with your own line. -->
+        <h1 class="hero-statement">Technical SEO, structured data, and <em>AI-driven</em> commerce.</h1>
+        <p class="hero-sub">For people who voluntarily work in an industry where the rules change without warning, the documentation is vague on purpose, and 'it depends' is a valid answer. Welcome.</p>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="#tools">Browse the toolkit
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a class="btn btn--secondary" href="#research">Read the notes</a>
+        </div>
+        <div class="hero-meta">
+          <span class="hero-meta-dot"></span>
+          <span class="eyebrow">By Mags Sikora · Senior SEO Consultant</span>
+        </div>
       </div>
-      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:600;color:var(--text-1);line-height:1.25;margin:0 0 16px;letter-spacing:-.02em;">Google Shipping and Return Settings: All Your Options, and What Takes Precedence</h2>
-      <div style="font-size:14px;color:var(--text-3);line-height:1.65;margin-bottom:24px;">Five places to configure shipping and returns for Google: feed, Merchant API, MC/SC settings, markup, and Organisation schema. Here&#x27;s which one wins.</div>
-      <div style="display:flex;gap:18px;align-items:center;">
-        <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-4);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>12 min read</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-4);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>28 May 2026</span>
+      <aside class="hero-schema" aria-label="Example product schema">
+        <div class="schema-window">
+          <div class="schema-window-head">
+            <span class="schema-label">PRODUCT.JSONLD</span>
+          </div>
+<pre class="schema-code"><code><span class="p">{</span>
+  <span class="k">"@context"</span><span class="p">:</span> <span class="s">"https://schema.org"</span><span class="p">,</span>
+  <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Product"</span><span class="p">,</span>
+  <span class="k">"name"</span><span class="p">:</span> <span class="s">"Field Notebook"</span><span class="p">,</span>
+  <span class="k">"brand"</span><span class="p">:</span> <span class="p">{</span> <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Brand"</span><span class="p">,</span>
+    <span class="k">"name"</span><span class="p">:</span> <span class="s">"MagsTags"</span> <span class="p">},</span>
+  <span class="k">"offers"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Offer"</span><span class="p">,</span>
+    <span class="k">"price"</span><span class="p">:</span> <span class="s">"24.00"</span><span class="p">,</span>
+    <span class="k">"priceCurrency"</span><span class="p">:</span> <span class="s">"GBP"</span><span class="p">,</span>
+    <span class="k">"availability"</span><span class="p">:</span> <span class="s">"InStock"</span>
+  <span class="p">},</span>
+  <span class="k">"aggregateRating"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="k">"@type"</span><span class="p">:</span> <span class="s">"AggregateRating"</span><span class="p">,</span>
+    <span class="k">"ratingValue"</span><span class="p">:</span> <span class="s">"4.8"</span><span class="p">,</span>
+    <span class="k">"reviewCount"</span><span class="p">:</span> <span class="s">"182"</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+          <div class="schema-window-foot">
+            <span class="schema-foot-left">Validated</span>
+            <span class="schema-foot-right"><span class="schema-foot-dot"></span>Rich result eligible</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <!-- ────────────────────────── 2. Worked-with brands ─────────────────────── -->
+  <!-- TODO: Mags — brands pulled from /mags-sikora/. Add or reorder freely. -->
+  <section class="brands">
+    <div class="wrap">
+      <span class="brands-label">Worked with</span>
+      <div class="brands-list">
+        <span>Autotrader</span>
+        <span>Avis</span>
+        <span>Emirates Group</span>
+        <span>Expedia</span>
+        <span>New Look</span>
+        <span class="brands-more">&amp; 50+ others</span>
       </div>
     </div>
-  </a>
-
-</section>
-
-<section class="tools-section" id="tools">
-  <div class="section-marker"><span class="num">01</span><span class="line"></span>Toolkit</div>
-  <div class="filter-bar">
-    <p class="section-label" style="margin-bottom:0">All tools</p>
-    <div class="filter-groups" role="tablist" aria-label="Filter tools by category">
-      <button class="fpill is-active" data-category="all"        role="tab" aria-selected="true">All</button>
-      <button class="fpill"           data-category="schema"     role="tab" aria-selected="false">Schema</button>
-      <button class="fpill"           data-category="technical"  role="tab" aria-selected="false">Technical SEO</button>
-      <button class="fpill"           data-category="feed"       role="tab" aria-selected="false">Feed &amp; Data</button>
-      <button class="fpill"           data-category="productivity" role="tab" aria-selected="false">Productivity</button>
+  </section>
+  <!-- ────────────────────────── 3. Featured research ─────────────────────── -->
+  <section id="research">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow eyebrow--accent">01 · Notes</span>
+        <h2>Practical SEO writing.</h2>
+        <p>No content for content's sake. Promise.</p>
+      </div>
+      <div class="research-grid">
+        <article class="research-feature">
+          <div class="meta-row">
+            <span class="badge">Original research</span>
+            <span class="read-time">18 min read · 9,718 results analysed</span>
+          </div>
+          <h3><a href="/notes/google-image-thumbnails-organic-case-study/">Google Image Thumbnails for Organic Results: Case Study</a></h3>
+          <p>Analysis of 9,718 organic results across 293 fashion keywords. Mobile serves 92% more image thumbnails than desktop. Which intents, modifiers, and categories get visual treatment.</p>
+          <div class="author-line">
+            <span>19 Apr 2026</span>
+            <span>·</span>
+            <span>Mags Sikora</span>
+          </div>
+        </article>
+        <div class="research-side">
+          <div class="research-side-label">Recent</div>
+          <article class="research-item">
+            <div class="meta">
+              <span class="cat">Structured Data</span>
+              <span class="dot"></span>
+              <span class="date">18 May 2026</span>
+            </div>
+            <h4><a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a></h4>
+            <p>Product schema suppression, disappearing rich results, and Merchant Center disapprovals are almost always a data problem. Five failure patterns, a 3-layer alignment model, and an operational audit checklist.</p>
+          </article>
+          <article class="research-item">
+            <div class="meta">
+              <span class="cat">Agentic Commerce</span>
+              <span class="dot"></span>
+              <span class="date">22 Mar 2026</span>
+            </div>
+            <h4><a href="/notes/what-is-agentic-commerce/">What Is Agentic Commerce? How AI Agents Change the Shopping Journey</a></h4>
+            <p>What agentic commerce actually means, how the shopping journey changes, which AI agents are live, and what they evaluate in your product data.</p>
+          </article>
+          <article class="research-item">
+            <div class="meta">
+              <span class="cat">Ecommerce SEO</span>
+              <span class="dot"></span>
+              <span class="date">28 May 2026</span>
+            </div>
+            <h4><a href="/notes/google-shipping-return-settings/">Google Shipping and Return Settings: All Your Options, and What Takes Precedence</a></h4>
+            <p>Five places to configure shipping and returns for Google: feed, Merchant API, MC/SC settings, markup, and Organisation schema. Here's which one wins.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ────────────────────────── 4. Chrome extension ───────────────────────── -->
+  <!-- Chrome Web Store listing: hgcahplmkjflaaeofnjjhipfiekjdikd -->
+  <section class="extension" id="extension">
+    <div class="wrap">
+      <div class="extension-grid">
+        <div class="extension-text">
+          <span class="extension-available">Available now</span>
+          <span class="eyebrow">02 · Chrome extension</span>
+          <h2>Schema Extractor.</h2>
+          <p class="extension-sub">JSON-LD, Microdata, RDFa — one click on the toolbar.</p>
+          <p class="extension-desc">Extracts all structured data from any page — JSON-LD, Microdata, and RDFa — and shows it in a clean tabbed viewer. The toolbar badge tells you what's on a page before you click. No DevTools. No view-source.</p>
+          <p class="extension-tagline">Rich results don't happen by accident. For SEOs who know valid ≠ correct.</p>
+          <div class="extension-actions">
+            <a class="btn-install" href="https://chromewebstore.google.com/detail/schema-extractor-json-ld/hgcahplmkjflaaeofnjjhipfiekjdikd" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Add to Chrome — it's free
+            </a>
+            <a class="btn-secondary-dark" href="/schema-extractor-chrome-extension/">Read more</a>
+          </div>
+          <div class="extension-meta">MV3 · Free · No tracking · Chrome, Edge, Brave, Arc</div>
+        </div>
+        <div class="extension-visual" aria-hidden="true">
+          <div class="ext-browser">
+            <div class="ext-browser-chrome">
+              <span class="ext-dot"></span>
+              <span class="ext-dot"></span>
+              <span class="ext-dot"></span>
+              <span class="ext-url">https://example.com/products/midi-dress</span>
+              <span class="ext-icon">S<span class="ext-badge">12</span></span>
+            </div>
+            <div class="ext-popup">
+              <div class="ext-popup-head">
+                <span class="ext-popup-title">Structured data · 12 items</span>
+                <span class="ext-popup-tabs">
+                  <span class="ext-popup-tab active">JSON-LD · 9</span>
+                  <span class="ext-popup-tab">Microdata · 2</span>
+                  <span class="ext-popup-tab">RDFa · 1</span>
+                </span>
+              </div>
+<pre class="ext-popup-code"><span class="p">{</span>
+  <span class="k">"@context"</span><span class="p">:</span> <span class="s">"https://schema.org"</span><span class="p">,</span>
+  <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Product"</span><span class="p">,</span>
+  <span class="k">"name"</span><span class="p">:</span> <span class="s">"Midi Dress"</span><span class="p">,</span>
+  <span class="k">"offers"</span><span class="p">:</span> <span class="p">{ … },</span>
+  <span class="k">"aggregateRating"</span><span class="p">:</span> <span class="p">{ … }</span>
+<span class="p">}</span></pre>
+              <div class="ext-popup-foot">
+                <span>● <span class="ok">Validated</span></span>
+                <span>Copy · Download · Send to visualizer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ────────────────────────── 5. Signature insight ─────────────────────── -->
+  <section class="insight">
+    <div class="insight-inner">
+      <span class="eyebrow eyebrow--accent" style="display:block;margin-bottom:32px">03 · From the writing</span>
+      <blockquote>
+        Most product schema isn't broken. It's <em>valid</em>. The data underneath it just doesn't match the page, the feed, and the catalogue — and Google trusts none of them.
+      </blockquote>
+      <cite>— from <a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a></cite>
+    </div>
+  </section>
+  <!-- ────────────────────────── 6. Tools (tabbed) ──────────────────────── -->
+  <section class="tools" id="tools">
+    <div class="wrap">
+      <div class="tools-head">
+        <span class="eyebrow eyebrow--accent">04 · Tools</span>
+        <h2>Tools. Automate the boring bits.</h2>
+        <p>Free SEO tools for structured data, technical checks, AI search readiness, and content workflows.</p>
+      </div>
+      <div class="tools-tabs" role="tablist" aria-label="Tool category">
+        <button class="tools-tab is-active" data-tab="schema"      role="tab" aria-selected="true">Schema</button>
+        <button class="tools-tab"           data-tab="technical"   role="tab" aria-selected="false">Technical SEO</button>
+        <button class="tools-tab"           data-tab="ai"          role="tab" aria-selected="false">AI Search</button>
+        <button class="tools-tab"           data-tab="diagnostics" role="tab" aria-selected="false">Diagnostics</button>
+        <button class="tools-tab"           data-tab="others"      role="tab" aria-selected="false">Others</button>
+      </div>
+      <!-- ───── Schema ───── -->
+      <div class="tools-panel is-active" data-tab="schema" role="tabpanel">
+        <article class="tool-featured">
+          <span class="tool-featured-tag">Featured · Schema</span>
+          <h3>E-commerce — Product Schema Generators</h3>
+          <p class="tool-featured-outcome">Generate Product, Merchant Listing, and ProductGroup markup for rich results.</p>
+          <p class="tool-featured-best-for">Best for: e-commerce sites preparing for rich results.</p>
+          <p class="tool-featured-desc">Compare Product Snippet, Merchant Listing, and ProductGroup side-by-side, then generate validated JSON-LD with the fields Google actually reads.</p>
+          <a class="btn btn--primary" href="/ecommerce-schema-generator/">Open generator
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="tool-featured-preview">
+            <span class="tool-featured-preview-label">PRODUCT.JSONLD</span>
+<pre><code><span class="p">{</span>
+  <span class="k">"@context"</span><span class="p">:</span> <span class="s">"https://schema.org"</span><span class="p">,</span>
+  <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Product"</span><span class="p">,</span>
+  <span class="k">"offers"</span><span class="p">:</span> <span class="p">{</span> <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Offer"</span><span class="p">, … },</span>
+  <span class="k">"aggregateRating"</span><span class="p">:</span> <span class="p">{ … }</span>
+<span class="p">}</span></code></pre>
+          </div>
+        </article>
+        <div class="tool-secondary-list">
+          <a class="tool-secondary" href="/product-snippet-schema-generator/">
+            <span class="tool-secondary-cat">Snippets</span>
+            <h4>Product Snippet — Schema Generator</h4>
+            <span class="tool-outcome">Adds stars and prices to your Google results.</span>
+          </a>
+          <a class="tool-secondary" href="/merchant-listing-schema-generator/">
+            <span class="tool-secondary-cat">Shopping</span>
+            <h4>Merchant Listing — Schema Generator</h4>
+            <span class="tool-outcome">Qualifies pages for Shopping panel and Popular Products.</span>
+          </a>
+          <a class="tool-secondary" href="/product-variants-schema-generator/">
+            <span class="tool-secondary-cat">Variants</span>
+            <h4>Product Variants — Schema Generator</h4>
+            <span class="tool-outcome">Shows colour and size swatches in Google Shopping.</span>
+          </a>
+        </div>
+      </div>
+      <!-- ───── Technical SEO ───── -->
+      <div class="tools-panel" data-tab="technical" role="tabpanel">
+        <article class="tool-featured">
+          <span class="tool-featured-tag">Featured · Technical SEO</span>
+          <h3>Hreflang Generator</h3>
+          <p class="tool-featured-outcome">Fix international targeting at scale, without the trial and error.</p>
+          <p class="tool-featured-best-for">Best for: multi-market sites with hreflang drift.</p>
+          <p class="tool-featured-desc">Generate bidirectional hreflang markup for HTML, XML sitemap, and HTTP-header variants. Validates language–region pairs against Google's rules.</p>
+          <a class="btn btn--primary" href="/hreflang-generator/">Open generator
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="tool-featured-preview">
+            <span class="tool-featured-preview-label">HREFLANG.HTML</span>
+<pre><code><span class="p">&lt;</span><span class="k">link</span> <span class="k">rel</span><span class="p">=</span><span class="s">"alternate"</span> <span class="k">hreflang</span><span class="p">=</span><span class="s">"en-gb"</span> <span class="k">href</span><span class="p">=</span><span class="s">"…/uk/"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="k">link</span> <span class="k">rel</span><span class="p">=</span><span class="s">"alternate"</span> <span class="k">hreflang</span><span class="p">=</span><span class="s">"en-us"</span> <span class="k">href</span><span class="p">=</span><span class="s">"…/us/"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="k">link</span> <span class="k">rel</span><span class="p">=</span><span class="s">"alternate"</span> <span class="k">hreflang</span><span class="p">=</span><span class="s">"x-default"</span> <span class="k">href</span><span class="p">=</span><span class="s">"…/"</span> <span class="p">/&gt;</span></code></pre>
+          </div>
+        </article>
+        <div class="tool-secondary-list">
+          <a class="tool-secondary" href="/robots-txt-generator/">
+            <span class="tool-secondary-cat">Crawl Control</span>
+            <h4>Robots.txt Generator</h4>
+            <span class="tool-outcome">Controls search and AI crawlers with rules that actually work.</span>
+          </a>
+          <a class="tool-secondary" href="/xml-sitemap-url-counter-analyzer/">
+            <span class="tool-secondary-cat">Sitemaps</span>
+            <h4>XML Sitemap Counter &amp; Analyzer</h4>
+            <span class="tool-outcome">Audits sitemap URL counts, lastmod, and duplicates in one pass.</span>
+          </a>
+          <a class="tool-secondary" href="/gmc-feed-analyzer/">
+            <span class="tool-secondary-cat">Feeds</span>
+            <h4>GMC Feed Analyzer</h4>
+            <span class="tool-outcome">Catches Merchant Center feed errors before Google does.</span>
+          </a>
+        </div>
+      </div>
+      <!-- ───── AI Search ───── -->
+      <div class="tools-panel" data-tab="ai" role="tabpanel">
+        <article class="tool-featured">
+          <span class="tool-featured-tag">Featured · AI Search</span>
+          <h3>Robots.txt Generator</h3>
+          <p class="tool-featured-outcome">Control which AI bots may train on your content.</p>
+          <p class="tool-featured-best-for">Best for: brands deciding which AI crawlers get access.</p>
+          <p class="tool-featured-desc">Generate robots.txt blocks for GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and CCBot — alongside your regular crawler rules.</p>
+          <a class="btn btn--primary" href="/robots-txt-generator/">Open generator
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="tool-featured-preview">
+            <span class="tool-featured-preview-label">ROBOTS.TXT</span>
+<pre><code><span class="c"># AI training crawlers</span>
+<span class="k">User-agent</span><span class="p">:</span> GPTBot
+<span class="k">Disallow</span><span class="p">:</span> /
+<span class="k">User-agent</span><span class="p">:</span> ClaudeBot
+<span class="k">Disallow</span><span class="p">:</span> /
+<span class="k">User-agent</span><span class="p">:</span> Google-Extended
+<span class="k">Disallow</span><span class="p">:</span> /</code></pre>
+          </div>
+        </article>
+        <div class="tool-secondary-list">
+          <span class="tool-secondary tool-secondary--soon" aria-disabled="true">
+            <span class="tool-secondary-cat">Audit</span>
+            <h4>AI Search Visibility Checklist</h4>
+            <span class="tool-outcome">Score whether AI assistants surface your content.</span>
+          </span>
+          <span class="tool-secondary tool-secondary--soon" aria-disabled="true">
+            <span class="tool-secondary-cat">Commerce</span>
+            <h4>Agentic Commerce Readiness</h4>
+            <span class="tool-outcome">Diagnose product data for AI shopping agents.</span>
+          </span>
+          <span class="tool-secondary tool-secondary--soon" aria-disabled="true">
+            <span class="tool-secondary-cat">Diagnostic</span>
+            <h4>AI Crawler Access Checker</h4>
+            <span class="tool-outcome">Verify which AI bots can reach your site.</span>
+          </span>
+        </div>
+      </div>
+      <!-- ───── Diagnostics ───── -->
+      <div class="tools-panel" data-tab="diagnostics" role="tabpanel">
+        <article class="tool-featured">
+          <span class="tool-featured-tag">Featured · Diagnostics</span>
+          <h3>GSC Regex Builder</h3>
+          <p class="tool-featured-outcome">Filter Search Console at scale.</p>
+          <p class="tool-featured-best-for">Best for: anyone filtering Search Console past the default row ceiling.</p>
+          <p class="tool-featured-desc">Build validated RE2 regex for Search Console URL and query filtering. 22 templates, live tester, plain-English explanations. Stop Googling the syntax.</p>
+          <a class="btn btn--primary" href="/gsc-regex-generator/">Open the builder
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="tool-featured-preview">
+            <span class="tool-featured-preview-label">GSC.REGEX</span>
+<pre><code><span class="c"># URLs under /products/ excluding /legacy/</span>
+<span class="k">^/products/</span><span class="p">[</span><span class="s">^/legacy</span><span class="p">]</span><span class="k">.*$</span>
+<span class="c"># Brand or commercial-intent queries</span>
+<span class="p">(</span><span class="s">magstags</span><span class="p">|</span><span class="s">buy</span><span class="p">|</span><span class="s">review</span><span class="p">|</span><span class="s">near\s+me</span><span class="p">|</span><span class="s">price</span><span class="p">)</span></code></pre>
+          </div>
+        </article>
+        <div class="tool-secondary-list">
+          <a class="tool-secondary" href="/serp-preview/">
+            <span class="tool-secondary-cat">SERP</span>
+            <h4>SERP Snippet Previewer</h4>
+            <span class="tool-outcome">Preview titles and metas before Google rewrites them.</span>
+          </a>
+          <a class="tool-secondary" href="/schema-markup-visualizer/">
+            <span class="tool-secondary-cat">Inspector</span>
+            <h4>Schema Markup Visualizer</h4>
+            <span class="tool-outcome">Inspects JSON-LD as a tree instead of counting braces.</span>
+          </a>
+          <a class="tool-secondary" href="/favicon-validator/">
+            <span class="tool-secondary-cat">Branding</span>
+            <h4>Favicon Validator</h4>
+            <span class="tool-outcome">Checks favicons against Google and browser standards.</span>
+          </a>
+        </div>
+      </div>
+      <!-- ───── Others (paid, external) ───── -->
+      <div class="tools-panel" data-tab="others" role="tabpanel">
+        <article class="tool-featured">
+          <span class="tool-featured-tag">Featured · Others<span class="tool-paid-badge">Paid</span></span>
+          <h3>InvuAI</h3>
+          <p class="tool-featured-outcome">Find out if ChatGPT is talking about your brand.</p>
+          <p class="tool-featured-best-for">Best for: brands tracking AI search visibility week-to-week.</p>
+          <p class="tool-featured-desc">Submit your brand and InvuAI runs queries across major AI assistants — ChatGPT, Claude, Perplexity — and reports which ones mention you, how, and in what context.</p>
+          <a class="btn btn--primary" href="https://invuai.com/" target="_blank" rel="noopener">Visit InvuAI
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <div class="tool-featured-preview">
+            <span class="tool-featured-preview-label">INVUAI.QUERY</span>
+<pre><code><span class="k">Brand</span><span class="p">:</span> <span class="s">MagsTags</span>
+<span class="c"># Mentioned across 50 SEO prompts</span>
+ChatGPT      <span class="p">·</span> 12 / 50
+Claude       <span class="p">·</span>  8 / 50
+Perplexity   <span class="p">·</span>  0 / 50</code></pre>
+          </div>
+        </article>
+        <div class="tool-secondary-list">
+          <a class="tool-secondary" href="https://sendlikeapro.com/" target="_blank" rel="noopener">
+            <span class="tool-secondary-cat">Email <span class="tool-paid-badge">Paid</span></span>
+            <h4>Send Like a Pro</h4>
+            <span class="tool-outcome">A polished email signature in under 5 minutes.</span>
+          </a>
+        </div>
+      </div>
+      <a class="tools-all-link" href="/free-seo-tools/">View full tool library →</a>
+    </div>
+  </section>
+  <!-- ────────────────────────── 5. Founder section ───────────────────────── -->
+  <section class="founder" id="about">
+    <div class="wrap">
+      <div class="founder-grid">
+        <picture class="founder-portrait">
+          <source type="image/webp" srcset="/mags-sikora/mags-sikora-portrait.webp">
+          <img class="portrait" src="/mags-sikora/mags-sikora-portrait.jpg" alt="Portrait of Mags Sikora" width="960" height="960" loading="lazy" decoding="async">
+        </picture>
+        <div>
+          <span class="eyebrow">05 · About the author</span>
+          <!-- TODO: Mags — H2 heading is proposed framing. Replace if you'd rather just say "Mags Sikora." -->
+          <h2 style="margin-top:24px">Mags Sikora.<br>Senior SEO Consultant.</h2>
+          <p>Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+          <p>At Intrepid Digital, I lead enterprise SEO engagements focused on AI-integrated search strategies, large-scale technical migrations, and connecting content operations to actual search performance.</p>
+          <p style="margin-top:24px"><a href="/mags-sikora/">Read the long version →</a></p>
+          <div class="founder-credentials">
+            <div>
+              <div class="credential-label">Currently</div>
+              <div class="credential-value">Intrepid Digital</div>
+            </div>
+            <div>
+              <div class="credential-label">Past brands</div>
+              <div class="credential-value">Expedia · New Look · Emirates</div>
+            </div>
+            <div>
+              <div class="credential-label">Always on</div>
+              <div class="credential-value">Notes, tools, occasional rants.</div>
+            </div>
+            <div>
+              <div class="credential-label">Writing &amp; speaking</div>
+              <div class="credential-value">Mostly here. When time allows.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ────────────────────────── 6. Newsletter ────────────────────────────── -->
+  <section class="newsletter" id="newsletter">
+    <div class="newsletter-inner">
+      <span class="eyebrow eyebrow--accent">06 · The newsletter</span>
+      <!-- TODO: Mags — heading proposed. The brief's longer line lives in the sub. -->
+      <h2>Join the working list.</h2>
+      <p>One email when something is published. New research, tool drops, and the occasional thinking-out-loud on AI search, structured data, and ecommerce visibility.</p>
+      <form onsubmit="event.preventDefault(); alert('Newsletter signup is illustrative in this prototype.');">
+        <label class="visually-hidden" for="newsletter-email" style="position:absolute;left:-999em">Email address</label>
+        <input id="newsletter-email" type="email" required placeholder="your@email.com">
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="micro">No spam. No tracking. Unsubscribe whenever.</p>
+    </div>
+  </section>
+</main>
+<!-- ────────────────────────── Footer ────────────────────────────────────── -->
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
     </div>
   </div>
-
-  <div class="tools-grid">
-
-    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/ecommerce-schema-generator/"None style="color:inherit;text-decoration:none;">E-commerce — Product Schema Generators<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Not sure which type you need? Compare all three and pick the right one for your page.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">JSON-LD</span>
-        <span class="tool-tag">Product</span>
-        <span class="tool-tag">Merchant</span>
-        <span class="tool-tag">Rich results</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/product-snippet-schema-generator/"None style="color:inherit;text-decoration:none;">Product Snippet — Schema Generator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">The markup that adds prices and stars to your Google results.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">JSON-LD</span>
-        <span class="tool-tag">Star ratings</span>
-        <span class="tool-tag">Reviews</span>
-        <span class="tool-tag">Organic search</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/merchant-listing-schema-generator/"None style="color:inherit;text-decoration:none;">Merchant Listing — Schema Generator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">The markup that enables Shopping features in Google: Popular Products, price drops, returns.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">JSON-LD</span>
-        <span class="tool-tag">Shopping</span>
-        <span class="tool-tag">Price drops</span>
-        <span class="tool-tag">Merchant</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/product-variants-schema-generator/"None style="color:inherit;text-decoration:none;">Product Variants — Schema Generator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">The markup that makes your product variants eligible for colour and size swatches in Google Shopping.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">JSON-LD</span>
-        <span class="tool-tag">ProductGroup</span>
-        <span class="tool-tag">Variants</span>
-        <span class="tool-tag">Swatches</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12h-8l4-8"/><circle cx="8" cy="8" r="6"/><path d="M8 14v8"/><path d="M5 19h6"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/schema-markup-visualizer/" style="color:inherit;text-decoration:none;">Schema Markup Visualizer<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">See your JSON-LD as a tree instead of counting braces at 11pm.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">JSON-LD</span>
-        <span class="tool-tag">Tree view</span>
-        <span class="tool-tag">Fetch from URL</span>
-        <span class="tool-tag">Auto-repair</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="schema" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="8" height="16" rx="1"/><rect x="14" y="4" width="8" height="16" rx="1"/><path d="M10 12h4"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/schema-comparison-tool/" style="color:inherit;text-decoration:none;">Schema Comparison<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Side-by-side diff of two schemas. Before/After or Structural mode.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">JSON-LD</span>
-        <span class="tool-tag">Diff</span>
-        <span class="tool-tag">Competitor analysis</span>
-        <span class="tool-tag">Migration</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/hreflang-generator/"None style="color:inherit;text-decoration:none;">Hreflang Generator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Hreflang without the trial and error.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">HTML</span>
-        <span class="tool-tag">XML Sitemap</span>
-        <span class="tool-tag">HTTP Headers</span>
-        <span class="tool-tag">Multilingual</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/gsc-regex-generator/"None style="color:inherit;text-decoration:none;">GSC Regex Builder<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Build GSC regex filters without Googling the syntax.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">URL filters</span>
-        <span class="tool-tag">Query filters</span>
-        <span class="tool-tag">RE2</span>
-        <span class="tool-tag">Client-side</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/robots-txt-generator/"None style="color:inherit;text-decoration:none;">Robots.txt Generator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Build a robots.txt that actually does what you think it does.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">Crawl control</span>
-        <span class="tool-tag">Technical SEO</span>
-        <span class="tool-tag">Download</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/serp-preview/"None style="color:inherit;text-decoration:none;">SERP Snippet Previewer<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Check your title and meta before Google decides to rewrite them.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">Title</span>
-        <span class="tool-tag">Meta description</span>
-        <span class="tool-tag">Desktop</span>
-        <span class="tool-tag">Mobile</span>
-        <span class="tool-tag">Client-side</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/favicon-validator/" style="color:inherit;text-decoration:none;">Favicon Validator<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Check your favicon against Google's requirements and browser standards.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">Favicon</span>
-        <span class="tool-tag">Google SERPs</span>
-        <span class="tool-tag">Client-side</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="technical" data-type="seo" data-price="free">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-free">Free</span>
-      </div>
-      <div class="tool-name"><a href="/xml-sitemap-url-counter-analyzer/" style="color:inherit;text-decoration:none;">XML Sitemap Counter &amp; Analyzer<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">URL counts, directory breakdown, duplicate detection, lastmod coverage — from one sitemap URL.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">Sitemap index</span>
-        <span class="tool-tag">URL count</span>
-        <span class="tool-tag">Lastmod</span>
-        <span class="tool-tag">Technical SEO</span>
-      </div>
-    </div>
-
-    <div id="gmc-card" class="tool-card" data-category="feed" data-type="seo" data-price="paid">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-paid">Paid</span>
-      </div>
-      <div class="tool-name"><a href="/gmc-feed-analyzer/"None style="color:inherit;text-decoration:none;">GMC Feed Analyzer<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Catch feed errors before Google does.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">CSV</span>
-        <span class="tool-tag">TSV</span>
-        <span class="tool-tag">JSON</span>
-        <span class="tool-tag">XML</span>
-        <span class="tool-tag">Client-side</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="productivity" data-type="seo" data-price="paid">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-ext">External · Free trial</span>
-      </div>
-      <div class="tool-name"><a href="https://invuai.com/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">InvuAI<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">Find out if ChatGPT is talking about your brand.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">AI visibility</span>
-        <span class="tool-tag">Brand monitoring</span>
-        <span class="tool-tag">ChatGPT</span>
-        <span class="tool-tag">Competitive intel</span>
-      </div>
-    </div>
-
-    <div class="tool-card" data-category="productivity" data-type="productivity" data-price="paid">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-ext">External · $8</span>
-      </div>
-      <div class="tool-name"><a href="https://sendlikeapro.com/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Send Like a Pro<span style="position:absolute;inset:0;border-radius:20px;"></span></a></div>
-      <div class="tool-desc">A pro email signature in under 5 minutes.</div>
-      <div class="tool-tags">
-        <span class="tool-tag">Gmail</span>
-        <span class="tool-tag">Outlook</span>
-        <span class="tool-tag">HTML</span>
-        <span class="tool-tag">No subscription</span>
-      </div>
-    </div>
-
-    <div class="tool-card-muted">
-      <div class="tool-card-top">
-        <div class="tool-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-4)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-        </div>
-        <span class="tool-badge tool-badge-soon">Coming soon</span>
-      </div>
-      <div class="tool-name">More tools</div>
-      <div class="tool-desc">Additional SEO and e-commerce tools in development.</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- Learning section -->
-<section class="learn-section" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
-  <!-- Left: heading + description -->
-  <div>
-    <a class="section-marker" href="/learn-seo/"><span class="num">02</span><span class="line"></span>Learn SEO</a>
-    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:32px;font-weight:400;color:var(--text-1);margin-bottom:16px;line-height:1.25">Structured data: technically optional, practically essential, officially documented in a way that helps a solid few.</h2>
-    <p style="font-size:15px;color:var(--text-3);line-height:1.65">These guides skip the preamble. Which type to use, what each field actually does, and how to generate clean JSON-LD — without watching a Google I/O keynote to figure it out.</p>
-  </div>
-  <!-- Right: 2×2 card grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-    <div class="hub-card">
-      <div class="hub-card-label">Overview</div>
-      <h3 class="hub-card-title"><a href="/product-schema/">Product Schema Markup</a></h3>
-      <div class="hub-card-desc">Introduction to the two main classes of Product structured data, plus ProductGroup for variants.</div>
-      <div class="hub-card-cta">Read guide →</div>
-    </div>
-    <div class="hub-card">
-      <div class="hub-card-label">Class 1</div>
-      <h3 class="hub-card-title"><a href="/product-snippet-schema/">Product Snippet Schema</a></h3>
-      <div class="hub-card-desc">Star ratings, reviews, pros/cons, and pricing in organic search. For any product page.</div>
-      <div class="hub-card-cta">Read guide →</div>
-    </div>
-    <div class="hub-card">
-      <div class="hub-card-label">Class 2</div>
-      <h3 class="hub-card-title"><a href="/merchant-listing-schema/">Merchant Listing Schema</a></h3>
-      <div class="hub-card-desc">Shopping panel, Popular products, price drop alerts, and shipping info. For merchant pages.</div>
-      <div class="hub-card-cta">Read guide →</div>
-    </div>
-    <div class="hub-card">
-      <div class="hub-card-label">+ Variants</div>
-      <h3 class="hub-card-title"><a href="/product-variants-schema/">Product Variants Schema</a></h3>
-      <div class="hub-card-desc">Colour swatches and variant pricing in Google Shopping. Uses ProductGroup with hasVariant.</div>
-      <div class="hub-card-cta">Read guide →</div>
-    </div>
-  </div>
-</section>
-
-
-
-<!-- Notes section — latest 6 (full archive at /notes/) -->
-<section class="notes-section" id="notes">
-  <div style="max-width:960px;margin:0 auto 28px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-      <a class="section-marker" href="/notes/" style="margin-bottom:0"><span class="num">03</span><span class="line"></span>Notes</a>
-      <a href="/notes/" style="font-size:12px;color:var(--text-4);text-decoration:none;">All posts →</a>
-    </div>
-    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:26px;font-weight:400;color:var(--text-1);line-height:1.3;margin:0">Practical SEO writing. No content for content's sake. Promise.</h2>
-  </div>
-
-  <div class="notes-list">
-      <div class="notes-row">
-        <div class="notes-row-date">28 May 2026</div>
-        <div class="notes-row-body">
-          <div class="notes-row-cat">Ecommerce SEO</div>
-          <h3 class="notes-row-title"><a href="/notes/google-shipping-return-settings/">Google Shipping and Return Settings: All Your Options, and What Takes Precedence<span class="notes-stretch"></span></a></h3>
-          <div class="notes-row-excerpt">Five places to configure shipping and returns for Google: feed, Merchant API, MC/SC settings, markup, and Organisation schema. Here&#x27;s which one wins.</div>
-          <div class="notes-row-meta">12 min read</div>
-        </div>
-      </div>
-
-
-    <div class="notes-row">
-      <div class="notes-row-date">18 May 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Structured Data</div>
-        <h3 class="notes-row-title"><a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't<span class="notes-stretch"></span></a></h3>
-        <div class="notes-row-excerpt">Product schema suppression, disappearing rich results, and Merchant Center disapprovals are almost always a data problem. Five failure patterns, a 3-layer alignment model, and an operational audit checklist.</div>
-        <div class="notes-row-meta">13 min read</div>
-      </div>
-    </div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">19 Apr 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Original Research</div>
-        <h3 class="notes-row-title"><a href="/notes/google-image-thumbnails-organic-case-study/">Google Image Thumbnails for Organic Results: Case Study<span class="notes-stretch"></span></a></h3>
-        <div class="notes-row-excerpt">Analysis of 9,718 organic results across 293 fashion keywords. Mobile serves 92% more image thumbnails than desktop. Which intents, modifiers, and categories get visual treatment.</div>
-        <div class="notes-row-meta">18 min read</div>
-      </div>
-    </div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">12 Apr 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Technical SEO</div>
-        <h3 class="notes-row-title"><a href="/notes/google-image-thumbnails/">Google Image Thumbnails: Best Practice Guide<span class="notes-stretch"></span></a></h3>
-        <div class="notes-row-excerpt">What drives image thumbnail display in Google Search. Covers max-image-preview, og:image best practices, the multi-image treatment, text result images, and a diagnostic sequence for finding where your page falls short.</div>
-        <div class="notes-row-meta">22 min read</div>
-      </div>
-    </div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">1 Apr 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Google SERP Tests</div>
-        <h3 class="notes-row-title"><a href="/notes/google-favourite-brands/">Google Favourite Shopping Brand - Personalisation in Search<span class="notes-stretch"></span></a></h3>
-        <div class="notes-row-excerpt">Google appears to be testing brand-level personalisation in shopping results. Users can save favourite brands via an in-SERP widget, and those choices shape which products appear for generic queries.</div>
-        </div>
-      <div class="notes-row-meta">5 min read</div></div>
-
-    <div class="notes-row">
-      <div class="notes-row-date">30 Mar 2026</div>
-      <div class="notes-row-body">
-        <div class="notes-row-cat">Google Shopping</div>
-        <h3 class="notes-row-title"><a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings: How Each Works<span class="notes-stretch"></span></a></h3>
-        <div class="notes-row-excerpt">Two rating systems, two data sources, two separate setups. Why the same product URL can show different stars in organic and Shopping.</div>
-        </div>
-      <div class="notes-row-meta">12 min read</div></div>
-
-  </div>
-</section>
-
-<section class="coffee-bar">
-  <div class="coffee-inner">
-  <p class="coffee-text">Many free tools here. No strings. If one of these saved you from a Friday afternoon panic, a coffee is a reasonable exchange. No pressure. But also: please. And thank you.</p>
-  <a class="coffee-btn" href="https://buy.stripe.com/cNi5kD9LsgHK54D80gasg01" target="_blank" rel="noopener">Buy me a coffee &nbsp;·&nbsp; $6</a>
-  </div>
-</section>
-
+</footer>
 <script>
-  // ── Tool filter (single-select segmented control) ───────────────────────
+  // ── Theme toggle ─────────────────────────────────────────────────────
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('mt-theme', next); } catch(e) {}
+  };
+  // ── Tools tabs (switch between schema / technical / ai / content) ────
   (function() {
-    var pills = document.querySelectorAll('.tools-section .fpill');
-    var cards = document.querySelectorAll('.tools-section .tool-card[data-category]');
-    pills.forEach(function(pill) {
-      pill.addEventListener('click', function() {
-        var cat = pill.dataset.category;
-        pills.forEach(function(p) {
-          var active = p === pill;
-          p.classList.toggle('is-active', active);
-          p.setAttribute('aria-selected', active ? 'true' : 'false');
+    var tabs = document.querySelectorAll('.tools-tab');
+    var panels = document.querySelectorAll('.tools-panel');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var name = tab.dataset.tab;
+        tabs.forEach(function(t) {
+          var active = t === tab;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', active ? 'true' : 'false');
         });
-        cards.forEach(function(card) {
-          card.hidden = !(cat === 'all' || card.dataset.category === cat);
+        panels.forEach(function(p) {
+          p.classList.toggle('is-active', p.dataset.tab === name);
         });
       });
     });
   })();
 </script>
-
-</main>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
-<script src="/header.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/dist/clerk.browser.js" data-clerk-publishable-key="pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA" crossorigin="anonymous"></script>
-  <script src="/gmc-auth.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', function(){ if(window.GmcAuth) GmcAuth.runListingMode(); });</script>
-  <script>
-    // Footer auth — subtle login for staff only
-    (function() {
-      var CLERK_KEY = 'pk_live_Y2xlcmsubWFnc3RhZ3MuY29tJA';
-      var el = document.getElementById('footer-auth');
-      if (!el) return;
-
-      var btnStyle = 'background:none;border:none;padding:0;cursor:pointer;font-size:11px;color:var(--text-4);font-family:inherit;text-decoration:underline;text-underline-offset:2px';
-
-      // Start loading Clerk immediately — store as a promise so click handler can await it
-      var _clerkReady = null;
-      function loadClerk() {
-        if (_clerkReady) return _clerkReady;
-        _clerkReady = window.Clerk.load({ publishableKey: CLERK_KEY }).then(function() {
-          return window.Clerk;
-        });
-        return _clerkReady;
-      }
-
-      function renderFooterAuth(clerk) {
-        if (clerk.user) {
-          var email = (clerk.user.primaryEmailAddress && clerk.user.primaryEmailAddress.emailAddress) || 'signed in';
-          el.innerHTML =
-            '<span style="opacity:.6;font-size:11px;color:var(--text-4)">' + email + '</span>' +
-            ' &middot; <button onclick="window.__clerkSignOut()" style="' + btnStyle + '">Sign out</button>';
-          window.__clerkSignOut = function() { window.Clerk.signOut().then(function(){ location.reload(); }); };
-        }
-      }
-
-      // Render sign-in button immediately
-      el.innerHTML = '<button onclick="window.__clerkSignInFooter()" style="' + btnStyle + '">Staff login</button>';
-
-      // Click: await Clerk being ready, then open sign-in modal
-      window.__clerkSignInFooter = function() {
-        loadClerk().then(function(clerk) {
-          clerk.openSignIn({ redirectUrl: window.location.href });
-        }).catch(function(e) { console.error('Clerk load failed:', e); });
-      };
-
-      // On page load, eagerly init Clerk and update display if already signed in
-      window.addEventListener('load', function() {
-        if (typeof window.Clerk === 'undefined') return;
-        loadClerk().then(renderFooterAuth);
-      });
-    })();
-  </script>
-</body>
-</html>
-ipt>
 </body>
 </html>

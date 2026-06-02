@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('mt-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) {}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Shipping and Return Settings: All Your Options, and What Takes Precedence — MagsTags</title>
+<meta name="description" content="Five places to configure shipping and returns for Google: feed, Merchant API, MC/SC settings, markup, and Organisation schema. Here's which one wins.">
+<link rel="canonical" href="https://www.magstags.com/redesign/notes/google-shipping-return-settings/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens (forest variant) ──────────────────────────────────────────── */
+  :root {
+    --ink-1: #1a1916; --ink-2: #2d2a26; --ink-3: #58534c; --ink-4: #8a847a;
+    --paper: #f5f1ea; --paper-2: #ebe5d7; --rule: #d8d2c4;
+    --accent: #0E7490; --accent-2: #e09226;
+    --font-display: 'IBM Plex Mono', 'Menlo', monospace;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+    --font-reading: Georgia, 'Times New Roman', serif;
+    --t-h1:      clamp(28px, 3.6vw, 44px);
+    --t-h2:      clamp(20px, 2.2vw, 28px);
+    --t-h3:      clamp(17px, 1.6vw, 20px);
+    --t-lead:    clamp(18px, 1.4vw, 21px);
+    --t-body:    16.5px;
+    --t-meta:    13px;
+    --t-eyebrow: 11px;
+    --gutter:    clamp(20px, 4vw, 88px);
+    --section-y: clamp(60px, 8vw, 120px);
+    --max:       1200px;
+    --reading:   680px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); font-size: var(--t-body); line-height: 1.7; color: var(--ink-2); background: var(--paper); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
+  a:hover { color: var(--ink-1); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .eyebrow { font-family: var(--font-mono); font-size: var(--t-eyebrow); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); }
+  .eyebrow--accent { color: var(--accent); }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--ink-1); letter-spacing: -.02em; }
+  h1 { font-size: var(--t-h1); line-height: 1.1; }
+  h2 { font-size: var(--t-h2); line-height: 1.2; font-weight: 400; }
+  h3 { font-size: var(--t-h3); line-height: 1.3; font-weight: 500; }
+  /* ── Sticky header ───────────────────────────────────────────────────── */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(245,241,234,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; text-decoration: none; }
+  .wordmark em { font-style: italic; color: var(--accent); }
+  nav.primary { display: flex; gap: 32px; align-items: center; }
+  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; text-decoration: none; }
+  nav.primary a:hover { color: var(--accent); }
+  nav.primary .subscribe { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px; color: var(--ink-1); background: transparent; transition: background .15s, color .15s; }
+  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
+  @media (max-width: 800px) { nav.primary { gap: 18px; } nav.primary a:not(.subscribe) { display: none; } }
+  .draft-banner { background: var(--accent-2); color: var(--ink-1); padding: 8px 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
+  .draft-banner a { color: var(--ink-1); text-decoration: underline; }
+  /* ── Article header ──────────────────────────────────────────────────── */
+  .article { padding: clamp(20px, 2.5vw, 40px) 0 var(--section-y); }
+  .article-grid { display: grid; grid-template-columns: 1fr 200px; gap: clamp(40px, 5vw, 80px); align-items: start; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  @media (max-width: 960px) { .article-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .article-body { max-width: var(--reading); min-width: 0; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 48px; letter-spacing: .04em; }
+  .breadcrumb a { color: var(--ink-4); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { opacity: .5; }
+  .post-cat { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); padding: 4px 10px; border: 1px solid var(--accent); border-radius: 99px; display: inline-block; margin-bottom: 24px; text-decoration: none; }
+  .post-h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h1); line-height: 1.1; letter-spacing: -.02em; color: var(--ink-1); margin-bottom: 24px; max-width: 22ch; }
+  .post-meta { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-4); letter-spacing: .06em; text-transform: uppercase; padding-bottom: 36px; border-bottom: 1px solid var(--rule); margin-bottom: 48px; }
+  .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); }
+  .post-lead { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-2); margin-bottom: 36px; font-family: var(--font-reading); font-style: italic; max-width: 32ch; }
+  /* ── Body typography ─────────────────────────────────────────────────── */
+  .article-body p { margin-bottom: 24px; line-height: 1.75; color: var(--ink-2); }
+  .article-body p strong { color: var(--ink-1); font-weight: 600; }
+  .article-body h2 { margin: 64px 0 18px; font-size: var(--t-h2); scroll-margin-top: 110px; }
+  .article-body h3 { margin: 40px 0 12px; font-size: var(--t-h3); scroll-margin-top: 110px; }
+  .article-body ol, .article-body ul { padding-left: 22px; margin-bottom: 24px; }
+  .article-body ol li, .article-body ul li { margin-bottom: 10px; line-height: 1.7; }
+  .article-body li::marker { color: var(--accent); font-weight: 600; }
+  .article-body code { font-family: var(--font-mono); font-size: 13.5px; background: var(--paper-2); padding: 2px 6px; border-radius: 3px; color: var(--ink-1); }
+  /* Callout */
+  .callout { background: var(--paper-2); border-left: 3px solid var(--accent); padding: 22px 26px; margin: 32px 0; border-radius: 0 4px 4px 0; }
+  .callout p { margin: 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+  .callout p strong { color: var(--ink-1); }
+  .callout--warn { background: rgba(224,146,38,.10); border-left-color: var(--accent-2); }
+  .callout--warn p strong { color: var(--ink-1); }
+  /* Pull quote */
+  .pullquote { margin: 56px 0; padding: 0 0 0 clamp(20px, 3vw, 40px); border-left: 2px solid var(--accent); }
+  .pullquote blockquote { font-family: var(--font-display); font-weight: 400; font-size: clamp(20px, 2.3vw, 26px); line-height: 1.3; color: var(--ink-1); letter-spacing: -.015em; margin: 0; }
+  .pullquote blockquote em { font-style: italic; color: var(--accent); }
+  .pullquote cite { display: block; margin-top: 16px; font-family: var(--font-mono); font-size: 11px; font-style: normal; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); }
+  /* Code/data block */
+  .codeblock { background: var(--ink-1); color: rgba(245,241,234,.85); border-radius: 4px; padding: 22px 24px; margin: 28px 0; font-family: var(--font-mono); font-size: 13px; line-height: 1.85; overflow-x: auto; }
+  .codeblock-label { display: block; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 14px; }
+  .codeblock pre { font-family: inherit; font-size: inherit; line-height: inherit; white-space: pre; }
+  .codeblock .k { color: rgba(245,241,234,.95); }
+  .codeblock .s { color: rgba(245,241,234,.62); }
+  .codeblock .p { color: rgba(245,241,234,.35); }
+  .codeblock .c { color: rgba(245,241,234,.42); font-style: italic; }
+  /* Precedence list — numbered + descriptive */
+  .precedence-list { list-style: none; padding: 0; margin: 32px 0; counter-reset: prec; }
+  .precedence-list > li { counter-increment: prec; padding: 18px 0 22px 56px; border-bottom: 1px solid var(--rule); position: relative; margin: 0; }
+  .precedence-list > li:last-child { border-bottom: none; }
+  .precedence-list > li::before { content: counter(prec, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: .08em; }
+  .prec-label { font-family: var(--font-display); font-size: 16px; font-weight: 400; color: var(--ink-1); margin-bottom: 8px; line-height: 1.35; }
+  .prec-desc { font-size: 14.5px; line-height: 1.6; color: var(--ink-3); }
+  .prec-badge { display: inline-block; font-family: var(--font-mono); font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; padding: 2px 8px; border-radius: 99px; margin-left: 8px; vertical-align: 2px; }
+  .prec-badge.strongest { background: var(--accent); color: var(--paper); }
+  .prec-badge.weakest { background: var(--rule); color: var(--ink-3); }
+  /* Data table (decision tree, etc.) */
+  .ct-table-wrap { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; margin: 32px 0; }
+  .ct-table { width: 100%; border-collapse: collapse; font-size: 14px; font-family: var(--font-body); }
+  .ct-table th { text-align: left; padding: 12px 18px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+  .ct-table td { padding: 14px 18px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; line-height: 1.5; }
+  .ct-table tr:last-child td { border-bottom: none; }
+  .ct-table strong { color: var(--ink-1); font-weight: 600; }
+  .ct-table .col-label { font-weight: 600; color: var(--ink-1); white-space: nowrap; }
+  .ct-table .col-pick { font-family: var(--font-display); font-weight: 600; color: var(--accent); white-space: nowrap; font-size: 13.5px; }
+  .ct-table .is-exit td { color: var(--ink-4); font-style: italic; }
+  .ct-table .is-exit .col-pick { color: var(--ink-4); font-style: italic; }
+  /* FAQ block */
+  .faq-block { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--rule); }
+  .faq-block h2 { margin-top: 0; margin-bottom: 28px; }
+  .faq-q { font-weight: 600; color: var(--ink-1); font-size: 16px; margin: 28px 0 10px; line-height: 1.45; padding-left: 30px; position: relative; }
+  .faq-q::before { content: 'Q.'; position: absolute; left: 0; top: 1px; font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: .12em; font-weight: 600; }
+  .faq-a { color: var(--ink-3); font-size: 15px; line-height: 1.7; margin: 0 0 28px; padding-left: 30px; }
+  /* Sources */
+  .sources { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--rule); }
+  .sources h2 { font-size: 16px; margin: 0 0 18px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); font-weight: 600; }
+  .sources ul { padding: 0; list-style: none; margin: 0; }
+  .sources li { margin-bottom: 12px; font-size: 14px; line-height: 1.6; padding-left: 18px; position: relative; }
+  .sources li::before { content: '·'; position: absolute; left: 4px; color: var(--accent); font-weight: 700; }
+  .sources li strong { color: var(--ink-1); font-weight: 600; }
+  /* Related tool card */
+  .related-tool { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: clamp(28px, 3.5vw, 40px); margin-top: 48px; display: flex; flex-direction: column; gap: 10px; position: relative; transition: border-color .15s, transform .1s, box-shadow .15s; }
+  .related-tool:hover { border-color: var(--ink-3); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,0,0,.05); }
+  .related-tool-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+  .related-tool h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.2; color: var(--ink-1); margin: 4px 0 0; }
+  .related-tool h3 a { color: inherit; text-decoration: none; }
+  .related-tool h3 a::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+  .related-tool:hover h3 a { color: var(--accent); }
+  .related-tool-outcome { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin-top: 4px; font-style: italic; }
+  .related-tool-cta { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  /* Author card */
+  .author-card { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start; }
+  .author-photo { width: 80px; height: 80px; border-radius: 50%; background: var(--paper-2); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 9px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+  .author-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 8px; }
+  .author-name { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--ink-1); margin-bottom: 4px; }
+  .author-name a { color: inherit; text-decoration: none; }
+  .author-name a:hover { color: var(--accent); }
+  .author-role { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+  .author-bio { font-size: 14px; color: var(--ink-3); line-height: 1.6; max-width: 540px; }
+  @media (max-width: 560px) { .author-card { grid-template-columns: 1fr; } }
+  /* ── Right rail TOC ──────────────────────────────────────────────────── */
+  .ct-toc { position: sticky; top: 100px; padding: 0; max-height: calc(100vh - 120px); overflow-y: auto; }
+  .ct-toc-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 14px; }
+  .ct-toc-list { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--rule); }
+  .ct-toc-list a { display: block; padding: 7px 0 7px 14px; font-size: 12px; color: var(--ink-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+  .ct-toc-list a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .ct-toc-list a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  @media (max-width: 960px) { .ct-toc { position: static; padding-top: 0; max-height: none; } }
+  /* ── Footer ──────────────────────────────────────────────────────────── */
+  footer.site { background: var(--ink-1); color: var(--paper-2); padding: clamp(48px, 6vw, 80px) 0 32px; margin-top: var(--section-y); }
+  .footer-base { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .footer-base a { color: var(--ink-4); }
+  .footer-base a:hover { color: var(--paper); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+  /* ── Theme toggle button (in header) ─────────────────────────────────── */
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
+  .theme-toggle svg { display: block; }
+  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
+  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  /* ── DARK MODE OVERRIDES (html[data-theme="dark"]) ───────────────────── */
+  html[data-theme="dark"] body { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] body a { color: var(--accent-2); }
+  html[data-theme="dark"] body a:hover { color: var(--paper); }
+  /* Header in dark */
+  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
+  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
+  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+  /* Article header */
+  html[data-theme="dark"] .breadcrumb { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .post-cat { color: var(--accent-2); border-color: var(--accent-2); }
+  html[data-theme="dark"] .post-h1 { color: var(--paper); }
+  html[data-theme="dark"] .article-subhead { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .post-meta { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .post-meta-dot { background: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .post-lead { color: var(--paper); }
+  html[data-theme="dark"] .article-byline { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .article-byline a { color: var(--paper); }
+  html[data-theme="dark"] .companion-note { background: rgba(245,241,234,.04); color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .article hr { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-badge { background: var(--accent-2); color: var(--ink-1); }
+  /* Article body */
+  html[data-theme="dark"] .article-body p { color: var(--paper-2); }
+  html[data-theme="dark"] .article-body p strong { color: var(--paper); }
+  html[data-theme="dark"] .article-body h2 { color: var(--paper); }
+  html[data-theme="dark"] .article-body h3 { color: var(--paper); }
+  html[data-theme="dark"] .article-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .article-body li::marker { color: var(--accent-2); }
+  /* Callouts */
+  html[data-theme="dark"] .callout { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .callout p { color: var(--paper-2); }
+  html[data-theme="dark"] .callout p strong { color: var(--paper); }
+  html[data-theme="dark"] .callout--warn { background: rgba(224,146,38,.14); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout--warn { background: rgba(224,146,38,.14); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout-icon { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout-title { color: var(--paper); }
+  html[data-theme="dark"] .ct-callout-body p { color: var(--paper-2); }
+  /* Pull quote / quotable */
+  html[data-theme="dark"] .pullquote { border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .pullquote blockquote { color: var(--paper); }
+  html[data-theme="dark"] .pullquote blockquote em { color: var(--accent-2); }
+  html[data-theme="dark"] .pullquote cite { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .pullquote cite a { color: var(--accent-2); }
+  html[data-theme="dark"] .quotable { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .quotable p { color: var(--paper); }
+  html[data-theme="dark"] .quotable .source { color: rgba(245,241,234,.55); }
+  /* Precedence list */
+  html[data-theme="dark"] .precedence-list > li { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .precedence-list > li::before { color: var(--accent-2); }
+  html[data-theme="dark"] .prec-label { color: var(--paper); }
+  html[data-theme="dark"] .prec-desc { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .prec-badge.strongest { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] .prec-badge.weakest { background: rgba(245,241,234,.15); color: rgba(245,241,234,.6); }
+  /* Tables */
+  html[data-theme="dark"] .ct-table-wrap { border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-table th { background: rgba(245,241,234,.04); color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-table td { border-bottom-color: rgba(245,241,234,.1); color: var(--paper-2); }
+  html[data-theme="dark"] .ct-table strong { color: var(--paper); }
+  html[data-theme="dark"] .ct-table .num { color: var(--paper-2); }
+  html[data-theme="dark"] .ct-table .highlight { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-table .dim { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ct-table .col-label { color: var(--paper); }
+  html[data-theme="dark"] .ct-table .col-pick { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-table .is-exit td { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ct-table .is-exit .col-pick { color: rgba(245,241,234,.4); }
+  /* Stat cards (case study) */
+  html[data-theme="dark"] .stat-row { background: rgba(245,241,234,.1); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .stat-card { background: rgba(245,241,234,.04); }
+  html[data-theme="dark"] .stat-number { color: var(--paper); }
+  html[data-theme="dark"] .stat-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .stat-card--mobile { background: rgba(224,146,38,.1); border-top-color: var(--accent-2); }
+  html[data-theme="dark"] .stat-card--mobile .stat-number { color: var(--accent-2); }
+  html[data-theme="dark"] .stat-card--desktop { background: rgba(245,241,234,.04); border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .stat-card--desktop .stat-number { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .device-badge { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .stat-card--mobile .device-badge { color: var(--accent-2); }
+  /* FAQ */
+  html[data-theme="dark"] .faq-block { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .faq-q { color: var(--paper); }
+  html[data-theme="dark"] .faq-q::before { color: var(--accent-2); }
+  html[data-theme="dark"] .faq-a { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .faq-a code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .ct-faq details { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-faq summary { color: var(--paper); }
+  html[data-theme="dark"] .ct-faq summary::after { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-faq details[open] summary { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-faq-body { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-faq-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  /* Sources */
+  html[data-theme="dark"] .sources { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .sources h2 { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .sources li::before { color: var(--accent-2); }
+  html[data-theme="dark"] .sources li strong { color: var(--paper); }
+  html[data-theme="dark"] .sources li { color: var(--paper-2); }
+  /* Related tool card */
+  html[data-theme="dark"] .related-tool { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .related-tool-tag { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool h3 a { color: var(--paper); }
+  html[data-theme="dark"] .related-tool:hover h3 a { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool-outcome { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .related-tool-cta { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool:hover { border-color: rgba(245,241,234,.25); }
+  /* Author card */
+  html[data-theme="dark"] .author-card { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .author-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .author-name { color: var(--paper); }
+  html[data-theme="dark"] .author-name a { color: var(--paper); }
+  html[data-theme="dark"] .author-name a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .author-role { color: var(--accent-2); }
+  html[data-theme="dark"] .author-bio { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .author-photo { background: rgba(245,241,234,.06); border-color: rgba(245,241,234,.1); color: rgba(245,241,234,.4); }
+  /* Series sidebar (case study) */
+  html[data-theme="dark"] .series-label { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .series-item { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .series-item-type { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .series-item-name { color: var(--paper); }
+  html[data-theme="dark"] .series-item.active .series-item-type { color: var(--accent-2); }
+  html[data-theme="dark"] .series-item.active .series-item-name { color: var(--accent-2); }
+  html[data-theme="dark"] .series-item.dim .series-item-name, html[data-theme="dark"] .series-item.dim .series-item-type { color: rgba(245,241,234,.4); }
+  /* TOC (right rail) */
+  html[data-theme="dark"] .ct-toc-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ct-toc-list { border-left-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-toc-list a { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-toc-list a:hover { color: var(--accent-2); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-toc-list a.active { color: var(--accent-2); border-left-color: var(--accent-2); }
+  /* Tool page editorial sections */
+  html[data-theme="dark"] .ct-section { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-section-label { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-section-label::before { background: var(--accent-2); }
+  html[data-theme="dark"] .ct-h2 { color: var(--paper); }
+  html[data-theme="dark"] .ct-lead { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .ct-body p { color: var(--paper-2); }
+  html[data-theme="dark"] .ct-body p strong { color: var(--paper); }
+  html[data-theme="dark"] .ct-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .ct-body li::marker { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-step { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-step-num { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-step h3 { color: var(--paper); }
+  html[data-theme="dark"] .ct-step p { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-pattern-cat { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-cheat-card { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-cheat-symbol { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-cheat-name { color: var(--paper); }
+  html[data-theme="dark"] .ct-cheat-desc { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-cheat-example { background: rgba(245,241,234,.06); color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ct-limit { background: rgba(224,146,38,.1); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-limit-icon { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-limit-title { color: var(--paper); }
+  html[data-theme="dark"] .ct-limit p { color: rgba(245,241,234,.65); }
+  /* Footer */
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] .footer-base { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .footer-base a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .footer-base a:hover { color: var(--paper); }
+  /* ── Full footer (ported from homepage for cross-page consistency) ──── */
+  .wrap-footer { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
+  footer.site .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { footer.site .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
+  footer.site .footer-brand .wordmark { color: var(--ink-1); }
+  footer.site .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
+  footer.site .footer-col h5 { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 20px; }
+  footer.site .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; }
+  footer.site .footer-col a { color: var(--ink-2); font-size: 14px; text-decoration: none; }
+  footer.site .footer-col a:hover { color: var(--accent); }
+  footer.site .footer-base { margin-top: 80px; padding: 28px 0 0 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; max-width: none; }
+  footer.site .footer-base a { color: var(--ink-4); text-decoration: none; }
+  footer.site .footer-base a:hover { color: var(--ink-1); }
+  /* Dark-mode overrides for full footer */
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] footer.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] footer.site .footer-brand p { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] footer.site .footer-col h5 { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
+  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
+  html[data-theme="dark"] footer.site .footer-base { border-top-color: rgba(245,241,234,.12); color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a:hover { color: var(--paper); }
+</style>
+</head>
+<body>
+<div class="draft-banner">
+  Redesign prototype · article page · forest variant · <a href="/redesign/">return to redesign home</a> · <a href="/">live site</a>
+</div>
+<header class="site">
+  <div class="site-inner">
+    <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/redesign/#research">Research</a>
+      <a href="/redesign/#guides">Guides</a>
+      <a href="/redesign/#tools">Tools</a>
+      <a href="/redesign/#about">About</a>
+      <a href="/redesign/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content" class="article">
+  <div class="article-grid">
+    <article class="article-body">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/redesign/">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="/redesign/#research">Notes</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Ecommerce SEO</span>
+      </nav>
+      <a class="post-cat" href="/redesign/#research">Ecommerce SEO</a>
+      <h1 class="post-h1">Google Shipping and Return Settings: All Your Options, and What Takes Precedence</h1>
+      <div class="post-meta">
+        <span>28 May 2026</span>
+        <span class="post-meta-dot"></span>
+        <span>12 min read</span>
+        <span class="post-meta-dot"></span>
+        <span>By Mags Sikora</span>
+      </div>
+      <p class="post-lead">Shipping and return policies can be configured in multiple places with Google, and the interactions between those places are not always obvious. If you're getting into conflicts, seeing stale data surfaced, or just trying to understand which method is right for your setup, here's how it all fits together.</p>
+      <p>The reason this gets complicated is that Google surfaces shipping and return information across multiple products (Shopping ads, free listings, product rich results), and each product has slightly different data requirements and ingestion paths. There is no single "shipping settings" field. There are five distinct configuration layers, each with its own scope and authority.</p>
+      <h2 id="five-layers">The five configuration layers</h2>
+      <p>Before getting into the details of each, it's useful to have the full picture. Google can read your shipping and return information from:</p>
+      <ol>
+        <li><strong>Product-level feed attributes in Merchant Center:</strong> set per-product in your submitted feed.</li>
+        <li><strong>Programmatic <a href="https://developers.google.com/merchant/api" target="_blank" rel="noopener">Merchant API v1</a>:</strong> settings written via the API, mostly by feed management platforms and automation tools.</li>
+        <li><strong>Account-level settings in Merchant Center or Search Console:</strong> the same layer in precedence, but GMC has primacy. Anything set in Search Console auto-syncs into Merchant Center; once a policy is created or edited in MC, it can only be managed there, and Search Console shows it as a read-only reference for 30 days.</li>
+        <li><strong>Product-level merchant listing markup:</strong> <code>shippingDetails</code> and <code>hasMerchantReturnPolicy</code> in structured data on individual product pages.</li>
+        <li><strong>Organisation-level markup:</strong> return policy defined at site level in Organisation schema. The fallback signal.</li>
+      </ol>
+      <p>Each layer has a different scope and a different relationship to the others. The right combination depends on your stack, how often your policies change, and whether you're running Shopping campaigns or relying on free listings and rich results.</p>
+      <h2 id="merchant-center-settings">Merchant Center: the canonical home for Shopping</h2>
+      <p>If you're running Google Shopping campaigns or want your products to appear in free listings with accurate shipping and return information, Merchant Center is where that data lives. You configure <a href="https://support.google.com/merchants/answer/6069284" target="_blank" rel="noopener">shipping settings</a> and <a href="https://support.google.com/merchants/answer/10220642" target="_blank" rel="noopener">return policies</a> under the relevant account settings sections.</p>
+      <p>Account-level settings in GMC apply to your entire product catalogue by default. You define shipping services (carrier, regions, rates, transit times), return windows, conditions, and fees. These settings are what Google uses to populate the shipping and returns annotations you see on Shopping listings.</p>
+      <p>The main advantage of GMC settings over markup is control and visibility. You can preview how policies will display, and changes take effect across your entire catalogue without touching individual product pages or feeds.</p>
+      <div class="callout">
+        <p><strong>For most retailers running Shopping:</strong> GMC settings are the primary source. Markup can complement them, but it won't override GMC data when both are present.</p>
+      </div>
+      <h2 id="search-console-settings">Search Console: an alternative that auto-syncs to GMC</h2>
+      <p>This is the least-known option and the source of the most confusion I see. You can configure shipping and return policies directly in Search Console under <strong>Settings</strong>, and Google will automatically push those settings to Merchant Center.</p>
+      <p>This matters in a few scenarios:</p>
+      <ul>
+        <li>You have a verified Search Console property but haven't completed full GMC onboarding</li>
+        <li>You want a simpler UI for managing policies without navigating GMC's more complex settings structure</li>
+        <li>You manage multiple properties and find SC a cleaner entry point</li>
+      </ul>
+      <p>The key point is that SC settings and GMC settings are not separate databases. They converge, but with a primacy rule. Anything you set in Search Console auto-syncs into Merchant Center. Once a policy is touched in MC after that, it belongs to MC: Search Console can no longer edit it, and shows the policy as a read-only reference for 30 days.</p>
+      <div class="callout callout--warn">
+        <p><strong>If your GMC policies changed unexpectedly after a recent Search Console edit,</strong> the auto-push is the cause. Once you then edit the policy in MC, the SC version becomes read-only. The Search Console UI is the entry point, not the system of record.</p>
+      </div>
+      <h2 id="merchant-listing-markup">Merchant listing markup: product-level signals</h2>
+      <p>Shipping and return information can also be embedded directly in your product pages via structured data. The relevant properties are <code>shippingDetails</code> and <code>hasMerchantReturnPolicy</code>, used in <a href="/merchant-listing-schema/">merchant listing markup</a> on individual product pages.</p>
+      <p>This approach puts the data in the page itself, which can be useful when:</p>
+      <ul>
+        <li>You don't have a GMC account but want shipping and returns to appear in product rich results</li>
+        <li>Policies vary significantly by product and you want per-product precision in the markup</li>
+        <li>You want markup to act as a backup signal when feed data isn't present</li>
+      </ul>
+      <p>The limitation is maintenance. Every time a policy changes (new return window, updated shipping costs, expanded regions), you either update every affected product page or accept that your markup is stale. For catalogues with frequent policy changes, this overhead is real.</p>
+      <p>To generate the correct markup for your product pages, use the <a href="/merchant-listing-schema-generator/">Merchant Listing Schema Generator</a>.</p>
+      <h2 id="organisation-markup">Organisation markup: the weakest signal</h2>
+      <p>It's also possible to define return policies at the site level using <a href="https://developers.google.com/search/docs/appearance/structured-data/organization" target="_blank" rel="noopener">Organisation schema</a>. This applies a single policy to the entire site rather than individual products.</p>
+      <p>This is the weakest configuration in the hierarchy. Google treats organisation-level signals as a fallback: useful when no other data is available, but easily overridden by anything more specific. If you have GMC settings, a product feed, or product-level markup, organisation markup won't make a material difference to what Google shows.</p>
+      <p>Where it can help: smaller retailers without a GMC account and without product-level markup who want some policy signal present. It's better than nothing, but it's not a substitute for the approaches above.</p>
+      <h2 id="precedence">What Google uses when you define multiple configurations</h2>
+      <p>This is the part that trips people up. When shipping or return data exists in more than one place, Google follows a strict order of precedence. Stronger sources override weaker ones completely. There is no blending.</p>
+      <ol class="precedence-list">
+        <li>
+          <div class="prec-label">Product-level feed attributes in Merchant Center<span class="prec-badge strongest">Strongest</span></div>
+          <div class="prec-desc">The <code>shipping</code> and <code>return_policy_label</code> attributes set on individual products in your submitted feed. These override everything else for that specific product.</div>
+        </li>
+        <li>
+          <div class="prec-label">Merchant API v1 (programmatic)</div>
+          <div class="prec-desc">Shipping and return configuration written programmatically via the API. Used by feed management platforms and automation tools.</div>
+        </li>
+        <li>
+          <div class="prec-label">Settings in Merchant Center or Search Console</div>
+          <div class="prec-desc">Account-level policies. The two converge, but GMC has primacy: once a policy is created or edited in Merchant Center, it can only be managed there. Search Console shows it as a read-only reference for 30 days.</div>
+        </li>
+        <li>
+          <div class="prec-label">Product-level merchant listing markup</div>
+          <div class="prec-desc"><code>shippingDetails</code> and <code>hasMerchantReturnPolicy</code> in structured data on individual product pages.</div>
+        </li>
+        <li>
+          <div class="prec-label">Organisation-level markup<span class="prec-badge weakest">Weakest</span></div>
+          <div class="prec-desc">Return policy defined at site level in Organisation schema. Only used when no higher-precedence source exists.</div>
+        </li>
+      </ol>
+      <p>The practical implication: if you have a product feed with <code>shipping</code> attributes set, your structured data values for shipping are functionally invisible to Google Shopping. The feed wins. Markup can still support rich results independently, but for Shopping purposes it's been overridden.</p>
+      <p>This also means that cleaning up a conflict isn't always about fixing the markup. It's about understanding which layer is actually winning and whether that layer has correct data.</p>
+      <h2 id="silent-failure">The silent failure mode</h2>
+      <p>This is the failure mode that costs people the most time, because nothing about it looks like a failure.</p>
+      <p>You implement Merchant Listing markup. It validates in the Rich Results Test. The product page passes Search Console's structured data checks. Nothing breaks. There is no error, no warning, and no indication that anything is wrong.</p>
+      <p>Six months later, someone notices that the rich result in Shopping is showing free delivery while the website charges £4.99. Or worse: a listing is rejected for a mismatch nobody knew existed. The investigation eventually traces back to an account-level shipping rate set in Merchant Center years ago, never updated, quietly overriding every line of markup since.</p>
+      <p>The markup didn't fail. It was never the source of truth in the first place. Nothing in the validation tooling tells you that.</p>
+      <div class="pullquote">
+        <blockquote>
+          Most product schema isn't broken. It's <em>valid</em>. The data underneath it just doesn't match the page, the feed, and the catalogue — and Google trusts none of them.
+        </blockquote>
+        <cite>— from <a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a></cite>
+      </div>
+      <h2 id="worked-example">A worked example</h2>
+      <p>A UK retailer has all four layers populated:</p>
+      <ul>
+        <li>A Merchant Center feed with <code>shipping(country:GB, price:4.99 GBP, service:Standard)</code> on most SKUs</li>
+        <li>A Search Console shipping policy of "Free over £50, otherwise £3.99" set last year</li>
+        <li>Product-level JSON-LD with <code>OfferShippingDetails</code> returning £2.99 for orders under 1kg</li>
+        <li>An <code>Organization</code> block with a generic <code>shippingDetails</code> of "£4.99 standard UK shipping"</li>
+      </ul>
+      <p>Which one shows up in the rich result?</p>
+      <p>The feed value: £4.99. For any SKU covered by the feed, the Search Console policy is ignored, the JSON-LD is ignored, and the Organisation markup is ignored. For SKUs not in the feed, the Search Console policy takes over. The markup only ever drives the rich result for SKUs in neither layer, which on most ecommerce sites is effectively zero products.</p>
+      <p>Now consider the scenario where the merchandising team runs a feed-level promotion that drops shipping to £2.99, the dev team updates the feed, and the on-site shipping rule never gets touched. Customers click the listing expecting £2.99 and find £4.99 at checkout. Google's documentation is explicit about what happens next: a listing can be rejected if Google finds a lower shipping cost on the listing than on the website. The direction of the mismatch matters. Listing cheaper than site is rejection territory; site cheaper than listing is not. Either way, the gap between them is what gets flagged.</p>
+      <div class="callout callout--warn">
+        <p><strong>Same currency, same number, same conditions.</strong> If the rich result shows one shipping figure and the checkout shows another, listing rejection is the automated consequence. There is no grace window and no approximation.</p>
+      </div>
+      <h2 id="where-each-layer-fits">Where each layer is the right source of truth</h2>
+      <p>No single layer is correct for every retailer. The right home for shipping and return data depends on your catalogue size, how often policies change, and whether you operate a feed at all.</p>
+      <h3 id="feed-source">When the feed is the right source</h3>
+      <ul>
+        <li>You sell more than a handful of SKUs and shipping varies by weight, category, or region</li>
+        <li>You run frequent promotions that affect shipping costs or thresholds</li>
+        <li>You already operate a Merchant Center feed, at which point the feed becomes the practical canonical source whether that was intentional or not</li>
+      </ul>
+      <h3 id="account-source">When Search Console or Merchant Center account-level is the right source</h3>
+      <ul>
+        <li>You have one shipping policy per country and it rarely changes</li>
+        <li>You do not have a feed, do not want one, and just need policies attached to your domain for free listings</li>
+        <li>Your return window and cost are consistent across products</li>
+      </ul>
+      <h3 id="markup-source">When product-level markup is the right source</h3>
+      <ul>
+        <li>You have no Merchant Center account at all and Search Console settings are too coarse for your catalogue</li>
+        <li>You want a defensive signal for AI Overviews, third-party indexers, and merchant listings outside Google's Shopping graph</li>
+        <li>You want a single canonical place. Your CMS already has shipping logic, and mirroring it in markup keeps the data auditable in one spot</li>
+      </ul>
+      <h3 id="common-conflicts">Where conflicts most often appear</h3>
+      <ul>
+        <li>You implement markup <em>and</em> a feed, then update only one. The feed wins, the markup goes stale</li>
+        <li>You set policies in both Merchant Center and Search Console, edit the MC version, and wonder why the Search Console UI still shows the old one. It will, with a note that the policy is now managed in MC, for 30 days</li>
+        <li>You submit return policies and assume they are live. Returns require manual verification and take 10 to 13 days. Shipping is auto-approved on submission. Schedule launches accordingly</li>
+        <li>You declare shipping costs on <code>Organization</code> and assume that covers product pages. It does not. Organisation-level is the weakest signal and only applies when nothing higher-precedence exists</li>
+      </ul>
+      <h2 id="decision-tree">The decision tree</h2>
+      <p>Work through in order. Stop at the first match.</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr>
+              <th>If this describes you</th>
+              <th>Source of truth</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-label">Merchant Center + product feed</td>
+              <td class="col-pick">Feed-level</td>
+              <td>Set policies at the feed level for fed SKUs. Account-level GMC settings cover any SKUs not in the feed. Markup is optional for non-Google surfaces.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Merchant Center, no feed</td>
+              <td class="col-pick">Account-level MC</td>
+              <td>Use the account-level Merchant Center settings. Skip markup unless you have a specific non-Google reason.</td>
+            </tr>
+            <tr>
+              <td class="col-label">No MC, simple policies</td>
+              <td class="col-pick">Search Console</td>
+              <td><strong>Settings &rsaquo; Shopping &rsaquo; Shipping and returns</strong>. Counts for free listings. Returns verify in 10 to 13 days.</td>
+            </tr>
+            <tr>
+              <td class="col-label">No MC, complex policies</td>
+              <td class="col-pick">Product-level markup</td>
+              <td>Per-category return windows, regional cost tiers. Maintain it, and plan to migrate to Merchant Center when you can.</td>
+            </tr>
+            <tr class="is-exit">
+              <td class="col-label">None of the above</td>
+              <td class="col-pick">none</td>
+              <td>You probably do not have an ecommerce site.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="what-to-do-instead">What to do instead of "implement schema and forget"</h2>
+      <p>The single most useful principle: decide where the source of truth lives, then make every other layer either inherit from it or stay out of the way.</p>
+      <p>Concretely, that means a few habits:</p>
+      <ul>
+        <li><strong>Pick one canonical system.</strong> Feed, Search Console, or markup. Document the decision. Tell the team. The cost of <em>which</em> system you pick is much smaller than the cost of leaving the choice implicit.</li>
+        <li><strong>If you have a Merchant Center feed, deprecate manually set policies in Search Console.</strong> They will not be honoured for fed products anyway, and keeping them around creates a drift surface no one wants to audit six months later.</li>
+        <li><strong>If you keep markup as a safety net, audit it on every shipping price change.</strong> A simple monthly diff between your <code>OfferShippingDetails</code> values and your Merchant Center feed values catches drift before Google does.</li>
+        <li><strong>Match the on-site shipping cost to the listing exactly.</strong> Not approximately. Same currency, same number, same conditions. Recovering a rejected listing is straightforward but slow, and the impressions lost during the recovery window do not come back.</li>
+        <li><strong>Treat returns and shipping as separate launches.</strong> Returns verify slower than shipping. If you are launching a new return policy, set it up around two weeks before you need it live. Shipping you can set the morning of.</li>
+      </ul>
+      <h2 id="making-the-change">Making the change without breaking what works</h2>
+      <p>If you are currently signalling shipping in three or four places and want to consolidate, the migration is not particularly complex, but it does need to happen in order.</p>
+      <ol>
+        <li><strong>Audit current state.</strong> Pick three representative products. For each, manually compare the feed value, the Merchant Center account-level value, the Search Console value, the JSON-LD value, and the on-site checkout value. List them in a sheet. The number of cells that do not match will be larger than you expect.</li>
+        <li><strong>Decide the canonical source.</strong> Use the decision tree above.</li>
+        <li><strong>Update the canonical source first.</strong> Confirm it propagates: typically 24 to 48 hours for feed-level changes, longer if your re-crawl backlog is long.</li>
+        <li><strong>Then strip or align the weaker signals.</strong> Remove conflicting account-level policies. Update markup to match, or remove it entirely. Update <code>Organization</code> markup to a plausible site-wide fallback or leave it out.</li>
+        <li><strong>Re-test.</strong> Pull a sample of products through the Rich Results Test. Check Merchant Center diagnostics for shipping or returns warnings. Verify the live rich result in a real search query.</li>
+      </ol>
+      <p>There is no shortcut and no tool that handles this end-to-end. The cleanup is the project.</p>
+      <h2 id="search-console-route">A closer look at the Search Console route</h2>
+      <p>For sites without a Merchant Center account, the Search Console <strong>Shipping and returns</strong> settings (under <strong>Settings &rsaquo; Shopping</strong>) are a useful addition. They give you a Merchant Center-grade signal without the overhead of running a feed. The forms are limited (one shipping policy per country, flat or "free over X" cost models, basic return windows), but for a long tail of merchants that is enough.</p>
+      <p>A few things worth knowing before you commit to this route:</p>
+      <ul>
+        <li>Owner or full user access on the Search Console property is required</li>
+        <li>If you also have a Merchant Center account, you must associate the two. Policies created in MC then appear in Search Console as a read-only link for 30 days. After that, they are managed only in MC. This is intentional and worth knowing before someone goes hunting for them in the wrong interface</li>
+        <li>Returns require manual verification. You submit them, wait 10 to 13 days, then check the status. Shipping is auto-approved on submission</li>
+        <li>Anything you set in Search Console is automatically pushed to Merchant Center if the accounts are linked. That is useful for keeping a single source of truth without operating the feed yourself</li>
+      </ul>
+      <h2 id="beyond-google">Beyond Google: the durable principle</h2>
+      <p>The precedence ladder above is specific to Google. The principle underneath it, alignment between feed, schema, and front-end, outlasts any specific platform. Other automated buyers, including AI shopping agents, compare the same layers, and when the layers disagree the rational response is to trust none of them. Consolidating to one canonical source is not a Google-only fix. It is what keeps the catalogue legible to whichever system reads it next.</p>
+      <div class="callout">
+        <p><strong>Shipping and returns is a source-of-truth problem, not a markup problem.</strong> Google reads from up to five places, in order, and uses the first one it finds. The job is to pick which place that is, make the on-site experience match it exactly, and accept that the other four are either inherited or quietly ignored. That is not less work than "just implement schema." It is the work you would have done anyway, surfaced.</p>
+      </div>
+      <!-- ── FAQ ── -->
+      <div class="faq-block">
+        <h2 id="faq">Frequently asked questions</h2>
+        <p class="faq-q">Can I rely on Search Console settings if I sell internationally?</p>
+        <p class="faq-a">You can, but you have to set a policy per country. There is no "rest of world" wildcard. Once you are over five or six markets, the maintenance overhead starts to favour a Merchant Center feed.</p>
+        <p class="faq-q">What about returns for digital products?</p>
+        <p class="faq-a">Mark them as <code>MerchantReturnNotPermitted</code> in either the policy UI or your markup. Do not leave the field blank. Blank reads as "policy not declared" and can suppress the merchant listing enhancement entirely.</p>
+        <p class="faq-q">My Merchant Center policy was edited yesterday and Search Console still shows the old version. What happened?</p>
+        <p class="faq-a">Search Console shows MC-managed policies for 30 days as a read-only reference. Edits in MC do not flow back to that view. Manage policies in Merchant Center going forward. The Search Console view is a courtesy, not a sync.</p>
+      </div>
+      <!-- ── Related tool card ── -->
+      <div class="related-tool">
+        <span class="related-tool-tag">Related tool</span>
+        <h3><a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a></h3>
+        <p class="related-tool-outcome">Catch feed errors before Google does.</p>
+        <span class="related-tool-cta">Open the analyzer →</span>
+      </div>
+      <!-- ── Sources ── -->
+      <div class="sources">
+        <h2>Sources &amp; further reading</h2>
+        <ul>
+          <li><strong>Related on MagsTags:</strong> <a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a>. The broader pattern of silent failures across page, schema, and feed layers.</li>
+          <li><strong>Related on MagsTags:</strong> <a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Structured Data: Rich Results, Google Shopping and What Actually Moves the Needle at Scale</a>. The three-layer alignment framework this post sits inside.</li>
+          <li><strong>Related on MagsTags:</strong> <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand</a>. Feed vs. markup alignment for the identifier side of the same problem.</li>
+          <li><strong>Tool:</strong> <a href="/merchant-listing-schema-generator/">Merchant Listing Schema Generator</a>. Generate correct JSON-LD for <code>OfferShippingDetails</code> and <code>MerchantReturnPolicy</code>.</li>
+          <li><strong>Tool:</strong> <a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a>. Audit shipping, returns, and identifier attributes across a Merchant Center feed.</li>
+          <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/6069284" rel="noopener noreferrer" target="_blank">Shipping settings</a></li>
+          <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/10220642" rel="noopener noreferrer" target="_blank">Return policies</a></li>
+          <li><strong>Google Search Console Help:</strong> <a href="https://support.google.com/webmasters/answer/14907594" rel="noopener noreferrer" target="_blank">Add shipping and return policies in Search Console</a></li>
+          <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/merchant-listing" rel="noopener noreferrer" target="_blank">Merchant listing (product snippet) structured data</a></li>
+          <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/organization" rel="noopener noreferrer" target="_blank">Organization structured data</a></li>
+        </ul>
+      </div>
+      <!-- ── Author card ── -->
+      <div class="author-card">
+        <div class="author-photo">Photo</div>
+        <div>
+          <div class="author-label">Written by</div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Senior SEO Consultant</div>
+          <p class="author-bio">Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+    </article>
+    <!-- ── Right rail TOC (all 14 sections) ── -->
+    <aside class="ct-toc" aria-label="On this page">
+      <div class="ct-toc-label">On this page</div>
+      <ul class="ct-toc-list">
+        <li><a href="#five-layers" class="active">The five layers</a></li>
+        <li><a href="#merchant-center-settings">Merchant Center</a></li>
+        <li><a href="#search-console-settings">Search Console</a></li>
+        <li><a href="#merchant-listing-markup">Merchant listing markup</a></li>
+        <li><a href="#organisation-markup">Organisation markup</a></li>
+        <li><a href="#precedence">What takes precedence</a></li>
+        <li><a href="#silent-failure">The silent failure mode</a></li>
+        <li><a href="#worked-example">A worked example</a></li>
+        <li><a href="#where-each-layer-fits">Where each layer fits</a></li>
+        <li><a href="#decision-tree">The decision tree</a></li>
+        <li><a href="#what-to-do-instead">What to do instead</a></li>
+        <li><a href="#making-the-change">Making the change</a></li>
+        <li><a href="#search-console-route">The Search Console route</a></li>
+        <li><a href="#beyond-google">Beyond Google</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </aside>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Research</h5>
+        <ul>
+          <li><a href="/notes/">All notes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Guides</h5>
+        <ul>
+          <li><a href="/learn-seo/">Learn SEO</a></li>
+          <li><a href="/product-schema/">Product schema</a></li>
+          <li><a href="/merchant-listing-schema/">Merchant listing</a></li>
+          <li><a href="/product-variants-schema/">Product variants</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Tools</h5>
+        <ul>
+          <li><a href="/ecommerce-schema-generator/">Schema generators</a></li>
+          <li><a href="/gsc-regex-generator/">GSC regex</a></li>
+          <li><a href="/hreflang-generator/">Hreflang</a></li>
+          <li><a href="/free-seo-tools/">All tools →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Mags</h5>
+        <ul>
+          <li><a href="/mags-sikora/">About</a></li>
+          <li><a href="/contact/">Work with Mags</a></li>
+          <li><a href="/redesign/#newsletter">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  // Active TOC link on scroll
+  (function() {
+    var links = document.querySelectorAll('.ct-toc-list a');
+    var headings = Array.from(document.querySelectorAll('.article-body h2[id]'));
+    if (!headings.length) return;
+    function update() {
+      var top = window.scrollY + 140;
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].offsetTop <= top) active = headings[i];
+      }
+      links.forEach(function(l) {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('mt-theme', next); } catch(e) {}
+  };
+</script>
+</body>
+</html>

@@ -13,7 +13,9 @@
   <title>Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     #blog-content{display:block}
     .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
@@ -21,14 +23,14 @@
     .breadcrumb a{color:var(--text-4);text-decoration:none}
     .breadcrumb a:hover{color:var(--teal)}
     .breadcrumb span{opacity:.5}
-    .post-category{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:var(--mint-light);color:var(--teal);margin-bottom:16px}
-    .post-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-category{ font-family: 'IBM Plex Mono','Menlo',monospace;display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background: transparent;color: var(--accent-2);margin-bottom:16px; border: 1px solid var(--accent-2); }
+    .post-h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:clamp(28px,4vw,40px);font-weight: 400;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
     .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
     .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
     .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
     .post-body p{margin-bottom:22px}
-    .post-body h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
-    .post-body h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
+    .post-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 500;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
     .post-body strong{color:var(--text-1);font-weight:600}
     .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
     .post-body li{margin-bottom:10px;line-height:1.75}
@@ -41,7 +43,7 @@
     html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
     .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
     .post-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
-    .post-table th{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left;white-space:nowrap}
+    .post-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left;white-space:nowrap}
     .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
     .post-table tr:last-child td{border-bottom:none}
     .post-table .col-label{font-weight:600;color:var(--text-1)}
@@ -52,22 +54,22 @@
     .id-card-tag.internal{background:var(--bg2);color:var(--text-3);border:1px solid var(--border)}
     html.dark .id-card-tag.global{background:#0f1e3d;color:#93c5fd;border-color:#1e40af}
     html.dark .id-card-tag.mfr{background:#052e16;color:#4ade80;border-color:#166534}
-    .id-card h3{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text-1);margin:0 0 8px 0}
+    .id-card h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight:700;color:var(--text-1);margin:0 0 8px 0}
     .id-card p{font-size:15px;color:var(--text-2);line-height:1.7;margin:0 0 8px 0}
     .id-card p:last-child{margin:0}
     .audit-steps{counter-reset:audit;list-style:none;padding:0;margin:28px 0}
     .audit-steps li{counter-increment:audit;display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border);font-size:16px;line-height:1.7;color:var(--text-2)}
     .audit-steps li:last-child{border-bottom:none}
-    .audit-steps li::before{content:counter(audit);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px;font-family:'Space Grotesk',sans-serif}
+    .audit-steps li::before{content:counter(audit);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px;font-family:'IBM Plex Mono','Menlo',monospace}
     .faq-block{margin:52px 0}
-    .faq-block h2{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
+    .faq-block h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
     .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
     .faq-item:first-of-type{border-top:1px solid var(--border)}
-    .faq-q{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-1);margin-bottom:10px}
+    .faq-q{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight: 500;color:var(--text-1);margin-bottom:10px}
     .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
     .faq-a a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
     .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
-    .sources h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text-1);margin:0 0 20px 0}
+    .sources h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight: 400;color:var(--text-1);margin:0 0 20px 0}
     .sources ul{padding-left:0;list-style:none}
     .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
     .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
@@ -78,10 +80,10 @@
     .author-inner{display:flex;align-items:flex-start;gap:24px;}
     .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border);}
     .author-details{flex:1;min-width:0;}
-    .author-name{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px;}
+    .author-name{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 400;color:var(--text-1);margin-bottom:4px;}
     .author-name a{color:inherit;text-decoration:none;}
     .author-name a:hover{color:var(--teal);}
-    .author-role{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px;}
+    .author-role{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px;}
     .author-bio{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:16px;}
     .author-links{display:flex;gap:12px;flex-wrap:wrap;}
     .author-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-3);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:99px;transition:all .15s;}
@@ -93,12 +95,12 @@
     .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
     .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
     .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
-    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight:600}
+    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight: 500}
     .ct-toc-toggle { display: none; }
     @media(max-width:960px) {
       .ct-layout { grid-template-columns: 1fr; gap: 0; }
       .ct-toc { position: static; padding: 0; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 32px; order: -1; max-height: none; overflow-y: visible; overflow: hidden; }
-      .ct-toc-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--surface); border: none; padding: 14px 16px; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-1); cursor: pointer; text-align: left; }
+      .ct-toc-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--surface); border: none; padding: 14px 16px; font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 13px; font-weight: 600; color: var(--text-1); cursor: pointer; text-align: left; }
       .ct-toc-toggle .ct-toc-arrow { font-size: 11px; color: var(--text-4); transition: transform .2s; }
       .ct-toc-toggle.open .ct-toc-arrow { transform: rotate(180deg); }
       .ct-toc-label { display: none; }
@@ -189,6 +191,22 @@
 <script src="/toc-generator.js"></script>
 </head>
 <body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
 <script>
   (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');})();
 </script>
@@ -217,7 +235,7 @@
       <div class="ct-content">
         <div class="post-body">
 
-      <p>Somewhere in your Merchant Center feed, there is a good chance a GTIN field contains a value that is not a GTIN. It uploaded without errors. It has been there for a while. Nothing in your diagnostics is on fire.</p>
+      <p class="post-lead">Somewhere in your Merchant Center feed, there is a good chance a GTIN field contains a value that is not a GTIN. It uploaded without errors. It has been there for a while. Nothing in your diagnostics is on fire.</p>
 
       <p>That's the problem. The Google documentation covers the definitions. What it doesn't cover is what actually goes wrong at scale, why it's invisible until it isn't, and how to find it before it costs you.</p>
 
@@ -453,7 +471,7 @@
     <div class="author-card">
             <div class="author-label">This article was written by</div>
             <div class="author-inner">
-            <img class="author-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="80" height="80">
+            <img class="author-photo" src="/mags-sikora/mags-sikora-portrait-bio.jpg" alt="Portrait of Mags Sikora" width="80" height="80" loading="lazy" decoding="async">
             <div class="author-details">
               <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
               <div class="author-role">Senior SEO Consultant, SEO Director</div>
@@ -496,7 +514,6 @@
   </div>
 </div>
 
-<script src="/header.js"></script>
 <script src="/cookie-consent.js"></script>
 <script>
 (function() {
@@ -526,21 +543,32 @@
 })();
 
 </script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
 </footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

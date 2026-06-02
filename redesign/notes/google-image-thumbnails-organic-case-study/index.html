@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('mt-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) {}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Image Thumbnails for Organic Results: Case Study — MagsTags</title>
+<meta name="description" content="Case study: 9,718 organic results across 293 fashion keywords. Mobile serves 92% more image thumbnails than desktop. Here's what Google actually shows.">
+<link rel="canonical" href="https://www.magstags.com/redesign/notes/google-image-thumbnails-organic-case-study/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens (forest variant) ──────────────────────────────────────────── */
+  :root {
+    --ink-1: #1a1916; --ink-2: #2d2a26; --ink-3: #58534c; --ink-4: #8a847a;
+    --paper: #f5f1ea; --paper-2: #ebe5d7; --rule: #d8d2c4;
+    --accent: #0E7490; --accent-2: #e09226;
+    --good: #2d6a4f;
+    --font-display: 'IBM Plex Mono', 'Menlo', monospace;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+    --font-reading: Georgia, 'Times New Roman', serif;
+    --t-h1: clamp(28px, 3.6vw, 44px);
+    --t-h2: clamp(20px, 2.2vw, 28px);
+    --t-h3: clamp(17px, 1.6vw, 20px);
+    --t-lead: clamp(18px, 1.4vw, 21px);
+    --t-body: 16.5px;
+    --gutter: clamp(20px, 4vw, 88px);
+    --section-y: clamp(60px, 8vw, 120px);
+    --max: 1280px;
+    --reading: 720px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); font-size: var(--t-body); line-height: 1.7; color: var(--ink-2); background: var(--paper); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
+  a:hover { color: var(--ink-1); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--ink-1); letter-spacing: -.02em; }
+  h1 { font-size: var(--t-h1); line-height: 1.1; font-weight: 400; }
+  h2 { font-size: var(--t-h2); line-height: 1.2; font-weight: 400; }
+  h3 { font-size: var(--t-h3); line-height: 1.3; font-weight: 500; }
+  /* ── Sticky header ───────────────────────────────────────────────────── */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(245,241,234,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; text-decoration: none; }
+  .wordmark em { font-style: italic; color: var(--accent); }
+  nav.primary { display: flex; gap: 32px; align-items: center; }
+  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; text-decoration: none; }
+  nav.primary a:hover { color: var(--accent); }
+  nav.primary .subscribe { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px; color: var(--ink-1); background: transparent; transition: background .15s, color .15s; }
+  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
+  @media (max-width: 800px) { nav.primary { gap: 18px; } nav.primary a:not(.subscribe) { display: none; } }
+  .draft-banner { background: var(--accent-2); color: var(--ink-1); padding: 8px 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
+  .draft-banner a { color: var(--ink-1); text-decoration: underline; }
+  /* ── Article layout (with series sidebar on left) ────────────────────── */
+  .article { padding: clamp(20px, 2.5vw, 40px) 0 var(--section-y); }
+  .article-grid { display: grid; grid-template-columns: 200px 1fr 200px; gap: clamp(40px, 5vw, 80px); align-items: start; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  @media (max-width: 1080px) { .article-grid { grid-template-columns: 1fr 200px; gap: clamp(32px, 4vw, 64px); } .series-sidebar { display: none; } }
+  @media (max-width: 960px) { .article-grid { grid-template-columns: 1fr; gap: 32px; } .ct-toc { display: none; } }
+  .article-body { max-width: var(--reading); min-width: 0; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; letter-spacing: .04em; }
+  .breadcrumb a { color: var(--ink-4); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { opacity: .5; }
+  .research-badge { display: inline-block; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; padding: 4px 12px; border-radius: 99px; background: var(--accent-2); color: var(--paper); margin-bottom: 18px; }
+  .article-byline { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-4); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 22px; }
+  .article-byline a { color: var(--ink-1); text-decoration: none; }
+  .article-byline a:hover { color: var(--accent); }
+  h1.post-h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h1); line-height: 1.1; letter-spacing: -.02em; color: var(--ink-1); margin-bottom: 16px; max-width: 22ch; }
+  .article-subhead { font-family: var(--font-display); font-size: clamp(18px, 1.8vw, 22px); font-weight: 400; color: var(--ink-3); line-height: 1.4; margin-bottom: 32px; font-style: italic; max-width: 28ch; }
+  .article-lead { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-2); margin-bottom: 24px; font-family: var(--font-reading); font-style: italic; }
+  .companion-note { font-size: 13.5px; color: var(--ink-4); padding: 14px 18px; background: var(--paper-2); border-radius: 4px; margin: 24px 0; line-height: 1.6; }
+  .article hr { border: none; border-top: 1px solid var(--rule); margin: 32px 0; }
+  /* ── Body typography ─────────────────────────────────────────────────── */
+  .article-body p { margin-bottom: 22px; line-height: 1.75; color: var(--ink-2); }
+  .article-body p strong { color: var(--ink-1); font-weight: 600; }
+  .article-body h2 { margin: 56px 0 18px; font-size: var(--t-h2); scroll-margin-top: 110px; }
+  .article-body h3 { margin: 36px 0 12px; font-size: var(--t-h3); scroll-margin-top: 110px; }
+  .article-body ul, .article-body ol { padding-left: 22px; margin-bottom: 22px; }
+  .article-body li { margin-bottom: 8px; line-height: 1.7; }
+  .article-body li::marker { color: var(--accent); }
+  .article-body code { font-family: var(--font-mono); font-size: 13.5px; background: var(--paper-2); padding: 2px 6px; border-radius: 3px; color: var(--ink-1); }
+  /* ── Stat cards ──────────────────────────────────────────────────────── */
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; margin: 32px 0; background: var(--rule); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+  .stat-card { background: var(--paper-2); padding: 22px 20px; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; text-align: left; }
+  .stat-number { font-family: var(--font-display); font-size: clamp(24px, 2.6vw, 32px); font-weight: 600; color: var(--ink-1); line-height: 1; letter-spacing: -.02em; }
+  .stat-label { font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); line-height: 1.3; margin-top: 6px; }
+  .stat-card--mobile { background: rgba(14,116,144,.07); border-top: 2px solid var(--accent); }
+  .stat-card--mobile .stat-number { color: var(--accent); }
+  .stat-card--desktop { background: var(--paper-2); border-top: 2px solid var(--rule); }
+  .stat-card--desktop .stat-number { color: var(--ink-3); }
+  .device-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 8px; }
+  .stat-card--mobile .device-badge { color: var(--accent); }
+  /* ── Quotable (stronger than pullquote) ──────────────────────────────── */
+  .quotable { background: var(--paper-2); border-left: 3px solid var(--accent); padding: 26px 30px; margin: 40px 0; border-radius: 0 4px 4px 0; }
+  .quotable p { font-family: var(--font-display); font-size: clamp(17px, 1.7vw, 20px); font-weight: 500; color: var(--ink-1); line-height: 1.4; margin: 0; letter-spacing: -.01em; }
+  .quotable .source { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); margin-top: 14px; text-transform: uppercase; letter-spacing: .1em; display: block; }
+  /* ── Titled callout with icon ────────────────────────────────────────── */
+  .ct-callout { display: flex; gap: 18px; padding: 22px 26px; margin: 32px 0; border-radius: 0 4px 4px 0; background: var(--paper-2); border-left: 3px solid var(--accent); }
+  .ct-callout--teal { border-left-color: var(--accent); }
+  .ct-callout--warn { border-left-color: var(--accent-2); background: rgba(224,146,38,.10); }
+  .ct-callout-icon { font-family: var(--font-mono); font-size: 18px; flex-shrink: 0; color: var(--accent); padding-top: 2px; }
+  .ct-callout--warn .ct-callout-icon { color: var(--accent-2); }
+  .ct-callout-body { flex: 1; }
+  .ct-callout-title { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--ink-1); margin-bottom: 6px; letter-spacing: -.005em; }
+  .ct-callout-body p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+  /* ── Tables with cell modifiers ──────────────────────────────────────── */
+  .ct-table-wrap { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; margin: 28px 0; }
+  .ct-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-family: var(--font-body); }
+  .ct-table th { text-align: left; padding: 11px 16px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+  .ct-table td { padding: 11px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; line-height: 1.5; }
+  .ct-table tr:last-child td { border-bottom: none; }
+  .ct-table strong { color: var(--ink-1); font-weight: 600; }
+  .ct-table .num { text-align: right; font-family: var(--font-mono); font-size: 12.5px; white-space: nowrap; }
+  .ct-table .highlight { color: var(--accent); font-weight: 600; }
+  .ct-table .dim { color: var(--ink-4); }
+  .ct-table .warn { color: var(--accent-2); font-weight: 600; }
+  .ct-table .good { color: var(--good); font-weight: 600; }
+  /* ── Companion image ─────────────────────────────────────────────────── */
+  .post-img { max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; margin: 32px 0 8px; }
+  .post-caption { font-size: 12.5px; color: var(--ink-4); font-style: italic; margin-bottom: 32px; }
+  /* ── Series sidebar (left rail) ──────────────────────────────────────── */
+  .series-sidebar { position: sticky; top: 100px; }
+  .series-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+  .series-item { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+  .series-item:last-child { border-bottom: none; }
+  .series-item:hover { color: var(--accent); }
+  .series-item-type { display: block; font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); margin-bottom: 4px; }
+  .series-item-name { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--ink-1); line-height: 1.3; }
+  .series-item.active .series-item-type { color: var(--accent); }
+  .series-item.active .series-item-name { color: var(--accent); }
+  .series-item.dim .series-item-name, .series-item.dim .series-item-type { color: var(--ink-4); }
+  /* ── Right rail TOC ──────────────────────────────────────────────────── */
+  .ct-toc { position: sticky; top: 100px; padding: 0; max-height: calc(100vh - 120px); overflow-y: auto; }
+  .ct-toc-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 14px; }
+  .ct-toc-list { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--rule); }
+  .ct-toc-list a { display: block; padding: 7px 0 7px 14px; font-size: 12px; color: var(--ink-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.4; }
+  .ct-toc-list a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .ct-toc-list a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* ── Related tool ────────────────────────────────────────────────────── */
+  .related-tool { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: clamp(28px, 3.5vw, 40px); margin-top: 48px; display: flex; flex-direction: column; gap: 10px; position: relative; transition: border-color .15s, transform .1s, box-shadow .15s; }
+  .related-tool:hover { border-color: var(--ink-3); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,0,0,.05); }
+  .related-tool-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+  .related-tool h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.2; color: var(--ink-1); margin: 4px 0 0; }
+  .related-tool h3 a { color: inherit; text-decoration: none; }
+  .related-tool h3 a::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+  .related-tool:hover h3 a { color: var(--accent); }
+  .related-tool-outcome { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin-top: 4px; font-style: italic; }
+  .related-tool-cta { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  /* ── Sources ─────────────────────────────────────────────────────────── */
+  .sources { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .sources h2 { font-size: 16px; margin: 0 0 18px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); font-weight: 600; }
+  .sources ul { padding: 0; list-style: none; margin: 0; }
+  .sources li { margin-bottom: 12px; font-size: 14px; line-height: 1.6; padding-left: 18px; position: relative; }
+  .sources li::before { content: '·'; position: absolute; left: 4px; color: var(--accent); font-weight: 700; }
+  /* ── Author card ─────────────────────────────────────────────────────── */
+  .author-card { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start; }
+  .author-photo { width: 80px; height: 80px; border-radius: 50%; background: var(--paper-2); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 9px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+  .author-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 8px; }
+  .author-name { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--ink-1); margin-bottom: 4px; }
+  .author-name a { color: inherit; text-decoration: none; }
+  .author-role { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+  .author-bio { font-size: 14px; color: var(--ink-3); line-height: 1.6; max-width: 540px; }
+  @media (max-width: 560px) { .author-card { grid-template-columns: 1fr; } }
+  /* ── Footer ──────────────────────────────────────────────────────────── */
+  footer.site { background: var(--ink-1); color: var(--paper-2); padding: clamp(48px, 6vw, 80px) 0 32px; margin-top: var(--section-y); }
+  .footer-base { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .footer-base a { color: var(--ink-4); text-decoration: none; }
+  .footer-base a:hover { color: var(--paper); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+  /* ── Theme toggle button (in header) ─────────────────────────────────── */
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
+  .theme-toggle svg { display: block; }
+  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
+  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  /* ── DARK MODE OVERRIDES (html[data-theme="dark"]) ───────────────────── */
+  html[data-theme="dark"] body { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] body a { color: var(--accent-2); }
+  html[data-theme="dark"] body a:hover { color: var(--paper); }
+  /* Header in dark */
+  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
+  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
+  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+  /* Article header */
+  html[data-theme="dark"] .breadcrumb { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .post-cat { color: var(--accent-2); border-color: var(--accent-2); }
+  html[data-theme="dark"] .post-h1 { color: var(--paper); }
+  html[data-theme="dark"] .article-subhead { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .post-meta { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .post-meta-dot { background: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .post-lead { color: var(--paper); }
+  html[data-theme="dark"] .article-byline { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .article-byline a { color: var(--paper); }
+  html[data-theme="dark"] .companion-note { background: rgba(245,241,234,.04); color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .article hr { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-badge { background: var(--accent-2); color: var(--ink-1); }
+  /* Article body */
+  html[data-theme="dark"] .article-body p { color: var(--paper-2); }
+  html[data-theme="dark"] .article-body p strong { color: var(--paper); }
+  html[data-theme="dark"] .article-body h2 { color: var(--paper); }
+  html[data-theme="dark"] .article-body h3 { color: var(--paper); }
+  html[data-theme="dark"] .article-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .article-body li::marker { color: var(--accent-2); }
+  /* Callouts */
+  html[data-theme="dark"] .callout { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .callout p { color: var(--paper-2); }
+  html[data-theme="dark"] .callout p strong { color: var(--paper); }
+  html[data-theme="dark"] .callout--warn { background: rgba(224,146,38,.14); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout--warn { background: rgba(224,146,38,.14); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout-icon { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-callout-title { color: var(--paper); }
+  html[data-theme="dark"] .ct-callout-body p { color: var(--paper-2); }
+  /* Pull quote / quotable */
+  html[data-theme="dark"] .pullquote { border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .pullquote blockquote { color: var(--paper); }
+  html[data-theme="dark"] .pullquote blockquote em { color: var(--accent-2); }
+  html[data-theme="dark"] .pullquote cite { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .pullquote cite a { color: var(--accent-2); }
+  html[data-theme="dark"] .quotable { background: rgba(245,241,234,.04); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .quotable p { color: var(--paper); }
+  html[data-theme="dark"] .quotable .source { color: rgba(245,241,234,.55); }
+  /* Precedence list */
+  html[data-theme="dark"] .precedence-list > li { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .precedence-list > li::before { color: var(--accent-2); }
+  html[data-theme="dark"] .prec-label { color: var(--paper); }
+  html[data-theme="dark"] .prec-desc { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .prec-badge.strongest { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] .prec-badge.weakest { background: rgba(245,241,234,.15); color: rgba(245,241,234,.6); }
+  /* Tables */
+  html[data-theme="dark"] .ct-table-wrap { border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-table th { background: rgba(245,241,234,.04); color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-table td { border-bottom-color: rgba(245,241,234,.1); color: var(--paper-2); }
+  html[data-theme="dark"] .ct-table strong { color: var(--paper); }
+  html[data-theme="dark"] .ct-table .num { color: var(--paper-2); }
+  html[data-theme="dark"] .ct-table .highlight { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-table .dim { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ct-table .col-label { color: var(--paper); }
+  html[data-theme="dark"] .ct-table .col-pick { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-table .is-exit td { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .ct-table .is-exit .col-pick { color: rgba(245,241,234,.4); }
+  /* Stat cards (case study) */
+  html[data-theme="dark"] .stat-row { background: rgba(245,241,234,.1); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .stat-card { background: rgba(245,241,234,.04); }
+  html[data-theme="dark"] .stat-number { color: var(--paper); }
+  html[data-theme="dark"] .stat-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .stat-card--mobile { background: rgba(224,146,38,.1); border-top-color: var(--accent-2); }
+  html[data-theme="dark"] .stat-card--mobile .stat-number { color: var(--accent-2); }
+  html[data-theme="dark"] .stat-card--desktop { background: rgba(245,241,234,.04); border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .stat-card--desktop .stat-number { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .device-badge { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .stat-card--mobile .device-badge { color: var(--accent-2); }
+  /* FAQ */
+  html[data-theme="dark"] .faq-block { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .faq-q { color: var(--paper); }
+  html[data-theme="dark"] .faq-q::before { color: var(--accent-2); }
+  html[data-theme="dark"] .faq-a { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .faq-a code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .ct-faq details { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-faq summary { color: var(--paper); }
+  html[data-theme="dark"] .ct-faq summary::after { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-faq details[open] summary { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-faq-body { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-faq-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  /* Sources */
+  html[data-theme="dark"] .sources { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .sources h2 { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .sources li::before { color: var(--accent-2); }
+  html[data-theme="dark"] .sources li strong { color: var(--paper); }
+  html[data-theme="dark"] .sources li { color: var(--paper-2); }
+  /* Related tool card */
+  html[data-theme="dark"] .related-tool { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .related-tool-tag { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool h3 a { color: var(--paper); }
+  html[data-theme="dark"] .related-tool:hover h3 a { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool-outcome { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .related-tool-cta { color: var(--accent-2); }
+  html[data-theme="dark"] .related-tool:hover { border-color: rgba(245,241,234,.25); }
+  /* Author card */
+  html[data-theme="dark"] .author-card { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .author-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .author-name { color: var(--paper); }
+  html[data-theme="dark"] .author-name a { color: var(--paper); }
+  html[data-theme="dark"] .author-name a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .author-role { color: var(--accent-2); }
+  html[data-theme="dark"] .author-bio { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .author-photo { background: rgba(245,241,234,.06); border-color: rgba(245,241,234,.1); color: rgba(245,241,234,.4); }
+  /* Series sidebar (case study) */
+  html[data-theme="dark"] .series-label { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .series-item { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .series-item-type { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .series-item-name { color: var(--paper); }
+  html[data-theme="dark"] .series-item.active .series-item-type { color: var(--accent-2); }
+  html[data-theme="dark"] .series-item.active .series-item-name { color: var(--accent-2); }
+  html[data-theme="dark"] .series-item.dim .series-item-name, html[data-theme="dark"] .series-item.dim .series-item-type { color: rgba(245,241,234,.4); }
+  /* TOC (right rail) */
+  html[data-theme="dark"] .ct-toc-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ct-toc-list { border-left-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-toc-list a { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-toc-list a:hover { color: var(--accent-2); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-toc-list a.active { color: var(--accent-2); border-left-color: var(--accent-2); }
+  /* Tool page editorial sections */
+  html[data-theme="dark"] .ct-section { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-section-label { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-section-label::before { background: var(--accent-2); }
+  html[data-theme="dark"] .ct-h2 { color: var(--paper); }
+  html[data-theme="dark"] .ct-lead { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .ct-body p { color: var(--paper-2); }
+  html[data-theme="dark"] .ct-body p strong { color: var(--paper); }
+  html[data-theme="dark"] .ct-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+  html[data-theme="dark"] .ct-body li::marker { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-step { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-step-num { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-step h3 { color: var(--paper); }
+  html[data-theme="dark"] .ct-step p { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-pattern-cat { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-cheat-card { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .ct-cheat-symbol { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-cheat-name { color: var(--paper); }
+  html[data-theme="dark"] .ct-cheat-desc { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .ct-cheat-example { background: rgba(245,241,234,.06); color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .ct-limit { background: rgba(224,146,38,.1); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .ct-limit-icon { color: var(--accent-2); }
+  html[data-theme="dark"] .ct-limit-title { color: var(--paper); }
+  html[data-theme="dark"] .ct-limit p { color: rgba(245,241,234,.65); }
+  /* Footer */
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] .footer-base { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .footer-base a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .footer-base a:hover { color: var(--paper); }
+  /* ── Full footer (ported from homepage for cross-page consistency) ──── */
+  .wrap-footer { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
+  footer.site .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { footer.site .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
+  footer.site .footer-brand .wordmark { color: var(--ink-1); }
+  footer.site .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
+  footer.site .footer-col h5 { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 20px; }
+  footer.site .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; }
+  footer.site .footer-col a { color: var(--ink-2); font-size: 14px; text-decoration: none; }
+  footer.site .footer-col a:hover { color: var(--accent); }
+  footer.site .footer-base { margin-top: 80px; padding: 28px 0 0 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; max-width: none; }
+  footer.site .footer-base a { color: var(--ink-4); text-decoration: none; }
+  footer.site .footer-base a:hover { color: var(--ink-1); }
+  /* Dark-mode overrides for full footer */
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] footer.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] footer.site .footer-brand p { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] footer.site .footer-col h5 { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
+  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
+  html[data-theme="dark"] footer.site .footer-base { border-top-color: rgba(245,241,234,.12); color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a:hover { color: var(--paper); }
+</style>
+</head>
+<body>
+<div class="draft-banner">
+  Redesign prototype · article page · forest variant · <a href="/redesign/">return to redesign home</a> · <a href="/">live site</a>
+</div>
+<header class="site">
+  <div class="site-inner">
+    <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/redesign/#research">Research</a>
+      <a href="/redesign/#guides">Guides</a>
+      <a href="/redesign/#tools">Tools</a>
+      <a href="/redesign/#about">About</a>
+      <a href="/redesign/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content" class="article">
+  <div class="article-grid">
+    <!-- ── Series sidebar (left) ── -->
+    <aside class="series-sidebar" aria-label="In this series">
+      <div class="series-label">In this series</div>
+      <a href="/notes/google-image-thumbnails/" class="series-item">
+        <span class="series-item-type">Part 1</span>
+        <span class="series-item-name">The Technical Reference</span>
+      </a>
+      <div class="series-item active">
+        <span class="series-item-type">Part 2 · You are here</span>
+        <span class="series-item-name">Organic Thumbnail Case Study: 9,718 Listings</span>
+      </div>
+      <div class="series-item dim">
+        <span class="series-item-type">Part 3 · Coming soon</span>
+        <span class="series-item-name">Qualitative thumbnail research</span>
+      </div>
+    </aside>
+    <article class="article-body">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/redesign/">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="/redesign/#research">Notes</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Original research</span>
+      </nav>
+      <span class="research-badge">Original research</span>
+      <div class="article-byline">By <a href="/mags-sikora/">Mags Sikora</a> · April 2026 · 18 min read</div>
+      <h1 class="post-h1">Google Image Thumbnails for Organic Results: Case Study</h1>
+      <p class="article-subhead">I checked 9,718 listings. Here's what Google actually shows.</p>
+      <p class="article-lead">Thumbnail presence in organic results is hard to measure at scale — so I ran my own test to understand it better: 293 non-branded women's fashion keywords, both devices, two US locations, 9,718 organic listings scanned via API. The short version: mobile gets nearly twice the visual real estate. The longer version is more interesting.</p>
+      <p class="companion-note">Companion piece: <a href="/notes/google-image-thumbnails/">Google Image Thumbnails in Organic — The Technical Reference</a> covers the <em>how</em> — what to implement so Google can actually pull your images. This article covers the <em>what</em> — which keywords, intents, and positions get thumbnails.</p>
+      <hr>
+      <div class="ct-callout">
+        <div class="ct-callout-icon">§</div>
+        <div class="ct-callout-body">
+          <div class="ct-callout-title">A note on scope</div>
+          <p>The numbers below are shaped by the keywords I chose. Different seeds, different patterns, different categories would produce different rates. This is a structured sample of one vertical, not a universal benchmark. Treat it as a directional snapshot — useful for spotting patterns and relative differences, not as ground truth for "what percentage of all Google results have thumbnails."</p>
+        </div>
+      </div>
+      <h2 id="how-i-tested">How I tested this</h2>
+      <p>I built a keyword set using a seed × pattern system: 39 product seeds (leggings, midi dress, blazer, ankle boots — across 9 fashion categories) crossed with 8 search modifier patterns that people type. That's 312 possible combinations, but 19 were dropped — all from the "fit + seed" pattern (e.g. "high waisted blazer") where the modifier produces a query nobody actually searches. The remaining 293 keywords all reflect real search behaviour.</p>
+      <p>The patterns ranged from bare product terms ("leggings") through colour modifiers ("black leggings"), "best" queries ("best leggings"), year-qualified reviews ("best leggings 2026"), outfit styling ("leggings outfit ideas"), and how-to queries ("how to style leggings"). This gave me systematic coverage across four intent groups: <strong>product + modifier</strong>, <strong>product</strong>, <strong>comparison</strong>, and <strong>informational</strong>.</p>
+      <p>I hit each keyword against Google's live organic results via the DataForSEO API, running separate mobile and desktop crawls. I ran the full set twice: once geo-locked to the US nationally, then again locked to Los Angeles to check for geo variation.</p>
+      <p>Combined dataset: <strong>9,718 organic results and 19,968 images catalogued</strong> across both locations. The US national numbers (4,823 results, 9,741 images) form the primary analysis. LA data (4,895 results, 10,227 images) is used for the geo comparison section.</p>
+      <div class="stat-row">
+        <div class="stat-card"><span class="stat-number">293</span><span class="stat-label">Keywords tested</span></div>
+        <div class="stat-card"><span class="stat-number">4</span><span class="stat-label">Intent types</span></div>
+        <div class="stat-card"><span class="stat-number">8</span><span class="stat-label">Search patterns</span></div>
+        <div class="stat-card"><span class="stat-number">9</span><span class="stat-label">Fashion categories</span></div>
+        <div class="stat-card"><span class="stat-number">9,718</span><span class="stat-label">Organic listings</span></div>
+        <div class="stat-card"><span class="stat-number">19,968</span><span class="stat-label">Images catalogued</span></div>
+      </div>
+      <h2 id="mobile-leads">Mobile leads</h2>
+      <p><a href="https://www.semrush.com/sensor/" target="_blank" rel="noopener">Semrush Sensor</a> data (April 2026) puts image thumbnails at 49% of US desktop SERPs and 71% of mobile across all categories. Shopping is higher: 77% desktop, 88% mobile. So thumbnails aren't rare. But "thumbnails appear a lot" doesn't tell you which keywords get them, which intents trigger them, or how many images Google attaches per listing. That's where it gets more granular.</p>
+      <p>Across all nine categories and all four intent types in this dataset, mobile serves more thumbnails on average. At the individual pattern level there's one exception — "fit + seed" queries where desktop edges ahead — but the overall direction is consistent.</p>
+      <div class="stat-row">
+        <div class="stat-card stat-card--mobile"><span class="device-badge">Mobile</span><span class="stat-number">79%</span><span class="stat-label">Thumbnail rate</span></div>
+        <div class="stat-card stat-card--desktop"><span class="device-badge">Desktop</span><span class="stat-number">72%</span><span class="stat-label">Thumbnail rate</span></div>
+        <div class="stat-card"><span class="stat-number">+7pt</span><span class="stat-label">Mobile advantage</span></div>
+      </div>
+      <h3 id="visual-real-estate">Mobile gets almost twice the visual real estate</h3>
+      <p>But the thumbnail rate only tells half the story. Among organic results that have thumbnails, count the total images. Across the same 293 keywords, mobile served <strong>6,409 total images</strong> where desktop served <strong>3,332</strong>. That's 92% more images on mobile than desktop.</p>
+      <p>What this means visually: mobile displays image strips — multiple product photos in a horizontal scroll — for each listing. Desktop shows fewer images per listing, or a single image. When a mobile listing gets a thumbnail, it gets more images. Desktop shows fewer.</p>
+      <div class="stat-row">
+        <div class="stat-card stat-card--mobile"><span class="device-badge">Mobile</span><span class="stat-number">3.45</span><span class="stat-label">Avg images per thumbnail listing</span></div>
+        <div class="stat-card stat-card--desktop"><span class="device-badge">Desktop</span><span class="stat-number">1.85</span><span class="stat-label">Avg images per thumbnail listing</span></div>
+        <div class="stat-card"><span class="stat-number">+92%</span><span class="stat-label">Mobile image volume</span></div>
+      </div>
+      <h2 id="search-intent">Search intent changes everything</h2>
+      <p>Aggregating thumbnail rates by query type reveals where the device gap widens. The pattern is consistent: queries that signal stronger commercial intent get more thumbnails on both devices, and queries that signal informational intent collapse on desktop while staying high on mobile.</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr><th>Pattern</th><th class="num">Mobile</th><th class="num">Desktop</th><th class="num">Gap</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Best + seed</strong> (e.g. "best leggings")</td><td class="num highlight">96%</td><td class="num">88%</td><td class="num dim">+8pt</td></tr>
+            <tr><td><strong>Colour + seed</strong> (e.g. "black leggings")</td><td class="num highlight">94%</td><td class="num">82%</td><td class="num dim">+12pt</td></tr>
+            <tr><td><strong>Bare seed</strong> (e.g. "leggings")</td><td class="num">88%</td><td class="num">81%</td><td class="num dim">+7pt</td></tr>
+            <tr><td><strong>Best + seed + year</strong></td><td class="num">80%</td><td class="num warn">46%</td><td class="num warn">+34pt</td></tr>
+            <tr><td><strong>Seed + outfit ideas</strong></td><td class="num">72%</td><td class="num warn">38%</td><td class="num warn">+34pt</td></tr>
+            <tr><td><strong>How to style + seed</strong></td><td class="num">62%</td><td class="num warn">22%</td><td class="num warn">+40pt</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="quotable">
+        <p>"Best + year" queries drop from 80% on mobile to 46% on desktop. Same keyword, same product — Google just decides desktop users searching "best leggings 2026" want text, not images. A 34-point gap. The largest of any pattern tested.</p>
+        <span class="source">Pattern-level data, US national, April 2026</span>
+      </div>
+      <h2 id="modifiers">Which modifiers move the needle?</h2>
+      <p>Isolating individual modifiers — what happens when you add "best", a colour, a year, or "outfit ideas" to the same seed — reveals which words push Google toward visual results and which collapse them.</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr><th>Modifier added</th><th class="num">Mobile delta</th><th class="num">Desktop delta</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>"best"</strong></td><td class="num good">+8pt</td><td class="num good">+7pt</td></tr>
+            <tr><td><strong>colour</strong> (e.g. "black")</td><td class="num good">+6pt</td><td class="num good">+1pt</td></tr>
+            <tr><td><strong>year</strong> (e.g. "2026")</td><td class="num dim">−8pt</td><td class="num warn">−35pt</td></tr>
+            <tr><td><strong>"outfit ideas"</strong></td><td class="num warn">−16pt</td><td class="num warn">−43pt</td></tr>
+            <tr><td><strong>"how to style"</strong></td><td class="num warn">−26pt</td><td class="num warn">−59pt</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The asymmetry is the interesting part. "Best" lifts both devices roughly equally. "How to style" drops desktop by 59 percentage points while mobile drops by only 26. Year qualifiers do something Google doesn't show desktop but accepts on mobile.</p>
+      <h2 id="categories">Which categories get the most visual treatment?</h2>
+      <p>Aggregating by fashion category, the rate ordering is consistent across devices, but the gap to desktop varies meaningfully. Categories with strong visual differentiation (shoes, bags, outerwear) over-perform on both devices. Categories with more interchangeable products (basics, hosiery) under-perform.</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr><th>Category</th><th class="num">Mobile</th><th class="num">Desktop</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Shoes</strong></td><td class="num highlight">91%</td><td class="num">85%</td></tr>
+            <tr><td><strong>Bags</strong></td><td class="num highlight">89%</td><td class="num">82%</td></tr>
+            <tr><td><strong>Outerwear</strong></td><td class="num">85%</td><td class="num">78%</td></tr>
+            <tr><td><strong>Dresses</strong></td><td class="num">82%</td><td class="num">74%</td></tr>
+            <tr><td><strong>Tops</strong></td><td class="num">79%</td><td class="num">71%</td></tr>
+            <tr><td><strong>Bottoms</strong></td><td class="num">76%</td><td class="num">68%</td></tr>
+            <tr><td><strong>Activewear</strong></td><td class="num">74%</td><td class="num">66%</td></tr>
+            <tr><td><strong>Basics</strong></td><td class="num">70%</td><td class="num warn">58%</td></tr>
+            <tr><td><strong>Hosiery</strong></td><td class="num">64%</td><td class="num warn">49%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="position">Position matters — but not how you'd expect</h2>
+      <p>Thumbnail rate by SERP position shows almost no decay on mobile from positions 1 through 9. Desktop does decay, but only slightly. The "high-position thumbnails, low-position no thumbnails" model people sometimes assume doesn't match the data.</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr><th>Position</th><th class="num">Mobile</th><th class="num">Desktop</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td class="num highlight">86%</td><td class="num">79%</td></tr>
+            <tr><td>2</td><td class="num highlight">85%</td><td class="num">78%</td></tr>
+            <tr><td>3</td><td class="num">79%</td><td class="num">74%</td></tr>
+            <tr><td>4</td><td class="num">78%</td><td class="num">72%</td></tr>
+            <tr><td>5</td><td class="num">77%</td><td class="num">71%</td></tr>
+            <tr><td>6</td><td class="num">76%</td><td class="num">69%</td></tr>
+            <tr><td>7</td><td class="num">76%</td><td class="num">68%</td></tr>
+            <tr><td>8</td><td class="num">77%</td><td class="num">68%</td></tr>
+            <tr><td>9</td><td class="num">76%</td><td class="num">67%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="quotable">
+        <p>Positions 1 and 2 get the highest thumbnail rates on mobile: 86% and 85%. After that it drops to a fairly consistent 76–79% for positions 3 through 9. The cliff is between the top two positions and everything else — not gradual decay.</p>
+        <span class="source">Position-level data, US national, April 2026</span>
+      </div>
+      <h2 id="who-wins">Who's winning the thumbnail game?</h2>
+      <p>Pulling the top domains by appearance frequency, then segmenting their thumbnail rate, reveals which brands and platforms Google trusts to surface visually. Pinterest appears most often, but its thumbnail rate is moderate. Nordstrom and Macy's get the highest treatment relative to appearance count.</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr><th>Domain</th><th class="num">Appearances</th><th class="num">Thumbnail rate</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>pinterest.com</strong></td><td class="num">412</td><td class="num warn">49%</td></tr>
+            <tr><td><strong>amazon.com</strong></td><td class="num">298</td><td class="num">73%</td></tr>
+            <tr><td><strong>nordstrom.com</strong></td><td class="num">211</td><td class="num good">98%</td></tr>
+            <tr><td><strong>macys.com</strong></td><td class="num">189</td><td class="num good">95%</td></tr>
+            <tr><td><strong>walmart.com</strong></td><td class="num">156</td><td class="num">81%</td></tr>
+            <tr><td><strong>nytimes.com (Wirecutter)</strong></td><td class="num">98</td><td class="num">88%</td></tr>
+            <tr><td><strong>vogue.com</strong></td><td class="num">76</td><td class="num warn">42%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="quotable">
+        <p>Pinterest ranks highest by appearances on both devices but only shows thumbnails around half the time. It gets the real estate. It doesn't always get the visual treatment.</p>
+        <span class="source">Domain-level data, US national, April 2026</span>
+      </div>
+      <h2 id="geo">Does location matter?</h2>
+      <p>Running the same 293-keyword set geo-locked to Los Angeles instead of US national produced near-identical thumbnail rates. The headline numbers moved by less than 2 percentage points in either direction. Geo-personalisation for fashion appears to be minimal at this granularity.</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr><th>Metric</th><th class="num">US national</th><th class="num">Los Angeles</th><th class="num">Delta</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mobile thumbnail rate</td><td class="num">79%</td><td class="num">80%</td><td class="num dim">+1pt</td></tr>
+            <tr><td>Desktop thumbnail rate</td><td class="num">72%</td><td class="num">71%</td><td class="num dim">−1pt</td></tr>
+            <tr><td>Mobile avg images / listing</td><td class="num">3.45</td><td class="num">3.51</td><td class="num dim">+0.06</td></tr>
+            <tr><td>Desktop avg images / listing</td><td class="num">1.85</td><td class="num">1.82</td><td class="num dim">−0.03</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ct-callout ct-callout--warn">
+        <div class="ct-callout-icon">!</div>
+        <div class="ct-callout-body">
+          <div class="ct-callout-title">Caveat for verticals where location matters</div>
+          <p>Fashion is a low-geo-variance vertical. For locally-anchored queries (restaurants, dentists, plumbers), geo will move thumbnail rates substantially. Don't generalise from this dataset to verticals where location is the dominant ranking signal.</p>
+        </div>
+      </div>
+      <h2 id="triggers">What actually triggers a thumbnail?</h2>
+      <p>The SERP data tells me where thumbnails appear. It doesn't tell me <em>why</em> — what's actually on the source page that makes Google decide to pull an image. That requires a different methodology: crawling the destination URLs and analysing their image implementation. That's Part 3.</p>
+      <p>What I can say from this dataset: the variance between domains with similar appearance counts is large enough that something on the page is driving the difference. Nordstrom at 98% mobile and Amazon at 73% — same keywords, same intent — points to differences in image markup, OG tags, schema, image count on page, or some combination. The data tells me <em>who</em>; it doesn't yet tell me <em>what</em>.</p>
+      <div class="quotable">
+        <p>The SERP data tells me who gets thumbnails and who doesn't. It doesn't tell me why. Nordstrom at 98% mobile and Amazon at 73% — on the same keywords, same intent — there's clearly something different about their image implementation. But what exactly? That's coming in Part 3.</p>
+        <span class="source">Methodology note, Case Study Part 2</span>
+      </div>
+      <h2 id="what-to-do">What to do with this</h2>
+      <p>If you sell physical products in any visual category — fashion, home, beauty, electronics, anything where a photo of the thing helps — the headline takeaways:</p>
+      <ul>
+        <li><strong>Mobile is where you're competing for visual real estate.</strong> Desktop strategies that ignore image implementation are leaving 92% more available image impressions on the table.</li>
+        <li><strong>Positions 1 and 2 get a thumbnail premium.</strong> Below that, it's roughly equal opportunity. If you're in the top three, the marginal click value of an image is higher than at position 6.</li>
+        <li><strong>Informational queries collapse on desktop.</strong> "Outfit ideas", "how to style", year-qualified reviews — Google decides those readers want text. Plan content for the device that surfaces it.</li>
+        <li><strong>Audit the domains that beat you.</strong> If Nordstrom is at 98% and you're at 60% on the same keyword, the gap is on your end. Look at their image markup before you look at their content.</li>
+      </ul>
+      <h2 id="next">Run this for your vertical</h2>
+      <p>The methodology generalises. If you want to run a comparable analysis for your category, the seed × pattern × intent framework is the part to copy. The pattern groups will be different (B2B keywords behave nothing like fashion), but the structure of "controlled crosses, both devices, two geos, image counts not just thumbnail rates" applies broadly. Part 3 will publish the crawl methodology for the destination pages — different work, different tool, same dataset feeding it.</p>
+      <!-- ── Related tool ── -->
+      <div class="related-tool">
+        <span class="related-tool-tag">Related tool</span>
+        <h3><a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a></h3>
+        <p class="related-tool-outcome">Catch feed errors before Google does — image attributes included.</p>
+        <span class="related-tool-cta">Open the analyzer →</span>
+      </div>
+      <!-- ── Sources ── -->
+      <div class="sources">
+        <h2>Sources &amp; further reading</h2>
+        <ul>
+          <li><strong>Companion piece:</strong> <a href="/notes/google-image-thumbnails/">Google Image Thumbnails — The Technical Reference</a>. The implementation side: max-image-preview, og:image, schema, image count on page.</li>
+          <li><strong>Related research:</strong> <a href="/notes/google-ecommerce-rich-results/">Google eCommerce Rich Results 2026</a>. Which features need feeds, which use structured data.</li>
+          <li><strong>Tool:</strong> <a href="/serp-preview/">SERP Snippet Previewer</a>. Check how titles and metas render before Google rewrites them.</li>
+          <li><strong>External:</strong> <a href="https://www.semrush.com/sensor/" target="_blank" rel="noopener">Semrush Sensor</a> — SERP feature tracking by category.</li>
+          <li><strong>External:</strong> <a href="https://dataforseo.com/" target="_blank" rel="noopener">DataForSEO API</a> — SERP scraping infrastructure used for this dataset.</li>
+        </ul>
+      </div>
+      <!-- ── Author card ── -->
+      <div class="author-card">
+        <div class="author-photo">Photo</div>
+        <div>
+          <div class="author-label">Written by</div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Senior SEO Consultant</div>
+          <p class="author-bio">Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+    </article>
+    <!-- ── Right rail TOC ── -->
+    <aside class="ct-toc" aria-label="On this page">
+      <div class="ct-toc-label">On this page</div>
+      <ul class="ct-toc-list">
+        <li><a href="#how-i-tested" class="active">How I tested this</a></li>
+        <li><a href="#mobile-leads">Mobile leads</a></li>
+        <li><a href="#search-intent">Search intent</a></li>
+        <li><a href="#modifiers">Which modifiers</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#position">Position</a></li>
+        <li><a href="#who-wins">Who's winning</a></li>
+        <li><a href="#geo">Does location matter</a></li>
+        <li><a href="#triggers">What triggers a thumbnail</a></li>
+        <li><a href="#what-to-do">What to do with this</a></li>
+        <li><a href="#next">Run this for your vertical</a></li>
+      </ul>
+    </aside>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Research</h5>
+        <ul>
+          <li><a href="/notes/">All notes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Guides</h5>
+        <ul>
+          <li><a href="/learn-seo/">Learn SEO</a></li>
+          <li><a href="/product-schema/">Product schema</a></li>
+          <li><a href="/merchant-listing-schema/">Merchant listing</a></li>
+          <li><a href="/product-variants-schema/">Product variants</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Tools</h5>
+        <ul>
+          <li><a href="/ecommerce-schema-generator/">Schema generators</a></li>
+          <li><a href="/gsc-regex-generator/">GSC regex</a></li>
+          <li><a href="/hreflang-generator/">Hreflang</a></li>
+          <li><a href="/free-seo-tools/">All tools →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Mags</h5>
+        <ul>
+          <li><a href="/mags-sikora/">About</a></li>
+          <li><a href="/contact/">Work with Mags</a></li>
+          <li><a href="/redesign/#newsletter">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  (function() {
+    var links = document.querySelectorAll('.ct-toc-list a');
+    var headings = Array.from(document.querySelectorAll('.article-body h2[id]'));
+    if (!headings.length) return;
+    function update() {
+      var top = window.scrollY + 140;
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].offsetTop <= top) active = headings[i];
+      }
+      links.forEach(function(l) {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('mt-theme', next); } catch(e) {}
+  };
+</script>
+</body>
+</html>

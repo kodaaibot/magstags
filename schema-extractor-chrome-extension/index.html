@@ -21,7 +21,6 @@
   <meta name="twitter:title" content="Schema Extractor — JSON-LD, Microdata &amp; RDFa Chrome Extension">
   <meta name="twitter:description" content="Free Chrome extension that extracts structured data from any page. Toolbar badge, tabbed viewer, export to JSON or CSV.">
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -107,12 +106,13 @@
     ]
   }
   </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     :root {
       --bg: #f0eeec; --bg2: #F5EDE7; --surface: #fafaf7; --surface-alt: #f2efe9;
       --border: #ddd9d3; --text-1: #111009; --text-2: #26221f; --text-3: #504c49; --text-4: #6b6661;
@@ -126,21 +126,18 @@
       --mint-light: rgba(14,116,144,.14);
       --shadow-sm: 0 1px 3px rgba(0,0,0,.5); --shadow-md: 0 4px 16px rgba(0,0,0,.6);
     }
-
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 0; }
-    @media (max-width: 768px) { main { padding: 24px 20px 0; } }
-
+    @media (max-width: 768px) {
+    }
     /* ─── Breadcrumb ─── */
     .breadcrumb { font-size: 12px; color: var(--text-4); margin-bottom: 28px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
     .breadcrumb a { color: var(--text-4); text-decoration: none; }
     .breadcrumb a:hover { color: var(--teal); }
     .breadcrumb-sep { opacity: .5; }
-
     /* ─── Hero ─── */
     .hero { margin-bottom: 56px; }
     .hero-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 4px 12px; border-radius: 99px; font-weight: 600; background: var(--mint-light); color: var(--teal); margin-bottom: 16px; }
     .hero-icon { font-size: 13px; }
-    .hero-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 42px; font-weight: 400; color: var(--text-1); margin-bottom: 16px; line-height: 1.2; max-width: 760px; }
+    .hero-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 42px; font-weight: 400; color: var(--text-1); margin-bottom: 16px; line-height: 1.2; max-width: 760px; }
     .hero-sub { font-size: 16px; color: var(--text-3); max-width: 600px; line-height: 1.65; margin-bottom: 8px; }
     .hero-tagline { font-size: 13px; color: var(--text-4); font-style: italic; margin-bottom: 32px; }
     .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -152,51 +149,44 @@
     .hero-meta { display: flex; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
     .hero-meta-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-4); }
     .hero-meta-item span { color: var(--text-3); font-weight: 500; }
-
     /* ─── Content wrapper ─── */
     .ct-wrap { max-width: 1320px; margin: 0 auto; padding: 0 36px 100px; }
     @media (max-width: 640px) { .ct-wrap { padding: 0 16px 60px; } }
-
     /* ─── Sections ─── */
     .ct-section { margin-bottom: 64px; }
     .ct-section-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); margin-bottom: 10px; }
-    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: var(--text-1); margin-bottom: 16px; }
+    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 26px; font-weight: 700; color: var(--text-1); margin-bottom: 16px; }
     .ct-lead { font-size: 15px; color: var(--text-2); line-height: 1.7; max-width: 760px; }
     .ct-body { font-size: 14px; color: var(--text-3); line-height: 1.75; max-width: 760px; }
     .ct-body code, .ct-lead code { font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; font-family: 'Menlo','Monaco','Courier New',monospace; color: var(--text-2); }
-
     /* ─── Card grid ─── */
     .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 28px; }
     .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; }
     .ct-card-icon { font-size: 22px; margin-bottom: 12px; }
-    .ct-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
+    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
     .ct-card p { font-size: 13.5px; color: var(--text-3); line-height: 1.65; margin: 0; }
-
     /* ─── Formats table ─── */
     .formats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
     @media (max-width: 640px) { .formats-grid { grid-template-columns: 1fr; } }
     .format-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 24px; }
     .format-mark { font-family: 'Menlo','Monaco','Courier New',monospace; font-size: 22px; font-weight: 700; color: var(--teal); margin-bottom: 10px; display: block; }
-    .format-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
+    .format-name { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
     .format-desc { font-size: 13px; color: var(--text-3); line-height: 1.65; margin-bottom: 14px; }
     .format-attrs { display: flex; flex-wrap: wrap; gap: 6px; }
     .format-attr { font-size: 11px; font-family: 'Menlo','Monaco','Courier New',monospace; background: var(--bg2); border: 1px solid var(--border); padding: 2px 8px; border-radius: 6px; color: var(--text-3); }
-
     /* ─── Steps ─── */
     .steps { display: flex; flex-direction: column; gap: 0; margin-top: 28px; }
     .step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
     .step:last-child { border-bottom: none; }
     .step-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--mint-light); color: var(--teal); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
-    .step-content h3 { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
+    .step-content h3 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; }
     .step-content p { font-size: 13.5px; color: var(--text-3); line-height: 1.65; margin: 0; }
-
     /* ─── Related tools ─── */
     .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 24px; }
     .tool-link-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; text-decoration: none; display: block; transition: border-color .15s, box-shadow .15s; }
     .tool-link-card:hover { border-color: var(--teal); box-shadow: var(--shadow-md); }
-    .tool-link-name { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .tool-link-name { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
     .tool-link-desc { font-size: 12px; color: var(--text-4); line-height: 1.55; }
-
     /* ─── FAQ ─── */
     .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 28px; }
     .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
@@ -208,17 +198,15 @@
     .ct-faq summary:hover { background: var(--bg2); }
     .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
     .ct-faq-body a { color: var(--teal); }
-
     /* ─── CTA ─── */
     .ct-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px 48px; margin-bottom: 0; text-align: center; }
-    .ct-cta h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
+    .ct-cta h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 8px; }
     .ct-cta p { font-size: 14px; color: var(--text-3); margin-bottom: 24px; }
     .ct-cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
     .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; transition: opacity .15s; }
     .ct-cta-link-primary:hover { opacity: .85; }
     .ct-cta-link-secondary { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 500; transition: opacity .15s; }
     .ct-cta-link-secondary:hover { opacity: .7; }
-
     @media (max-width: 600px) {
       .hero-title { font-size: 30px; }
       .ct-cta { padding: 28px 20px; }
@@ -226,15 +214,27 @@
   </style>
 </head>
 <body>
-<script src="/header.js"></script>
-
-<main>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a><span class="breadcrumb-sep">›</span>
     <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
     <span>Schema Extractor</span>
   </nav>
-
   <div class="hero">
     <div class="hero-badge">
       <span class="hero-icon">{}</span>
@@ -245,7 +245,7 @@
     <p class="hero-tagline">Rich results don't happen by accident. For SEOs who know valid ≠ correct.</p>
     <div class="hero-actions">
       <!-- Replace href with Chrome Web Store URL once published -->
-      <a href="https://chromewebstore.google.com" target="_blank" rel="noopener" class="btn-install">
+      <a href="https://chromewebstore.google.com/detail/schema-extractor-json-ld/hgcahplmkjflaaeofnjjhipfiekjdikd" target="_blank" rel="noopener" class="btn-install">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Add to Chrome — it's free
       </a>
@@ -259,9 +259,7 @@
     </div>
   </div>
 </main>
-
 <div class="ct-wrap">
-
   <!-- What it does -->
   <section class="ct-section" id="what-it-does">
     <span class="ct-section-label">What it does</span>
@@ -301,7 +299,6 @@
       </div>
     </div>
   </section>
-
   <!-- How it works -->
   <section class="ct-section" id="how-it-works">
     <span class="ct-section-label">How it works</span>
@@ -331,7 +328,6 @@
       </div>
     </div>
   </section>
-
   <!-- Formats -->
   <section class="ct-section" id="formats">
     <span class="ct-section-label">Supported formats</span>
@@ -374,7 +370,6 @@
       </div>
     </div>
   </section>
-
   <!-- FAQ -->
   <section class="ct-section" id="faq">
     <span class="ct-section-label">Common questions</span>
@@ -414,7 +409,6 @@
       </details>
     </div>
   </section>
-
   <!-- Related tools -->
   <section class="ct-section" id="related-tools">
     <span class="ct-section-label">Related tools</span>
@@ -447,36 +441,44 @@
       </a>
     </div>
   </section>
-
   <!-- CTA -->
   <div class="ct-cta">
     <h2>Add the Schema Extractor to Chrome</h2>
     <p>Free, private, zero dependencies. Structured data on any page, one click away.</p>
     <div class="ct-cta-actions">
       <!-- Replace href with Chrome Web Store URL once published -->
-      <a href="https://chromewebstore.google.com" target="_blank" rel="noopener" class="ct-cta-link-primary">Add to Chrome — it's free ↗</a>
+      <a href="https://chromewebstore.google.com/detail/schema-extractor-json-ld/hgcahplmkjflaaeofnjjhipfiekjdikd" target="_blank" rel="noopener" class="ct-cta-link-primary">Add to Chrome — it's free ↗</a>
       <a href="/schema-markup-visualizer/" class="ct-cta-link-secondary">Schema Markup Visualizer →</a>
     </div>
   </div>
-
 </div><!-- end .ct-wrap -->
-
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

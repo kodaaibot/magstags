@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('mt-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) {}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mags Sikora — Senior SEO Consultant, SEO Director | MagsTags</title>
+<meta name="description" content="Mags Sikora is a Senior SEO Consultant, SEO Director with 18+ years of experience leading enterprise search programmes.">
+<link rel="canonical" href="https://www.magstags.com/redesign/mags-sikora/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens (matches other redesign pages) ────────────────────────────── */
+  :root {
+    --ink-1: #1a1916; --ink-2: #2d2a26; --ink-3: #58534c; --ink-4: #8a847a;
+    --paper: #f5f1ea; --paper-2: #ebe5d7; --rule: #d8d2c4;
+    --accent: #0E7490; --accent-2: #e09226;
+    --font-display: 'IBM Plex Mono', 'Menlo', monospace;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+    --font-reading: Georgia, 'Times New Roman', serif;
+    --t-h1: clamp(28px, 3.6vw, 44px);
+    --t-h2: clamp(20px, 2.2vw, 28px);
+    --t-lead: clamp(18px, 1.4vw, 21px);
+    --t-body: 16px;
+    --gutter: clamp(20px, 4vw, 88px);
+    --section-y: clamp(60px, 8vw, 120px);
+    --max: 1200px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); font-size: var(--t-body); line-height: 1.65; color: var(--ink-2); background: var(--paper); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
+  a:hover { color: var(--ink-1); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--ink-1); letter-spacing: -.02em; }
+  h1 { font-size: var(--t-h1); line-height: 1.1; }
+  h2 { font-size: var(--t-h2); line-height: 1.2; }
+  /* ── Sticky header (identical to other redesign pages) ───────────────── */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(245,241,234,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; text-decoration: none; }
+  .wordmark em { font-style: italic; color: var(--accent); }
+  nav.primary { display: flex; gap: 32px; align-items: center; }
+  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; text-decoration: none; }
+  nav.primary a:hover { color: var(--accent); }
+  nav.primary .subscribe { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px; color: var(--ink-1); background: transparent; transition: background .15s, color .15s; }
+  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
+  @media (max-width: 800px) { nav.primary { gap: 18px; } nav.primary a:not(.subscribe) { display: none; } }
+  .draft-banner { background: var(--accent-2); color: var(--ink-1); padding: 8px 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
+  .draft-banner a { color: var(--ink-1); text-decoration: underline; }
+  /* ── Theme toggle ────────────────────────────────────────────────────── */
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
+  .theme-toggle svg { display: block; }
+  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
+  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  /* ── Page layout ─────────────────────────────────────────────────────── */
+  .profile { padding: clamp(24px, 3vw, 48px) 0 var(--section-y); }
+  .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; letter-spacing: .04em; max-width: var(--max); margin-left: auto; margin-right: auto; padding: 0 var(--gutter); }
+  .breadcrumb a { color: var(--ink-4); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { opacity: .5; }
+  .profile-grid { display: grid; grid-template-columns: 260px 1fr; gap: clamp(40px, 5vw, 80px); align-items: start; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  @media (max-width: 800px) { .profile-grid { grid-template-columns: 1fr; gap: 40px; } }
+  /* ── Sidebar ────────────────────────────────────────────────────────── */
+  .profile-sidebar { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 22px; }
+  @media (max-width: 800px) { .profile-sidebar { position: static; top: auto; } }
+  .profile-photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 2px solid var(--rule); display: block; }
+  @media (max-width: 800px) { .profile-photo { width: 140px; height: 140px; } }
+  .profile-meta { display: flex; flex-direction: column; gap: 4px; }
+  .profile-name { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); line-height: 1.2; letter-spacing: -.015em; margin-bottom: 6px; }
+  .profile-title { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+  .profile-company { font-size: 13px; color: var(--ink-3); margin-top: 2px; }
+  /* CTA links */
+  .profile-cta { display: flex; flex-direction: column; gap: 8px; }
+  .profile-cta-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 18px; border-radius: 99px; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-decoration: none; transition: background .15s, border-color .15s, color .15s, transform .1s; border: 1px solid var(--rule); letter-spacing: -.005em; }
+  .profile-cta-btn.primary { background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); }
+  .profile-cta-btn.primary:hover { background: #f0a431; border-color: #f0a431; transform: translateY(-1px); }
+  .profile-cta-btn.secondary { color: var(--ink-2); border-color: var(--rule); }
+  .profile-cta-btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+  /* Social links */
+  .social-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .social-link { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; text-decoration: none; color: var(--ink-3); border-radius: 8px; border: 1px solid var(--rule); background: var(--paper-2); transition: border-color .15s, color .15s; }
+  .social-link:hover { border-color: var(--accent); color: var(--accent); }
+  /* Day counter card */
+  .day-counter-card { padding: 16px 18px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 12px; }
+  .day-counter-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 8px; }
+  .day-counter-num { font-family: var(--font-display); font-size: 32px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--accent); line-height: 1; margin-bottom: 4px; letter-spacing: -.02em; }
+  .day-counter-sub { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); margin-bottom: 10px; }
+  .day-counter-desc { font-size: 12px; color: var(--ink-3); line-height: 1.55; }
+  /* ── Bio body ────────────────────────────────────────────────────────── */
+  .profile-bio { min-width: 0; }
+  .bio-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .bio-label::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .bio-lead { font-family: var(--font-reading); font-size: var(--t-lead); line-height: 1.55; color: var(--ink-1); font-style: italic; margin-bottom: 28px; }
+  .bio-body { display: flex; flex-direction: column; gap: 22px; }
+  .bio-body p { font-size: 15.5px; color: var(--ink-2); line-height: 1.8; }
+  .bio-stat { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .bio-brand { font-weight: 600; color: var(--ink-1); }
+  .bio-education { margin-top: 40px; padding: 24px 26px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; }
+  .bio-education-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 10px; }
+  .bio-education p { font-size: 14px; color: var(--ink-3); line-height: 1.7; }
+  .bio-cta { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--ink-3); line-height: 1.7; }
+  .bio-cta a { color: var(--accent); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--accent); }
+  .bio-cta a:hover { color: var(--ink-1); border-bottom-color: var(--ink-1); }
+  /* ── Full footer (matches other redesign pages) ──────────────────────── */
+  .wrap-footer { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
+  footer.site .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { footer.site .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
+  footer.site .footer-brand .wordmark { color: var(--ink-1); }
+  footer.site .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
+  footer.site .footer-col h5 { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 20px; }
+  footer.site .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; }
+  footer.site .footer-col a { color: var(--ink-2); font-size: 14px; text-decoration: none; }
+  footer.site .footer-col a:hover { color: var(--accent); }
+  footer.site .footer-base { margin-top: 80px; padding: 28px 0 0 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+  footer.site .footer-base a { color: var(--ink-4); text-decoration: none; }
+  footer.site .footer-base a:hover { color: var(--ink-1); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+  /* ── DARK MODE OVERRIDES ─────────────────────────────────────────────── */
+  html[data-theme="dark"] body { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] body a { color: var(--accent-2); }
+  html[data-theme="dark"] body a:hover { color: var(--paper); }
+  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
+  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
+  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+  html[data-theme="dark"] .breadcrumb { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .profile-photo { border-color: rgba(245,241,234,.12); }
+  html[data-theme="dark"] .profile-name { color: var(--paper); }
+  html[data-theme="dark"] .profile-title { color: var(--accent-2); }
+  html[data-theme="dark"] .profile-company { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .profile-cta-btn.secondary { color: var(--paper); border-color: rgba(245,241,234,.25); }
+  html[data-theme="dark"] .profile-cta-btn.secondary:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  html[data-theme="dark"] .social-link { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.12); color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .social-link:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  html[data-theme="dark"] .day-counter-card { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .day-counter-label { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .day-counter-num { color: var(--accent-2); }
+  html[data-theme="dark"] .day-counter-sub { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .day-counter-desc { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .bio-label { color: var(--accent-2); }
+  html[data-theme="dark"] .bio-label::before { background: var(--accent-2); }
+  html[data-theme="dark"] .bio-lead { color: var(--paper); }
+  html[data-theme="dark"] .bio-body p { color: var(--paper-2); }
+  html[data-theme="dark"] .bio-stat { color: var(--accent-2); }
+  html[data-theme="dark"] .bio-brand { color: var(--paper); }
+  html[data-theme="dark"] .bio-education { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .bio-education-label { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .bio-education p { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .bio-cta { color: rgba(245,241,234,.65); border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .bio-cta a { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+  html[data-theme="dark"] .bio-cta a:hover { color: var(--paper); border-bottom-color: var(--paper); }
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] footer.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] footer.site .footer-brand p { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] footer.site .footer-col h5 { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
+  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
+  html[data-theme="dark"] footer.site .footer-base { border-top-color: rgba(245,241,234,.12); color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a:hover { color: var(--paper); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://www.magstags.com/mags-sikora/#person",
+      "name": "Mags Sikora",
+      "alternateName": "Magdalena Sikora",
+      "givenName": "Magdalena",
+      "familyName": "Sikora",
+      "url": "https://www.magstags.com/mags-sikora/",
+      "image": "https://www.magstags.com/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg",
+      "jobTitle": "Senior SEO Consultant, SEO Director",
+      "description": "Senior SEO consultant with 18+ years leading enterprise search programmes across e-commerce, travel, and publishing. Founder of MagsTags. Currently at Intrepid Digital.",
+      "sameAs": [
+        "https://www.linkedin.com/in/magdalenasikora/",
+        "https://x.com/magssikora",
+        "https://www.youtube.com/c/Sheknowsdigital",
+        "https://www.sheknowsdigital.com/"
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="draft-banner">
+  Redesign prototype · about page · <a href="/redesign/">return to redesign home</a> · <a href="/mags-sikora/">live site</a>
+</div>
+<header class="site">
+  <div class="site-inner">
+    <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/redesign/#research">Research</a>
+      <a href="/redesign/#guides">Guides</a>
+      <a href="/redesign/#tools">Tools</a>
+      <a href="/redesign/#about">About</a>
+      <a href="/redesign/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
+  <section class="profile">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/redesign/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>Mags Sikora</span>
+    </nav>
+    <div class="profile-grid">
+      <!-- ── Sidebar ── -->
+      <aside class="profile-sidebar">
+        <img class="profile-photo" src="mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="180" height="180" title="AI-polished. The unedited version exists only in my webcam history and several very honest Zoom calls. I protect you from that version.">
+        <div class="profile-meta">
+          <h1 class="profile-name">Mags Sikora</h1>
+          <div class="profile-title">Senior SEO Consultant · SEO Director</div>
+          <div class="profile-company">She Knows Digital &amp; Intrepid Digital</div>
+        </div>
+        <nav class="profile-cta" aria-label="Contact options">
+          <a href="/contact/" class="profile-cta-btn primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Contact me
+          </a>
+          <a href="https://calendar.app.google/GVre1j7sUJni8GfN8" class="profile-cta-btn secondary" rel="nofollow" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.42 2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Schedule a call
+          </a>
+          <a href="/seo-services/" class="profile-cta-btn secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Services
+          </a>
+        </nav>
+        <nav class="social-links" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/magdalenasikora/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.44c.98 0 1.79-.77 1.79-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+          <a href="https://x.com/magssikora" class="social-link" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/c/Sheknowsdigital" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.84 12l-6.09 3.52z"/></svg>
+          </a>
+          <a href="https://www.sheknowsdigital.com/" class="social-link" target="_blank" rel="noopener" aria-label="She Knows Digital">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </a>
+        </nav>
+        <div class="day-counter-card">
+          <div class="day-counter-label">magstags.com</div>
+          <div class="day-counter-num" id="day-counter">—</div>
+          <div class="day-counter-sub">days and counting</div>
+          <p class="day-counter-desc">Registered 28 November 2009. I bought this domain when I genuinely believed the hard part was picking the name.</p>
+        </div>
+      </aside>
+      <!-- ── Bio ── -->
+      <div class="profile-bio">
+        <span class="bio-label">About</span>
+        <p class="bio-lead">I've spent <span class="bio-stat">18 years</span> in SEO, an industry that rewrites its own rules every six months and still expects you to have a five-year strategy. If you work in SEO, I already know your Monday mornings.</p>
+        <div class="bio-body">
+          <p>I'm a Senior SEO Consultant, SEO Director at <span class="bio-brand">Intrepid Digital</span>. I build search programmes for businesses large enough that nobody agrees on who owns the robots.txt, but everyone has an opinion when it breaks.</p>
+          <p>My career has split fairly evenly between agency and in-house. On the agency side, I led SEO for brands including <span class="bio-brand">Autotrader</span>, <span class="bio-brand">Avis</span>, and <span class="bio-brand">Boscolo</span>. I then moved in-house to run the SEO division of a specialist publishing group operating <span class="bio-stat">22 websites</span> and a video-sharing platform, the kind of role where you stop thinking about individual pages and start thinking about systems.</p>
+          <p>From there I joined <span class="bio-brand">Expedia</span>, managing UK &amp; Ireland search, then <span class="bio-brand">New Look</span>, where I ran the full online marketing mix (SEO, paid, and affiliates) for one of the UK's largest fashion retailers. From there I moved to <span class="bio-brand">dnata Emirates Group</span>, where I led organic search across six B2C travel brands, including <span class="bio-brand">Travel Republic</span>, <span class="bio-brand">Travelbag</span>, and <span class="bio-brand">Emirates Holidays</span>, across more than <span class="bio-stat">54 markets</span>. Large-scale migrations, multi-market complexity, <span class="bio-stat">double-digit year-on-year growth</span> in organic visibility. That's where "it depends" stopped being an acceptable answer. It's also where I learned to present organic results to a room full of VPs, right after the PPC team's presentation packed with every data point known to mankind. And I chose to stay in SEO anyway. No regrets. Mostly. Builds character.</p>
+          <p>At <span class="bio-brand">Intrepid Digital</span>, I lead enterprise SEO engagements focused on AI-integrated search strategies, large-scale technical migrations, and connecting content operations to actual search performance, the kind of work where you are expected to have done the audit, written the brief, and explained it to a board who had questions about something completely different.</p>
+          <p>I also work with <strong>venture capital firms</strong> on SEO due diligence and pre-acquisition audits, helping investors understand whether the organic performance they're buying actually holds up or just looks good on a dashboard.</p>
+        </div>
+        <div class="bio-education">
+          <div class="bio-education-label">Education &amp; Speaking</div>
+          <p>MSc in Marketing and Management, Jagiellonian University (with studies at HEC Liège) · Regular contributor to industry publications and webinars on global SEO and the evolving search landscape.</p>
+        </div>
+        <p class="bio-cta">Looking for senior-level SEO work? See what I do on the <a href="/seo-services/">services page</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/redesign/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Research</h5>
+        <ul>
+          <li><a href="/notes/">All notes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Guides</h5>
+        <ul>
+          <li><a href="/learn-seo/">Learn SEO</a></li>
+          <li><a href="/product-schema/">Product schema</a></li>
+          <li><a href="/merchant-listing-schema/">Merchant listing</a></li>
+          <li><a href="/product-variants-schema/">Product variants</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Tools</h5>
+        <ul>
+          <li><a href="/ecommerce-schema-generator/">Schema generators</a></li>
+          <li><a href="/gsc-regex-generator/">GSC regex</a></li>
+          <li><a href="/hreflang-generator/">Hreflang</a></li>
+          <li><a href="/free-seo-tools/">All tools →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Mags</h5>
+        <ul>
+          <li><a href="/mags-sikora/">About</a></li>
+          <li><a href="/contact/">Work with Mags</a></li>
+          <li><a href="/redesign/#newsletter">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('mt-theme', next); } catch(e) {}
+  };
+  (function(){
+    var start = new Date('2009-11-28');
+    var now = new Date();
+    var days = Math.floor((now - start) / 86400000);
+    var el = document.getElementById('day-counter');
+    if (el) el.textContent = days.toLocaleString();
+  })();
+</script>
+</body>
+</html>

@@ -9,19 +9,21 @@
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-  
   <title>Cookie Policy | MagsTags</title>
   <meta name="description" content="Cookie policy for magstags.com.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-    .page-title{font-family:'Space Grotesk',sans-serif;font-size:32px;color:var(--text-1);margin-bottom:8px}
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+    
+    .page-title{font-family:'IBM Plex Mono','Menlo',monospace;font-size:32px;color:var(--text-1);margin-bottom:8px}
     .page-meta{font-size:13px;color:var(--text-4);margin-bottom:48px}
-    .legal-body h2{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:var(--text-1);margin:40px 0 12px}
+    .legal-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:17px;font-weight:600;color:var(--text-1);margin:40px 0 12px}
     .legal-body h2:first-child{margin-top:0}
-    .legal-body h3{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-2);margin:20px 0 8px}
+    .legal-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:600;color:var(--text-2);margin:20px 0 8px}
     .legal-body p{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:14px}
     .legal-body ul{padding-left:20px;margin-bottom:14px}
     .legal-body ul li{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:3px}
@@ -41,22 +43,33 @@
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
 </head>
 <body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <script>(function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')})();</script>
-<main>
+<main id="main-content">
   <h1 class="page-title">Cookie Policy</h1>
   <p class="page-meta">Last updated: March 2026</p>
   <div class="legal-body">
-
     <h2>What Are Cookies</h2>
     <p>Cookies are small data files stored on your device when you visit a website. They allow websites to recognize users, improve functionality, analyze traffic, and deliver relevant advertising.</p>
-
     <h2>Types of Cookies Used</h2>
-
     <div class="cookie-type">
       <h3>Essential Cookies</h3>
       <p>These cookies are necessary for the operation and security of the Website. Without them, certain features may not function properly.</p>
     </div>
-
     <div class="cookie-type">
       <h3>Analytics Cookies</h3>
       <p>We use analytics tools such as Google Analytics to understand how visitors interact with the Website. These cookies help us collect information such as:</p>
@@ -69,7 +82,6 @@
       </ul>
       <p>The data collected is used for statistical and performance analysis.</p>
     </div>
-
     <div class="cookie-type">
       <h3>Advertising Cookies</h3>
       <p>We may use advertising services such as Google Ads and Google AdSense. These services may place cookies on your device to:</p>
@@ -80,7 +92,6 @@
       </ul>
       <p>Advertising cookies may track browsing activity across different websites.</p>
     </div>
-
     <h2>Managing Cookies</h2>
     <p>Users can manage cookie preferences through:</p>
     <ul>
@@ -89,32 +100,39 @@
       <li>privacy settings within their browser</li>
     </ul>
     <p>Disabling cookies may affect some website functionality.</p>
-
     <h2>Third-Party Cookies</h2>
     <p>Some cookies may be placed by third-party services integrated into the Website. These third parties operate independently and are responsible for their own privacy practices.</p>
-
     <h2>Updates to This Policy</h2>
     <p>This Cookie Policy may be updated periodically to reflect technological or legal changes.</p>
-
   </div>
 </main>
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

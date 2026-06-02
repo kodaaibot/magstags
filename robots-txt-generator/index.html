@@ -7,13 +7,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
-
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-
   <title>Robots.txt Generator | MagsTags</title>
   <meta name="description" content="Generate a valid robots.txt file visually. Set rules per bot, block AI crawlers, add your sitemap — copy or download in seconds. Free, no signup.">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -46,8 +43,11 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     :root {
       --bg:           #f0eeec;
       --bg2:          #F5EDE7;
@@ -76,64 +76,56 @@
       --text-3:       #857f79;
       --text-4:       #8a847d;
     }
-
     /* ── Layout ── */
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
     .tool-hero{margin-bottom:32px}
     .tool-badge-free{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;font-weight:600;background:var(--mint-light);color:var(--teal);margin-bottom:12px}
-    .tool-title{font-family:'DM Serif Display',Georgia,serif;font-size:36px;font-weight:400;color:var(--text-1);margin-bottom:8px}
+    .tool-title{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:400;color:var(--text-1);margin-bottom:8px}
     .tool-subtitle{font-size:15px;color:var(--text-3);max-width:640px;line-height:1.6}
-
     .tool-layout{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:start}
     @media(max-width:900px){.tool-layout{grid-template-columns:1fr}}
-
     /* ── Panels ── */
     .panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
     .panel-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
-    .panel-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-1)}
+    .panel-title{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:600;color:var(--text-1)}
     .panel-body{padding:20px}
-
     /* ── Presets ── */
     .presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
     .preset-btn{font-size:12px;font-weight:500;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text-2);cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
     .preset-btn:hover{border-color:var(--teal);color:var(--teal)}
-
     /* ── Sitemap field ── */
     .field-row{margin-bottom:16px}
     .field-label{font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block}
     .sitemap-inputs{display:flex;flex-direction:column;gap:6px}
     .sitemap-row{display:flex;gap:6px}
-    .sitemap-row input{flex:1;font-size:13px;font-family:'Menlo','Monaco','Courier New',monospace;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text-1);outline:none;transition:border .15s}
+    .sitemap-row input{flex:1;font-size:13px;font-family:'Menlo','Monaco','Courier New',monospace;background: var(--field);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text-1);outline:none;transition:border .15s}
     .sitemap-row input:focus{border-color:var(--teal)}
     .sitemap-row input::placeholder{color:var(--text-4)}
     .btn-icon{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text-3);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
     .btn-icon:hover{border-color:var(--paid-color);color:var(--paid-color)}
     .btn-add-sitemap{font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;padding:2px 0;text-align:left;margin-top:2px}
     .btn-add-sitemap:hover{opacity:.7}
-
     /* ── Agent groups ── */
     .groups{display:flex;flex-direction:column;gap:16px;margin-bottom:20px}
     .group-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
     .group-card-header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)}
     .group-num{width:22px;height:22px;border-radius:99px;background:var(--teal);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .group-agent-select{flex:1;font-size:13px;font-family:'Inter',sans-serif;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text-1);outline:none;cursor:pointer}
+    .group-agent-select{flex:1;font-size:13px;font-family:'Inter',sans-serif;background: var(--field);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text-1);outline:none;cursor:pointer}
     .group-agent-custom{display:none;flex:1;font-size:13px;font-family:'Menlo','Monaco','Courier New',monospace;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text-1);outline:none}
     .group-agent-custom:focus,.group-agent-select:focus{border-color:var(--teal)}
     .btn-rm-group{width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--text-4);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
     .btn-rm-group:hover{background:var(--paid-light);color:var(--paid-color)}
     .group-rules{padding:10px 16px;display:flex;flex-direction:column;gap:6px}
     .rule-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-    .rule-type-select{font-size:12px;font-weight:600;font-family:'Inter',sans-serif;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 8px;color:var(--text-1);outline:none;cursor:pointer;min-width:90px}
+    .rule-type-select{font-size:12px;font-weight:600;font-family:'Inter',sans-serif;background: var(--field);border:1px solid var(--border);border-radius:7px;padding:6px 8px;color:var(--text-1);outline:none;cursor:pointer;min-width:90px}
     .rule-type-select:focus{border-color:var(--teal)}
     .rule-type-select.type-disallow{color:var(--paid-color)}
     .rule-type-select.type-allow{color:#16a34a}
-    .rule-path-input{flex:1;font-size:13px;font-family:'Menlo','Monaco','Courier New',monospace;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 10px;color:var(--text-1);outline:none;transition:border .15s}
+    .rule-path-input{flex:1;font-size:13px;font-family:'Menlo','Monaco','Courier New',monospace;background: var(--field);border:1px solid var(--border);border-radius:7px;padding:6px 10px;color:var(--text-1);outline:none;transition:border .15s}
     .rule-path-input:focus{border-color:var(--teal)}
     .rule-path-input::placeholder{color:var(--text-4)}
     .rule-path-input.err{border-color:var(--paid-color)}
     .btn-rm-rule{width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--text-4);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
     .btn-rm-rule:hover{background:var(--paid-light);color:var(--paid-color)}
-
     /* Pattern picker */
     .btn-pattern{height:32px;padding:0 10px;border-radius:7px;border:1px solid var(--mint-light);background:var(--mint-light);color:var(--teal);cursor:pointer;font-size:11px;font-weight:700;display:flex;align-items:center;gap:4px;white-space:nowrap;transition:all .15s;flex-shrink:0;font-family:'Inter',sans-serif;letter-spacing:.01em}
     .btn-pattern:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
@@ -154,11 +146,9 @@
     .disallow-all-warning{display:none;margin:4px 0 2px;padding:8px 12px;background:#FEE2E2;border:1px solid #FCA5A5;border-radius:8px;font-size:13px;color:#7F1D1D;line-height:1.5}
     .disallow-all-warning strong{font-weight:600}
     html.dark .disallow-all-warning{background:#450a0a;border-color:#991b1b;color:#fca5a5}
-
     /* ── Add group ── */
     .btn-add-group{width:100%;padding:12px;border-radius:12px;border:1.5px dashed var(--border);background:transparent;color:var(--text-3);font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
     .btn-add-group:hover{border-color:var(--teal);color:var(--teal)}
-
     /* ── Output panel ── */
     .output-sticky{position:sticky;top:20px}
     .output-pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;line-height:1.7;color:var(--text-2);background:var(--bg2);padding:16px;border-radius:0;overflow-x:auto;white-space:pre;min-height:200px;max-height:520px;overflow-y:auto}
@@ -173,15 +163,13 @@
     .btn-copy:hover{opacity:.85}
     .btn-download{padding:10px 14px;border-radius:9px;border:1px solid var(--border);background:var(--bg2);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
     .btn-download:hover{border-color:var(--teal);color:var(--teal)}
-
-
     /* ── Content sections (ct-) ──────────────────────────────────────── */
     .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
     .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
     .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
+    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
     .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
-    .ct-h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
+    .ct-h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
     .ct-body{font-size:14px;color:var(--text-2);line-height:1.75;margin-bottom:14px}
     .ct-code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);color:var(--text-2);padding:1px 5px;border-radius:4px;word-break:break-all}
     .ct-list{font-size:15px;color:var(--text-2);line-height:1.75;padding-left:22px;margin-bottom:16px}
@@ -195,7 +183,7 @@
     .ct-step-body strong { color: var(--text-1); }
     /* Tables */
     .ct-table{width:100%;border-collapse:collapse;font-size:14px;color:var(--text-2);margin-bottom:20px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-    .ct-table th{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);background:var(--bg2);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border)}
+    .ct-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);background:var(--bg2);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border)}
     .ct-table td{padding:11px 14px;border-bottom:1px solid var(--border);line-height:1.6;vertical-align:top}
     .ct-table tr:last-child td{border-bottom:none}
     .ct-table tr:hover td{background:var(--bg2)}
@@ -233,7 +221,7 @@
     .ct-tools-list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
     .ct-tool-link{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:inherit;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .15s}
     .ct-tool-link:not(.ct-tool-coming):hover{border-color:var(--teal)}
-    .ct-tool-link strong{font-size:15px;color:var(--text-1);font-family:'Space Grotesk',sans-serif;display:block;margin-bottom:2px}
+    .ct-tool-link strong{font-size:15px;color:var(--text-1);font-family:'IBM Plex Mono','Menlo',monospace;display:block;margin-bottom:2px}
     .ct-tool-link:not(.ct-tool-coming):hover strong{color:var(--teal)}
     .ct-tool-link em{font-size:13px;color:var(--text-3);line-height:1.5;font-style:normal;display:block}
     .ct-tool-coming{cursor:default;opacity:.6}
@@ -259,9 +247,29 @@
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
 </head>
 <body>
-
-<main>
-  <p style="font-size:12px;color:var(--text-4);margin-bottom:20px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> Robots.txt Generator</p>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/seo-tools/">SEO Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Robots.txt Generator</span>
+        </nav>
   <div class="tool-hero">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
       <h1 class="tool-title" style="margin-bottom:0">Robots.txt Generator</h1>
@@ -271,7 +279,6 @@
     <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
     <p class="tool-subtitle">Set crawl rules for each bot. Block directories you don't want indexed. Add your sitemap URL. Copy it or download it instantly. No syntax errors. No guesswork. No panic.</p>
   </div>
-
   <div class="tool-layout">
     <!-- ── Builder panel ── -->
     <div class="panel">
@@ -279,7 +286,6 @@
         <span class="panel-title">Build your robots.txt</span>
       </div>
       <div class="panel-body">
-
         <!-- Presets -->
         <div class="field-row">
           <span class="field-label">Quick presets</span>
@@ -292,7 +298,6 @@
             <button class="preset-btn" onclick="applyPreset('images-off')">No image crawling</button>
           </div>
         </div>
-
         <!-- Sitemap -->
         <div class="field-row">
           <span class="field-label">Sitemap URL(s) <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-4)">— optional</span></span>
@@ -304,17 +309,14 @@
           </div>
           <button class="btn-add-sitemap" onclick="addSitemapRow()">+ Add sitemap URL</button>
         </div>
-
         <!-- Groups -->
         <div class="field-row" style="margin-bottom:0">
           <span class="field-label">Crawler groups</span>
           <div class="groups" id="groups"></div>
           <button class="btn-add-group" onclick="addGroup()">+ Add crawler group</button>
         </div>
-
       </div>
     </div>
-
     <!-- ── Output panel ── -->
     <div class="output-sticky">
       <div class="panel">
@@ -333,7 +335,6 @@
        Content sections
   ═══════════════════════════════════════════════════════════════ -->
   <div class="ct-wrap">
-
     <!-- ── Section 3: How to use ── -->
     <section class="ct-section" id="how-to-use">
       <span class="ct-section-label">Getting started</span>
@@ -390,7 +391,6 @@
         </div>
       </div>
     </section>
-
     <!-- ── Section 4: What is robots.txt ── -->
     <section class="ct-section" id="what-is-robots">
       <span class="ct-section-label">The basics</span>
@@ -398,7 +398,6 @@
       <p class="ct-body">A robots.txt file is a plain text file that sits in the root directory of your website and tells search engine crawlers which pages or directories they are and aren't allowed to access. Every major search engine checks for it before crawling your site.</p>
       <p class="ct-body">It is part of the <strong>Robots Exclusion Protocol</strong> — an industry standard followed by Google, Bing, Yandex, and most legitimate crawlers. It's one of the first things a crawler reads when it visits your domain.</p>
       <p class="ct-body">The file lives at a fixed location: <code class="ct-code">https://yourdomain.com/robots.txt</code>. You cannot change this path.</p>
-
       <h3 class="ct-h3">What robots.txt does not do</h3>
       <p class="ct-body">This is one of the most misunderstood points in technical SEO, and getting it wrong can cause real problems:</p>
       <ul class="ct-list">
@@ -407,30 +406,24 @@
         <li><strong>It does not apply to subdomains.</strong> A robots.txt at <code class="ct-code">example.com/robots.txt</code> does not cover <code class="ct-code">shop.example.com</code>. Each subdomain needs its own robots.txt file.</li>
       </ul>
     </section>
-
     <!-- ── Section 5: Why it matters for SEO ── -->
     <section class="ct-section" id="why-matters">
       <span class="ct-section-label">SEO impact</span>
       <h2 class="ct-h2">Why robots.txt matters for SEO</h2>
-
       <h3 class="ct-h3">Crawl budget</h3>
       <p class="ct-body">Search engines allocate a crawl budget to every website — roughly the number of pages they'll crawl in a given period. For small sites (under a few hundred pages), crawl budget is rarely a concern. For large sites — ecommerce stores, news sites, content-heavy platforms — it matters significantly.</p>
       <p class="ct-body">If crawlers spend their budget on low-value URLs (thank-you pages, filtered category pages, internal search results, login pages), they may not get around to crawling the content you actually want indexed. A well-configured robots.txt file directs that budget to your most important pages.</p>
-
       <h3 class="ct-h3">Duplicate content</h3>
       <p class="ct-body">Many CMS platforms — particularly WordPress and ecommerce platforms — automatically generate multiple URLs for the same content: tag pages, author archives, paginated versions, filtered URLs with tracking parameters. When search engines see the same content on multiple URLs, it dilutes your authority and can cause ranking confusion.</p>
       <p class="ct-body">Disallowing these duplicate-generating patterns in robots.txt prevents crawlers from ever indexing them. This works best in combination with <code class="ct-code">canonical</code> tags — robots.txt stops the crawl, canonical tags handle any already-indexed duplicates.</p>
-
       <h3 class="ct-h3">Keeping private sections private (from search engines)</h3>
       <p class="ct-body">Staging environments, admin panels, internal tools, and development directories should never appear in search results. Disallowing these in robots.txt is your first line of defence — not a substitute for authentication, but a sensible additional layer.</p>
     </section>
-
     <!-- ── Section 6: Syntax reference ── -->
     <section class="ct-section" id="syntax-reference">
       <span class="ct-section-label">Technical reference</span>
       <h2 class="ct-h2">Robots.txt syntax reference</h2>
       <p class="ct-body">A robots.txt file is made up of blocks, each starting with a User-agent line followed by one or more directives. Here are all the directives you need to know.</p>
-
       <table class="ct-table">
         <thead>
           <tr><th>Directive</th><th>What it does</th></tr>
@@ -443,7 +436,6 @@
           <tr><td><code class="ct-code">Crawl-delay</code></td><td>Requests a pause (in seconds) between requests. Ignored by Google — respected by Bing, Yandex, and others.</td></tr>
         </tbody>
       </table>
-
       <h3 class="ct-h3">Syntax rules — what makes a valid robots.txt file</h3>
       <ul class="ct-list">
         <li><strong>One directive per line.</strong> Each rule must be on its own line. You cannot combine multiple paths on one line.</li>
@@ -452,33 +444,24 @@
         <li><strong>No quotes, semicolons, or inline comments on directive lines.</strong> Comments use # but must be on their own line or at the end after a space.</li>
         <li><strong>Trailing slash for directories.</strong> Use <code class="ct-code">Disallow: /admin/</code> not <code class="ct-code">Disallow: /admin</code> — without the trailing slash, the rule may not match all paths inside that directory.</li>
       </ul>
-
       <h3 class="ct-h3">Examples</h3>
       <p class="ct-body">Allow everything, block admin, include sitemap:</p>
       <pre class="ct-pre">User-agent: *
 Disallow: /wp-admin/
 Allow: /wp-admin/admin-ajax.php
-
 Sitemap: https://example.com/sitemap.xml</pre>
-
       <p class="ct-body" style="margin-top:20px">Block AI training bots while allowing all search engines:</p>
       <pre class="ct-pre">User-agent: *
 Disallow:
-
 User-agent: GPTBot
 Disallow: /
-
 User-agent: ClaudeBot
 Disallow: /
-
 User-agent: OAI-SearchBot
 Disallow: /
-
 User-agent: PerplexityBot
 Disallow: /
-
 Sitemap: https://example.com/sitemap.xml</pre>
-
       <p class="ct-body" style="margin-top:20px">WordPress site — block non-essential areas, preserve crawlability:</p>
       <pre class="ct-pre">User-agent: *
 Disallow: /wp-admin/
@@ -486,17 +469,14 @@ Disallow: /wp-login.php
 Disallow: /?s=
 Disallow: /search/
 Allow: /wp-admin/admin-ajax.php
-
 Sitemap: https://example.com/sitemap.xml</pre>
     </section>
-
     <!-- ── Section 7: Block AI bots ── -->
     <section class="ct-section" id="block-ai-bots">
       <span class="ct-section-label">AI crawlers</span>
       <h2 class="ct-h2">How to block AI bots from your website</h2>
       <p class="ct-body">Since 2023, a new category of bots has emerged: AI training crawlers. These are operated by AI companies and use your content to train large language models — not to send you search traffic. Many website owners want to opt out.</p>
       <p class="ct-body">You can block these bots in robots.txt using their official user-agent names. The generator above includes all of them in the per-bot list.</p>
-
       <table class="ct-table">
         <thead>
           <tr><th>User-agent</th><th>Operated by</th></tr>
@@ -511,7 +491,6 @@ Sitemap: https://example.com/sitemap.xml</pre>
           <tr><td><code class="ct-code">CCBot</code></td><td>Common Crawl — dataset used by many AI models</td></tr>
         </tbody>
       </table>
-
       <div class="ct-callout ct-callout--amber" style="margin-top:20px">
         <div class="ct-callout-icon"></div>
         <div class="ct-callout-body">
@@ -521,7 +500,6 @@ Sitemap: https://example.com/sitemap.xml</pre>
       </div>
       <p class="ct-body" style="margin-top:20px">To block all AI training bots while keeping search engines active, add a separate block for each bot after your main allow-all rule, as shown in the example in the syntax section above.</p>
     </section>
-
     <!-- ── Section 8: Common mistakes ── -->
     <section class="ct-section" id="common-mistakes">
       <span class="ct-section-label">Pitfalls</span>
@@ -562,13 +540,11 @@ Sitemap: https://example.com/sitemap.xml</pre>
         </tbody>
       </table>
     </section>
-
     <!-- ── Section 9: robots.txt vs noindex ── -->
     <section class="ct-section" id="noindex-difference">
       <span class="ct-section-label">Comparison</span>
       <h2 class="ct-h2">Robots.txt vs noindex: what's the difference?</h2>
       <p class="ct-body">This is one of the most common points of confusion in technical SEO. Both control what appears in search results, but they work at completely different stages of the process — and using the wrong one leads to unexpected results.</p>
-
       <table class="ct-table ct-compare-table">
         <thead>
           <tr><th></th><th>robots.txt <code>Disallow</code></th><th><code>noindex</code> meta tag</th></tr>
@@ -601,7 +577,6 @@ Sitemap: https://example.com/sitemap.xml</pre>
           </tr>
         </tbody>
       </table>
-
       <div class="ct-callout ct-callout--amber">
         <div class="ct-callout-icon"></div>
         <div class="ct-callout-body">
@@ -610,22 +585,17 @@ Sitemap: https://example.com/sitemap.xml</pre>
         </div>
       </div>
     </section>
-
     <!-- ── Section 10: How to validate ── -->
     <section class="ct-section" id="validate">
       <span class="ct-section-label">Testing</span>
       <h2 class="ct-h2">How to validate your robots.txt file after publishing</h2>
       <p class="ct-body">After uploading your robots.txt file, it's worth checking it works as intended. Here are three ways to do it.</p>
-
       <h3 class="ct-h3">1. Check it's accessible</h3>
       <p class="ct-body">Visit <code class="ct-code">https://yourdomain.com/robots.txt</code> in a browser. If you see your file as plain text, it's correctly placed and publicly accessible. If you get a 404, the file isn't in the root directory — check your upload location.</p>
-
       <h3 class="ct-h3">2. Use Google Search Console's robots.txt report</h3>
       <p class="ct-body">If your site is verified in Google Search Console, navigate to Settings → robots.txt. Google shows you the last version it fetched, when it was last read, and any warnings. This is the most authoritative check for how Google specifically is interpreting your file.</p>
-
       <h3 class="ct-h3">3. Test specific URLs</h3>
       <p class="ct-body">Google Search Console's URL Inspection tool lets you test whether a specific page is blocked by robots.txt. Enter any URL and the tool tells you if Googlebot is allowed to crawl it — useful for confirming your Disallow rules are working as intended without accidental collateral blocking.</p>
-
       <h3 class="ct-h3">Signs something is wrong</h3>
       <ul class="ct-list">
         <li><strong>Traffic drops suddenly</strong> — check if a new robots.txt deployment accidentally added <code class="ct-code">Disallow: /</code></li>
@@ -634,7 +604,6 @@ Sitemap: https://example.com/sitemap.xml</pre>
         <li><strong>New content is slow to be indexed</strong> — your sitemap may be missing from robots.txt</li>
       </ul>
     </section>
-
     <!-- ── Section 11: FAQ ── -->
     <section class="ct-section" id="faq">
       <span class="ct-section-label">Q&A</span>
@@ -682,7 +651,6 @@ Sitemap: https://example.com/sitemap.xml</pre>
         </details>
       </div>
     </section>
-
     <!-- ── Section 13: Related tools CTA ── -->
     <section class="ct-section ct-cta-section" id="related-tools">
       <span class="ct-section-label">Resources</span>
@@ -709,7 +677,6 @@ Sitemap: https://example.com/sitemap.xml</pre>
         </li>
       </ul>
     </section>
-
     <!-- ── Sources ── -->
     <section class="ct-section" id="sources">
       <h2 class="ct-h2" style="font-size:18px;margin-bottom:14px">Sources</h2>
@@ -717,11 +684,8 @@ Sitemap: https://example.com/sitemap.xml</pre>
         <li><a href="https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec" target="_blank" rel="noopener" class="ct-source-link">developers.google.com — Robots.txt specification ↗</a></li>
       </ul>
     </section>
-
   </div><!-- end .ct-wrap -->
-
 </main>
-
 <script>
 // ── Known bots ─────────────────────────────────────────────────────────────
 var BOTS = [
@@ -896,9 +860,7 @@ var BOTS = [
   // ──
   ['custom',                         'Custom bot name…'],
 ];
-
 var groupCount = 0;
-
 // ── Add group ──────────────────────────────────────────────────────────────
 function addGroup(agentValue, rules) {
   groupCount++;
@@ -906,12 +868,10 @@ function addGroup(agentValue, rules) {
   var el = document.createElement('div');
   el.className = 'group-card';
   el.dataset.id = id;
-
   var opts = BOTS.map(function(b) {
     var sel = (agentValue && b[0] === agentValue) ? ' selected' : '';
     return '<option value="' + b[0] + '"' + sel + '>' + b[1] + '</option>';
   }).join('');
-
   el.innerHTML = [
     '<div class="group-card-header">',
     '  <span class="group-num">' + groupCount + '</span>',
@@ -928,27 +888,22 @@ function addGroup(agentValue, rules) {
     '  <button class="btn-add-rule" style="color:#16a34a;border-color:rgba(22,163,74,.2)" onclick="addRule(this.closest(\'.group-card\'),\'Allow\')">+ Allow</button>',
     '</div>',
   ].join('');
-
   document.getElementById('groups').appendChild(el);
-
   // Pre-fill rules if provided
   if (rules && rules.length) {
     rules.forEach(function(r) { addRule(el, r.type, r.path); });
   } else {
     addRule(el, 'Disallow', '');
   }
-
   // Show custom input if preset
   if (agentValue === 'custom') {
     el.querySelector('.group-agent-select').style.display = 'none';
     el.querySelector('.group-agent-custom').style.display = '';
   }
-
   updateAdsBotWarning(el);
   updateDisallowAllWarnings(el);
   renderOutput();
 }
-
 // ── Agent change ───────────────────────────────────────────────────────────
 function onAgentChange(sel) {
   var card = sel.closest('.group-card');
@@ -961,7 +916,6 @@ function onAgentChange(sel) {
   updateAdsBotWarning(card);
   renderOutput();
 }
-
 function updateAdsBotWarning(card) {
   var sel = card.querySelector('.group-agent-select');
   var warning = card.querySelector('.adsbot-warning');
@@ -969,7 +923,6 @@ function updateAdsBotWarning(card) {
   warning.style.display = (val === '*') ? 'block' : 'none';
   updateDisallowAllWarnings(card);
 }
-
 function updateDisallowAllWarnings(card) {
   var sel = card.querySelector('.group-agent-select');
   var agentVal = sel.style.display === 'none' ? '' : sel.value;
@@ -982,7 +935,6 @@ function updateDisallowAllWarnings(card) {
     w.style.display = isDangerous ? 'block' : 'none';
   });
 }
-
 // ── Remove group ───────────────────────────────────────────────────────────
 function removeGroup(btn) {
   var card = btn.closest('.group-card');
@@ -990,19 +942,16 @@ function removeGroup(btn) {
   renumberGroups();
   renderOutput();
 }
-
 function renumberGroups() {
   document.querySelectorAll('.group-card').forEach(function(c, i) {
     c.querySelector('.group-num').textContent = i + 1;
   });
 }
-
 // ── Add rule ───────────────────────────────────────────────────────────────
 function addRule(card, type, path) {
   type = type || 'Disallow';
   path = path !== undefined ? path : '';
   var rulesEl = card.querySelector('.group-rules');
-
   var row = document.createElement('div');
   row.className = 'rule-row';
   var ruleId = 'rule-' + Date.now() + '-' + Math.random().toString(36).slice(2);
@@ -1017,29 +966,24 @@ function addRule(card, type, path) {
     '<button class="btn-rm-rule" onclick="removeRule(this)" title="Remove">×</button>',
     '<div class="disallow-all-warning" style="flex:0 0 100%;margin-top:6px"><strong>This blocks all crawlers from your entire site.</strong> Any URL not explicitly allowed will be blocked from crawling — and Google cannot index content it cannot crawl. If this is intentional, make sure it is.</div>',
   ].join('');
-
   rulesEl.appendChild(row);
   renderOutput();
 }
-
 function onRuleTypeChange(sel) {
   sel.className = 'rule-type-select type-' + sel.value.toLowerCase();
   updateDisallowAllWarnings(sel.closest('.group-card'));
   renderOutput();
 }
-
 function onPathInput(inp) {
   inp.classList.remove('err');
   updateDisallowAllWarnings(inp.closest('.group-card'));
   renderOutput();
 }
-
 // ── Remove rule ────────────────────────────────────────────────────────────
 function removeRule(btn) {
   btn.closest('.rule-row').remove();
   renderOutput();
 }
-
 // ── Sitemap rows ───────────────────────────────────────────────────────────
 function addSitemapRow(val) {
   var row = document.createElement('div');
@@ -1048,7 +992,6 @@ function addSitemapRow(val) {
   document.getElementById('sitemap-inputs').appendChild(row);
   renderOutput();
 }
-
 function removeSitemapRow(btn) {
   var rows = document.querySelectorAll('.sitemap-row');
   if (rows.length > 1) {
@@ -1059,7 +1002,6 @@ function removeSitemapRow(btn) {
     renderOutput();
   }
 }
-
 // ── Presets ────────────────────────────────────────────────────────────────
 function applyPreset(name) {
   clearAll();
@@ -1107,7 +1049,6 @@ function applyPreset(name) {
   };
   if (defs[name]) defs[name]();
 }
-
 function clearAll() {
   document.getElementById('groups').innerHTML = '';
   groupCount = 0;
@@ -1115,42 +1056,34 @@ function clearAll() {
   var si = document.getElementById('sitemap-inputs');
   si.innerHTML = '<div class="sitemap-row"><input type="url" placeholder="https://example.com/sitemap.xml" oninput="renderOutput()"><button class="btn-icon" onclick="removeSitemapRow(this)" title="Remove">×</button></div>';
 }
-
 // ── Render output ──────────────────────────────────────────────────────────
 function renderOutput() {
   var lines = [];
-
   // Sitemap lines at top (Google convention: sitemap is standalone, can be anywhere)
   var sitemapVals = [];
   document.querySelectorAll('.sitemap-row input').forEach(function(inp) {
     var v = inp.value.trim();
     if (v) sitemapVals.push(v);
   });
-
   // Build groups
   document.querySelectorAll('.group-card').forEach(function(card) {
     var sel = card.querySelector('.group-agent-select');
     var custom = card.querySelector('.group-agent-custom');
     var agent = (sel.style.display === 'none') ? custom.value.trim() : sel.value;
     if (!agent || agent === 'custom') return;
-
     lines.push({type:'ua', val: agent});
-
     card.querySelectorAll('.rule-row').forEach(function(row) {
       var type = row.querySelector('.rule-type-select').value;
       var path = row.querySelector('.rule-path-input').value.trim();
       lines.push({type:'rule', ruleType: type, val: path});
     });
-
     lines.push({type:'blank'});
   });
-
   // Sitemaps at end
   sitemapVals.forEach(function(s) {
     lines.push({type:'sitemap', val: s});
   });
   if (sitemapVals.length) lines.push({type:'blank'});
-
   // Build HTML for colourised display
   var html = lines.map(function(l) {
     if (l.type === 'blank') return '';
@@ -1162,14 +1095,11 @@ function renderOutput() {
     }
     return '';
   }).join('\n');
-
   if (!html.trim()) {
     html = '<span class="line-comment"># Add a crawler group to get started</span>';
   }
-
   document.getElementById('output-pre').innerHTML = html;
 }
-
 // ── Get plain text ─────────────────────────────────────────────────────────
 function getPlainText() {
   var lines = [];
@@ -1178,31 +1108,24 @@ function getPlainText() {
     var v = inp.value.trim();
     if (v) sitemapVals.push(v);
   });
-
   document.querySelectorAll('.group-card').forEach(function(card) {
     var sel = card.querySelector('.group-agent-select');
     var custom = card.querySelector('.group-agent-custom');
     var agent = (sel.style.display === 'none') ? custom.value.trim() : sel.value;
     if (!agent || agent === 'custom') return;
-
     lines.push('User-agent: ' + agent);
-
     card.querySelectorAll('.rule-row').forEach(function(row) {
       var type = row.querySelector('.rule-type-select').value;
       var path = row.querySelector('.rule-path-input').value.trim();
       lines.push(type + ': ' + path);
     });
-
     lines.push('');
   });
-
   sitemapVals.forEach(function(s) {
     lines.push('Sitemap: ' + s);
   });
-
   return lines.join('\n').trim();
 }
-
 // ── Copy ───────────────────────────────────────────────────────────────────
 function copyOutput() {
   var txt = getPlainText();
@@ -1213,7 +1136,6 @@ function copyOutput() {
     setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
   });
 }
-
 // ── Download ───────────────────────────────────────────────────────────────
 function downloadOutput() {
   var txt = getPlainText();
@@ -1224,7 +1146,6 @@ function downloadOutput() {
   a.download = 'robots.txt';
   a.click();
 }
-
 // ── Pattern picker (single shared floating dropdown) ───────────────────────
 var PATTERNS = [
   ['/',         'Entire site — all URLs'],
@@ -1238,9 +1159,7 @@ var PATTERNS = [
 ];
 // Fix last item (backtick was for display only)
 PATTERNS[7] = ['/*/','Any single-level subfolder path'];
-
 var _pickerTarget = null; // the btn-pattern that opened the picker
-
 function buildPicker() {
   var dd = document.createElement('div');
   dd.id = 'pattern-picker';
@@ -1256,11 +1175,9 @@ function buildPicker() {
   document.body.appendChild(dd);
   return dd;
 }
-
 function getPicker() {
   return document.getElementById('pattern-picker') || buildPicker();
 }
-
 function togglePatternPicker(btn) {
   var picker = getPicker();
   if (_pickerTarget === btn && picker.classList.contains('open')) {
@@ -1268,7 +1185,6 @@ function togglePatternPicker(btn) {
   }
   _pickerTarget = btn;
   btn.classList.add('active');
-
   var rect = btn.getBoundingClientRect();
   var pickerW = 340;
   // Position below button, align left edge, but don't overflow viewport right
@@ -1276,18 +1192,15 @@ function togglePatternPicker(btn) {
   var top = rect.bottom + 6;
   // Flip above if not enough room below
   if (top + 320 > window.innerHeight) top = rect.top - 320 - 6;
-
   picker.style.left = left + 'px';
   picker.style.top  = top  + 'px';
   picker.classList.add('open');
 }
-
 function closePicker() {
   var picker = getPicker();
   picker.classList.remove('open');
   if (_pickerTarget) { _pickerTarget.classList.remove('active'); _pickerTarget = null; }
 }
-
 function pickPattern(pattern) {
   if (!_pickerTarget) return;
   var ruleId = _pickerTarget.dataset.ruleId;
@@ -1301,7 +1214,6 @@ function pickPattern(pattern) {
   closePicker();
   renderOutput();
 }
-
 // Close on outside click
 document.addEventListener('click', function(e) {
   if (!e.target.classList.contains('btn-pattern') && !e.target.closest('#pattern-picker')) {
@@ -1310,36 +1222,43 @@ document.addEventListener('click', function(e) {
 });
 // Close on scroll
 window.addEventListener('scroll', function() { closePicker(); }, {passive:true});
-
 // ── Utils ──────────────────────────────────────────────────────────────────
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
 // ── Init ───────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   // Default: one group with * and Allow: /
   addGroup('*', [{type:'Allow', path:'/'}]);
 });
 </script>
-
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

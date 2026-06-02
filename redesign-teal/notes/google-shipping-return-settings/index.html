@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Shipping and Return Settings: All Your Options, and What Takes Precedence — Teal variant — MagsTags</title>
+<meta name="description" content="Five places to configure shipping and returns for Google: feed, Merchant API, MC/SC settings, markup, and Organisation schema. Here's which one wins.">
+<link rel="canonical" href="https://www.magstags.com/redesign/notes/google-shipping-return-settings/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── Tokens (forest variant) ──────────────────────────────────────────── */
+  :root {
+    --ink-1: #111009; --ink-2: #26221f; --ink-3: #504c49; --ink-4: #6b6661;
+    --paper: #f5f5f5; --paper-2: #F5EDE7; --rule: #ddd9d3;
+    --accent: #1ab6db; --accent-2: #d97706;
+    --font-display: 'IBM Plex Mono', 'Menlo', monospace;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+    --font-reading: Georgia, 'Times New Roman', serif;
+    --t-h1:      clamp(28px, 3.6vw, 44px);
+    --t-h2:      clamp(20px, 2.2vw, 28px);
+    --t-h3:      clamp(17px, 1.6vw, 20px);
+    --t-lead:    clamp(18px, 1.4vw, 21px);
+    --t-body:    16.5px;
+    --t-meta:    13px;
+    --t-eyebrow: 11px;
+    --gutter:    clamp(20px, 4vw, 88px);
+    --section-y: clamp(60px, 8vw, 120px);
+    --max:       1200px;
+    --reading:   680px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); font-size: var(--t-body); line-height: 1.7; color: var(--ink-2); background: var(--paper); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
+  a:hover { color: var(--ink-1); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .eyebrow { font-family: var(--font-mono); font-size: var(--t-eyebrow); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); }
+  .eyebrow--accent { color: var(--accent); }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; }
+  h1 { font-size: var(--t-h1); line-height: 1.1; }
+  h2 { font-size: var(--t-h2); line-height: 1.2; font-weight: 600; }
+  h3 { font-size: var(--t-h3); line-height: 1.3; font-weight: 600; }
+  /* ── Sticky header (carried from homepage redesign) ──────────────────── */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(245,241,234,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; text-decoration: none; }
+  .wordmark em { font-style: italic; color: var(--accent); }
+  nav.primary { display: flex; gap: 32px; align-items: center; }
+  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; text-decoration: none; }
+  nav.primary a:hover { color: var(--accent); }
+  nav.primary .subscribe { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px; color: var(--ink-1); background: transparent; transition: background .15s, color .15s; }
+  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
+  @media (max-width: 800px) { nav.primary { gap: 18px; } nav.primary a:not(.subscribe) { display: none; } }
+  .draft-banner { background: var(--accent-2); color: var(--ink-1); padding: 8px 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
+  .draft-banner a { color: var(--ink-1); text-decoration: underline; }
+  /* ── Article header ──────────────────────────────────────────────────── */
+  .article { padding: clamp(40px, 5vw, 64px) 0 var(--section-y); }
+  .article-grid { display: grid; grid-template-columns: 1fr 200px; gap: clamp(40px, 5vw, 80px); align-items: start; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  @media (max-width: 960px) { .article-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .article-body { max-width: var(--reading); min-width: 0; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 48px; letter-spacing: .04em; }
+  .breadcrumb a { color: var(--ink-4); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { opacity: .5; }
+  .post-cat { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); padding: 4px 10px; border: 1px solid var(--accent); border-radius: 99px; display: inline-block; margin-bottom: 24px; text-decoration: none; }
+  .post-h1 { font-family: var(--font-display); font-weight: 600; font-size: var(--t-h1); line-height: 1.1; letter-spacing: -.02em; color: var(--ink-1); margin-bottom: 24px; max-width: 22ch; }
+  .post-meta { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-4); letter-spacing: .06em; text-transform: uppercase; padding-bottom: 36px; border-bottom: 1px solid var(--rule); margin-bottom: 48px; }
+  .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); }
+  .post-lead { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-2); margin-bottom: 36px; font-family: var(--font-reading); font-style: italic; max-width: 30ch; }
+  /* ── Body typography ─────────────────────────────────────────────────── */
+  .article-body p { margin-bottom: 24px; line-height: 1.75; color: var(--ink-2); }
+  .article-body p strong { color: var(--ink-1); font-weight: 600; }
+  .article-body h2 { margin: 56px 0 18px; font-size: var(--t-h2); }
+  .article-body h3 { margin: 36px 0 12px; font-size: var(--t-h3); }
+  .article-body ol, .article-body ul { padding-left: 22px; margin-bottom: 24px; }
+  .article-body ol li, .article-body ul li { margin-bottom: 10px; line-height: 1.7; }
+  .article-body li::marker { color: var(--accent); font-weight: 600; }
+  .article-body code { font-family: var(--font-mono); font-size: 13.5px; background: var(--paper-2); padding: 2px 6px; border-radius: 3px; color: var(--ink-1); }
+  /* Callout — light variant */
+  .callout { background: var(--paper-2); border-left: 3px solid var(--accent); padding: 22px 26px; margin: 32px 0; border-radius: 0 4px 4px 0; }
+  .callout p { margin: 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+  .callout p strong { color: var(--ink-1); }
+  /* Pull quote */
+  .pullquote { margin: 56px 0; padding: 0 0 0 clamp(20px, 3vw, 40px); border-left: 2px solid var(--accent); }
+  .pullquote blockquote { font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 2.3vw, 26px); line-height: 1.3; color: var(--ink-1); letter-spacing: -.015em; margin: 0; }
+  .pullquote blockquote em { font-style: italic; color: var(--accent); }
+  .pullquote cite { display: block; margin-top: 16px; font-family: var(--font-mono); font-size: 11px; font-style: normal; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); }
+  /* Code/data block */
+  .codeblock { background: var(--ink-1); color: rgba(245,241,234,.85); border-radius: 4px; padding: 22px 24px; margin: 28px 0; font-family: var(--font-mono); font-size: 13px; line-height: 1.85; overflow-x: auto; }
+  .codeblock-label { display: block; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 14px; }
+  .codeblock pre { font-family: inherit; font-size: inherit; line-height: inherit; white-space: pre; }
+  .codeblock .k { color: rgba(245,241,234,.95); }
+  .codeblock .s { color: rgba(245,241,234,.62); }
+  .codeblock .p { color: rgba(245,241,234,.35); }
+  .codeblock .c { color: rgba(245,241,234,.42); font-style: italic; }
+  /* Data table */
+  .ct-table-wrap { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; margin: 32px 0; }
+  .ct-table { width: 100%; border-collapse: collapse; font-size: 14px; font-family: var(--font-body); }
+  .ct-table th { text-align: left; padding: 12px 18px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+  .ct-table td { padding: 14px 18px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+  .ct-table tr:last-child td { border-bottom: none; }
+  .ct-table strong { color: var(--ink-1); font-weight: 600; }
+  /* Sources */
+  .sources { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--rule); }
+  .sources h2 { font-size: 18px; margin: 0 0 18px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); font-weight: 600; }
+  .sources ul { padding: 0; list-style: none; margin: 0; }
+  .sources li { margin-bottom: 12px; font-size: 14px; line-height: 1.55; padding-left: 18px; position: relative; }
+  .sources li::before { content: '·'; position: absolute; left: 4px; color: var(--accent); font-weight: 700; }
+  .sources li strong { color: var(--ink-1); font-weight: 600; }
+  /* Related tool card (matches homepage redesign's .tool-featured) */
+  .related-tool { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: clamp(28px, 3.5vw, 40px); margin-top: 48px; display: flex; flex-direction: column; gap: 10px; position: relative; transition: border-color .15s, transform .1s, box-shadow .15s; }
+  .related-tool:hover { border-color: var(--ink-3); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,0,0,.05); }
+  .related-tool-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+  .related-tool h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.2; color: var(--ink-1); margin: 4px 0 0; }
+  .related-tool h3 a { color: inherit; text-decoration: none; }
+  .related-tool h3 a::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+  .related-tool:hover h3 a { color: var(--accent); }
+  .related-tool-outcome { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin-top: 4px; font-style: italic; }
+  .related-tool-cta { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; }
+  /* Author card */
+  .author-card { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start; }
+  .author-photo { width: 80px; height: 80px; border-radius: 50%; background: var(--paper-2); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 9px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+  .author-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 8px; }
+  .author-name { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--ink-1); margin-bottom: 4px; }
+  .author-name a { color: inherit; text-decoration: none; }
+  .author-name a:hover { color: var(--accent); }
+  .author-role { font-family: var(--font-mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+  .author-bio { font-size: 14px; color: var(--ink-3); line-height: 1.6; max-width: 540px; }
+  @media (max-width: 560px) { .author-card { grid-template-columns: 1fr; } }
+  /* ── Right rail TOC ──────────────────────────────────────────────────── */
+  .ct-toc { position: sticky; top: 100px; padding: 0; }
+  .ct-toc-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 14px; }
+  .ct-toc-list { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--rule); }
+  .ct-toc-list a { display: block; padding: 8px 0 8px 16px; font-size: 12.5px; color: var(--ink-3); text-decoration: none; transition: color .12s, border-color .12s; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.35; }
+  .ct-toc-list a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .ct-toc-list a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  @media (max-width: 960px) { .ct-toc { position: static; padding-top: 0; } }
+  /* ── Footer ──────────────────────────────────────────────────────────── */
+  footer.site { background: var(--ink-1); color: var(--paper-2); padding: clamp(48px, 6vw, 80px) 0 32px; margin-top: var(--section-y); }
+  .footer-base { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .footer-base a { color: var(--ink-4); }
+  .footer-base a:hover { color: var(--paper); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+<div class="draft-banner">
+  Redesign · teal variant · article page · <a href="/redesign-teal/">return to redesign home</a> · <a href="/">live site</a>
+</div>
+<header class="site">
+  <div class="site-inner">
+    <a href="/redesign-teal/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/redesign-teal/#research">Research</a>
+      <a href="/redesign-teal/#guides">Guides</a>
+      <a href="/redesign-teal/#tools">Tools</a>
+      <a href="/redesign-teal/#topics">Topics</a>
+      <a href="/redesign-teal/#about">About</a>
+      <a href="/redesign-teal/#newsletter" class="subscribe">Subscribe</a>
+    </nav>
+  </div>
+</header>
+<main id="main-content" class="article">
+  <div class="article-grid">
+    <article class="article-body">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/redesign-teal/">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="/redesign-teal/#research">Notes</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Ecommerce SEO</span>
+      </nav>
+      <a class="post-cat" href="/redesign-teal/#research">Ecommerce SEO</a>
+      <h1 class="post-h1">Google Shipping and Return Settings: All Your Options, and What Takes Precedence</h1>
+      <div class="post-meta">
+        <span>28 May 2026</span>
+        <span class="post-meta-dot"></span>
+        <span>12 min read</span>
+        <span class="post-meta-dot"></span>
+        <span>By Mags Sikora</span>
+      </div>
+      <p class="post-lead">Shipping and return policies can be configured in multiple places with Google, and the interactions between those places are not always obvious.</p>
+      <p>The reason this gets complicated is that Google surfaces shipping and return information across multiple products (Shopping ads, free listings, product rich results), and each product has slightly different data requirements and ingestion paths. There is no single "shipping settings" field. There are <strong>five distinct configuration layers</strong>, each with its own scope and authority.</p>
+      <h2 id="five-layers">The five configuration layers</h2>
+      <p>From most authoritative to least, here is the precedence ladder Google walks when it needs a shipping or returns answer:</p>
+      <div class="codeblock">
+        <span class="codeblock-label">PRECEDENCE.ORDER</span>
+<pre><code><span class="c"># Highest authority first</span>
+<span class="k">1.</span> Merchant Center feed       <span class="p">→</span> <span class="s">per-item, per-market</span>
+<span class="k">2.</span> Merchant API               <span class="p">→</span> <span class="s">programmatic overrides</span>
+<span class="k">3.</span> Merchant Center settings   <span class="p">→</span> <span class="s">account-level defaults</span>
+<span class="k">4.</span> Search Console settings    <span class="p">→</span> <span class="s">auto-syncs to MC</span>
+<span class="k">5.</span> Schema markup              <span class="p">→</span> <span class="s">page-level fallback</span>
+<span class="c">                              (Organisation schema = weakest)</span></code></pre>
+      </div>
+      <p>The fact that all five can co-exist is the source of nearly every issue. Google does not aggregate them, it picks the first one it finds. If the per-item feed value disagrees with the schema markup on the page, the feed wins and the markup is silently ignored.</p>
+      <div class="callout">
+        <p><strong>Shipping and returns is a source-of-truth problem, not a markup problem.</strong> The job is to pick which of the five layers is the canonical source for your setup, make every other layer agree with it, and accept that the rest are either inherited or quietly ignored.</p>
+      </div>
+      <h2 id="silent-failure">The silent failure mode</h2>
+      <p>The pattern most teams discover the hard way: a developer adds <code>OfferShippingDetails</code> to the product schema. The Rich Results Test passes. The page validates. Six weeks later, Merchant Center is still showing the old rate because the feed value (set up two years ago by someone who has since left) still has authority. Nothing is "broken" — but the change you shipped did not change anything visible to Google.</p>
+      <p>This is the failure that costs teams the most because there is nothing to debug. The validator is green. The schema is correct. The data underneath simply lost the argument.</p>
+      <div class="pullquote">
+        <blockquote>
+          Most product schema isn't broken. It's <em>valid</em>. The data underneath it just doesn't match the page, the feed, and the catalogue — and Google trusts none of them.
+        </blockquote>
+        <cite>— from <a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a></cite>
+      </div>
+      <h2 id="where-each-wins">Where each layer is the right source of truth</h2>
+      <p>The right answer depends on scale and team structure. Here is when each layer typically becomes the canonical source:</p>
+      <div class="ct-table-wrap">
+        <table class="ct-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Use it when</th>
+              <th>Avoid when</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Feed</strong></td>
+              <td>Per-product rates vary; multi-market catalogue</td>
+              <td>Rates are uniform across the catalogue</td>
+            </tr>
+            <tr>
+              <td><strong>Merchant API</strong></td>
+              <td>Rates change frequently; programmatic pricing</td>
+              <td>No engineering bandwidth for integration</td>
+            </tr>
+            <tr>
+              <td><strong>MC settings</strong></td>
+              <td>Account-wide defaults; single-market</td>
+              <td>Need per-item granularity</td>
+            </tr>
+            <tr>
+              <td><strong>Search Console</strong></td>
+              <td>Small site without a feed; no MC account</td>
+              <td>Multi-market; complex rate structures</td>
+            </tr>
+            <tr>
+              <td><strong>Schema</strong></td>
+              <td>Only option (no MC/SC); explicit per-page fallback</td>
+              <td>Anything authoritative exists upstream</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="beyond-google">Beyond Google: the durable principle</h2>
+      <p>The precedence ladder above is specific to Google. The principle underneath it — alignment between feed, schema, and front-end — outlasts any specific platform. Other automated buyers, including AI shopping agents, compare the same layers, and when the layers disagree the rational response is to trust none of them. Consolidating to one canonical source is not a Google-only fix. It is what keeps the catalogue legible to whichever system reads it next.</p>
+      <!-- ── Related tool card (matches homepage tool-featured pattern) ── -->
+      <div class="related-tool">
+        <span class="related-tool-tag">Related tool</span>
+        <h3><a href="/gmc-feed-analyzer/">GMC Feed Analyzer</a></h3>
+        <p class="related-tool-outcome">Catch feed errors before Google does.</p>
+        <span class="related-tool-cta">Open the analyzer →</span>
+      </div>
+      <!-- ── Sources ── -->
+      <div class="sources">
+        <h2>Sources &amp; further reading</h2>
+        <ul>
+          <li><strong>Related on MagsTags:</strong> <a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a> — the broader pattern of silent failures across page, schema, and feed layers.</li>
+          <li><strong>Related on MagsTags:</strong> <a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Structured Data: Rich Results, Google Shopping and What Actually Moves the Needle at Scale</a> — the three-layer alignment framework this post sits inside.</li>
+          <li><strong>Google Merchant Center Help:</strong> <a href="https://support.google.com/merchants/answer/6069284" rel="noopener noreferrer" target="_blank">Shipping settings</a></li>
+          <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/merchant-listing" rel="noopener noreferrer" target="_blank">Merchant listing (product snippet) structured data</a></li>
+        </ul>
+      </div>
+      <!-- ── Author card ── -->
+      <div class="author-card">
+        <div class="author-photo">Photo</div>
+        <div>
+          <div class="author-label">Written by</div>
+          <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+          <div class="author-role">Senior SEO Consultant</div>
+          <p class="author-bio">Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+        </div>
+      </div>
+    </article>
+    <!-- ── Right rail TOC ── -->
+    <aside class="ct-toc" aria-label="On this page">
+      <div class="ct-toc-label">On this page</div>
+      <ul class="ct-toc-list">
+        <li><a href="#five-layers" class="active">The five layers</a></li>
+        <li><a href="#silent-failure">The silent failure</a></li>
+        <li><a href="#where-each-wins">Where each layer wins</a></li>
+        <li><a href="#beyond-google">The durable principle</a></li>
+      </ul>
+    </aside>
+  </div>
+</main>
+<footer class="site">
+  <div class="footer-base">
+    <span>© 2026 MagsTags · Magdalena Sikora</span>
+    <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/sitemap/">Sitemap</a></span>
+  </div>
+</footer>
+<script>
+  // Active TOC link on scroll
+  (function() {
+    var links = document.querySelectorAll('.ct-toc-list a');
+    var headings = Array.from(document.querySelectorAll('.article-body h2[id]'));
+    if (!headings.length) return;
+    function update() {
+      var top = window.scrollY + 140;
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].offsetTop <= top) active = headings[i];
+      }
+      links.forEach(function(l) {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + active.id);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+</body>
+</html>

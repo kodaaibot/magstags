@@ -7,16 +7,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
-
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-
   <title>SERP Snippet Previewer | MagsTags</title>
   <meta name="description" content="Preview your Google title and meta description before you publish. Check pixel width, truncation, and how your snippet looks on desktop and mobile.">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     /* Header */
     .logo-sep { color: var(--text-4); margin: 0 4px; }
     .logo-sub { color: var(--text-3); font-size: 13px; }
@@ -24,34 +23,27 @@
     .header-btn:hover { color: var(--text-1); border-color: var(--text-3); }
     .back-link { font-size: 12px; color: var(--text-3); text-decoration: none; display: flex; align-items: center; gap: 4px; }
     .back-link:hover { color: var(--teal); }
-
     /* Layout */
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-
     .page-header { margin-bottom: 28px; }
-    .page-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
+    .page-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
     .page-sub { font-size: 14px; color: var(--text-3); line-height: 1.5; }
-
     /* Two-column layout */
     .tool-layout { display: grid; grid-template-columns: 400px 1fr; gap: 24px; align-items: start; }
     @media (max-width: 860px) { .tool-layout { grid-template-columns: 1fr; } }
-
     /* Input card */
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-sm); }
     .card-title { font-size: 12px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 16px; }
-
     .field { margin-bottom: 16px; }
     .field:last-of-type { margin-bottom: 0; }
     .field-label { font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
     .field-label-hint { font-weight: 400; color: var(--text-4); font-size: 11px; }
     input[type=text], textarea {
       width: 100%; padding: 8px 11px; font-size: 13px; font-family: 'Inter', sans-serif;
-      background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+      background: var(--field); border: 1px solid var(--border); border-radius: 8px;
       color: var(--text-1); outline: none; resize: vertical; transition: border-color .15s;
     }
     input[type=text]:focus, textarea:focus { border-color: var(--teal); }
     textarea { min-height: 72px; line-height: 1.5; }
-
     /* Pixel meter */
     .px-meter { margin-top: 6px; }
     .px-meter-bar-wrap { height: 4px; background: var(--bg2); border-radius: 99px; overflow: visible; position: relative; margin-bottom: 4px; }
@@ -64,7 +56,6 @@
     .px-meter-label .status.ok   { color: var(--green); }
     .px-meter-label .status.warn { color: var(--orange); }
     .px-meter-label .status.over { color: var(--red); }
-
     /* Preview cards */
     .preview-col { display: flex; flex-direction: column; gap: 16px; }
     .preview-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
@@ -72,11 +63,9 @@
     .preview-card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); }
     .preview-card-dim { font-size: 11px; color: var(--text-4); }
     .preview-card-body { padding: 20px 24px; }
-
     /* Google SERP result styles */
     .serp-result { font-family: Arial, sans-serif; max-width: 600px; }
     .serp-result.mobile { max-width: 360px; }
-
     .serp-site-row { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
     .serp-favicon { width: 18px; height: 18px; border-radius: 50%; background: #e8eaed; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
     .serp-favicon svg { width: 12px; height: 12px; }
@@ -84,25 +73,19 @@
     .serp-site-name { font-size: 14px; color: #202124; line-height: 1.3; }
     .serp-breadcrumb { font-size: 12px; color: #4d5156; line-height: 1.3; }
     html.dark .serp-site-name, html.dark .serp-breadcrumb { color: #9aa0a6; }
-
     .serp-title { font-size: 20px; color: #1a0dab; line-height: 1.3; margin-bottom: 4px; cursor: pointer; display: block; text-decoration: none; word-break: break-word; }
     .serp-title:hover { text-decoration: underline; }
     html.dark .serp-title { color: #8ab4f8; }
     .serp-title.truncated { color: #1a0dab; }
     .serp-title.truncated::after { content: ''; }
-
     .serp-desc { font-size: 14px; color: #4d5156; line-height: 1.58; word-break: break-word; }
     html.dark .serp-desc { color: #9aa0a6; }
-
     .serp-result.mobile .serp-site-name { font-size: 13px; }
     .serp-result.mobile .serp-breadcrumb { font-size: 11px; }
     .serp-result.mobile .serp-title { font-size: 18px; }
     .serp-result.mobile .serp-desc { font-size: 13px; }
-
     .trunc-badge { display: inline-block; font-size: 10px; font-weight: 600; background: rgba(220,38,38,.1); color: var(--red); border-radius: 4px; padding: 1px 5px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .05em; }
-
     .empty-hint { font-size: 13px; color: var(--text-4); font-style: italic; }
-  
       @media(max-width:600px){main{padding:24px 16px 60px}}
   </style>
   <meta property="og:title" content="SERP Snippet Previewer | MagsTags">
@@ -117,31 +100,44 @@
   <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
 </head>
 <body>
-
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 </div>
-
-
-<main>
-  <p style="font-size:12px;color:var(--text-4);margin-bottom:20px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> SERP Snippet Previewer</p>
+<main id="main-content">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/seo-tools/">SEO Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>SERP Snippet Previewer</span>
+        </nav>
   <div class="page-header">
     <h1 class="page-title">SERP Snippet Previewer</h1>
     <p class="page-sub">Because 'it looks fine in the CMS' is not the same as 'it looks fine in Google.' And no, the limit isn't exactly 60 characters — it's pixels.<hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">Pixel-accurate SERP preview, live truncation warnings, and the satisfaction of fixing it before anyone sends you a screenshot of how it actually looked.</p>
   </div>
-
   <div class="tool-layout">
-
     <!-- Input panel -->
     <div class="card">
       <div class="card-title">Snippet inputs</div>
-
       <div class="field">
         <div class="field-label">
           Page URL <span class="field-label-hint">optional — for breadcrumb</span>
         </div>
         <input type="text" id="inp-url" aria-label="Page URL" placeholder="https://www.example.com/path/to/page" oninput="update()">
       </div>
-
       <div class="field">
         <div class="field-label">Title tag</div>
         <input type="text" id="inp-title" aria-label="Page title" placeholder="Your page title here" oninput="update()" maxlength="200">
@@ -160,7 +156,6 @@
           </div>
         </div>
       </div>
-
       <div class="field">
         <div class="field-label">Meta description</div>
         <textarea id="inp-desc" placeholder="A concise summary of what this page is about..." oninput="update()"></textarea>
@@ -180,10 +175,8 @@
         </div>
       </div>
     </div>
-
     <!-- Preview panels -->
     <div class="preview-col">
-
       <!-- Desktop -->
       <div class="preview-card">
         <div class="preview-card-header">
@@ -199,7 +192,6 @@
           </div>
         </div>
       </div>
-
       <!-- Mobile -->
       <div class="preview-card">
         <div class="preview-card-header">
@@ -215,37 +207,28 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </main>
-
 <canvas id="measure-canvas" style="display:none"></canvas>
-
 <script>
 // ── Auth ──────────────────────────────────────────────────────────────────
 var isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-
 // ── Theme ─────────────────────────────────────────────────────────────────
-
 // ── Canvas text measurement ───────────────────────────────────────────────
 var _ctx = document.getElementById('measure-canvas').getContext('2d');
-
 function px(text, font) {
   _ctx.font = font;
   return _ctx.measureText(text).width;
 }
-
 var TITLE_D_FONT = 'bold 20px Arial';
 var TITLE_D_MAX  = 580;
 var TITLE_M_FONT = 'bold 18px Arial';
 var TITLE_M_MAX  = 480;
-
 var DESC_D_FONT  = '14px Arial';
 var DESC_D_MAX   = 920;  // total across 2 lines (~460px each)
 var DESC_M_FONT  = '13px Arial';
 var DESC_M_MAX   = 680;  // total across 2–3 lines
-
 // Truncate text to fit pixel width, adding ellipsis
 function truncate(text, font, maxW) {
   _ctx.font = font;
@@ -258,7 +241,6 @@ function truncate(text, font, maxW) {
   }
   return { out: text.slice(0, lo) + '\u2026', truncated: true };
 }
-
 // Wrap text into lines, truncate last line if needed
 function wrapDesc(text, font, lineMax, maxLines) {
   _ctx.font = font;
@@ -292,7 +274,6 @@ function wrapDesc(text, font, lineMax, maxLines) {
   }
   return { lines: lines, truncated: false };
 }
-
 // ── Meter update helper ───────────────────────────────────────────────────
 function updateMeter(containerId, pxVal, maxPx, chars, charsElId) {
   var wrap = document.getElementById(containerId);
@@ -307,7 +288,6 @@ function updateMeter(containerId, pxVal, maxPx, chars, charsElId) {
   label.textContent = Math.round(pxVal) + ' px';
   if (charsElId) document.getElementById(charsElId).textContent = chars + ' chars';
 }
-
 // ── URL → breadcrumb ─────────────────────────────────────────────────────
 function parseBreadcrumb(urlStr) {
   try {
@@ -321,62 +301,49 @@ function parseBreadcrumb(urlStr) {
     return { site: urlStr || 'example.com', crumb: urlStr || 'example.com' };
   }
 }
-
 // ── Favicon SVG placeholder ───────────────────────────────────────────────
 var FAVICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#9aa0a6"><circle cx="12" cy="12" r="10"/></svg>';
-
 function faviconEl(urlStr) {
   try {
     var u = new URL(urlStr);
     return '<img alt="" src="https://www.google.com/s2/favicons?domain=' + encodeURIComponent(u.hostname) + '&sz=32" width="18" height="18" style="border-radius:50%;object-fit:cover" onerror="this.style.display=\'none\'">';
   } catch(e) { return FAVICON_SVG; }
 }
-
 // ── Main update function ──────────────────────────────────────────────────
 function update() {
   var urlVal   = document.getElementById('inp-url').value.trim();
   var titleVal = document.getElementById('inp-title').value;
   var descVal  = document.getElementById('inp-desc').value;
-
   var isEmpty = !titleVal && !descVal;
-
   // Meters
   var tPxD = px(titleVal, TITLE_D_FONT);
   var tPxM = px(titleVal, TITLE_M_FONT);
   var dPxD = px(descVal, DESC_D_FONT);
   var dPxM = px(descVal, DESC_M_FONT);
-
   updateMeter('meter-title-desktop', tPxD, TITLE_D_MAX, titleVal.length, 'meter-title-desktop-chars');
   updateMeter('meter-title-mobile',  tPxM, TITLE_M_MAX, titleVal.length, null);
   updateMeter('meter-desc-desktop',  dPxD, DESC_D_MAX,  descVal.length,  'meter-desc-desktop-chars');
   updateMeter('meter-desc-mobile',   dPxM, DESC_M_MAX,  descVal.length,  null);
-
   renderPreview('preview-desktop', urlVal, titleVal, descVal, false);
   renderPreview('preview-mobile',  urlVal, titleVal, descVal, true);
 }
-
 function renderPreview(elId, urlVal, titleVal, descVal, isMobile) {
   var el = document.getElementById(elId);
   if (!titleVal && !descVal) { el.innerHTML = '<p class="empty-hint">Start typing to see a preview.</p>'; return; }
-
   var tFont   = isMobile ? TITLE_M_FONT   : TITLE_D_FONT;
   var tMax    = isMobile ? TITLE_M_MAX    : TITLE_D_MAX;
   var dFont   = isMobile ? DESC_M_FONT    : DESC_D_FONT;
   var dLineW  = isMobile ? 340            : 460;
   var dLines  = isMobile ? 3              : 2;
-
   // Title
   var tResult = truncate(titleVal || '', tFont, tMax);
   var titleHtml = esc(tResult.out) + (tResult.truncated ? '<span class="trunc-badge">truncated</span>' : '');
-
   // Description
   var dResult = wrapDesc(descVal || '', dFont, dLineW, dLines);
   var descHtml = dResult.lines.map(esc).join('<br>') + (dResult.truncated ? '' : '');
-
   // URL / breadcrumb
   var bc = urlVal ? parseBreadcrumb(urlVal) : { site: 'example.com', crumb: 'example.com \u203a page' };
   var fav = urlVal ? faviconEl(urlVal) : FAVICON_SVG;
-
   el.innerHTML =
     '<div class="serp-site-row">' +
       '<div class="serp-favicon">' + fav + '</div>' +
@@ -388,29 +355,37 @@ function renderPreview(elId, urlVal, titleVal, descVal, isMobile) {
     '<a class="serp-title' + (tResult.truncated ? ' truncated' : '') + '" href="#">' + titleHtml + '</a>' +
     '<div class="serp-desc">' + (descHtml || '<em style="color:var(--text-4)">No description</em>') + '</div>';
 }
-
 function esc(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
-
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

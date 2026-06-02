@@ -14,8 +14,9 @@
   <meta property="og:title" content="Product Variants — Schema Generator | MagsTags">
   <meta property="og:description" content="The markup that makes your product variants eligible for colour and size swatches in Google Shopping. Generate ProductGroup JSON-LD with variants, pricing, and availability.">
   <meta property="og:url" content="https://www.magstags.com/product-variants-schema-generator/">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org/",
@@ -40,28 +41,19 @@
     ]
   }
   </script>
-
   <style>
-
-    .page-hero { margin-bottom: 32px; }
-    .page-hero h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 36px; font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
-    .page-hero p { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 620px; }
-    .page-hero code { font-family: 'Menlo', 'Monaco', 'Courier New', monospace; font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: var(--text-2); }
-
-    /* Tabs */
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+/* Tabs */
     .schema-tabs { display: flex; gap: 4px; margin-bottom: 28px; background: var(--surface); border-radius: 99px; padding: 4px; width: fit-content; border: 1px solid var(--border); flex-wrap: wrap; }
     .schema-tab { background: none; border: none; border-radius: 99px; padding: 7px 22px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-3); cursor: pointer; transition: all .15s; white-space: nowrap; text-decoration: none; display: inline-block; }
     .schema-tab:hover { color: var(--text-1); }
     .schema-tab.active { background: var(--teal); color: #fff; font-weight: 600; }
-
     /* Layout */
     .tool-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
     @media (max-width: 960px) { .tool-layout { grid-template-columns: 1fr; } }
-
     /* Cards */
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 14px; }
     .card:last-child { margin-bottom: 0; }
-
     /* Form sections */
     .form-section + .form-section { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--border); }
     .form-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); }
@@ -70,21 +62,19 @@
     .form-section.collapsible.open .form-section-body { display: block; margin-top: 16px; }
     .chevron { transition: transform .2s; color: var(--text-4); flex-shrink: 0; }
     .form-section.collapsible.open .chevron { transform: rotate(180deg); }
-
     /* Fields */
     .form-group { margin-bottom: 14px; }
     .form-group:last-child { margin-bottom: 0; }
     .form-label { display: block; font-size: 11px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .06em; }
     .form-label .req { color: var(--teal); }
     .form-hint { font-size: 11px; color: var(--text-4); margin-top: 5px; line-height: 1.5; }
-
     input[type="text"], input[type="url"], input[type="number"], input[type="date"], select, textarea {
       width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 10px;
-      background: var(--bg2); color: var(--text-1); font-family: 'Inter', sans-serif; font-size: 13px;
+      background: var(--field); color: var(--text-1); font-family: 'Inter', sans-serif; font-size: 13px;
       transition: border-color .15s, box-shadow .15s; outline: none;
     }
     textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
-    input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); background: var(--surface); }
+    input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,116,144,.1); background: var(--field); }
     html.dark input:focus, html.dark select:focus, html.dark textarea:focus { box-shadow: 0 0 0 3px rgba(34,211,238,.1); }
     select {
       appearance: none; -webkit-appearance: none;
@@ -94,25 +84,21 @@
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
     @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
-
     /* Offer type toggle */
     .offer-toggle { display: flex; gap: 4px; margin-bottom: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 99px; padding: 3px; width: fit-content; }
     .offer-toggle-btn { border: none; background: none; border-radius: 99px; padding: 5px 14px; font-size: 12px; font-weight: 500; color: var(--text-3); cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; }
     .offer-toggle-btn.active { background: var(--teal); color: #fff; font-weight: 600; }
     .offer-section { display: none; }
     .offer-section.active { display: block; }
-
     /* Validation */
     .v-msg { font-size: 11px; margin-top: 4px; padding: 4px 8px; border-radius: 6px; }
     .v-msg.error { color: var(--red); background: var(--red-light); }
     .v-msg.warn  { color: var(--amber); background: rgba(146,64,14,.08); }
     .v-msg.ok    { color: var(--green); }
     input.v-error { border-color: var(--red) !important; }
-
     /* Pros/cons notice */
     .pros-cons-notice { font-size: 11px; color: var(--amber); background: rgba(146,64,14,.08); border-radius: 6px; padding: 6px 10px; margin-top: 8px; display: none; }
     .pros-cons-notice.show { display: block; }
-
     /* Dynamic rows */
     .dyn-row { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
     .dyn-row-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
@@ -123,14 +109,12 @@
     .btn-remove:hover { color: var(--red); }
     .note-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
     .note-row input { flex: 1; }
-
     /* Pills */
     .pill-group { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill-check { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border: 1.5px solid var(--border); border-radius: 99px; font-size: 12px; font-weight: 500; color: var(--text-3); cursor: pointer; user-select: none; transition: all .15s; }
     .pill-check input { display: none; }
     .pill-check:hover { border-color: var(--teal); color: var(--teal); }
     .pill-check.on { background: var(--teal); border-color: var(--teal); color: #fff; }
-
     /* Output */
     .output-sticky { position: sticky; top: 20px; }
     .output-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 14px; }
@@ -146,7 +130,6 @@
     .jb { color: #d97706; } .jl { color: var(--text-4); } .jt { color: var(--text-4); }
     html.dark .jk { color: #c084fc; } html.dark .js { color: #6ee7b7; }
     html.dark .jn { color: #93c5fd; } html.dark .jb { color: #fbbf24; }
-
     /* Benefit card */
     .benefit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; }
     .tc-inner { display: flex; gap: 16px; align-items: flex-start; }
@@ -164,39 +147,54 @@
     .tc-benefits li { font-size: 14px; color: var(--text-3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
     .tc-benefits li::before { content: ''; width: 5px; height: 5px; background: var(--teal); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
     @media (max-width: 600px) { .tc-inner { flex-direction: column; } .tc-serp { width: 100%; } }
-
     /* Variant rows */
     .pg-variant + .pg-variant { margin-top: 10px; }
-
     /* Form type indicator */
     .tab-intro { font-size: 13px; color: var(--text-3); background: rgba(14,116,144,.06); border: 1px solid rgba(14,116,144,.15); border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.5; }
     .tab-intro a { color: var(--teal); }
   </style>
 </head>
 <body>
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <div class="tool-content">
-<main>
-
+<main id="main-content">
   <div class="page-hero">
-    <p style="font-size:12px;color:var(--text-4);margin-bottom:14px"><a href="/" style="color:var(--text-4);text-decoration:none">Home</a> <span style="opacity:.5">›</span> <a href="/seo-tools/" style="color:var(--text-4);text-decoration:none">SEO Tools</a> <span style="opacity:.5">›</span> <a href="/ecommerce-schema-generator/" style="color:var(--text-4);text-decoration:none">E-commerce — Product Schema Generators</a> <span style="opacity:.5">›</span> Product Variants</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/seo-tools/">SEO Tools</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="/ecommerce-schema-generator/">E-commerce — Product Schema Generators</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Product Variants</span>
+        </nav>
     <h1>Product Variants — Schema Generator</h1>
     <p style="font-size:16px;color:var(--text-2);font-weight:400;margin-bottom:8px">The markup that makes your product variants eligible for colour and size swatches in Google Shopping.</p>
     <p>For the product that comes in blue, green, red, and 'navy (which is basically blue).'</p>
     <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
   </div>
-
   <div class="schema-tabs">
     <a class="schema-tab" href="/product-snippet-schema-generator/">Product Snippet</a>
     <a class="schema-tab" href="/merchant-listing-schema-generator/">Merchant Listing</a>
     <a class="schema-tab active" href="/product-variants-schema-generator/">Product Variants</a>
   </div>
-
   <div class="tool-layout">
-
     <!-- ═══ LEFT: FORMS ═══ -->
     <div>
-
       <!-- ══════════════════════════════════════
            PRODUCT SNIPPET FORM
            ══════════════════════════════════════ -->
@@ -205,7 +203,6 @@
           <strong>Product Snippet</strong> — for any page that describes a product (review sites, editorial pages, shopping aggregators, or merchant pages). Required: <code>name</code> + at least one of <code>review</code>, <code>aggregateRating</code>, or <code>offers</code>.
           <a href="/product-snippet-schema/" target="_blank">Learn more →</a>
         </div>
-
         <div class="card">
           <!-- Basic info -->
           <div class="form-section">
@@ -239,7 +236,6 @@
               </div>
             </div>
           </div>
-
           <!-- Aggregate Rating -->
           <div class="form-section collapsible" id="sec-ps-rating">
             <div class="form-section-header" onclick="toggleSection('sec-ps-rating')">
@@ -269,7 +265,6 @@
               </div>
             </div>
           </div>
-
           <!-- Review -->
           <div class="form-section collapsible" id="sec-ps-review">
             <div class="form-section-header" onclick="toggleSection('sec-ps-review')">
@@ -316,7 +311,6 @@
               <div id="pros-cons-notice" class="pros-cons-notice">At least 2 statements total (pros + cons) are required for Google to display pros/cons in search results.</div>
             </div>
           </div>
-
           <!-- Offer -->
           <div class="form-section collapsible" id="sec-ps-offer">
             <div class="form-section-header" onclick="toggleSection('sec-ps-offer')">
@@ -357,12 +351,10 @@
                       <option value="OutOfStock">Out of Stock</option>
                       <option value="BackOrder">Back Order</option>
                       <option value="PreOrder">Pre-Order</option>
-                      
                       <option value="LimitedAvailability">Limited Availability</option>
                       <option value="OnlineOnly">Online Only</option>
                       <option value="InStoreOnly">In Store Only</option>
                       <option value="Discontinued">Discontinued</option>
-                      
                     </select>
                   </div>
                   <div class="form-group">
@@ -403,11 +395,9 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <!-- end snippet form -->
-
       <!-- ══════════════════════════════════════
            MERCHANT LISTING FORM
            ══════════════════════════════════════ -->
@@ -416,7 +406,6 @@
           <strong>Merchant Listing</strong> — for pages where customers can purchase the product from you. Required: <code>name</code> + <code>offers.price</code> + <code>offers.priceCurrency</code>. Enables Shopping panel, Popular products, and price drop alerts.
           <a href="/merchant-listing-schema/" target="_blank">Learn more →</a>
         </div>
-
         <div class="card">
           <!-- Basic info -->
           <div class="form-section">
@@ -446,7 +435,6 @@
               </div>
             </div>
           </div>
-
           <!-- Identifiers -->
           <div class="form-section collapsible open" id="sec-ml-ids">
             <div class="form-section-header" onclick="toggleSection('sec-ml-ids')">
@@ -482,7 +470,6 @@
               </div>
             </div>
           </div>
-
           <!-- Offer / Pricing -->
           <div class="form-section collapsible open" id="sec-ml-offer">
             <div class="form-section-header" onclick="toggleSection('sec-ml-offer')">
@@ -516,12 +503,10 @@
                     <option value="OutOfStock">Out of Stock</option>
                     <option value="BackOrder">Back Order</option>
                     <option value="PreOrder">Pre-Order</option>
-                    
                     <option value="LimitedAvailability">Limited Availability</option>
                     <option value="OnlineOnly">Online Only</option>
                     <option value="InStoreOnly">In Store Only</option>
                     <option value="Discontinued">Discontinued</option>
-                    
                   </select>
                 </div>
                 <div class="form-group">
@@ -531,7 +516,6 @@
                     <option value="NewCondition">New</option>
                     <option value="RefurbishedCondition">Refurbished</option>
                     <option value="UsedCondition">Used</option>
-                    
                   </select>
                 </div>
               </div>
@@ -559,7 +543,6 @@
               </div>
             </div>
           </div>
-
           <!-- Shipping -->
           <div class="form-section collapsible" id="sec-ml-shipping">
             <div class="form-section-header" onclick="toggleSection('sec-ml-shipping')">
@@ -613,7 +596,6 @@
               </div>
             </div>
           </div>
-
           <!-- Returns -->
           <div class="form-section collapsible" id="sec-ml-returns">
             <div class="form-section-header" onclick="toggleSection('sec-ml-returns')">
@@ -663,7 +645,6 @@
               </div>
             </div>
           </div>
-
           <!-- Aggregate Rating -->
           <div class="form-section collapsible" id="sec-ml-rating">
             <div class="form-section-header" onclick="toggleSection('sec-ml-rating')">
@@ -693,11 +674,9 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <!-- end merchant form -->
-
       <!-- ══════════════════════════════════════
            PRODUCT VARIANTS FORM
            ══════════════════════════════════════ -->
@@ -706,7 +685,6 @@
           <strong>Product Variants</strong> — for products with colour, size, material, or other options. Uses <code>ProductGroup</code> with <code>hasVariant</code>. Enables colour swatches and variant pricing in Google Shopping.
           <a href="/product-variants-schema/" target="_blank">Learn more →</a>
         </div>
-
         <!-- Structure toggle -->
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap">
           <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">Structure:</span>
@@ -716,7 +694,6 @@
           </div>
           <span style="font-size:11px;color:var(--text-4)" id="pg-mode-hint">Variants nested inside ProductGroup — simpler to implement and validate.</span>
         </div>
-
         <div class="card">
           <div class="form-section">
             <div class="form-section-title">Basic Info</div>
@@ -756,7 +733,6 @@
               </div>
             </div>
           </div>
-
           <!-- Aggregate Rating -->
           <div class="form-section collapsible" id="sec-pg-rating">
             <div class="form-section-header" onclick="toggleSection('sec-pg-rating')">
@@ -787,7 +763,6 @@
               </div>
             </div>
           </div>
-
           <!-- Audience -->
           <div class="form-section collapsible" id="sec-pg-audience">
             <div class="form-section-header" onclick="toggleSection('sec-pg-audience')">
@@ -817,7 +792,6 @@
               </div>
             </div>
           </div>
-
           <!-- Varies By -->
           <div class="form-section">
             <div class="form-section-title">Varies By <span class="req">*</span></div>
@@ -827,7 +801,6 @@
               <div id="varies-by-warn" style="display:none;margin-top:8px;font-size:11px;color:#92400e;background:rgba(146,64,14,.08);border-radius:6px;padding:6px 10px">variesBy is required for ProductGroup. Select at least one dimension — otherwise Google cannot identify variant relationships and no colour swatches will appear.</div>
             </div>
           </div>
-
           <!-- Variants -->
           <div class="form-section">
             <div class="form-section-title">Variants (hasVariant)</div>
@@ -837,14 +810,11 @@
               <button class="btn-add" onclick="addVariant()">+ Add Variant</button>
             </div>
           </div>
-
         </div>
       </div>
       <!-- end variants form -->
-
     </div>
     <!-- end left col -->
-
     <!-- ═══ RIGHT: OUTPUT + BENEFIT CARD ═══ -->
     <div class="output-sticky">
       <div class="output-card">
@@ -867,23 +837,17 @@
       </div>
       <div id="benefit-card" class="benefit-card"></div>
     </div>
-
   </div><!-- end tool-layout -->
-
   <p style="font-size:13px;color:var(--text-3);line-height:1.6;max-width:640px;margin-top:32px">Generate ProductGroup JSON-LD with variant-specific pricing, availability, and images. Nested or flat structure, ready to implement. Switch tabs to generate <a href="/product-snippet-schema-generator/" style="color:var(--teal)">Product Snippet</a> or <a href="/merchant-listing-schema-generator/" style="color:var(--teal)">Merchant Listing</a> schema instead.</p>
-
 </main>
 </div><!-- end tool-content -->
-
 <script>
   /* ─── Clerk auth (staff tools only — this tool is public) ─── */
-
   /* ─── State ─── */
   var currentSchema = 'snippet';
   var variantCount  = 0;
   var pgMode        = 'nested';
   var offerType     = 'single'; // 'single' | 'agg'
-
   /* ─── Offer type toggle ─── */
   function setOfferType(type) {
     offerType = type;
@@ -893,7 +857,6 @@
     document.getElementById('ps-offer-agg').classList.toggle('active', type === 'agg');
     generate();
   }
-
   /* ─── ProductGroup mode ─── */
   function setPgMode(mode) {
     pgMode = mode;
@@ -904,7 +867,6 @@
       : 'Flat JSON-LD array — variants reference group via isVariantOf. Better for headless setups or large catalogues.';
     generate();
   }
-
   /* ─── Switch tab ─── */
   function switchSchema(type) {
     currentSchema = type;
@@ -917,34 +879,28 @@
     updateBenefitCard(type);
     generate();
   }
-
   /* ─── Toggle collapsible ─── */
   function toggleSection(id) {
     document.getElementById(id).classList.toggle('open');
   }
-
   /* ─── Generate (dispatcher) ─── */
   function generate() {
     if (currentSchema === 'snippet')  genProductSnippet();
     else if (currentSchema === 'merchant') genMerchantListing();
     else                               genProductVariants();
   }
-
   /* ─── Helper ─── */
   function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
-
   /* ─── Product Snippet ─── */
   function genProductSnippet() {
     var name = v('ps-name');
     if (!name) { showEmpty(); return; }
-
     var schema = { '@context': 'https://schema.org/', '@type': 'Product', 'name': name };
     if (v('ps-desc'))  schema.description = v('ps-desc');
     if (v('ps-image')) schema.image = v('ps-image');
     if (v('ps-brand')) schema.brand = { '@type': 'Brand', 'name': v('ps-brand') };
     if (v('ps-sku'))   schema.sku   = v('ps-sku');
     if (v('ps-mpn'))   schema.mpn   = v('ps-mpn');
-
     // aggregateRating
     var arVal = v('ps-ar-value'), arCount = v('ps-ar-count');
     if (arVal || arCount) {
@@ -955,7 +911,6 @@
       if (arBest)  schema.aggregateRating.bestRating   = parseFloat(arBest);
       if (arWorst) schema.aggregateRating.worstRating  = parseFloat(arWorst);
     }
-
     // review
     var rvAuthor = v('ps-rv-author'), rvRating = v('ps-rv-rating');
     if (rvAuthor || rvRating) {
@@ -976,7 +931,6 @@
       });
       if (pros.length) rev.positiveNotes = { '@type': 'ItemList', 'itemListElement': pros };
       if (cons.length) rev.negativeNotes = { '@type': 'ItemList', 'itemListElement': cons };
-
       // Pros/cons validation notice
       var total = pros.length + cons.length;
       var notice = document.getElementById('pros-cons-notice');
@@ -989,7 +943,6 @@
       }
       schema.review = rev;
     }
-
     // offers
     if (offerType === 'single') {
       var price = v('ps-price');
@@ -1012,15 +965,12 @@
         schema.offers = aggOffer;
       }
     }
-
     showSchema(schema);
   }
-
   /* ─── Merchant Listing ─── */
   function genMerchantListing() {
     var name = v('ml-name');
     if (!name) { showEmpty(); return; }
-
     var schema = { '@context': 'https://schema.org/', '@type': 'Product', 'name': name };
     if (v('ml-desc'))  schema.description = v('ml-desc');
     if (v('ml-image')) schema.image = v('ml-image');
@@ -1030,7 +980,6 @@
     if (v('ml-group-id')) schema.inProductGroupWithID = v('ml-group-id');
     var gtinVal = v('ml-gtin');
     if (gtinVal) schema[v('ml-gtin-type')] = gtinVal;
-
     // Aggregate Rating
     var mlArVal = v('ml-ar-value'), mlArCount = v('ml-ar-count');
     if (mlArVal || mlArCount) {
@@ -1041,7 +990,6 @@
       if (mlArBest)  schema.aggregateRating.bestRating  = parseFloat(mlArBest);
       if (mlArWorst) schema.aggregateRating.worstRating = parseFloat(mlArWorst);
     }
-
     // Offer
     var price = v('ml-price');
     var offer = { '@type': 'Offer', 'priceCurrency': v('ml-currency') || 'GBP' };
@@ -1063,7 +1011,6 @@
     if (mlPuntil) offer.priceValidUntil = mlPuntil;
     var mlSeller = v('ml-seller');
     if (mlSeller) offer.seller = { '@type': 'Organization', 'name': mlSeller };
-
     // Shipping
     var shipPrice = v('ml-ship-price');
     if (shipPrice !== '') {
@@ -1087,9 +1034,7 @@
       }
       offer.shippingDetails = shipping;
     }
-
     schema.offers = offer;
-
     // Return policy
     var retType = v('ml-return-type');
     if (retType) {
@@ -1104,15 +1049,12 @@
       if (retCountry) ret.applicableCountry = retCountry.toUpperCase();
       schema.hasMerchantReturnPolicy = ret;
     }
-
     showSchema(schema);
   }
-
   /* ─── Product Variants (ProductGroup) ─── */
   function genProductVariants() {
     var name = v('pg-name');
     if (!name) { showEmpty(); return; }
-
     var schema = { '@context': 'https://schema.org/', '@type': 'ProductGroup', 'name': name };
     if (v('pg-desc'))     schema.description    = v('pg-desc');
     if (v('pg-url'))      schema.url            = v('pg-url');
@@ -1120,7 +1062,6 @@
     if (v('pg-brand'))    schema.brand          = { '@type': 'Brand', 'name': v('pg-brand') };
     if (v('pg-pattern'))  schema.pattern        = v('pg-pattern');
     if (v('pg-material')) schema.material       = v('pg-material');
-
     // Audience
     var gender = v('pg-gender'), ageMin = v('pg-age-min');
     if (gender || ageMin) {
@@ -1133,7 +1074,6 @@
       }
       schema.audience = aud;
     }
-
     // Group-level rating
     var pgRating = v('pg-rating'), pgRcount = v('pg-review-count');
     if (pgRating && pgRcount) {
@@ -1143,7 +1083,6 @@
         'bestRating': parseFloat(v('pg-best') || '5'), 'worstRating': parseFloat(v('pg-worst') || '1')
       };
     }
-
     // variesBy
     var variesBy = [];
     document.querySelectorAll('#varies-by-pills .pill-check.on').forEach(function(p) { variesBy.push(p.dataset.val); });
@@ -1156,7 +1095,6 @@
     }
     var warnEl2 = document.getElementById('varies-by-warn');
     if (warnEl2) warnEl2.style.display = variesBy.length ? 'none' : 'block';
-
     // Variants
     var variants = [];
     document.querySelectorAll('.pg-variant').forEach(function(row) {
@@ -1186,7 +1124,6 @@
       }
       variants.push(variant);
     });
-
     if (pgMode === 'nested') {
       if (variants.length) schema.hasVariant = variants;
       showSchema(schema);
@@ -1203,7 +1140,6 @@
       showSchema(output);
     }
   }
-
   /* ─── Display ─── */
   function showSchema(obj) {
     var json    = JSON.stringify(obj, null, 2);
@@ -1224,7 +1160,6 @@
     });
     return esc;
   }
-
   /* ─── Copy ─── */
   function copyOutput() {
     var text = document.getElementById('output-code').textContent.trim();
@@ -1238,7 +1173,6 @@
       }, 2000);
     });
   }
-
   /* ─── Varies By pills ─── */
   var VARIES = [
     { label: 'Color',            val: 'https://schema.org/color'           },
@@ -1259,7 +1193,6 @@
     });
   })();
   function pillToggle(input) { input.parentElement.classList.toggle('on', input.checked); generate(); }
-
   /* ─── Add pros/cons note ─── */
   function addNote(type) {
     var container = document.getElementById('ps-' + (type === 'pro' ? 'pros' : 'cons'));
@@ -1273,7 +1206,6 @@
     container.appendChild(div);
     generate();
   }
-
   /* ─── Add Variant ─── */
   function addVariant() {
     variantCount++;
@@ -1323,14 +1255,12 @@
     document.getElementById('pg-variants').appendChild(div);
     generate();
   }
-
   /* ─── GTIN type change ─── */
   function onGtinTypeChange(sel) {
     var row = sel.closest('.dyn-row') || document;
     var gtinInput = row.querySelector('[data-f="vgtin"], #ml-gtin');
     if (gtinInput && gtinInput.value.trim()) validateField(gtinInput);
   }
-
   /* ─── Field validation ─── */
   var VR = {
     url: function(val) {
@@ -1392,7 +1322,6 @@
     msg.textContent = result.msg;
     el.parentNode.insertBefore(msg, el.nextSibling);
   }
-
   /* ─── Benefit card data ─── */
   var BENEFIT_DATA = {
     snippet: {
@@ -1492,7 +1421,6 @@
       link: '/product-variants-schema/'
     }
   };
-
   function updateBenefitCard(type) {
     var d = BENEFIT_DATA[type];
     if (!d) return;
@@ -1508,7 +1436,6 @@
         '</div>' +
       '</div>';
   }
-
   /* ─── Init: default tab = variants ─── */
   (function() {
     var params = new URLSearchParams(window.location.search);
@@ -1520,25 +1447,33 @@
     }
   })();
 </script>
-
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
-
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
 </body>
 </html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Schema for SEO — Structured Data Guides for E-commerce | MagsTags</title>
+  <meta name="description" content="Practical guides on Product, Product Snippet, Merchant Listing, and ProductGroup schema. Which class to use, what each field does, and how to generate clean JSON-LD.">
+  <link rel="canonical" href="https://www.magstags.com/schema-for-seo/">
+  <meta property="og:title" content="Schema for SEO — Structured Data Guides for E-commerce | MagsTags">
+  <meta property="og:description" content="Practical guides on Product, Product Snippet, Merchant Listing, and ProductGroup schema. Which class to use, what each field does, and how to generate clean JSON-LD.">
+  <meta property="og:url" content="https://www.magstags.com/schema-for-seo/">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Schema for SEO — Structured Data Guides for E-commerce",
+    "description": "Practical guides on Product, Product Snippet, Merchant Listing, and ProductGroup schema. Which class to use, what each field does, and how to generate clean JSON-LD.",
+    "url": "https://www.magstags.com/schema-for-seo/",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.magstags.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Learn SEO", "item": "https://www.magstags.com/learn-seo/" },
+        { "@type": "ListItem", "position": 3, "name": "Schema for SEO", "item": "https://www.magstags.com/schema-for-seo/" }
+      ]
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "url": "https://www.magstags.com/product-schema/", "name": "Product Schema Markup" },
+        { "@type": "ListItem", "position": 2, "url": "https://www.magstags.com/product-snippet-schema/", "name": "Product Snippet Schema" },
+        { "@type": "ListItem", "position": 3, "url": "https://www.magstags.com/merchant-listing-schema/", "name": "Merchant Listing Schema" },
+        { "@type": "ListItem", "position": 4, "url": "https://www.magstags.com/product-variants-schema/", "name": "Product Variants Schema" }
+      ]
+    }
+  }
+  </script>
+  <style>
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+
+    .page-hero { margin-bottom: 56px; max-width: 720px; }
+    .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; background: rgba(14,116,144,.08); padding: 4px 12px; border-radius: 99px; }
+    .page-hero h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.15; color: var(--ink-1); margin-bottom: 18px; }
+    .page-hero .page-lead { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: clamp(16px, 1.5vw, 19px); color: var(--ink-2); line-height: 1.55; margin-bottom: 14px; }
+    .page-hero .page-sub { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 15px; color: var(--ink-3); line-height: 1.7; }
+
+    .section-label { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-4); margin-bottom: 28px; }
+
+    /* ── Editorial grid (matches homepage Notes section) ──────────────── */
+    .research-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: clamp(56px, 6vw, 96px); align-items: flex-start; margin-bottom: 64px; }
+    @media (max-width: 960px) { .research-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+    .research-feature {
+      display: flex; flex-direction: column;
+      background: var(--paper-2);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: clamp(36px, 4vw, 56px);
+      position: relative;
+    }
+    .research-feature .meta-row { display: flex; gap: 14px; align-items: center; margin-bottom: 32px; flex-wrap: wrap; }
+    .research-feature .badge {
+      font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .14em; color: var(--accent);
+      padding: 5px 12px; border: 1px solid var(--accent); border-radius: 99px;
+    }
+    .research-feature .read-time { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 11px; color: var(--ink-4); letter-spacing: .08em; text-transform: uppercase; }
+    .research-feature h3 {
+      font-family: 'IBM Plex Mono','Menlo',monospace; font-weight: 500;
+      font-size: clamp(26px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -.015em;
+      color: var(--ink-1); margin-bottom: 24px; max-width: 18ch;
+    }
+    .research-feature h3 a { color: inherit; text-decoration: none; }
+    .research-feature h3 a:hover { color: var(--accent); }
+    .research-feature p { font-size: 16px; line-height: 1.7; color: var(--ink-3); margin-bottom: 32px; max-width: 540px; }
+    .research-feature .author-line {
+      font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 11px; color: var(--ink-4);
+      display: flex; gap: 14px; align-items: center; padding-top: 24px;
+      border-top: 1px solid var(--rule); margin-top: auto;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    .research-side { display: flex; flex-direction: column; }
+    .research-side-label { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+    .research-item { display: flex; flex-direction: column; gap: 8px; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+    .research-item:last-child { border-bottom: none; }
+    .research-item .meta { display: flex; gap: 10px; align-items: center; }
+    .research-item .cat { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
+    .research-item .cat.is-variant { color: var(--accent-2); }
+    .research-item .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); flex-shrink: 0; }
+    .research-item .scope { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 10.5px; color: var(--ink-4); letter-spacing: .04em; text-transform: uppercase; }
+    .research-item h4 { font-family: 'IBM Plex Mono','Menlo',monospace; font-weight: 500; font-size: 16px; line-height: 1.3; letter-spacing: -.01em; }
+    .research-item h4 a { color: var(--ink-1); text-decoration: none; }
+    .research-item h4 a:hover { color: var(--accent); }
+    .research-item p { font-size: 13.5px; line-height: 1.6; color: var(--ink-3); margin: 0; }
+
+    /* Dark mode */
+    html[data-theme="dark"] .page-hero-eyebrow { color: var(--accent-2); background: rgba(224,146,38,.12); }
+    html[data-theme="dark"] .page-hero h1 { color: var(--paper); }
+    html[data-theme="dark"] .page-hero .page-lead { color: rgba(245,241,234,.85); }
+    html[data-theme="dark"] .page-hero .page-sub { color: rgba(245,241,234,.7); }
+    html[data-theme="dark"] .section-label { color: rgba(245,241,234,.5); }
+    html[data-theme="dark"] .research-feature { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+    html[data-theme="dark"] .research-feature .badge { color: var(--accent-2); border-color: var(--accent-2); }
+    html[data-theme="dark"] .research-feature .read-time { color: rgba(245,241,234,.5); }
+    html[data-theme="dark"] .research-feature h3 a { color: var(--paper); }
+    html[data-theme="dark"] .research-feature h3 a:hover { color: var(--accent-2); }
+    html[data-theme="dark"] .research-feature p { color: rgba(245,241,234,.72); }
+    html[data-theme="dark"] .research-feature .author-line { color: rgba(245,241,234,.5); border-top-color: rgba(245,241,234,.1); }
+    html[data-theme="dark"] .research-side-label { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+    html[data-theme="dark"] .research-item { border-bottom-color: rgba(245,241,234,.1); }
+    html[data-theme="dark"] .research-item .cat { color: var(--accent-2); }
+    html[data-theme="dark"] .research-item .cat.is-variant { color: #f0a431; }
+    html[data-theme="dark"] .research-item .dot { background: rgba(245,241,234,.4); }
+    html[data-theme="dark"] .research-item .scope { color: rgba(245,241,234,.5); }
+    html[data-theme="dark"] .research-item h4 a { color: var(--paper); }
+    html[data-theme="dark"] .research-item h4 a:hover { color: var(--accent-2); }
+    html[data-theme="dark"] .research-item p { color: rgba(245,241,234,.7); }
+
+    @media(max-width:600px){main{padding:24px 16px 60px}}
+  </style>
+</head>
+<body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/learn-seo/">Learn SEO</a><span class="breadcrumb-sep">›</span>
+    <span>Schema for SEO</span>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-eyebrow">Schema guides</div>
+    <h1>Schema for SEO</h1>
+    <p class="page-lead">Structured data: technically optional, practically essential, officially documented in a way that helps a solid few.</p>
+    <p class="page-sub">These guides skip the preamble. Which type to use, what each field actually does, and how to generate clean JSON-LD — without watching a Google I/O keynote to figure it out.</p>
+  </div>
+
+  <p class="section-label">Product Schema</p>
+  <div class="research-grid">
+    <article class="research-feature">
+      <div class="meta-row">
+        <span class="badge">Overview</span>
+        <span class="read-time">4 guides in this hub</span>
+      </div>
+      <h3><a href="/product-schema/">Product Schema Markup</a></h3>
+      <p>Introduction to the two main classes of Product structured data, plus ProductGroup for variants. Which one Google reads, when each applies, and how they overlap.</p>
+      <div class="author-line">
+        <span>JSON-LD</span>
+        <span>·</span>
+        <span>Rich results</span>
+        <span>·</span>
+        <span>E-commerce</span>
+      </div>
+    </article>
+
+    <div class="research-side">
+      <div class="research-side-label">Deep dives</div>
+
+      <article class="research-item">
+        <div class="meta">
+          <span class="cat">Class 1</span>
+          <span class="dot"></span>
+          <span class="scope">Snippets</span>
+        </div>
+        <h4><a href="/product-snippet-schema/">Product Snippet Schema</a></h4>
+        <p>Star ratings, reviews, pros/cons, and pricing in organic search. For any product page.</p>
+      </article>
+
+      <article class="research-item">
+        <div class="meta">
+          <span class="cat">Class 2</span>
+          <span class="dot"></span>
+          <span class="scope">Shopping</span>
+        </div>
+        <h4><a href="/merchant-listing-schema/">Merchant Listing Schema</a></h4>
+        <p>Shopping panel, Popular products, price drop alerts, and shipping info. For merchant pages.</p>
+      </article>
+
+      <article class="research-item">
+        <div class="meta">
+          <span class="cat is-variant">+ Variants</span>
+          <span class="dot"></span>
+          <span class="scope">ProductGroup</span>
+        </div>
+        <h4><a href="/product-variants-schema/">Product Variants Schema</a></h4>
+        <p>Colour swatches, size options, and variant pricing in Google Shopping. ProductGroup with hasVariant.</p>
+      </article>
+    </div>
+  </div>
+</main>
+<script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/schema-for-seo/">Schema for SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
+</body>
+</html>

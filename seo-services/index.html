@@ -1,28 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://www.magstags.com/seo-services/">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
-  <link rel="apple-touch-icon" href="/favicon-apple.png">
-  <script src="/theme-init.js"></script>
-  <link rel="stylesheet" href="/base.css">
+<meta charset="UTF-8">
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('mt-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch(e) {}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Services — Senior SEO Counsel | MagsTags</title>
+<meta name="description" content="Enterprise SEO strategy, technical migrations, international search programmes, and due diligence for investors. Senior-level SEO counsel from Mags Sikora.">
+<link rel="canonical" href="https://www.magstags.com/seo-services/">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+<link rel="apple-touch-icon" href="/favicon-apple.png">
+<link rel="stylesheet" href="/base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
 
-  <title>SEO Services — Senior SEO Counsel | MagsTags</title>
-  <meta name="description" content="Enterprise SEO strategy, technical migrations, international search programmes, and due diligence for investors. Senior-level SEO counsel from Mags Sikora.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <meta property="og:title" content="SEO Services — Senior SEO Counsel | MagsTags">
-  <meta property="og:description" content="Enterprise SEO strategy, technical migrations, international search programmes, and due diligence for investors. Senior-level SEO counsel from Mags Sikora.">
-  <meta property="og:url" content="https://www.magstags.com/seo-services/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="MagsTags">
-
-  <script type="application/ld+json">
+  /* ── Tokens ──────────────────────────────────────────────────────────── */
+  :root {
+    --ink-1: #1a1916; --ink-2: #2d2a26; --ink-3: #58534c; --ink-4: #8a847a;
+    --paper: #f5f1ea; --paper-2: #ebe5d7; --rule: #d8d2c4;
+    --accent: #0E7490; --accent-2: #e09226;
+    --font-display: 'IBM Plex Mono', 'Menlo', monospace;
+    --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+    --font-reading: 'IBM Plex Mono','Menlo',monospace;
+    --t-h1: clamp(28px, 3.6vw, 44px);
+    --t-h2: clamp(20px, 2.2vw, 28px);
+    --t-lead: clamp(18px, 1.4vw, 21px);
+    --t-body: 16px;
+    --gutter: clamp(20px, 4vw, 88px);
+    --section-y: clamp(60px, 8vw, 120px);
+    --max: 1200px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; cursor: pointer; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); font-size: var(--t-body); line-height: 1.65; color: var(--ink-2); background: var(--paper); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
+  a:hover { color: var(--ink-1); }
+  ::selection { background: var(--accent); color: var(--paper); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; color: var(--ink-1); letter-spacing: -.02em; }
+  h1 { font-size: var(--t-h1); line-height: 1.1; }
+  h2 { font-size: var(--t-h2); line-height: 1.2; }
+  h3 { font-size: 17px; line-height: 1.3; font-weight: 500; }
+  /* ── Sticky header ───────────────────────────────────────────────────── */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(245,241,234,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); }
+  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; text-decoration: none; }
+  .wordmark em { font-style: italic; color: var(--accent); }
+  nav.primary { display: flex; gap: 32px; align-items: center; }
+  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; text-decoration: none; }
+  nav.primary a:hover { color: var(--accent); }
+  nav.primary .subscribe { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px; color: var(--ink-1); background: transparent; transition: background .15s, color .15s; }
+  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
+  @media (max-width: 800px) { nav.primary { gap: 18px; } nav.primary a:not(.subscribe) { display: none; } }
+  .draft-banner { background: var(--accent-2); color: var(--ink-1); padding: 8px 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
+  .draft-banner a { color: var(--ink-1); text-decoration: underline; }
+  /* ── Theme toggle ────────────────────────────────────────────────────── */
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
+  .theme-toggle svg { display: block; }
+  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
+  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  /* ── Page layout ─────────────────────────────────────────────────────── */
+  .profile { padding: clamp(24px, 3vw, 48px) 0 var(--section-y); }
+  .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; letter-spacing: .04em; max-width: var(--max); margin-left: auto; margin-right: auto; padding: 0 var(--gutter); }
+  .breadcrumb a { color: var(--ink-4); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { opacity: .5; }
+  .profile-grid { display: grid; grid-template-columns: 260px 1fr; gap: clamp(40px, 5vw, 80px); align-items: start; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  @media (max-width: 800px) { .profile-grid { grid-template-columns: 1fr; gap: 40px; } }
+  /* ── Sidebar ────────────────────────────────────────────────────────── */
+  .profile-sidebar { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 22px; }
+  @media (max-width: 800px) { .profile-sidebar { position: static; top: auto; } }
+  .profile-photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 2px solid var(--rule); display: block; }
+  @media (max-width: 800px) { .profile-photo { width: 140px; height: 140px; } }
+  .profile-meta { display: flex; flex-direction: column; gap: 4px; }
+  .profile-name { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); line-height: 1.2; letter-spacing: -.015em; margin-bottom: 6px; }
+  .profile-title { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+  .profile-company { font-size: 13px; color: var(--ink-3); margin-top: 2px; }
+  .profile-cta { display: flex; flex-direction: column; gap: 8px; }
+  .profile-cta-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 18px; border-radius: 99px; font-family: var(--font-body); font-size: 13px; font-weight: 600; text-decoration: none; transition: background .15s, border-color .15s, color .15s, transform .1s; border: 1px solid var(--rule); letter-spacing: -.005em; }
+  .profile-cta-btn.primary { background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); }
+  .profile-cta-btn.primary:hover { background: #f0a431; border-color: #f0a431; transform: translateY(-1px); }
+  .profile-cta-btn.secondary { color: var(--ink-2); border-color: var(--rule); }
+  .profile-cta-btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .social-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .social-link { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; text-decoration: none; color: var(--ink-3); border-radius: 8px; border: 1px solid var(--rule); background: var(--paper-2); transition: border-color .15s, color .15s; }
+  .social-link:hover { border-color: var(--accent); color: var(--accent); }
+  .about-card { padding: 16px 18px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 12px; }
+  .about-card-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 10px; }
+  .about-card p { font-size: 13px; color: var(--ink-3); line-height: 1.6; margin-bottom: 12px; }
+  .about-card a { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .about-card a:hover { color: var(--ink-1); }
+  /* ── Bio body ────────────────────────────────────────────────────────── */
+  .profile-bio { min-width: 0; }
+  .bio-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .bio-label::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .bio-lead { font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.55; color: var(--ink-1); margin-bottom: 22px; }
+  .bio-intro p { font-size: 15.5px; color: var(--ink-2); line-height: 1.75; margin-bottom: 18px; }
+  /* ── Section divider headings ────────────────────────────────────────── */
+  .svc-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--rule); }
+  .svc-section-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .svc-section-label::before { content: ''; height: 1px; width: 32px; background: var(--ink-4); }
+  .svc-section h2 { margin-bottom: 24px; }
+  .svc-section p { font-size: 14.5px; color: var(--ink-3); line-height: 1.75; margin-bottom: 14px; }
+  .svc-section p strong { color: var(--ink-1); font-weight: 600; }
+  .svc-section p a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+  .svc-section p a:hover { color: var(--ink-1); border-bottom-color: var(--ink-1); }
+  .svc-brand-name { font-weight: 600; color: var(--ink-1); }
+  /* ── Tabs (segmented control) ────────────────────────────────────────── */
+  .svc-tabs { margin-top: 8px; }
+  .svc-tab-nav { display: flex; gap: 0; margin-bottom: 28px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); }
+  .svc-tab-btn { padding: 12px 18px 12px 0; margin-right: 26px; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); transition: color .15s, border-color .15s; }
+  .svc-tab-btn:hover { color: var(--ink-1); }
+  .svc-tab-btn.active { color: var(--ink-1); border-bottom-color: var(--accent); }
+  .svc-tab-content { display: none; }
+  .svc-tab-content.active { display: block; }
+  /* ── Service card (paper-2 with saffron left rule) ───────────────────── */
+  .svc-card { background: var(--paper-2); border: 1px solid var(--rule); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 28px 30px; display: flex; flex-direction: column; }
+  .svc-card-icon { width: 28px; height: 28px; color: var(--accent-2); margin-bottom: 16px; flex-shrink: 0; }
+  .svc-card-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 8px; }
+  .svc-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--ink-1); margin-bottom: 14px; line-height: 1.3; letter-spacing: -.01em; }
+  .svc-card-problem { font-family: var(--font-display); font-size: 14.5px; color: var(--ink-2); line-height: 1.7; margin-bottom: 16px; font-style: italic; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .svc-card-body { font-size: 14px; color: var(--ink-3); line-height: 1.7; }
+  /* ── CTA block at the bottom ─────────────────────────────────────────── */
+  .svc-cta { margin-top: 56px; padding: clamp(32px, 4vw, 48px) clamp(28px, 3vw, 40px); background: var(--ink-1); color: var(--paper); border-radius: 4px; text-align: center; }
+  .svc-cta h3 { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--paper); margin-bottom: 12px; letter-spacing: -.01em; }
+  .svc-cta p { font-size: 14.5px; color: rgba(245,241,234,.72); line-height: 1.6; margin: 0 auto 24px; max-width: 480px; }
+  .svc-cta-link { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 99px; background: var(--accent-2); color: var(--paper); font-family: var(--font-body); font-size: 13.5px; font-weight: 600; text-decoration: none; transition: background .15s, transform .1s; letter-spacing: -.005em; }
+  .svc-cta-link:hover { background: #f0a431; transform: translateY(-1px); }
+  /* ── Full footer (matches other redesign pages) ──────────────────────── */
+  .wrap-footer { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
+  footer.site .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { footer.site .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
+  footer.site .footer-brand .wordmark { color: var(--ink-1); }
+  footer.site .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
+  footer.site .footer-col h5 { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 20px; }
+  footer.site .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; }
+  footer.site .footer-col a { color: var(--ink-2); font-size: 14px; text-decoration: none; }
+  footer.site .footer-col a:hover { color: var(--accent); }
+  footer.site .footer-base { margin-top: 80px; padding: 28px 0 0 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+  footer.site .footer-base a { color: var(--ink-4); text-decoration: none; }
+  footer.site .footer-base a:hover { color: var(--ink-1); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+  /* ── DARK MODE OVERRIDES ─────────────────────────────────────────────── */
+  html[data-theme="dark"] body { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
+  html[data-theme="dark"] body a { color: var(--accent-2); }
+  html[data-theme="dark"] body a:hover { color: var(--paper); }
+  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
+  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
+  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
+  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+  html[data-theme="dark"] .breadcrumb { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .breadcrumb a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .profile-photo { border-color: rgba(245,241,234,.12); }
+  html[data-theme="dark"] .profile-name { color: var(--paper); }
+  html[data-theme="dark"] .profile-title { color: var(--accent-2); }
+  html[data-theme="dark"] .profile-company { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] .profile-cta-btn.secondary { color: var(--paper); border-color: rgba(245,241,234,.25); }
+  html[data-theme="dark"] .profile-cta-btn.secondary:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  html[data-theme="dark"] .social-link { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.12); color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .social-link:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  html[data-theme="dark"] .about-card { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .about-card-label { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .about-card p { color: rgba(245,241,234,.65); }
+  html[data-theme="dark"] .about-card a { color: var(--accent-2); }
+  html[data-theme="dark"] .about-card a:hover { color: var(--paper); }
+  html[data-theme="dark"] .bio-label { color: var(--accent-2); }
+  html[data-theme="dark"] .bio-label::before { background: var(--accent-2); }
+  html[data-theme="dark"] .bio-lead { color: var(--paper); }
+  html[data-theme="dark"] .bio-intro p { color: var(--paper-2); }
+  html[data-theme="dark"] .svc-section { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .svc-section-label { color: rgba(245,241,234,.55); }
+  html[data-theme="dark"] .svc-section-label::before { background: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .svc-section h2 { color: var(--paper); }
+  html[data-theme="dark"] .svc-section p { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .svc-section p strong { color: var(--paper); }
+  html[data-theme="dark"] .svc-section p a { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+  html[data-theme="dark"] .svc-section p a:hover { color: var(--paper); border-bottom-color: var(--paper); }
+  html[data-theme="dark"] .svc-brand-name { color: var(--paper); }
+  html[data-theme="dark"] .svc-tab-nav { border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .svc-tab-btn { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .svc-tab-btn:hover { color: var(--paper); }
+  html[data-theme="dark"] .svc-tab-btn.active { color: var(--paper); border-bottom-color: var(--accent-2); }
+  html[data-theme="dark"] .svc-card { background: rgba(224,146,38,.1); border-color: rgba(245,241,234,.1); border-left-color: var(--accent-2); }
+  html[data-theme="dark"] .svc-card-icon { color: var(--accent-2); }
+  html[data-theme="dark"] .svc-card h3 { color: var(--paper); }
+  html[data-theme="dark"] .svc-card-problem { color: var(--paper); border-bottom-color: rgba(245,241,234,.12); }
+  html[data-theme="dark"] .svc-card-body { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .svc-cta { background: #15130f; }
+  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
+  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
+  html[data-theme="dark"] footer.site .wordmark em { color: var(--accent-2); }
+  html[data-theme="dark"] footer.site .footer-brand p { color: rgba(245,241,234,.6); }
+  html[data-theme="dark"] footer.site .footer-col h5 { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
+  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
+  html[data-theme="dark"] footer.site .footer-base { border-top-color: rgba(245,241,234,.12); color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] footer.site .footer-base a:hover { color: var(--paper); }
+</style>
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -125,251 +327,199 @@
     ]
   }
   </script>
-
-  <style>
-    main { max-width: 1320px; margin: 0 auto; padding: 40px 36px 100px; }
-
-    /* ── Layout ── */
-    .profile-layout { display: grid; grid-template-columns: 260px 1fr; gap: 56px; align-items: start; max-width: 1000px; }
-    .profile-sidebar { position: sticky; top: 80px; }
-    @media(max-width: 720px) { .profile-layout { grid-template-columns: 1fr; gap: 32px; } .profile-sidebar { position: static !important; top: auto !important; } }
-
-    /* ── Sidebar ── */
-    .profile-photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); display: block; margin-bottom: 22px; }
-    @media(max-width: 720px) { .profile-photo { width: 120px; height: 120px; margin-bottom: 16px; } }
-
-    .profile-name { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-1); line-height: 1.2; margin-bottom: 4px; }
-    .profile-title { font-size: 13px; color: var(--teal); font-weight: 600; margin-bottom: 2px; }
-    .profile-company { font-size: 13px; color: var(--text-3); margin-bottom: 20px; }
-
-    /* CTA links */
-    .profile-cta { display: flex; flex-direction: column; gap: 10px; }
-    .profile-cta-btn { display: inline-flex; align-items: center; justify-content: center; padding: 11px 18px; border-radius: 99px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all .15s; border: 1px solid var(--border); }
-    .profile-cta-btn.primary { background: var(--teal); color: white; border-color: var(--teal); }
-    .profile-cta-btn.primary:hover { background: #0c6680; }
-    html.dark .profile-cta-btn.primary { color: #111; }
-    html.dark .profile-cta-btn.primary:hover { background: #1cb8d8; }
-    .profile-cta-btn.secondary { color: var(--text-2); border-color: var(--border); }
-    .profile-cta-btn.secondary:hover { border-color: var(--teal); color: var(--teal); }
-
-    /* ── Social links ── */
-    .social-links { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; }
-    .social-link { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; text-decoration: none; color: var(--text-3); border-radius: 8px; border: 1px solid var(--border); background: var(--surface); transition: border-color .15s, color .15s; }
-    .social-link:hover { border-color: var(--teal); color: var(--teal); }
-    .social-link svg { flex-shrink: 0; }
-
-    /* ── Content ── */
-    .profile-bio { padding-top: 4px; }
-    .bio-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--teal); margin-bottom: 16px; }
-    .bio-body { display: flex; flex-direction: column; gap: 18px; }
-    .bio-body p { font-size: 15px; color: var(--text-2); line-height: 1.75; }
-    .bio-body strong { color: var(--text-1); font-weight: 600; }
-
-    /* ── Service cards ── */
-    /* ── Tabs ── */
-    .svc-tabs { margin-top: 28px; }
-    .svc-tab-nav { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
-    .svc-tab-btn { padding: 12px 16px; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text-3); transition: all .15s; }
-    .svc-tab-btn:hover { color: var(--text-1); }
-    .svc-tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
-    .svc-tab-content { display: none; }
-    .svc-tab-content.active { display: block; }
-    .svc-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-    .svc-card { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: 12px; padding: 28px; display: flex; flex-direction: column; transition: box-shadow .2s, border-color .2s; }
-    .svc-card:hover { box-shadow: var(--shadow-md); }
-    .svc-card-icon { width: 32px; height: 32px; color: var(--teal); background: var(--mint-light); border: 1px solid rgba(14, 116, 144, .15); border-radius: 8px; padding: 6px; margin-bottom: 14px; flex-shrink: 0; }
-    .svc-card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); margin-bottom: 8px; }
-    .svc-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 12px; line-height: 1.3; }
-    .svc-card-problem { font-size: 13.5px; color: var(--text-2); line-height: 1.65; margin-bottom: 12px; font-style: italic; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-    .svc-card-body { font-size: 13px; color: var(--text-3); line-height: 1.65; }
-
-    /* ── How I work ── */
-    .svc-how { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--border); }
-    .svc-how h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 12px; }
-    .svc-how p { font-size: 13.5px; color: var(--text-2); line-height: 1.75; margin-bottom: 12px; }
-
-    /* ── Background ── */
-    .svc-background { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--border); }
-    .svc-background h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 12px; }
-    .svc-brands { font-size: 13px; color: var(--text-2); line-height: 1.7; }
-    .svc-brands strong { color: var(--text-1); font-weight: 600; }
-    .svc-brand-name { font-weight: 600; color: var(--text-2); }
-
-    /* ── CTA Section ── */
-    .svc-cta { margin-top: 36px; padding: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
-    .svc-cta h3 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; color: var(--text-1); margin-bottom: 8px; }
-    .svc-cta p { font-size: 13px; color: var(--text-3); margin-bottom: 16px; line-height: 1.6; }
-    .svc-cta-link { display: inline-block; padding: 10px 20px; border-radius: 99px; background: var(--teal); color: white; font-size: 13px; font-weight: 600; text-decoration: none; transition: background .15s; }
-    .svc-cta-link:hover { background: #0c6680; text-decoration: none; }
-    html.dark .svc-cta-link { color: #111; }
-    html.dark .svc-cta-link:hover { background: #1cb8d8; }
-
-    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 12px; color: var(--text-4); margin-top: 60px; }
-    @media(max-width: 600px) { main { padding: 24px 16px 60px; } }
-  </style>
+<meta property="og:title" content="SEO Services — Senior SEO Counsel | MagsTags">
+<meta property="og:description" content="Enterprise SEO strategy, technical migrations, international search programmes, and due diligence for investors. Senior-level SEO counsel from Mags Sikora.">
+<meta property="og:url" content="https://www.magstags.com/seo-services/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MagsTags">
 </head>
 <body>
-
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
 <main id="main-content">
-  <div class="profile-layout">
-
-    <!-- ── Sidebar ── -->
-    <aside class="profile-sidebar">
-      <img class="profile-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="180" height="180">
-      <h1 class="profile-name">Mags Sikora</h1>
-      <div class="profile-title">Senior SEO Consultant, SEO Director</div>
-      <div class="profile-company">Senior-Level SEO Services</div>
-
-      <nav class="profile-cta" aria-label="Contact options">
-        <a href="/contact/" class="profile-cta-btn primary">Get in touch</a>
-        <a href="https://calendar.app.google/GVre1j7sUJni8GfN8" class="profile-cta-btn secondary" rel="nofollow" target="_blank">Schedule a call</a>
-      </nav>
-
-      <nav class="social-links" aria-label="Social links" style="margin-top:20px;">
-        <a href="https://www.linkedin.com/in/magdalenasikora/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.44c.98 0 1.79-.77 1.79-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-        </a>
-        <a href="https://x.com/magssikora" class="social-link" target="_blank" rel="noopener" aria-label="X (Twitter)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://www.youtube.com/c/Sheknowsdigital" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.84 12l-6.09 3.52z"/></svg>
-        </a>
-      </nav>
-    </aside>
-
-    <!-- ── Content ── -->
-    <div class="profile-bio">
-      <div class="bio-label">Services</div>
-
-      <div class="bio-body">
-        <p style="font-size:16px; color:var(--text-1); font-weight:400; margin-bottom:16px;">Enterprise search gets complicated in ways that don't fit neatly into a sprint ticket or a quarterly report. The org chart gets in the way. The migration timeline was optimistic from day one. The strategy that made sense in January doesn't survive first contact with a core update in March.</p>
-        <p style="font-size:14px; margin-bottom:0;">I work with in-house teams and investors who need senior-level SEO thinking: whether that's shaping the strategy, pressure-testing the approach, or making sure the organic numbers tell the real story.</p>
-      </div>
-
-      <!-- Service Areas -->
-      <div class="bio-body" style="margin-top:32px;">
-        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; color:var(--text-1); margin-bottom:4px; text-transform:uppercase; letter-spacing:.08em;">What I do</h2>
-        
-        <div class="svc-tabs">
-          <div class="svc-tab-nav" role="tablist">
-            <button class="svc-tab-btn active" role="tab" aria-selected="true" aria-controls="tab-strategy" data-tab="strategy">Enterprise Strategy</button>
-            <button class="svc-tab-btn" role="tab" aria-selected="false" aria-controls="tab-migrations" data-tab="migrations">Technical Migrations</button>
-            <button class="svc-tab-btn" role="tab" aria-selected="false" aria-controls="tab-international" data-tab="international">International</button>
-            <button class="svc-tab-btn" role="tab" aria-selected="false" aria-controls="tab-diligence" data-tab="diligence">Due Diligence</button>
-          </div>
-
-          <!-- Tab 1: Enterprise Strategy -->
-          <div id="tab-strategy" class="svc-tab-content active" role="tabpanel" aria-labelledby="tab-strategy-btn">
-            <div class="svc-card">
-              <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <div class="svc-card-label">Strategy &amp; Leadership</div>
-              <h3>Enterprise SEO Strategy</h3>
-              <p class="svc-card-problem">You're the most senior SEO in the building (big site, big responsibility, every call is yours) and there's nobody at your level to pressure-test the thinking with.</p>
-              <p class="svc-card-body">I'm that person. I work alongside in-house SEO leads as a senior strategic partner: someone who's run programmes at this scale before and can help shape the direction, challenge the assumptions, and make the case to leadership in language that actually lands. Not a replacement for your team. A force multiplier.</p>
+  <section class="profile">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>SEO Services</span>
+    </nav>
+    <div class="profile-grid">
+      <!-- ── Sidebar ── -->
+      <aside class="profile-sidebar">
+        <img class="profile-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="180" height="180">
+        <div class="profile-meta">
+          <h1 class="profile-name">Mags Sikora</h1>
+          <div class="profile-title">Senior-Level SEO Services</div>
+          <div class="profile-company">Enterprise · Migrations · International · Due Diligence</div>
+        </div>
+        <nav class="profile-cta" aria-label="Contact options">
+          <a href="/contact/" class="profile-cta-btn primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Get in touch
+          </a>
+          <a href="https://calendar.app.google/GVre1j7sUJni8GfN8" class="profile-cta-btn secondary" rel="nofollow" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.42 2 2 0 0 1 3.56 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Schedule a call
+          </a>
+        </nav>
+        <nav class="social-links" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/magdalenasikora/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.43v6.31zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.44c.98 0 1.79-.77 1.79-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+          <a href="https://x.com/magssikora" class="social-link" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/c/Sheknowsdigital" class="social-link" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.84 12l-6.09 3.52z"/></svg>
+          </a>
+        </nav>
+        <div class="about-card">
+          <div class="about-card-label">More about Mags</div>
+          <p>18 years across agency and in-house, including Expedia, New Look, and dnata Emirates Group.</p>
+          <a href="/mags-sikora/">Read the about page →</a>
+        </div>
+      </aside>
+      <!-- ── Bio ── -->
+      <div class="profile-bio">
+        <span class="bio-label">Services</span>
+        <p class="bio-lead">Enterprise search gets complicated, in many ways. The org chart gets in the way. The migration timeline was optimistic from day one. The strategy that made sense in January doesn't survive first contact with a core update in March.</p>
+        <div class="bio-intro">
+          <p>I work with in-house teams and investors who need senior-level SEO thinking: whether that's shaping the strategy, pressure-testing the approach, or making sure the organic numbers tell the real story.</p>
+        </div>
+        <!-- ── Service tabs ── -->
+        <div class="svc-section">
+          <span class="svc-section-label">What I do</span>
+          <h2>Four practice areas, one consultant.</h2>
+          <div class="svc-tabs">
+            <div class="svc-tab-nav" role="tablist">
+              <button class="svc-tab-btn active" type="button" role="tab" aria-selected="true" data-tab="strategy">Enterprise strategy</button>
+              <button class="svc-tab-btn" type="button" role="tab" aria-selected="false" data-tab="migrations">Migrations</button>
+              <button class="svc-tab-btn" type="button" role="tab" aria-selected="false" data-tab="international">International</button>
+              <button class="svc-tab-btn" type="button" role="tab" aria-selected="false" data-tab="diligence">Due diligence</button>
             </div>
-          </div>
-
-          <!-- Tab 2: Technical Migrations -->
-          <div id="tab-migrations" class="svc-tab-content" role="tabpanel" aria-labelledby="tab-migrations-btn">
-            <div class="svc-card">
-              <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              <div class="svc-card-label">Migrations</div>
-              <h3>Technical Migrations</h3>
-              <p class="svc-card-problem">The migration is approved. The dev timeline is tight. And somehow the SEO requirements are still waiting for sign-off from three teams who each think it's someone else's responsibility.</p>
-              <p class="svc-card-body">I've led migrations for some of the UK's largest e-commerce and travel sites: platform moves, domain consolidations, CMS rebuilds. The SEO risk isn't the redirect map. It's everything that doesn't make it into the redirect map. I handle the architecture, the risk assessment, the stakeholder alignment, and the part where someone has to say "no, we can't launch on that date" and be right about it.</p>
+            <!-- Tab 1: Enterprise Strategy -->
+            <div id="tab-strategy" class="svc-tab-content active" role="tabpanel">
+              <div class="svc-card">
+                <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                <div class="svc-card-label">Strategy &amp; Leadership</div>
+                <h3>Enterprise SEO Strategy</h3>
+                <p class="svc-card-problem">You're the most senior SEO in the building (big site, big responsibility, every call is yours) and there's nobody at your level to pressure-test the thinking with.</p>
+                <p class="svc-card-body">I'm that person. I work alongside in-house SEO leads as a senior strategic partner: someone who's run programmes at this scale before and can help shape the direction, challenge the assumptions, and make the case to leadership in language that actually lands. Not a replacement for your team. A force multiplier.</p>
+              </div>
             </div>
-          </div>
-
-          <!-- Tab 3: International -->
-          <div id="tab-international" class="svc-tab-content" role="tabpanel" aria-labelledby="tab-international-btn">
-            <div class="svc-card">
-              <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              <div class="svc-card-label">International</div>
-              <h3>International &amp; Multi-Market SEO</h3>
-              <p class="svc-card-problem">54 markets. 11 languages. A CMS that was built for one region and is now expected to handle all of them gracefully. It does not handle them gracefully. Multi-market SEO isn't just hreflang and translated keywords: it's governance, prioritisation, and figuring out which markets actually justify the investment.</p>
-              <p class="svc-card-body">I've managed organic search across dozens of markets simultaneously, including the messy reality of local teams, shared platforms, and content workflows that were never designed for scale. I help teams build the structure that makes international SEO manageable rather than something that slowly falls apart when nobody's watching.</p>
+            <!-- Tab 2: Migrations -->
+            <div id="tab-migrations" class="svc-tab-content" role="tabpanel">
+              <div class="svc-card">
+                <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <div class="svc-card-label">Migrations</div>
+                <h3>Technical Migrations</h3>
+                <p class="svc-card-problem">The migration is approved. The dev timeline is tight. And somehow the SEO requirements are still waiting for sign-off from three teams who each think it's someone else's responsibility.</p>
+                <p class="svc-card-body">I've led migrations for some of the UK's largest e-commerce and travel sites: platform moves, domain consolidations, CMS rebuilds. The SEO risk isn't the redirect map. It's everything that doesn't make it into the redirect map. I handle the architecture, the risk assessment, the stakeholder alignment, and the part where someone has to say "no, we can't launch on that date" and be right about it.</p>
+              </div>
             </div>
-          </div>
-
-          <!-- Tab 4: VC Due Diligence -->
-          <div id="tab-diligence" class="svc-tab-content" role="tabpanel" aria-labelledby="tab-diligence-btn">
-            <div class="svc-card">
-              <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              <div class="svc-card-label">Due Diligence</div>
-              <h3>SEO Due Diligence &amp; Pre-Acquisition Audits</h3>
-              <p class="svc-card-problem">The organic numbers look strong on the acquisition deck. Your job is to decide whether they'll still look strong 12 months after close. Whether the traffic is genuinely earned or propped up by a domain history that won't survive a rebrand. Whether the content driving that traffic is defensible or one algorithm update away from irrelevance.</p>
-              <p class="svc-card-body">I work with venture capital firms and investors to assess the real quality of a target's organic performance: not the vanity metrics, but the structural fundamentals. Traffic durability, technical debt, content defensibility, competitive positioning. The things that determine whether you're acquiring a growth engine or inheriting a problem.</p>
+            <!-- Tab 3: International -->
+            <div id="tab-international" class="svc-tab-content" role="tabpanel">
+              <div class="svc-card">
+                <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <div class="svc-card-label">International</div>
+                <h3>International &amp; Multi-Market SEO</h3>
+                <p class="svc-card-problem">54 markets. 11 languages. A CMS that was built for one region and is now expected to handle all of them gracefully. It does not handle them gracefully. Multi-market SEO isn't just hreflang and translated keywords: it's governance, prioritisation, and figuring out which markets actually justify the investment.</p>
+                <p class="svc-card-body">I've managed organic search across dozens of markets simultaneously, including the messy reality of local teams, shared platforms, and content workflows that were never designed for scale. I help teams build the structure that makes international SEO manageable rather than something that slowly falls apart when nobody's watching.</p>
+              </div>
+            </div>
+            <!-- Tab 4: Due Diligence -->
+            <div id="tab-diligence" class="svc-tab-content" role="tabpanel">
+              <div class="svc-card">
+                <svg class="svc-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <div class="svc-card-label">Due Diligence</div>
+                <h3>SEO Due Diligence &amp; Pre-Acquisition Audits</h3>
+                <p class="svc-card-problem">The organic numbers look strong on the acquisition deck. Your job is to decide whether they'll still look strong 12 months after close. Whether the traffic is genuinely earned or propped up by a domain history that won't survive a rebrand. Whether the content driving that traffic is defensible or one algorithm update away from irrelevance.</p>
+                <p class="svc-card-body">I work with venture capital firms and investors to assess the real quality of a target's organic performance: not the vanity metrics, but the structural fundamentals. Traffic durability, technical debt, content defensibility, competitive positioning. The things that determine whether you're acquiring a growth engine or inheriting a problem.</p>
+              </div>
             </div>
           </div>
         </div>
+        <!-- ── How this works ── -->
+        <div class="svc-section">
+          <span class="svc-section-label">How this works</span>
+          <h2>No fixed menu of packages.</h2>
+          <p>The work varies: sometimes it's a focused engagement over a few weeks, sometimes it's an ongoing strategic partnership, sometimes it's a single due diligence report before a deal closes.</p>
+          <p>What stays the same: I start by understanding the situation properly before recommending anything. The first conversation is about figuring out whether I'm the right person for what you need. <strong>If I'm not the right fit, I'll tell you that.</strong></p>
+        </div>
+        <!-- ── Background ── -->
+        <div class="svc-section">
+          <span class="svc-section-label">Where I've done this before</span>
+          <h2>18 years across agency and in-house.</h2>
+          <p>Enterprise search programmes for <span class="svc-brand-name">Expedia</span>, <span class="svc-brand-name">New Look</span>, <span class="svc-brand-name">dnata Emirates Group</span>, <span class="svc-brand-name">Autotrader</span>, and others. 54+ markets. Large-scale migrations. Double-digit year-on-year organic growth. MSc in Marketing and Management.</p>
+          <p>The full story is on the <a href="/mags-sikora/">about page</a>.</p>
+        </div>
+        <!-- ── CTA ── -->
+        <div class="svc-cta">
+          <h3>Sounds like your situation?</h3>
+          <p>If you're dealing with something on this page or something adjacent that I haven't listed, I'd rather have a conversation than exchange a dozen emails.</p>
+          <a href="/contact/" class="svc-cta-link">
+            Get in touch
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
       </div>
-
-      <!-- How I work -->
-      <div class="svc-how">
-        <h3>How this works</h3>
-        <p>I don't have a fixed menu of packages. The work varies: sometimes it's a focused engagement over a few weeks, sometimes it's an ongoing strategic partnership, sometimes it's a single due diligence report before a deal closes.</p>
-        <p>What stays the same: I start by understanding the situation properly before recommending anything. The first conversation is about figuring out whether I'm the right person for what you need. If I'm not the right fit, I'll tell you that.</p>
-      </div>
-
-      <!-- Background -->
-      <div class="svc-background">
-        <h3>Where I've done this before</h3>
-        <p class="svc-brands">18 years across agency and in-house. Enterprise search programmes for <span class="svc-brand-name">Expedia</span>, <span class="svc-brand-name">New Look</span>, <span class="svc-brand-name">dnata Emirates Group</span>, <span class="svc-brand-name">Autotrader</span>, and others. 54+ markets. Large-scale migrations. Double-digit year-on-year organic growth. MSc in Marketing and Management.</p>
-        <p style="font-size:13px; color:var(--text-2); line-height:1.65; margin-top:12px;">The full story is on the <a href="/mags-sikora/">about page</a>.</p>
-      </div>
-
-      <!-- CTA -->
-      <div class="svc-cta">
-        <h3>Sounds like your situation?</h3>
-        <p>If you're dealing with something on this page or something adjacent that I haven't listed, I'd rather have a conversation than exchange a dozen emails.</p>
-        <a href="/contact/" class="svc-cta-link">Get in touch</a>
-      </div>
-
     </div>
-
-  </div>
+  </section>
 </main>
-
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
 <script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('mt-theme', next); } catch(e) {}
+  };
   // Tab switcher
-  document.querySelectorAll('[data-tab]').forEach(button => {
-    button.addEventListener('click', () => {
-      const tab = button.getAttribute('data-tab');
-      // Hide all tabs
-      document.querySelectorAll('.svc-tab-content').forEach(el => {
-        el.classList.remove('active');
-      });
-      // Deactivate all buttons
-      document.querySelectorAll('.svc-tab-btn').forEach(btn => {
+  document.querySelectorAll('.svc-tab-btn').forEach(function(button) {
+    button.addEventListener('click', function() {
+      var tab = button.getAttribute('data-tab');
+      document.querySelectorAll('.svc-tab-content').forEach(function(el) { el.classList.remove('active'); });
+      document.querySelectorAll('.svc-tab-btn').forEach(function(btn) {
         btn.classList.remove('active');
         btn.setAttribute('aria-selected', 'false');
       });
-      // Show selected tab
-      document.getElementById('tab-' + tab).classList.add('active');
+      var panel = document.getElementById('tab-' + tab);
+      if (panel) panel.classList.add('active');
       button.classList.add('active');
       button.setAttribute('aria-selected', 'true');
     });
   });
 </script>
-
-<script src="/header.js"></script>
-<footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
-    &copy; 2026 MagsTags
-    &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
-    &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
-    &middot; <a href="/contact/" style="color:inherit;text-decoration:none;opacity:.8">Contact</a>
-    &middot; <a href="/mags-sikora/" style="color:inherit;text-decoration:none;opacity:.8">About me</a>
-    &middot; <a href="/disclaimer/" style="color:inherit;text-decoration:none;opacity:.8">Disclaimer</a>
-    &middot; <a href="/privacy-policy/" style="color:inherit;text-decoration:none;opacity:.8">Privacy Policy</a>
-    &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
-    &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
-  </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
-    <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
-  </p>
-</footer>
 <script src="/cookie-consent.js"></script>
 </body>
 </html>
