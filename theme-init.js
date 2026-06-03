@@ -2,11 +2,16 @@
    Supports both selectors during the redesign migration:
      html.dark                    (legacy pages)
      html[data-theme="dark"]      (redesigned pages)
-   Reads both storage keys (mt-theme = new, theme = legacy) so the user's
-   choice carries across page types. */
+   Storage key is `mt-theme` (new). Legacy `theme` is read once and migrated. */
 (function(){
   try {
-    var saved = localStorage.getItem('mt-theme') || localStorage.getItem('theme');
+    var legacy = localStorage.getItem('theme');
+    var current = localStorage.getItem('mt-theme');
+    if (legacy && !current) {
+      localStorage.setItem('mt-theme', legacy);
+      current = legacy;
+    }
+    var saved = current || legacy;
     var dark  = saved === 'dark' || (!saved && window.matchMedia && matchMedia('(prefers-color-scheme:dark)').matches);
     var html  = document.documentElement;
     if (dark) {

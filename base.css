@@ -129,6 +129,21 @@ a {
 a:hover { color: var(--ink-1); }
 ::selection { background: var(--accent); color: var(--paper); }
 
+/* Skip-link — hidden until focused (accessibility) */
+.skip-link {
+  position: absolute; top: -40px; left: 16px;
+  z-index: 100;
+  padding: 10px 18px;
+  background: var(--ink-1); color: var(--paper);
+  font: 500 13px var(--font-body);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: top .15s;
+}
+.skip-link:focus { top: 12px; outline: 2px solid var(--accent-2); outline-offset: 2px; }
+html[data-theme="dark"] .skip-link,
+html.dark .skip-link { background: var(--paper); color: var(--ink-1); }
+
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 400;

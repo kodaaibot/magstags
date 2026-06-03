@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
 
+Disallow: /page-template.html
+Disallow: /toc-demo.html
+Disallow: /toc-preview.html
+Disallow: /favicon-preview.html
+Disallow: /redesign/
+Disallow: /redesign-light/
+Disallow: /redesign-teal/
+Disallow: /logo-hover-preview/
+
 Sitemap: https://www.magstags.com/sitemap.xml
