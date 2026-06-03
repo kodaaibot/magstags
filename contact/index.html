@@ -27,24 +27,12 @@
     @media(max-width:700px){.contact-layout{grid-template-columns:1fr}}
     /* ── Form card ── */
     .form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 28px 32px}
-    .field-group{margin-bottom:18px}
-    .field-label{display:block;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-    .field-label .hint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-4)}
-    .field-input,
-    .field-textarea{width:100%;font-size:14px;font-family:'Inter',sans-serif;background: var(--field);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--text-1);outline:none;transition:border .15s;resize:none}
-    .field-input:focus,.field-textarea:focus{border-color:var(--teal)}
-    .field-input::placeholder,.field-textarea::placeholder{color:var(--text-4)}
-    .field-input.err,.field-textarea.err{border-color:var(--paid-color)}
-    .field-textarea{line-height:1.6;min-height:130px}
     /* Math validation */
     .math-row{display:flex;align-items:center;gap:10px}
     .math-question{font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px;font-weight:600;color:var(--teal);white-space:nowrap}
     .math-input{width:72px;text-align:center;font-family:'Menlo','Monaco','Courier New',monospace;font-size:14px}
     .math-error{font-size:12px;color:var(--paid-color);margin-top:5px;display:none}
     /* Submit button */
-    .btn-submit{width:100%;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s;margin-top:4px}
-    .btn-submit:hover{opacity:.85}
-    .btn-submit:disabled{opacity:.5;cursor:not-allowed}
     /* Success / error states */
     .form-success{display:none;text-align:center;padding:32px 20px}
     .form-success .icon{font-size:40px;margin-bottom:12px}
@@ -106,34 +94,34 @@
       <form name="contact" id="contact-form" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="contact">
         <div style="display:none"><input name="bot-field" tabindex="-1" autocomplete="off"></div>
-        <div class="field-group">
-          <label class="field-label" for="field-name">Name</label>
-          <input class="field-input" type="text" id="field-name" name="name" placeholder="Your name" autocomplete="name" required>
+        <div class="form-field">
+          <label class="form-label" for="field-name">Name</label>
+          <input class="form-input" type="text" id="field-name" name="name" placeholder="Your name" autocomplete="name" required>
         </div>
-        <div class="field-group">
-          <label class="field-label" for="field-email">Email</label>
-          <input class="field-input" type="email" id="field-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        <div class="form-field">
+          <label class="form-label" for="field-email">Email</label>
+          <input class="form-input" type="email" id="field-email" name="email" placeholder="you@example.com" autocomplete="email" required>
         </div>
-        <div class="field-group">
-          <label class="field-label" for="field-subject">Subject</label>
-          <input class="field-input" type="text" id="field-subject" name="subject" placeholder="What's this about?" required>
+        <div class="form-field">
+          <label class="form-label" for="field-subject">Subject</label>
+          <input class="form-input" type="text" id="field-subject" name="subject" placeholder="What's this about?" required>
         </div>
-        <div class="field-group">
-          <label class="field-label" for="field-message">Message</label>
-          <textarea class="field-textarea" id="field-message" name="message" placeholder="Your message…" required></textarea>
+        <div class="form-field">
+          <label class="form-label" for="field-message">Message</label>
+          <textarea class="form-textarea" id="field-message" name="message" placeholder="Your message…" required></textarea>
         </div>
-        <div class="field-group">
-          <label class="field-label">
+        <div class="form-field">
+          <label class="form-label">
             <span id="math-label-text">Spam check</span>
             <span class="hint"> — type the answer</span>
           </label>
           <div class="math-row">
             <span class="math-question" id="math-question">…</span>
-            <input class="field-input math-input" type="text" id="math-answer" name="_math" autocomplete="off" inputmode="numeric" placeholder="?" required>
+            <input class="form-input form-input--math" type="text" id="math-answer" name="_math" autocomplete="off" inputmode="numeric" placeholder="?" required>
           </div>
           <div class="math-error" id="math-error">Wrong answer — try again</div>
         </div>
-        <button class="btn-submit" type="submit" id="submit-btn">Send message</button>
+        <button class="btn btn--cta btn--block" type="submit" id="submit-btn">Send message</button>
         <div class="form-send-error" id="send-error">Something went wrong — please try again.</div>
       </form>
       <!-- Success state -->
@@ -181,11 +169,17 @@
       const userAnswer = parseInt(mathAnswer.value, 10);
       if (userAnswer !== correctAnswer) {
         mathError.style.display = 'block';
+        mathError.setAttribute('role', 'alert');
         mathAnswer.classList.add('err');
+        mathAnswer.setAttribute('aria-invalid', 'true');
+        mathAnswer.setAttribute('aria-describedby', 'math-error');
         return false;
       }
       mathError.style.display = 'none';
+      mathError.removeAttribute('role');
       mathAnswer.classList.remove('err');
+      mathAnswer.setAttribute('aria-invalid', 'false');
+      mathAnswer.removeAttribute('aria-describedby');
       return true;
     }
     // Generate on load

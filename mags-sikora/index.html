@@ -57,24 +57,11 @@
   h2 { font-size: var(--t-h2); line-height: 1.2; }
   /* ── Sticky header (identical to other redesign pages) ───────────────── */
   /* header.site is in /base.css (includes 2px saffron top border) */
-  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
-  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; text-decoration: none; }
-  .wordmark em { font-style: italic; color: var(--accent); }
-  nav.primary { display: flex; gap: 32px; align-items: center; }
-  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; text-decoration: none; }
-  nav.primary a:hover { color: var(--accent); }
-  nav.primary .subscribe { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px; color: var(--ink-1); background: transparent; transition: background .15s, color .15s; }
-  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
-  @media (max-width: 800px) { nav.primary { gap: 18px; } nav.primary a:not(.subscribe) { display: none; } }
+
   .draft-banner { background: var(--accent-2); color: var(--ink-1); padding: 8px 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
   .draft-banner a { color: var(--ink-1); text-decoration: underline; }
   /* ── Theme toggle ────────────────────────────────────────────────────── */
-  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
-  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
-  .theme-toggle svg { display: block; }
-  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
-  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
-  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
   /* ── Page layout ─────────────────────────────────────────────────────── */
   .profile { padding: clamp(24px, 3vw, 48px) 0 var(--section-y); }
   .breadcrumb { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; letter-spacing: .04em; max-width: var(--max); margin-left: auto; margin-right: auto; padding: 0 var(--gutter); }
@@ -126,18 +113,7 @@
   .bio-cta a:hover { color: var(--ink-1); border-bottom-color: var(--ink-1); }
   /* ── Full footer (matches other redesign pages) ──────────────────────── */
   .wrap-footer { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
-  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
-  footer.site .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
-  @media (max-width: 900px) { footer.site .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
-  footer.site .footer-brand .wordmark { color: var(--ink-1); }
-  footer.site .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
-  footer.site .footer-col h5 { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 20px; }
-  footer.site .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; }
-  footer.site .footer-col a { color: var(--ink-2); font-size: 14px; text-decoration: none; }
-  footer.site .footer-col a:hover { color: var(--accent); }
-  footer.site .footer-base { margin-top: 80px; padding: 28px 0 0 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
-  footer.site .footer-base a { color: var(--ink-4); text-decoration: none; }
-  footer.site .footer-base a:hover { color: var(--ink-1); }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
   }
@@ -146,15 +122,7 @@
   html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
   html[data-theme="dark"] body a { color: var(--accent-2); }
   html[data-theme="dark"] body a:hover { color: var(--paper); }
-  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
-  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
-  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
-  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
-  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
-  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
-  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
-  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
-  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+
   html[data-theme="dark"] .breadcrumb { color: rgba(245,241,234,.5); }
   html[data-theme="dark"] .breadcrumb a { color: rgba(245,241,234,.5); }
   html[data-theme="dark"] .breadcrumb a:hover { color: var(--accent-2); }
@@ -183,16 +151,7 @@
   html[data-theme="dark"] .bio-cta { color: rgba(245,241,234,.65); border-top-color: rgba(245,241,234,.1); }
   html[data-theme="dark"] .bio-cta a { color: var(--accent-2); border-bottom-color: var(--accent-2); }
   html[data-theme="dark"] .bio-cta a:hover { color: var(--paper); border-bottom-color: var(--paper); }
-  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
-  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
-  html[data-theme="dark"] footer.site .wordmark em { color: var(--accent-2); }
-  html[data-theme="dark"] footer.site .footer-brand p { color: rgba(245,241,234,.6); }
-  html[data-theme="dark"] footer.site .footer-col h5 { color: rgba(245,241,234,.5); }
-  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
-  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
-  html[data-theme="dark"] footer.site .footer-base { border-top-color: rgba(245,241,234,.12); color: rgba(245,241,234,.45); }
-  html[data-theme="dark"] footer.site .footer-base a { color: rgba(245,241,234,.45); }
-  html[data-theme="dark"] footer.site .footer-base a:hover { color: var(--paper); }
+
 </style>
 <script type="application/ld+json">
   {

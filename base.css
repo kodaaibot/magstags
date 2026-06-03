@@ -575,3 +575,545 @@ a.section-marker:hover .line { background: var(--accent); width: 72px; }
     transform: none !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Canonical component system
+   New pages should use these classes. Legacy classes (.btn-primary, .post-callout,
+   .field-input etc.) are being migrated. See magstags audit Chunk 3.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 99px;
+  font-family: var(--font-body); font-size: 13.5px; font-weight: 600;
+  letter-spacing: -.005em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background .15s, border-color .15s, color .15s, transform .1s;
+}
+.btn--primary   { background: var(--ink-1); color: var(--paper); border-color: var(--ink-1); }
+.btn--primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+.btn--secondary { background: transparent; color: var(--ink-2); border-color: var(--rule); }
+.btn--secondary:hover { border-color: var(--ink-2); color: var(--ink-1); }
+.btn--ghost     { background: transparent; color: var(--ink-2); border-color: transparent; }
+.btn--ghost:hover { color: var(--accent); }
+.btn--cta       { background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); }
+.btn--cta:hover { background: #f0a431; border-color: #f0a431; color: var(--paper); transform: translateY(-1px); }
+.btn--sm        { padding: 8px 16px; font-size: 12.5px; }
+.btn--icon      { padding: 0; width: 36px; height: 36px; }
+.btn--block     { width: 100%; }
+html[data-theme="dark"] .btn--primary,
+html.dark .btn--primary { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
+html[data-theme="dark"] .btn--primary:hover,
+html.dark .btn--primary:hover { background: var(--accent-2); border-color: var(--accent-2); color: var(--ink-1); }
+html[data-theme="dark"] .btn--secondary,
+html.dark .btn--secondary { color: var(--paper-2); border-color: rgba(245,241,234,.2); }
+html[data-theme="dark"] .btn--secondary:hover,
+html.dark .btn--secondary:hover { border-color: var(--paper); color: var(--paper); }
+
+/* ── Callouts ────────────────────────────────────────────────────────── */
+.callout {
+  display: flex; gap: 14px;
+  padding: 18px 22px;
+  border-radius: 0 4px 4px 0;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-2);
+  font-size: 15px; line-height: 1.7;
+  color: var(--ink-2);
+  margin: 32px 0;
+}
+.callout--info { border-left-color: var(--accent); }
+.callout--warn { border-left-color: var(--accent-2); }
+.callout--ok   { border-left-color: var(--good); }
+.callout-title {
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--ink-1);
+  margin-bottom: 4px;
+}
+.callout-icon { width: 20px; flex-shrink: 0; color: currentColor; }
+.callout-body p { margin: 0; }
+.callout-body p + p { margin-top: 8px; }
+.callout strong { color: var(--ink-1); font-weight: 600; }
+
+/* ── Forms ───────────────────────────────────────────────────────────── */
+.form-field { margin-bottom: 18px; }
+.form-label {
+  display: block;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--ink-4);
+  margin-bottom: 8px;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-body); font-size: 14px; font-weight: 400;
+  line-height: 1.5;
+  background: var(--field);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  color: var(--ink-1);
+  outline: none;
+  transition: border-color .15s;
+}
+.form-textarea { min-height: 140px; resize: vertical; }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--ink-4); }
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--accent); }
+.form-input[aria-invalid="true"], .form-textarea[aria-invalid="true"] { border-color: var(--accent-2); }
+.form-error {
+  display: none;
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--accent-2);
+  margin-top: 6px;
+}
+.form-field.is-error .form-error,
+.form-input[aria-invalid="true"] ~ .form-error,
+.form-textarea[aria-invalid="true"] ~ .form-error { display: block; }
+.form-help {
+  font-size: 12px; color: var(--ink-4); line-height: 1.5;
+  margin-top: 6px;
+}
+html[data-theme="dark"] .form-input, html.dark .form-input,
+html[data-theme="dark"] .form-textarea, html.dark .form-textarea,
+html[data-theme="dark"] .form-select, html.dark .form-select {
+  background: rgba(245,241,234,.06);
+  border-color: rgba(245,241,234,.15);
+  color: var(--paper);
+}
+html[data-theme="dark"] .form-input::placeholder, html.dark .form-input::placeholder,
+html[data-theme="dark"] .form-textarea::placeholder, html.dark .form-textarea::placeholder {
+  color: rgba(245,241,234,.45);
+}
+html[data-theme="dark"] .form-input:focus, html.dark .form-input:focus,
+html[data-theme="dark"] .form-textarea:focus, html.dark .form-textarea:focus {
+  border-color: var(--accent-2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Article layout + .prose typography (canonical for notes + legal pages)
+
+   Replaces the brand-override blocks duplicated across every note's inline
+   <style>. New notes use:
+       <article class="article">
+         <header class="article-head">…</header>
+         <div class="article-layout">
+           <div class="article-body prose">…</div>
+           <aside class="article-toc">…</aside>
+         </div>
+         <footer class="article-foot">…</footer>
+       </article>
+   Existing notes have inline copies until migrated (Chunk 4.5).
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Article shell */
+.article { max-width: var(--article, 1120px); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+.article-head { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+.article-cat {
+  font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 14px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--accent-2); margin-bottom: 22px;
+}
+.article-cat::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+.article-head h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 40px); font-weight: 400; color: var(--ink-1); line-height: 1.2; margin-bottom: 20px; letter-spacing: -.02em; }
+.article-meta { font-family: var(--font-mono); display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--ink-4); letter-spacing: .04em; }
+.article-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); display: inline-block; }
+
+.article-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
+@media (max-width: 960px) { .article-layout { grid-template-columns: 1fr; gap: 0; } }
+.article-body { min-width: 0; }
+.article-toc { position: sticky; top: 96px; padding-top: 12px; max-height: calc(100vh - 96px); overflow-y: auto; }
+@media (max-width: 960px) { .article-toc { position: static; max-height: none; padding-top: 0; order: -1; margin-bottom: 32px; } }
+
+.article-foot { margin-top: 64px; }
+
+/* .prose — body typography for long-form HTML (article body, legal pages) */
+.prose { font-family: var(--font-body); font-size: 16px; line-height: 1.85; color: var(--ink-2); }
+.prose p { margin-bottom: 22px; }
+.prose > p:first-child, .prose .article-lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-1); margin-bottom: 36px; }
+.prose h2 { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--ink-1); margin: 52px 0 16px; line-height: 1.3; letter-spacing: -.01em; }
+.prose h3 { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--ink-1); margin: 36px 0 12px; line-height: 1.35; }
+.prose h2:not(:first-of-type) { margin-top: 72px; }
+.prose h2:not(:first-of-type)::before {
+  content: '';
+  display: block;
+  width: 14px; height: 14px;
+  margin: 0 auto 36px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain;
+  opacity: .6;
+}
+.prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.prose a:hover { color: var(--ink-1); }
+.prose strong {
+  color: var(--ink-1); font-weight: 500;
+  background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%);
+  padding: 0 3px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  border-radius: 0;
+}
+.prose .callout strong, .prose .callout-warn strong { background: transparent; padding: 0; font-weight: 600; }
+
+.prose ul { padding-left: 24px; margin-bottom: 22px; }
+.prose ul li { margin-bottom: 10px; line-height: 1.75; }
+.prose ul li::marker { color: var(--accent); }
+.prose ol { counter-reset: prose-counter; list-style: none; padding-left: 0; margin-bottom: 22px; }
+.prose ol > li {
+  counter-increment: prose-counter;
+  position: relative;
+  padding-left: 44px;
+  margin-bottom: 12px;
+  line-height: 1.75;
+}
+.prose ol > li::before {
+  content: counter(prose-counter, decimal-leading-zero) ".";
+  position: absolute; left: 0; top: 0;
+  font-family: var(--font-mono); font-size: 14px; font-weight: 500;
+  color: var(--accent); letter-spacing: .02em; line-height: 1.85;
+}
+.prose blockquote {
+  font-family: var(--font-display); font-size: 18px; line-height: 1.5;
+  color: var(--ink-1);
+  border-left: 3px solid var(--accent-2); padding: 4px 0 4px 22px;
+  margin: 32px 0;
+  max-width: 580px;
+}
+.prose pre {
+  font-family: var(--font-mono); font-size: 13.5px; line-height: 1.8;
+  background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px;
+  padding: 20px; margin: 28px 0;
+  overflow-x: auto;
+  color: var(--ink-2);
+  white-space: pre;
+}
+.prose code {
+  font-family: var(--font-mono); font-size: 13.5px;
+  background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--accent);
+}
+.prose pre code { background: transparent; border: none; padding: 0; color: inherit; }
+
+/* Article-scoped table treatment — same redesign as .post-table */
+.prose .table-wrap { margin: 36px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; background: var(--paper); display: block; }
+.prose .table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+.prose .table thead th { font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 14px 20px; text-align: left; vertical-align: bottom; }
+.prose .table tbody td { padding: 18px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+.prose .table tbody tr:last-child td { border-bottom: none; }
+.prose .table tbody tr:hover { background: rgba(224, 146, 38, 0.05); }
+.prose .table tbody td:first-child { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-1); width: 20%; min-width: 130px; padding-top: 20px; }
+@media (max-width: 720px) {
+  .prose .table-wrap { overflow-x: visible; }
+  .prose .table thead { display: none; }
+  .prose .table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .prose .table tbody tr:last-child { border-bottom: none; }
+  .prose .table tbody td { display: block; padding: 4px 20px; border: none; width: auto !important; min-width: 0; }
+  .prose .table tbody td:first-child { color: var(--accent-2); margin-bottom: 4px; font-size: 11px; padding-top: 8px; }
+  .prose .table tbody tr:hover { background: transparent; }
+}
+
+/* Dark mode token flip scoped to .article and .prose containers */
+html.dark .article, html[data-theme="dark"] .article,
+html.dark .prose, html[data-theme="dark"] .prose {
+  --ink-1: #f5f1ea;
+  --ink-2: #ebe5d7;
+  --ink-3: rgba(245,241,234,.7);
+  --ink-4: rgba(245,241,234,.5);
+  --paper: #1a1916;
+  --paper-2: #25221e;
+  --rule: rgba(245,241,234,.12);
+}
+/* Override base.css's html.dark h1-h4 rule for headings inside .article / .prose */
+html.dark .article h1, html.dark .article h2, html.dark .article h3, html.dark .article h4,
+html[data-theme="dark"] .article h1, html[data-theme="dark"] .article h2, html[data-theme="dark"] .article h3, html[data-theme="dark"] .article h4,
+html.dark .prose h1, html.dark .prose h2, html.dark .prose h3, html.dark .prose h4,
+html[data-theme="dark"] .prose h1, html[data-theme="dark"] .prose h2, html[data-theme="dark"] .prose h3, html[data-theme="dark"] .prose h4 {
+  color: var(--ink-1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Tool after-tool content vocabulary (the .ct-* namespace)
+
+   Canonical for the after-tool sections on every tool page. Lifted from
+   /gsc-regex-generator/ which the audit calls the gold standard.
+
+   Use:
+       <div class="ct-wrap">
+         <section class="ct-section">
+           <span class="ct-section-label">Background</span>
+           <h2 class="ct-h2">What this tool does</h2>
+           <p class="ct-lead">…</p>
+           [content: .ct-card-grid, .ct-callout, .ct-table-wrap, .ct-faq, .ct-cta]
+         </section>
+       </div>
+   ───────────────────────────────────────────────────────────────────────── */
+
+.ct-wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); padding-bottom: 80px; }
+.ct-section { padding: var(--section-y) 0; border-top: 1px solid var(--rule); }
+
+/* Eyebrow with 32px rule prefix — same pattern as .post-category */
+.ct-section-label {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex; align-items: center; gap: 14px;
+  margin-bottom: 18px;
+}
+.ct-section-label::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
+
+/* Section heading + lead */
+.ct-h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  color: var(--ink-1);
+  margin-bottom: 16px;
+  max-width: 26ch;
+  scroll-margin-top: 110px;
+}
+.ct-lead {
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 700px;
+  margin-bottom: 24px;
+}
+.ct-body { font-size: 16px; color: var(--ink-2); line-height: 1.7; max-width: 700px; }
+.ct-body p { margin-bottom: 16px; }
+.ct-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Intro cards */
+.ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
+.ct-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 22px 24px; }
+.ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--ink-3); }
+.ct-card-title { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--ink-1); text-transform: uppercase; letter-spacing: .14em; margin-bottom: 8px; }
+.ct-card p { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+
+/* Editorial table — universal pattern, tool pages can use this directly */
+.ct-table-wrap { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; margin-bottom: 32px; }
+.ct-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-family: var(--font-body); }
+.ct-table thead th {
+  text-align: left; padding: 11px 16px;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-4);
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+}
+.ct-table tbody tr { border-bottom: 1px solid var(--rule); transition: background .12s; }
+.ct-table tbody tr:last-child { border-bottom: none; }
+.ct-table tbody tr:hover { background: var(--paper-2); }
+.ct-table td { padding: 12px 16px; vertical-align: top; color: var(--ink-2); line-height: 1.55; }
+.ct-table td:first-child { color: var(--ink-1); font-weight: 500; }
+@media (max-width: 680px) {
+  .ct-table thead { display: none; }
+  .ct-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .ct-table tbody tr:last-child { border-bottom: none; }
+  .ct-table td { display: block; padding: 3px 16px; border: none; width: auto !important; }
+  .ct-table td:first-child { font-size: 13px; font-weight: 600; padding-top: 12px; color: var(--accent-2); }
+}
+
+/* Callout — same warm-cream pattern as .callout but kept under .ct- namespace */
+.ct-callout {
+  border-radius: 0 4px 4px 0;
+  padding: 18px 22px;
+  display: flex; gap: 14px;
+  margin-top: 24px;
+  background: var(--paper-2);
+  border-left: 3px solid var(--accent);
+}
+.ct-callout--teal { border-left-color: var(--accent); }
+.ct-callout--warn { border-left-color: var(--accent-2); }
+.ct-callout--red  { background: rgba(220,38,38,.06); border-left-color: #dc2626; }
+.ct-callout-icon { font-family: var(--font-mono); font-size: 16px; color: var(--accent); flex-shrink: 0; padding-top: 1px; }
+.ct-callout--warn .ct-callout-icon { color: var(--accent-2); }
+.ct-callout--red .ct-callout-icon { color: #dc2626; }
+.ct-callout-body strong { display: block; font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--ink-1); margin-bottom: 4px; letter-spacing: -.005em; }
+.ct-callout-body p { font-size: 14px; color: var(--ink-2); margin: 0; line-height: 1.6; }
+.ct-callout-body ul { font-size: 13px; color: var(--ink-3); padding-left: 18px; margin-top: 6px; line-height: 1.7; }
+.ct-callout-body li { margin-bottom: 3px; }
+
+/* FAQ — native <details> pattern */
+.ct-faq { display: flex; flex-direction: column; gap: 8px; margin-top: 32px; }
+.ct-faq details { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; background: var(--paper-2); }
+.ct-faq summary {
+  padding: 18px 22px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 400;
+  color: var(--ink-1);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: color .12s;
+  user-select: none;
+  letter-spacing: -.01em;
+  background: transparent;
+}
+.ct-faq summary::-webkit-details-marker { display: none; }
+.ct-faq summary::after { content: '+'; font-family: var(--font-mono); font-size: 18px; color: var(--accent); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
+.ct-faq details[open] summary::after { content: '−'; }
+.ct-faq details[open] summary { color: var(--accent); background: transparent; }
+.ct-faq summary:hover { color: var(--accent); }
+.ct-faq-body { padding: 0 22px 20px; background: transparent; font-size: 14px; color: var(--ink-3); line-height: 1.7; }
+.ct-faq-body strong { color: var(--ink-1); font-weight: 600; }
+.ct-faq-body code { font-family: var(--font-mono); font-size: 12.5px; background: var(--paper); padding: 2px 6px; border-radius: 3px; color: var(--ink-1); }
+
+/* CTA block — bottom of after-tool content */
+.ct-cta {
+  text-align: center;
+  padding: clamp(36px, 5vw, 56px) var(--gutter);
+  max-width: 640px;
+  margin: var(--section-y) auto 0;
+  border-top: 1px solid var(--rule);
+}
+.ct-cta h2 { font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 28px); font-weight: 400; color: var(--ink-1); margin-bottom: 12px; }
+.ct-cta p { font-size: 15px; color: var(--ink-3); line-height: 1.6; margin-bottom: 24px; max-width: 480px; margin-left: auto; margin-right: auto; }
+.ct-cta-links { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.ct-cta-link-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 99px;
+  background: var(--accent-2); color: var(--paper);
+  font-family: var(--font-body); font-size: 13.5px; font-weight: 600;
+  text-decoration: none;
+  transition: background .15s, transform .1s;
+}
+.ct-cta-link-primary:hover { background: #f0a431; transform: translateY(-1px); color: var(--paper); }
+.ct-cta-link-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 99px;
+  background: transparent; color: var(--ink-2); border: 1px solid var(--rule);
+  font-family: var(--font-body); font-size: 13.5px; font-weight: 500;
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.ct-cta-link-secondary:hover { border-color: var(--ink-2); color: var(--ink-1); }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Editorial list row — canonical for "list of links with description"
+
+   Used by: notes index, tool hubs, sitemap, any "list of things with a link".
+   Replaces .tool-secondary (homepage) and .notes-row (notes index) for new pages.
+
+   Markup:
+       <div class="list">
+         <a class="list-row" href="…">
+           <span class="list-row-cat">Category</span>
+           <h3>Item title</h3>
+           <p class="list-row-desc">One-line description.</p>
+         </a>
+         …
+       </div>
+   ───────────────────────────────────────────────────────────────────────── */
+
+.list { display: flex; flex-direction: column; border-top: 1px solid var(--rule); }
+.list-row {
+  position: relative;
+  padding: 24px 40px 24px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  display: block;
+  transition: padding-left .15s, background .15s;
+}
+.list-row:hover { background: var(--paper-2); padding-left: 14px; }
+.list-row-cat {
+  font-family: var(--font-mono); display: block;
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.list-row h2, .list-row h3 {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 500;
+  line-height: 1.25; letter-spacing: -.01em;
+  color: var(--ink-1);
+  margin: 0;
+}
+.list-row:hover h2, .list-row:hover h3 { color: var(--accent); }
+.list-row p, .list-row .list-row-desc {
+  font-family: var(--font-body); font-size: 14px;
+  color: var(--ink-3); line-height: 1.55;
+  margin-top: 6px;
+  max-width: 640px;
+}
+.list-row::after {
+  content: '→';
+  position: absolute; right: 6px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-4); font-size: 18px;
+  transition: color .15s, right .15s;
+}
+.list-row:hover::after { color: var(--accent); right: 0; }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Mobile nav — hamburger + overlay menu (injected by /theme-init.js)
+   ───────────────────────────────────────────────────────────────────────── */
+
+.nav-hamburger {
+  display: none;
+  width: 36px; height: 36px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: 99px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.nav-hamburger:hover { border-color: var(--ink-2); color: var(--ink-1); }
+.nav-hamburger svg { display: block; margin: 0 auto; }
+@media (max-width: 800px) {
+  .nav-hamburger { display: inline-flex; align-items: center; justify-content: center; }
+}
+html[data-theme="dark"] .nav-hamburger,
+html.dark .nav-hamburger { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
+html[data-theme="dark"] .nav-hamburger:hover,
+html.dark .nav-hamburger:hover { border-color: var(--paper); color: var(--paper); }
+
+.nav-overlay {
+  position: fixed; inset: 0;
+  z-index: 99;
+  background: var(--paper);
+  display: none;
+  flex-direction: column;
+  padding: 0 var(--gutter);
+}
+.nav-overlay.is-open { display: flex; }
+.nav-overlay-close {
+  position: absolute; top: 16px; right: var(--gutter);
+  width: 36px; height: 36px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: 99px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.nav-overlay-close:hover { border-color: var(--ink-2); color: var(--ink-1); }
+.nav-overlay nav { margin-top: 96px; display: flex; flex-direction: column; gap: 24px; }
+.nav-overlay nav a {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 400;
+  color: var(--ink-1);
+  text-decoration: none;
+  letter-spacing: -.02em;
+}
+.nav-overlay nav a:hover { color: var(--accent); }
+body.nav-locked { overflow: hidden; }
+
+html[data-theme="dark"] .nav-overlay,
+html.dark .nav-overlay { background: #1a1916; }
+html[data-theme="dark"] .nav-overlay nav a,
+html.dark .nav-overlay nav a { color: var(--paper); }
+html[data-theme="dark"] .nav-overlay nav a:hover,
+html.dark .nav-overlay nav a:hover { color: var(--accent-2); }
+html[data-theme="dark"] .nav-overlay-close,
+html.dark .nav-overlay-close { border-color: rgba(245,241,234,.25); color: var(--paper); }
+

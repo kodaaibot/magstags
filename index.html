@@ -95,24 +95,7 @@
   h2 { font-size: var(--t-h2); line-height: 1.15; }
   h3 { font-size: var(--t-h3); line-height: 1.25; font-weight: 500; }
   /* ── Header ── chrome rule lives in /base.css (includes 2px saffron top border) ── */
-  .site-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 18px var(--gutter); max-width: var(--max); margin: 0 auto; }
-  .wordmark { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--ink-1); letter-spacing: -.02em; }
-  .wordmark em { font-style: italic; color: var(--accent); }
-  nav.primary { display: flex; gap: 32px; align-items: center; }
-  nav.primary a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--ink-2); letter-spacing: -.005em; }
-  nav.primary a:hover { color: var(--accent); }
-  nav.primary .subscribe {
-    font-family: var(--font-mono); font-size: 12px; font-weight: 500;
-    text-transform: uppercase; letter-spacing: .08em;
-    padding: 9px 18px; border: 1px solid var(--ink-1); border-radius: 99px;
-    color: var(--ink-1); background: transparent;
-    transition: background .15s, color .15s;
-  }
-  nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
-  @media (max-width: 800px) {
-    nav.primary { gap: 18px; }
-    nav.primary a:not(.subscribe) { display: none; }
-  }
+  /* .site-inner, .wordmark, nav.primary, .subscribe — all in /base.css */
   /* ── Hero (dark moment — matches extension section aesthetic) ───────── */
   .hero { padding: clamp(48px, 7vw, 96px) 0 clamp(64px, 8vw, 100px); }
   .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
@@ -427,6 +410,19 @@
   .ext-popup-code .p { color: var(--ink-4); }
   .ext-popup-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); }
   .ext-popup-foot .ok { color: var(--accent-2); }
+  /* Mobile: contain the extension visual so it doesn't overflow viewport */
+  @media (max-width: 600px) {
+    .extension-visual { min-width: 0; overflow: hidden; }
+    .ext-browser { min-width: 0; max-width: 100%; }
+    .ext-browser-chrome { padding: 8px 10px; gap: 8px; }
+    .ext-url { font-size: 10px; padding: 3px 8px; margin: 0 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ext-icon { width: 22px; height: 22px; font-size: 10px; }
+    .ext-popup { padding: 14px 16px; }
+    .ext-popup-title { font-size: 10.5px; }
+    .ext-popup-tab { font-size: 9px; padding: 2px 6px; }
+    .ext-popup-code { font-size: 10.5px; line-height: 1.7; }
+    .ext-popup-foot { font-size: 9px; }
+  }
   /* ── Founder section ─────────────────────────────────────────────────── */
   .founder { background: var(--paper-2); color: var(--ink-2); padding: var(--section-y) 0; }
   .founder-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(48px, 6vw, 96px); align-items: center; }
@@ -471,29 +467,7 @@
   .newsletter button:hover { background: var(--accent); }
   .newsletter .micro { margin-top: 18px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .1em; }
   @media (max-width: 560px) { .newsletter form { flex-direction: column; } .newsletter form input { text-align: center; } }
-  /* ── Footer ──────────────────────────────────────────────────────────── */
-  footer.site { background: var(--paper-2); color: var(--ink-3); padding: clamp(64px, 8vw, 120px) 0 40px; border-top: 1px solid var(--rule); }
-  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 48px; }
-  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px 32px; } }
-  .footer-brand .wordmark { color: var(--ink-1); }
-  .footer-brand p { font-size: 14px; line-height: 1.6; color: var(--ink-3); margin-top: 24px; max-width: 320px; }
-  .footer-col h5 {
-    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
-    text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4);
-    margin-bottom: 20px;
-  }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .footer-col a { color: var(--ink-2); font-size: 14px; }
-  .footer-col a:hover { color: var(--accent); }
-  .footer-base {
-    margin-top: 80px; padding-top: 28px;
-    border-top: 1px solid var(--rule);
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
-    font-family: var(--font-mono); font-size: 11px; color: var(--ink-4);
-    text-transform: uppercase; letter-spacing: .08em;
-  }
-  .footer-base a { color: var(--ink-4); }
-  .footer-base a:hover { color: var(--ink-1); }
+  /* ── Footer ── footer.site, .footer-grid, .footer-brand, .footer-col, .footer-base — all in /base.css ── */
   /* ── Utility ─────────────────────────────────────────────────────────── */
   .rule-top { border-top: 1px solid var(--rule); }
   .draft-banner {
@@ -506,28 +480,13 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   }
-  /* ── Theme toggle button (in header) ─────────────────────────────────── */
-  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--rule); border-radius: 99px; background: transparent; color: var(--ink-2); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
-  .theme-toggle:hover { border-color: var(--ink-2); color: var(--ink-1); }
-  .theme-toggle svg { display: block; }
-  .theme-toggle .icon-moon, .theme-toggle .icon-sun { display: none; }
-  html:not([data-theme="dark"]) .theme-toggle .icon-moon { display: block; }
-  html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  /* .theme-toggle — in /base.css */
   /* ── DARK MODE OVERRIDES (html[data-theme="dark"]) ───────────────────── */
   html[data-theme="dark"] body { background: var(--ink-1); color: var(--paper); }
   html[data-theme="dark"] ::selection { background: var(--accent-2); color: var(--ink-1); }
   html[data-theme="dark"] body a { color: var(--accent-2); }
   html[data-theme="dark"] body a:hover { color: var(--paper); }
-  /* Header in dark */
-  html[data-theme="dark"] header.site { background: rgba(26,25,22,.85); border-bottom-color: rgba(245,241,234,.08); }
-  html[data-theme="dark"] header.site .wordmark { color: var(--paper); }
-  html[data-theme="dark"] header.site .wordmark em { color: var(--accent-2); }
-  html[data-theme="dark"] header.site nav.primary a { color: rgba(245,241,234,.8); }
-  html[data-theme="dark"] header.site nav.primary a:hover { color: var(--accent-2); }
-  html[data-theme="dark"] header.site nav.primary .subscribe { border-color: rgba(245,241,234,.4); color: var(--paper); }
-  html[data-theme="dark"] header.site nav.primary .subscribe:hover { background: var(--paper); color: var(--ink-1); border-color: var(--paper); }
-  html[data-theme="dark"] .theme-toggle { border-color: rgba(245,241,234,.25); color: rgba(245,241,234,.8); }
-  html[data-theme="dark"] .theme-toggle:hover { border-color: var(--paper); color: var(--paper); }
+  /* Header + theme-toggle dark-mode overrides — in /base.css */
   /* Hero in dark */
   html[data-theme="dark"] .hero { background: var(--ink-1); color: var(--paper); }
   html[data-theme="dark"] .hero-eyebrow::after { background: rgba(245,241,234,.3); }
@@ -664,13 +623,7 @@
   html[data-theme="dark"] .newsletter button { background: var(--accent-2); color: var(--ink-1); }
   html[data-theme="dark"] .newsletter button:hover { background: #f0a431; }
   html[data-theme="dark"] .newsletter .micro { color: rgba(245,241,234,.45); }
-  /* Footer in dark */
-  html[data-theme="dark"] footer.site { background: var(--ink-1); color: var(--paper-2); border-top-color: transparent; }
-  html[data-theme="dark"] footer.site .wordmark { color: var(--paper); }
-  html[data-theme="dark"] footer.site .footer-brand p { color: var(--ink-4); }
-  html[data-theme="dark"] footer.site .footer-col h5 { color: var(--ink-4); }
-  html[data-theme="dark"] footer.site .footer-col a { color: var(--paper-2); }
-  html[data-theme="dark"] footer.site .footer-col a:hover { color: var(--paper); }
+  /* Footer dark-mode overrides — in /base.css */
   html[data-theme="dark"] .footer-base { border-top-color: rgba(245,241,234,.12); color: var(--ink-4); }
   html[data-theme="dark"] .footer-base a { color: var(--ink-4); }
   html[data-theme="dark"] .footer-base a:hover { color: var(--paper); }
