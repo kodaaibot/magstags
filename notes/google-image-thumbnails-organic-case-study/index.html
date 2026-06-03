@@ -12,7 +12,8 @@
 <meta property="og:image" content="https://www.magstags.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
 <link rel="apple-touch-icon" href="/favicon-apple.png">
 <script src="/theme-init.js"></script>
 <link rel="stylesheet" href="/base.css">
@@ -47,18 +48,18 @@
 <style>
 /* ── Page-level colour overrides ── */
 :root {
-  --teal: #1ab6db;
-  --mint: #0891B2;
-  --orange: #D97706;
-  --orange-light: #FEF3C7;
-  --green-light: #dcfce7;
+  --teal: var(--accent);
+  --mint: var(--accent);
+  --orange: var(--accent-2);
+  --orange-light: var(--paper-2);
+  --green-light: var(--paper-2);
 }
 html.dark {
-  --teal: #22D3EE;
-  --mint: #67E8F9;
-  --orange: #fbbf24;
-  --orange-light: #451a03;
-  --green-light: #14532d;
+  --teal: var(--accent);
+  --mint: var(--accent);
+  --orange: var(--accent-2);
+  --orange-light: var(--paper-2);
+  --green-light: var(--paper-2);
 }
 
 /* ── Two-column layout ── */
@@ -68,9 +69,9 @@ html.dark {
 @media (max-width: 900px) { .study-sidebar { display: none; } }
 
 /* ── Breadcrumb ── */
-.breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.breadcrumb a{color:var(--text-4);text-decoration:none}
-.breadcrumb a:hover{color:var(--teal)}
+.breadcrumb{font-size:13px;color:var(--ink-4);margin-bottom:20px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.breadcrumb a{color:var(--ink-4);text-decoration:none}
+.breadcrumb a:hover{color:var(--accent)}
 .breadcrumb span{opacity:.5}
 
 /* ── Research badge ── */
@@ -78,117 +79,229 @@ html.dark {
 
 /* ── Study layout ── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text-2); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; }
+body { background: var(--paper); color: var(--ink-2); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; }
 
 main { padding: 48px 36px 80px; }
 
-.article-meta { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-4); margin-bottom: 16px; }
-.article-meta span { color: var(--teal); }
+.article-meta { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); margin-bottom: 16px; }
+.article-meta span { color: var(--accent); }
 
-h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(30px, 4.5vw, 42px); font-weight: 400; color: var(--text-1); line-height: 1.2; margin-bottom: 18px; }
+h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(30px, 4.5vw, 42px); font-weight: 400; color: var(--ink-1); line-height: 1.2; margin-bottom: 18px; }
 
-.article-lead { font-size: 17px; color: var(--text-3); line-height: 1.7; margin-bottom: 14px; max-width: 680px; }
+.article-lead { font-size: 17px; color: var(--ink-3); line-height: 1.7; margin-bottom: 14px; max-width: 680px; }
 
-hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+hr { border: none; border-top: 1px solid var(--rule); margin: 28px 0; }
 
-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(22px, 3vw, 30px); font-weight: 400; letter-spacing: -.02em; color: var(--text-1); margin: 48px 0 16px; }
+h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(22px, 3vw, 30px); font-weight: 400; letter-spacing: -.02em; color: var(--ink-1); margin: 48px 0 16px; }
 
-h3 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 18px; font-weight: 600; color: var(--text-1); margin: 36px 0 12px; }
+h3 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 18px; font-weight: 600; color: var(--ink-1); margin: 36px 0 12px; }
 
-p { font-size: 15px; color: var(--text-3); line-height: 1.7; margin-bottom: 18px; max-width: 680px; }
+p { font-size: 15px; color: var(--ink-3); line-height: 1.7; margin-bottom: 18px; max-width: 680px; }
 
-a { color: var(--teal); }
-a:hover { color: var(--text-1); }
+a { color: var(--accent); }
+a:hover { color: var(--ink-1); }
 
 /* Quotable blocks */
-.quotable { background: var(--surface); border-left: 3px solid var(--teal); padding: 20px 24px; border-radius: 0 12px 12px 0; margin: 28px 0; }
-.quotable p { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 17px; font-weight: 500; color: var(--text-1); line-height: 1.5; margin: 0; max-width: 100%; }
-.quotable .source { font-size: 12px; color: var(--text-4); margin-top: 8px; font-family: 'Inter', sans-serif; font-weight: 400; }
+.quotable { background: var(--paper-2); border-left: 3px solid var(--accent); padding: 20px 24px; border-radius: 0 12px 12px 0; margin: 28px 0; }
+.quotable p { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 17px; font-weight: 500; color: var(--ink-1); line-height: 1.5; margin: 0; max-width: 100%; }
+.quotable .source { font-size: 12px; color: var(--ink-4); margin-top: 8px; font-family: 'Inter', sans-serif; font-weight: 400; }
 
 /* Stat cards */
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0 32px; }
 @media (max-width: 600px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; text-align: center; }
-.stat-card .stat-number { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 32px; font-weight: 600; color: var(--teal); display: block; margin-bottom: 4px; }
-.stat-card .stat-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-4); }
-.stat-card--mobile { border-top: 3px solid var(--teal); }
-.stat-card--mobile .stat-number { color: var(--teal); }
-.stat-card--desktop { border-top: 3px solid var(--border); }
-.stat-card--desktop .stat-number { color: var(--text-3); }
+.stat-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 14px; padding: 20px 22px; text-align: center; }
+.stat-card .stat-number { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 32px; font-weight: 600; color: var(--accent); display: block; margin-bottom: 4px; }
+.stat-card .stat-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-4); }
+.stat-card--mobile { border-top: 3px solid var(--accent); }
+.stat-card--mobile .stat-number { color: var(--accent); }
+.stat-card--desktop { border-top: 3px solid var(--rule); }
+.stat-card--desktop .stat-number { color: var(--ink-3); }
 .stat-card .device-badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 3px 10px; border-radius: 99px; margin-bottom: 10px; }
-.stat-card--mobile .device-badge { background: var(--mint-light); color: var(--teal); }
-.stat-card--desktop .device-badge { background: var(--bg2); color: var(--text-4); }
+.stat-card--mobile .device-badge { background: var(--paper-2); color: var(--accent); }
+.stat-card--desktop .device-badge { background: var(--paper-2); color: var(--ink-4); }
 
 /* Data tables */
-.ct-table-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; overflow-x: auto; margin: 24px 0 32px; }
+.ct-table-wrap { border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; overflow-x: auto; margin: 24px 0 32px; }
 .ct-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.ct-table thead th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-4); background: var(--surface); border-bottom: 1px solid var(--border); }
-.ct-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--text-3); vertical-align: top; }
+.ct-table thead th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+.ct-table td { padding: 10px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-3); vertical-align: top; }
 .ct-table tr:last-child td { border-bottom: none; }
 .ct-table .num { text-align: right; font-family: 'Menlo', monospace; font-size: 12px; }
-.ct-table .highlight { color: var(--teal); font-weight: 600; }
-.ct-table .dim { color: var(--text-4); }
+.ct-table .highlight { color: var(--accent); font-weight: 600; }
+.ct-table .dim { color: var(--ink-4); }
 .ct-table .warn { color: var(--orange); font-weight: 600; }
 .ct-table .good { color: var(--green); font-weight: 600; }
 
 /* Callout */
 .ct-callout { display: flex; gap: 14px; padding: 18px 20px; border-radius: 12px; margin: 28px 0; }
-.ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
+.ct-callout--teal { background: var(--paper-2); border: 1px solid rgba(14,116,144,.2); }
 .ct-callout--orange { background: var(--orange-light); border: 1px solid rgba(217,119,6,.2); }
 .ct-callout-icon { font-size: 16px; flex-shrink: 0; }
 .ct-callout-body { flex: 1; }
-.ct-callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 4px; }
-.ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0 0 10px; line-height: 1.6; max-width: 100%; }
+.ct-callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-1); margin-bottom: 4px; }
+.ct-callout-body p { font-size: 14px; color: var(--ink-3); margin: 0 0 10px; line-height: 1.6; max-width: 100%; }
 .ct-callout-body p:last-child { margin-bottom: 0; }
-.ct-callout-body code { font-family: 'Menlo', monospace; font-size: 11px; background: var(--bg2); border: 1px solid var(--border); padding: 1px 5px; border-radius: 4px; color: var(--teal); }
+.ct-callout-body code { font-family: 'Menlo', monospace; font-size: 11px; background: var(--paper-2); border: 1px solid var(--rule); padding: 1px 5px; border-radius: 4px; color: var(--accent); }
 
 /* Intent position tabs */
 .pos-tabs { margin: 28px 0 8px; }
 .pos-tab-bar { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 0; }
-.pos-tab-btn { padding: 9px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-4); background: transparent; border: 1px solid var(--border); border-bottom: none; border-radius: 10px 10px 0 0; cursor: pointer; transition: all .15s; white-space: nowrap; }
-.pos-tab-btn:hover { color: var(--text-2); background: var(--bg2); }
-.pos-tab-btn.active { color: var(--teal); background: var(--surface); border-color: var(--border); position: relative; z-index: 1; }
+.pos-tab-btn { padding: 9px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: var(--ink-4); background: transparent; border: 1px solid var(--rule); border-bottom: none; border-radius: 10px 10px 0 0; cursor: pointer; transition: all .15s; white-space: nowrap; }
+.pos-tab-btn:hover { color: var(--ink-2); background: var(--paper-2); }
+.pos-tab-btn.active { color: var(--accent); background: var(--paper-2); border-color: var(--rule); position: relative; z-index: 1; }
 .pos-tab-panel { display: none; }
 .pos-tab-panel.active { display: block; }
 .pos-tab-panel .ct-table-wrap { margin-top: 0; border-top-left-radius: 0; }
-.pos-tab-note { font-size: 12px; color: var(--text-4); margin: 6px 0 18px; font-style: italic; }
-.ct-table .small-sample { font-size: 10px; color: var(--text-4); font-weight: 400; margin-left: 4px; }
+.pos-tab-note { font-size: 12px; color: var(--ink-4); margin: 6px 0 18px; font-style: italic; }
+.ct-table .small-sample { font-size: 10px; color: var(--ink-4); font-weight: 400; margin-left: 4px; }
 
 /* CTA */
 .ct-cta { text-align: center; padding: 48px 24px; max-width: 600px; margin: 0 auto; }
-.ct-cta h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 22px; font-weight: 600; color: var(--text-1); }
-.ct-cta p { font-size: 14px; color: var(--text-3); margin: 8px auto 24px; text-align: center; }
+.ct-cta h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 22px; font-weight: 600; color: var(--ink-1); }
+.ct-cta p { font-size: 14px; color: var(--ink-3); margin: 8px auto 24px; text-align: center; }
 
 /* Author card */
-.study-author { margin-top: 0; padding: 40px 0 0; border-top: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start; }
-.study-author-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); flex-shrink: 0; }
-.study-author-name { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; }
+.study-author { margin-top: 0; padding: 40px 0 0; border-top: 1px solid var(--rule); display: flex; gap: 20px; align-items: flex-start; }
+.study-author-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--rule); flex-shrink: 0; }
+.study-author-name { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 18px; font-weight: 700; color: var(--ink-1); margin-bottom: 2px; }
 .study-author-name a { color: inherit; text-decoration: none; }
-.study-author-name a:hover { color: var(--teal); }
-.study-author-role { font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px; }
-.study-author-bio { font-size: 14px; color: var(--text-3); line-height: 1.65; margin-bottom: 0; max-width: 100%; }
+.study-author-name a:hover { color: var(--accent); }
+.study-author-role { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px; }
+.study-author-bio { font-size: 14px; color: var(--ink-3); line-height: 1.65; margin-bottom: 0; max-width: 100%; }
 
 /* Series nav */
 .page-layout { display: flex; gap: 48px; align-items: flex-start; }
 .series-sidebar { width: 200px; flex-shrink: 0; position: sticky; top: 88px; }
-.series-sidebar-inner { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; }
-.series-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text-4); margin-bottom: 12px; }
+.series-sidebar-inner { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 14px; padding: 18px 16px; }
+.series-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-4); margin-bottom: 12px; }
 .series-item { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border-radius: 8px; margin-bottom: 2px; text-decoration: none; transition: background .12s; }
-.series-item:hover { background: var(--bg); }
+.series-item:hover { background: var(--paper); }
 .series-item.active { background: rgba(14,116,144,.07); pointer-events: none; }
 .series-item.dim { opacity: .5; pointer-events: none; }
-.series-item-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-4); }
-.series-item.active .series-item-type { color: var(--teal); }
-.series-item-name { font-size: 12px; font-weight: 600; color: var(--text-2); line-height: 1.3; }
-.series-item.active .series-item-name { color: var(--teal); }
+.series-item-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-4); }
+.series-item.active .series-item-type { color: var(--accent); }
+.series-item-name { font-size: 12px; font-weight: 600; color: var(--ink-2); line-height: 1.3; }
+.series-item.active .series-item-name { color: var(--accent); }
 .container { max-width: 860px; padding: 0 24px; }
 .page-content { flex: 1; min-width: 0; }
 @media (max-width: 860px) { .series-sidebar { display: none; } }
 
 /* Footer */
-footer { border-top: 1px solid var(--border); margin-top: 64px; padding: 32px 24px; text-align: center; font-size: 13px; color: var(--text-4); }
+footer { border-top: 1px solid var(--rule); margin-top: 64px; padding: 32px 24px; text-align: center; font-size: 13px; color: var(--ink-4); }
 footer a { color: inherit; text-decoration: none; opacity: .8; }
-footer a:hover { color: var(--teal); opacity: 1; }
+footer a:hover { color: var(--accent); opacity: 1; }
+
+    /* ── Brand overrides applied at end of style block ── */
+
+    /* Lead — Inter, ink-1, no italic, no border */
+    .post-lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-1); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
+
+    /* Body strong — saffron marker stripe */
+    .post-body strong { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
+    .post-callout strong, .post-callout-warn strong { background: transparent; padding: 0; font-weight: 600; }
+
+    /* Callouts — warm cream + accent left rule */
+    .post-callout { background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+    .post-callout-warn { background: var(--paper-2); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+
+    /* Compare grid — cream + accent/ink-4 left rules (no green/red) */
+    .compare-col { padding: 22px; background: var(--paper-2); border: 1px solid var(--rule); border-left-width: 3px; border-radius: 0 4px 4px 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+    .compare-col.yes { border-left-color: var(--accent); }
+    .compare-col.no { border-left-color: var(--ink-4); }
+
+    /* Tables — editorial, label-first columns */
+    .post-table-wrap { margin: 36px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; background: var(--paper); display: block; }
+    .post-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+    .post-table thead th { font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 14px 20px; text-align: left; vertical-align: bottom; }
+    .post-table tbody td { padding: 18px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+    .post-table tbody tr:last-child td { border-bottom: none; }
+    .post-table tbody tr:hover { background: rgba(224, 146, 38, 0.05); }
+    .post-table tbody td:first-child, .post-table .col-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-1); width: 20%; min-width: 130px; padding-top: 20px; white-space: normal; }
+    @media (max-width: 720px) {
+      .post-table-wrap { overflow-x: visible; }
+      .post-table thead { display: none; }
+      .post-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+      .post-table tbody tr:last-child { border-bottom: none; }
+      .post-table tbody td { display: block; padding: 4px 20px; border: none; width: auto !important; min-width: 0; }
+      .post-table tbody td:first-child, .post-table .col-label { color: var(--accent-2); margin-bottom: 4px; font-size: 11px; padding-top: 8px; }
+      .post-table tbody tr:hover { background: transparent; }
+    }
+
+    /* Code blocks — IBM Plex Mono on cream */
+    .post-body pre { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink-2); }
+    .post-body code { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; color: var(--accent); }
+
+    /* Bullets — teal markers */
+    .post-body ul li::marker { color: var(--accent); }
+
+    /* Numbered lists — Plex Mono counters 01., 02., ... */
+    .post-body ol { counter-reset: post-counter; list-style: none; padding-left: 0; margin-bottom: 22px; }
+    .post-body ol > li { counter-increment: post-counter; position: relative; padding-left: 44px; margin-bottom: 12px; line-height: 1.75; }
+    .post-body ol > li::before { content: counter(post-counter, decimal-leading-zero) "."; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); letter-spacing: .02em; line-height: 1.85; }
+
+    /* Category eyebrow with 32px rule prefix */
+    .post-category { font-family: var(--font-mono); display: inline-flex !important; align-items: center; gap: 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2) !important; margin-bottom: 22px; padding: 0 !important; background: transparent !important; border: none !important; border-radius: 0 !important; }
+    .post-category::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+
+    /* Sparkle ornaments between sections + before author card */
+    .post-body h2:not(:first-of-type) { margin-top: 72px; }
+    .post-body h2:not(:first-of-type)::before { content: ''; display: block; width: 14px; height: 14px; margin: 0 auto 36px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .6; }
+    .author-card { padding-top: 64px !important; position: relative; }
+    .author-card::before { content: ''; display: block; width: 16px; height: 16px; margin: 0 auto 32px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .7; }
+
+    /* Related articles — 3-up card grid */
+    .related-articles { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--rule); }
+    .related-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 28px; display: inline-flex; align-items: center; gap: 14px; }
+    .related-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .related-card { position: relative; padding: 22px 24px 24px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; transition: border-color .15s, transform .15s, box-shadow .15s; display: flex; flex-direction: column; gap: 10px; }
+    .related-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .related-card-title { font-family: var(--font-display); font-size: 15.5px; font-weight: 500; line-height: 1.3; color: var(--ink-1); letter-spacing: -.01em; text-decoration: none; transition: color .15s; }
+    .related-card-title::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+    .related-card:hover .related-card-title { color: var(--accent); }
+    .related-card-desc { font-family: var(--font-body); font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+    @media (max-width: 720px) { .related-grid { grid-template-columns: 1fr; gap: 12px; } }
+
+    /* Sources — numbered editorial references */
+    .post-sources { margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--rule); }
+    .post-sources-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 22px; display: inline-flex; align-items: center; gap: 14px; }
+    .post-sources-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .post-sources-list { counter-reset: src-counter; list-style: none; padding: 0; margin: 0; }
+    .post-sources-list li { counter-increment: src-counter; position: relative; padding: 16px 0 16px 52px; border-bottom: 1px solid var(--rule); }
+    .post-sources-list li:last-child { border-bottom: none; }
+    .post-sources-list li::before { content: counter(src-counter, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-4); letter-spacing: .04em; }
+    .post-sources-list .src-link { font-family: var(--font-body); font-size: 14.5px; color: var(--ink-1); line-height: 1.55; text-decoration: none; font-weight: 500; display: block; margin-bottom: 4px; }
+    .post-sources-list .src-link:hover { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+    .post-sources-list .src-meta { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+
+
+    /* FAQ block — Plex Mono Q (weight 500, smaller), Inter A, rule between pairs */
+    .faq-q { font-family: var(--font-mono) !important; font-size: 16px !important; font-weight: 500 !important; color: var(--ink-1) !important; margin: 28px 0 12px !important; line-height: 1.4 !important; letter-spacing: -.005em !important; }
+    .faq-q:first-of-type { margin-top: 0 !important; }
+    .faq-a { font-family: var(--font-body) !important; font-size: 14.5px !important; color: var(--ink-2) !important; line-height: 1.7 !important; margin: 0 0 28px !important; padding-bottom: 28px !important; border-bottom: 1px solid var(--rule) !important; }
+    .faq-a:last-of-type { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    /* .faq-block with .faq-item wrapper variant */
+    .faq-item { padding: 0 !important; border-bottom: 1px solid var(--rule) !important; margin-bottom: 24px !important; padding-bottom: 24px !important; }
+    .faq-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    .faq-item .faq-q { margin: 0 0 8px !important; padding-bottom: 0 !important; border-bottom: none !important; }
+    .faq-item .faq-a { margin: 0 !important; padding-bottom: 0 !important; border-bottom: none !important; }
+
+    /* Dark mode — flip ink/paper tokens scoped to post content only (site chrome unaffected) */
+    html.dark .post-wrap, html[data-theme="dark"] .post-wrap,
+    html.dark #blog-content, html[data-theme="dark"] #blog-content {
+      --ink-1:   #f5f1ea;
+      --ink-2:   #ebe5d7;
+      --ink-3:   rgba(245,241,234,.7);
+      --ink-4:   rgba(245,241,234,.5);
+      --paper:   #1a1916;
+      --paper-2: #25221e;
+      --rule:    rgba(245,241,234,.12);
+    }
+    /* Override base.css's html.dark h1-h4 rule for headings inside post-wrap */
+    html.dark .post-wrap h1, html.dark .post-wrap h2, html.dark .post-wrap h3, html.dark .post-wrap h4,
+    html[data-theme="dark"] .post-wrap h1, html[data-theme="dark"] .post-wrap h2, html[data-theme="dark"] .post-wrap h3, html[data-theme="dark"] .post-wrap h4 {
+      color: var(--ink-1);
+    }
 </style>
 </head>
 <body>
@@ -237,18 +350,18 @@ footer a:hover { color: var(--teal); opacity: 1; }
   <span>›</span>
   <a href="/notes/">Notes</a>
   <span>›</span>
-  <span style="color:var(--text-3)">Google Image Thumbnail Case Study</span>
+  <span style="color:var(--ink-3)">Google Image Thumbnail Case Study</span>
 </nav>
 
 <span class="research-badge">Original Research</span>
-<span class="article-meta" style="display:block;margin-top:8px">By <a href="/mags-sikora/" style="color:var(--teal);font-weight:700;text-decoration:none">Mags Sikora</a> · <span>April 2026</span></span>
+<span class="article-meta" style="display:block;margin-top:8px">By <a href="/mags-sikora/" style="color:var(--accent);font-weight:700;text-decoration:none">Mags Sikora</a> · <span>April 2026</span></span>
 
 <h1>Google Image Thumbnails for Organic Results: Case Study</h1>
-<p style="font-size:22px;font-weight:400;color:var(--text-3);line-height:1.4;margin-top:8px;margin-bottom:0;">I Checked 9,718 Listings. Here’s What Google Actually Shows.</p>
+<p style="font-size:22px;font-weight:400;color:var(--ink-3);line-height:1.4;margin-top:8px;margin-bottom:0;">I Checked 9,718 Listings. Here’s What Google Actually Shows.</p>
 
 <p class="article-lead">Thumbnail presence in organic results is hard to measure at scale - so I ran my own test to understand it better: 293 non-branded women's fashion keywords, both devices, two US locations, 9,718 organic listings scanned via API. The short version: mobile gets nearly twice the visual real estate. The longer version is more interesting.</p>
 
-<p style="font-size: 14px; color: var(--text-4);">Companion piece: <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">Google Image Thumbnails in Organic - The Technical Reference</a> covers the how - what to implement so Google can actually pull your images. This article covers the what - which keywords, intents, and positions get thumbnails. Part 2 will crawl these domains and analyse what Google is actually pulling.</p>
+<p style="font-size: 14px; color: var(--ink-4);">Companion piece: <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--accent); font-weight: 600;">Google Image Thumbnails in Organic - The Technical Reference</a> covers the how - what to implement so Google can actually pull your images. This article covers the what - which keywords, intents, and positions get thumbnails. Part 2 will crawl these domains and analyse what Google is actually pulling.</p>
 
 <hr>
 
@@ -299,7 +412,7 @@ footer a:hover { color: var(--teal); opacity: 1; }
 
 <h2>Mobile leads</h2>
 
-<p><a href="https://www.semrush.com/sensor/" style="color: var(--teal); font-weight: 600;">Semrush Sensor</a> data (April 2026) puts image thumbnails at 49% of US desktop SERPs and 71% of mobile across all categories. Shopping is higher: 77% desktop, 88% mobile. So thumbnails aren't rare. But "thumbnails appear a lot" doesn't tell you which keywords get them, which intents trigger them, or how many images Google attaches per listing. That's where it gets more granular.</p>
+<p><a href="https://www.semrush.com/sensor/" style="color: var(--accent); font-weight: 600;">Semrush Sensor</a> data (April 2026) puts image thumbnails at 49% of US desktop SERPs and 71% of mobile across all categories. Shopping is higher: 77% desktop, 88% mobile. So thumbnails aren't rare. But "thumbnails appear a lot" doesn't tell you which keywords get them, which intents trigger them, or how many images Google attaches per listing. That's where it gets more granular.</p>
 
 <p>Across all nine categories and all four intent types in this dataset, mobile serves more thumbnails on average. At the individual pattern level there's one exception - "fit + seed" queries where desktop edges ahead - but the overall direction is consistent.</p>
 
@@ -326,9 +439,9 @@ footer a:hover { color: var(--teal); opacity: 1; }
 
 <p>What this means visually: mobile displays image strips - multiple product photos in a horizontal scroll - for each listing. Desktop shows fewer images per listing, or a single image. Here's what that looks like in practice:</p>
 
-<img src="/notes/google-image-thumbnails-organic-case-study/serp-mobile-vs-desktop.png" alt="Mobile SERP shows 2-6 images per listing, desktop shows fewer images per listing" style="max-width: 100%; border: 1px solid var(--border); border-radius: 14px; margin: 32px 0;">
+<img src="/notes/google-image-thumbnails-organic-case-study/serp-mobile-vs-desktop.png" alt="Mobile SERP shows 2-6 images per listing, desktop shows fewer images per listing" style="max-width: 100%; border: 1px solid var(--rule); border-radius: 14px; margin: 32px 0;">
 
-<p style="font-size: 13px; color: var(--text-4); margin-bottom: 32px;">Mobile shows different thumbnail layout options - image strips, individual images, and product variations. Desktop uses a more compact display.</p>
+<p style="font-size: 13px; color: var(--ink-4); margin-bottom: 32px;">Mobile shows different thumbnail layout options - image strips, individual images, and product variations. Desktop uses a more compact display.</p>
 
 <p>When a mobile listing gets a thumbnail, it gets more images. Desktop shows fewer.</p>
 
@@ -614,7 +727,7 @@ footer a:hover { color: var(--teal); opacity: 1; }
 
 <p>Not who you'd expect. And it looks different depending on the device.</p>
 
-<h3 style="font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 16px; font-weight: 600; color: var(--teal); margin: 32px 0 12px;">Mobile</h3>
+<h3 style="font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 16px; font-weight: 600; color: var(--accent); margin: 32px 0 12px;">Mobile</h3>
 
 <div class="ct-table-wrap">
   <table class="ct-table">
@@ -640,7 +753,7 @@ footer a:hover { color: var(--teal); opacity: 1; }
   </table>
 </div>
 
-<h3 style="font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 16px; font-weight: 600; color: var(--text-3); margin: 32px 0 12px;">Desktop</h3>
+<h3 style="font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 16px; font-weight: 600; color: var(--ink-3); margin: 32px 0 12px;">Desktop</h3>
 
 <div class="ct-table-wrap">
   <table class="ct-table">
@@ -692,11 +805,11 @@ footer a:hover { color: var(--teal); opacity: 1; }
   <p>The SERP data tells me who gets thumbnails and who doesn't. It doesn't tell me why. Nordstrom at 98% mobile and Amazon at 73% - on the same keywords, same intent - there's clearly something different about their image implementation. But what exactly? That's coming in Part 3: qualitative thumbnail research.</p>
 </div>
 
-<p>This is where the <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">technical reference</a> picks up. The short answer: Google needs to find your images, trust them, and match them to the query. That means real <code>&lt;img&gt;</code> elements in the HTML (not CSS backgrounds), images that don't depend on JavaScript to render, proper <code>og:image</code> and Product schema pointing to high-quality photos, <code>max-image-preview:large</code> in your robots meta, and descriptive alt text. Miss any of these and you're invisible - even if the page looks image-rich to a human.</p>
+<p>This is where the <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--accent); font-weight: 600;">technical reference</a> picks up. The short answer: Google needs to find your images, trust them, and match them to the query. That means real <code>&lt;img&gt;</code> elements in the HTML (not CSS backgrounds), images that don't depend on JavaScript to render, proper <code>og:image</code> and Product schema pointing to high-quality photos, <code>max-image-preview:large</code> in your robots meta, and descriptive alt text. Miss any of these and you're invisible - even if the page looks image-rich to a human.</p>
 
 <p>The multi-image treatment (the horizontal strip of product images) is harder to trigger. Schema isn't the deciding factor. CMS doesn't matter. What matters is having 7+ relevant, indexable product images early in the HTML, each showing a single product on a non-transparent background. I'm running a separate case study measuring schema presence against the multi-image treatment across e-commerce verticals.</p>
 
-<p>The full technical breakdown - HTML layer, JS rendering issues, responsive image fallbacks, format requirements, alt text quality, and the multi-image treatment - is in <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">Google Image Thumbnails in Organic - The Technical Reference</a>.</p>
+<p>The full technical breakdown - HTML layer, JS rendering issues, responsive image fallbacks, format requirements, alt text quality, and the multi-image treatment - is in <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--accent); font-weight: 600;">Google Image Thumbnails in Organic - The Technical Reference</a>.</p>
 
 <h2>What to do with this</h2>
 
@@ -708,7 +821,7 @@ footer a:hover { color: var(--teal); opacity: 1; }
 
 <p><strong>Then og:image.</strong> If your og:image is a logo or placeholder, Google is more likely to skip showing thumbnails entirely if there is no strong product image on the page. A logo-default og:image signals weak visual content, and Google treats it as a reason not to surface images. If your CMS stamps the brand logo into every product page's og:image, swap it for the primary product photo. Perhaps one-line config, significant impact.</p>
 
-<p>For the full technical checklist - HTML requirements, JS rendering, responsive images, the multi-image treatment - see the <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--teal); font-weight: 600;">technical reference</a>.</p>
+<p>For the full technical checklist - HTML requirements, JS rendering, responsive images, the multi-image treatment - see the <a href="https://www.magstags.com/notes/google-image-thumbnails/" style="color: var(--accent); font-weight: 600;">technical reference</a>.</p>
 
 <hr>
 

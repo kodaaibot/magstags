@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
@@ -41,37 +42,37 @@
     main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) clamp(48px, 6vw, 96px); }
     
     .page-hero { margin-bottom: 48px; }
-    .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; background: rgba(14,116,144,.08); padding: 4px 12px; border-radius: 99px; }
-    .page-hero h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.15; color: var(--text-1); margin-bottom: 14px; }
-    .page-hero p { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 520px; }
-    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-4); margin-bottom: 16px; }
+    .page-hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; background: rgba(14,116,144,.08); padding: 4px 12px; border-radius: 99px; }
+    .page-hero h1 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(28px, 4vw, 44px); font-weight: 400; line-height: 1.15; color: var(--ink-1); margin-bottom: 14px; }
+    .page-hero p { font-size: 15px; color: var(--ink-3); line-height: 1.7; max-width: 520px; }
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-4); margin-bottom: 16px; }
     .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 48px; }
-    .guide-card { border: 1px solid var(--border); border-radius: 20px; padding: 26px 28px; background: var(--surface); text-decoration: none; display: flex; flex-direction: column; gap: 10px; transition: all .2s; position: relative; cursor: pointer; }
-    .guide-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .guide-card { border: 1px solid var(--rule); border-radius: 20px; padding: 26px 28px; background: var(--paper-2); text-decoration: none; display: flex; flex-direction: column; gap: 10px; transition: all .2s; position: relative; cursor: pointer; }
+    .guide-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .guide-name a { color: inherit; text-decoration: none; }
     .guide-name a::after { content: ''; position: absolute; inset: 0; border-radius: 20px; }
     .guide-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
     .guide-icon { width: 40px; height: 40px; background: rgba(14,116,144,.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
     .guide-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
-    .guide-badge-guide { background: rgba(14,116,144,.1); color: var(--teal); }
-    .guide-badge-overview { background: rgba(22,163,74,.1); color: #16a34a; }
-    .guide-name { font-size: 16px; font-weight: 700; color: var(--text-1); line-height: 1.3; }
-    .guide-card:hover .guide-name { color: var(--teal); }
-    .guide-desc { font-size: 13px; color: var(--text-3); line-height: 1.55; }
+    .guide-badge-guide { background: rgba(14,116,144,.1); color: var(--accent); }
+    .guide-badge-overview { background: rgba(14,116,144,.1); color: var(--accent); }
+    .guide-name { font-size: 16px; font-weight: 700; color: var(--ink-1); line-height: 1.3; }
+    .guide-card:hover .guide-name { color: var(--accent); }
+    .guide-desc { font-size: 13px; color: var(--ink-3); line-height: 1.55; }
     .guide-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-    .guide-tag { font-size: 11px; font-weight: 500; color: var(--text-4); background: var(--bg); border: 1px solid var(--border); border-radius: 99px; padding: 2px 10px; }
+    .guide-tag { font-size: 11px; font-weight: 500; color: var(--ink-4); background: var(--paper); border: 1px solid var(--rule); border-radius: 99px; padding: 2px 10px; }
 
     /* ── Hub card (single linked card replacing 4-up grid) ──────────── */
-    .hub-card { position: relative; display: flex; gap: clamp(20px, 3vw, 36px); align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: clamp(28px, 3.5vw, 40px); text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s; max-width: 760px; margin-bottom: 48px; }
-    .hub-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .hub-card { position: relative; display: flex; gap: clamp(20px, 3vw, 36px); align-items: flex-start; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 20px; padding: clamp(28px, 3.5vw, 40px); text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s; max-width: 760px; margin-bottom: 48px; }
+    .hub-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .hub-card-icon { flex-shrink: 0; width: 52px; height: 52px; background: rgba(14,116,144,.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
     .hub-card-body { display: flex; flex-direction: column; gap: 12px; }
     .hub-card-badges { display: flex; flex-wrap: wrap; gap: 8px; }
     .hub-card-badges .guide-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
-    .hub-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(20px, 2.4vw, 26px); font-weight: 500; color: var(--text-1); line-height: 1.2; letter-spacing: -.015em; }
-    .hub-card:hover .hub-card-title { color: var(--teal); }
-    .hub-card-desc { font-size: 14px; color: var(--text-3); line-height: 1.65; max-width: 540px; }
-    .hub-card-cta { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--teal); margin-top: 4px; }
+    .hub-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(20px, 2.4vw, 26px); font-weight: 500; color: var(--ink-1); line-height: 1.2; letter-spacing: -.015em; }
+    .hub-card:hover .hub-card-title { color: var(--accent); }
+    .hub-card-desc { font-size: 14px; color: var(--ink-3); line-height: 1.65; max-width: 540px; }
+    .hub-card-cta { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-top: 4px; }
     .hub-card-cta::after { content: ''; position: absolute; inset: 0; border-radius: 20px; }
     @media (max-width: 600px) { .hub-card { flex-direction: column; } }
 
@@ -107,7 +108,7 @@
   <p class="section-label">Structured Data</p>
   <a href="/schema-for-seo/" class="hub-card">
     <div class="hub-card-icon">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
     </div>
     <div class="hub-card-body">
       <div class="hub-card-badges">

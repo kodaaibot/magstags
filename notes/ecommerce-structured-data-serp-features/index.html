@@ -6,6 +6,7 @@
   <link rel="canonical" href="https://www.magstags.com/notes/ecommerce-structured-data-serp-features/">
   <meta name="description" content="Most ecommerce sites implement schema wrong or implement the wrong schema. This is the practitioner guide to product structured data at scale: what earns rich results, what to prioritise first, and what to deprioritise entirely.">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
@@ -13,118 +14,116 @@
   <title>E-commerce Schema Markup: Rich Results, Google Shopping &amp; Scale in 2026 | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     #blog-content{display:block}
     .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
-    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
-    .breadcrumb a{color:var(--text-4);text-decoration:none}
-    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb{font-size:13px;color:var(--ink-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--ink-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--accent)}
     .breadcrumb span{opacity:.5}
     .post-category{ font-family: 'IBM Plex Mono','Menlo',monospace;display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background: transparent;color: var(--accent-2);margin-bottom:16px; border: 1px solid var(--accent-2); }
-    .post-h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:clamp(28px,4vw,40px);font-weight: 400;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
-    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
-    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
-    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
-    .post-lead{font-size:17px;line-height:1.7;color: var(--accent-2);margin-bottom:36px;border-left:3px solid var(--border);padding-left:18px}
+    .post-h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:clamp(28px,4vw,40px);font-weight: 400;color:var(--ink-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--ink-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--rule)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--ink-4);display:inline-block}
+    .post-body{font-size:16px;line-height:1.85;color:var(--ink-2)}
+    .post-lead{font-size:17px;line-height:1.7;color: var(--accent-2);margin-bottom:36px;border-left:3px solid var(--rule);padding-left:18px}
     .post-body p{margin-bottom:22px}
-    .post-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
-    .post-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 500;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
-    .post-body strong{color:var(--text-1);font-weight:600}
-    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--text-2);white-space:pre}
+    .post-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--ink-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 500;color:var(--ink-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--ink-1);font-weight:600}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--paper-2);border:1px solid var(--rule);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--ink-2);white-space:pre}
     .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
     .post-body li{margin-bottom:10px;line-height:1.75}
-    .post-body li::marker{color:var(--teal)}
-    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
-    .post-body a:hover{color:var(--text-1)}
-    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
-    .post-callout strong{color:var(--text-1)}
-    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
-    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
-    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-body li::marker{color:var(--accent)}
+    .post-body a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--ink-1)}
+    .post-callout{background:var(--paper-2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    .post-callout strong{color:var(--ink-1)}
+    .post-callout-warn{background:var(--paper-2);border-left:3px solid var(--accent-2);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    html.dark .post-callout-warn{background:var(--paper-2);border-color:var(--accent-2);color:var(--ink-1)}
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--paper-2);border:1px solid var(--rule);border-radius:10px}
     .post-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
-    .post-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left}
-    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-1);background:var(--paper-2);border-bottom:2px solid var(--ink-1);padding:10px 14px;text-align:left}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top}
     .post-table tr:last-child td{border-bottom:none}
-    .post-table .col-label{font-weight:600;color:var(--text-1);white-space:nowrap}
+    .post-table .col-label{font-weight:600;color:var(--ink-1);white-space:nowrap}
     .priority-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
     @media(max-width:640px){.priority-grid{grid-template-columns:1fr}}
-    .priority-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
-    .priority-card-num{font-family:'IBM Plex Mono','Menlo',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin:0 0 8px 0}
-    .priority-card h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:15px;font-weight:700;color:var(--text-1);margin:0 0 10px 0}
-    .priority-card p{font-size:14px;color:var(--text-2);line-height:1.7;margin:0 0 8px 0}
+    .priority-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:20px}
+    .priority-card-num{font-family:'IBM Plex Mono','Menlo',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 8px 0}
+    .priority-card h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:15px;font-weight:700;color:var(--ink-1);margin:0 0 10px 0}
+    .priority-card p{font-size:14px;color:var(--ink-2);line-height:1.7;margin:0 0 8px 0}
     .priority-card p:last-child{margin-bottom:0}
     .checklist{list-style:none;padding:0;margin:28px 0}
-    .checklist li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);font-size:16px;line-height:1.65;color:var(--text-2)}
+    .checklist li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--rule);font-size:16px;line-height:1.65;color:var(--ink-2)}
     .checklist li:last-child{border-bottom:none}
-    .checklist-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--mint-light);color:var(--teal);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px}
+    .checklist-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--paper-2);color:var(--accent);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px}
     .faq-block{margin:52px 0}
-    .faq-block h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
-    .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
-    .faq-item:first-of-type{border-top:1px solid var(--border)}
-    .faq-q{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight: 500;color:var(--text-1);margin-bottom:10px}
-    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
-    .faq-a a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
-    .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
-    .sources h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight: 400;color:var(--text-1);margin:0 0 20px 0}
+    .faq-block h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--ink-1);margin-bottom:28px;letter-spacing:-.01em}
+    .faq-item{border-bottom:1px solid var(--rule);padding:20px 0}
+    .faq-item:first-of-type{border-top:1px solid var(--rule)}
+    .faq-q{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight: 500;color:var(--ink-1);margin-bottom:10px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--ink-2)}
+    .faq-a a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+    .sources{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight: 400;color:var(--ink-1);margin:0 0 20px 0}
     .sources ul{padding-left:0;list-style:none}
-    .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
-    .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
-    .sources a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
-    .sources strong{color:var(--text-2);font-weight:600}
-    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--border);border-radius:0;}
-    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-4);margin-bottom:20px;}
+    .sources li{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--accent);font-weight:800}
+    .sources a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--ink-2);font-weight:600}
+    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--rule);border-radius:0;}
+    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-4);margin-bottom:20px;}
     .author-inner{display:flex;align-items:flex-start;gap:24px;}
-    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border);}
+    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--rule);}
     .author-details{flex:1;min-width:0;}
-    .author-name{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 400;color:var(--text-1);margin-bottom:4px;}
+    .author-name{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 400;color:var(--ink-1);margin-bottom:4px;}
     .author-name a{color:inherit;text-decoration:none;}
-    .author-name a:hover{color:var(--teal);}
-    .author-role{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px;}
-    .author-bio{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:16px;}
+    .author-name a:hover{color:var(--accent);}
+    .author-role{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;color:var(--accent);font-weight:600;margin-bottom:12px;}
+    .author-bio{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:16px;}
     .author-links{display:flex;gap:12px;flex-wrap:wrap;}
-    .author-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text-3);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:99px;transition:all .15s;}
-    .author-link:hover{border-color:var(--teal);color:var(--teal);}
+    .author-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-3);text-decoration:none;padding:6px 14px;border:1px solid var(--rule);border-radius:99px;transition:all .15s;}
+    .author-link:hover{border-color:var(--accent);color:var(--accent);}
     .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
     .ct-content{min-width:0}
     .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
-    .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
-    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
-    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
-    .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
-    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight: 500}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--ink-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--rule)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--ink-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--accent);border-left-color:var(--accent)}
+    .ct-toc-list li a.active{color:var(--accent);border-left-color:var(--accent);font-weight: 500}
     .ct-toc-toggle { display: none; }
     @media(max-width:960px) {
       .ct-layout { grid-template-columns: 1fr; gap: 0; }
-      .ct-toc { position: static; padding: 0; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 32px; order: -1; max-height: none; overflow-y: visible; overflow: hidden; }
-      .ct-toc-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--surface); border: none; padding: 14px 16px; font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 13px; font-weight: 600; color: var(--text-1); cursor: pointer; text-align: left; }
-      .ct-toc-toggle .ct-toc-arrow { font-size: 11px; color: var(--text-4); transition: transform .2s; }
+      .ct-toc { position: static; padding: 0; border: 1px solid var(--rule); border-radius: 10px; margin-bottom: 32px; order: -1; max-height: none; overflow-y: visible; overflow: hidden; }
+      .ct-toc-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--paper-2); border: none; padding: 14px 16px; font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 13px; font-weight: 600; color: var(--ink-1); cursor: pointer; text-align: left; }
+      .ct-toc-toggle .ct-toc-arrow { font-size: 11px; color: var(--ink-4); transition: transform .2s; }
       .ct-toc-toggle.open .ct-toc-arrow { transform: rotate(180deg); }
       .ct-toc-label { display: none; }
-      .ct-toc-list { border-left: none; flex-direction: column; flex-wrap: nowrap; gap: 0; border-top: 1px solid var(--border); display: none; padding: 8px 0; }
+      .ct-toc-list { border-left: none; flex-direction: column; flex-wrap: nowrap; gap: 0; border-top: 1px solid var(--rule); display: none; padding: 8px 0; }
       .ct-toc-list.open { display: flex; }
       .ct-toc-list li a { border-left: none; padding: 8px 16px; font-size: 13px; }
     }
   
     /* Nested ToC styling */
     .ct-toc-list ol {
-      border-left: 1px solid var(--border);
+      border-left: 1px solid var(--rule);
       margin-left: 14px;
       padding-left: 0;
     }
     .ct-toc-list ol li a {
       font-size: 12px;
       padding: 6px 0 6px 16px;
-      color: var(--text-4);
+      color: var(--ink-4);
     }
     .ct-toc-list ol li a:hover {
-      color: var(--teal);
-      border-left-color: var(--teal);
+      color: var(--accent);
+      border-left-color: var(--accent);
     }
     .ct-toc-list ol li a.active {
-      color: var(--teal);
+      color: var(--accent);
       font-weight: 600;
     }
     /* Third level (h4) */
@@ -134,7 +133,7 @@
     .ct-toc-list ol ol li a {
       font-size: 11px;
       padding: 4px 0 4px 16px;
-      color: var(--text-4);
+      color: var(--ink-4);
     }
     @media(max-width:960px){
       .ct-toc-list ol {
@@ -150,6 +149,118 @@
       }
     }
 
+
+    /* ── Brand overrides applied at end of style block ── */
+
+    /* Lead — Inter, ink-1, no italic, no border */
+    .post-lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-1); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
+
+    /* Body strong — saffron marker stripe */
+    .post-body strong { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
+    .post-callout strong, .post-callout-warn strong { background: transparent; padding: 0; font-weight: 600; }
+
+    /* Callouts — warm cream + accent left rule */
+    .post-callout { background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+    .post-callout-warn { background: var(--paper-2); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+
+    /* Compare grid — cream + accent/ink-4 left rules (no green/red) */
+    .compare-col { padding: 22px; background: var(--paper-2); border: 1px solid var(--rule); border-left-width: 3px; border-radius: 0 4px 4px 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+    .compare-col.yes { border-left-color: var(--accent); }
+    .compare-col.no { border-left-color: var(--ink-4); }
+
+    /* Tables — editorial, label-first columns */
+    .post-table-wrap { margin: 36px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; background: var(--paper); display: block; }
+    .post-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+    .post-table thead th { font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 14px 20px; text-align: left; vertical-align: bottom; }
+    .post-table tbody td { padding: 18px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+    .post-table tbody tr:last-child td { border-bottom: none; }
+    .post-table tbody tr:hover { background: rgba(224, 146, 38, 0.05); }
+    .post-table tbody td:first-child, .post-table .col-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-1); width: 20%; min-width: 130px; padding-top: 20px; white-space: normal; }
+    @media (max-width: 720px) {
+      .post-table-wrap { overflow-x: visible; }
+      .post-table thead { display: none; }
+      .post-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+      .post-table tbody tr:last-child { border-bottom: none; }
+      .post-table tbody td { display: block; padding: 4px 20px; border: none; width: auto !important; min-width: 0; }
+      .post-table tbody td:first-child, .post-table .col-label { color: var(--accent-2); margin-bottom: 4px; font-size: 11px; padding-top: 8px; }
+      .post-table tbody tr:hover { background: transparent; }
+    }
+
+    /* Code blocks — IBM Plex Mono on cream */
+    .post-body pre { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink-2); }
+    .post-body code { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; color: var(--accent); }
+
+    /* Bullets — teal markers */
+    .post-body ul li::marker { color: var(--accent); }
+
+    /* Numbered lists — Plex Mono counters 01., 02., ... */
+    .post-body ol { counter-reset: post-counter; list-style: none; padding-left: 0; margin-bottom: 22px; }
+    .post-body ol > li { counter-increment: post-counter; position: relative; padding-left: 44px; margin-bottom: 12px; line-height: 1.75; }
+    .post-body ol > li::before { content: counter(post-counter, decimal-leading-zero) "."; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); letter-spacing: .02em; line-height: 1.85; }
+
+    /* Category eyebrow with 32px rule prefix */
+    .post-category { font-family: var(--font-mono); display: inline-flex !important; align-items: center; gap: 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2) !important; margin-bottom: 22px; padding: 0 !important; background: transparent !important; border: none !important; border-radius: 0 !important; }
+    .post-category::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+
+    /* Sparkle ornaments between sections + before author card */
+    .post-body h2:not(:first-of-type) { margin-top: 72px; }
+    .post-body h2:not(:first-of-type)::before { content: ''; display: block; width: 14px; height: 14px; margin: 0 auto 36px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .6; }
+    .author-card { padding-top: 64px !important; position: relative; }
+    .author-card::before { content: ''; display: block; width: 16px; height: 16px; margin: 0 auto 32px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .7; }
+
+    /* Related articles — 3-up card grid */
+    .related-articles { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--rule); }
+    .related-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 28px; display: inline-flex; align-items: center; gap: 14px; }
+    .related-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .related-card { position: relative; padding: 22px 24px 24px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; transition: border-color .15s, transform .15s, box-shadow .15s; display: flex; flex-direction: column; gap: 10px; }
+    .related-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .related-card-title { font-family: var(--font-display); font-size: 15.5px; font-weight: 500; line-height: 1.3; color: var(--ink-1); letter-spacing: -.01em; text-decoration: none; transition: color .15s; }
+    .related-card-title::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+    .related-card:hover .related-card-title { color: var(--accent); }
+    .related-card-desc { font-family: var(--font-body); font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+    @media (max-width: 720px) { .related-grid { grid-template-columns: 1fr; gap: 12px; } }
+
+    /* Sources — numbered editorial references */
+    .post-sources { margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--rule); }
+    .post-sources-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 22px; display: inline-flex; align-items: center; gap: 14px; }
+    .post-sources-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .post-sources-list { counter-reset: src-counter; list-style: none; padding: 0; margin: 0; }
+    .post-sources-list li { counter-increment: src-counter; position: relative; padding: 16px 0 16px 52px; border-bottom: 1px solid var(--rule); }
+    .post-sources-list li:last-child { border-bottom: none; }
+    .post-sources-list li::before { content: counter(src-counter, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-4); letter-spacing: .04em; }
+    .post-sources-list .src-link { font-family: var(--font-body); font-size: 14.5px; color: var(--ink-1); line-height: 1.55; text-decoration: none; font-weight: 500; display: block; margin-bottom: 4px; }
+    .post-sources-list .src-link:hover { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+    .post-sources-list .src-meta { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+
+
+    /* FAQ block — Plex Mono Q (weight 500, smaller), Inter A, rule between pairs */
+    .faq-q { font-family: var(--font-mono) !important; font-size: 16px !important; font-weight: 500 !important; color: var(--ink-1) !important; margin: 28px 0 12px !important; line-height: 1.4 !important; letter-spacing: -.005em !important; }
+    .faq-q:first-of-type { margin-top: 0 !important; }
+    .faq-a { font-family: var(--font-body) !important; font-size: 14.5px !important; color: var(--ink-2) !important; line-height: 1.7 !important; margin: 0 0 28px !important; padding-bottom: 28px !important; border-bottom: 1px solid var(--rule) !important; }
+    .faq-a:last-of-type { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    /* .faq-block with .faq-item wrapper variant */
+    .faq-item { padding: 0 !important; border-bottom: 1px solid var(--rule) !important; margin-bottom: 24px !important; padding-bottom: 24px !important; }
+    .faq-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    .faq-item .faq-q { margin: 0 0 8px !important; padding-bottom: 0 !important; border-bottom: none !important; }
+    .faq-item .faq-a { margin: 0 !important; padding-bottom: 0 !important; border-bottom: none !important; }
+
+    /* Dark mode — flip ink/paper tokens scoped to post content only (site chrome unaffected) */
+    html.dark .post-wrap, html[data-theme="dark"] .post-wrap,
+    html.dark #blog-content, html[data-theme="dark"] #blog-content {
+      --ink-1:   #f5f1ea;
+      --ink-2:   #ebe5d7;
+      --ink-3:   rgba(245,241,234,.7);
+      --ink-4:   rgba(245,241,234,.5);
+      --paper:   #1a1916;
+      --paper-2: #25221e;
+      --rule:    rgba(245,241,234,.12);
+    }
+    /* Override base.css's html.dark h1-h4 rule for headings inside post-wrap */
+    html.dark .post-wrap h1, html.dark .post-wrap h2, html.dark .post-wrap h3, html.dark .post-wrap h4,
+    html[data-theme="dark"] .post-wrap h1, html[data-theme="dark"] .post-wrap h2, html[data-theme="dark"] .post-wrap h3, html[data-theme="dark"] .post-wrap h4 {
+      color: var(--ink-1);
+    }
 </style>
   <meta property="og:title" content="E-commerce Schema Markup: Rich Results, Google Shopping &amp; Scale in 2026 | MagsTags">
   <meta property="og:description" content="Most ecommerce sites implement schema wrong or implement the wrong schema. The practitioner guide to product structured data at scale: what earns rich results, what to prioritise first, and what to deprioritise.">
@@ -302,9 +413,9 @@
       <h3 id="price-and-availability-annotations-in-organic-results">Price and availability annotations in organic results</h3>
       <p> Price, star rating, and review count directly in the search result, before a user clicks anything. That's what Merchant Listing schema does when implemented correctly.</p>
 
-      <figure style="margin:24px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <figure style="margin:24px 0;border:1px solid var(--rule);border-radius:10px;overflow:hidden">
         <img src="/notes/ecommerce-structured-data-serp-features/product-rich-result-example.webp" alt="Google search result showing product rich result with price, rating and review count for SKIMS" style="width:100%;display:block">
-        <figcaption style="font-size:13px;color:var(--text-4);padding:10px 14px;background:var(--surface)">A product rich result in Google organic search. Price, rating, and review count pulled directly from schema markup.</figcaption>
+        <figcaption style="font-size:13px;color:var(--ink-4);padding:10px 14px;background:var(--paper-2)">A product rich result in Google organic search. Price, rating, and review count pulled directly from schema markup.</figcaption>
       </figure>
 
       <p>This requires a <code>Product</code> with a valid <code>Offer</code>: <code>price</code>, <code>priceCurrency</code>, <code>availability</code>, and for purchase pages, <code>AggregateRating</code> if you have reviews. Use <a href="/merchant-listing-schema/">Merchant Listing schema</a> on direct purchase pages. <a href="/merchant-listing-schema-generator/">Generate the JSON-LD here</a>.</p>
@@ -312,9 +423,9 @@
       <h3 id="free-product-listings-in-google-shopping">Free product listings in Google Shopping</h3>
       <p> The unpaid product tiles in the Shopping tab, price, retailer, delivery, and star ratings, all without a paid ad.</p>
 
-      <figure style="margin:24px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <figure style="margin:24px 0;border:1px solid var(--rule);border-radius:10px;overflow:hidden">
         <img src="/notes/ecommerce-structured-data-serp-features/google-shopping-free-product-listings-ecommerce-schema.webp" alt="Google Shopping free product listings showing price, retailer, delivery information and star ratings for funny socks search query" style="width:100%;display:block">
-        <figcaption style="font-size:13px;color:var(--text-4);padding:10px 14px;background:var(--surface)">Google Shopping free product listings. Price, retailer, delivery threshold, ratings and review count, all pulled from Merchant Listing schema and Merchant Center feed data.</figcaption>
+        <figcaption style="font-size:13px;color:var(--ink-4);padding:10px 14px;background:var(--paper-2)">Google Shopping free product listings. Price, retailer, delivery threshold, ratings and review count, all pulled from Merchant Listing schema and Merchant Center feed data.</figcaption>
       </figure>
 
       <p>Merchant Listing schema is the on-page signal; your Merchant Center feed is the other. Both need to agree on price, availability, and identifiers. Google uses GTIN, MPN, and brand to match your listing to a known product entity, not your internal SKU. For the full breakdown: <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO</a>.</p>
@@ -322,18 +433,18 @@
       <h3 id="variant-level-shopping-features">Variant-level Shopping features</h3>
       <p> Colour swatches, size selectors, and variant-specific pricing directly in Shopping results, before a user lands on your site.</p>
 
-      <figure style="margin:24px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <figure style="margin:24px 0;border:1px solid var(--rule);border-radius:10px;overflow:hidden">
         <img src="/notes/ecommerce-structured-data-serp-features/google-shopping-productgroup-variant-swatches-size-inseam-schema.webp" alt="Google Shopping product panel showing size selector bubbles, inseam size options and size type variants for AE Dreamy Drape jeans, variant-level Shopping features enabled by ProductGroup with hasVariant schema markup" style="width:100%;display:block">
-        <figcaption style="font-size:13px;color:var(--text-4);padding:10px 14px;background:var(--surface)">Size, inseam, and size type selectors in a Google Shopping product panel. These variant-level features only appear when <code>ProductGroup</code> with <code>hasVariant</code> is correctly implemented, one <code>Product</code> node per variant, each with its own <code>Offer</code> and identifier.</figcaption>
+        <figcaption style="font-size:13px;color:var(--ink-4);padding:10px 14px;background:var(--paper-2)">Size, inseam, and size type selectors in a Google Shopping product panel. These variant-level features only appear when <code>ProductGroup</code> with <code>hasVariant</code> is correctly implemented, one <code>Product</code> node per variant, each with its own <code>Offer</code> and identifier.</figcaption>
       </figure>
 
       <p>If all variants are on a single URL: <a href="/product-variants-schema/">ProductGroup with hasVariant</a>, each variant as a nested <code>Product</code> with its own <code>Offer</code>, image, and identifier. If each variant has its own URL: <code>isVariantOf</code> on each variant page linking back to the <code>ProductGroup</code> via a shared <code>@id</code>. Most enterprise sites haven't implemented either correctly and are leaving visible CTR gains in Shopping on the table.</p>
 
       <h3 id="shipping-and-returns-annotations">Shipping and returns annotations</h3>
 
-      <figure style="margin:0 0 24px;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <figure style="margin:0 0 24px;border:1px solid var(--rule);border-radius:10px;overflow:hidden">
         <img src="/notes/ecommerce-structured-data-serp-features/google-organic-search-shipping-returns-annotation-schema-example.webp" alt="Google organic search result for Macy's Women's Wide-Leg Jeans showing shipping and returns annotation: Free delivery over $49 and 30-day returns displayed in the search snippet" style="width:100%;display:block">
-        <figcaption style="font-size:13px;color:var(--text-4);padding:10px 14px;background:var(--surface)">"Free delivery over $49 · 30-day returns" in an organic search result. This annotation is powered by <code>ShippingDetails</code> and <code>ReturnPolicy</code> schema, visible before a user clicks.</figcaption>
+        <figcaption style="font-size:13px;color:var(--ink-4);padding:10px 14px;background:var(--paper-2)">"Free delivery over $49 · 30-day returns" in an organic search result. This annotation is powered by <code>ShippingDetails</code> and <code>ReturnPolicy</code> schema, visible before a user clicks.</figcaption>
       </figure>
 
       <p> "Free delivery over £20", "Free returns", "Get it by Thu Apr 3", the lines that appear beneath the price on Shopping tiles, and since April 2023, also in an expanded section below the meta description on organic product page results. These come from <code>ShippingDetails</code> (<code>shippingRate</code> + <code>deliveryTime</code>) and <code>ReturnPolicy</code> (<code>returnPolicyCategory</code> + <code>merchantReturnDays</code>) in your schema, cross-referenced with your Merchant Center feed. The lowest implementation effort of the four. Most competitors don't have it, and it shows directly in the result, before a click. For a full breakdown of what the <a href="/notes/google-ecommerce-rich-results/#delivery-price">Delivery Price</a> and <a href="/notes/google-ecommerce-rich-results/#returns-policy">Returns Policy</a> rich results look like in SERPs and the exact triggers for each, see the eCommerce Rich Results guide.</p>
@@ -403,9 +514,9 @@
 
       <h3 id="the-mismatch-that-causes-disapprovals">The mismatch that causes disapprovals</h3>
 
-      <figure style="margin:0 0 24px;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <figure style="margin:0 0 24px;border:1px solid var(--rule);border-radius:10px;overflow:hidden">
         <img src="/notes/ecommerce-structured-data-serp-features/google-merchant-center-price-mismatch-feed-vs-landing-page.webp" alt="Google animation showing price mismatch between Merchant Center product data feed and product landing page for the same shoe, feed shows one price, landing page shows a different price" style="width:100%;display:block">
-        <figcaption style="font-size:13px;color:var(--text-4);padding:10px 14px;background:var(--surface)">Google's own illustration of a price mismatch: the price in the Merchant Center feed doesn't match the price on the product landing page. Either will trigger a disapproval. Source: Google Merchant Center Help.</figcaption>
+        <figcaption style="font-size:13px;color:var(--ink-4);padding:10px 14px;background:var(--paper-2)">Google's own illustration of a price mismatch: the price in the Merchant Center feed doesn't match the price on the product landing page. Either will trigger a disapproval. Source: Google Merchant Center Help.</figcaption>
       </figure>
 
       <p> Google's Googlebot routinely crawls your landing pages and compares the <code>price</code> in your Merchant Center feed against what it finds on the page, both in the HTML and in your structured data. When any of these three sources disagree, the product may be disapproved. Googlebot crawls the HTML returned from your server. If your prices are rendered dynamically via JavaScript after page load, Google reads the pre-render HTML price. If that differs from the feed price, you have a mismatch even if the displayed price is correct.</p>
@@ -466,7 +577,7 @@
 
       <h2 id="alignment">The three-layer alignment problem</h2>
 
-      <p style="font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight:600;color:var(--text-1);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;text-align:center;letter-spacing:-.01em">Structured data on the page &nbsp;=&nbsp; Merchant Center feed &nbsp;=&nbsp; Visible PDP content</p>
+      <p style="font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight:600;color:var(--ink-1);background:var(--paper-2);border:1px solid var(--rule);border-radius:10px;padding:14px 20px;text-align:center;letter-spacing:-.01em">Structured data on the page &nbsp;=&nbsp; Merchant Center feed &nbsp;=&nbsp; Visible PDP content</p>
       <p>When all three agree, Google is confident. When they disagree on price or availability, rich results get suppressed. Schema and feed are often managed by different teams on different update cycles. They drift.</p>
       <ul>
         <li>Take a sample of 20 high-traffic PDPs.</li>
@@ -558,8 +669,9 @@
       </div>
 
       <div class="sources">
-        <h2 id="sources-and-further-reading">Sources and further reading</h2>
-        <ul>
+        <div class="post-sources" id="sources-and-further-reading">
+        <div class="post-sources-label">Sources and further reading</div>
+        <ol class="post-sources-list">
           <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/specialty/ecommerce/include-structured-data-relevant-to-ecommerce" target="_blank" rel="noopener">Structured Data for Ecommerce Sites</a> — official documentation on supported schema types</li>
           <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/product-variants" target="_blank" rel="noopener">Product Variant Structured Data</a> — ProductGroup and hasVariant implementation guide</li>
           <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/structured-data/product" target="_blank" rel="noopener">Product rich results</a> — required and recommended properties</li>
@@ -567,7 +679,8 @@
           <li><strong>MagsTags:</strong> <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization</a> — what AI agents evaluate in your product data</li>
           <li><strong>Schema.org:</strong> <a href="https://schema.org/Product" target="_blank" rel="noopener">Product type reference</a> — full property list</li>
           <li><strong>Schema.org:</strong> <a href="https://schema.org/ProductGroup" target="_blank" rel="noopener">ProductGroup type reference</a> — variant grouping specification</li>
-        </ul>
+        </ol>
+      </div>
       </div>
 
           <div class="related-articles">

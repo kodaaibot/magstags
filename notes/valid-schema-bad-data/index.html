@@ -6,6 +6,7 @@
   <link rel="canonical" href="https://www.magstags.com/notes/valid-schema-bad-data/">
   <meta name="description" content="Product schema suppression and disappearing rich results are almost always a data problem, not a markup problem. Five failure patterns, no errors, no flags.">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
@@ -13,141 +14,244 @@
   <title>When Your Schema Is Valid But Your Data Isn't | MagsTags</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     #blog-content{display:block}
     .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
-    .breadcrumb{font-size:13px;color:var(--text-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
-    .breadcrumb a{color:var(--text-4);text-decoration:none}
-    .breadcrumb a:hover{color:var(--teal)}
+    .breadcrumb{font-size:13px;color:var(--ink-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--ink-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--accent)}
     .breadcrumb span{opacity:.5}
     .post-category{ font-family: 'IBM Plex Mono','Menlo',monospace;display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background: transparent;color: var(--accent-2);margin-bottom:16px; border: 1px solid var(--accent-2); }
-    .post-h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:clamp(28px,4vw,40px);font-weight: 400;color:var(--text-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
-    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--text-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border)}
-    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--text-4);display:inline-block}
-    .post-body{font-size:16px;line-height:1.85;color:var(--text-2)}
+    .post-h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:clamp(28px,4vw,40px);font-weight: 400;color:var(--ink-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--ink-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--rule)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--ink-4);display:inline-block}
+    .post-body{font-size:16px;line-height:1.85;color:var(--ink-2)}
     .post-body p{margin-bottom:22px}
-    .post-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--text-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
-    .post-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 500;color:var(--text-1);margin:36px 0 12px;line-height:1.35}
-    .post-body strong{color:var(--text-1);font-weight:600}
+    .post-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--ink-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 500;color:var(--ink-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--ink-1);font-weight:600}
     .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
     .post-body li{margin-bottom:10px;line-height:1.75}
-    .post-body li::marker{color:var(--teal)}
-    .post-body a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
-    .post-body a:hover{color:var(--text-1)}
-    .post-callout{background:var(--mint-light);border-left:3px solid var(--teal);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--text-2)}
-    .post-callout strong{color:var(--text-1)}
-    .post-callout-warn{background:#FEF9C3;border-left:3px solid #D97706;padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:#713F12}
-    html.dark .post-callout-warn{background:#422006;border-color:#92400e;color:#fde68a}
-    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+    .post-body li::marker{color:var(--accent)}
+    .post-body a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+    .post-body a:hover{color:var(--ink-1)}
+    .post-callout{background:var(--paper-2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    .post-callout strong{color:var(--ink-1)}
+    .post-callout-warn{background:var(--paper-2);border-left:3px solid var(--accent-2);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    html.dark .post-callout-warn{background:var(--paper-2);border-color:var(--accent-2);color:var(--ink-1)}
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--paper-2);border:1px solid var(--rule);border-radius:10px}
     .post-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
-    .post-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-1);background:var(--bg2);border-bottom:2px solid var(--text-1);padding:10px 14px;text-align:left;white-space:nowrap}
-    .post-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+    .post-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-1);background:var(--paper-2);border-bottom:2px solid var(--ink-1);padding:10px 14px;text-align:left;white-space:nowrap}
+    .post-table td{padding:10px 14px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top}
     .post-table tr:last-child td{border-bottom:none}
-    .post-table .col-label{font-weight:600;color:var(--text-1)}
+    .post-table .col-label{font-weight:600;color:var(--ink-1)}
     /* Failure cards */
-    .failure-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin:12px 0}
-    .failure-card-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border-radius:99px;margin:0 0 10px 0}
-    .failure-card-tag.price{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
-    .failure-card-tag.identifier{background:#eff6ff;color:#1e40af;border:1px solid #93c5fd}
-    .failure-card-tag.rating{background:#f0fdf4;color:#166534;border:1px solid #86efac}
-    .failure-card-tag.image{background:#fdf4ff;color:#6b21a8;border:1px solid #d8b4fe}
-    html.dark .failure-card-tag.price{background:#3d0000;color:#fca5a5;border-color:#991b1b}
-    html.dark .failure-card-tag.identifier{background:#0f1e3d;color:#93c5fd;border-color:#1e40af}
-    html.dark .failure-card-tag.rating{background:#052e16;color:#4ade80;border-color:#166534}
-    html.dark .failure-card-tag.image{background:#2d0a4e;color:#d8b4fe;border-color:#6b21a8}
-    .failure-card h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight: 400;color:var(--text-1);margin:0 0 8px 0}
-    .failure-card p{font-size:15px;color:var(--text-2);line-height:1.7;margin:0 0 8px 0}
+    .failure-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:22px;margin:12px 0}
+    .failure-card-tag{display:inline-block;font-family:'IBM Plex Mono','Menlo',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:3px 12px;border-radius:99px;margin:0 0 12px 0;background:transparent;color:var(--accent-2);border:1px solid var(--accent-2)}
+    .failure-card-tag.price,.failure-card-tag.identifier,.failure-card-tag.rating,.failure-card-tag.image,.failure-card-tag.completeness{background:transparent;color:var(--accent-2);border-color:var(--accent-2)}
+    .failure-card h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight: 400;color:var(--ink-1);margin:0 0 8px 0}
+    .failure-card p{font-size:15px;color:var(--ink-2);line-height:1.7;margin:0 0 8px 0}
     .failure-card p:last-child{margin:0}
     /* 3-layer model */
-    .layer-model{margin:32px 0;display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden}
-    .layer-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:0;border-bottom:1px solid var(--border)}
+    .layer-model{margin:32px 0;display:flex;flex-direction:column;gap:0;border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+    .layer-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:0;border-bottom:1px solid var(--rule)}
     .layer-row:last-child{border-bottom:none}
-    .layer-row.header{background:var(--bg2)}
-    .layer-cell{padding:14px 18px;font-size:14px;line-height:1.6;color:var(--text-2);border-right:1px solid var(--border)}
+    .layer-row.header{background:var(--paper-2)}
+    .layer-cell{padding:14px 18px;font-size:14px;line-height:1.6;color:var(--ink-2);border-right:1px solid var(--rule)}
     .layer-cell:last-child{border-right:none}
-    .layer-cell.label{font-family:'IBM Plex Mono','Menlo',monospace;font-weight: 400;color:var(--text-1);font-size:13px}
-    .layer-cell.header-cell{font-family:'IBM Plex Mono','Menlo',monospace;font-size:11px;font-weight: 400;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)}
+    .layer-cell.label{font-family:'IBM Plex Mono','Menlo',monospace;font-weight: 400;color:var(--ink-1);font-size:13px}
+    .layer-cell.header-cell{font-family:'IBM Plex Mono','Menlo',monospace;font-size:11px;font-weight: 400;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
     .layer-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-bottom:4px}
-    .layer-badge.html{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
-    .layer-badge.schema{background:#eff6ff;color:#1e40af;border:1px solid #93c5fd}
-    .layer-badge.feed{background:#f0fdf4;color:#166534;border:1px solid #86efac}
-    html.dark .layer-badge.html{background:#3d0000;color:#fca5a5;border-color:#991b1b}
-    html.dark .layer-badge.schema{background:#0f1e3d;color:#93c5fd;border-color:#1e40af}
-    html.dark .layer-badge.feed{background:#052e16;color:#4ade80;border-color:#166534}
-    @media(max-width:640px){.layer-row{grid-template-columns:1fr}.layer-cell{border-right:none;border-bottom:1px solid var(--border)}.layer-cell:last-child{border-bottom:none}}
+    .layer-badge.html{background:var(--paper-2);color:var(--ink-2);border:1px solid var(--ink-4)}
+    .layer-badge.schema{background:var(--paper-2);color:var(--accent);border:1px solid var(--ink-4)}
+    .layer-badge.feed{background:var(--paper-2);color:var(--ink-2);border:1px solid var(--ink-4)}
+    html.dark .layer-badge.html{background:var(--paper-2);color:var(--ink-4);border-color:var(--ink-2)}
+    html.dark .layer-badge.schema{background:var(--paper-2);color:var(--ink-4);border-color:var(--accent)}
+    html.dark .layer-badge.feed{background:var(--paper-2);color:var(--ink-4);border-color:var(--ink-2)}
+    @media(max-width:640px){.layer-row{grid-template-columns:1fr}.layer-cell{border-right:none;border-bottom:1px solid var(--rule)}.layer-cell:last-child{border-bottom:none}}
     /* Retrieval block */
-    .retrieval-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:32px 0}
-    .retrieval-block-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-4);margin-bottom:12px}
+    .retrieval-block{background:var(--paper-2);border:1px solid var(--rule);border-radius:12px;padding:20px 24px;margin:32px 0}
+    .retrieval-block-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-4);margin-bottom:12px}
     .retrieval-block ul{padding-left:0;list-style:none;margin:0}
-    .retrieval-block ul li{font-size:14px;line-height:1.7;color:var(--text-2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+    .retrieval-block ul li{font-size:14px;line-height:1.7;color:var(--ink-2);padding:4px 0;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:8px}
     .retrieval-block ul li:last-child{border-bottom:none}
-    .retrieval-block ul li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+    .retrieval-block ul li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
     /* Audit steps */
     .audit-steps{counter-reset:audit;list-style:none;padding:0;margin:28px 0}
-    .audit-steps li{counter-increment:audit;display:flex;gap:14px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border);font-size:16px;line-height:1.7;color:var(--text-2)}
+    .audit-steps li{counter-increment:audit;display:flex;gap:14px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--rule);font-size:16px;line-height:1.7;color:var(--ink-2)}
     .audit-steps li:last-child{border-bottom:none}
-    .audit-steps li::before{content:counter(audit);flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px;font-family:'IBM Plex Mono','Menlo',monospace}
-    .audit-steps li strong{color:var(--text-1);font-weight:600;display:block;margin-bottom:4px}
+    .audit-steps li::before{content:counter(audit);flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:3px;font-family:'IBM Plex Mono','Menlo',monospace}
+    .audit-steps li strong{color:var(--ink-1);font-weight:600;display:block;margin-bottom:4px;background:none;padding:0;font-family:var(--font-mono);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
     /* FAQ */
     .faq-block{margin:52px 0}
-    .faq-block h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--text-1);margin-bottom:28px;letter-spacing:-.01em}
-    .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
-    .faq-item:first-of-type{border-top:1px solid var(--border)}
-    .faq-q{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight: 500;color:var(--text-1);margin-bottom:10px}
-    .faq-a{font-size:16px;line-height:1.75;color:var(--text-2)}
-    .faq-a a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+    .faq-block h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--ink-1);margin-bottom:28px;letter-spacing:-.01em}
+    .faq-item{border-bottom:1px solid var(--rule);padding:20px 0}
+    .faq-item:first-of-type{border-top:1px solid var(--rule)}
+    .faq-q{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight: 500;color:var(--ink-1);margin-bottom:10px}
+    .faq-a{font-size:16px;line-height:1.75;color:var(--ink-2)}
+    .faq-a a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
     /* Sources */
-    .sources{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;margin:48px 0 0}
-    .sources h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight: 400;color:var(--text-1);margin:0 0 20px 0}
+    .sources{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight: 400;color:var(--ink-1);margin:0 0 20px 0}
     .sources ul{padding-left:0;list-style:none}
-    .sources li{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
-    .sources li::before{content:'·';position:absolute;left:0;color:var(--teal);font-weight:800}
-    .sources a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
-    .sources strong{color:var(--text-2);font-weight:600}
+    .sources li{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--accent);font-weight:800}
+    .sources a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--ink-2);font-weight:600}
     /* Author */
-    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--border);border-radius:0}
-    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-4);margin-bottom:20px}
+    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--rule);border-radius:0}
+    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-4);margin-bottom:20px}
     .author-inner{display:flex;align-items:flex-start;gap:24px}
-    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
+    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--rule)}
     .author-details{flex:1;min-width:0}
-    .author-name{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 400;color:var(--text-1);margin-bottom:4px}
+    .author-name{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 400;color:var(--ink-1);margin-bottom:4px}
     .author-name a{color:inherit;text-decoration:none}
-    .author-name a:hover{color:var(--teal)}
-    .author-role{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;color:var(--teal);font-weight:600;margin-bottom:12px}
-    .author-bio{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:16px}
+    .author-name a:hover{color:var(--accent)}
+    .author-role{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;color:var(--accent);font-weight:600;margin-bottom:12px}
+    .author-bio{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:16px}
     /* TOC */
     .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
     .ct-content{min-width:0}
     .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
-    .ct-toc-label{font-size:10px;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
-    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--border)}
-    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--text-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
-    .ct-toc-list li a:hover{color:var(--teal);border-left-color:var(--teal)}
-    .ct-toc-list li a.active{color:var(--teal);border-left-color:var(--teal);font-weight: 500}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--ink-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--rule)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--ink-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--accent);border-left-color:var(--accent)}
+    .ct-toc-list li a.active{color:var(--accent);border-left-color:var(--accent);font-weight: 500}
     .ct-toc-toggle{display:none}
     @media(max-width:960px){
       .ct-layout{grid-template-columns:1fr;gap:0}
-      .ct-toc{position:static;padding:0;border:1px solid var(--border);border-radius:10px;margin-bottom:32px;order:-1;max-height:none;overflow-y:visible;overflow:hidden}
-      .ct-toc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--surface);border:none;padding:14px 16px;font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:600;color:var(--text-1);cursor:pointer;text-align:left}
-      .ct-toc-toggle .ct-toc-arrow{font-size:11px;color:var(--text-4);transition:transform .2s}
+      .ct-toc{position:static;padding:0;border:1px solid var(--rule);border-radius:10px;margin-bottom:32px;order:-1;max-height:none;overflow-y:visible;overflow:hidden}
+      .ct-toc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--paper-2);border:none;padding:14px 16px;font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:600;color:var(--ink-1);cursor:pointer;text-align:left}
+      .ct-toc-toggle .ct-toc-arrow{font-size:11px;color:var(--ink-4);transition:transform .2s}
       .ct-toc-toggle.open .ct-toc-arrow{transform:rotate(180deg)}
       .ct-toc-label{display:none}
-      .ct-toc-list{border-left:none;flex-direction:column;flex-wrap:nowrap;gap:0;border-top:1px solid var(--border);display:none;padding:8px 0}
+      .ct-toc-list{border-left:none;flex-direction:column;flex-wrap:nowrap;gap:0;border-top:1px solid var(--rule);display:none;padding:8px 0}
       .ct-toc-list.open{display:flex}
       .ct-toc-list li a{border-left:none;padding:8px 16px;font-size:13px}
     }
-    .ct-toc-list ol{border-left:1px solid var(--border);margin-left:14px;padding-left:0}
-    .ct-toc-list ol li a{font-size:12px;padding:6px 0 6px 16px;color:var(--text-4)}
-    .ct-toc-list ol li a:hover,.ct-toc-list ol li a.active{color:var(--teal);border-left-color:var(--teal)}
+    .ct-toc-list ol{border-left:1px solid var(--rule);margin-left:14px;padding-left:0}
+    .ct-toc-list ol li a{font-size:12px;padding:6px 0 6px 16px;color:var(--ink-4)}
+    .ct-toc-list ol li a:hover,.ct-toc-list ol li a.active{color:var(--accent);border-left-color:var(--accent)}
     .ct-toc-list ol li a.active{font-weight:600}
     @media(max-width:960px){
       .ct-toc-list ol{border-left:none;margin-left:0}
       .ct-toc-list ol li a{border-left:none;padding:4px 0}
     }
-  </style>
+  
+    /* ── Brand overrides applied at end of style block ── */
+
+    /* Lead — Inter, ink-1, no italic, no border */
+    .post-lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-1); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
+
+    /* Body strong — saffron marker stripe */
+    .post-body strong { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
+    .post-callout strong, .post-callout-warn strong { background: transparent; padding: 0; font-weight: 600; }
+
+    /* Callouts — warm cream + accent left rule */
+    .post-callout { background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+    .post-callout-warn { background: var(--paper-2); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+
+    /* Compare grid — cream + accent/ink-4 left rules (no green/red) */
+    .compare-col { padding: 22px; background: var(--paper-2); border: 1px solid var(--rule); border-left-width: 3px; border-radius: 0 4px 4px 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+    .compare-col.yes { border-left-color: var(--accent); }
+    .compare-col.no { border-left-color: var(--ink-4); }
+
+    /* Tables — editorial, label-first columns */
+    .post-table-wrap { margin: 36px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; background: var(--paper); display: block; }
+    .post-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+    .post-table thead th { font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 14px 20px; text-align: left; vertical-align: bottom; }
+    .post-table tbody td { padding: 18px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+    .post-table tbody tr:last-child td { border-bottom: none; }
+    .post-table tbody tr:hover { background: rgba(224, 146, 38, 0.05); }
+    .post-table tbody td:first-child, .post-table .col-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-1); width: 20%; min-width: 130px; padding-top: 20px; white-space: normal; }
+    @media (max-width: 720px) {
+      .post-table-wrap { overflow-x: visible; }
+      .post-table thead { display: none; }
+      .post-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+      .post-table tbody tr:last-child { border-bottom: none; }
+      .post-table tbody td { display: block; padding: 4px 20px; border: none; width: auto !important; min-width: 0; }
+      .post-table tbody td:first-child, .post-table .col-label { color: var(--accent-2); margin-bottom: 4px; font-size: 11px; padding-top: 8px; }
+      .post-table tbody tr:hover { background: transparent; }
+    }
+
+    /* Code blocks — IBM Plex Mono on cream */
+    .post-body pre { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink-2); }
+    .post-body code { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; color: var(--accent); }
+
+    /* Bullets — teal markers */
+    .post-body ul li::marker { color: var(--accent); }
+
+    /* Numbered lists — Plex Mono counters 01., 02., ... */
+    .post-body ol { counter-reset: post-counter; list-style: none; padding-left: 0; margin-bottom: 22px; }
+    .post-body ol > li { counter-increment: post-counter; position: relative; padding-left: 44px; margin-bottom: 12px; line-height: 1.75; }
+    .post-body ol > li::before { content: counter(post-counter, decimal-leading-zero) "."; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); letter-spacing: .02em; line-height: 1.85; }
+
+    /* Category eyebrow with 32px rule prefix */
+    .post-category { font-family: var(--font-mono); display: inline-flex !important; align-items: center; gap: 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2) !important; margin-bottom: 22px; padding: 0 !important; background: transparent !important; border: none !important; border-radius: 0 !important; }
+    .post-category::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+
+    /* Sparkle ornaments between sections + before author card */
+    .post-body h2:not(:first-of-type) { margin-top: 72px; }
+    .post-body h2:not(:first-of-type)::before { content: ''; display: block; width: 14px; height: 14px; margin: 0 auto 36px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .6; }
+    .author-card { padding-top: 64px !important; position: relative; }
+    .author-card::before { content: ''; display: block; width: 16px; height: 16px; margin: 0 auto 32px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .7; }
+
+    /* Related articles — 3-up card grid */
+    .related-articles { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--rule); }
+    .related-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 28px; display: inline-flex; align-items: center; gap: 14px; }
+    .related-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .related-card { position: relative; padding: 22px 24px 24px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; transition: border-color .15s, transform .15s, box-shadow .15s; display: flex; flex-direction: column; gap: 10px; }
+    .related-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .related-card-title { font-family: var(--font-display); font-size: 15.5px; font-weight: 500; line-height: 1.3; color: var(--ink-1); letter-spacing: -.01em; text-decoration: none; transition: color .15s; }
+    .related-card-title::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+    .related-card:hover .related-card-title { color: var(--accent); }
+    .related-card-desc { font-family: var(--font-body); font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+    @media (max-width: 720px) { .related-grid { grid-template-columns: 1fr; gap: 12px; } }
+
+    /* Sources — numbered editorial references */
+    .post-sources { margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--rule); }
+    .post-sources-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 22px; display: inline-flex; align-items: center; gap: 14px; }
+    .post-sources-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .post-sources-list { counter-reset: src-counter; list-style: none; padding: 0; margin: 0; }
+    .post-sources-list li { counter-increment: src-counter; position: relative; padding: 16px 0 16px 52px; border-bottom: 1px solid var(--rule); }
+    .post-sources-list li:last-child { border-bottom: none; }
+    .post-sources-list li::before { content: counter(src-counter, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-4); letter-spacing: .04em; }
+    .post-sources-list .src-link { font-family: var(--font-body); font-size: 14.5px; color: var(--ink-1); line-height: 1.55; text-decoration: none; font-weight: 500; display: block; margin-bottom: 4px; }
+    .post-sources-list .src-link:hover { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+    .post-sources-list .src-meta { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+
+
+    /* FAQ block — Plex Mono Q (weight 500, smaller), Inter A, rule between pairs */
+    .faq-q { font-family: var(--font-mono) !important; font-size: 16px !important; font-weight: 500 !important; color: var(--ink-1) !important; margin: 28px 0 12px !important; line-height: 1.4 !important; letter-spacing: -.005em !important; }
+    .faq-q:first-of-type { margin-top: 0 !important; }
+    .faq-a { font-family: var(--font-body) !important; font-size: 14.5px !important; color: var(--ink-2) !important; line-height: 1.7 !important; margin: 0 0 28px !important; padding-bottom: 28px !important; border-bottom: 1px solid var(--rule) !important; }
+    .faq-a:last-of-type { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    /* .faq-block with .faq-item wrapper variant */
+    .faq-item { padding: 0 !important; border-bottom: 1px solid var(--rule) !important; margin-bottom: 24px !important; padding-bottom: 24px !important; }
+    .faq-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    .faq-item .faq-q { margin: 0 0 8px !important; padding-bottom: 0 !important; border-bottom: none !important; }
+    .faq-item .faq-a { margin: 0 !important; padding-bottom: 0 !important; border-bottom: none !important; }
+
+    /* Dark mode — flip ink/paper tokens scoped to post content only (site chrome unaffected) */
+    html.dark .post-wrap, html[data-theme="dark"] .post-wrap,
+    html.dark #blog-content, html[data-theme="dark"] #blog-content {
+      --ink-1:   #f5f1ea;
+      --ink-2:   #ebe5d7;
+      --ink-3:   rgba(245,241,234,.7);
+      --ink-4:   rgba(245,241,234,.5);
+      --paper:   #1a1916;
+      --paper-2: #25221e;
+      --rule:    rgba(245,241,234,.12);
+    }
+    /* Override base.css's html.dark h1-h4 rule for headings inside post-wrap */
+    html.dark .post-wrap h1, html.dark .post-wrap h2, html.dark .post-wrap h3, html.dark .post-wrap h4,
+    html[data-theme="dark"] .post-wrap h1, html[data-theme="dark"] .post-wrap h2, html[data-theme="dark"] .post-wrap h3, html[data-theme="dark"] .post-wrap h4 {
+      color: var(--ink-1);
+    }
+</style>
   <meta property="og:title" content="When Your Schema Is Valid But Your Data Isn't | MagsTags">
   <meta property="og:description" content="Product schema suppression and disappearing rich results are almost always a data problem, not a markup problem. Five failure patterns that produce no errors, raise no flags, and still cost you.">
   <meta property="og:url" content="https://www.magstags.com/notes/valid-schema-bad-data/">
@@ -254,7 +358,7 @@
     <span class="post-category">Structured Data</span>
     <h1 class="post-h1">When Your Schema Is Valid But Your Data Isn't</h1>
 
-    <p style="font-size:17px;color:var(--text-3);line-height:1.65;margin-bottom:24px;">For anyone who has run the Rich Results Test, seen zero errors, and then watched rich results disappear — or had products repeatedly disapprove in Merchant Center without an explanation that makes sense. Schema suppression tends to work like that.</p>
+    <p style="font-size:17px;color:var(--ink-3);line-height:1.65;margin-bottom:24px;">For anyone who has run the Rich Results Test, seen zero errors, and then watched rich results disappear — or had products repeatedly disapprove in Merchant Center without an explanation that makes sense. Schema suppression tends to work like that.</p>
 
     <div class="post-meta">
       <span>Mags Sikora</span>
@@ -366,7 +470,7 @@
           <h3 id="thin-schema">5. Thin Schema: Missing Recommended Properties</h3>
 
           <div class="failure-card">
-            <span class="failure-card-tag" style="background:#fff7ed;color:#9a3412;border:1px solid #fdba74;">Completeness</span>
+            <span class="failure-card-tag completeness">Completeness</span>
             <h3>Schema that passes validation but omits properties Google uses to serve features</h3>
             <p>Required properties get you into the system. Recommended properties determine how well you perform once you're in it. Missing them isn't an error — it's an invisible opportunity cost.</p>
           </div>
@@ -391,75 +495,97 @@
           <p>Most product data failures don't happen in one place. They happen because the same data is being maintained in three separate systems, by separate teams, on separate update cycles. When any two layers disagree, you get disapprovals, suppression, or a lower-confidence match that nobody tracks.</p>
 
           <figure class="ct-figure" role="group" aria-labelledby="three-layer-title">
-            <div class="ct-figure-frame">
-              <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="three-layer-title three-layer-desc">
+            <div class="ct-figure-frame" style="background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 36px 24px 28px;">
+              <svg viewBox="0 0 800 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="three-layer-title three-layer-desc" style="display: block; width: 100%; height: auto;">
                 <title id="three-layer-title">The 3-Layer Product Data Alignment Model</title>
                 <desc id="three-layer-desc">A triangle diagram showing three data layers — Rendered Page State, Structured Data, and Merchant Center Feed — and the specific failure mode that occurs along each edge when those two layers fall out of alignment.</desc>
                 <g aria-hidden="true">
                 <defs>
                   <style>
-                    .diagram-heading{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;fill:#111009;text-anchor:middle}
-                    .diagram-sub{font-family:'Inter',system-ui,sans-serif;font-size:12px;fill:#504c49;text-anchor:middle}
-                    .layer-box{fill:#ffffff;stroke:#ddd9d3;stroke-width:1}
+                    .diagram-eyebrow{font-family:'IBM Plex Mono','Menlo',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;fill:#e09226;text-anchor:middle}
+                    .diagram-heading{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight:500;letter-spacing:-.01em;fill:#1a1916;text-anchor:middle}
+                    .diagram-sub{font-family:'Inter',system-ui,sans-serif;font-size:13px;fill:#58534c;text-anchor:middle}
+                    .layer-box{fill:#f5f1ea;stroke:#d8d2c4;stroke-width:1}
                     .layer-accent{fill:#0E7490}
-                    .layer-label-svg{font-family:'Inter',system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;fill:#857f7a}
-                    .layer-title-svg{font-family:'IBM Plex Mono','Menlo',monospace;font-size:17px;font-weight:600;fill:#111009}
-                    .layer-body-svg{font-family:'Inter',system-ui,sans-serif;font-size:12.5px;fill:#504c49}
-                    .layer-owner-svg{font-family:'Inter',system-ui,sans-serif;font-size:11px;font-style:italic;fill:#857f7a}
-                    .edge-line{stroke:#0E7490;stroke-width:1.5;fill:none}
-                    .edge-label-bg{fill:#E0F2FE;stroke:rgba(14,116,144,.25);stroke-width:1}
-                    .edge-label-title-svg{font-family:'Inter',system-ui,sans-serif;font-size:11.5px;font-weight:700;fill:#0E7490}
-                    .edge-label-sub-svg{font-family:'Menlo','Courier New',monospace;font-size:10.5px;fill:#504c49}
+                    .layer-label-svg{font-family:'IBM Plex Mono','Menlo',monospace;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;fill:#8a847a}
+                    .layer-title-svg{font-family:'IBM Plex Mono','Menlo',monospace;font-size:17px;font-weight:500;letter-spacing:-.01em;fill:#1a1916}
+                    .layer-body-svg{font-family:'Inter',system-ui,sans-serif;font-size:12.5px;fill:#58534c}
+                    .layer-owner-svg{font-family:'IBM Plex Mono','Menlo',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;fill:#8a847a}
+                    .edge-line{stroke:#d8d2c4;stroke-width:1.5;stroke-dasharray:4 4;fill:none}
+                    .edge-label-bg{fill:#f5f1ea;stroke:#d8d2c4;stroke-width:1}
+                    .edge-label-rule{stroke:#e09226;stroke-width:3;fill:none}
+                    .edge-label-title-svg{font-family:'IBM Plex Mono','Menlo',monospace;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;fill:#e09226}
+                    .edge-label-eq-svg{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:500;letter-spacing:.02em;fill:#1a1916}
                   </style>
                 </defs>
-                <text class="diagram-heading" x="400" y="30">The 3-Layer Alignment Model</text>
-                <text class="diagram-sub" x="400" y="50">Google compares the same value across all three layers at crawl time</text>
-                <line class="edge-line" x1="330" y1="180" x2="200" y2="420" />
-                <line class="edge-line" x1="470" y1="180" x2="600" y2="420" />
-                <line class="edge-line" x1="280" y1="470" x2="520" y2="470" />
+
+                <!-- Heading block -->
+                <text class="diagram-eyebrow" x="400" y="32">— Diagram</text>
+                <text class="diagram-heading" x="400" y="58">The 3-Layer Alignment Model</text>
+                <text class="diagram-sub" x="400" y="80">Google compares the same value across all three layers at crawl time</text>
+
+                <!-- Connecting edges (dashed cream rule lines, not loud teal) -->
+                <line class="edge-line" x1="335" y1="220" x2="200" y2="450" />
+                <line class="edge-line" x1="465" y1="220" x2="600" y2="450" />
+                <line class="edge-line" x1="280" y1="500" x2="520" y2="500" />
+
+                <!-- Layer 1: Rendered Page State (top) -->
                 <g>
-                  <rect class="layer-box" x="280" y="80" width="240" height="100" rx="14" />
-                  <rect class="layer-accent" x="280" y="80" width="3" height="100" />
-                  <text class="layer-label-svg" x="298" y="106">Layer 1</text>
-                  <text class="layer-title-svg" x="298" y="130">Rendered Page State</text>
-                  <text class="layer-body-svg" x="298" y="151">What a user sees after render</text>
-                  <text class="layer-owner-svg" x="298" y="169">Owner: engineering / frontend</text>
+                  <rect class="layer-box" x="280" y="120" width="240" height="100" rx="4" />
+                  <rect class="layer-accent" x="280" y="120" width="3" height="100" />
+                  <text class="layer-label-svg" x="298" y="146">Layer 1</text>
+                  <text class="layer-title-svg" x="298" y="170">Rendered Page State</text>
+                  <text class="layer-body-svg" x="298" y="191">What a user sees after render</text>
+                  <text class="layer-owner-svg" x="298" y="209">Owner: engineering · frontend</text>
                 </g>
+
+                <!-- Layer 2: Structured Data (bottom-left) -->
                 <g>
-                  <rect class="layer-box" x="40" y="420" width="240" height="100" rx="14" />
-                  <rect class="layer-accent" x="40" y="420" width="3" height="100" />
-                  <text class="layer-label-svg" x="58" y="446">Layer 2</text>
-                  <text class="layer-title-svg" x="58" y="470">Structured Data</text>
-                  <text class="layer-body-svg" x="58" y="491">JSON-LD Google parses</text>
-                  <text class="layer-owner-svg" x="58" y="509">Owner: SEO / platform</text>
+                  <rect class="layer-box" x="40" y="450" width="240" height="100" rx="4" />
+                  <rect class="layer-accent" x="40" y="450" width="3" height="100" />
+                  <text class="layer-label-svg" x="58" y="476">Layer 2</text>
+                  <text class="layer-title-svg" x="58" y="500">Structured Data</text>
+                  <text class="layer-body-svg" x="58" y="521">JSON-LD Google parses</text>
+                  <text class="layer-owner-svg" x="58" y="539">Owner: SEO · platform</text>
                 </g>
+
+                <!-- Layer 3: Merchant Center Feed (bottom-right) -->
                 <g>
-                  <rect class="layer-box" x="520" y="420" width="240" height="100" rx="14" />
-                  <rect class="layer-accent" x="520" y="420" width="3" height="100" />
-                  <text class="layer-label-svg" x="538" y="446">Layer 3</text>
-                  <text class="layer-title-svg" x="538" y="470">Merchant Center Feed</text>
-                  <text class="layer-body-svg" x="538" y="491">Shopping ingestion data</text>
-                  <text class="layer-owner-svg" x="538" y="509">Owner: ecommerce / merch</text>
+                  <rect class="layer-box" x="520" y="450" width="240" height="100" rx="4" />
+                  <rect class="layer-accent" x="520" y="450" width="3" height="100" />
+                  <text class="layer-label-svg" x="538" y="476">Layer 3</text>
+                  <text class="layer-title-svg" x="538" y="500">Merchant Center Feed</text>
+                  <text class="layer-body-svg" x="538" y="521">Shopping ingestion data</text>
+                  <text class="layer-owner-svg" x="538" y="539">Owner: ecommerce · merch</text>
                 </g>
-                <g transform="translate(135,270)">
-                  <rect class="edge-label-bg" x="0" y="0" width="190" height="54" rx="10" />
-                  <text class="edge-label-title-svg" x="14" y="23">Rich result suppression</text>
-                  <text class="edge-label-sub-svg" x="14" y="42">page &#8800; schema</text>
+
+                <!-- Edge label: page = schema (top-left edge) -->
+                <g transform="translate(115,290)">
+                  <rect class="edge-label-bg" x="0" y="0" width="210" height="68" rx="4" />
+                  <line class="edge-label-rule" x1="0" y1="0" x2="0" y2="68" />
+                  <text class="edge-label-title-svg" x="16" y="26">Rich result suppression</text>
+                  <text class="edge-label-eq-svg" x="16" y="52">page = schema</text>
                 </g>
-                <g transform="translate(475,270)">
-                  <rect class="edge-label-bg" x="0" y="0" width="190" height="54" rx="10" />
-                  <text class="edge-label-title-svg" x="14" y="23">Merchant Center disapproval</text>
-                  <text class="edge-label-sub-svg" x="14" y="42">page &#8800; feed</text>
+
+                <!-- Edge label: page = feed (top-right edge) -->
+                <g transform="translate(475,290)">
+                  <rect class="edge-label-bg" x="0" y="0" width="210" height="68" rx="4" />
+                  <line class="edge-label-rule" x1="0" y1="0" x2="0" y2="68" />
+                  <text class="edge-label-title-svg" x="16" y="26">Merchant Center disapproval</text>
+                  <text class="edge-label-eq-svg" x="16" y="52">page = feed</text>
                 </g>
-                <g transform="translate(280,549)">
-                  <rect class="edge-label-bg" x="0" y="0" width="240" height="34" rx="10" />
-                  <text class="edge-label-title-svg" x="14" y="17">Lower entity match confidence</text>
-                  <text class="edge-label-sub-svg" x="14" y="29">schema &#8800; feed</text>
+
+                <!-- Edge label: schema = feed (bottom edge) -->
+                <g transform="translate(280,575)">
+                  <rect class="edge-label-bg" x="0" y="0" width="240" height="42" rx="4" />
+                  <line class="edge-label-rule" x1="0" y1="0" x2="0" y2="42" />
+                  <text class="edge-label-title-svg" x="16" y="18">Lower entity match confidence</text>
+                  <text class="edge-label-eq-svg" x="16" y="35">schema = feed</text>
                 </g>
                 </g>
               </svg>
             </div>
-            <figcaption style="font-size:13px;color:var(--text-4);line-height:1.7;margin-top:14px;max-width:680px;">The same product data lives in three places, maintained by different teams on different update cycles. A mismatch on any edge produces a different failure mode — and none of them show up as a validator error. The fix is operational: align the layers, not the markup.</figcaption>
+            <figcaption style="font-family: var(--font-body); font-size: 13.5px; color: var(--ink-4); line-height: 1.7; margin-top: 16px; max-width: 680px;">The same product data lives in three places, maintained by different teams on different update cycles. Each saffron tag names what breaks when that pair falls out of alignment. None of these failures show up as validator errors — the fix is operational.</figcaption>
           </figure>
 
           <div class="layer-model">
@@ -606,9 +732,9 @@
 
           <h2 id="conclusion" style="margin-top:56px;">Conclusion</h2>
 
-          <p style="font-size:17px;line-height:1.75;color:var(--text-2);">The validator checks whether the markup is technically valid. What actually determines whether products surface consistently across organic search, Shopping, and AI-driven experiences is whether the underlying data stays accurate, current, and aligned across the page, schema, and Merchant Center feed.</p>
+          <p style="font-size:17px;line-height:1.75;color:var(--ink-2);">The validator checks whether the markup is technically valid. What actually determines whether products surface consistently across organic search, Shopping, and AI-driven experiences is whether the underlying data stays accurate, current, and aligned across the page, schema, and Merchant Center feed.</p>
 
-          <p style="font-size:17px;line-height:1.75;color:var(--text-2);">Getting the implementation live is step one. Keeping those three layers aligned over time is the operational discipline most ecommerce teams never fully solve. That is where the real gap is.</p>
+          <p style="font-size:17px;line-height:1.75;color:var(--ink-2);">Getting the implementation live is step one. Keeping those three layers aligned over time is the operational discipline most ecommerce teams never fully solve. That is where the real gap is.</p>
 
           <div class="sources">
             <h2>Sources and further reading</h2>
@@ -674,7 +800,7 @@
   </div>
 </div>
 <footer>
-  <p style="text-align:center;font-size:12px;color:var(--text-4)">
+  <p style="text-align:center;font-size:12px;color:var(--ink-4)">
     &copy; 2026 MagsTags
     &middot; <a href="/" style="color:inherit;text-decoration:none;opacity:.8">Home</a>
     &middot; <a href="/notes/" style="color:inherit;text-decoration:none;opacity:.8">Notes</a>
@@ -685,7 +811,7 @@
     &middot; <a href="/cookie-policy/" style="color:inherit;text-decoration:none;opacity:.8">Cookie Policy</a>
     &middot; <a href="/terms-of-service/" style="color:inherit;text-decoration:none;opacity:.8">Terms of Service</a>
   </p>
-  <p style="font-size:11px;color:var(--text-4);margin-top:8px;text-align:center">
+  <p style="font-size:11px;color:var(--ink-4);margin-top:8px;text-align:center">
     <a href="/sitemap/" style="color:inherit;opacity:.7">Sitemap</a>
   </p>
 </footer>
