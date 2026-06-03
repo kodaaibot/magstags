@@ -213,6 +213,7 @@ nav.primary a {
 }
 nav.primary a:hover { color: var(--accent); }
 nav.primary .subscribe {
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
