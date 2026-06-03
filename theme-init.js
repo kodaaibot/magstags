@@ -34,7 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   syncTogglePressed();
 
-  // Wrap any existing window.toggleTheme to also sync aria-pressed.
+  // Wrap any existing window.toggleTheme to (a) toggle html.dark class in sync
+  // with data-theme (many per-page inline toggleTheme blocks only touch
+  // data-theme and forget the class — leaving html.dark stuck on after a
+  // dark→light toggle), and (b) sync aria-pressed.
   var origToggle = typeof window.toggleTheme === 'function' ? window.toggleTheme : null;
   window.toggleTheme = function() {
     if (origToggle) {
@@ -43,9 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
       var cur = document.documentElement.getAttribute('data-theme');
       var next = cur === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      document.documentElement.classList.toggle('dark', next === 'dark');
       try { localStorage.setItem('mt-theme', next); } catch (e) {}
     }
+    // ALWAYS sync html.dark class to current data-theme, regardless of
+    // what the original toggle did (most inline blocks forget this step).
+    var nowDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.classList.toggle('dark', nowDark);
     syncTogglePressed();
   };
 
