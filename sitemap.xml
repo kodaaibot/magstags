@@ -4,7 +4,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://www.magstags.com/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,31 +12,31 @@
   <!-- Hub pages -->
   <url>
     <loc>https://www.magstags.com/seo-tools/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/free-seo-tools/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/paid-seo-tools/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/learn-seo/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/schema-for-seo/</loc>
-    <lastmod>2026-06-02</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -44,61 +44,61 @@
   <!-- Tools -->
   <url>
     <loc>https://www.magstags.com/schema-extractor-chrome-extension/</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/schema-markup-visualizer/</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/schema-comparison-tool/</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/hreflang-generator/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/gsc-regex-generator/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/robots-txt-generator/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/serp-preview/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/gmc-feed-analyzer/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/favicon-validator/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/xml-sitemap-url-counter-analyzer/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -106,25 +106,25 @@
   <!-- Schema generators -->
   <url>
     <loc>https://www.magstags.com/ecommerce-schema-generator/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/product-snippet-schema-generator/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/merchant-listing-schema-generator/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/product-variants-schema-generator/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -132,31 +132,31 @@
   <!-- Learn SEO guides -->
   <url>
     <loc>https://www.magstags.com/product-schema/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/product-snippet-schema/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/merchant-listing-schema/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/product-variants-schema/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/productgroup-schema/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -164,19 +164,19 @@
   <!-- About & contact -->
   <url>
     <loc>https://www.magstags.com/mags-sikora/</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/seo-services/</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/contact/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -184,7 +184,7 @@
   <!-- Sitemap -->
   <url>
     <loc>https://www.magstags.com/sitemap/</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
@@ -192,31 +192,31 @@
   <!-- Legal -->
   <url>
     <loc>https://www.magstags.com/privacy-policy/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/terms-of-service/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/cookie-policy/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/disclaimer/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/extension-privacy/</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -224,124 +224,124 @@
   <!-- Notes -->
   <url>
     <loc>https://www.magstags.com/notes/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/what-is-agentic-commerce/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/agentic-commerce-optimization/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/google-image-thumbnails/</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/google-favourite-brands/</loc>
-    <lastmod>2026-04-01</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/google-store-ratings-vs-product-ratings/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/google-ecommerce-rich-results/</loc>
-    <lastmod>2026-03-29</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/ecommerce-structured-data-serp-features/</loc>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/product-identifiers-seo/</loc>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/mega-menus-seo/</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/crawl-budget-enterprise/</loc>
-    <lastmod>2026-03-19</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/bill-slawski/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/hreflang-canonical-conflict/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/hreflang-mistakes/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/robots-txt-mistakes/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/gsc-regex-deep-dive/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.magstags.com/notes/product-vs-productgroup-schema/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.magstags.com/notes/google-image-thumbnails-organic-case-study/</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.magstags.com/notes/valid-schema-bad-data/</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.magstags.com/notes/google-shipping-return-settings/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

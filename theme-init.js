@@ -12,7 +12,11 @@
       current = legacy;
     }
     var saved = current || legacy;
-    var dark  = saved === 'dark' || (!saved && window.matchMedia && matchMedia('(prefers-color-scheme:dark)').matches);
+    // Honour user toggle only. We intentionally do NOT fall back to
+    // prefers-color-scheme — different pages on the site historically defaulted
+    // to light without reading the OS preference, and mixing the two behaviours
+    // makes the theme appear to switch between pages.
+    var dark  = saved === 'dark';
     var html  = document.documentElement;
     if (dark) {
       html.classList.add('dark');
