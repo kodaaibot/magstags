@@ -365,7 +365,7 @@
       <span class="post-meta-dot"></span>
       <span>18 May 2026</span>
       <span class="post-meta-dot"></span>
-      <span>13 min read</span>
+      <span>12 min read</span>
     </div>
 
     <div class="ct-layout">
@@ -376,9 +376,9 @@
 
           <p>The Rich Results Test validates structure. Google evaluates trust. That means your Product schema can pass every validator while still losing rich results, triggering Merchant Center disapprovals, suppressing Shopping visibility, and weakening AI retrieval confidence — because the underlying product data is stale, inconsistent, or contradictory across your page HTML, your schema, and your Merchant Center feed.</p>
 
-          <p>This article covers the hidden data-layer failures most ecommerce teams never audit: the ones that produce no errors, raise no flags, and quietly cost you. Specifically: price and availability staleness, GTIN and identifier mismatches, AggregateRating data problems, image compliance failures, and thin schema, along with the 3-Layer Product Data Alignment Model that explains why these failures are systematic rather than random, an operational audit checklist, and five concrete failure scenarios from real ecommerce environments.</p>
+          <p>These are the data-layer failures most ecommerce teams never audit — the ones that produce no errors, raise no flags, and quietly cost you: stale price and availability, mismatched identifiers, bad AggregateRating data, broken images, and thin schema. Then the model that explains why they're systematic rather than random, and the audit that catches them.</p>
 
-          <h2 id="what-the-test-validates">What the Rich Results Test Actually Validates</h2>
+          <h2 id="what-the-test-validates">What the Rich Results Test actually validates</h2>
 
           <p>The Rich Results Test validates syntax, not truth. It checks that your JSON-LD is parseable, that required properties are present, and that values are the correct type. <code>price</code> is a number. <code>priceCurrency</code> is a string. <code>availability</code> is an <code>ItemAvailability</code> enum — accepted as a short value like <code>InStock</code> or a full schema.org URL. Pass those checks and you get a green tick.</p>
 
@@ -400,9 +400,9 @@
             </ul>
           </div>
 
-          <h2 id="five-failures">5 Product Data Failures: Suppression, Disapproval, and Silent Underperformance</h2>
+          <h2 id="five-failures">Five product data failures: suppression, disapproval, and silent underperformance</h2>
 
-          <h3 id="price-availability">1. Price and Availability Staleness</h3>
+          <h3 id="price-availability">1. Price and availability staleness</h3>
 
           <div class="failure-card">
             <span class="failure-card-tag price">Price</span>
@@ -418,7 +418,9 @@
             <strong>Availability staleness at template level.</strong> A template that hardcodes <code>InStock</code> regardless of actual stock status — because nobody updated it when the product range changed — reduces Google's data confidence across every page using that template. There is no disapproval, no warning, and no per-URL flag in Search Console. You find it in a crawl, or you don't find it.
           </div>
 
-          <h3 id="identifier-mismatches">2. GTIN and Identifier Mismatches</h3>
+          <p><strong>The fix is process, not markup.</strong> Trigger the feed refresh and schema regeneration as part of the sale-launch process, not on a fixed schedule — and make a stock-status change invalidate the schema cache rather than waiting for a CDN TTL to expire. A restock that takes 12 hours to reach the schema is 12 hours of suppressed availability annotations that nothing flags.</p>
+
+          <h3 id="identifier-mismatches">2. GTIN and identifier mismatches</h3>
 
           <div class="failure-card">
             <span class="failure-card-tag identifier">Identifier</span>
@@ -432,11 +434,11 @@
 
           <p>GTIN is how Google matches your product to a known entity in its knowledge graph. Get it right and your listing gets price comparison features, Shopping knowledge panels, and stronger AI Overview eligibility. Get it wrong and the product appears without being matched — no price comparison, no knowledge panel, weaker signals across the board.</p>
 
-          <p>The <strong>schema vs. feed drift</strong> problem is subtler. GTINs live in two places: your JSON-LD and your Merchant Center feed, maintained by different teams on different update cycles. A GTIN corrected in the feed after a supplier update doesn't automatically update the page template. A product relaunch that changes the identifier gets the feed updated; the schema is generated from a CDN-cached data layer that nobody flushed. Neither produces an error. Google just sees two sources disagreeing and applies a lower confidence score to both.</p>
+          <p>The <strong>schema vs. feed drift</strong> problem is subtler. GTINs live in two places: your JSON-LD and your Merchant Center feed, maintained by different teams on different update cycles. A GTIN corrected in the feed after a supplier update doesn't automatically update the page template. A product relaunch that changes the identifier gets the feed updated; the schema is generated from a CDN-cached data layer that nobody flushed. Neither produces an error. Google just sees two sources disagreeing and applies a lower confidence score to both. The fix is at the process level: a relaunch should trigger an immediate PIM-to-schema sync rather than waiting for the weekly cycle — five days of conflicting identifiers during a relaunch is exactly when Shopping impression share matters most.</p>
 
           <p>The practical check: pull 20 high-traffic PDPs and compare the <code>gtin</code> in the schema against the <code>gtin [gtin]</code> in the Merchant Center feed for the same product. They should be identical. For full identifier field definitions and format requirements: <a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO</a>.</p>
 
-          <h3 id="rating-data">3. AggregateRating Data Problems</h3>
+          <h3 id="rating-data">3. AggregateRating data problems</h3>
 
           <div class="failure-card">
             <span class="failure-card-tag rating">Ratings</span>
@@ -452,7 +454,9 @@
 
           <p><strong>RatingValue that doesn't match the page.</strong> Schema says 4.8. The page says 4.2. One was cached. The other wasn't. Google takes the conservative position and suppresses the annotation rather than surfacing data it can't verify independently. The rule: schema values must match what a user can visibly see on the page at the time of crawl.</p>
 
-          <h3 id="image-compliance">4. Image Compliance Failures</h3>
+          <p>The fix that catches all three: a review-provider migration needs a schema data-source audit, not just a front-end integration check. The old provider's API often keeps feeding a cached count to your schema long after the page has switched over.</p>
+
+          <h3 id="image-compliance">4. Image compliance failures</h3>
 
           <div class="failure-card">
             <span class="failure-card-tag image">Image</span>
@@ -461,13 +465,13 @@
           </div>
 
           <ul>
-            <li><strong>404s from CDN migrations.</strong> The product image moved to a new path. The HTML was updated. The schema wasn't. Google can't fetch the image, no thumbnail appears, and nothing flags it in Search Console.</li>
+            <li><strong>404s from CDN migrations.</strong> The product image moved to a new path. The HTML was updated. The schema wasn't. Google can't fetch the image, no thumbnail appears, and nothing flags it in Search Console. The fix: include schema <code>image</code> URLs in your post-migration crawl checks — image 404s never surface in the Rich Results report.</li>
             <li><strong>Dimensions below Google's minimums.</strong> The validator doesn't enforce dimensions. For schema <code>image</code>, Google's stated minimum for rich results is 160×90px, but the practical minimum for Discover and AI retrieval is higher. For Merchant Center's <code>image_link</code>: 100×100px (non-apparel), 250×250px (apparel). Both Google and Merchant Center recommend 800×800px. An undersized image passes validation and still causes features to be withheld.</li>
             <li><strong>Wrong image on variant pages.</strong> Where all variants share a single URL, the <code>image</code> property sometimes points to a generic shot rather than the variant being described. Google may show the wrong product in Shopping, or none at all.</li>
             <li><strong>Redirect chains.</strong> The image URL resolves — eventually — through multiple redirects. Google follows them, but long chains create uncertainty and images can be skipped during high-volume crawls.</li>
           </ul>
 
-          <h3 id="thin-schema">5. Thin Schema: Missing Recommended Properties</h3>
+          <h3 id="thin-schema">5. Thin schema: missing recommended properties</h3>
 
           <div class="failure-card">
             <span class="failure-card-tag completeness">Completeness</span>
@@ -490,7 +494,7 @@
             <strong>How to find thin schema at scale:</strong> crawl a sample of your PDPs and extract the full list of properties present in each Product schema block. Build a count of which recommended properties are present vs. absent across the sample. Missing <code>shippingDetails</code> on 80% of pages is a template fix, not a page-by-page fix. The pattern is what matters.
           </div>
 
-          <h2 id="three-layer-model">The 3-Layer Product Data Alignment Model</h2>
+          <h2 id="three-layer-model">The 3-layer product data alignment model</h2>
 
           <p>Most product data failures don't happen in one place. They happen because the same data is being maintained in three separate systems, by separate teams, on separate update cycles. When any two layers disagree, you get disapprovals, suppression, or a lower-confidence match that nobody tracks.</p>
 
@@ -615,17 +619,17 @@
 
           <p>This is also why schema audits that only check syntax miss the actual problem. The three layers need to be checked against each other, not just internally. The audit checklist below is structured to do exactly that.</p>
 
-          <h2 id="ai-trust">Why This Is Now an AI Trust Problem, Not Just an SEO Problem</h2>
+          <h2 id="ai-trust">Why this is now an AI trust problem, not just an SEO problem</h2>
 
           <p>Rich results are one consequence of bad product data. They are no longer the biggest one.</p>
 
-          <p>AI shopping agents — the systems used in Google's AI Overviews, ChatGPT shopping, Perplexity product recommendations, and the agentic commerce layer being built into most major search interfaces — retrieve product data from structured markup to inform purchase decisions. Based on how these systems behave, they appear to favour product data that is internally consistent across page, schema, and feed. Inconsistency is a low-confidence signal for the same reason it is for Google: it means one of your sources is wrong, and there is no way to know which one.</p>
+          <p>AI shopping agents — Google's AI Overviews, ChatGPT shopping, Perplexity's product recommendations, the agentic-commerce layer turning up across major search interfaces — retrieve product data from structured markup to inform purchase decisions, and they favour data that is internally consistent across page, schema, and feed. Inconsistency reads as low confidence for the same reason it does to Google: one of your sources is wrong, and there's no way to tell which.</p>
 
           <p>A product with valid but inaccurate schema isn't just at risk of losing rich results. It's at risk of being skipped by systems that have no obligation to surface data they can't verify. That's a different kind of visibility problem than anything in your Search Console report.</p>
 
           <p>The validator pass is the floor. What's above it — data consistency, feed alignment, identifier accuracy — is increasingly what determines whether your products surface in AI-assisted shopping at all. For the broader context: <a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: What to Fix in Your Schema, Feeds, and Product Data</a>.</p>
 
-          <h2 id="symptoms">Symptoms You'll Actually See</h2>
+          <h2 id="symptoms">Symptoms you'll actually see</h2>
 
           <p>These failures don't announce themselves as schema errors. They show up as operational signals in other systems, usually without an obvious cause.</p>
 
@@ -650,7 +654,7 @@
             </table>
           </div>
 
-          <h2 id="audit-checklist">The Audit Checklist</h2>
+          <h2 id="audit-checklist">The audit checklist</h2>
 
           <p>Start with 20 high-traffic PDPs, not 200. The goal is to identify systematic failures in your template or pipeline. Individual bad URLs are noise. Patterns are signal.</p>
 
@@ -693,48 +697,9 @@
             </li>
           </ol>
 
-          <h2 id="scenarios">Common Failure Scenarios</h2>
-
-          <p>The five failures above aren't theoretical. These are the patterns that appear most frequently in real ecommerce audits.</p>
-
-          <div class="faq-block">
-
-            <div class="faq-item">
-              <div class="faq-q">Flash sale launch with a daily feed cycle</div>
-              <div class="faq-a">Sale goes live at midnight. Page price updates immediately. Static JSON-LD was generated at the last platform build, a week prior. Merchant Center feed refreshes at 06:00. Between midnight and 06:00, the page, schema, and feed carry three different prices. Products disapprove. Rich results drop. Reapproval happens on the next crawl after the feed refreshes — but the peak traffic window for the sale has passed. <strong>Fix:</strong> trigger feed refresh and schema regeneration as part of the sale launch process, not on a fixed schedule.</div>
-            </div>
-
-            <div class="faq-item">
-              <div class="faq-q">Headless commerce cache drift after a restock</div>
-              <div class="faq-a">Product goes out of stock. Schema is updated to <code>OutOfStock</code>. Product is restocked two days later. Page HTML updates immediately. Schema is generated from a CDN-cached data layer with a 12-hour TTL. Schema continues to say <code>OutOfStock</code> for 12 hours after the restock. No disapproval — the mismatch direction is availability correct on page, wrong in schema. The availability annotation in organic results disappears or is suppressed for those 12 hours. No flag anywhere. <strong>Fix:</strong> stock status changes should trigger a schema cache invalidation, not wait for the TTL.</div>
-            </div>
-
-            <div class="faq-item">
-              <div class="faq-q">CDN migration without schema update</div>
-              <div class="faq-a">Platform migrates product images to a new CDN with a different URL structure. HTML image tags are updated in the migration. JSON-LD schema is generated from a product data template that hardcodes the old CDN domain. Schema <code>image</code> URLs return 404s. Product rich result images disappear. Shopping thumbnail annotations drop. Nothing in Search Console flags image 404s as a structured data issue — it appears in a crawl, not in the Rich Results report. Takes weeks to identify without proactive monitoring. <strong>Fix:</strong> include schema <code>image</code> URLs in post-migration crawl checks.</div>
-            </div>
-
-            <div class="faq-item">
-              <div class="faq-q">Review provider switch with cached AggregateRating</div>
-              <div class="faq-a">Site migrates to a new review provider. New provider loads reviews via JavaScript. Schema <code>AggregateRating</code> is still generated from the old provider's API, which stopped syncing at the point of migration. Schema says 1,104 reviews, 4.7 rating. Page now displays 38 reviews from the new provider, 4.4 rating. Google crawls the page, sees 38 and 4.4, compares to the 1,104 and 4.7 in schema, and suppresses the rating annotation. No error in Merchant Center, no warning in Search Console. <strong>Fix:</strong> review provider migrations require a schema data source audit, not just a front-end integration check.</div>
-            </div>
-
-            <div class="faq-item">
-              <div class="faq-q">Feed GTIN update not reflected in schema after a product relaunch</div>
-              <div class="faq-a">Product relaunches under a revised variant structure with new GTINs. Merchant Center feed is updated. Schema is generated from a product information management (PIM) system on a weekly sync cycle. For five days, schema carries old GTINs; feed carries new ones. Google sees conflicting identifier signals during the relaunch window — exactly when Shopping impression share for the product matters most. Neither the old nor new GTIN is flagged as wrong. Both are just trusted less. <strong>Fix:</strong> product relaunches should trigger an immediate PIM-to-schema sync, not wait for the weekly cycle.</div>
-            </div>
-
-          </div>
-
           <div class="post-callout" style="margin-top:40px;">
-            The pattern across all five scenarios is the same. The failure isn't visible in any single system. Merchant Center looks clean. Search Console raises nothing. The validator passes. The problem only exists at the intersection of all three layers — which is exactly where Google, Shopping, and AI retrieval systems operate.
+            The pattern across all five failures is the same. The failure isn't visible in any single system. Merchant Center looks clean. Search Console raises nothing. The validator passes. The problem only exists at the intersection of all three layers — which is exactly where Google, Shopping, and AI retrieval systems operate. Getting the markup live is step one; keeping the three layers aligned over time is the discipline most ecommerce teams never quite solve.
           </div>
-
-          <h2 id="conclusion" style="margin-top:56px;">Conclusion</h2>
-
-          <p style="font-size:17px;line-height:1.75;color:var(--ink-2);">The validator checks whether the markup is technically valid. What actually determines whether products surface consistently across organic search, Shopping, and AI-driven experiences is whether the underlying data stays accurate, current, and aligned across the page, schema, and Merchant Center feed.</p>
-
-          <p style="font-size:17px;line-height:1.75;color:var(--ink-2);">Getting the implementation live is step one. Keeping those three layers aligned over time is the operational discipline most ecommerce teams never fully solve. That is where the real gap is.</p>
 
           <div class="sources">
             <h2>Sources and further reading</h2>
@@ -777,8 +742,8 @@
         </button>
         <div class="ct-toc-label">On this page</div>
         <ol class="ct-toc-list">
-          <li><a href="#what-the-test-validates">What the Rich Results Test Validates</a></li>
-          <li><a href="#five-failures">5 Product Data Failures</a>
+          <li><a href="#what-the-test-validates">What the Rich Results Test validates</a></li>
+          <li><a href="#five-failures">Five product data failures</a>
             <ol>
               <li><a href="#price-availability">Price and availability staleness</a></li>
               <li><a href="#identifier-mismatches">GTIN and identifier mismatches</a></li>
@@ -787,12 +752,10 @@
               <li><a href="#thin-schema">Thin schema: missing recommended properties</a></li>
             </ol>
           </li>
-          <li><a href="#three-layer-model">The 3-Layer Alignment Model</a></li>
-          <li><a href="#ai-trust">AI Trust, Not Just SEO</a></li>
+          <li><a href="#three-layer-model">The 3-layer alignment model</a></li>
+          <li><a href="#ai-trust">AI trust, not just SEO</a></li>
           <li><a href="#symptoms">Symptoms</a></li>
-          <li><a href="#audit-checklist">Audit Checklist</a></li>
-          <li><a href="#scenarios">Failure Scenarios</a></li>
-          <li><a href="#conclusion">Conclusion</a></li>
+          <li><a href="#audit-checklist">Audit checklist</a></li>
         </ol>
       </div>
     </div>

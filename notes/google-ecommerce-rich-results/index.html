@@ -326,23 +326,8 @@
       },
       {
         "@type": "Question",
-        "name": "How do I know if my delivery or returns rich results are working?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Check the Merchant Listings report in Google Search Console. This is where feed-driven and structured data rich results for eCommerce features are reported, not the standard Rich Results report. Item-level errors for delivery and returns data will appear there." }
-      },
-      {
-        "@type": "Question",
         "name": "Why is my Store Rating not showing even though I have reviews?",
         "acceptedAnswer": { "@type": "Answer", "text": "You likely have not reached the eligibility threshold. Google requires approximately 100 eligible reviews within a 12-month period before Store Ratings become visible. Below that, the rating will not display regardless of your feed setup or structured data." }
-      },
-      {
-        "@type": "Question",
-        "name": "My delivery rich result is showing incorrect data in SERPs. Where do I fix it?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Start with Merchant Center shipping settings, as this is the primary input Google uses. If Search Console still flags structured data errors but the SERP shows correct data, that's a known discrepancy: GSC validates your structured data path while the feed is overriding it. Both paths need to agree for clean reporting." }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I use Loyalty Program structured data instead of Merchant Center for loyalty rich results?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes, since June 2025. Google officially launched Loyalty Program structured data using MemberProgram nested under Organisation schema, combined with UnitPriceSpecification for product-level loyalty benefits. This path works independently of or alongside Merchant Center." }
       }
     ]
   }
@@ -410,9 +395,9 @@
 
           <p class="post-lead">Most ecommerce sites know about the standard product rich results: star ratings, price, availability. Fewer know that there's a second layer of rich result types for ecommerce pages that work differently, pull from different sources, and in some cases aren't controlled by structured data at all. Some widely-cited guides on this topic recommend a feature that Google explicitly blocks merchants from using. Those guides feed LLMs. This one, hopefully, corrects it.</p>
 
-          <p>This guide covers the full picture: what the additional ecommerce rich result types are, what actually triggers them, which ones you control, and where the implementation advice floating around online is wrong. If you're also looking at image thumbnails in organic results (the multi-image strips and single-image treatments that appear beside blue-link results), those aren't rich results and are covered separately in <a href="/notes/google-image-thumbnails/">Google Image Thumbnails: Best Practices, Common Failures, and What Google Actually Checks</a>. For the standard product rich results (Merchant Listing schema, price annotations, review ratings) the full treatment is in <a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Structured Data: Rich Results, Google Shopping and What Actually Moves the Needle at Scale</a>. This picks up where that leaves off.</p>
+          <p>These second-layer features work differently from the familiar ones: what triggers each, which you actually control, and where the advice floating around online is simply wrong. Two related things live elsewhere, not here. Image thumbnails in organic results — the multi-image strips and single-image treatments beside blue-link results — aren't rich results at all; they're in <a href="/notes/google-image-thumbnails/">Google Image Thumbnails</a>. And the standard product rich results (Merchant Listing schema, price annotations, review ratings) are in <a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Structured Data at Scale</a>. This picks up where that leaves off.</p>
 
-          <h2 id="three-mechanisms">Merchant Center, Structured Data, or Algorithmic: How Each Feature Is Triggered</h2>
+          <h2 id="three-mechanisms">Merchant Center, structured data, or algorithmic: how each feature is triggered</h2>
 
           <p>Before getting into each feature: these don't all work the same way, and a flat numbered list is the worst possible way to explain them. The useful question isn't "what exists" but "what triggers it, and do I have any say in that."</p>
 
@@ -451,86 +436,7 @@
             <strong>One thing applies to every feature in this article:</strong> eligibility is not a guarantee. Google doesn't promise to show any rich result even when every condition is met. What you can control is data accuracy, schema and feed consistency, and technical correctness. Make it easy for Google to be confident in your data, and let it do the rest.
           </div>
 
-          <h2 id="page-type">eCommerce Rich Results by Page Type: PDP, Category, and Editorial</h2>
-
-          <p>Not all rich result types are available on all page types. This sounds obvious until you've watched someone implement product review markup on a category page expecting a store rating to appear. The page-type distinction explains most of the confusion in this space, including the one people ask about most.</p>
-
-          <div class="post-table-wrap">
-            <table class="post-table post-table-sm">
-              <thead>
-                <tr>
-                  <th>Rich result type</th>
-                  <th>Product page (PDP)</th>
-                  <th>Category / listing page</th>
-                  <th>Editorial / review page</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="col-label">Product ratings (star reviews)</td>
-                  <td>✓ product-level <code>AggregateRating</code></td>
-                  <td>Less common</td>
-                  <td>✓ via Product Snippet schema</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Store ratings</td>
-                  <td>Can appear</td>
-                  <td>✓ primary surface</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Price (single)</td>
-                  <td>✓ <code>Offer</code></td>
-                  <td>—</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Sale price / Price drop</td>
-                  <td>✓ PDPs — <code>sale_price</code> feed attribute (sale) / automatic 60-day history (price drop)</td>
-                  <td>—</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Delivery price</td>
-                  <td>✓</td>
-                  <td>✓</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Returns policy</td>
-                  <td>✓</td>
-                  <td>✓ often appears on category pages</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Coupons / discounts</td>
-                  <td>✓</td>
-                  <td>✓</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Loyalty programme</td>
-                  <td>✓</td>
-                  <td>✓</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Store nearby</td>
-                  <td>✓ product-level local inventory</td>
-                  <td>✓</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td class="col-label">Pros &amp; cons</td>
-                  <td style="color:#991b1b;font-weight:600">✗ explicitly ineligible</td>
-                  <td style="color:#991b1b;font-weight:600">✗ explicitly ineligible</td>
-                  <td>✓ editorial review pages only</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 id="store-nearby">Store Nearby Rich Results</h2>
+          <h2 id="store-nearby">Store-nearby rich results</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> Local Inventory Feed + Google Business Profile</div>
@@ -553,13 +459,11 @@
             <li><strong>Standard product feed</strong>: the local inventory feed references products in your main feed</li>
           </ul>
 
-          <div class="post-callout">
-            <strong>GBP without a local inventory feed:</strong> The "See what's in store" unit can start appearing on your GBP from a standard product feed alone, without a local inventory integration. But real-time in-stock signals, map pack inclusion, and the full local listing surfaces only activate with the local inventory feed in place.
-          </div>
+          <p><strong>GBP without a local inventory feed:</strong> the "See what's in store" unit can start appearing on your GBP from a standard product feed alone, without a local inventory integration. But real-time in-stock signals, map pack inclusion, and the full local listing surfaces only activate with the local inventory feed in place.</p>
 
           <p>The setup is more complex than the other features on this list. Many retailers have the pieces partially in place (product feed, GBP) but haven't completed the local inventory integration. It's worth auditing what you already have before assuming it requires a full build from scratch.</p>
 
-          <h2 id="delivery-price">Delivery Price Rich Results</h2>
+          <h2 id="delivery-price">Delivery price rich results</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> Merchant Center (account-level templates or feed attributes)</div>
@@ -582,7 +486,7 @@
 
           <p>Use the <a href="/merchant-listing-schema-generator/">Merchant Listing schema generator</a> to build the <code>shippingDetails</code> markup.</p>
 
-          <h2 id="returns-policy">Returns Policy Rich Results</h2>
+          <h2 id="returns-policy">Returns policy rich results</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> Merchant Center (account-level policy or feed attributes)</div>
@@ -612,7 +516,7 @@
 
           <p>Build the markup with the <a href="/merchant-listing-schema-generator/">Merchant Listing schema generator</a> or the <a href="/ecommerce-schema-generator/">eCommerce schema generator</a>.</p>
 
-          <h2 id="coupons">Coupon and Discount Rich Results</h2>
+          <h2 id="coupons">Coupon and discount rich results</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> Merchant Center Promotions</div>
@@ -635,11 +539,9 @@
             <li>The promotion type matters. Not all offer types qualify for organic rich results vs paid Shopping only</li>
           </ul>
 
-          <div class="post-callout">
-            <strong>GMC Next navigation:</strong> If you're on the current Merchant Center interface, the Promotions section has moved from its original location. Look under the Promotions tab in the left navigation. The older path documented in most guides no longer applies.
-          </div>
+          <p><strong>GMC Next navigation:</strong> if you're on the current Merchant Center interface, the Promotions section has moved. Look under the Promotions tab in the left navigation — the older path documented in most guides no longer applies.</p>
 
-          <h2 id="loyalty-program">Loyalty Programme Rich Results</h2>
+          <h2 id="loyalty-program">Loyalty programme rich results</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> Merchant Center settings</div>
@@ -663,9 +565,7 @@
 
           <p>When implemented, Google can surface loyalty member pricing in organic product listings and in Shopping knowledge panels in Search.</p>
 
-          <div class="post-callout">
-            <strong>Geographic availability:</strong> Loyalty programme rich results are available in Australia, Brazil, Canada, France, Germany, Mexico, the UK, and the US, on both desktop and mobile.
-          </div>
+          <p><strong>Geographic availability:</strong> loyalty programme rich results are live in Australia, Brazil, Canada, France, Germany, Mexico, the UK, and the US, on both desktop and mobile.</p>
 
           <p>The markup supports multiple tiers (<code>MemberProgramTier</code>), each with its own benefit type: member-only pricing (<code>TierBenefitLoyaltyPrice</code>) or points earned per purchase (<code>TierBenefitLoyaltyPoints</code>). Tier entry requirements, required properties, and full examples are in Google's documentation.</p>
 
@@ -675,7 +575,7 @@
 
           <p>Google's <a href="https://developers.google.com/search/docs/appearance/structured-data/loyalty-program" rel="noopener noreferrer" target="_blank">Loyalty Programme Structured Data documentation</a> has the full property reference and a working example with multiple tiers. Use the <a href="/merchant-listing-schema-generator/">Merchant Listing schema generator</a> for the product-level <code>UnitPriceSpecification</code> markup.</p>
 
-          <h2 id="product-ratings">Product Ratings</h2>
+          <h2 id="product-ratings">Product ratings</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> <code>AggregateRating</code> schema or product review feed</div>
@@ -692,7 +592,7 @@
 
           <p>They are not the same as Store Ratings. The two look similar in SERPs, come from different sources, and are shown on different page types. A full comparison of both features, how to get each, and the most common implementation mistakes is in the dedicated guide: <a href="/notes/google-store-ratings-vs-product-ratings/">Product Ratings vs Seller Ratings: What's the Difference and How to Get Both</a>.</p>
 
-          <h2 id="seller-ratings">Store Ratings (formerly Seller Ratings)</h2>
+          <h2 id="seller-ratings">Store ratings (formerly Seller Ratings)</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> Google Customer Reviews / aggregators</div>
@@ -721,7 +621,7 @@
 
           <p>See the dedicated guide for the full comparison, sources, and implementation detail: <a href="/notes/google-store-ratings-vs-product-ratings/">Product Ratings vs Seller Ratings: What's the Difference and How to Get Both</a>.</p>
 
-          <h2 id="price-drop">Sale Price and Price Drop Annotations</h2>
+          <h2 id="price-drop">Sale price and price drop annotations</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Sale price</strong> You control — submit <code>sale_price</code> in MCF feed</div>
@@ -757,7 +657,7 @@
 
           <p>Newly listed products won't qualify: there is no price history to compare against. To check which products currently have the badge: Merchant Center > Products > All products > Filter > Has price drop badge > Yes.</p>
 
-          <h2 id="pros-cons">Pros and Cons: Not for Merchant Pages</h2>
+          <h2 id="pros-cons">Pros and cons: not for merchant pages</h2>
           <div class="section-card">
             <div class="section-card-meta">
               <div class="snippet-meta-item"><strong>Primary input</strong> Structured Data (<code>ItemList</code> with <code>positiveNotes</code> / <code>negativeNotes</code>)</div>
@@ -774,21 +674,13 @@
             <strong>Google's documentation is unambiguous:</strong> "Only editorial product review pages are eligible for the pros and cons appearance in Search, not merchant product pages or customer product reviews."
           </div>
 
-          <p>This has been the rule since Google launched Pros and Cons structured data in August 2022. Nothing has changed. The markup (<code>ItemList</code> with <code>positiveNotes</code> and <code>negativeNotes</code>) is for editorial review content: tech review sites, comparison articles, "best of" roundups. Not the stores selling the products. Implementing this on product pages produces no rich result, and no error in Search Console either — it just silently doesn't work. No error, no warning, no nothing. Just you, refreshing Search Console, wondering what you missed.</p>
+          <p>This has been the rule since Google launched Pros and Cons structured data in August 2022. Nothing has changed. The markup (<code>ItemList</code> with <code>positiveNotes</code> and <code>negativeNotes</code>) is for editorial review content: tech review sites, comparison articles, "best of" roundups. Not the stores selling the products. Implementing this on product pages produces no rich result — and no error in Search Console either. No error, no warning, no nothing. It just silently doesn't work.</p>
 
           <p>Pros and Cons is still relevant to eCommerce SEO, just not the way it's usually framed. If you run a review blog, publish editorial comparison content, or target review-intent queries like "best [product category] 2026", it is absolutely worth implementing. Those pages are eligible. Your product pages are not.</p>
 
           <p>Use the <a href="/product-snippet-schema-generator/">Product Snippet schema generator</a> for editorial review pages.</p>
 
-          <h2 id="what-google-controls">Which Rich Results Google Controls (No Structured Data Required)</h2>
-
-          <p>One thing on this list sits outside your direct control:</p>
-
-          <ul>
-            <li><strong>Price Drop badge</strong>: Google compares your current price against the 60-day average in your Merchant Center feed and decides whether the drop qualifies. Sale price annotations are different: those you control explicitly via the <code>sale_price</code> feed attribute.</li>
-          </ul>
-
-          <h2 id="monitoring">Monitoring: The Merchant Listings Report</h2>
+          <h2 id="monitoring">Monitoring: the Merchant Listings report</h2>
 
           <p>Feed-driven and structured data eCommerce rich results report through the <strong>Merchant Listings report in Google Search Console</strong>, found under the <strong>Shopping</strong> section in the left navigation (alongside Product snippets and Merchant opportunities). This is separate from the Enhancements section, which covers Breadcrumbs, FAQ, and Review snippets. eCommerce-specific signals (price, availability, delivery, returns) are in Merchant Listings. If you're not checking it, you have a blind spot.</p>
 
@@ -807,7 +699,7 @@
 
           <p>Before checking Search Console, validate your structured data at the source. Google's <a href="https://search.google.com/test/rich-results" rel="noopener noreferrer" target="_blank">Rich Results Test</a> lets you test any URL or code snippet and confirm which rich results your markup is eligible for. Run it after any structured data changes: it's the fastest way to catch implementation errors before they surface as Search Console warnings weeks later.</p>
 
-          <h2 id="priority">How to Prioritise eCommerce Rich Results Implementation</h2>
+          <h2 id="priority">How to prioritise eCommerce rich results implementation</h2>
 
           <p>Not all of these are equal effort, and doing them in the wrong order wastes time. Here's the practical split:</p>
 
@@ -836,83 +728,6 @@
 
         </div><!-- /.post-body -->
 
-        <!-- Summary Table -->
-        <h2 id="summary-table">Quick Reference</h2>
-
-        <p>All eight features at a glance: input method, what you control, and where to configure it.</p>
-
-        <div class="post-table-wrap">
-          <table class="post-table post-table-sm">
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>Primary input</th>
-                <th>Structured data option?</th>
-                <th>You control the trigger?</th>
-                <th>Key requirement / note</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="col-label">Delivery price</td>
-                <td>Merchant Center feed</td>
-                <td>Yes, <code>shippingDetails</code></td>
-                <td>Yes</td>
-                <td>Both paths must agree for clean Search Console reporting</td>
-              </tr>
-              <tr>
-                <td class="col-label">Returns policy</td>
-                <td>Merchant Center feed</td>
-                <td>Yes, <code>MerchantReturnPolicy</code> or Organisation-level structured data</td>
-                <td>Yes</td>
-                <td>Structured data works without MCF; Organisation-level added June 2024</td>
-              </tr>
-              <tr>
-                <td class="col-label">Coupons / discounts</td>
-                <td>Merchant Center Promotions</td>
-                <td>No</td>
-                <td>Yes</td>
-                <td>Required: <code>promotion_id</code>, <code>offer_type</code>, <code>long_title</code>, valid dates</td>
-              </tr>
-              <tr>
-                <td class="col-label">Loyalty programme</td>
-                <td>Merchant Center settings</td>
-                <td>Yes, <code>MemberProgram</code> under <code>Organization</code> (June 2025)</td>
-                <td>Yes</td>
-                <td>Structured data now viable independently of MCF</td>
-              </tr>
-              <tr>
-                <td class="col-label">Seller ratings</td>
-                <td>Google Customer Reviews / aggregators</td>
-                <td>No</td>
-                <td>Partially, build review volume</td>
-                <td>~100 eligible reviews in 12 months required; MCF account not required</td>
-              </tr>
-              <tr>
-                <td class="col-label">Price drop</td>
-                <td>Merchant Center feed (60-day price history)</td>
-                <td>Supports eligibility — <code>Offer</code> + <code>priceValidUntil</code></td>
-                <td>Eligibility only, Google controls the trigger</td>
-                <td>60-day average price window; stable pricing + <code>priceValidUntil</code> on sale prices required</td>
-              </tr>
-              <tr>
-                <td class="col-label">Store nearby</td>
-                <td>Local Inventory Feed (Merchant Center) + Google Business Profile</td>
-                <td>No</td>
-                <td>Partially, feed + GBP required, Google controls display</td>
-                <td>Separate local inventory feed required for full in-stock signals and map pack inclusion</td>
-              </tr>
-              <tr>
-                <td class="col-label">Pros &amp; cons</td>
-                <td>Structured Data (<code>ItemList</code> with <code>positiveNotes</code> / <code>negativeNotes</code>)</td>
-                <td>Yes, editorial pages only</td>
-                <td>Yes, for eligible pages</td>
-                <td style="color:#991b1b;font-weight:600">Merchant product pages are explicitly ineligible. Editorial review pages only.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
         <!-- FAQ -->
         <div class="faq-block">
           <h2 id="frequently-asked-questions">Frequently asked questions</h2>
@@ -928,23 +743,8 @@
           </div>
 
           <div class="faq-item">
-            <div class="faq-q">How do I monitor eCommerce rich results in Search Console?</div>
-            <div class="faq-a">Through the Merchant Listings report, not the standard Rich Results report. Feed-driven and structured data signals for eCommerce features (delivery, returns, pricing) are reported there. Item-level errors and feature-specific warnings appear in that report.</div>
-          </div>
-
-          <div class="faq-item">
             <div class="faq-q">Why is my Store Rating not showing even though I have reviews?</div>
             <div class="faq-a">The most likely cause is the eligibility threshold: Google requires approximately 100 eligible reviews within a 12-month period before Store Ratings become visible. Below that, the rating won't display regardless of your Merchant Center setup. Check your review volume across Google Customer Reviews and any third-party aggregators you're using.</div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-q">My delivery rich result is showing incorrect data. Where do I fix it?</div>
-            <div class="faq-a">Start with Merchant Center shipping settings first. That is the primary input. If Search Console is still flagging structured data errors but the SERP shows correct data, that's a known discrepancy: GSC validates your structured data while the MCF feed overrides it in the actual result. Both paths need to agree for clean diagnostics and consistent display.</div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-q">Can I use structured data instead of Merchant Center for Loyalty Programme rich results?</div>
-            <div class="faq-a">Yes, since June 2025. Google launched Loyalty Programme Structured Data using <code>MemberProgram</code> nested under <code>Organization</code> schema, combined with <code>UnitPriceSpecification</code> for product-level loyalty benefits. This works independently of or alongside Merchant Center. The full reference is in <a href="https://developers.google.com/search/docs/appearance/structured-data/loyalty-program" rel="noopener noreferrer" target="_blank">Google's Loyalty Programme documentation</a>.</div>
           </div>
 
         </div><!-- /.faq-block -->
@@ -1023,7 +823,6 @@
         <div class="ct-toc-label">On this page</div>
         <ul class="ct-toc-list">
           <li><a href="#three-mechanisms">How features are triggered</a></li>
-          <li><a href="#page-type">By page type</a></li>
           <li><a href="#store-nearby">Store nearby</a></li>
           <li><a href="#delivery-price">Delivery price</a></li>
           <li><a href="#returns-policy">Returns policy</a></li>
@@ -1033,10 +832,8 @@
           <li><a href="#seller-ratings">Store ratings</a></li>
           <li><a href="#price-drop">Sale price &amp; price drop</a></li>
           <li><a href="#pros-cons">Pros &amp; cons</a></li>
-          <li><a href="#what-google-controls">What Google controls</a></li>
           <li><a href="#monitoring">Monitoring</a></li>
           <li><a href="#priority">Where to prioritise</a></li>
-          <li><a href="#summary-table">Quick reference</a></li>
         </ul>
       </aside>
 
