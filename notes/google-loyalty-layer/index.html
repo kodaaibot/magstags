@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/google-loyalty-layer/">
+  <title>Google&#x27;s Loyalty Layer: From Search Relevance to Brand Preference | MagsTags</title>
+  <meta name="description" content="Preferred Sources, Search Profiles, Subscription Linking and Favourite Brands are one loyalty layer sitting on top of ranking. What it means for ecommerce brands.">
+  <meta property="og:title" content="Google&#x27;s Loyalty Layer: From Search Relevance to Brand Preference | MagsTags">
+  <meta property="og:description" content="Preferred Sources, Search Profiles, Subscription Linking and Favourite Brands are one loyalty layer sitting on top of ranking. What it means for ecommerce brands.">
+  <meta property="og:url" content="https://www.magstags.com/notes/google-loyalty-layer/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google&#x27;s Loyalty Layer: From Search Relevance to Brand Preference | MagsTags">
+  <meta name="twitter:description" content="Preferred Sources, Search Profiles, Subscription Linking and Favourite Brands are one loyalty layer sitting on top of ranking. What it means for ecommerce brands.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Post layout ── */
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    /* ── Breadcrumb ── */
+    .breadcrumb{font-size:13px;color:var(--ink-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--ink-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--accent)}
+    .breadcrumb span{opacity:.5}
+    /* ── Post header ── */
+    .post-category{ font-family: 'IBM Plex Mono','Menlo',monospace;display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background: transparent;color: var(--accent-2);margin-bottom:16px; border: 1px solid var(--accent-2); }
+    .post-h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:clamp(28px,4vw,40px);font-weight: 400;color:var(--ink-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--ink-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--rule)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--ink-4);display:inline-block}
+    /* ── Body ── */
+    .post-body{font-size:16px;line-height:1.85;color:var(--ink-2)}
+    .post-lead{font-size:20px;line-height:1.7;color: var(--accent-2);margin-bottom:36px;font-weight:400}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--ink-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 500;color:var(--ink-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--ink-1);font-weight:600}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--paper-2);border:1px solid var(--rule);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--ink-2);white-space:pre}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13px;background:var(--paper-2);border:1px solid var(--rule);border-radius:5px;padding:1px 6px;color:var(--accent)}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--accent)}
+    .post-body a{color:var(--accent);text-decoration:none}
+    .post-body a:hover{text-decoration:underline}
+    .post-callout{background:var(--paper-2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    .post-callout strong{color:var(--ink-1)}
+    .post-callout-warn{background:var(--paper-2);border-left:3px solid var(--accent-2);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    html.dark .post-callout-warn{background:var(--paper-2);border-color:var(--accent-2);color:var(--ink-1)}
+    /* ── Precedence table ── */
+    .precedence-list{list-style:none;padding:0;margin:28px 0;counter-reset:prec}
+    .precedence-list li{counter-increment:prec;display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;margin-bottom:8px;background:var(--paper-2)}
+    .precedence-list li::before{content:counter(prec);display:flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:700;flex-shrink:0;margin-top:1px}
+    .prec-label{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight: 500;color:var(--ink-1);margin-bottom:2px}
+    .prec-desc{font-size:13px;color:var(--ink-3);line-height:1.5}
+    .prec-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:99px;margin-left:8px;vertical-align:middle}
+    .prec-badge.strongest{background:var(--paper-2);color:var(--ink-2)}
+    html.dark .prec-badge.strongest{background:var(--paper-2);color:var(--ink-4)}
+    .prec-badge.weakest{background:var(--paper-2);color:var(--accent-2)}
+    html.dark .prec-badge.weakest{background:var(--paper-2);color:var(--ink-4)}
+    /* ── Decision table ── */
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--paper-2);border:1px solid var(--rule);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
+    .post-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-weight: 400;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-1);background:var(--paper-2);border-bottom:1px solid var(--rule);padding:12px 16px;text-align:left;white-space:nowrap}
+    .post-table td{padding:14px 16px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top;font-size:14px;line-height:1.6}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table .col-label{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;color:var(--ink-1);white-space:nowrap}
+    .post-table .col-pick{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;color:var(--accent);white-space:nowrap}
+    .post-table tr.is-exit td{color:var(--ink-4);font-style:italic}
+    @media(max-width:600px){
+      .post-table th,.post-table td{padding:10px 12px;font-size:13px}
+      .post-table .col-label,.post-table .col-pick{white-space:normal}
+    }
+    /* ── FAQ ── */
+    .faq-block{margin-top:52px}
+    .faq-q{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight:500;color:var(--ink-1);margin:28px 0 12px;line-height:1.4;letter-spacing:-.005em}
+    .faq-q:first-of-type{margin-top:0}
+    .faq-a{font-family:'Inter',system-ui,sans-serif;font-size:14.5px;color:var(--ink-2);line-height:1.7;margin:0 0 28px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+    .faq-a:last-of-type{border-bottom:none;padding-bottom:0;margin-bottom:0}
+    /* ── Sources ── */
+    .sources{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight: 400;color:var(--ink-1);margin:0 0 20px 0}
+    .sources ul{padding-left:0;list-style:none}
+    .sources li{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--accent);font-weight:800}
+    .sources a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--ink-2);font-weight:600}
+    /* ── TOC Sidebar ── */
+    .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+    .ct-content{min-width:0}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--ink-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--rule)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--ink-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--accent);border-left-color:var(--accent)}
+    .ct-toc-list li a.active{color:var(--accent);border-left-color:var(--accent);font-weight: 500}
+    /* ── Author bio ── */
+    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--rule);border-radius:0}
+    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-4);margin-bottom:20px}
+    .author-inner{display:flex;align-items:flex-start;gap:24px}
+    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--rule)}
+    .author-details{flex:1;min-width:0}
+    .author-name{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 400;color:var(--ink-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--accent)}
+    .author-role{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;color:var(--accent);font-weight:600;margin-bottom:12px}
+    .author-bio{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:16px}
+    .author-links{display:flex;gap:12px;flex-wrap:wrap}
+    .author-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-3);text-decoration:none;padding:6px 14px;border:1px solid var(--rule);border-radius:99px;transition:all .15s}
+    .author-link:hover{border-color:var(--accent);color:var(--accent)}
+    /* ── Related articles ── */
+    .related-articles{margin-top:56px;padding-top:40px;border-top:1px solid var(--rule)}
+    .related-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-4);margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .related-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:20px}
+    .related-card-title{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:600;color:var(--ink-1);text-decoration:none;display:block;margin-bottom:8px;line-height:1.4}
+    .related-card-title:hover{color:var(--accent)}
+    .related-card-desc{font-size:12px;color:var(--ink-3);line-height:1.6}
+    /* ── Back link ── */
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--accent)}
+    .ct-toc-toggle{display:none}
+    @media(max-width:960px){
+      .ct-layout{grid-template-columns:1fr;gap:0}
+      .ct-toc{position:static;padding:0;border:1px solid var(--rule);border-radius:10px;margin-bottom:32px;order:-1;max-height:none;overflow-y:visible;overflow:hidden}
+      .ct-toc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--paper-2);border:none;padding:14px 16px;font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:600;color:var(--ink-1);cursor:pointer;text-align:left}
+      .ct-toc-toggle .ct-toc-arrow{font-size:11px;color:var(--ink-4);transition:transform .2s}
+      .ct-toc-toggle.open .ct-toc-arrow{transform:rotate(180deg)}
+      .ct-toc-label{display:none}
+      .ct-toc-list{border-left:none;flex-direction:column;flex-wrap:nowrap;gap:0;border-top:1px solid var(--rule);display:none;padding:8px 0}
+      .ct-toc-list.open{display:flex}
+      .ct-toc-list li a{border-left:none;padding:8px 16px;font-size:13px}
+    }
+  
+    /* ── Brand overrides applied at end of style block ── */
+
+    /* Lead — Inter, ink-1, no italic, no border */
+    .post-lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-1); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
+
+    /* Body strong — saffron marker stripe */
+    .post-body strong { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
+    .post-callout strong, .post-callout-warn strong { background: transparent; padding: 0; font-weight: 600; }
+
+    /* Callouts — warm cream + accent left rule */
+    .post-callout { background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+    .post-callout-warn { background: var(--paper-2); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+
+    /* Compare grid — cream + accent/ink-4 left rules (no green/red) */
+    .compare-col { padding: 22px; background: var(--paper-2); border: 1px solid var(--rule); border-left-width: 3px; border-radius: 0 4px 4px 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+    .compare-col.yes { border-left-color: var(--accent); }
+    .compare-col.no { border-left-color: var(--ink-4); }
+
+    /* Tables — editorial, label-first columns */
+    .post-table-wrap { margin: 36px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; background: var(--paper); display: block; }
+    .post-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+    .post-table thead th { font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 14px 20px; text-align: left; vertical-align: bottom; }
+    .post-table tbody td { padding: 18px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+    .post-table tbody tr:last-child td { border-bottom: none; }
+    .post-table tbody tr:hover { background: rgba(224, 146, 38, 0.05); }
+    .post-table tbody td:first-child, .post-table .col-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-1); width: 20%; min-width: 130px; padding-top: 20px; white-space: normal; }
+    @media (max-width: 720px) {
+      .post-table-wrap { overflow-x: visible; }
+      .post-table thead { display: none; }
+      .post-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+      .post-table tbody tr:last-child { border-bottom: none; }
+      .post-table tbody td { display: block; padding: 4px 20px; border: none; width: auto !important; min-width: 0; }
+      .post-table tbody td:first-child, .post-table .col-label { color: var(--accent-2); margin-bottom: 4px; font-size: 11px; padding-top: 8px; }
+      .post-table tbody tr:hover { background: transparent; }
+    }
+
+    /* Code blocks — IBM Plex Mono on cream */
+    .post-body pre { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink-2); }
+    .post-body code { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; color: var(--accent); }
+
+    /* Bullets — teal markers */
+    .post-body ul li::marker { color: var(--accent); }
+
+    /* Numbered lists — Plex Mono counters 01., 02., ... */
+    .post-body ol { counter-reset: post-counter; list-style: none; padding-left: 0; margin-bottom: 22px; }
+    .post-body ol > li { counter-increment: post-counter; position: relative; padding-left: 44px; margin-bottom: 12px; line-height: 1.75; }
+    .post-body ol > li::before { content: counter(post-counter, decimal-leading-zero) "."; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); letter-spacing: .02em; line-height: 1.85; }
+
+    /* Category eyebrow with 32px rule prefix */
+    .post-category { font-family: var(--font-mono); display: inline-flex !important; align-items: center; gap: 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2) !important; margin-bottom: 22px; padding: 0 !important; background: transparent !important; border: none !important; border-radius: 0 !important; }
+    .post-category::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+
+    /* Sparkle ornaments between sections + before author card */
+    .post-body h2:not(:first-of-type) { margin-top: 44px; }
+    .author-card { padding-top: 64px !important; position: relative; }
+    .author-card::before { content: ''; display: block; width: 16px; height: 16px; margin: 0 auto 32px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .7; }
+
+    /* Related articles — 3-up card grid */
+    .related-articles { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--rule); }
+    .related-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 28px; display: inline-flex; align-items: center; gap: 14px; }
+    .related-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .related-card { position: relative; padding: 22px 24px 24px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; transition: border-color .15s, transform .15s, box-shadow .15s; display: flex; flex-direction: column; gap: 10px; }
+    .related-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .related-card-title { font-family: var(--font-display); font-size: 15.5px; font-weight: 500; line-height: 1.3; color: var(--ink-1); letter-spacing: -.01em; text-decoration: none; transition: color .15s; }
+    .related-card-title::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+    .related-card:hover .related-card-title { color: var(--accent); }
+    .related-card-desc { font-family: var(--font-body); font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+    @media (max-width: 720px) { .related-grid { grid-template-columns: 1fr; gap: 12px; } }
+
+    /* Sources — numbered editorial references */
+    .post-sources { margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--rule); }
+    .post-sources-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 22px; display: inline-flex; align-items: center; gap: 14px; }
+    .post-sources-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .post-sources-list { counter-reset: src-counter; list-style: none; padding: 0; margin: 0; }
+    .post-sources-list li { counter-increment: src-counter; position: relative; padding: 16px 0 16px 52px; border-bottom: 1px solid var(--rule); }
+    .post-sources-list li:last-child { border-bottom: none; }
+    .post-sources-list li::before { content: counter(src-counter, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-4); letter-spacing: .04em; }
+    .post-sources-list .src-link { font-family: var(--font-body); font-size: 14.5px; color: var(--ink-1); line-height: 1.55; text-decoration: none; font-weight: 500; display: block; margin-bottom: 4px; }
+    .post-sources-list .src-link:hover { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+    .post-sources-list .src-meta { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+
+
+    /* FAQ block — Plex Mono Q (weight 500, smaller), Inter A, rule between pairs */
+    .faq-q { font-family: var(--font-mono) !important; font-size: 16px !important; font-weight: 500 !important; color: var(--ink-1) !important; margin: 28px 0 12px !important; line-height: 1.4 !important; letter-spacing: -.005em !important; }
+    .faq-q:first-of-type { margin-top: 0 !important; }
+    .faq-a { font-family: var(--font-body) !important; font-size: 14.5px !important; color: var(--ink-2) !important; line-height: 1.7 !important; margin: 0 0 28px !important; padding-bottom: 28px !important; border-bottom: 1px solid var(--rule) !important; }
+    .faq-a:last-of-type { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    /* .faq-block with .faq-item wrapper variant */
+    .faq-item { padding: 0 !important; border-bottom: 1px solid var(--rule) !important; margin-bottom: 24px !important; padding-bottom: 24px !important; }
+    .faq-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    .faq-item .faq-q { margin: 0 0 8px !important; padding-bottom: 0 !important; border-bottom: none !important; }
+    .faq-item .faq-a { margin: 0 !important; padding-bottom: 0 !important; border-bottom: none !important; }
+
+    /* Dark mode — flip ink/paper tokens scoped to post content only (site chrome unaffected) */
+    html.dark .post-wrap, html[data-theme="dark"] .post-wrap,
+    html.dark #blog-content, html[data-theme="dark"] #blog-content {
+      --ink-1:   #f5f1ea;
+      --ink-2:   #ebe5d7;
+      --ink-3:   rgba(245,241,234,.7);
+      --ink-4:   rgba(245,241,234,.5);
+      --paper:   #1a1916;
+      --paper-2: #25221e;
+      --rule:    rgba(245,241,234,.12);
+    }
+    /* Override base.css's html.dark h1-h4 rule for headings inside post-wrap */
+    html.dark .post-wrap h1, html.dark .post-wrap h2, html.dark .post-wrap h3, html.dark .post-wrap h4,
+    html[data-theme="dark"] .post-wrap h1, html[data-theme="dark"] .post-wrap h2, html[data-theme="dark"] .post-wrap h3, html[data-theme="dark"] .post-wrap h4 {
+      color: var(--ink-1);
+    }
+</style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.magstags.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Notes",
+      "item": "https://www.magstags.com/notes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Google's Loyalty Layer: From Search Relevance to Brand Preference",
+      "item": "https://www.magstags.com/notes/google-loyalty-layer/"
+    }
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Google's Loyalty Layer: From Search Relevance to Brand Preference",
+  "description": "Preferred Sources, Search Profiles, Subscription Linking and Favourite Brands are one loyalty layer sitting on top of ranking. What it means for ecommerce brands.",
+  "datePublished": "2026-07-08",
+  "dateModified": "2026-07-08",
+  "author": {
+    "@type": "Person",
+    "name": "Mags Sikora",
+    "url": "https://www.magstags.com/mags-sikora/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MagsTags",
+    "url": "https://www.magstags.com"
+  },
+  "image": "https://www.magstags.com/og-image.png",
+  "url": "https://www.magstags.com/notes/google-loyalty-layer/"
+}
+</script>
+  <script src="/toc-generator.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
+  })();
+</script>
+<div id="blog-content">
+  <div class="post-wrap">
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Google&#x27;s Loyalty Layer: From Search Relevance to Brand Preference</span>
+    </nav>
+    <span class="post-category">Google SERP Tests</span>
+    <h1 class="post-h1">Google&#x27;s Loyalty Layer: From Search Relevance to Brand Preference</h1>
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>8 Jul 2026</span>
+      <span class="post-meta-dot"></span><span>7 min read</span>
+    </div>
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+          <style>
+  figure.screenshot-wrap{margin:30px 0;}
+  figure.screenshot-wrap img{width:100%;height:auto;display:block;border:1px solid var(--rule);border-radius:4px;}
+  figure.screenshot-wrap figcaption{font-size:13px;color:var(--ink-3);margin-top:10px;}
+</style>
+
+<p class="post-lead">Google is adding a second layer to Search: declared preference. Alongside the ranking it infers from links, content and behaviour, it now lets users state out loud which sources they want to see more of, and rewards that choice with visibility, AI Overviews included. For twenty years the job was to be relevant. This layer is about <strong>being preferred</strong>.</p>
+
+<p>It started in publishing (Barry Adams calls the pattern an <a href="https://www.seoforgooglenews.com/p/google-audience-loyalty-ecosystem" target="_blank" rel="noopener">audience loyalty ecosystem</a>), but it's crossing into retail, and that's the part the publishing coverage skips. So this is the retail read: the model, what you can deploy today, and where it appears to be heading.</p>
+
+<h2 id="the-model">The model, in one pass</h2>
+
+<p>The strategic pattern is the same across each feature. The user makes an explicit choice: follow, prefer, subscribe, save. Google then uses that declaration to personalise how the chosen source appears across that user's experiences. Not a signal inferred from behaviour. A preference stated once, stored against the account, applied on future queries. It sits on top of the ranking you already compete for, and it's earned from your audience rather than from Google's crawl.</p>
+
+<p>Four features carry it, at different stages of maturity and different levels of relevance to retailers:</p>
+
+<div class="post-table-wrap">
+  <table class="post-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>User action</th>
+        <th>Surface affected</th>
+        <th>Status</th>
+        <th>Retail relevance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Preferred Sources</td>
+        <td>Prefer a domain</td>
+        <td>Search + AI surfaces</td>
+        <td>Live</td>
+        <td>Deployable now</td>
+      </tr>
+      <tr>
+        <td>Favourite Brands</td>
+        <td>Save a brand</td>
+        <td>Shopping results</td>
+        <td>Unannounced test</td>
+        <td>Most strategically relevant</td>
+      </tr>
+      <tr>
+        <td>Search Profiles</td>
+        <td>Follow an entity</td>
+        <td>Search + Discover</td>
+        <td>Limited rollout (US)</td>
+        <td>Notable brands only</td>
+      </tr>
+      <tr>
+        <td>Subscription Linking</td>
+        <td>Link a subscription</td>
+        <td>Search / Discover / AI</td>
+        <td>Live</td>
+        <td>Mostly publisher-focused</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="preferred-sources">What brands can test today: Preferred Sources</h2>
+
+<p><strong>Preferred Sources</strong> launched in the US and India in <a href="https://blog.google/products-and-platforms/products/search/preferred-sources/" target="_blank" rel="noopener">August 2025</a>, rolled out globally in April 2026, and since May 2026 <a href="https://blog.google/products-and-platforms/products/search/original-high-quality-content-search/" target="_blank" rel="noopener">feeds AI Overviews and AI Mode</a>. Users pick the sites they want to see more of, and those sites surface more often in Top Stories or a dedicated "From your sources" block. The part that matters for a brand: the opt-in isn't restricted to news publishers anymore. Google <a href="https://developers.google.com/search/docs/appearance/preferred-sources" target="_blank" rel="noopener">documents a deep link</a> (<code>google.com/preferences/source?q=yourdomain.com</code>) plus downloadable "Add as a preferred source on Google" button assets, so any site can send its audience straight to a one-click opt-in for its own domain.</p>
+
+<p>The reason it's worth acting on is the AI surface. Because Google has extended preferred-source personalisation into AI Overviews and AI Mode, the feature opens a possible route to greater visibility for opted-in users across generative Search, one of the few direct, user-controlled mechanisms brands can currently test in AI-led Search.</p>
+
+<p>Be clear-eyed about the limits. It only changes results for users who actively opt in. It's a general "show me more of this source" signal, not a product-level one. It won't hand you a Shopping carousel. There's no aggregate ranking lift, and it is not a guaranteed route into AI Overviews. Treat it as an early-stage visibility test aimed at an audience that already trusts you, not a ranking lever.</p>
+
+<h2 id="favourite-brands">Where retail is heading: Favourite Brands</h2>
+
+<p>The retail-native version is <strong>Favourite Brands</strong>, spotted in the wild by <a href="https://www.seroundtable.com/google-search-save-your-favorite-brands-35058.html" target="_blank" rel="noopener">Barry Schwartz</a> and detailed in the <a href="/notes/google-favourite-brands/">Favourite Brands note</a>. Search a generic term ("underwear", "trainers", "coffee maker") and a "Save your favorite brands to get more relevant results" widget can appear mid-results. Save one, and a "Popular from your favorite brands" carousel shows up, populated entirely with that brand's products. The selection persists in Shopping preferences, which already supports loyalty-programme connections.</p>
+
+<figure class="screenshot-wrap">
+  <img src="img/google-shopping-jeans-all-products.webp" alt="Google Shopping results for the query 'jeans' with no favourite brands saved, showing a generic mix of retailers" width="1011" height="695" loading="lazy" decoding="async">
+  <figcaption>Before: a generic "jeans" query, with no favourite brands saved. A standard mix of retailers.</figcaption>
+</figure>
+
+<figure class="screenshot-wrap">
+  <img src="img/google-search-jeans-favourite-brands-carousel.webp" alt="Google Search for 'jeans' showing the 'Save your favorite brands' widget and a 'Popular from your favorite brands' product carousel" width="978" height="586" loading="lazy" decoding="async">
+  <figcaption>After, in Search: once brands are saved, a "Popular from your favorite brands" carousel appears in the results.</figcaption>
+</figure>
+
+<figure class="screenshot-wrap">
+  <img src="img/google-shopping-jeans-favourite-brands.webp" alt="Google Shopping results for 'jeans' led by a 'From your favorite brands' row of saved-brand products" width="1034" height="925" loading="lazy" decoding="async">
+  <figcaption>And in Shopping: the same saved brands surface as a "From your favorite brands" row above all products.</figcaption>
+</figure>
+
+<p>It's Preferred Sources pointed at commercial brands instead of editorial sources, and it's the pillar that matters most to a retailer. It's also the least certain: unlike Preferred Sources, there's no brand-controlled deep link or button yet, so there's no consistent way to send customers to a one-click "save us." Any customer prompt would remain manual for now.</p>
+
+<div class="post-callout"><strong>Status check.</strong> Favourite Brands is an observed test, not a shipped product. As of writing there's been no Google announcement and no brand tooling. Treat it as a strong signal of direction and prepare the messaging and customer touchpoints early, but don't plan a campaign around a button that doesn't exist yet.</div>
+
+<h2 id="beyond-retail">The same pattern, beyond retail</h2>
+
+<p>Two more features round out the picture. They're less central to a retail reader, but they show this is a deliberate, broad strategy rather than a one-off test. <strong>Search Profiles</strong>, <a href="https://blog.google/products-and-platforms/products/search/a-new-profile-to-help-publishers-and-creators-highlight-their-work-on-search/" target="_blank" rel="noopener">announced in June 2026</a> and US-only to start, gives publishers and creators with a sizeable following on at least one major social or video platform a claimable profile page; users can follow a source directly on Search and are then more likely to see it in Discover. It's framed for publishers and creators, though some notable brands with a substantial following and an established entity presence may also fit the eligibility model. <strong>Subscription Linking</strong> ties a <a href="https://developers.google.com/news/subscription-linking" target="_blank" rel="noopener">publisher's subscriber data</a> to users' Google accounts, then surfaces that content in a "From your subscriptions" panel across Search, Discover and AI surfaces. It's mostly a publisher mechanism, but the same declared-commitment logic.</p>
+
+<h2 id="why-it-matters">Why it matters commercially</h2>
+
+<p>None of this is designed to give anyone their traffic back. These features aren't built to restore broad referral traffic; they give extra visibility to users who've already expressed an affinity with the source. The person who saves you as a favourite brand is unlikely to be a completely cold searcher comparing seven unfamiliar retailers. They already know, follow or buy from you, and they're telling Google to give the brand greater weight. Google isn't primarily opening a cold-acquisition channel here; it's building an affinity and retention layer around an existing relationship. Which does mean part of the modern SEO remit is now persuading customers to change a setting inside Google on your behalf. Not something that was on the original job description.</p>
+
+<h2 id="what-it-changes">What it changes in SEO</h2>
+
+<p>As the layer spreads, three things follow for how you read the SERP.</p>
+
+<p><strong>The split SERP.</strong> Once declared preference feeds results, two people running the same query see different pages, not because of location or device, but because of preferences sitting in their accounts. "Ranking for a term" stops being a single fact and starts meaning different things for different segments of your audience.</p>
+
+<p><strong>The blended average.</strong> If declared-preference personalisation expands, Search Console impressions and clicks will increasingly reflect an affinity-weighted reality rather than a universal SERP. Your aggregated numbers quietly merge "how I rank for everyone" with "how I rank for people who already saved me," and those are not the same figure. It's the interpretation problem already created by personalised Search, potentially extending further into commerce-related visibility.</p>
+
+<p><strong>A potentially durable advantage.</strong> A brand that persuades its audience to save it holds an affinity signal competitors cannot directly replicate through better feeds, content or backlinks, and for high-affinity customers that can be a persistent edge. Worth being precise, though: this is an influence on personalisation, not an override. Relevance, eligibility, inventory and quality still apply, and Google can change how much weight the signal carries. Call it a durable affinity advantage, not visibility no one can touch.</p>
+
+<h2 id="what-to-do">What to do</h2>
+
+<h3 id="do-now">Do now</h3>
+
+<ul>
+  <li><strong>Test the Preferred Sources CTA.</strong> It's the one shippable piece. Use Google's deep link (<code>google.com/preferences/source?q=yourdomain.com</code>) and button assets; check your domain is eligible first.</li>
+  <li><strong>Place it where affinity already lives.</strong> Editorial and guide pages, the logged-in account area, post-purchase screens, loyalty emails and newsletters, aimed at people who've already chosen you. Frame it as "stay connected," not "help us rank."</li>
+  <li><strong>Define the test around what you can actually see.</strong> Track CTA engagement and downstream visibility indicators, and accept that Google may not expose a clean opted-in audience segment to measure directly.</li>
+</ul>
+
+<h3 id="prepare-for">Prepare for</h3>
+
+<ul>
+  <li><strong>Favourite Brands: monitor and prepare the messaging.</strong> Identify the social, account and loyalty touchpoints where a "save us" prompt could live if Google ships consistent brand tooling, and draft the messaging now. Don't actively promote it yet: the save is manual and the experience isn't reliably available to your audience.</li>
+  <li><strong>Loyalty-programme connections.</strong> Google Shopping preferences already support linking loyalty accounts, a second declared-affinity hook pointing the same way.</li>
+  <li><strong>Search Profiles, where eligible.</strong> Notable brands with a substantial following and an established entity presence should check whether they qualify for the US rollout.</li>
+</ul>
+
+<h3 id="dont-claim">Don't claim</h3>
+
+<ul>
+  <li><strong>Aggregate ranking gains.</strong> The effect is per-user, for opted-in users only.</li>
+  <li><strong>Guaranteed inclusion in AI Overviews.</strong> Preferred Sources raises the odds for opted-in users; it doesn't guarantee placement.</li>
+  <li><strong>A confirmed retail rollout.</strong> Favourite Brands is still an unannounced test.</li>
+</ul>
+
+<p>Relevance gets you ranked. Preference gets you chosen. Preferred Sources is the only mechanism brands can actively test today; the rest should be monitored and prepared for, not treated as established retail channels.</p>
+
+<div class="faq-block">
+<h2 id="faq">Frequently asked questions</h2>
+
+<p class="faq-q">Which of these features actually apply to a retail brand today?</p>
+<p class="faq-a">Preferred Sources is the deployable one: the opt-in works for any domain, and Google supplies a deep link and button assets, so a brand can run a CTA today. Search Profiles may be relevant if the brand meets Google's eligibility criteria: framed for publishers and creators, but not exclusive to them. Favourite Brands is the retail-specific one, but it's an unannounced test with no brand tooling yet. Subscription Linking is news/publishing only.</p>
+
+<p class="faq-q">Is Favourite Brands confirmed?</p>
+<p class="faq-a">No. As of 8 July 2026, it remains an observed test with no Google announcement or brand-controlled tooling. Treat it as early signal, not established behaviour.</p>
+
+<p class="faq-q">Does saving a brand affect paid Shopping ads?</p>
+<p class="faq-a">Unconfirmed. The "Popular from your favorite brands" carousel appears in the organic area and isn't labelled as an ad. Whether declared preference also touches paid placement is unknown.</p>
+
+<p class="faq-q">Will this mess up my Search Console data?</p>
+<p class="faq-a">Potentially, if personalisation scales. Personalised results mean impressions and clicks increasingly reflect affinity segments rather than one universal SERP, so aggregated figures get harder to interpret without accounting for that variance.</p>
+</div>
+
+<div class="sources">
+<h2>Sources and further reading</h2>
+<ul>
+  <li><strong>Related on MagsTags:</strong> <a href="/notes/google-favourite-brands/">Google Favourite Shopping Brand: Personalisation in Search</a>. The retail widget in detail, including what the SERP looks like before and after a brand is saved.</li>
+  <li><strong>Related on MagsTags:</strong> <a href="/notes/what-is-agentic-commerce/">What Is Agentic Commerce? How AI Agents Change the Shopping Journey</a>. The wider shift in how discovery and buying decisions get made.</li>
+  <li><strong>Google Search Central:</strong> <a href="https://developers.google.com/search/docs/appearance/preferred-sources" target="_blank" rel="noopener">Preferred sources</a>. The deep-link format and button assets for the CTA.</li>
+  <li><strong>Google blog:</strong> <a href="https://blog.google/products-and-platforms/products/search/preferred-sources/" target="_blank" rel="noopener">How to select your preferred sources in Top Stories</a></li>
+  <li><strong>Google blog:</strong> <a href="https://blog.google/products-and-platforms/products/search/a-new-profile-to-help-publishers-and-creators-highlight-their-work-on-search/" target="_blank" rel="noopener">A new profile to help publishers and creators highlight their work on Search</a>. Search Profiles.</li>
+  <li><strong>Google for Developers:</strong> <a href="https://developers.google.com/news/subscription-linking" target="_blank" rel="noopener">Subscription linking</a></li>
+  <li><strong>SEO for Google News:</strong> <a href="https://www.seoforgooglenews.com/p/google-audience-loyalty-ecosystem" target="_blank" rel="noopener">Google is building an Audience Loyalty ecosystem</a>. Barry Adams on the publishing side of the same pattern.</li>
+</ul>
+</div>
+          <div class="author-card">
+  <div class="author-label">Written by</div>
+  <div class="author-inner">
+    <img class="author-photo" src="/mags-sikora/mags-sikora-portrait-bio.jpg" alt="Portrait of Mags Sikora" width="80" height="80" loading="lazy" decoding="async">
+    <div class="author-details">
+      <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+      <div class="author-role">Senior SEO Consultant, SEO Director</div>
+      <p class="author-bio">Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+      <div class="ct-toc">
+        <button class="ct-toc-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.nextElementSibling.classList.toggle('open')">
+          On this page <span class="ct-toc-arrow">▼</span>
+        </button>
+        <div class="ct-toc-label">On this page</div>
+        <ol class="ct-toc-list"></ol>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
+</body>
+</html>
