@@ -14,7 +14,7 @@
   </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="https://www.magstags.com/notes/google-shipping-return-settings/" rel="canonical"/>
-<meta content="Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Here is the correct precedence order and a practical decision tree." name="description"/>
+<meta content="Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Google publishes two slightly different precedence lists; here is how they fit together and which configuration to use." name="description"/>
 <link href="/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="/favicon-512.png" rel="icon" sizes="512x512" type="image/png"/>
@@ -254,20 +254,20 @@
     }
 </style>
 <meta content="Google Shipping and Return Policies: Where to Configure Them and What Takes Precedence | MagsTags" property="og:title"/>
-<meta content="Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Here is the correct precedence order and a practical decision tree." property="og:description"/>
+<meta content="Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Google publishes two slightly different precedence lists; here is how they fit together and which configuration to use." property="og:description"/>
 <meta content="https://www.magstags.com/notes/google-shipping-return-settings/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="https://www.magstags.com/og-image.png" property="og:image"/>
 <meta content="MagsTags" property="og:site_name"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Google Shipping and Return Policies: Where to Configure Them and What Takes Precedence | MagsTags" name="twitter:title"/>
-<meta content="Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Here is the correct precedence order and a practical decision tree." name="twitter:description"/>
+<meta content="Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Google publishes two slightly different precedence lists; here is how they fit together and which configuration to use." name="twitter:description"/>
 <meta content="https://www.magstags.com/og-image.png" name="twitter:image"/>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Google Shipping and Return Policies: Where to Configure Them and What Takes Precedence",
-  "description": "Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Here is the correct precedence order and a practical decision tree.",
+  "description": "Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Google publishes two slightly different precedence lists; here is how they fit together and which configuration to use.",
   "url": "https://www.magstags.com/notes/google-shipping-return-settings/",
   "datePublished": "2026-05-28",
   "dateModified": "2026-07-21",
@@ -334,42 +334,66 @@
 <li><strong>12 November 2025:</strong> Google expanded the Search Console feature to websites it identifies as online merchants, even when they do not have a Merchant Center account. At the same time, Google added organisation-level shipping policy markup using <code>ShippingService</code>.</li>
 </ol>
 <p>The 2025 announcement did not replace Merchant Center, feeds or product-level markup. It added two more accessible ways for merchants without Merchant Center to provide general shipping and return information: Search Console settings or organisation-level structured data.</p>
-<h2 id="sources">The five sources Google currently lists</h2>
-<p>Google's Search documentation gives the following order of precedence, from strongest to weakest, when the same shipping or return information is supplied in multiple places:</p>
+<h2 id="sources">Google publishes two precedence lists</h2>
+
+<p>Google's current documentation does not present one completely consistent precedence list. Its dedicated shipping and return policy pages show four configuration layers, while the broader merchant listing documentation adds product-level Merchant Center feeds above them.</p>
+
+<p>This is not simply a case of the dedicated policy pages being outdated. Google's return policy documentation was last updated on 10 December 2025, after the November 2025 expansion of shipping and return options. The shipping policy page was last updated on 7 January 2026. Both continue to show the four-level hierarchy.</p>
+
+<h3>Dedicated shipping and return policy documentation</h3>
+
+<p>Google's dedicated shipping and return policy pages give the following order, from strongest to weakest:</p>
+
+<ol>
+  <li><strong>Content API for Shopping settings</strong></li>
+  <li><strong>Settings in Merchant Center or Search Console</strong></li>
+  <li><strong>Product-level merchant listing markup</strong></li>
+  <li><strong>Organisation-level markup</strong></li>
+</ol>
+
+<p>Google gives a direct example: when return policy information is provided through both Search Console and structured data on the website, Google uses the information configured in Search Console.</p>
+
+<h3>Broader merchant listing documentation</h3>
+
+<p>Google's merchant listing documentation, last updated on 7 July 2026, gives a broader five-level order:</p>
+
 <ul class="precedence-list">
-<li>
-<div>
-<div class="prec-label">Product-level feeds submitted in Merchant Center <span class="prec-badge strongest">Strongest</span></div>
-<div class="prec-desc">Product-specific shipping or return data supplied in a Merchant Center data source. This should normally be used for exceptions, not duplicated across every product without a reason.</div>
-</div>
-</li>
-<li>
-<div>
-<div class="prec-label">Settings in the Content API for Shopping</div>
-<div class="prec-desc">This is the wording still used in Google's published Search precedence list. Merchant API is replacing Content API for Shopping and can manage shipping settings and online return policies, but Google has not yet republished this precedence list using the Merchant API terminology.</div>
-</div>
-</li>
-<li>
-<div>
-<div class="prec-label">Settings in Merchant Center or Search Console</div>
-<div class="prec-desc">General account-level policies. Search Console provides a simplified interface; Merchant Center supports more detailed configuration and product groups or exceptions.</div>
-</div>
-</li>
-<li>
-<div>
-<div class="prec-label">Product-level merchant listing markup</div>
-<div class="prec-desc"><code>OfferShippingDetails</code> and product-level <code>MerchantReturnPolicy</code> nested under an <code>Offer</code>.</div>
-</div>
-</li>
-<li>
-<div>
-<div class="prec-label">Organisation-level markup <span class="prec-badge weakest">Fallback</span></div>
-<div class="prec-desc">A standard <code>ShippingService</code> or <code>MerchantReturnPolicy</code> nested under <code>Organization</code>, <code>OnlineStore</code> or an appropriate <code>LocalBusiness</code> subtype.</div>
-</div>
-</li>
+  <li>
+    <div>
+      <div class="prec-label">Product-level feeds submitted in Merchant Center <span class="prec-badge strongest">Strongest</span></div>
+      <div class="prec-desc">Product-specific shipping or return information submitted through a Merchant Center product data source.</div>
+    </div>
+  </li>
+  <li>
+    <div>
+      <div class="prec-label">Settings in the Content API for Shopping</div>
+      <div class="prec-desc">Account shipping or return settings submitted programmatically. Merchant API is replacing Content API for Shopping, although Google's published Search precedence lists still use the older Content API terminology.</div>
+    </div>
+  </li>
+  <li>
+    <div>
+      <div class="prec-label">Settings in Merchant Center or Search Console</div>
+      <div class="prec-desc">General account-level shipping and return policies configured through either interface.</div>
+    </div>
+  </li>
+  <li>
+    <div>
+      <div class="prec-label">Product-level merchant listing markup</div>
+      <div class="prec-desc"><code>OfferShippingDetails</code> and product-level <code>MerchantReturnPolicy</code> nested under an <code>Offer</code>.</div>
+    </div>
+  </li>
+  <li>
+    <div>
+      <div class="prec-label">Organisation-level markup <span class="prec-badge weakest">Fallback</span></div>
+      <div class="prec-desc">A general <code>ShippingService</code> or <code>MerchantReturnPolicy</code> nested under <code>Organization</code>, <code>OnlineStore</code> or an appropriate <code>LocalBusiness</code> subtype.</div>
+    </div>
+  </li>
 </ul>
+
+<p>Google does not explicitly explain why the dedicated policy pages omit product-level Merchant Center feeds. The safest reading is that the dedicated pages compare API and account settings with structured data, while the broader merchant listing guide also accounts for product-specific data submitted through Merchant Center feeds.</p>
+
 <div class="post-callout-warn">
-<strong>Precedence is not the same as implementation advice.</strong> Product-level feed data ranks first when it exists, but Google recommends starting with account-level shipping settings and using the product-level <code>shipping</code> attribute when an individual product needs an override. The same principle applies to returns: use a standard policy, then assign exception policies or product-level return data where needed.
+  <strong>Precedence is not the same as implementation advice.</strong> Product-level Merchant Center feed data has the highest precedence when it has been supplied for a particular product. That does not mean every merchant with a feed should configure shipping and returns individually for every SKU. The standard policy should normally be managed at account or organisation level, with product-level data used for genuine exceptions.
 </div>
 <h2 id="scope-before-precedence">Scope comes before precedence</h2>
 <p>The precedence list is easy to misread as a recommendation to put everything into the highest-ranking source. It is the misreading I see most often, and it is not what Google says.</p>
@@ -416,7 +440,7 @@
 <li>Use <code>shippingDetails</code> with <code>OfferShippingDetails</code> under <code>Offer</code>.</li>
 <li>Use <code>hasMerchantReturnPolicy</code> with <code>MerchantReturnPolicy</code> under <code>Offer</code>.</li>
 </ul>
-<p>Product-level structured data overrides organisation-level structured data for that product. However, it remains below Merchant Center product feeds, API-managed settings and Merchant Center or Search Console account settings in Google's published precedence order.</p>
+<p>Product-level structured data overrides organisation-level structured data for that product. Google's dedicated shipping and return policy pages place it below Content API settings and Merchant Center or Search Console settings. The broader merchant listing documentation additionally places product-level Merchant Center feeds above all of those sources.</p>
 <h2 id="decision-tree">The decision tree</h2>
 <p>Start by separating the general policy from product exceptions.</p>
 <div class="post-table-wrap">
@@ -530,7 +554,7 @@ Do you already use Merchant Center?
 <p class="faq-q">Does product-level markup override organisation-level markup?</p>
 <p class="faq-a">Yes, for that product. Google explicitly recommends product-level shipping or return markup when a product needs to override the general organisation policy.</p>
 <p class="faq-q">Where does Merchant API fit?</p>
-<p class="faq-a">Merchant API is replacing Content API for Shopping and supports account shipping settings and online return policies. Google's current Search precedence page still names Content API for Shopping, so it is safer to reproduce the published ladder exactly and add a migration note rather than silently substituting Merchant API into the list.</p>
+<p class="faq-a">Merchant API is replacing Content API for Shopping and supports account-level shipping settings and online return policies. Google's current shipping, return and merchant listing precedence sections still use the term Content API for Shopping. The article therefore preserves Google's published terminology while noting the ongoing API migration.</p>
 </div>
 <div class="sources">
 <h2>Sources and further reading</h2>
@@ -567,7 +591,7 @@ Do you already use Merchant Center?
           On this page <span class="ct-toc-arrow">▼</span>
 </button>
 <div class="ct-toc-label">On this page</div>
-<ol class="ct-toc-list"><li><a href="#what-changed">What changed</a></li><li><a href="#sources">The five sources</a></li><li><a href="#scope-before-precedence">Scope before precedence</a></li><li><a href="#merchant-center">Merchant Center</a></li><li><a href="#search-console">Search Console</a></li><li><a href="#organisation-markup">Organisation markup</a></li><li><a href="#product-markup">Product markup</a></li><li><a href="#decision-tree">The decision tree</a></li><li><a href="#what-not-to-do">What not to do</a></li><li><a href="#worked-example">Worked example</a></li><li><a href="#mismatches">Mismatch risk</a></li><li><a href="#source-of-truth">Governance model</a></li><li><a href="#faq">FAQ</a></li></ol>
+<ol class="ct-toc-list"><li><a href="#what-changed">What changed</a></li><li><a href="#sources">Google's two precedence lists</a></li><li><a href="#scope-before-precedence">Scope before precedence</a></li><li><a href="#merchant-center">Merchant Center</a></li><li><a href="#search-console">Search Console</a></li><li><a href="#organisation-markup">Organisation markup</a></li><li><a href="#product-markup">Product markup</a></li><li><a href="#decision-tree">The decision tree</a></li><li><a href="#what-not-to-do">What not to do</a></li><li><a href="#worked-example">Worked example</a></li><li><a href="#mismatches">Mismatch risk</a></li><li><a href="#source-of-truth">Governance model</a></li><li><a href="#faq">FAQ</a></li></ol>
 </div>
 </div>
 </div>
