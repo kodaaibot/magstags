@@ -158,15 +158,21 @@
   .schema-code .s { color: var(--accent); }
   .schema-code .p { color: var(--ink-4); }
   .schema-code .g { color: var(--accent-2); }
-  .schema-window-foot {
-    display: flex; justify-content: space-between; align-items: center;
+  .schema-ledger {
     padding-top: 12px; border-top: 1px solid var(--rule);
     font-family: var(--font-mono); font-size: 9.5px;
-    letter-spacing: .14em; text-transform: uppercase;
+    letter-spacing: .12em; text-transform: uppercase;
+    display: flex; flex-direction: column; gap: 6px;
   }
-  .schema-foot-left  { color: var(--ink-4); font-weight: 500; }
-  .schema-foot-right { color: var(--accent-2); font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
-  .schema-foot-dot   { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); }
+  .schema-ledger-row { display: flex; justify-content: space-between; align-items: center; }
+  .sl-k   { color: var(--ink-4); font-weight: 500; }
+  .sl-ok  { color: var(--ink-4); font-weight: 600; }
+  .sl-bad { color: var(--ink-1); font-weight: 700; }
+  .sl-bad::first-letter { color: var(--accent-2); }
+  .schema-verdict {
+    margin-top: 14px; font-family: var(--font-mono); font-size: 10.5px;
+    letter-spacing: .04em; font-weight: 600; color: var(--accent-2);
+  }
   /* ── Section primitives ──────────────────────────────────────────────── */
   section { padding: var(--section-y) 0; }
   .section-head { margin-bottom: clamp(40px, 6vw, 80px); max-width: 800px; }
@@ -515,8 +521,10 @@
   html[data-theme="dark"] .schema-code .k { color: rgba(245,241,234,.95); }
   html[data-theme="dark"] .schema-code .s { color: rgba(245,241,234,.65); }
   html[data-theme="dark"] .schema-code .p { color: rgba(245,241,234,.4); }
-  html[data-theme="dark"] .schema-window-foot { border-top-color: rgba(245,241,234,.08); }
-  html[data-theme="dark"] .schema-foot-left { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] .schema-ledger { border-top-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] .sl-k  { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .sl-ok { color: rgba(245,241,234,.45); }
+  html[data-theme="dark"] .sl-bad { color: rgba(245,241,234,.92); }
   html[data-theme="dark"] .hero .eyebrow { color: rgba(245,241,234,.55); }
   html[data-theme="dark"] .hero .eyebrow--accent { color: var(--accent-2); }
   html[data-theme="dark"] .hero-statement { color: var(--paper); }
@@ -762,10 +770,12 @@
     <span class="k">"reviewCount"</span><span class="p">:</span> <span class="s">"182"</span>
   <span class="p">}</span>
 <span class="p">}</span></code></pre>
-          <div class="schema-window-foot">
-            <span class="schema-foot-left">Validated</span>
-            <span class="schema-foot-right"><span class="schema-foot-dot"></span>Rich result eligible</span>
+          <div class="schema-ledger">
+            <div class="schema-ledger-row"><span class="sl-k">Syntax</span><span class="sl-ok">✓ valid</span></div>
+            <div class="schema-ledger-row"><span class="sl-k">Google</span><span class="sl-ok">✓ rich-result eligible</span></div>
+            <div class="schema-ledger-row"><span class="sl-k">Your live feed</span><span class="sl-bad">✗ price = £19.00</span></div>
           </div>
+          <div class="schema-verdict">Valid. Eligible. Still wrong.</div>
         </div>
       </aside>
     </div>
