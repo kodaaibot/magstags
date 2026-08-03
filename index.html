@@ -188,9 +188,8 @@
   .brands-list span { font-family: var(--font-display); font-weight: 400; font-size: clamp(17px, 1.8vw, 22px); letter-spacing: -.01em; color: var(--ink-1); white-space: nowrap; }
   .brands-list .brands-sep { color: var(--rule); font-weight: 400; }
   .brands-list .brands-more { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); }
-  /* ── Featured research (feature dominates, side items are list rows) ── */
-  .research-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: clamp(56px, 6vw, 96px); align-items: flex-start; }
-  @media (max-width: 960px) { .research-grid { grid-template-columns: 1fr; gap: 64px; } }
+  /* ── Featured research (full-width feature banner; Recent is a row below) ── */
+  .research-grid { display: block; }
   .research-feature {
     display: flex; flex-direction: column;
     background: var(--paper-2);
@@ -222,8 +221,13 @@
     border-top: 1px solid var(--rule); margin-top: auto;
     letter-spacing: .06em; text-transform: uppercase;
   }
-  /* Side items: tighter, more like editorial list rows */
-  .research-side { display: flex; flex-direction: column; }
+  /* Recent: a labelled row of note cards below the full-width feature */
+  .research-side { display: flex; flex-direction: column; margin-top: clamp(44px, 5vw, 72px); }
+  @media (min-width: 721px) {
+    .research-side { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(32px, 4vw, 64px); align-items: start; }
+    .research-side-label { grid-column: 1 / -1; }
+    .research-side .research-item { border-bottom: none; padding-top: 0; }
+  }
   .research-side-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
   .research-item { display: flex; flex-direction: column; gap: 8px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
   .research-item:last-child { border-bottom: none; }
@@ -235,15 +239,22 @@
   .research-item h4 a { color: var(--ink-1); }
   .research-item h4 a:hover { color: var(--accent); }
   .research-item p { display: none; } /* drop the excerpts in the side list — keep it tight */
-  /* Desktop: lay the feature out horizontally so it doesn't tower over the side column */
+  /* Desktop: full-width feature laid out horizontally — big image left, text right */
   @media (min-width: 961px) {
-    .research-feature { flex-direction: row; align-items: center; gap: clamp(24px, 2.6vw, 40px); }
-    .research-feature-imglink { flex: 0 0 48%; margin-bottom: 0; align-self: center; }
+    .research-feature { flex-direction: row; align-items: center; gap: clamp(40px, 4vw, 72px); }
+    .research-feature-imglink { flex: 0 0 56%; margin-bottom: 0; align-self: center; }
     .research-feature-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
-    .research-feature-body .meta-row { margin-bottom: 16px; }
-    .research-feature h3 { font-size: clamp(19px, 1.6vw, 23px); line-height: 1.2; max-width: none; margin-bottom: 14px; }
-    .research-feature p { font-size: 14px; line-height: 1.6; max-width: none; margin-bottom: 18px; }
-    .research-feature .author-line { padding-top: 16px; margin-top: 4px; }
+    .research-feature-body .meta-row { margin-bottom: 20px; }
+    .research-feature h3 { font-size: clamp(24px, 2.1vw, 32px); line-height: 1.15; max-width: none; margin-bottom: 18px; }
+    .research-feature p { font-size: 15.5px; line-height: 1.6; max-width: 52ch; margin-bottom: 24px; }
+    .research-feature .author-line { padding-top: 20px; margin-top: 4px; }
+  }
+  /* Mobile: image runs edge-to-edge inside the card instead of being boxed by padding */
+  @media (max-width: 960px) {
+    .research-feature { padding: 0; overflow: hidden; }
+    .research-feature-imglink { margin-bottom: 0; }
+    .research-feature-img { border: 0; border-radius: 0; }
+    .research-feature-body { padding: clamp(28px, 6vw, 40px); }
   }
   /* ── More notes (full archive grid under the feature) ─────────────────── */
   .research-more { margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--rule); }
