@@ -256,12 +256,6 @@
     .research-feature-img { border: 0; border-radius: 0; }
     .research-feature-body { padding: clamp(28px, 6vw, 40px); }
   }
-  /* Phones: add a simplified, larger-type vertical SVG above the full WebP flowchart */
-  .research-feature-flow { display: none; }
-  @media (max-width: 640px) {
-    .research-feature-imglink { display: flex; flex-direction: column; }
-    .research-feature-flow { display: block; order: -1; width: 100%; height: auto; border-bottom: 1px solid var(--rule); }
-  }
   /* ── More notes (full archive grid under the feature) ─────────────────── */
   .research-more { margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--rule); }
   .research-more-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -833,7 +827,6 @@
         <article class="research-feature">
           <a class="research-feature-imglink" href="/notes/google-shipping-return-settings/">
             <img class="research-feature-img" src="/notes/google-shipping-return-settings/images/google-shipping-returns-setup-decision-tree.webp" alt="Decision-tree flowchart for choosing where to configure Google shipping and return policies: Merchant Center account settings and product-level feed overrides, or Search Console and organisation-level structured data." width="1493" height="1054" loading="lazy" decoding="async">
-            <img class="research-feature-flow" src="/notes/google-shipping-return-settings/images/google-shipping-returns-setup-decision-tree-mobile.svg" alt="Simplified decision tree: if you already use Merchant Center, set the standard policy at account level and add product-level feed overrides for exceptions; if one simple policy is enough, set it in Search Console; if it is complex or varies by product, use Organisation-level structured data with merchant listing markup." width="360" height="580" loading="lazy" decoding="async">
           </a>
           <div class="research-feature-body">
             <div class="meta-row">
