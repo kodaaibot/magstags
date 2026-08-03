@@ -235,6 +235,16 @@
   .research-item h4 a { color: var(--ink-1); }
   .research-item h4 a:hover { color: var(--accent); }
   .research-item p { display: none; } /* drop the excerpts in the side list — keep it tight */
+  /* Desktop: lay the feature out horizontally so it doesn't tower over the side column */
+  @media (min-width: 961px) {
+    .research-feature { flex-direction: row; align-items: center; gap: clamp(24px, 2.6vw, 40px); }
+    .research-feature-imglink { flex: 0 0 48%; margin-bottom: 0; align-self: center; }
+    .research-feature-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+    .research-feature-body .meta-row { margin-bottom: 16px; }
+    .research-feature h3 { font-size: clamp(19px, 1.6vw, 23px); line-height: 1.2; max-width: none; margin-bottom: 14px; }
+    .research-feature p { font-size: 14px; line-height: 1.6; max-width: none; margin-bottom: 18px; }
+    .research-feature .author-line { padding-top: 16px; margin-top: 4px; }
+  }
   /* ── More notes (full archive grid under the feature) ─────────────────── */
   .research-more { margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--rule); }
   .research-more-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -807,16 +817,18 @@
           <a class="research-feature-imglink" href="/notes/google-shipping-return-settings/">
             <img class="research-feature-img" src="/notes/google-shipping-return-settings/images/google-shipping-returns-setup-decision-tree.webp" alt="Decision-tree flowchart for choosing where to configure Google shipping and return policies: Merchant Center account settings and product-level feed overrides, or Search Console and organisation-level structured data." width="1493" height="1054" loading="lazy" decoding="async">
           </a>
-          <div class="meta-row">
-            <span class="badge">Ecommerce SEO</span>
-            <span class="read-time">11 min read</span>
-          </div>
-          <h3><a href="/notes/google-shipping-return-settings/">Google Shipping and Return Policies: Where to Configure Them and What Takes Precedence</a></h3>
-          <p>Google reads shipping and returns from five sources: product feed, API, Merchant Center or Search Console settings, product markup, and Organisation schema. The precedence order, and a decision tree for which to use.</p>
-          <div class="author-line">
-            <span>28 May 2026</span>
-            <span>·</span>
-            <span>Mags Sikora</span>
+          <div class="research-feature-body">
+            <div class="meta-row">
+              <span class="badge">Ecommerce SEO</span>
+              <span class="read-time">11 min read</span>
+            </div>
+            <h3><a href="/notes/google-shipping-return-settings/">Google Shipping and Return Policies: Where to Configure Them and What Takes Precedence</a></h3>
+            <p>Google reads shipping and returns from five sources: product feed, API, Merchant Center or Search Console settings, product markup, and Organisation schema. The precedence order, and a decision tree for which to use.</p>
+            <div class="author-line">
+              <span>28 May 2026</span>
+              <span>·</span>
+              <span>Mags Sikora</span>
+            </div>
           </div>
         </article>
         <div class="research-side">
