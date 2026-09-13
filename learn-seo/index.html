@@ -71,13 +71,14 @@
     .guide-tag { font-size: 11px; font-weight: 500; color: var(--ink-4); background: var(--paper); border: 1px solid var(--rule); border-radius: 99px; padding: 2px 10px; }
 
     /* ── Hub card (single linked card replacing 4-up grid) ──────────── */
-    .hub-card { position: relative; display: flex; gap: clamp(20px, 3vw, 36px); align-items: flex-start; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 20px; padding: clamp(28px, 3.5vw, 40px); text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s; max-width: 760px; margin-bottom: 48px; }
+    .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; margin-bottom: 48px; }
+    .hub-card { position: relative; display: flex; gap: clamp(18px, 2.5vw, 28px); align-items: flex-start; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 20px; padding: clamp(24px, 3vw, 32px); text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s; }
     .hub-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .hub-card-icon { flex-shrink: 0; width: 52px; height: 52px; background: rgba(14,116,144,.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; }
     .hub-card-body { display: flex; flex-direction: column; gap: 12px; }
     .hub-card-badges { display: flex; flex-wrap: wrap; gap: 8px; }
     .hub-card-badges .guide-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
-    .hub-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(20px, 2.4vw, 26px); font-weight: 500; color: var(--ink-1); line-height: 1.2; letter-spacing: -.015em; }
+    .hub-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(18px, 1.8vw, 22px); font-weight: 500; color: var(--ink-1); line-height: 1.2; letter-spacing: -.015em; }
     .hub-card:hover .hub-card-title { color: var(--accent); }
     .hub-card-desc { font-size: 14px; color: var(--ink-3); line-height: 1.65; max-width: 540px; }
     .hub-card-cta { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-top: 4px; }
@@ -111,9 +112,10 @@
   <div class="page-hero">
     <div class="page-hero-eyebrow">Guides &amp; resources</div>
     <h1>Learn SEO</h1>
-    <p>Structured data, technical SEO, e-commerce optimisation. Written at various hours of the night by someone who's been in the validator, in the Search Console, and in the meeting where someone asked 'so why didn't we just run ads?'</p>
+    <p>Six topic hubs: structured data, ecommerce and Merchant Center, technical SEO, international SEO, AI search, and original research. Each one collects the guides, notes and tools for that subject. Written at various hours of the night by someone who's been in the validator, in the Search Console, and in the meeting where someone asked 'so why didn't we just run ads?'</p>
   </div>
-  <p class="section-label">Structured Data</p>
+  <p class="section-label">Topic hubs</p>
+  <div class="hub-grid">
   <a href="/schema-for-seo/" class="hub-card">
     <div class="hub-card-icon">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
@@ -121,13 +123,84 @@
     <div class="hub-card-body">
       <div class="hub-card-badges">
         <span class="guide-badge guide-badge-overview">Hub</span>
-        <span class="guide-badge guide-badge-guide">4 guides</span>
+        <span class="guide-badge guide-badge-guide">5 guides · 5 notes · 4 tools</span>
       </div>
-      <div class="hub-card-title">Schema for SEO</div>
-      <p class="hub-card-desc">Product, Product Snippet, Merchant Listing, and ProductGroup — which class to use, what each field actually does, and how to generate clean JSON-LD.</p>
-      <span class="hub-card-cta">Read the schema guides →</span>
+      <div class="hub-card-title">Structured data &amp; Product schema</div>
+      <p class="hub-card-desc">Product, Product Snippet, Merchant Listing, ProductGroup. Which class to use, what each field does, and how to generate clean JSON-LD.</p>
+      <span class="hub-card-cta">Open the schema hub →</span>
     </div>
   </a>
+  <a href="/ecommerce-seo/" class="hub-card">
+    <div class="hub-card-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </div>
+    <div class="hub-card-body">
+      <div class="hub-card-badges">
+        <span class="guide-badge guide-badge-overview">Hub</span>
+        <span class="guide-badge guide-badge-guide">7 notes · 3 tools</span>
+      </div>
+      <div class="hub-card-title">Ecommerce &amp; Merchant Center</div>
+      <p class="hub-card-desc">Feeds, Merchant Center, shipping and returns, ratings, and what wins when the sources disagree.</p>
+      <span class="hub-card-cta">Open the ecommerce hub →</span>
+    </div>
+  </a>
+  <a href="/technical-seo/" class="hub-card">
+    <div class="hub-card-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    </div>
+    <div class="hub-card-body">
+      <div class="hub-card-badges">
+        <span class="guide-badge guide-badge-overview">Hub</span>
+        <span class="guide-badge guide-badge-guide">6 notes · 6 tools</span>
+      </div>
+      <div class="hub-card-title">Technical SEO</div>
+      <p class="hub-card-desc">Crawl budget, robots.txt, image thumbnails, mega menus, GSC regex, and Google's redirect wrappers.</p>
+      <span class="hub-card-cta">Open the technical hub →</span>
+    </div>
+  </a>
+  <a href="/international-seo/" class="hub-card">
+    <div class="hub-card-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    </div>
+    <div class="hub-card-body">
+      <div class="hub-card-badges">
+        <span class="guide-badge guide-badge-overview">Hub</span>
+        <span class="guide-badge guide-badge-guide">2 notes · 1 tool</span>
+      </div>
+      <div class="hub-card-title">International SEO</div>
+      <p class="hub-card-desc">Hreflang, canonicals, and the conflicts between them on multi-market sites.</p>
+      <span class="hub-card-cta">Open the international hub →</span>
+    </div>
+  </a>
+  <a href="/ai-search/" class="hub-card">
+    <div class="hub-card-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/></svg>
+    </div>
+    <div class="hub-card-body">
+      <div class="hub-card-badges">
+        <span class="guide-badge guide-badge-overview">Hub</span>
+        <span class="guide-badge guide-badge-guide">3 notes · 3 tools</span>
+      </div>
+      <div class="hub-card-title">AI search &amp; agentic commerce</div>
+      <p class="hub-card-desc">How AI shopping agents read product data, and what to fix in schema, feeds and PDP content so they can.</p>
+      <span class="hub-card-cta">Open the AI search hub →</span>
+    </div>
+  </a>
+  <a href="/research/" class="hub-card">
+    <div class="hub-card-icon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    </div>
+    <div class="hub-card-body">
+      <div class="hub-card-badges">
+        <span class="guide-badge guide-badge-overview">Hub</span>
+        <span class="guide-badge guide-badge-guide">3 notes</span>
+      </div>
+      <div class="hub-card-title">Original research</div>
+      <p class="hub-card-desc">Large-sample SERP analysis and features spotted in the wild before the documentation caught up.</p>
+      <span class="hub-card-cta">Open the research hub →</span>
+    </div>
+  </a>
+  </div>
 </main>
 <script src="/cookie-consent.js"></script>
 <footer class="site">

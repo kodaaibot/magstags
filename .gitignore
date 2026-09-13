@@ -13,3 +13,6 @@ token.json
 .vscode/
 .idea/
 .netlify/
+
+# Local tooling
+.claude/

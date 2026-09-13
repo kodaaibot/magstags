@@ -172,14 +172,7 @@
     .btn-copy:hover{opacity:.85}
     .btn-download{padding:10px 14px;border-radius:9px;border:1px solid var(--border);background:var(--bg2);color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
     .btn-download:hover{border-color:var(--teal);color:var(--teal)}
-    /* ── Content sections (ct-) ──────────────────────────────────────── */
-    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
-    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
-    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
-    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
     .ct-h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight:600;color:var(--text-1);margin:28px 0 10px}
-    .ct-body{font-size:14px;color:var(--text-2);line-height:1.75;margin-bottom:14px}
     .ct-code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12px;font-weight:600;background:var(--bg2);border:1px solid var(--border);color:var(--text-2);padding:1px 5px;border-radius:4px;word-break:break-all}
     .ct-list{font-size:15px;color:var(--text-2);line-height:1.75;padding-left:22px;margin-bottom:16px}
     .ct-list li{margin-bottom:10px}
@@ -190,41 +183,14 @@
     .ct-step-body h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; padding-top: 10px; }
     .ct-step-body p { font-size: 14px; color: var(--text-3); line-height: 1.65; margin: 0; }
     .ct-step-body strong { color: var(--text-1); }
-    /* Tables */
-    .ct-table{width:100%;border-collapse:collapse;font-size:14px;color:var(--text-2);margin-bottom:20px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-    .ct-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);background:var(--bg2);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border)}
-    .ct-table td{padding:11px 14px;border-bottom:1px solid var(--border);line-height:1.6;vertical-align:top}
-    .ct-table tr:last-child td{border-bottom:none}
-    .ct-table tr:hover td{background:var(--bg2)}
     .ct-compare-table th:not(:first-child),.ct-compare-table td:not(:first-child){text-align:left}
     .ct-compare-table td:first-child{font-weight:600;color:var(--text-1);white-space:nowrap;width:200px}
     .ct-td-mistake{white-space:nowrap;vertical-align:top;width:220px}
     .ct-td-mistake strong{color:var(--paid-color)}
     /* Code blocks */
     .ct-pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:12.5px;line-height:1.85;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;overflow-x:auto;color:var(--text-2);margin-bottom:8px;white-space:pre}
-    /* Callouts */
-    .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
     .ct-callout--amber { background: #FEF9C3; border-left: 3px solid #D97706; border-radius: 0 8px 8px 0; }
     html.dark .ct-callout--amber { background: #422006; border-color: #92400e; }
-    .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144),.2); }
-    html.dark .ct-callout--teal { background: rgba(14,116,144),.1); }
-    .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
-    .ct-callout-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
-    .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
-    .ct-callout-body ul { font-size: 13px; color: var(--text-3); padding-left: 18px; margin-top: 6px; line-height: 1.7; }
-    .ct-callout-body li { margin-bottom: 3px; }
-    .ct-callout-body p code { font-size: inherit; font-weight: normal; color: var(--teal); }
-    /* FAQ */
-    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
-    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
-    .ct-faq summary::-webkit-details-marker { display: none; }
-    .ct-faq summary::after { content: '▾'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
-    .ct-faq details[open] summary::after { transform: rotate(180deg); }
-    .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
-    .ct-faq summary:hover { background: var(--bg2); }
-    .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
-    .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
     /* Related tools CTA */
     .ct-cta-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px}
     .ct-tools-list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
@@ -239,7 +205,6 @@
     .ct-source-link{font-size:13px;color:var(--teal);text-decoration:none;font-family:'Menlo','Monaco','Courier New',monospace}
     .ct-source-link:hover{text-decoration:underline}
     @media(max-width: 768px) {
-      .ct-wrap { padding: 0 16px 60px; }
       .ct-steps::before { display: none; }
     }
     @media(max-width:600px){main{padding:24px 16px 60px}}

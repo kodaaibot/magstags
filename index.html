@@ -22,7 +22,7 @@
   })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MagsTags | SEO & E-commerce Toolkit</title>
+<title>MagsTags by Mags Sikora | SEO &amp; E-commerce Toolkit</title>
 <meta name="description" content="Free SEO and e-commerce tools built by Mags Sikora. Schema generators, hreflang builder, GSC regex, robots.txt, SERP previewer. No signup required.">
 <link rel="canonical" href="https://www.magstags.com/">
 <meta name="google-site-verification" content="mlv2yk2QLD1yW-NkMpVaDJ7-g5rSBlxjLGxZhzA2Vtk" />
@@ -63,7 +63,7 @@
     --t-eyebrow:   11px;
     /* Spacing */
     --gutter:      clamp(20px, 4vw, 88px);
-    --section-y:   clamp(80px, 12vw, 160px);
+    --section-y:   clamp(60px, 8vw, 120px);   /* same rhythm as base.css */
     /* Layout */
     --max:         1200px;
     --reading:     640px;
@@ -142,52 +142,65 @@
     background: var(--paper-2); color: var(--ink-2);
     border: 1px solid var(--rule);
     border-radius: 12px;
-    padding: 20px 24px;
+    padding: 26px 28px 28px;
     position: relative;
   }
-  .schema-window-head { display: flex; align-items: center; padding-bottom: 12px; }
+  .schema-window-head { display: flex; align-items: center; padding-bottom: 18px; }
   .schema-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: .14em; color: var(--accent-2); text-transform: uppercase; }
-  .schema-code {
-    font-family: var(--font-mono);
-    font-size: 11.5px; line-height: 1.75;
-    color: var(--ink-2);
-    white-space: pre; overflow-x: auto;
-    padding: 2px 0 14px;
+  .signal-url { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); letter-spacing: .02em; }
+  .signal-rows { display: grid; grid-template-columns: max-content minmax(0, 1fr) max-content; column-gap: 0; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 11px; }
+  .signal-row { display: contents; }
+  .signal-row > span { padding: 16px 0; border-bottom: 1px solid var(--rule); line-height: 1.5; }
+  .sig-src { font-size: 9.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-4); align-self: center; }
+  .sig-val { color: var(--ink-1); font-weight: 500; overflow-wrap: anywhere; padding-left: 28px !important; padding-right: 28px !important; }
+  .sig-quote { font-style: italic; color: var(--ink-2); font-weight: 400; }
+  .sig-status { font-size: 10px; font-weight: 600; letter-spacing: .06em; white-space: nowrap; text-align: right; }
+  .sig-status.is-ok { color: var(--good); }
+  .sig-status.is-warn { color: var(--accent-2); }
+  .sig-status.is-bad { color: var(--ink-1); }
+  .sig-status.is-bad::first-letter { color: var(--accent-2); }
+  @media (max-width: 480px) {
+    .schema-window-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .signal-url { margin-left: 0; }
+    .signal-rows { grid-template-columns: minmax(0, 1fr) max-content; column-gap: 0; }
+    .signal-row > .sig-src { grid-column: 1 / -1; padding-bottom: 4px; border-bottom: 0; }
+    .signal-row > .sig-val, .signal-row > .sig-status { padding-top: 0; }
+    .signal-row > .sig-val { padding-left: 0 !important; padding-right: 12px !important; }
   }
-  .schema-code .k { color: var(--ink-1); }
-  .schema-code .s { color: var(--accent); }
-  .schema-code .p { color: var(--ink-4); }
-  .schema-code .g { color: var(--accent-2); }
-  .schema-ledger {
-    padding-top: 12px; border-top: 1px solid var(--rule);
-    font-family: var(--font-mono); font-size: 9.5px;
-    letter-spacing: .12em; text-transform: uppercase;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .schema-ledger-row { display: flex; justify-content: space-between; align-items: center; }
-  .sl-k   { color: var(--ink-4); font-weight: 500; }
-  .sl-ok  { color: var(--ink-4); font-weight: 600; }
-  .sl-bad { color: var(--ink-1); font-weight: 700; }
-  .sl-bad::first-letter { color: var(--accent-2); }
   .schema-verdict {
-    margin-top: 14px; font-family: var(--font-mono); font-size: 10.5px;
-    letter-spacing: .04em; font-weight: 600; color: var(--accent-2);
+    margin-top: 22px; font-family: var(--font-display); font-size: 14px;
+    letter-spacing: -.005em; font-weight: 500; color: var(--accent-2);
   }
   /* ── Section primitives ──────────────────────────────────────────────── */
   section { padding: var(--section-y) 0; }
-  .section-head { margin-bottom: clamp(40px, 6vw, 80px); max-width: 800px; }
+  .section-head { margin-bottom: clamp(32px, 4vw, 56px); max-width: 800px; }
   .section-head .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 18px; }
   .section-head .eyebrow::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
   .section-head h2 { margin-bottom: 16px; }
   .section-head p { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-3); max-width: 580px; }
-  /* ── Brands layer (worked-with credentials) ──────────────────────────── */
-  .brands { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: clamp(48px, 6vw, 80px) 0; }
-  .brands-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 28px; }
-  .brands-label::after { content: ''; height: 1px; width: 32px; background: var(--accent); }
-  .brands-list { display: flex; flex-wrap: wrap; align-items: center; row-gap: clamp(14px, 1.5vw, 20px); column-gap: clamp(20px, 3vw, 48px); }
-  .brands-list span { font-family: var(--font-display); font-weight: 400; font-size: clamp(17px, 1.8vw, 22px); letter-spacing: -.01em; color: var(--ink-1); white-space: nowrap; }
-  .brands-list .brands-sep { color: var(--rule); font-weight: 400; }
-  .brands-list .brands-more { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); }
+  /* ── Tool launcher: pick the problem, land on the tool ── */
+  .launcher { padding: var(--section-y) 0; }
+  .launcher-head { margin-bottom: clamp(24px, 3vw, 36px); }
+  .launcher-head .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .launcher-head .eyebrow::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
+  .launcher-head h2 { margin: 0; }
+  .launcher-list { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: clamp(32px, 5vw, 80px); border-top: 1px solid var(--rule); }
+  @media (max-width: 720px) { .launcher-list { grid-template-columns: 1fr; } }
+  .launch-row { display: flex; flex-direction: column; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .launch-task { font-family: var(--font-display); font-size: clamp(20px, 1.9vw, 24px); font-weight: 500; line-height: 1.2; letter-spacing: -.015em; color: var(--ink-1); margin-bottom: 6px; }
+  .launch-action { font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--ink-3); margin-bottom: 12px; }
+  .launch-tools { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  .launch-tools a { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
+  .launch-tools a:hover { color: var(--ink-1); }
+  .launch-arrow { display: inline-block; transition: transform .15s; }
+  .launch-tools a:hover .launch-arrow { transform: translateX(3px); }
+  .launcher-foot { display: flex; justify-content: space-between; align-items: baseline; gap: 16px 32px; flex-wrap: wrap; margin-top: 24px; }
+  .launcher-ext { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); }
+  .launcher-ext a { color: var(--accent); }
+  .launcher-ext a:hover { color: var(--ink-1); }
+  .launch-sep { color: var(--ink-4); }
+  .launcher-all { display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .launcher-all:hover { color: var(--ink-1); }
   /* ── Featured research (full-width feature banner; Recent is a row below) ── */
   .research-grid { display: block; }
   .research-feature {
@@ -224,11 +237,15 @@
   /* Recent: a labelled row of note cards below the full-width feature */
   .research-side { display: flex; flex-direction: column; margin-top: clamp(44px, 5vw, 72px); }
   @media (min-width: 721px) {
-    .research-side { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: clamp(32px, 4vw, 64px); align-items: start; }
+    .research-side { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
     .research-side-label { grid-column: 1 / -1; }
-    .research-side .research-item { border-bottom: none; padding-top: 0; }
   }
-  .research-side-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .research-side-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 8px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .research-side .research-item { position: relative; background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 22px 24px 24px; gap: 10px; transition: border-color .2s, transform .2s; }
+  .research-side .research-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .research-side .research-item h4 { font-size: 17px; }
+  .research-side .research-item h4 a::after { content: ''; position: absolute; inset: 0; }
+  .research-side .research-item p { display: block; font-size: 14px; line-height: 1.6; color: var(--ink-3); margin: 0; }
   .research-item { display: flex; flex-direction: column; gap: 8px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
   .research-item:last-child { border-bottom: none; }
   .research-item .meta { display: flex; gap: 10px; align-items: center; }
@@ -238,7 +255,6 @@
   .research-item h4 { font-family: var(--font-display); font-weight: 500; font-size: 16px; line-height: 1.3; letter-spacing: -.01em; }
   .research-item h4 a { color: var(--ink-1); }
   .research-item h4 a:hover { color: var(--accent); }
-  .research-item p { display: none; } /* drop the excerpts in the side list — keep it tight */
   /* Desktop: full-width feature laid out horizontally — big image left, text right */
   @media (min-width: 961px) {
     .research-feature { flex-direction: row; align-items: center; gap: clamp(40px, 4vw, 72px); }
@@ -256,6 +272,14 @@
     .research-feature-img { border: 0; border-radius: 0; }
     .research-feature-body { padding: clamp(28px, 6vw, 40px); }
   }
+  /* ── Browse line under Recent (hubs as plain text links) ── */
+  .research-browse { display: flex; align-items: baseline; gap: 12px 24px; flex-wrap: wrap; margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  .research-browse-label { color: var(--ink-4); }
+  .research-browse-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .research-browse-links a { color: var(--ink-2); padding: 6px 12px; border: 1px solid var(--rule); border-radius: 99px; transition: border-color .15s, color .15s; }
+  .research-browse-links a:hover { border-color: var(--accent); }
+  .research-browse-links a:hover { color: var(--accent); }
+  .research-browse .research-more-all { margin-left: auto; }
   /* ── More notes (full archive grid under the feature) ─────────────────── */
   .research-more { margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--rule); }
   .research-more-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -264,159 +288,6 @@
   .research-more-all:hover { color: var(--ink-1); }
   .research-more-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0 clamp(32px, 4vw, 64px); }
   .research-more-grid .research-item p { display: none; }
-  /* ── Knowledge pillars ───────────────────────────────────────────────── */
-  .pillars { background: var(--paper-2); padding: var(--section-y) 0; }
-  .pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); margin-top: clamp(40px, 5vw, 64px); border: 1px solid var(--rule); }
-  .pillar { background: var(--paper-2); padding: clamp(40px, 5vw, 56px); display: flex; flex-direction: column; transition: background .2s; cursor: pointer; position: relative; min-height: 280px; }
-  .pillar:hover { background: var(--paper); }
-  .pillar-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: clamp(28px, 4vw, 48px); }
-  .pillar-num {
-    font-family: var(--font-display); font-style: italic; font-weight: 500;
-    font-size: clamp(36px, 5vw, 64px); line-height: 1; color: var(--ink-1);
-    letter-spacing: -.04em;
-    transition: color .2s;
-  }
-  .pillar:hover .pillar-num { color: var(--accent); }
-  .pillar-glyph {
-    width: 36px; height: 36px;
-    color: var(--accent);
-    flex-shrink: 0;
-    opacity: .85;
-    transition: opacity .2s, transform .2s;
-  }
-  .pillar:hover .pillar-glyph { opacity: 1; transform: translateX(2px); }
-  .pillar h3 { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.15; font-weight: 500; letter-spacing: -.015em; margin-bottom: 14px; }
-  .pillar p { font-size: 15px; line-height: 1.65; color: var(--ink-3); max-width: 420px; flex: 1; }
-  .pillar-link {
-    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: .14em;
-    color: var(--accent); margin-top: 24px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .pillar a.stretched { position: absolute; inset: 0; text-indent: -999em; overflow: hidden; }
-  @media (max-width: 760px) { .pillars-grid { grid-template-columns: 1fr; } .pillar { min-height: auto; } }
-  /* ── Signature insight (pull quote) ──────────────────────────────────── */
-  .insight { padding: var(--section-y) 0; }
-  .insight-inner { max-width: 880px; margin: 0 auto; padding: 0 var(--gutter); position: relative; }
-  .insight blockquote {
-    font-family: var(--font-display); font-weight: 400;
-    font-size: clamp(28px, 3.8vw, 46px); line-height: 1.2; letter-spacing: -.015em;
-    color: var(--ink-1); padding-left: clamp(36px, 4vw, 60px);
-    border-left: 2px solid var(--accent);
-  }
-  .insight blockquote em { font-style: italic; color: var(--accent); }
-  .insight cite {
-    display: block; margin-top: 32px; padding-left: clamp(36px, 4vw, 60px);
-    font-family: var(--font-mono); font-size: 12px; font-style: normal;
-    text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4);
-  }
-  .insight cite a { color: var(--accent); }
-  /* ── Tools section (tabbed featured+secondary layout) ────────────────── */
-  .tools { border-top: 1px solid var(--rule); }
-  .tools-head { max-width: 720px; margin-bottom: clamp(28px, 3vw, 40px); }
-  .tools-head h2 { margin: 14px 0 12px; }
-  .tools-head p { font-size: var(--t-lead); color: var(--ink-3); line-height: 1.55; max-width: 580px; }
-  /* Tab navigation — underline accent, scrolls on mobile */
-  .tools-tabs {
-    display: flex; gap: 4px; flex-wrap: nowrap;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: clamp(36px, 4vw, 56px);
-    overflow-x: auto; -webkit-overflow-scrolling: touch;
-  }
-  .tools-tab {
-    font-family: var(--font-mono); font-size: 11.5px; font-weight: 500;
-    letter-spacing: .12em; text-transform: uppercase;
-    padding: 14px 22px; background: transparent; border: none;
-    color: var(--ink-3); cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px; white-space: nowrap;
-    transition: color .15s, border-color .15s;
-  }
-  .tools-tab:hover { color: var(--ink-1); }
-  .tools-tab.is-active { color: var(--ink-1); border-bottom-color: var(--accent); font-weight: 600; }
-  .tools-panel { display: none; }
-  .tools-panel.is-active { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 3vw, 48px); align-items: flex-start; }
-  @media (max-width: 860px) { .tools-panel.is-active { grid-template-columns: 1fr; gap: 32px; } }
-  /* Featured card — light editorial card with a dark inset preview */
-  .tool-featured {
-    background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px;
-    padding: clamp(28px, 3.5vw, 44px);
-    display: flex; flex-direction: column; gap: 10px;
-  }
-  .tool-featured-tag { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
-  .tool-featured h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.15; letter-spacing: -.02em; color: var(--ink-1); margin: 4px 0 0; }
-  .tool-featured-outcome { font-size: 16px; line-height: 1.45; color: var(--ink-3); margin-top: 6px; max-width: 480px; font-style: italic; }
-  .tool-featured-best-for { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); margin-top: 10px; }
-  .tool-featured-desc { font-size: 14.5px; line-height: 1.6; color: var(--ink-3); max-width: 460px; margin-top: 6px; }
-  .tool-featured .btn { align-self: flex-start; margin-top: 14px; }
-  /* Featured-tool code preview — light by default (paper, lighter than the surrounding paper-2 card), dark via toggle */
-  .tool-featured-preview {
-    margin-top: 22px;
-    background: var(--paper); color: var(--ink-2);
-    border: 1px solid var(--rule);
-    border-radius: 4px;
-    padding: 16px 20px;
-    font-family: var(--font-mono); font-size: 11.5px;
-    line-height: 1.75;
-    overflow-x: auto;
-  }
-  .tool-featured-preview-label {
-    display: block; font-size: 9.5px; font-weight: 600;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--accent-2);
-    margin-bottom: 12px;
-  }
-  .tool-featured-preview pre { font-family: inherit; font-size: inherit; line-height: inherit; white-space: pre; color: var(--ink-2); }
-  .tool-featured-preview .k { color: var(--ink-1); }
-  .tool-featured-preview .s { color: var(--accent); }
-  .tool-featured-preview .p { color: var(--ink-4); }
-  .tool-featured-preview .c { color: var(--ink-4); font-style: italic; }
-  /* Secondary cards — tight list rows, outcome-led titles */
-  .tool-secondary-list { display: flex; flex-direction: column; border-top: 1px solid var(--rule); }
-  .tool-secondary {
-    position: relative;
-    padding: 22px 36px 22px 0;
-    border-bottom: 1px solid var(--rule);
-    text-decoration: none;
-    display: block;
-    transition: padding-left .15s, background .15s;
-  }
-  .tool-secondary:hover { background: var(--paper-2); padding-left: 12px; }
-  .tool-secondary-cat {
-    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
-    text-transform: uppercase; letter-spacing: .14em;
-    color: var(--accent); display: block; margin-bottom: 6px;
-  }
-  .tool-secondary h4 {
-    font-family: var(--font-display); font-weight: 500;
-    font-size: 17px; line-height: 1.25; color: var(--ink-1);
-    letter-spacing: -.01em; margin: 0;
-  }
-  .tool-secondary .tool-outcome {
-    display: block; font-size: 13px;
-    color: var(--ink-3); margin-top: 6px; line-height: 1.45;
-  }
-  /* Paid badge — used in Others tab */
-  .tool-paid-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); padding: 3px 8px; border: 1px solid var(--accent-2); border-radius: 99px; margin-left: 8px; vertical-align: middle; }
-  .tool-secondary::after {
-    content: '→'; position: absolute; right: 6px; top: 50%;
-    transform: translateY(-50%); color: var(--ink-4); font-size: 18px;
-    transition: transform .15s, color .15s, right .15s;
-  }
-  .tool-secondary:hover::after { color: var(--accent); right: 0; }
-  /* "Coming soon" variant */
-  .tool-secondary--soon { cursor: default; opacity: .6; }
-  .tool-secondary--soon:hover { background: transparent; padding-left: 0; }
-  .tool-secondary--soon::after { content: 'SOON'; font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em; color: var(--ink-4); font-weight: 600; }
-  .tool-secondary--soon:hover::after { color: var(--ink-4); right: 6px; transform: translateY(-50%); }
-  /* Final link */
-  .tools-all-link {
-    display: inline-block; margin-top: clamp(40px, 5vw, 64px);
-    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: .12em;
-    color: var(--accent);
-  }
-  .tools-all-link:hover { color: var(--ink-1); }
   /* ── Chrome extension feature ────────────────────────────────────────── */
   .extension { background: var(--paper-2); color: var(--ink-2); padding: var(--section-y) 0; }
   .extension-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 5vw, 80px); align-items: center; }
@@ -469,9 +340,22 @@
     .ext-popup-code { font-size: 10.5px; line-height: 1.7; }
     .ext-popup-foot { font-size: 9px; }
   }
+  /* Extension carousel */
+  .ext-track { display: grid; }
+  .ext-slide { grid-area: 1 / 1; }
+  .ext-slide[hidden] { display: none; }
+  .ext-nav { display: flex; align-items: center; gap: 14px; margin-top: clamp(28px, 3vw, 40px); }
+  .ext-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--rule); background: transparent; color: var(--ink-2); font-family: var(--font-mono); font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: border-color .15s, color .15s; }
+  .ext-btn:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  .ext-dots { display: inline-flex; gap: 8px; }
+  .ext-dot-btn { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; background: var(--rule); cursor: pointer; transition: background .15s, transform .15s; }
+  .ext-dot-btn.is-active { background: var(--accent-2); transform: scale(1.25); }
+  .ext-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; color: var(--ink-4); margin-left: 4px; }
+  .extension-available--pending { color: var(--ink-4); border-color: var(--rule); }
+  .extension-available--pending::before { content: '○'; }
   /* ── Founder section ─────────────────────────────────────────────────── */
-  .founder { background: var(--paper-2); color: var(--ink-2); padding: var(--section-y) 0; }
-  .founder-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(48px, 6vw, 96px); align-items: center; }
+  .founder { background: transparent; color: var(--ink-2); padding: var(--section-y) 0; border-top: 1px solid var(--rule); }
+  .founder-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(48px, 6vw, 96px); align-items: start; }
   @media (max-width: 800px) { .founder-grid { grid-template-columns: 1fr; gap: 48px; } }
   .founder .eyebrow { color: var(--ink-4); }
   .founder .eyebrow::before { background: var(--accent); }
@@ -489,6 +373,11 @@
   .founder-credentials { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding-top: 32px; border-top: 1px solid var(--rule); }
   .credential-label { font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 6px; }
   .credential-value { font-family: var(--font-display); font-size: 20px; color: var(--ink-1); }
+  .founder .btn--primary { background: var(--accent-2); color: var(--paper); border-color: var(--accent-2); }
+  .founder .btn--primary:hover { background: #f0a431; border-color: #f0a431; color: var(--paper); transform: translateY(-1px); }
+  .founder-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin: 24px 0 28px; }
+  .founder-more { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .founder-more:hover { color: var(--ink-1); }
   /* ── Newsletter ──────────────────────────────────────────────────────── */
   .newsletter { padding: var(--section-y) 0; text-align: center; border-top: 1px solid var(--rule); }
   .newsletter-inner { max-width: 640px; margin: 0 auto; padding: 0 var(--gutter); }
@@ -538,14 +427,13 @@
   html[data-theme="dark"] .hero-eyebrow::after { background: rgba(245,241,234,.3); }
   /* Schema window — restore dark terminal look in dark mode */
   html[data-theme="dark"] .schema-window { background: #15130f; color: rgba(245,241,234,.78); border-color: rgba(245,241,234,.06); }
-  html[data-theme="dark"] .schema-code { color: rgba(245,241,234,.85); }
-  html[data-theme="dark"] .schema-code .k { color: rgba(245,241,234,.95); }
-  html[data-theme="dark"] .schema-code .s { color: rgba(245,241,234,.65); }
-  html[data-theme="dark"] .schema-code .p { color: rgba(245,241,234,.4); }
-  html[data-theme="dark"] .schema-ledger { border-top-color: rgba(245,241,234,.08); }
-  html[data-theme="dark"] .sl-k  { color: rgba(245,241,234,.4); }
-  html[data-theme="dark"] .sl-ok { color: rgba(245,241,234,.45); }
-  html[data-theme="dark"] .sl-bad { color: rgba(245,241,234,.92); }
+  html[data-theme="dark"] .signal-url { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .signal-rows, html[data-theme="dark"] .signal-row { border-color: rgba(245,241,234,.08); }
+  html[data-theme="dark"] .sig-src { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .sig-val { color: rgba(245,241,234,.92); }
+  html[data-theme="dark"] .sig-quote { color: rgba(245,241,234,.75); }
+  html[data-theme="dark"] .sig-status.is-ok { color: #5fb08a; }
+  html[data-theme="dark"] .sig-status.is-bad { color: rgba(245,241,234,.92); }
   html[data-theme="dark"] .hero .eyebrow { color: rgba(245,241,234,.55); }
   html[data-theme="dark"] .hero .eyebrow--accent { color: var(--accent-2); }
   html[data-theme="dark"] .hero-statement { color: var(--paper); }
@@ -557,17 +445,20 @@
   html[data-theme="dark"] .hero .btn--primary:hover { background: #f0a431; border-color: #f0a431; color: var(--paper); }
   html[data-theme="dark"] .hero .btn--secondary { color: var(--paper); border-color: rgba(245,241,234,.3); }
   html[data-theme="dark"] .hero .btn--secondary:hover { border-color: var(--paper); color: var(--paper); }
-  /* Brands in dark */
-  html[data-theme="dark"] .brands { border-top-color: rgba(245,241,234,.1); border-bottom-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .brands-label { color: rgba(245,241,234,.55); }
-  html[data-theme="dark"] .brands-label::after { background: var(--accent-2); }
-  html[data-theme="dark"] .brands-list span { color: var(--paper); }
-  html[data-theme="dark"] .brands-list .brands-more { color: rgba(245,241,234,.45); }
   /* Section heads in dark */
   html[data-theme="dark"] .section-head .eyebrow { color: var(--accent-2); }
   html[data-theme="dark"] .section-head .eyebrow::before { background: var(--accent-2); }
   html[data-theme="dark"] .section-head h2 { color: var(--paper); }
   html[data-theme="dark"] .section-head p { color: rgba(245,241,234,.7); }
+  /* Tool launcher in dark */
+  html[data-theme="dark"] .launcher-head .eyebrow { color: var(--accent-2); }
+  html[data-theme="dark"] .launcher-head .eyebrow::before { background: var(--accent-2); }
+  html[data-theme="dark"] .launcher-head h2 { color: var(--paper); }
+  html[data-theme="dark"] .launcher-list, html[data-theme="dark"] .launch-row { border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .launch-task { color: var(--paper); }
+  html[data-theme="dark"] .launch-action { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .launch-tools a, html[data-theme="dark"] .launcher-all { color: var(--accent-2); }
+  html[data-theme="dark"] .launch-tools a:hover, html[data-theme="dark"] .launcher-all:hover { color: var(--paper); }
   /* Featured research in dark */
   html[data-theme="dark"] .research-feature { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
   html[data-theme="dark"] .research-feature .badge { color: var(--accent-2); border-color: var(--accent-2); }
@@ -583,7 +474,26 @@
   html[data-theme="dark"] .research-item .date { color: rgba(245,241,234,.5); }
   html[data-theme="dark"] .research-item h4 a { color: var(--paper); }
   html[data-theme="dark"] .research-item h4 a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .launcher-ext { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .launcher-ext a { color: var(--accent-2); }
+  html[data-theme="dark"] .research-browse { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-browse-label, html[data-theme="dark"] .research-browse-links { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .research-browse-links a { color: var(--paper); border-color: rgba(245,241,234,.2); }
+  html[data-theme="dark"] .research-browse-links a:hover { border-color: var(--accent-2); }
+  html[data-theme="dark"] .research-side .research-item { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-side .research-item:hover { border-color: var(--accent-2); }
+  html[data-theme="dark"] .research-side .research-item p { color: rgba(245,241,234,.7); }
+  html[data-theme="dark"] .research-browse-links a:hover { color: var(--accent-2); }
+  html[data-theme="dark"] .founder-more { color: var(--accent-2); }
+  html[data-theme="dark"] .founder .btn--primary { background: var(--accent-2); color: var(--ink-1); border-color: var(--accent-2); }
+  html[data-theme="dark"] .founder .btn--primary:hover { background: #f0a431; border-color: #f0a431; color: var(--ink-1); }
   /* Extension in dark */
+  html[data-theme="dark"] .ext-btn { border-color: rgba(245,241,234,.25); color: var(--paper); }
+  html[data-theme="dark"] .ext-btn:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  html[data-theme="dark"] .ext-dot-btn { background: rgba(245,241,234,.25); }
+  html[data-theme="dark"] .ext-dot-btn.is-active { background: var(--accent-2); }
+  html[data-theme="dark"] .ext-count { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .extension-available--pending { color: rgba(245,241,234,.55); border-color: rgba(245,241,234,.25); }
   html[data-theme="dark"] .extension { background: var(--ink-1); color: var(--paper); }
   html[data-theme="dark"] .extension .eyebrow { color: rgba(245,241,234,.6); }
   html[data-theme="dark"] .extension h2 { color: var(--paper); }
@@ -592,6 +502,9 @@
   html[data-theme="dark"] .btn-secondary-dark { border-color: rgba(245,241,234,.25); color: var(--paper); }
   html[data-theme="dark"] .btn-secondary-dark:hover { border-color: var(--paper); color: var(--paper); }
   html[data-theme="dark"] .extension-meta { color: rgba(245,241,234,.4); }
+  html[data-theme="dark"] .btn-install { color: var(--ink-1); }
+  html[data-theme="dark"] .btn-install:hover { color: var(--ink-1); }
+  html[data-theme="dark"] .btn-install svg { color: var(--ink-1); }
   /* Schema-extractor browser mockup — restore dark terminal look in dark mode */
   html[data-theme="dark"] .ext-browser { background: #15130f; border-color: rgba(245,241,234,.08); }
   html[data-theme="dark"] .ext-browser-chrome { background: rgba(245,241,234,.04); border-bottom-color: rgba(245,241,234,.06); }
@@ -608,48 +521,8 @@
   html[data-theme="dark"] .ext-popup-code .s { color: rgba(245,241,234,.6); }
   html[data-theme="dark"] .ext-popup-code .p { color: rgba(245,241,234,.35); }
   html[data-theme="dark"] .ext-popup-foot { color: rgba(245,241,234,.4); border-top-color: rgba(245,241,234,.08); }
-  /* Insight in dark */
-  html[data-theme="dark"] .insight blockquote { color: var(--paper); border-left-color: var(--accent-2); }
-  html[data-theme="dark"] .insight blockquote em { color: var(--accent-2); }
-  html[data-theme="dark"] .insight cite { color: rgba(245,241,234,.55); }
-  html[data-theme="dark"] .insight cite a { color: var(--accent-2); }
-  /* Tools in dark */
-  html[data-theme="dark"] .tools { border-top-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .tools-head h2 { color: var(--paper); }
-  html[data-theme="dark"] .tools-head p { color: rgba(245,241,234,.72); }
-  html[data-theme="dark"] .tools-tabs { border-bottom-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .tools-tab { color: rgba(245,241,234,.55); }
-  html[data-theme="dark"] .tools-tab:hover { color: var(--paper); }
-  html[data-theme="dark"] .tools-tab.is-active { color: var(--paper); border-bottom-color: var(--accent-2); }
-  html[data-theme="dark"] .tool-featured { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .tool-featured-tag { color: var(--accent-2); }
-  html[data-theme="dark"] .tool-featured h3 { color: var(--paper); }
-  html[data-theme="dark"] .tool-featured-outcome { color: rgba(245,241,234,.72); }
-  html[data-theme="dark"] .tool-featured-best-for { color: rgba(245,241,234,.5); }
-  html[data-theme="dark"] .tool-featured-desc { color: rgba(245,241,234,.7); }
-  html[data-theme="dark"] .tool-featured .btn--primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
-  html[data-theme="dark"] .tool-featured .btn--primary:hover { background: #0a5d75; border-color: #0a5d75; color: var(--paper); }
-  html[data-theme="dark"] .tool-featured-preview { background: rgba(0,0,0,.35); border-color: rgba(245,241,234,.08); color: rgba(245,241,234,.78); }
-  html[data-theme="dark"] .tool-featured-preview pre { color: rgba(245,241,234,.78); }
-  html[data-theme="dark"] .tool-featured-preview .k { color: rgba(245,241,234,.95); }
-  html[data-theme="dark"] .tool-featured-preview .s { color: rgba(245,241,234,.6); }
-  html[data-theme="dark"] .tool-featured-preview .p { color: rgba(245,241,234,.35); }
-  html[data-theme="dark"] .tool-featured-preview .c { color: rgba(245,241,234,.4); }
-  html[data-theme="dark"] .tool-secondary-list { border-top-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .tool-secondary { border-bottom-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .tool-secondary:hover { background: rgba(245,241,234,.04); }
-  html[data-theme="dark"] .tool-secondary-cat { color: var(--accent-2); }
-  html[data-theme="dark"] .tool-secondary h4 a { color: var(--paper); }
-  html[data-theme="dark"] .tool-secondary:hover h4 a { color: var(--accent-2); }
-  html[data-theme="dark"] .tool-secondary .tool-name { color: rgba(245,241,234,.5); }
-  html[data-theme="dark"] .tool-secondary::after { color: rgba(245,241,234,.5); }
-  html[data-theme="dark"] .tool-secondary:hover::after { color: var(--accent-2); }
-  html[data-theme="dark"] .tool-secondary--soon::after { color: rgba(245,241,234,.5); }
-  html[data-theme="dark"] .tools-all-link { color: var(--accent-2); }
-  html[data-theme="dark"] .tools-all-link:hover { color: var(--paper); }
-  html[data-theme="dark"] .tool-paid-badge { color: var(--accent-2); border-color: var(--accent-2); }
   /* Founder in dark */
-  html[data-theme="dark"] .founder { background: var(--ink-1); color: var(--paper); }
+  html[data-theme="dark"] .founder { background: transparent; color: var(--paper); border-top-color: rgba(245,241,234,.1); }
   html[data-theme="dark"] .founder .eyebrow { color: var(--paper-2); }
   html[data-theme="dark"] .founder .eyebrow::before { background: var(--accent-2); }
   html[data-theme="dark"] .founder h2 { color: var(--paper); }
@@ -768,33 +641,18 @@
           <span class="eyebrow">By Mags Sikora · Senior SEO Consultant</span>
         </div>
       </div>
-      <aside class="hero-schema" aria-label="Example product schema">
-        <div class="schema-window">
+      <aside class="hero-schema" aria-label="Product signal check: one product, four sources, and an AI agent that can't tell which price is right">
+        <div class="schema-window signal">
           <div class="schema-window-head">
-            <span class="schema-label">PRODUCT.JSONLD</span>
+            <span class="schema-label">Product signal check</span>
+            <span class="signal-url">/products/field-notebook</span>
           </div>
-<pre class="schema-code"><code><span class="p">{</span>
-  <span class="k">"@context"</span><span class="p">:</span> <span class="s">"https://schema.org"</span><span class="p">,</span>
-  <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Product"</span><span class="p">,</span>
-  <span class="k">"name"</span><span class="p">:</span> <span class="s">"Field Notebook"</span><span class="p">,</span>
-  <span class="k">"brand"</span><span class="p">:</span> <span class="p">{</span> <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Brand"</span><span class="p">,</span>
-    <span class="k">"name"</span><span class="p">:</span> <span class="s">"MagsTags"</span> <span class="p">},</span>
-  <span class="k">"offers"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Offer"</span><span class="p">,</span>
-    <span class="k">"price"</span><span class="p">:</span> <span class="s">"24.00"</span><span class="p">,</span>
-    <span class="k">"priceCurrency"</span><span class="p">:</span> <span class="s">"GBP"</span><span class="p">,</span>
-    <span class="k">"availability"</span><span class="p">:</span> <span class="s">"InStock"</span>
-  <span class="p">},</span>
-  <span class="k">"aggregateRating"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="k">"@type"</span><span class="p">:</span> <span class="s">"AggregateRating"</span><span class="p">,</span>
-    <span class="k">"ratingValue"</span><span class="p">:</span> <span class="s">"4.8"</span><span class="p">,</span>
-    <span class="k">"reviewCount"</span><span class="p">:</span> <span class="s">"182"</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre>
-          <div class="schema-ledger">
-            <div class="schema-ledger-row"><span class="sl-k">Syntax</span><span class="sl-ok">✓ valid</span></div>
-            <div class="schema-ledger-row"><span class="sl-k">Google</span><span class="sl-ok">✓ rich-result eligible</span></div>
-            <div class="schema-ledger-row"><span class="sl-k">Your live feed</span><span class="sl-bad">✗ price = £19.00</span></div>
+          <div class="signal-rows">
+            <div class="signal-row"><span class="sig-src">Page</span><span class="sig-val">£24.00</span><span class="sig-status is-ok">✓ In stock</span></div>
+            <div class="signal-row"><span class="sig-src">Structured data</span><span class="sig-val">£24.00</span><span class="sig-status is-ok">✓ Valid</span></div>
+            <div class="signal-row"><span class="sig-src">Merchant feed</span><span class="sig-val">£19.00</span><span class="sig-status is-bad">✕ Price mismatch</span></div>
+            <div class="signal-row"><span class="sig-src">Canonical</span><span class="sig-val">/products/notebook</span><span class="sig-status is-warn">⚠ Different URL</span></div>
+            <div class="signal-row"><span class="sig-src">AI shopping agent</span><span class="sig-val sig-quote">“£19 or £24?”</span><span class="sig-status is-bad">✕ Can't decide</span></div>
           </div>
           <div class="schema-verdict">Valid. Eligible. Still wrong.</div>
         </div>
@@ -802,24 +660,103 @@
     </div>
   </section>
   <!-- ────────────────────────── 2. Worked-with brands ─────────────────────── -->
-  <section class="brands">
-    <div class="wrap">
-      <span class="brands-label">Worked with</span>
-      <div class="brands-list">
-        <span>Autotrader</span>
-        <span>Avis</span>
-        <span>Emirates Group</span>
-        <span>Expedia</span>
-        <span>New Look</span>
-        <span class="brands-more">&amp; 50+ others</span>
+  <section class="brands" aria-label="Brands Mags has worked with">
+    <div class="brands-inner"><span class="brands-label">Worked with</span></div>
+    <div class="brands-marquee">
+      <div class="brands-track">
+      <div class="brands-set">
+        <img src="/brands/company-1.png" alt="AutoTrader" width="1296" height="160" loading="eager" decoding="async" style="--h:24px">
+        <img src="/brands/company-2.png" alt="Avis" width="524" height="160" loading="eager" decoding="async" style="--h:22px">
+        <img src="/brands/company-3.png" alt="Bookatable" width="895" height="160" loading="eager" decoding="async" style="--h:26px">
+        <img src="/brands/company-4.png" alt="dnata travel group" width="347" height="160" loading="eager" decoding="async" style="--h:46px">
+        <img src="/brands/company-5.png" alt="Emirates Holidays" width="157" height="160" loading="eager" decoding="async" style="--h:56px">
+        <img src="/brands/company-6.png" alt="Expedia" width="565" height="160" loading="eager" decoding="async" style="--h:28px">
+        <img src="/brands/company-9.png" alt="Netflights" width="601" height="160" loading="eager" decoding="async" style="--h:30px">
+        <img src="/brands/company-7.png" alt="New Look" width="1874" height="160" loading="eager" decoding="async" style="--h:17px">
+        <img src="/brands/company-8.png" alt="Travelbag" width="1194" height="160" loading="eager" decoding="async" style="--h:20px">
+        <span class="brands-more">+ 50 more</span>
+      </div>
+      <div class="brands-set" aria-hidden="true">
+        <img src="/brands/company-1.png" alt="" width="1296" height="160" loading="eager" decoding="async" style="--h:24px">
+        <img src="/brands/company-2.png" alt="" width="524" height="160" loading="eager" decoding="async" style="--h:22px">
+        <img src="/brands/company-3.png" alt="" width="895" height="160" loading="eager" decoding="async" style="--h:26px">
+        <img src="/brands/company-4.png" alt="" width="347" height="160" loading="eager" decoding="async" style="--h:46px">
+        <img src="/brands/company-5.png" alt="" width="157" height="160" loading="eager" decoding="async" style="--h:56px">
+        <img src="/brands/company-6.png" alt="" width="565" height="160" loading="eager" decoding="async" style="--h:28px">
+        <img src="/brands/company-9.png" alt="" width="601" height="160" loading="eager" decoding="async" style="--h:30px">
+        <img src="/brands/company-7.png" alt="" width="1874" height="160" loading="eager" decoding="async" style="--h:17px">
+        <img src="/brands/company-8.png" alt="" width="1194" height="160" loading="eager" decoding="async" style="--h:20px">
+        <span class="brands-more">+ 50 more</span>
+      </div>
       </div>
     </div>
   </section>
-  <!-- ────────────────────────── 3. Featured research ─────────────────────── -->
+  <!-- ────────────────────────── 1. Toolkit (task-first launcher) ────────────── -->
+  <section class="launcher" id="tools">
+    <div class="wrap">
+      <div class="launcher-head">
+        <span class="eyebrow eyebrow--accent">01 · Toolkit</span>
+        <h2>What are you working on?</h2>
+      </div>
+      <div class="launcher-list">
+        <div class="launch-row">
+          <span class="launch-task">Structured data</span>
+          <span class="launch-action">Generate or inspect schema.</span>
+          <span class="launch-tools">
+            <a href="/ecommerce-schema-generator/">Schema generators <span class="launch-arrow">→</span></a>
+            <a href="/schema-markup-visualizer/">Visualizer <span class="launch-arrow">→</span></a>
+            <a href="/schema-comparison-tool/">Comparison <span class="launch-arrow">→</span></a>
+          </span>
+        </div>
+        <div class="launch-row">
+          <span class="launch-task">Merchant Center</span>
+          <span class="launch-action">Audit feeds.</span>
+          <span class="launch-tools">
+            <a href="/gmc-feed-analyzer/">GMC Feed Analyzer <span class="launch-arrow">→</span></a>
+          </span>
+        </div>
+        <div class="launch-row">
+          <span class="launch-task">International SEO</span>
+          <span class="launch-action">Build hreflang.</span>
+          <span class="launch-tools">
+            <a href="/hreflang-generator/">Hreflang Generator <span class="launch-arrow">→</span></a>
+          </span>
+        </div>
+        <div class="launch-row">
+          <span class="launch-task">Search Console</span>
+          <span class="launch-action">Build RE2 regex.</span>
+          <span class="launch-tools">
+            <a href="/gsc-regex-generator/">GSC Regex Builder <span class="launch-arrow">→</span></a>
+          </span>
+        </div>
+        <div class="launch-row">
+          <span class="launch-task">SERP diagnostics</span>
+          <span class="launch-action">Preview snippets, check favicons.</span>
+          <span class="launch-tools">
+            <a href="/serp-preview/">SERP Previewer <span class="launch-arrow">→</span></a>
+            <a href="/favicon-validator/">Favicon Validator <span class="launch-arrow">→</span></a>
+          </span>
+        </div>
+        <div class="launch-row">
+          <span class="launch-task">Crawl controls</span>
+          <span class="launch-action">Build robots.txt, inspect sitemaps.</span>
+          <span class="launch-tools">
+            <a href="/robots-txt-generator/">Robots.txt Generator <span class="launch-arrow">→</span></a>
+            <a href="/xml-sitemap-url-counter-analyzer/">Sitemap Analyzer <span class="launch-arrow">→</span></a>
+          </span>
+        </div>
+      </div>
+      <div class="launcher-foot">
+        <span class="launcher-ext">Chrome extensions: <a href="/schema-extractor-chrome-extension/">Schema Extractor</a> <span class="launch-sep">·</span> <a href="/google-goto-url-resolver/">Goto URL Resolver</a></span>
+        <a class="launcher-all" href="/free-seo-tools/">View all SEO tools →</a>
+      </div>
+    </div>
+  </section>
+  <!-- ────────────────────────── 2. Notes ─────────────────────── -->
   <section id="research">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow eyebrow--accent">01 · Notes</span>
+        <span class="eyebrow eyebrow--accent">02 · Notes</span>
         <h2>Practical SEO writing.</h2>
         <p>No content for content's sake. Promise.</p>
       </div>
@@ -873,94 +810,29 @@
           </article>
         </div>
       </div>
-      <div class="research-more">
-        <div class="research-more-head">
-          <span class="research-more-label">More from the notes</span>
-          <a class="research-more-all" href="/notes/">All notes →</a>
-        </div>
-        <div class="research-more-grid">
-          <article class="research-item">
-            <div class="meta"><span class="cat">Structured Data</span><span class="dot"></span><span class="date">18 May 2026</span></div>
-            <h4><a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Technical SEO</span><span class="dot"></span><span class="date">11 Apr 2026</span></div>
-            <h4><a href="/notes/google-image-thumbnails/">Google Image Thumbnails: Best Practice Guide</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Google SERP Tests</span><span class="dot"></span><span class="date">1 Apr 2026</span></div>
-            <h4><a href="/notes/google-favourite-brands/">Google Favourite Shopping Brand: Personalisation in Search</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Google Shopping</span><span class="dot"></span><span class="date">30 Mar 2026</span></div>
-            <h4><a href="/notes/google-store-ratings-vs-product-ratings/">Google Store Ratings vs Product Ratings: How Each Works</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Ecommerce SEO</span><span class="dot"></span><span class="date">29 Mar 2026</span></div>
-            <h4><a href="/notes/google-ecommerce-rich-results/">Google eCommerce Rich Results in 2026: Feeds, Schema, and What You Actually Control</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Structured Data</span><span class="dot"></span><span class="date">27 Mar 2026</span></div>
-            <h4><a href="/notes/ecommerce-structured-data-serp-features/">E-commerce Structured Data: Rich Results, Google Shopping and What Actually Moves the Needle at Scale</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Structured Data</span><span class="dot"></span><span class="date">27 Mar 2026</span></div>
-            <h4><a href="/notes/product-identifiers-seo/">Product Identifiers for Ecommerce SEO: GTIN, MPN, SKU &amp; Brand</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Agentic Commerce</span><span class="dot"></span><span class="date">22 Mar 2026</span></div>
-            <h4><a href="/notes/agentic-commerce-optimization/">Agentic Commerce Optimization: Fix Your Schema, Feeds, and Product Data</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Structured Data</span><span class="dot"></span><span class="date">21 Mar 2026</span></div>
-            <h4><a href="/notes/product-vs-productgroup-schema/">Product vs ProductGroup Schema: When to Use Which</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Technical SEO</span><span class="dot"></span><span class="date">20 Mar 2026</span></div>
-            <h4><a href="/notes/mega-menus-seo/">Mega Menus &amp; SEO: When They Help and When They Hurt</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Technical SEO</span><span class="dot"></span><span class="date">19 Mar 2026</span></div>
-            <h4><a href="/notes/crawl-budget-enterprise/">Crawl Budget Management for Large Websites: The Enterprise Guide</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">International SEO</span><span class="dot"></span><span class="date">16 Mar 2026</span></div>
-            <h4><a href="/notes/hreflang-canonical-conflict/">When Hreflang and Canonicals Conflict</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Technical SEO</span><span class="dot"></span><span class="date">10 Mar 2026</span></div>
-            <h4><a href="/notes/robots-txt-mistakes/">Robots.txt Mistakes</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">International SEO</span><span class="dot"></span><span class="date">28 Feb 2026</span></div>
-            <h4><a href="/notes/hreflang-mistakes/">Hreflang in 2026: The Mistakes That Keep Coming Back</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Technical SEO</span><span class="dot"></span><span class="date">15 Feb 2026</span></div>
-            <h4><a href="/notes/gsc-regex-deep-dive/">GSC Regex: Moving Past the Basics</a></h4>
-          </article>
-          <article class="research-item">
-            <div class="meta"><span class="cat">Personal</span><span class="dot"></span><span class="date">16 Mar 2026</span></div>
-            <h4><a href="/notes/bill-slawski/">Bill Slawski</a></h4>
-          </article>
-        </div>
+      <div class="research-browse">
+        <span class="research-browse-label">Browse</span>
+        <span class="research-browse-links"><a href="/schema-for-seo/">Structured data</a><a href="/ecommerce-seo/">Ecommerce</a><a href="/technical-seo/">Technical SEO</a><a href="/international-seo/">International</a><a href="/ai-search/">AI search</a><a href="/research/">Research</a></span>
+        <a class="research-more-all" href="/notes/">All notes →</a>
       </div>
     </div>
   </section>
-  <!-- ────────────────────────── 4. Chrome extension ───────────────────────── -->
+  <!-- ────────────────────────── 3. Chrome extension (carousel) ───────────────────────── -->
   <!-- Chrome Web Store listing: hgcahplmkjflaaeofnjjhipfiekjdikd -->
   <section class="extension" id="extension">
     <div class="wrap">
-      <div class="extension-grid">
+      <div class="ext-carousel" aria-roledescription="carousel" aria-label="Chrome extensions">
+      <div class="ext-track">
+      <div class="extension-grid ext-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 2">
         <div class="extension-text">
           <span class="extension-available">Available now</span>
-          <span class="eyebrow">02 · Chrome extension</span>
+          <span class="eyebrow">03 · Chrome extension</span>
           <h2>Schema Extractor.</h2>
           <p class="extension-sub">JSON-LD, Microdata, RDFa — one click on the toolbar.</p>
           <p class="extension-desc">Extracts all structured data from any page — JSON-LD, Microdata, and RDFa — and shows it in a clean tabbed viewer. The toolbar badge tells you what's on a page before you click. No DevTools. No view-source.</p>
           <p class="extension-tagline">Rich results don't happen by accident. For SEOs who know valid ≠ correct.</p>
           <div class="extension-actions">
-            <a class="btn-install" href="https://chromewebstore.google.com/detail/schema-extractor-json-ld/hgcahplmkjflaaeofnjjhipfiekjdikd" target="_blank" rel="noopener">
+            <a class="btn-install" href="https://chromewebstore.google.com/detail/schema-markup-extractor-v/hgcahplmkjflaaeofnjjhipfiekjdikd" target="_blank" rel="noopener">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Add to Chrome — it's free
             </a>
@@ -1001,217 +873,63 @@
           </div>
         </div>
       </div>
+      <div class="extension-grid ext-slide" role="group" aria-roledescription="slide" aria-label="2 of 2" hidden>
+        <div class="extension-text">
+          <span class="extension-available extension-available--pending">Web Store review pending</span>
+          <span class="eyebrow">03 · Chrome extension</span>
+          <h2>Google Goto URL Resolver</h2>
+          <p class="extension-sub">Get the real URL back from google.com/goto.</p>
+          <p class="extension-desc">Google now wraps many result links in google.com/goto. The extension resolves the destination in your browser, shows the real URL, and exports the SERP as URLs, Markdown or CSV.</p>
+          <p class="extension-tagline">For anyone who has pasted a Google redirect into a client deck and noticed too late.</p>
+          <div class="extension-actions">
+            <a class="btn-install" href="/google-goto-url-resolver/">Read more</a>
+            <a class="btn-secondary-dark" href="/notes/google-goto-url-redirect/">How /goto works</a>
+          </div>
+          <div class="extension-meta">MV3 · Free · No tracking · Export as URLs, Markdown, CSV</div>
+        </div>
+        <div class="extension-visual" aria-hidden="true">
+          <div class="ext-browser">
+            <div class="ext-browser-chrome">
+              <span class="ext-dot"></span>
+              <span class="ext-dot"></span>
+              <span class="ext-dot"></span>
+              <span class="ext-url">https://www.google.com/goto?url=[encoded-value]</span>
+              <span class="ext-icon">G<span class="ext-badge">10</span></span>
+            </div>
+            <div class="ext-popup">
+              <div class="ext-popup-head">
+                <span class="ext-popup-title">Resolved · 10 results</span>
+                <span class="ext-popup-tabs">
+                  <span class="ext-popup-tab active">URLs</span>
+                  <span class="ext-popup-tab">Markdown</span>
+                  <span class="ext-popup-tab">CSV</span>
+                </span>
+              </div>
+<pre class="ext-popup-code"><span class="p">1</span>  <span class="s">https://example.com/products/midi-dress</span>
+<span class="p">2</span>  <span class="s">https://example.co.uk/dresses/midi-wrap</span>
+<span class="p">3</span>  <span class="s">https://example.de/kleider/midikleid</span>
+<span class="p">4</span>  <span class="k">google.com/goto?url=…</span>  <span class="p">→ not resolved</span>
+<span class="p">5</span>  <span class="s">https://example.fr/robes/robe-midi</span>
+<span class="p">…</span></pre>
+              <div class="ext-popup-foot">
+                <span>● <span class="ok">Resolved locally</span></span>
+                <span>Copy · Export · Nothing leaves the browser</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="ext-nav">
+        <button class="ext-btn" type="button" data-dir="-1" aria-label="Previous extension">←</button>
+        <span class="ext-dots"><button class="ext-dot-btn is-active" type="button" data-go="0" aria-label="Schema Extractor"></button><button class="ext-dot-btn" type="button" data-go="1" aria-label="Google Goto URL Resolver"></button></span>
+        <button class="ext-btn" type="button" data-dir="1" aria-label="Next extension">→</button>
+        <span class="ext-count"><span class="ext-count-cur">1</span> / 2</span>
+      </div>
+      </div>
     </div>
   </section>
-  <!-- ────────────────────────── 5. Signature insight ─────────────────────── -->
-  <section class="insight">
-    <div class="insight-inner">
-      <span class="eyebrow eyebrow--accent" style="display:block;margin-bottom:32px">03 · From the writing</span>
-      <blockquote>
-        Most product schema isn't broken. It's <em>valid</em>. The data underneath it just doesn't match the page, the feed, and the catalogue — and Google trusts none of them.
-      </blockquote>
-      <cite>— from <a href="/notes/valid-schema-bad-data/">When Your Schema Is Valid But Your Data Isn't</a></cite>
-    </div>
-  </section>
-  <!-- ────────────────────────── 6. Tools (tabbed) ──────────────────────── -->
-  <section class="tools" id="tools">
-    <div class="wrap">
-      <div class="tools-head">
-        <span class="eyebrow eyebrow--accent">04 · Tools</span>
-        <h2>Tools. Automate the boring bits.</h2>
-        <p>Free SEO tools for structured data, technical checks, AI search readiness, and content workflows.</p>
-      </div>
-      <div class="tools-tabs" role="tablist" aria-label="Tool category">
-        <button class="tools-tab is-active" data-tab="schema"      role="tab" aria-selected="true">Schema</button>
-        <button class="tools-tab"           data-tab="technical"   role="tab" aria-selected="false">Technical SEO</button>
-        <button class="tools-tab"           data-tab="ai"          role="tab" aria-selected="false">AI Search</button>
-        <button class="tools-tab"           data-tab="diagnostics" role="tab" aria-selected="false">Diagnostics</button>
-        <button class="tools-tab"           data-tab="others"      role="tab" aria-selected="false">Others</button>
-      </div>
-      <!-- ───── Schema ───── -->
-      <div class="tools-panel is-active" data-tab="schema" role="tabpanel">
-        <article class="tool-featured">
-          <span class="tool-featured-tag">Featured · Schema</span>
-          <h3>E-commerce — Product Schema Generators</h3>
-          <p class="tool-featured-outcome">Generate Product, Merchant Listing, and ProductGroup markup for rich results.</p>
-          <p class="tool-featured-best-for">Best for: e-commerce sites preparing for rich results.</p>
-          <p class="tool-featured-desc">Compare Product Snippet, Merchant Listing, and ProductGroup side-by-side, then generate validated JSON-LD with the fields Google actually reads.</p>
-          <a class="btn btn--primary" href="/ecommerce-schema-generator/">Open generator
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <div class="tool-featured-preview">
-            <span class="tool-featured-preview-label">PRODUCT.JSONLD</span>
-<pre><code><span class="p">{</span>
-  <span class="k">"@context"</span><span class="p">:</span> <span class="s">"https://schema.org"</span><span class="p">,</span>
-  <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Product"</span><span class="p">,</span>
-  <span class="k">"offers"</span><span class="p">:</span> <span class="p">{</span> <span class="k">"@type"</span><span class="p">:</span> <span class="s">"Offer"</span><span class="p">, … },</span>
-  <span class="k">"aggregateRating"</span><span class="p">:</span> <span class="p">{ … }</span>
-<span class="p">}</span></code></pre>
-          </div>
-        </article>
-        <div class="tool-secondary-list">
-          <a class="tool-secondary" href="/product-snippet-schema-generator/">
-            <span class="tool-secondary-cat">Snippets</span>
-            <h4>Product Snippet — Schema Generator</h4>
-            <span class="tool-outcome">Adds stars and prices to your Google results.</span>
-          </a>
-          <a class="tool-secondary" href="/merchant-listing-schema-generator/">
-            <span class="tool-secondary-cat">Shopping</span>
-            <h4>Merchant Listing — Schema Generator</h4>
-            <span class="tool-outcome">Qualifies pages for Shopping panel and Popular Products.</span>
-          </a>
-          <a class="tool-secondary" href="/product-variants-schema-generator/">
-            <span class="tool-secondary-cat">Variants</span>
-            <h4>Product Variants — Schema Generator</h4>
-            <span class="tool-outcome">Shows colour and size swatches in Google Shopping.</span>
-          </a>
-        </div>
-      </div>
-      <!-- ───── Technical SEO ───── -->
-      <div class="tools-panel" data-tab="technical" role="tabpanel">
-        <article class="tool-featured">
-          <span class="tool-featured-tag">Featured · Technical SEO</span>
-          <h3>Hreflang Generator</h3>
-          <p class="tool-featured-outcome">Fix international targeting at scale, without the trial and error.</p>
-          <p class="tool-featured-best-for">Best for: multi-market sites with hreflang drift.</p>
-          <p class="tool-featured-desc">Generate bidirectional hreflang markup for HTML, XML sitemap, and HTTP-header variants. Validates language–region pairs against Google's rules.</p>
-          <a class="btn btn--primary" href="/hreflang-generator/">Open generator
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <div class="tool-featured-preview">
-            <span class="tool-featured-preview-label">HREFLANG.HTML</span>
-<pre><code><span class="p">&lt;</span><span class="k">link</span> <span class="k">rel</span><span class="p">=</span><span class="s">"alternate"</span> <span class="k">hreflang</span><span class="p">=</span><span class="s">"en-gb"</span> <span class="k">href</span><span class="p">=</span><span class="s">"…/uk/"</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="k">link</span> <span class="k">rel</span><span class="p">=</span><span class="s">"alternate"</span> <span class="k">hreflang</span><span class="p">=</span><span class="s">"en-us"</span> <span class="k">href</span><span class="p">=</span><span class="s">"…/us/"</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="k">link</span> <span class="k">rel</span><span class="p">=</span><span class="s">"alternate"</span> <span class="k">hreflang</span><span class="p">=</span><span class="s">"x-default"</span> <span class="k">href</span><span class="p">=</span><span class="s">"…/"</span> <span class="p">/&gt;</span></code></pre>
-          </div>
-        </article>
-        <div class="tool-secondary-list">
-          <a class="tool-secondary" href="/robots-txt-generator/">
-            <span class="tool-secondary-cat">Crawl Control</span>
-            <h4>Robots.txt Generator</h4>
-            <span class="tool-outcome">Controls search and AI crawlers with rules that actually work.</span>
-          </a>
-          <a class="tool-secondary" href="/xml-sitemap-url-counter-analyzer/">
-            <span class="tool-secondary-cat">Sitemaps</span>
-            <h4>XML Sitemap Counter &amp; Analyzer</h4>
-            <span class="tool-outcome">Audits sitemap URL counts, lastmod, and duplicates in one pass.</span>
-          </a>
-          <a class="tool-secondary" href="/gmc-feed-analyzer/">
-            <span class="tool-secondary-cat">Feeds</span>
-            <h4>GMC Feed Analyzer</h4>
-            <span class="tool-outcome">Catches Merchant Center feed errors before Google does.</span>
-          </a>
-        </div>
-      </div>
-      <!-- ───── AI Search ───── -->
-      <div class="tools-panel" data-tab="ai" role="tabpanel">
-        <article class="tool-featured">
-          <span class="tool-featured-tag">Featured · AI Search</span>
-          <h3>Robots.txt Generator</h3>
-          <p class="tool-featured-outcome">Control which AI bots may train on your content.</p>
-          <p class="tool-featured-best-for">Best for: brands deciding which AI crawlers get access.</p>
-          <p class="tool-featured-desc">Generate robots.txt blocks for GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and CCBot — alongside your regular crawler rules.</p>
-          <a class="btn btn--primary" href="/robots-txt-generator/">Open generator
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <div class="tool-featured-preview">
-            <span class="tool-featured-preview-label">ROBOTS.TXT</span>
-<pre><code><span class="c"># AI training crawlers</span>
-<span class="k">User-agent</span><span class="p">:</span> GPTBot
-<span class="k">Disallow</span><span class="p">:</span> /
-<span class="k">User-agent</span><span class="p">:</span> ClaudeBot
-<span class="k">Disallow</span><span class="p">:</span> /
-<span class="k">User-agent</span><span class="p">:</span> Google-Extended
-<span class="k">Disallow</span><span class="p">:</span> /</code></pre>
-          </div>
-        </article>
-        <div class="tool-secondary-list">
-          <span class="tool-secondary tool-secondary--soon" aria-disabled="true">
-            <span class="tool-secondary-cat">Audit</span>
-            <h4>AI Search Visibility Checklist</h4>
-            <span class="tool-outcome">Score whether AI assistants surface your content.</span>
-          </span>
-          <span class="tool-secondary tool-secondary--soon" aria-disabled="true">
-            <span class="tool-secondary-cat">Commerce</span>
-            <h4>Agentic Commerce Readiness</h4>
-            <span class="tool-outcome">Diagnose product data for AI shopping agents.</span>
-          </span>
-          <span class="tool-secondary tool-secondary--soon" aria-disabled="true">
-            <span class="tool-secondary-cat">Diagnostic</span>
-            <h4>AI Crawler Access Checker</h4>
-            <span class="tool-outcome">Verify which AI bots can reach your site.</span>
-          </span>
-        </div>
-      </div>
-      <!-- ───── Diagnostics ───── -->
-      <div class="tools-panel" data-tab="diagnostics" role="tabpanel">
-        <article class="tool-featured">
-          <span class="tool-featured-tag">Featured · Diagnostics</span>
-          <h3>GSC Regex Builder</h3>
-          <p class="tool-featured-outcome">Filter Search Console at scale.</p>
-          <p class="tool-featured-best-for">Best for: anyone filtering Search Console past the default row ceiling.</p>
-          <p class="tool-featured-desc">Build validated RE2 regex for Search Console URL and query filtering. 22 templates, live tester, plain-English explanations. Stop Googling the syntax.</p>
-          <a class="btn btn--primary" href="/gsc-regex-generator/">Open the builder
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <div class="tool-featured-preview">
-            <span class="tool-featured-preview-label">GSC.REGEX</span>
-<pre><code><span class="c"># URLs under /products/ excluding /legacy/</span>
-<span class="k">^/products/</span><span class="p">[</span><span class="s">^/legacy</span><span class="p">]</span><span class="k">.*$</span>
-<span class="c"># Brand or commercial-intent queries</span>
-<span class="p">(</span><span class="s">magstags</span><span class="p">|</span><span class="s">buy</span><span class="p">|</span><span class="s">review</span><span class="p">|</span><span class="s">near\s+me</span><span class="p">|</span><span class="s">price</span><span class="p">)</span></code></pre>
-          </div>
-        </article>
-        <div class="tool-secondary-list">
-          <a class="tool-secondary" href="/serp-preview/">
-            <span class="tool-secondary-cat">SERP</span>
-            <h4>SERP Snippet Previewer</h4>
-            <span class="tool-outcome">Preview titles and metas before Google rewrites them.</span>
-          </a>
-          <a class="tool-secondary" href="/schema-markup-visualizer/">
-            <span class="tool-secondary-cat">Inspector</span>
-            <h4>Schema Markup Visualizer</h4>
-            <span class="tool-outcome">Inspects JSON-LD as a tree instead of counting braces.</span>
-          </a>
-          <a class="tool-secondary" href="/favicon-validator/">
-            <span class="tool-secondary-cat">Branding</span>
-            <h4>Favicon Validator</h4>
-            <span class="tool-outcome">Checks favicons against Google and browser standards.</span>
-          </a>
-        </div>
-      </div>
-      <!-- ───── Others (paid, external) ───── -->
-      <div class="tools-panel" data-tab="others" role="tabpanel">
-        <article class="tool-featured">
-          <span class="tool-featured-tag">Featured · Others<span class="tool-paid-badge">Paid</span></span>
-          <h3>InvuAI</h3>
-          <p class="tool-featured-outcome">Find out if ChatGPT is talking about your brand.</p>
-          <p class="tool-featured-best-for">Best for: brands tracking AI search visibility week-to-week.</p>
-          <p class="tool-featured-desc">Submit your brand and InvuAI runs queries across major AI assistants — ChatGPT, Claude, Perplexity — and reports which ones mention you, how, and in what context.</p>
-          <a class="btn btn--primary" href="https://invuai.com/" target="_blank" rel="noopener">Visit InvuAI
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <div class="tool-featured-preview">
-            <span class="tool-featured-preview-label">INVUAI.QUERY</span>
-<pre><code><span class="k">Brand</span><span class="p">:</span> <span class="s">MagsTags</span>
-<span class="c"># Mentioned across 50 SEO prompts</span>
-ChatGPT      <span class="p">·</span> 12 / 50
-Claude       <span class="p">·</span>  8 / 50
-Perplexity   <span class="p">·</span>  0 / 50</code></pre>
-          </div>
-        </article>
-        <div class="tool-secondary-list">
-          <a class="tool-secondary" href="https://sendlikeapro.com/" target="_blank" rel="noopener">
-            <span class="tool-secondary-cat">Email <span class="tool-paid-badge">Paid</span></span>
-            <h4>Send Like a Pro</h4>
-            <span class="tool-outcome">A polished email signature in under 5 minutes.</span>
-          </a>
-        </div>
-      </div>
-      <a class="tools-all-link" href="/free-seo-tools/">View full tool library →</a>
-    </div>
-  </section>
-  <!-- ────────────────────────── 5. Founder section ───────────────────────── -->
+  <!-- ────────────────────────── 4. About ───────────────────────── -->
   <section class="founder" id="about">
     <div class="wrap">
       <div class="founder-grid">
@@ -1220,11 +938,13 @@ Perplexity   <span class="p">·</span>  0 / 50</code></pre>
           <img class="portrait" src="/mags-sikora/mags-sikora-portrait.jpg" alt="Portrait of Mags Sikora" width="960" height="960" loading="lazy" decoding="async">
         </picture>
         <div>
-          <span class="eyebrow">05 · About the author</span>
+          <span class="eyebrow">04 · About</span>
           <h2 style="margin-top:24px">Mags Sikora.<br>Senior SEO Consultant.</h2>
-          <p>Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
-          <p>At Intrepid Digital, I lead enterprise SEO engagements focused on AI-integrated search strategies, large-scale technical migrations, and connecting content operations to actual search performance.</p>
-          <p style="margin-top:24px"><a href="/mags-sikora/">Read the long version →</a></p>
+          <p>18+ years leading search programmes for enterprise and global businesses. I specialise in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations. Currently leading enterprise engagements at Intrepid Digital.</p>
+          <div class="founder-actions">
+            <a class="btn btn--primary" href="/seo-services/">Work with me</a>
+            <a class="founder-more" href="/mags-sikora/">Read more →</a>
+          </div>
           <div class="founder-credentials">
             <div>
               <div class="credential-label">Currently</div>
@@ -1247,10 +967,10 @@ Perplexity   <span class="p">·</span>  0 / 50</code></pre>
       </div>
     </div>
   </section>
-  <!-- ────────────────────────── 6. Newsletter ────────────────────────────── -->
+  <!-- ────────────────────────── 5. Newsletter ────────────────────────────── -->
   <section class="newsletter" id="newsletter">
     <div class="newsletter-inner">
-      <span class="eyebrow eyebrow--accent">06 · The newsletter</span>
+      <span class="eyebrow eyebrow--accent">05 · The newsletter</span>
       <h2>Join the working list.</h2>
       <p>One email when something is published. New research, tool drops, and the occasional thinking-out-loud on AI search, structured data, and ecommerce visibility.</p>
       <form onsubmit="event.preventDefault(); alert('Newsletter signup is illustrative in this prototype.');">
@@ -1289,23 +1009,19 @@ Perplexity   <span class="p">·</span>  0 / 50</code></pre>
     document.documentElement.setAttribute('data-theme', next);
     try { localStorage.setItem('mt-theme', next); } catch(e) {}
   };
-  // ── Tools tabs (switch between schema / technical / ai / content) ────
+  // ── Extension carousel ────────────────────────────────────────────
   (function() {
-    var tabs = document.querySelectorAll('.tools-tab');
-    var panels = document.querySelectorAll('.tools-panel');
-    tabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var name = tab.dataset.tab;
-        tabs.forEach(function(t) {
-          var active = t === tab;
-          t.classList.toggle('is-active', active);
-          t.setAttribute('aria-selected', active ? 'true' : 'false');
-        });
-        panels.forEach(function(p) {
-          p.classList.toggle('is-active', p.dataset.tab === name);
-        });
-      });
-    });
+    var root = document.querySelector('.ext-carousel'); if (!root) return;
+    var slides = root.querySelectorAll('.ext-slide'), dots = root.querySelectorAll('.ext-dot-btn'), cur = root.querySelector('.ext-count-cur'), i = 0;
+    function go(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function(s, k) { s.hidden = k !== i; s.classList.toggle('is-active', k === i); });
+      dots.forEach(function(d, k) { d.classList.toggle('is-active', k === i); });
+      if (cur) cur.textContent = i + 1;
+    }
+    root.querySelectorAll('.ext-btn').forEach(function(b) { b.addEventListener('click', function() { go(i + Number(b.dataset.dir)); }); });
+    dots.forEach(function(d) { d.addEventListener('click', function() { go(Number(d.dataset.go)); }); });
+    root.addEventListener('keydown', function(e) { if (e.key === 'ArrowRight') go(i + 1); if (e.key === 'ArrowLeft') go(i - 1); });
   })();
 </script>
 <script src="/cookie-consent.js"></script>

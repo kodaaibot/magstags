@@ -113,8 +113,6 @@
       --cyan-val:     #22d3ee;
       --red:          #fca5a5;                         --red-light:    rgba(252,165,165,.1);
     }
-    @media (max-width: 768px) {
-    }
     .tool-header { margin-bottom: 32px; }
     .tool-badge-free { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 99px; font-weight: 600; background: var(--mint-light); color: var(--teal); margin-bottom: 12px; }
     .tool-title { font-family: 'IBM Plex Mono','Menlo',monospace;  font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
@@ -301,46 +299,6 @@
       .tree-wrap { font-size: 11px; padding: 8px; }
       .overview-grid { gap: 16px; }
     }
-    /* ─── Content sections (ct-* pattern) ─── */
-    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
-    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
-    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
-    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
-    .ct-body { font-size: 14px; color: var(--text-2); line-height: 1.75; }
-    /* Cards */
-    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
-    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
-    .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
-    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
-    .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-    /* Callout */
-    .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
-    .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
-    html.dark .ct-callout--teal { background: rgba(14,116,144,.1); }
-    .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
-    .ct-callout-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
-    .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
-    /* FAQ */
-    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
-    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
-    .ct-faq summary::-webkit-details-marker { display: none; }
-    .ct-faq summary::after { content: '▾'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
-    .ct-faq details[open] summary::after { transform: rotate(180deg); }
-    .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
-    .ct-faq summary:hover { background: var(--bg2); }
-    .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
-    /* CTA */
-    .ct-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px; text-align: center; margin: 72px 0 0; }
-    .ct-cta h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 28px; font-weight: 400; color: var(--text-1); letter-spacing: -.02em; margin-bottom: 12px; }
-    .ct-cta p { font-size: 15px; color: var(--text-3); max-width: 560px; margin: 0 auto 28px; line-height: 1.7; }
-    .ct-cta-links { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
-    .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; transition: opacity .15s; }
-    .ct-cta-link-primary:hover { opacity: .85; }
-    .ct-cta-link-secondary { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 500; transition: opacity .15s; }
-    .ct-cta-link-secondary:hover { opacity: .7; }
-    @media (max-width: 640px) { .ct-wrap { padding: 0 16px 60px; } }
   </style>
 </head>
 <body>

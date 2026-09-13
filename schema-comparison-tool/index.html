@@ -136,8 +136,6 @@
       --diff-removed: #f87171; --diff-removed-bg: rgba(248,113,113,.1);
       --diff-changed: #fbbf24; --diff-changed-bg: rgba(251,191,36,.1);
     }
-    @media (max-width: 768px) {
-    }
     .tool-hero { margin-bottom: 24px; }
     .tool-title { font-family: 'IBM Plex Mono','Menlo',monospace;  font-weight: 400; color: var(--text-1); margin-bottom: 8px; }
     .tool-badge-free { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 99px; background: var(--mint-light, #E0F2FE); color: var(--teal); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
@@ -451,42 +449,12 @@
       .diff-tree-col { font-size: 11px; padding: 8px; }
       .overview-grid { gap: 16px; }
     }
-    /* ─── Content sections (ct-* design system) ─── */
-    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
-    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
-    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
-    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
-    .ct-body { font-size: 14px; color: var(--text-3); line-height: 1.6; max-width: 680px; }
-    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
-    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
-    .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
-    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 8px; }
-    .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-    .ct-callout { display: flex; gap: 14px; padding: 18px 20px; border-radius: 12px; margin-top: 28px; }
-    .ct-callout--teal { background: var(--mint-light); border: 1px solid rgba(14,116,144,.2); }
-    .ct-callout-icon { font-size: 16px; flex-shrink: 0; }
     .ct-callout-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-1); margin-bottom: 4px; }
-    .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
     .ct-limit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 28px; }
     .ct-limit { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: flex; gap: 12px; }
     .ct-limit-icon { font-size: 16px; flex-shrink: 0; }
     .ct-limit-title { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 5px; }
     .ct-limit p { font-size: 13px; color: var(--text-3); line-height: 1.55; margin: 0; }
-    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
-    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
-    .ct-faq summary::-webkit-details-marker { display: none; }
-    .ct-faq summary::after { content: '\25BE'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
-    .ct-faq details[open] summary::after { transform: rotate(180deg); }
-    .ct-faq details[open] summary { background: var(--surface); color: var(--teal); }
-    .ct-faq-body { padding: 0 22px 18px; font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
-    .ct-cta { text-align: center; padding: 48px 24px; max-width: 600px; margin: 0 auto; }
-    .ct-cta h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 22px; font-weight: 600; }
-    .ct-cta p { font-size: 14px; color: var(--text-3); margin: 8px 0 24px; }
-    .ct-cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .ct-cta-link-primary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 99px; background: var(--teal); color: white; font-size: 13px; font-weight: 600; text-decoration: none; transition: background .15s; }
-    .ct-cta-link-secondary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 99px; border: 1px solid var(--border); color: var(--text-2); font-size: 13px; font-weight: 500; text-decoration: none; transition: all .15s; }
   </style>
 </head>
 <body>

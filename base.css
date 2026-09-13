@@ -979,7 +979,7 @@ html[data-theme="dark"] .prose h1, html[data-theme="dark"] .prose h2, html[data-
   text-align: center;
   padding: clamp(36px, 5vw, 56px) var(--gutter);
   max-width: 640px;
-  margin: var(--section-y) auto 0;
+  margin: 0 auto;                 /* the section above already carries --section-y below it */
   border-top: 1px solid var(--rule);
 }
 .ct-cta h2 { font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 28px); font-weight: 400; color: var(--ink-1); margin-bottom: 12px; }
@@ -1158,3 +1158,31 @@ html[data-theme="dark"] .nav-overlay nav a:hover,
 html.dark .nav-overlay nav a:hover { color: var(--accent-2); }
 html[data-theme="dark"] .nav-overlay-close,
 html.dark .nav-overlay-close { border-color: rgba(245,241,234,.25); color: var(--paper); }
+
+/* ── Brands strip (worked-with logos, continuous marquee) ─────────────────
+   Markup: section.brands > .brands-inner > .brands-label, then .brands-marquee >
+   .brands-track > two .brands-set (second one aria-hidden) for a seamless loop.
+   Logos are greyscale PNGs in /brands/, each sized via --h for equal visual weight. */
+.brands { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: clamp(40px, 5vw, 64px) 0; overflow: hidden; }
+.brands-inner { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.brands-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.brands-label::after { content: ''; height: 1px; width: 32px; background: var(--accent); }
+.brands-marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.brands-track { display: flex; width: max-content; animation: brands-scroll 48s linear infinite; }
+.brands-marquee:hover .brands-track { animation-play-state: paused; }
+.brands-set { display: flex; align-items: center; gap: clamp(44px, 5vw, 80px); padding-right: clamp(44px, 5vw, 80px); }
+.brands-set img { height: var(--h, 26px); width: auto; display: block; opacity: .55; filter: grayscale(1); flex-shrink: 0; }
+.brands-more { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-4); white-space: nowrap; }
+@keyframes brands-scroll { to { transform: translateX(-50%); } }
+@media (max-width: 640px) { .brands-set img { height: calc(var(--h, 26px) * .85); } .brands-set { gap: 36px; padding-right: 36px; } }
+@media (prefers-reduced-motion: reduce) {
+  .brands-track { animation: none; width: auto; }
+  .brands-set { flex-wrap: wrap; row-gap: 20px; padding: 0 var(--gutter); max-width: var(--max); margin: 0 auto; }
+  .brands-set[aria-hidden="true"] { display: none; }
+  .brands-marquee { -webkit-mask-image: none; mask-image: none; }
+}
+html[data-theme="dark"] .brands, html.dark .brands { border-top-color: rgba(245,241,234,.1); border-bottom-color: rgba(245,241,234,.1); }
+html[data-theme="dark"] .brands-label, html.dark .brands-label { color: rgba(245,241,234,.55); }
+html[data-theme="dark"] .brands-label::after, html.dark .brands-label::after { background: var(--accent-2); }
+html[data-theme="dark"] .brands-set img, html.dark .brands-set img { filter: grayscale(1) invert(1); opacity: .5; }
+html[data-theme="dark"] .brands-more, html.dark .brands-more { color: rgba(245,241,234,.5); }

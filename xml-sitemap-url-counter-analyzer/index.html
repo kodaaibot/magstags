@@ -132,12 +132,6 @@
     .export-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
     .btn-copy { padding: 8px 18px; background: var(--teal); color: #fff; border: none; border-radius: 99px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity .15s; }
     .btn-copy:hover { opacity: .88; }
-    /* ── Content sections (GSC-style) ── */
-    .ct-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
-    .ct-section { padding: 60px 0; border-top: 1px solid var(--border); }
-    .ct-section-label { font-size: 11px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: block; }
-    .ct-h2 { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; color: var(--text-1); margin-bottom: 14px; }
-    .ct-lead { font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 680px; margin-bottom: 0; }
     /* Steps with timeline */
     .ct-steps { display: flex; flex-direction: column; position: relative; margin-top: 32px; }
     .ct-steps::before { content: ''; position: absolute; left: 19px; top: 28px; bottom: 28px; width: 1px; background: var(--border); }
@@ -146,33 +140,10 @@
     .ct-step-body h4 { font-size: 15px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; padding-top: 10px; }
     .ct-step-body p { font-size: 14px; color: var(--text-3); line-height: 1.65; margin: 0; }
     .ct-step-body strong { color: var(--text-1); }
-    /* Feature cards */
-    .ct-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 32px; }
-    .ct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
-    .ct-card-icon { width: 20px; height: 20px; display: block; margin-bottom: 14px; color: var(--text-3); }
-    .ct-card-title { font-family: 'IBM Plex Mono','Menlo',monospace; font-size: 12px; font-weight: 700; color: var(--text-1); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
-    .ct-card p { font-size: 14px; color: var(--text-3); line-height: 1.6; margin: 0; }
-    /* Callout */
-    .ct-callout { border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; margin-top: 24px; }
     .ct-callout--amber { background: #FEF9C3; border: 1px solid rgba(217,119,6,.2); }
     html.dark .ct-callout--amber { background: rgba(217,119,6,.1); }
-    .ct-callout-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
-    .ct-callout-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
-    .ct-callout-body p { font-size: 14px; color: var(--text-3); margin: 0; line-height: 1.6; }
-    /* FAQ accordion */
-    .ct-faq { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; }
-    .ct-faq details { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .ct-faq summary { padding: 18px 22px; cursor: pointer; list-style: none; font-size: 14px; font-weight: 600; color: var(--text-1); display: flex; align-items: center; justify-content: space-between; background: var(--surface); transition: background .12s, color .12s; user-select: none; }
-    .ct-faq summary::-webkit-details-marker { display: none; }
-    .ct-faq summary::after { content: '\25BE'; font-size: 13px; color: var(--text-4); transition: transform .2s; flex-shrink: 0; margin-left: 16px; }
-    .ct-faq details[open] summary::after { transform: rotate(180deg); }
-    .ct-faq details[open] summary { color: var(--teal); background: var(--bg2); }
-    .ct-faq summary:hover { background: var(--bg2); }
-    .ct-faq-body { padding: 0 22px 18px; background: var(--surface); font-size: 13.5px; color: var(--text-3); line-height: 1.7; }
-    .ct-faq-body strong { color: var(--text-1); font-weight: 600; }
     /* Content layout — two-column with sticky TOC */
     .ct-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: start; }
-    .ct-content { min-width: 0; }
     /* Floating sticky TOC */
     .ct-toc { position: sticky; top: 80px; padding-top: 60px; }
     .ct-toc-label { font-size: 10px; font-weight: 700; color: var(--text-4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 14px; }
@@ -186,7 +157,6 @@
       .ct-toc-list { border-left: none; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; }
       .ct-toc-list li a { border-left: none; padding: 6px 0; font-size: 13px; }
     }
-    @media(max-width:768px) { .ct-wrap { padding: 0 16px 60px; } }
     @media(max-width:600px) {
     .input-row { flex-direction: column; align-items: stretch; }
       .total-banner { flex-direction: column; gap: 8px; text-align: center; }

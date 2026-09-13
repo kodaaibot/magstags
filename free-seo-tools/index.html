@@ -52,7 +52,6 @@
     /* ── Tool list (homepage .tool-secondary pattern) ─────────────────── */
     .tool-secondary-list {
       display: flex; flex-direction: column;
-      border-top: 1px solid var(--rule);
       margin-top: 32px;
     }
     .tool-secondary {
@@ -69,7 +68,9 @@
       text-transform: uppercase; letter-spacing: .14em;
       color: var(--accent); display: block; margin-bottom: 8px;
     }
-    .tool-secondary h2 {
+    .tool-group { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin: 40px 0 0; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    .tool-group:first-child { margin-top: 0; }
+    .tool-secondary h3 {
       font-family: var(--font-display); font-weight: 500;
       font-size: 19px; line-height: 1.25; color: var(--ink-1);
       letter-spacing: -.01em; margin: 0;
@@ -131,44 +132,76 @@
     <span class="eyebrow">Free tools</span>
     <h1>Free SEO Tools</h1>
     <p class="lead">No cost. No catch.</p>
-    <p>These tools are free to use. No account, no subscription, no signup — just open and go.</p>
+    <p>These tools are free to use. No account, no subscription, no signup — just open and go. Grouped by the problem you are trying to solve.</p>
   </div>
 
   <div class="tool-secondary-list">
 
+    <h2 class="tool-group">Structured data</h2>
+    <a class="tool-secondary" href="/ecommerce-schema-generator/">
+      <h3>Product Schema Generators</h3>
+      <span class="tool-outcome">Product Snippet, Merchant Listing and ProductGroup JSON-LD from a form. Validated output, the fields Google actually reads, nothing you don't need.</span>
+    </a>
+    <a class="tool-secondary" href="/schema-markup-visualizer/">
+      <h3>Schema Markup Visualizer</h3>
+      <span class="tool-outcome">See your JSON-LD as a tree instead of counting braces at 11pm. Fetch from URL or paste, auto-repair common errors.</span>
+    </a>
+    <a class="tool-secondary" href="/schema-comparison-tool/">
+      <h3>Schema Comparison</h3>
+      <span class="tool-outcome">Side-by-side diff of two schemas. Before/After mode for tracking changes, Structural mode for comparing against competitors.</span>
+    </a>
+
+    <h2 class="tool-group">Merchant Center</h2>
+    <a class="tool-secondary" href="/gmc-feed-analyzer/">
+      <h3>GMC Feed Analyzer</h3>
+      <span class="tool-outcome">Validate a Google Shopping feed before Merchant Center disapproves it for you. Missing identifiers, bad prices, availability mismatches.</span>
+    </a>
+
+    <h2 class="tool-group">International SEO</h2>
     <a class="tool-secondary" href="/hreflang-generator/">
-      <span class="tool-secondary-cat">International</span>
-      <h2>Hreflang Generator</h2>
+      <h3>Hreflang Generator</h3>
       <span class="tool-outcome">Generate correct bidirectional hreflang markup for multilingual sites. HTML, XML sitemap, or HTTP headers.</span>
     </a>
 
+    <h2 class="tool-group">Search Console</h2>
     <a class="tool-secondary" href="/gsc-regex-generator/">
-      <span class="tool-secondary-cat">Search Console</span>
-      <h2>GSC Regex Builder</h2>
+      <h3>GSC Regex Builder</h3>
       <span class="tool-outcome">Validated RE2 regex for URL and query filtering. 22 templates, live tester, plain-English explanations.</span>
     </a>
 
+    <h2 class="tool-group">SERP diagnostics</h2>
     <a class="tool-secondary" href="/serp-preview/">
-      <span class="tool-secondary-cat">Snippet preview</span>
-      <h2>SERP Snippet Previewer</h2>
+      <h3>SERP Snippet Previewer</h3>
       <span class="tool-outcome">Pixel-accurate preview of how your title and meta description render in Google on desktop and mobile. Flags truncation in real time.</span>
     </a>
-
-    <a class="tool-secondary" href="/schema-markup-visualizer/">
-      <span class="tool-secondary-cat">Structured data</span>
-      <h2>Schema Markup Visualizer</h2>
-      <span class="tool-outcome">See your JSON-LD as a tree instead of counting braces at 11pm. Fetch from URL or paste, auto-repair common errors.</span>
+    <a class="tool-secondary" href="/favicon-validator/">
+      <h3>Favicon Validator</h3>
+      <span class="tool-outcome">Check whether Google will pick up your favicon: size, format, path, and the markup it needs to find it.</span>
     </a>
 
-    <a class="tool-secondary" href="/schema-comparison-tool/">
-      <span class="tool-secondary-cat">Structured data</span>
-      <h2>Schema Comparison</h2>
-      <span class="tool-outcome">Side-by-side diff of two schemas. Before/After mode for tracking changes, Structural mode for comparing against competitors.</span>
+    <h2 class="tool-group">Crawl controls</h2>
+    <a class="tool-secondary" href="/robots-txt-generator/">
+      <h3>Robots.txt Generator</h3>
+      <span class="tool-outcome">Crawler rules, including the AI crawlers, without the typos. Presets for the common cases, a validator for the rest.</span>
+    </a>
+    <a class="tool-secondary" href="/xml-sitemap-url-counter-analyzer/">
+      <h3>XML Sitemap Analyzer</h3>
+      <span class="tool-outcome">Count and inspect URLs across nested sitemaps and sitemap indexes. Find what you're actually submitting to Google.</span>
+    </a>
+
+    <h2 class="tool-group">Chrome extensions</h2>
+    <a class="tool-secondary" href="/schema-extractor-chrome-extension/">
+      <h3>Schema Extractor</h3>
+      <span class="tool-outcome">Pull JSON-LD, Microdata and RDFa off any page in one click. Toolbar badge shows the item count before you open it.</span>
+    </a>
+    <a class="tool-secondary" href="/google-goto-url-resolver/">
+      <h3>Google Goto URL Resolver</h3>
+      <span class="tool-outcome">Get the real destination URL back from google.com/goto redirect wrappers in search results.</span>
     </a>
 
   </div>
 
-  <span class="tool-count">5 free tools</span>
+  <span class="tool-count">12 free tools</span>
 </div>
 </main>
 <script src="/cookie-consent.js"></script>
