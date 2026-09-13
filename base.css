@@ -200,8 +200,16 @@ header.site {
   color: var(--ink-1);
   letter-spacing: -.02em;
   text-decoration: none;
+  display: inline-flex; align-items: baseline;
 }
-.wordmark em { font-style: italic; color: var(--accent); }
+/* <magstags/> — teal brackets, saffron slash, upright ink name (Sept 2026 mark) */
+.wordmark em { font-style: normal; color: inherit; }
+.wordmark::before { content: '<'; color: var(--accent); margin-right: .06em; }
+.wordmark::after {
+  content: '/>'; margin-left: .06em;
+  background: linear-gradient(90deg, var(--accent-2) 0 50%, var(--accent) 50%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 nav.primary { display: flex; gap: 32px; align-items: center; }
 nav.primary a {
   font-family: var(--font-body);
@@ -240,7 +248,7 @@ html.dark header.site {
 html[data-theme="dark"] header.site .wordmark,
 html.dark header.site .wordmark { color: var(--paper); }
 html[data-theme="dark"] header.site .wordmark em,
-html.dark header.site .wordmark em { color: var(--accent-2); }
+html.dark header.site .wordmark em { color: inherit; }
 html[data-theme="dark"] header.site nav.primary a,
 html.dark header.site nav.primary a { color: rgba(245,241,234,.8); }
 html[data-theme="dark"] header.site nav.primary a:hover,
@@ -361,7 +369,7 @@ html.dark footer.site {
 html[data-theme="dark"] footer.site .wordmark,
 html.dark footer.site .wordmark { color: var(--paper); }
 html[data-theme="dark"] footer.site .wordmark em,
-html.dark footer.site .wordmark em { color: var(--accent-2); }
+html.dark footer.site .wordmark em { color: inherit; }
 html[data-theme="dark"] footer.site .footer-brand p,
 html.dark footer.site .footer-brand p { color: rgba(245,241,234,.6); }
 html[data-theme="dark"] footer.site .footer-col h5,
@@ -996,6 +1004,39 @@ html[data-theme="dark"] .prose h1, html[data-theme="dark"] .prose h2, html[data-
 }
 .ct-cta-link-secondary:hover { border-color: var(--ink-2); color: var(--ink-1); }
 
+/* ── Tool-content components in dark (both selectors) ── */
+html[data-theme="dark"] .ct-callout, html.dark .ct-callout { background: rgba(245,241,234,.05); }
+html[data-theme="dark"] .ct-callout-body strong, html.dark .ct-callout-body strong { color: var(--paper); }
+html[data-theme="dark"] .ct-callout-body p, html.dark .ct-callout-body p { color: rgba(245,241,234,.75); }
+html[data-theme="dark"] .ct-callout-body ul, html.dark .ct-callout-body ul { color: rgba(245,241,234,.65); }
+html[data-theme="dark"] .ct-section, html.dark .ct-section { border-top-color: rgba(245,241,234,.12); }
+html[data-theme="dark"] .ct-section-label, html.dark .ct-section-label { color: var(--accent-2); }
+html[data-theme="dark"] .ct-section-label::before, html.dark .ct-section-label::before { background: var(--accent-2); }
+html[data-theme="dark"] .ct-h2, html.dark .ct-h2 { color: var(--paper); }
+html[data-theme="dark"] .ct-lead, html.dark .ct-lead { color: rgba(245,241,234,.7); }
+html[data-theme="dark"] .ct-body, html.dark .ct-body { color: var(--paper-2); }
+html[data-theme="dark"] .ct-body a, html.dark .ct-body a { color: var(--accent-2); }
+html[data-theme="dark"] .ct-card, html.dark .ct-card,
+html[data-theme="dark"] .ct-faq details, html.dark .ct-faq details,
+html[data-theme="dark"] .ct-cta, html.dark .ct-cta,
+html[data-theme="dark"] .ct-table-wrap, html.dark .ct-table-wrap { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.12); }
+html[data-theme="dark"] .ct-card-icon, html.dark .ct-card-icon { color: rgba(245,241,234,.6); }
+html[data-theme="dark"] .ct-card-title, html.dark .ct-card-title { color: var(--paper); }
+html[data-theme="dark"] .ct-card p, html.dark .ct-card p { color: rgba(245,241,234,.7); }
+html[data-theme="dark"] .ct-card a, html.dark .ct-card a { color: var(--accent-2); }
+html[data-theme="dark"] .ct-faq summary, html.dark .ct-faq summary { color: var(--paper); }
+html[data-theme="dark"] .ct-faq summary::after, html.dark .ct-faq summary::after,
+html[data-theme="dark"] .ct-faq summary:hover, html.dark .ct-faq summary:hover,
+html[data-theme="dark"] .ct-faq details[open] summary, html.dark .ct-faq details[open] summary { color: var(--accent-2); }
+html[data-theme="dark"] .ct-faq-body, html.dark .ct-faq-body { color: rgba(245,241,234,.7); }
+html[data-theme="dark"] .ct-faq-body strong, html.dark .ct-faq-body strong { color: var(--paper); }
+html[data-theme="dark"] .ct-faq-body a, html.dark .ct-faq-body a { color: var(--accent-2); }
+html[data-theme="dark"] .ct-faq-body code, html.dark .ct-faq-body code { background: rgba(245,241,234,.08); color: var(--paper); }
+html[data-theme="dark"] .ct-cta h2, html.dark .ct-cta h2 { color: var(--paper); }
+html[data-theme="dark"] .ct-cta p, html.dark .ct-cta p { color: rgba(245,241,234,.7); }
+html[data-theme="dark"] .ct-cta-link-secondary, html.dark .ct-cta-link-secondary { border-color: rgba(245,241,234,.25); color: var(--paper); }
+html[data-theme="dark"] .ct-cta-link-secondary:hover, html.dark .ct-cta-link-secondary:hover { border-color: var(--paper); color: var(--paper); }
+
 /* ─────────────────────────────────────────────────────────────────────────
    Editorial list row — canonical for "list of links with description"
 
@@ -1117,4 +1158,3 @@ html[data-theme="dark"] .nav-overlay nav a:hover,
 html.dark .nav-overlay nav a:hover { color: var(--accent-2); }
 html[data-theme="dark"] .nav-overlay-close,
 html.dark .nav-overlay-close { border-color: rgba(245,241,234,.25); color: var(--paper); }
-

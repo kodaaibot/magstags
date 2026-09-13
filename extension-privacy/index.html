@@ -18,8 +18,8 @@
   <link rel="apple-touch-icon" href="/favicon-apple.png">
   <script src="/theme-init.js"></script>
   <link rel="stylesheet" href="/base.css">
-  <title>Privacy Policy — Schema.org Structured Data Extractor | MagsTags</title>
-  <meta name="description" content="Privacy policy for the Schema.org Structured Data Extractor Chrome extension. No data is collected, transmitted, or stored on remote servers.">
+  <title>Privacy Policy — MagsTags Chrome Extensions | MagsTags</title>
+  <meta name="description" content="Privacy policy for the MagsTags Chrome extensions: Schema.org Structured Data Extractor and Google Goto URL Resolver. No data is collected, transmitted, or stored on remote servers.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +32,8 @@
     .page-meta{font-size:13px;color:var(--text-4);margin-bottom:48px}
     .legal-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:17px;font-weight:600;color:var(--text-1);margin:40px 0 12px}
     .legal-body h2:first-child{margin-top:0}
+    .legal-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:500;color:var(--text-1);margin:24px 0 8px}
+    .legal-body h2{scroll-margin-top:110px}
     .legal-body p{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:14px}
     .legal-body ul{padding-left:20px;margin-bottom:14px}
     .legal-body ul li{font-size:14px;line-height:1.8;color:var(--text-2);margin-bottom:3px}
@@ -66,22 +68,41 @@
 </header>
 <script>(function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')})();</script>
 <main id="main-content">
-  <h1 class="page-title">Privacy Policy — Schema.org Structured Data Extractor</h1>
-  <p class="page-meta">Last updated: May 2026</p>
+  <h1 class="page-title">Privacy Policy — MagsTags Chrome Extensions</h1>
+  <p class="page-meta">Last updated: September 2026</p>
   <div class="legal-body">
+    <p>This policy covers the two Chrome extensions published by MagsTags: the <a href="#schema-extractor">Schema.org Structured Data Extractor</a> and the <a href="#google-goto-url-resolver">Google Goto URL Resolver</a>. Neither extension collects, transmits, or stores any user data on remote servers. There are no analytics, no telemetry, no accounts, no remote code, and no developer-operated server behind either of them.</p>
+
+    <h2 id="schema-extractor">Schema.org Structured Data Extractor</h2>
     <p>The Schema.org Structured Data Extractor extension does not collect, transmit, or store any user data on remote servers.</p>
-    <h2>Data the Extension Reads</h2>
+    <h3>Data the extension reads</h3>
     <p>The extension reads structured data markup (JSON-LD scripts, microdata attributes, and RDFa attributes) from the current page's DOM when:</p>
     <ul>
       <li>A content script counts items on each page you visit, to display the count as a badge on the toolbar icon</li>
       <li>You click the toolbar icon, in which case the full extracted data is displayed in a viewer tab on your device</li>
     </ul>
-    <h2>Data Stored Locally</h2>
+    <h3>Data stored locally</h3>
     <p>The extension uses <code>chrome.storage.local</code> to temporarily pass extracted data from the background service worker to the viewer tab. This data is stored only on your device, is not transmitted anywhere, and is overwritten each time you click the icon.</p>
-    <h2>Network Requests</h2>
-    <p>The extension makes no network requests on its own. The only external navigation occurs when you click the "Visualize" button, which opens <a href="/schema-markup-visualizer/" style="color:var(--teal)">magstags.com/schema-markup-visualizer/</a> in a new tab. The schema data is placed on your clipboard at that point; you paste it manually into the visualizer. No data is sent to magstags.com or any other server by the extension itself.</p>
-    <h2>Third-Party Services</h2>
-    <p>None. No analytics, no telemetry, no error reporting services, no remote APIs.</p>
+    <h3>Network requests</h3>
+    <p>The extension makes no network requests on its own. The only external navigation occurs when you click the "Visualize" button, which opens <a href="/schema-markup-visualizer/">magstags.com/schema-markup-visualizer/</a> in a new tab. The schema data is placed on your clipboard at that point; you paste it manually into the visualizer. No data is sent to magstags.com or any other server by the extension itself.</p>
+
+    <h2 id="google-goto-url-resolver">Google Goto URL Resolver</h2>
+    <p>The Google Goto URL Resolver extension shows the real destination of Google search result links that Google has wrapped in a redirect (for example <code>google.com/goto?url=…</code>). It does not collect, transmit, or store any user data on remote servers.</p>
+    <h3>Data the extension reads</h3>
+    <p>The extension runs only on Google Search results pages. On those pages it reads the links in the results in order to display their destination in a tooltip, optionally rewrite the link so the browser shows the destination, and list the page's results in the popup. It does not read your search queries as data, your browsing history, or any content on the destination websites.</p>
+    <h3>Network requests</h3>
+    <p>The only network requests the extension makes go to Google, to resolve the redirect links that Google itself placed on the results page. Each request is the same one your browser would make if you clicked the link, is sent without cookies, and is made only when you hover a result, click "Resolve all links on this page" in the popup, or have chosen the automatic mode in the popup (which resolves the results on pages you open, one link at a time with a delay). The extension never contacts the destination websites, magstags.com, or any other server.</p>
+    <h3>Permissions</h3>
+    <ul>
+      <li><strong>webRequest</strong> (read-only): used to read the <code>Location</code> header of the redirect responses the extension itself requests. Chrome's <code>fetch()</code> API hides this header, so observing it is the only way to learn where a redirect goes. The extension never blocks or modifies any request.</li>
+      <li><strong>storage</strong>: resolved destinations are cached with <code>chrome.storage.session</code> for the current browser session only and are discarded when the browser closes. Your settings (resolve mode, tooltip on/off, rewrite links on/off, include images in copy) are stored with <code>chrome.storage.sync</code>.</li>
+      <li><strong>Host permissions for Google search domains</strong>: required to run on results pages and to make the resolve requests described above.</li>
+    </ul>
+    <h3>Data stored locally</h3>
+    <p>Only the session cache of resolved URLs and your settings, as described above. Nothing is written to disk beyond what Chrome's storage APIs keep for the extension, and nothing leaves your device except the requests to Google.</p>
+
+    <h2>Third-party services</h2>
+    <p>None, for either extension. No analytics, no telemetry, no error reporting services, no remote APIs.</p>
     <h2>Contact</h2>
     <p>mags.sikora [at] googlemail.com</p>
   </div>

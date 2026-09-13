@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <!-- Square teal background -->
-  <rect width="32" height="32" fill="#0E7490"/>
-  <!-- Left angle bracket -->
-  <path d="M10 9 L4.5 16 L10 23" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Centre sparkle (AI mark) -->
-  <path d="M16 11 L17.2 14.8 L21 16 L17.2 17.2 L16 21 L14.8 17.2 L11 16 L14.8 14.8 Z" fill="#ffffff"/>
-  <!-- Right angle bracket -->
-  <path d="M22 9 L27.5 16 L22 23" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" fill="#F5F1EA"/><path fill="#0E7490" d="M62 58 L12 88 L12 104 L62 134 L62 115 L28 96 L62 77 Z M130 58 L180 88 L180 104 L130 134 L130 115 L164 96 L130 77 Z"/><path fill="#E09226" d="M107 43 L122 43 L83 149 L68 149 Z"/></svg>

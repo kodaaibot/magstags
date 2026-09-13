@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E474WQYDLX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E474WQYDLX');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <title>Google Goto URL Resolver - Chrome Extension | MagsTags</title>
+  <meta name="description" content="Resolve Google /goto redirect links to their real destination URLs. Chrome extension with URL hover previews, clean Copy link address and SERP export.">
+  <link rel="canonical" href="https://www.magstags.com/google-goto-url-resolver/">
+  <meta property="og:title" content="Google Goto URL Resolver - Chrome Extension">
+  <meta property="og:description" content="Resolve Google /goto redirect links to their real destination URLs. Chrome extension with URL hover previews, clean Copy link address and SERP export.">
+  <meta property="og:url" content="https://www.magstags.com/google-goto-url-resolver/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google Goto URL Resolver - Chrome Extension">
+  <meta name="twitter:description" content="Resolve Google /goto redirect links to their real destination URLs. Chrome extension with URL hover previews, clean Copy link address and SERP export.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "SoftwareApplication",
+    "name": "Google Goto URL Resolver",
+    "alternateName": "Google Goto URL Resolver – Real Links, Hover Preview & SERP Export",
+    "description": "Chrome extension that resolves Google /goto redirect links to their real destination URLs: hover previews, a working Copy link address, and SERP export to URLs, Markdown or CSV.",
+    "url": "https://www.magstags.com/google-goto-url-resolver/",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "softwareVersion": "0.3.0",
+    "inLanguage": "en-GB",
+    "creator": {
+      "@type": "Organization",
+      "name": "MagsTags",
+      "url": "https://www.magstags.com/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Destination URL on hover for google.com/goto redirect links",
+      "Optional link rewriting so Chrome's status bar and Copy link address use the resolved destination",
+      "Hover mode or automatic mode, cached per session",
+      "SERP export keeping organic results, sitelinks, jump links and image results grouped",
+      "Copy as plain URLs, Markdown list or CSV",
+      "Requests go only to Google's redirect endpoint; no analytics, accounts or developer servers"
+    ],
+    "image": "https://www.magstags.com/og-image.png"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.magstags.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "SEO Tools",
+        "item": "https://www.magstags.com/seo-tools/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Google Goto URL Resolver",
+        "item": "https://www.magstags.com/google-goto-url-resolver/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Google /goto URL?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It is a Google redirect used on many search result links. The URL contains an encrypted token rather than the destination. Google returns the destination in a 302 response when the redirect is requested. The full write-up is in the notes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can a Google /goto URL be decoded?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. There is no client-side decoding step. The extension asks Google’s redirect endpoint for the destination and reads the URL from the response."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does Copy link address give me a Google URL?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because the result’s href is now the /goto redirect, and Chrome copies the URL that is actually in the link. With link rewriting on, the extension rewrites the link to the resolved destination first."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the extension change Google rankings or search results?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. It changes how links are displayed and copied in your browser. It does not change the results Google returns or affect rankings."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the extension collect or send my search data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Nothing is sent to magstags.com or any other service, and there are no accounts or analytics. The only requests it makes go to Google’s redirect endpoint, to resolve the links Google put on the page. Privacy policy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between hover and automatic mode?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hover mode resolves a result when you point at it and makes the fewest requests; it is the default. Automatic mode resolves the result links as the page loads, so the destination URLs are ready before you start copying."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I export Google search results?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The popup exports organic results, sitelinks, jump links and image results as plain URLs, Markdown or CSV. The CSV has position, title, URL, domain and result type."
+        }
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tool page shell (page-types: tool) ── */
+    main { max-width: var(--max); margin: 0 auto; padding: clamp(24px, 3vw, 48px) var(--gutter) 0; }
+    code { font-family: var(--font-mono); font-size: .92em; color: var(--accent); background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1px 6px; }
+
+    /* ── Hero ── */
+    .hero { padding: clamp(28px, 4vw, 56px) 0 clamp(40px, 5vw, 72px); margin-bottom: clamp(28px, 3vw, 40px); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent-2); margin-bottom: 28px; }
+    .hero-badge::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .hero-title { font-family: var(--font-display); font-size: var(--t-h1); font-weight: 400; color: var(--ink-1); line-height: 1.15; letter-spacing: -.02em; max-width: 18ch; margin-bottom: 24px; }
+    .hero-sub { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-3); max-width: 620px; margin-bottom: 14px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn-install { display: inline-flex; align-items: center; gap: 10px; padding: 13px 24px; border-radius: 99px; background: var(--accent-2); color: var(--paper); font-family: var(--font-body); font-size: 14px; font-weight: 700; text-decoration: none; transition: background .15s, transform .15s; }
+    .btn-install:hover { background: #f0a431; color: var(--paper); transform: translateY(-1px); text-decoration: none; }
+    .btn-install svg { color: var(--paper); flex-shrink: 0; }
+    .btn-privacy { display: inline-flex; align-items: center; padding: 13px 22px; border-radius: 99px; border: 1px solid var(--rule); color: var(--ink-2); font-family: var(--font-body); font-size: 13.5px; font-weight: 600; text-decoration: none; }
+    .btn-privacy:hover { border-color: var(--ink-2); color: var(--ink-1); text-decoration: none; }
+    .hero-meta { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 32px; }
+    .hero-meta-item { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); }
+    .hero-meta-item span { color: var(--ink-3); }
+
+    /* ── Steps ── */
+    .steps { margin-top: 40px; border-top: 1px solid var(--rule); }
+    .step { display: flex; gap: 22px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+    .step-num { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+    .step-content h3 { font-family: var(--font-display); font-size: var(--t-h3); font-weight: 500; color: var(--ink-1); margin-bottom: 6px; }
+    .step-content p { font-size: 15px; line-height: 1.65; color: var(--ink-3); max-width: 640px; }
+
+    /* ── Link types ── */
+    .formats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+    .format-card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 26px; }
+    .format-name { font-family: var(--font-display); font-size: var(--t-h3); font-weight: 500; color: var(--ink-1); margin-bottom: 8px; }
+    .format-desc { font-size: 14.5px; line-height: 1.65; color: var(--ink-3); margin-bottom: 16px; }
+
+    /* ── Related ── */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+    .tool-link-card { display: block; background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 24px 26px; text-decoration: none; transition: border-color .15s, transform .15s; }
+    .tool-link-card:hover { border-color: var(--accent); transform: translateY(-1px); text-decoration: none; }
+    .tool-link-name { font-family: var(--font-display); font-size: 16px; font-weight: 500; color: var(--ink-1); line-height: 1.3; margin-bottom: 8px; }
+    .tool-link-desc { font-size: 14px; line-height: 1.6; color: var(--ink-3); }
+
+
+    /* ── Hero extras ── */
+    .hero-textlink { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--ink-2); text-decoration: none; padding: 13px 4px; }
+    .hero-textlink:hover { color: var(--accent); }
+    .hero-privacy { margin-top: 18px; font-family: var(--font-mono); font-size: 11.5px; }
+    .hero-privacy a { color: var(--ink-4); text-decoration: none; }
+    .hero-privacy a:hover { color: var(--accent); }
+    /* ── Demo figure ── */
+    .demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 0 0 clamp(40px, 5vw, 72px); }
+    .demo-panel { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .demo-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); }
+    .demo-label--on { color: var(--accent); }
+    .demo-result { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 12px 14px; position: relative; }
+    .demo-title { font-family: var(--font-body); font-size: 15px; color: #1a0dab; text-decoration: underline; text-underline-offset: 2px; }
+    .demo-site { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); margin-top: 4px; }
+    .demo-tip { position: absolute; left: 14px; bottom: -14px; background: var(--paper); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 4px 8px; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 28px); }
+    .demo-status { margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 5px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .demo-status--on { color: var(--accent); }
+    .demo-caption { font-size: 12.5px; line-height: 1.5; color: var(--ink-3); margin-top: auto; }
+    .demo-pop { background: var(--paper); border: 1px solid var(--rule); border-top: 2px solid var(--accent-2); border-radius: var(--radius); padding: 10px 12px; font-size: 11.5px; color: var(--ink-2); }
+    .demo-pop-row { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-3); margin-bottom: 8px; }
+    .demo-pop-n { font-family: var(--font-display); font-size: 16px; color: var(--accent); margin-right: 4px; }
+    .demo-pop-item { padding: 5px 0; border-top: 1px solid var(--rule); font-weight: 600; color: var(--ink-1); }
+    .demo-pop-item span { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .demo-pop-sub { border-top: 0; padding-top: 0; padding-left: 8px; font-family: var(--font-mono); font-size: 10px; font-weight: 400; color: var(--ink-3); }
+    .demo-pop-btns { display: flex; gap: 6px; margin-top: 8px; }
+    .demo-pop-btns span { flex: 1; text-align: center; font-family: var(--font-body); font-size: 10.5px; font-weight: 600; border: 1px solid var(--rule); border-radius: var(--radius); padding: 5px 0; color: var(--ink-2); }
+    .demo-note { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); }
+    /* ── Format cards: kicker + code line ── */
+    .format-kicker { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin: 4px 0 10px; }
+    .format-line { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-2); background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 8px 10px; white-space: pre-wrap; word-break: break-all; margin: 0; }
+    .ct-faq summary > span { flex: 1 1 auto; min-width: 0; }
+    .ct-cta-version { margin-top: 20px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); }
+    html[data-theme="dark"] .demo-panel, html.dark .demo-panel, html[data-theme="dark"] .format-line, html.dark .format-line { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.12); }
+    html[data-theme="dark"] .demo-result, html.dark .demo-result, html[data-theme="dark"] .demo-status, html.dark .demo-status, html[data-theme="dark"] .demo-pop, html.dark .demo-pop, html[data-theme="dark"] .demo-tip, html.dark .demo-tip { background: rgba(245,241,234,.06); border-color: rgba(245,241,234,.15); }
+    html[data-theme="dark"] .demo-title, html.dark .demo-title { color: #8ab4f8; }
+    html[data-theme="dark"] .demo-tip, html.dark .demo-tip, html[data-theme="dark"] .demo-pop-item, html.dark .demo-pop-item, html[data-theme="dark"] .format-line, html.dark .format-line { color: var(--paper); }
+    html[data-theme="dark"] .demo-caption, html.dark .demo-caption, html[data-theme="dark"] .demo-pop, html.dark .demo-pop, html[data-theme="dark"] .demo-pop-btns span, html.dark .demo-pop-btns span { color: rgba(245,241,234,.75); }
+    html[data-theme="dark"] .demo-pop-btns span, html.dark .demo-pop-btns span { border-color: rgba(245,241,234,.2); }
+    html[data-theme="dark"] .hero-textlink, html.dark .hero-textlink { color: var(--paper); }
+    html[data-theme="dark"] .demo-status--on, html.dark .demo-status--on, html[data-theme="dark"] .demo-label--on, html.dark .demo-label--on, html[data-theme="dark"] .format-kicker, html.dark .format-kicker { color: var(--accent-2); }
+
+    .format-icon { width: 20px; height: 20px; color: var(--accent); margin-bottom: 12px; }
+    .format-icon svg { width: 20px; height: 20px; }
+    .ct-card .ct-card-icon svg { width: 20px; height: 20px; }
+    .demo-cursor { position: absolute; right: 22px; top: 12px; width: 16px; height: 16px; color: var(--ink-1); }
+    .demo-cursor svg { width: 16px; height: 16px; }
+    html[data-theme="dark"] .format-icon, html.dark .format-icon { color: var(--accent-2); }
+    html[data-theme="dark"] .demo-cursor, html.dark .demo-cursor { color: var(--paper); }
+
+    .btn-install--pending, .ct-cta-pending { background: var(--paper-2); color: var(--ink-3); border: 1px solid var(--rule); cursor: default; }
+    .btn-install--pending:hover, .ct-cta-pending:hover { background: var(--paper-2); color: var(--ink-3); transform: none; }
+    .btn-install--pending svg { color: var(--ink-4); }
+    .hero-pending { margin-top: 16px; font-size: 13.5px; line-height: 1.55; color: var(--ink-3); max-width: 560px; }
+    html[data-theme="dark"] .btn-install--pending, html.dark .btn-install--pending, html[data-theme="dark"] .ct-cta-pending, html.dark .ct-cta-pending { background: rgba(245,241,234,.06); color: rgba(245,241,234,.7); border-color: rgba(245,241,234,.2); }
+    html[data-theme="dark"] .hero-pending, html.dark .hero-pending { color: rgba(245,241,234,.7); }
+    /* ── Dark mode (both selectors) ── */
+    html[data-theme="dark"] body .btn-install, html.dark body .btn-install { background: var(--accent-2); color: var(--paper); }
+    html[data-theme="dark"] body .btn-install:hover, html.dark body .btn-install:hover { background: #f0a431; color: var(--paper); }
+    html[data-theme="dark"] body .btn-privacy, html.dark body .btn-privacy { border-color: rgba(245,241,234,.25); color: var(--paper); }
+    html[data-theme="dark"] body .btn-privacy:hover, html.dark body .btn-privacy:hover { border-color: var(--paper); }
+    html[data-theme="dark"] code, html.dark code { background: rgba(245,241,234,.08); border-color: rgba(245,241,234,.15); color: var(--accent-2); }
+    html[data-theme="dark"] .hero-title, html.dark .hero-title, html[data-theme="dark"] .step-content h3, html.dark .step-content h3, html[data-theme="dark"] .format-name, html.dark .format-name, html[data-theme="dark"] .tool-link-name, html.dark .tool-link-name { color: var(--paper); }
+    html[data-theme="dark"] .hero-sub, html.dark .hero-sub, html[data-theme="dark"] .step-content p, html.dark .step-content p, html[data-theme="dark"] .format-desc, html.dark .format-desc, html[data-theme="dark"] .tool-link-desc, html.dark .tool-link-desc { color: rgba(245,241,234,.7); }
+    html[data-theme="dark"] .hero-meta-item span, html.dark .hero-meta-item span { color: rgba(245,241,234,.75); }
+    html[data-theme="dark"] .hero, html.dark .hero, html[data-theme="dark"] .steps, html.dark .steps, html[data-theme="dark"] .step, html.dark .step { border-color: rgba(245,241,234,.12); }
+    html[data-theme="dark"] .format-card, html.dark .format-card, html[data-theme="dark"] .tool-link-card, html.dark .tool-link-card { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
+    html[data-theme="dark"] .tool-link-card:hover, html.dark .tool-link-card:hover { border-color: var(--accent-2); }
+
+    @media (max-width: 800px) { .demo { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) {
+      .hero-title { max-width: none; }
+      .step { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+<main id="main-content">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+    <a href="/seo-tools/">SEO Tools</a><span class="breadcrumb-sep">›</span>
+    <span>Google Goto URL Resolver</span>
+  </nav>
+  <div class="hero">
+    <div class="hero-badge">Free Chrome Extension</div>
+    <h1 class="hero-title">Google Goto URL Resolver - Chrome Extension</h1>
+    <p class="hero-sub">Google Search now wraps many result links in <code>google.com/goto?url=…</code>, so hover and Copy link address show a Google redirect instead of the destination. The extension resolves the link in the browser, shows you the real URL, and can export the whole SERP as URLs, Markdown or CSV.</p>
+    <div class="hero-actions">
+      <!-- STORE URL: swap this span for the Add to Chrome link once the Web Store listing is approved -->
+      <span class="btn-install btn-install--pending" aria-disabled="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Chrome Web Store review pending
+      </span>
+      <a href="/notes/google-goto-url-redirect/" class="hero-textlink">How <code>/goto</code> works →</a>
+    </div>
+    <p class="hero-pending">The extension has been submitted to the Chrome Web Store and is waiting for Google’s review. The install link will appear here once the listing is live.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">✦ <span>Works only on Google Search</span></div>
+      <div class="hero-meta-item">✦ <span>No data collection</span></div>
+      <div class="hero-meta-item">✦ <span>Requests go to Google only</span></div>
+      <div class="hero-meta-item">✦ <span>Free, no sign-up</span></div>
+    </div>
+    <p class="hero-privacy"><a href="/extension-privacy/#google-goto-url-resolver">Privacy policy ↗</a></p>
+  </div>
+  <figure class="demo" aria-label="Illustration: what hover and Copy link address show before and after the extension, and the export popup">
+    <div class="demo-panel">
+      <div class="demo-label">Before</div>
+      <div class="demo-result"><div class="demo-title">Example Domain – Documentation</div><div class="demo-site">example.com</div></div>
+      <div class="demo-status">google.com/goto?url=CAESVAHrOzAVnxj44DGxhaQDKUnk…</div>
+      <div class="demo-caption">Hover and Copy link address show Google’s redirect</div>
+    </div>
+    <div class="demo-panel">
+      <div class="demo-label demo-label--on">With the extension</div>
+      <div class="demo-result"><div class="demo-title">Example Domain – Documentation</div><div class="demo-site">example.com</div><div class="demo-cursor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" fill="var(--paper)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l14 8-6.6 2.2L10 20z"/></svg></div><div class="demo-tip">https://example.com/docs/getting-started/</div></div>
+      <div class="demo-status demo-status--on">https://example.com/docs/getting-started/</div>
+      <div class="demo-caption">Tooltip on hover; status bar and Copy link address use the destination</div>
+    </div>
+    <div class="demo-panel">
+      <div class="demo-label demo-label--on">Popup</div>
+      <div class="demo-pop">
+        <div class="demo-pop-row"><span class="demo-pop-n">12</span> result links · Resolved 12</div>
+        <div class="demo-pop-item">Example Domain – Documentation<span>https://example.com/docs/getting-started/</span></div>
+        <div class="demo-pop-item demo-pop-sub">↳ Getting started · Pricing</div>
+        <div class="demo-pop-item">Second result<span>https://another.example/page/</span></div>
+        <div class="demo-pop-btns"><span>URLs</span><span>Markdown</span><span>CSV</span></div>
+      </div>
+      <div class="demo-caption">Export the page as URLs, Markdown or CSV</div>
+    </div>
+    <figcaption class="demo-note">Schematic — the real tooltip and popup follow the same layout.</figcaption>
+  </figure>
+</main>
+<div class="ct-wrap">
+  <section class="ct-section" id="what-it-fixes">
+    <span class="ct-section-label">What it fixes</span>
+    <h2 class="ct-h2">Get the real URL behind Google <code>/goto</code> links</h2>
+    <div class="ct-body">
+      <p>Many Google results now use an encrypted <code>/goto</code> redirect instead of putting the destination URL in the link. Hover shows Google, Copy link address copies the redirect, and reading the HTML gets you the same token.</p>
+      <p>The extension resolves that redirect in the browser and gives you the destination URL. The popup can also turn the SERP into a structured list of results, sitelinks, jump links and images for export. If you are auditing search results, it doubles as a SERP URL extractor, with exports for plain URLs, Markdown and CSV.</p>
+      <p><a href="/notes/google-goto-url-redirect/">Read what changed with Google <code>/goto</code> redirects →</a></p>
+    </div>
+  </section>
+  <section class="ct-section" id="what-you-can-do">
+    <span class="ct-section-label">What you can do</span>
+    <h2 class="ct-h2">Hover, copy, export</h2>
+    <div class="ct-card-grid">
+      <div class="ct-card">
+        <div class="ct-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l14 8-6.6 2.2L10 20z"/></svg></div>
+        <div class="ct-card-title">See the real URL on hover</div>
+        <p>Hover a result to see its destination without visiting the page. The first request resolves the redirect; the result is cached for the rest of the session.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+        <div class="ct-card-title">Copy the destination URL</div>
+        <p>Turn on link rewriting if you want Chrome’s status bar and Copy link address to use the resolved URL. You can resolve links as you hover or automatically across the page.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="10" x2="9" y2="20"/></svg></div>
+        <div class="ct-card-title">Export the SERP</div>
+        <p>The popup keeps organic results, sitelinks, “Read more” links and image results in their proper groups. Copy the page as plain URLs, Markdown or CSV with position, title, URL, domain and result type.</p>
+      </div>
+      <div class="ct-card">
+        <div class="ct-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+        <div class="ct-card-title">Nothing is sent to magstags.com</div>
+        <p>There are no accounts, analytics or developer servers involved in resolving the links. Requests for <code>/goto</code> destinations go to Google’s redirect endpoint.</p>
+      </div>
+    </div>
+  </section>
+  <section class="ct-section" id="how-to-use">
+    <span class="ct-section-label">How to use it</span>
+    <h2 class="ct-h2">Install it, then use Google as usual</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Add the extension</h3>
+          <p>Install Google Goto URL Resolver from the Chrome Web Store once the listing is approved. It runs only on Google Search results pages.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Hover, or resolve the page automatically</h3>
+          <p>Hover a result to see its destination. If you want every result ready for copying, switch to automatic mode in the popup.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Copy or export what you need</h3>
+          <p>Copy an individual destination from the page, or open the extension to export the SERP as URLs, Markdown or CSV.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="ct-section" id="formats">
+    <span class="ct-section-label">How result links are handled</span>
+    <h2 class="ct-h2">Google Search currently uses three link formats</h2>
+    <p class="ct-lead">The extension recognises each one and only makes a request when the destination cannot already be read from the page.</p>
+    <div class="formats-grid">
+      <div class="format-card">
+        <div class="format-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v7a4 4 0 0 0 4 4h12"/><polyline points="15 10 20 15 15 20"/></svg></div>
+        <div class="format-name"><code>/goto?url=…</code></div>
+        <div class="format-kicker">Needs a request to Google</div>
+        <p class="format-desc">The destination is hidden behind an encrypted token. The extension follows Google’s redirect, reads the 302 <code>Location</code> header and caches the result.</p>
+        <pre class="format-line">/goto → 302 → Location: https://example.com/page</pre>
+      </div>
+      <div class="format-card">
+        <div class="format-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="format-name"><code>/url?q=…</code></div>
+        <div class="format-kicker">Can be resolved locally</div>
+        <p class="format-desc">The older format still contains the destination in the query string, so the extension can extract it without another request.</p>
+        <pre class="format-line">/url?q=https://example.com/page</pre>
+      </div>
+      <div class="format-card">
+        <div class="format-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7L12 19"/></svg></div>
+        <div class="format-name">Direct <code>href</code> with <code>ping</code></div>
+        <div class="format-kicker">Already contains the destination</div>
+        <p class="format-desc">Sitelinks, image results, “Read more” links and some other result types still have the real destination in <code>href</code>. No resolution request is needed.</p>
+        <pre class="format-line">href=&quot;https://example.com/page&quot; ping=&quot;/url?…&quot;</pre>
+      </div>
+    </div>
+  </section>
+  <section class="ct-section" id="permissions">
+    <span class="ct-section-label">Permissions and privacy</span>
+    <h2 class="ct-h2">Why it needs access to Google Search</h2>
+    <div class="ct-body">
+      <p>The extension needs access to Google Search results pages so it can find result links and read Google’s redirect response. It does not run on the destination websites you visit.</p>
+      <p><code>/goto</code> resolution uses Chrome’s read-only <code>webRequest</code> API because a normal browser <code>fetch()</code> does not expose the redirect’s <code>Location</code> header. It never blocks or modifies requests. Resolved URLs are cached with <code>chrome.storage.session</code> and discarded when the browser closes; your settings are the only other thing stored.</p>
+      <p><a href="/extension-privacy/#google-goto-url-resolver">Full privacy policy →</a></p>
+    </div>
+  </section>
+  <section class="ct-section" id="faq">
+    <span class="ct-section-label">Common questions</span>
+    <h2 class="ct-h2">Frequently asked questions</h2>
+    <div class="ct-faq">
+      <details open>
+        <summary><span>What is a Google <code>/goto</code> URL?</span></summary>
+        <div class="ct-faq-body">It is a Google redirect used on many search result links. The URL contains an encrypted token rather than the destination. Google returns the destination in a 302 response when the redirect is requested. <a href="/notes/google-goto-url-redirect/">The full write-up is in the notes.</a></div>
+      </details>
+      <details>
+        <summary><span>Can a Google <code>/goto</code> URL be decoded?</span></summary>
+        <div class="ct-faq-body">No. There is no client-side decoding step. The extension asks Google’s redirect endpoint for the destination and reads the URL from the response.</div>
+      </details>
+      <details>
+        <summary><span>Why does Copy link address give me a Google URL?</span></summary>
+        <div class="ct-faq-body">Because the result’s <code>href</code> is now the <code>/goto</code> redirect, and Chrome copies the URL that is actually in the link. With link rewriting on, the extension rewrites the link to the resolved destination first.</div>
+      </details>
+      <details>
+        <summary><span>Does the extension change Google rankings or search results?</span></summary>
+        <div class="ct-faq-body">No. It changes how links are displayed and copied in your browser. It does not change the results Google returns or affect rankings.</div>
+      </details>
+      <details>
+        <summary><span>Does the extension collect or send my search data?</span></summary>
+        <div class="ct-faq-body">No. Nothing is sent to magstags.com or any other service, and there are no accounts or analytics. The only requests it makes go to Google’s redirect endpoint, to resolve the links Google put on the page. <a href="/extension-privacy/#google-goto-url-resolver">Privacy policy.</a></div>
+      </details>
+      <details>
+        <summary><span>What is the difference between hover and automatic mode?</span></summary>
+        <div class="ct-faq-body">Hover mode resolves a result when you point at it and makes the fewest requests; it is the default. Automatic mode resolves the result links as the page loads, so the destination URLs are ready before you start copying.</div>
+      </details>
+      <details>
+        <summary><span>Can I export Google search results?</span></summary>
+        <div class="ct-faq-body">Yes. The popup exports organic results, sitelinks, jump links and image results as plain URLs, Markdown or CSV. The CSV has position, title, URL, domain and result type.</div>
+      </details>
+    </div>
+  </section>
+  <section class="ct-section" id="related-tools">
+    <span class="ct-section-label">Related</span>
+    <h2 class="ct-h2">More on Google URLs and SERP data</h2>
+    <div class="tools-grid">
+      <a href="/notes/google-goto-url-redirect/" class="tool-link-card">
+        <div class="tool-link-name">Google <code>/goto</code> redirect links: how to get real URLs →</div>
+        <div class="tool-link-desc">What changed in Google’s result markup, why Copy link address stopped being useful, and how the redirect works.</div>
+      </a>
+      <a href="/schema-extractor-chrome-extension/" class="tool-link-card">
+        <div class="tool-link-name">Schema Extractor for Chrome →</div>
+        <div class="tool-link-desc">Extract JSON-LD, Microdata and RDFa from any page, with a toolbar badge, tabbed viewer and CSV export.</div>
+      </a>
+      <a href="/gsc-regex-generator/" class="tool-link-card">
+        <div class="tool-link-name">GSC Regex Generator →</div>
+        <div class="tool-link-desc">Turn a list of URLs into a Search Console regex without manually escaping everything.</div>
+      </a>
+      <a href="/xml-sitemap-url-counter-analyzer/" class="tool-link-card">
+        <div class="tool-link-name">XML Sitemap Analyzer →</div>
+        <div class="tool-link-desc">Compare the URLs Google is ranking with the URLs you actually have in your sitemap.</div>
+      </a>
+    </div>
+  </section>
+  <div class="ct-cta">
+    <h2>Google Goto URL Resolver for Chrome</h2>
+    <p>The extension is free, runs only on Google Search, and does not send your SERP data to magstags.com. It is currently in Chrome Web Store review; the install link will replace this notice when Google approves the listing.</p>
+    <div class="ct-cta-links">
+      <span class="ct-cta-link-primary ct-cta-pending" aria-disabled="true">Chrome Web Store review pending</span>
+      <a href="/notes/google-goto-url-redirect/" class="ct-cta-link-secondary">Read how Google <code>/goto</code> works →</a>
+    </div>
+    <p class="ct-cta-version">Current version 0.3.0 · Built for current Chrome (Manifest V3)</p>
+  </div>
+</div><!-- end .ct-wrap -->
+<script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
+</body>
+</html>

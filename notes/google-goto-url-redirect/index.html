@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E474WQYDLX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E474WQYDLX');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://www.magstags.com/notes/google-goto-url-redirect/">
+  <title>Google /goto redirects: how to get the real URL | MagsTags</title>
+  <meta name="description" content="Google now wraps results in google.com/goto redirects, hiding the real URL from the status bar and Copy link address. What changed, and how to get it back.">
+  <meta property="og:title" content="Google /goto redirects: how to get the real URL | MagsTags">
+  <meta property="og:description" content="Google now wraps results in google.com/goto redirects, hiding the real URL from the status bar and Copy link address. What changed, and how to get it back.">
+  <meta property="og:url" content="https://www.magstags.com/notes/google-goto-url-redirect/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://www.magstags.com/og-image.png">
+  <meta property="og:site_name" content="MagsTags">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google /goto redirects: how to get the real URL | MagsTags">
+  <meta name="twitter:description" content="Google now wraps results in google.com/goto redirects, hiding the real URL from the status bar and Copy link address. What changed, and how to get it back.">
+  <meta name="twitter:image" content="https://www.magstags.com/og-image.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+  <link rel="apple-touch-icon" href="/favicon-apple.png">
+  <script src="/theme-init.js"></script>
+  <link rel="stylesheet" href="/base.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Post layout ── */
+    #blog-content{display:block}
+    .post-wrap{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    /* ── Breadcrumb ── */
+    .breadcrumb{font-size:13px;color:var(--ink-4);margin-bottom:36px;display:flex;align-items:center;gap:6px}
+    .breadcrumb a{color:var(--ink-4);text-decoration:none}
+    .breadcrumb a:hover{color:var(--accent)}
+    .breadcrumb span{opacity:.5}
+    /* ── Post header ── */
+    .post-category{ font-family: 'IBM Plex Mono','Menlo',monospace;display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background: transparent;color: var(--accent-2);margin-bottom:16px; border: 1px solid var(--accent-2); }
+    .post-h1{font-family:'IBM Plex Mono','Menlo',monospace;font-size:clamp(28px,4vw,40px);font-weight: 400;color:var(--ink-1);line-height:1.2;margin-bottom:20px;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--ink-4);margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--rule)}
+    .post-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--ink-4);display:inline-block}
+    /* ── Body ── */
+    .post-body{font-size:16px;line-height:1.85;color:var(--ink-2)}
+    .post-lead{font-size:20px;line-height:1.7;color: var(--accent-2);margin-bottom:36px;font-weight:400}
+    .post-body p{margin-bottom:22px}
+    .post-body h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:26px;font-weight: 400;color:var(--ink-1);margin:52px 0 16px;letter-spacing:-.01em;line-height:1.3}
+    .post-body h3{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 500;color:var(--ink-1);margin:36px 0 12px;line-height:1.35}
+    .post-body strong{color:var(--ink-1);font-weight:600}
+    .post-body pre{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13.5px;line-height:1.8;background:var(--paper-2);border:1px solid var(--rule);border-radius:10px;padding:20px;overflow-x:auto;margin:28px 0;color:var(--ink-2);white-space:pre}
+    .post-body code{font-family:'Menlo','Monaco','Courier New',monospace;font-size:13px;background:var(--paper-2);border:1px solid var(--rule);border-radius:5px;padding:1px 6px;color:var(--accent)}
+    .post-body ul,.post-body ol{padding-left:24px;margin-bottom:22px}
+    .post-body li{margin-bottom:10px;line-height:1.75}
+    .post-body li::marker{color:var(--accent)}
+    .post-body a{color:var(--accent);text-decoration:none}
+    .post-body a:hover{text-decoration:underline}
+    .post-callout{background:var(--paper-2);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    .post-callout strong{color:var(--ink-1)}
+    .post-callout-warn{background:var(--paper-2);border-left:3px solid var(--accent-2);padding:16px 20px;border-radius:0 10px 10px 0;margin:32px 0;font-size:16px;line-height:1.7;color:var(--ink-2)}
+    html.dark .post-callout-warn{background:var(--paper-2);border-color:var(--accent-2);color:var(--ink-1)}
+    /* ── Precedence table ── */
+    .precedence-list{list-style:none;padding:0;margin:28px 0;counter-reset:prec}
+    .precedence-list li{counter-increment:prec;display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;margin-bottom:8px;background:var(--paper-2)}
+    .precedence-list li::before{content:counter(prec);display:flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:700;flex-shrink:0;margin-top:1px}
+    .prec-label{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight: 500;color:var(--ink-1);margin-bottom:2px}
+    .prec-desc{font-size:13px;color:var(--ink-3);line-height:1.5}
+    .prec-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:99px;margin-left:8px;vertical-align:middle}
+    .prec-badge.strongest{background:var(--paper-2);color:var(--ink-2)}
+    html.dark .prec-badge.strongest{background:var(--paper-2);color:var(--ink-4)}
+    .prec-badge.weakest{background:var(--paper-2);color:var(--accent-2)}
+    html.dark .prec-badge.weakest{background:var(--paper-2);color:var(--ink-4)}
+    /* ── Decision table ── */
+    .post-table-wrap{margin:28px 0;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;display:block;background:var(--paper-2);border:1px solid var(--rule);border-radius:10px}
+    .post-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
+    .post-table th{font-family:'IBM Plex Mono','Menlo',monospace;font-weight: 400;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-1);background:var(--paper-2);border-bottom:1px solid var(--rule);padding:12px 16px;text-align:left;white-space:nowrap}
+    .post-table td{padding:14px 16px;border-bottom:1px solid var(--rule);color:var(--ink-2);vertical-align:top;font-size:14px;line-height:1.6}
+    .post-table tr:last-child td{border-bottom:none}
+    .post-table .col-label{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;color:var(--ink-1);white-space:nowrap}
+    .post-table .col-pick{font-family:'IBM Plex Mono','Menlo',monospace;font-weight:600;color:var(--accent);white-space:nowrap}
+    .post-table tr.is-exit td{color:var(--ink-4);font-style:italic}
+    @media(max-width:600px){
+      .post-table th,.post-table td{padding:10px 12px;font-size:13px}
+      .post-table .col-label,.post-table .col-pick{white-space:normal}
+    }
+    /* ── FAQ ── */
+    .faq-block{margin-top:52px}
+    .faq-q{font-family:'IBM Plex Mono','Menlo',monospace;font-size:16px;font-weight:500;color:var(--ink-1);margin:28px 0 12px;line-height:1.4;letter-spacing:-.005em}
+    .faq-q:first-of-type{margin-top:0}
+    .faq-a{font-family:'Inter',system-ui,sans-serif;font-size:14.5px;color:var(--ink-2);line-height:1.7;margin:0 0 28px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+    .faq-a:last-of-type{border-bottom:none;padding-bottom:0;margin-bottom:0}
+    /* ── Sources ── */
+    .sources{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:28px;margin:48px 0 0}
+    .sources h2{font-family:'IBM Plex Mono','Menlo',monospace;font-size:18px;font-weight: 400;color:var(--ink-1);margin:0 0 20px 0}
+    .sources ul{padding-left:0;list-style:none}
+    .sources li{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:12px;padding-left:16px;position:relative}
+    .sources li::before{content:'·';position:absolute;left:0;color:var(--accent);font-weight:800}
+    .sources a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+    .sources strong{color:var(--ink-2);font-weight:600}
+    /* ── TOC Sidebar ── */
+    .ct-layout{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:start}
+    .ct-content{min-width:0}
+    .ct-toc{position:sticky;top:80px;padding-top:60px;max-height:calc(100vh - 80px);overflow-y:auto}
+    .ct-toc-label{font-size:10px;font-weight:700;color:var(--ink-4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .ct-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0;border-left:1px solid var(--rule)}
+    .ct-toc-list li a{display:block;padding:8px 0 8px 16px;font-size:13px;color:var(--ink-3);text-decoration:none;transition:color .12s,border-color .12s;border-left:2px solid transparent;margin-left:-1px;line-height:1.4}
+    .ct-toc-list li a:hover{color:var(--accent);border-left-color:var(--accent)}
+    .ct-toc-list li a.active{color:var(--accent);border-left-color:var(--accent);font-weight: 500}
+    /* ── Author bio ── */
+    .author-card{margin-top:64px;padding:40px;border-top:1px solid var(--rule);border-radius:0}
+    .author-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-4);margin-bottom:20px}
+    .author-inner{display:flex;align-items:flex-start;gap:24px}
+    .author-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--rule)}
+    .author-details{flex:1;min-width:0}
+    .author-name{font-family:'IBM Plex Mono','Menlo',monospace;font-size:20px;font-weight: 400;color:var(--ink-1);margin-bottom:4px}
+    .author-name a{color:inherit;text-decoration:none}
+    .author-name a:hover{color:var(--accent)}
+    .author-role{font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;color:var(--accent);font-weight:600;margin-bottom:12px}
+    .author-bio{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:16px}
+    .author-links{display:flex;gap:12px;flex-wrap:wrap}
+    .author-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-3);text-decoration:none;padding:6px 14px;border:1px solid var(--rule);border-radius:99px;transition:all .15s}
+    .author-link:hover{border-color:var(--accent);color:var(--accent)}
+    /* ── Related articles ── */
+    .related-articles{margin-top:56px;padding-top:40px;border-top:1px solid var(--rule)}
+    .related-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-4);margin-bottom:20px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .related-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:20px}
+    .related-card-title{font-family:'IBM Plex Mono','Menlo',monospace;font-size:14px;font-weight:600;color:var(--ink-1);text-decoration:none;display:block;margin-bottom:8px;line-height:1.4}
+    .related-card-title:hover{color:var(--accent)}
+    .related-card-desc{font-size:12px;color:var(--ink-3);line-height:1.6}
+    /* ── Back link ── */
+    .post-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-4);text-decoration:none;margin-top:48px}
+    .post-back:hover{color:var(--accent)}
+    .ct-toc-toggle{display:none}
+    @media(max-width:960px){
+      .ct-layout{grid-template-columns:1fr;gap:0}
+      .ct-toc{position:static;padding:0;border:1px solid var(--rule);border-radius:10px;margin-bottom:32px;order:-1;max-height:none;overflow-y:visible;overflow:hidden}
+      .ct-toc-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--paper-2);border:none;padding:14px 16px;font-family:'IBM Plex Mono','Menlo',monospace;font-size:13px;font-weight:600;color:var(--ink-1);cursor:pointer;text-align:left}
+      .ct-toc-toggle .ct-toc-arrow{font-size:11px;color:var(--ink-4);transition:transform .2s}
+      .ct-toc-toggle.open .ct-toc-arrow{transform:rotate(180deg)}
+      .ct-toc-label{display:none}
+      .ct-toc-list{border-left:none;flex-direction:column;flex-wrap:nowrap;gap:0;border-top:1px solid var(--rule);display:none;padding:8px 0}
+      .ct-toc-list.open{display:flex}
+      .ct-toc-list li a{border-left:none;padding:8px 16px;font-size:13px}
+    }
+  
+    /* ── Brand overrides applied at end of style block ── */
+
+    /* Lead — Inter, ink-1, no italic, no border */
+    .post-lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-1); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
+
+    /* Body strong — saffron marker stripe */
+    .post-body strong { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
+    .post-callout strong, .post-callout-warn strong { background: transparent; padding: 0; font-weight: 600; }
+
+    /* Callouts — warm cream + accent left rule */
+    .post-callout { background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+    .post-callout-warn { background: var(--paper-2); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+
+    /* Compare grid — cream + accent/ink-4 left rules (no green/red) */
+    .compare-col { padding: 22px; background: var(--paper-2); border: 1px solid var(--rule); border-left-width: 3px; border-radius: 0 4px 4px 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+    .compare-col.yes { border-left-color: var(--accent); }
+    .compare-col.no { border-left-color: var(--ink-4); }
+
+    /* Tables — editorial, label-first columns */
+    .post-table-wrap { margin: 36px 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; overflow-x: auto; background: var(--paper); display: block; }
+    .post-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+    .post-table thead th { font-family: var(--font-mono); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); background: var(--paper-2); border-bottom: 1px solid var(--rule); padding: 14px 20px; text-align: left; vertical-align: bottom; }
+    .post-table tbody td { padding: 18px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+    .post-table tbody tr:last-child td { border-bottom: none; }
+    .post-table tbody tr:hover { background: rgba(224, 146, 38, 0.05); }
+    .post-table tbody td:first-child, .post-table .col-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-1); width: 20%; min-width: 130px; padding-top: 20px; white-space: normal; }
+    @media (max-width: 720px) {
+      .post-table-wrap { overflow-x: visible; }
+      .post-table thead { display: none; }
+      .post-table tbody tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+      .post-table tbody tr:last-child { border-bottom: none; }
+      .post-table tbody td { display: block; padding: 4px 20px; border: none; width: auto !important; min-width: 0; }
+      .post-table tbody td:first-child, .post-table .col-label { color: var(--accent-2); margin-bottom: 4px; font-size: 11px; padding-top: 8px; }
+      .post-table tbody tr:hover { background: transparent; }
+    }
+
+    /* Code blocks — IBM Plex Mono on cream */
+    .post-body pre { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink-2); }
+    .post-body code { font-family: var(--font-mono); background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 6px; color: var(--accent); }
+
+    /* Bullets — teal markers */
+    .post-body ul li::marker { color: var(--accent); }
+
+    /* Numbered lists — Plex Mono counters 01., 02., ... */
+    .post-body ol { counter-reset: post-counter; list-style: none; padding-left: 0; margin-bottom: 22px; }
+    .post-body ol > li { counter-increment: post-counter; position: relative; padding-left: 44px; margin-bottom: 12px; line-height: 1.75; }
+    .post-body ol > li::before { content: counter(post-counter, decimal-leading-zero) "."; position: absolute; left: 0; top: 0; font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--accent); letter-spacing: .02em; line-height: 1.85; }
+
+    /* Category eyebrow with 32px rule prefix */
+    .post-category { font-family: var(--font-mono); display: inline-flex !important; align-items: center; gap: 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2) !important; margin-bottom: 22px; padding: 0 !important; background: transparent !important; border: none !important; border-radius: 0 !important; }
+    .post-category::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+
+    /* Sparkle ornaments between sections + before author card */
+    .post-body h2:not(:first-of-type) { margin-top: 44px; }
+    .author-card { padding-top: 64px !important; position: relative; }
+    .author-card::before { content: ''; display: block; width: 16px; height: 16px; margin: 0 auto 32px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .7; }
+
+    /* Related articles — 3-up card grid */
+    .related-articles { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--rule); }
+    .related-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 28px; display: inline-flex; align-items: center; gap: 14px; }
+    .related-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .related-card { position: relative; padding: 22px 24px 24px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px; transition: border-color .15s, transform .15s, box-shadow .15s; display: flex; flex-direction: column; gap: 10px; }
+    .related-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .related-card-title { font-family: var(--font-display); font-size: 15.5px; font-weight: 500; line-height: 1.3; color: var(--ink-1); letter-spacing: -.01em; text-decoration: none; transition: color .15s; }
+    .related-card-title::after { content: ''; position: absolute; inset: 0; border-radius: 4px; }
+    .related-card:hover .related-card-title { color: var(--accent); }
+    .related-card-desc { font-family: var(--font-body); font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+    @media (max-width: 720px) { .related-grid { grid-template-columns: 1fr; gap: 12px; } }
+
+    /* Sources — numbered editorial references */
+    .post-sources { margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--rule); }
+    .post-sources-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); margin-bottom: 22px; display: inline-flex; align-items: center; gap: 14px; }
+    .post-sources-label::before { content: ''; height: 1px; width: 32px; background: var(--accent-2); }
+    .post-sources-list { counter-reset: src-counter; list-style: none; padding: 0; margin: 0; }
+    .post-sources-list li { counter-increment: src-counter; position: relative; padding: 16px 0 16px 52px; border-bottom: 1px solid var(--rule); }
+    .post-sources-list li:last-child { border-bottom: none; }
+    .post-sources-list li::before { content: counter(src-counter, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-4); letter-spacing: .04em; }
+    .post-sources-list .src-link { font-family: var(--font-body); font-size: 14.5px; color: var(--ink-1); line-height: 1.55; text-decoration: none; font-weight: 500; display: block; margin-bottom: 4px; }
+    .post-sources-list .src-link:hover { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+    .post-sources-list .src-meta { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); text-transform: uppercase; letter-spacing: .08em; }
+
+
+    /* FAQ block — Plex Mono Q (weight 500, smaller), Inter A, rule between pairs */
+    .faq-q { font-family: var(--font-mono) !important; font-size: 16px !important; font-weight: 500 !important; color: var(--ink-1) !important; margin: 28px 0 12px !important; line-height: 1.4 !important; letter-spacing: -.005em !important; }
+    .faq-q:first-of-type { margin-top: 0 !important; }
+    .faq-a { font-family: var(--font-body) !important; font-size: 14.5px !important; color: var(--ink-2) !important; line-height: 1.7 !important; margin: 0 0 28px !important; padding-bottom: 28px !important; border-bottom: 1px solid var(--rule) !important; }
+    .faq-a:last-of-type { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    /* .faq-block with .faq-item wrapper variant */
+    .faq-item { padding: 0 !important; border-bottom: 1px solid var(--rule) !important; margin-bottom: 24px !important; padding-bottom: 24px !important; }
+    .faq-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 0 !important; }
+    .faq-item .faq-q { margin: 0 0 8px !important; padding-bottom: 0 !important; border-bottom: none !important; }
+    .faq-item .faq-a { margin: 0 !important; padding-bottom: 0 !important; border-bottom: none !important; }
+
+    /* Dark mode — flip ink/paper tokens scoped to post content only (site chrome unaffected) */
+    html.dark .post-wrap, html[data-theme="dark"] .post-wrap,
+    html.dark #blog-content, html[data-theme="dark"] #blog-content {
+      --ink-1:   #f5f1ea;
+      --ink-2:   #ebe5d7;
+      --ink-3:   rgba(245,241,234,.7);
+      --ink-4:   rgba(245,241,234,.5);
+      --paper:   #1a1916;
+      --paper-2: #25221e;
+      --rule:    rgba(245,241,234,.12);
+    }
+    /* Override base.css's html.dark h1-h4 rule for headings inside post-wrap */
+    html.dark .post-wrap h1, html.dark .post-wrap h2, html.dark .post-wrap h3, html.dark .post-wrap h4,
+    html[data-theme="dark"] .post-wrap h1, html[data-theme="dark"] .post-wrap h2, html[data-theme="dark"] .post-wrap h3, html[data-theme="dark"] .post-wrap h4 {
+      color: var(--ink-1);
+    }
+</style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.magstags.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Notes",
+      "item": "https://www.magstags.com/notes/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Google /goto redirects: how to get the real URL",
+      "item": "https://www.magstags.com/notes/google-goto-url-redirect/"
+    }
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Google /goto redirects: how to get the real URL",
+  "description": "Google now wraps results in google.com/goto redirects, hiding the real URL from the status bar and Copy link address. What changed, and how to get it back.",
+  "datePublished": "2026-09-12",
+  "dateModified": "2026-09-12",
+  "author": {
+    "@type": "Person",
+    "name": "Mags Sikora",
+    "url": "https://www.magstags.com/mags-sikora/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "MagsTags",
+    "url": "https://www.magstags.com"
+  },
+  "image": "https://www.magstags.com/og-image.png",
+  "url": "https://www.magstags.com/notes/google-goto-url-redirect/"
+}
+</script>
+  <script src="/toc-generator.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  (function(){
+    var s = localStorage.getItem('theme');
+    if(s === 'dark' || (!s && matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark');
+  })();
+</script>
+<div id="blog-content">
+  <div class="post-wrap">
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/notes/">Notes</a>
+      <span>›</span>
+      <span>Google /goto redirects: how to get the real URL</span>
+    </nav>
+    <span class="post-category">Technical SEO</span>
+    <h1 class="post-h1">Google /goto redirects: how to get the real URL</h1>
+    <div class="post-meta">
+      <span>Mags Sikora</span>
+      <span class="post-meta-dot"></span>
+      <span>12 Sep 2026</span>
+      <span class="post-meta-dot"></span><span>9 min read</span>
+    </div>
+    <div class="ct-layout">
+      <div class="ct-content">
+        <div class="post-body">
+          <p class="post-lead">Right-click a Google result and choose Copy link address. On affected results, you no longer get the page URL. You get this:</p>
+
+<pre>https://www.google.com/goto?url=CAESVAHrOzAVnxj44DGxhaQDKUnk…</pre>
+
+<p>Hovering is no better. Chrome's status bar shows the same Google URL.</p>
+
+<p>Google confirmed the rollout on 26 August 2026, after the behaviour had already been appearing in testing. For normal searching, there is not much to notice: click the result and you still arrive at the page.</p>
+
+<p>For SEO work, it is more annoying. The destination URL is no longer sitting in the result's <code>href</code>, which means you cannot inspect it on hover, copy it into a sheet, or pull it directly out of the HTML.</p>
+
+<div class="post-callout">
+<strong>Testing note:</strong> I tested this in Chrome on <code>google.com</code> (Poland, English interface) on 11–12 September 2026, while building the extension I use to resolve the links. Google is not serving the same link format to every browser, result type or session. Where the behaviour below comes from someone else's testing rather than mine, I've said so.
+</div>
+
+<h2 id="what-changed">What changed in the link</h2>
+
+<p>A normal Google result used to be fairly useful HTML:</p>
+
+<pre>&lt;a href="https://www.nike.com/gb/"
+   ping="/url?sa=t&amp;url=https://www.nike.com/gb/&amp;ved=…"&gt;
+  &lt;h3&gt;Nike. Just Do It. Nike GB&lt;/h3&gt;
+&lt;/a&gt;</pre>
+
+<p>The destination stayed in <code>href</code>. Google could handle click tracking separately through <code>ping</code>.</p>
+
+<p>On affected results, the link now looks like this:</p>
+
+<pre>&lt;a href="https://www.google.com/goto?url=CAESVAHrOzAVnxj44DGxhaQDKUnk…"&gt;
+  &lt;h3&gt;Nike. Just Do It. Nike GB&lt;/h3&gt;
+&lt;/a&gt;</pre>
+
+<p>The <code>CAES…</code> value is not the destination URL with some inconvenient encoding on top.</p>
+
+<p>You can Base64URL-decode it. You can parse the protobuf envelope. On the token above, field 1 is the integer <code>1</code> and field 2 contains 84 bytes of binary data.</p>
+
+<p>What you do not get is a URL.</p>
+
+<p>ScrapingBee tested 324 tokens and found the same basic envelope each time, including a consistent prefix on the binary payload and data behaving like cryptographic output. My tokens have the same structure. I have not found a published method that gets from that payload back to the destination locally, and I would not build anything around the assumption that one is coming.</p>
+
+<p>The useful part happens when you send the token back to Google:</p>
+
+<pre>GET /goto?url=CAES…
+
+302 Found
+Location: https://www.nike.com/gb/</pre>
+
+<p>The <code>Location</code> header is the destination.</p>
+
+<p>No decoding trick required. You ask Google where the token goes.</p>
+
+<p>The redirect also does not appear to be tied to the browser session that produced it. A token I collected on 11 September still resolved on the 12th. ScrapingBee resolved tokens days later and from different connections without carrying over the original cookies or browser session.</p>
+
+<p>That does not make <code>/goto</code> links good identifiers. Their maximum lifetime is unknown, and the same destination can receive a different token on another SERP. Resolve them when you need them; store the destination, not Google's token.</p>
+
+<h2 id="what-breaks">What this breaks</h2>
+
+<h3>Hover no longer tells you where the result goes</h3>
+<p>Chrome's status bar shows <code>google.com/goto?url=…</code> rather than the destination.</p>
+<p>That removes a small but useful check when you are looking at country variants, tracking domains, unexpected hosts, or simply trying to make sure the result goes where you think it does.</p>
+
+<h3>Copy link address copies the redirect</h3>
+<p>Chrome is doing exactly what it is supposed to do. The <code>href</code> contains a Google URL, so that is what Copy link address copies.</p>
+<p>Paste it into a spreadsheet and you have a long opaque token where you expected the page URL.</p>
+
+<h3>Parsing the HTML gets you the same problem</h3>
+<p>Anything that previously extracted organic destinations from <code>href</code> now gets <code>/goto</code> tokens instead.</p>
+<p>Resolving those tokens adds another Google request for every unique wrapped URL you actually need.</p>
+<p>This comes on top of Google's removal of <code>num=100</code> in 2025. Fetching roughly 100 results already went from one SERP request to around ten. <code>/goto</code> adds a second problem after you have the results: finding out where the wrapped ones lead.</p>
+
+<div class="post-callout-warn">
+<strong>Use GET, not HEAD.</strong> This one cost me more time than it should have. A <code>HEAD</code> request to <code>/goto</code> returned <code>200</code> without a <code>Location</code> header in my testing. A normal <code>GET</code> returned the expected 302. ScrapingBee found the same thing. So if you have written a resolver, it gets a response, and somehow Google never appears to redirect anywhere, check the request method before checking everything else.
+</div>
+
+<h2 id="get-the-url">How to get the real URL</h2>
+
+<h3>For one result: click it</h3>
+<p>The obvious option. Fine if you only need one URL and do not care about checking it first. You visit the destination, read the address bar, done.</p>
+
+<h3>For one result without visiting the destination: read the 302</h3>
+<p>Copy the <code>/goto</code> URL and request it without following redirects:</p>
+
+<pre>curl -sS -D - -o /dev/null \
+  "https://www.google.com/goto?url=CAES…" \
+  | grep -i '^location:'</pre>
+
+<p>Do not add <code>-L</code>. You want curl to stop at Google's response rather than follow the redirect. The result is:</p>
+
+<pre>location: https://www.nike.com/gb/</pre>
+
+<p>Google gets the <code>/goto</code> request. The destination site does not.</p>
+<p>Good for one URL. Tedious for twenty.</p>
+
+<h3>If you are working in the SERP: resolve it there</h3>
+<p>Copying tokens into a terminal gets old fairly quickly, so I built <a href="/google-goto-url-resolver/">Google Goto URL Resolver for Chrome</a>.</p>
+<p>Hover a result and it resolves the destination. If you want the old behaviour back more fully, it can rewrite the result so Chrome's status bar and Copy link address use the destination again.</p>
+<p>It can also resolve the current page and export the results as URLs, Markdown or CSV, which is the part I actually wanted when auditing SERPs.</p>
+<p>Resolution still goes through Google's <code>/goto</code> endpoint. The extension does it one link at a time and caches the answer for the browser session.</p>
+
+<h3>Not every Google link uses <code>/goto</code></h3>
+<p>This is where it gets slightly untidy.</p>
+<p>In my Chrome tests, image-pack tiles, sitelinks beneath the main result and the “Read more” links with <code>#:~:text=</code> fragments still had their destination directly in <code>href</code>, with tracking handled separately through <code>ping</code>.</p>
+<p>Organic title links and results inside grouped related-results sections were the ones getting <code>/goto</code>.</p>
+<p>Do not assume that is the universal layout. ScrapingBee saw <code>/goto</code> in Chrome and Edge, direct links in Brave and LibreWolf, and a different <code>/url?...&amp;url=CAES…</code> wrapper in Safari.</p>
+<p>So if you are parsing Google results yourself, inspect what you are actually being served before writing the selector and calling the job finished.</p>
+
+<h2 id="building-it">Things I found while building the resolver</h2>
+<p>This is the bit I wish had existed before I started.</p>
+
+<h3>Rewriting <code>href</code> once isn't enough</h3>
+<p>My first version found the <code>/goto</code> links, resolved them, replaced <code>href</code> and looked finished.</p>
+<p>Then I clicked one.</p>
+<p>Google's own page script had put the redirect back.</p>
+<p>The results page uses an interaction handler, <code>google.arwt</code>, which can reassign the link on <code>mousedown</code>. Rewriting the DOM once on page load therefore works right up until someone interacts with the result.</p>
+<p>I tried reapplying the destination on <code>mousedown</code> in the capture phase. Google's handler still ran afterwards and changed it back.</p>
+<p>What worked was reasserting the resolved URL on <code>click</code> and <code>auxclick</code>, after Google's handler has done its work and immediately before navigation.</p>
+<p>If you are writing your own fix, inspect the URL when the link is actually clicked. The DOM looking correct while you stare at DevTools does not prove very much.</p>
+
+<h3>Resolve duplicate tokens once</h3>
+<p>The same destination can turn up several times on one results page: as the main organic result, in a related-results block, as an image source, or elsewhere in the page. Search for a brand and <code>nike.com/gb/</code> can appear in all three.</p>
+<p>ScrapingBee found identical <code>/goto</code> tokens repeated within the same SERP.</p>
+<p>If you are resolving programmatically, dedupe identical tokens before sending requests.</p>
+<p>If you are building a list of results, dedupe the final data on the resolved destination URL. The same page will not necessarily have the same token on another results page.</p>
+<p>Those are two different dedupe jobs.</p>
+
+<h3>“Translate this page” needs its own handling</h3>
+<p>In the results I tested, Google's translation links were wrapped too. Resolving them led to a <code>translate.google.com/translate?u=…</code> URL rather than directly to the page.</p>
+<p>They also carry <code>hreftranslate</code>, which is a much cleaner way to identify them than matching “Translate this page” text and then discovering Google has changed the interface language.</p>
+<p>If you are exporting organic destinations, you probably want to exclude them.</p>
+
+<h3><code>fetch()</code> does not give you the redirect header</h3>
+<p>My first instinct for the extension was the obvious one:</p>
+
+<pre>fetch(url, { redirect: "manual" })</pre>
+
+<p>That does not give an extension the <code>Location</code> header.</p>
+<p>For a manual cross-origin redirect, Fetch exposes an <code>opaqueredirect</code> response: status <code>0</code>, no readable headers and no useful body.</p>
+<p>So the extension observes the redirect through Chrome's <code>webRequest</code> API instead.</p>
+<p>That is why it needs the permission. It is not inspecting the destination site; it needs to see the response Google sends before Chrome follows it.</p>
+
+<h2 id="unchanged">The referrer does not change</h2>
+<p>The extra redirect looks as though it ought to add another attribution problem, but in practice it does not.</p>
+<p>Google Search already uses an <code>origin</code> referrer policy. Destination sites therefore saw <code>https://www.google.com/</code> rather than the full results-page URL before <code>/goto</code>, and they still do now.</p>
+<p>So this changes how you inspect and collect result URLs. It does not change ordinary Google organic attribution in your analytics.</p>
+
+<div class="faq-block">
+<h2 id="faq">Frequently asked questions</h2>
+
+<p class="faq-q">Is <code>/goto</code> the same as Google's old <code>/url?q=</code> redirect?</p>
+<p class="faq-a">No. The older format carried the destination in a readable parameter: <code>/url?q=https://www.nike.com/gb/&amp;sa=…</code>. You could extract the URL directly from the link. With <code>/goto?url=CAES…</code> the parameter is an opaque token. There is no destination URL sitting in the query string waiting to be decoded.</p>
+
+<p class="faq-q">Can the <code>CAES</code> token be decoded?</p>
+<p class="faq-a">Partly. The Base64URL layer decodes. The protobuf structure parses. What remains is protected binary rather than a readable destination. I can get into the container; I cannot turn its payload into the URL. For practical purposes, resolution still means sending the token to Google's <code>/goto</code> endpoint with a <code>GET</code> and reading the 302 <code>Location</code> header.</p>
+
+<p class="faq-q">Why does Copy link address give me a Google URL?</p>
+<p class="faq-a">Because that is now the link. Chrome copies the value of <code>href</code>, and on affected results <code>href</code> points to <code>google.com/goto</code>. Resolve it first if you need the destination instead.</p>
+
+<p class="faq-q">Does Google Goto URL Resolver resolve the whole web?</p>
+<p class="faq-a">No. It runs only on Google Search results pages and deals with the links on the current page. Hover mode resolves a result when you point at it. Automatic mode works through the result links one at a time and caches them for the session. It is a browser tool for working with SERPs, not a bulk Google scraper.</p>
+</div>
+
+<div class="sources">
+<h2>Sources and further reading</h2>
+<ul>
+<li><strong>Search Engine Land:</strong> <a href="https://searchengineland.com/google-confirms-deploying-goto-url-redirects-to-search-results-links-485926" rel="noopener noreferrer" target="_blank">Google confirms deploying goto URL redirects to search results links</a>, 26 August 2026. Google's confirmation that the new redirects are part of technical measures against abuse.</li>
+<li><strong>Search Engine Roundtable:</strong> <a href="https://www.seroundtable.com/google-search-goto-tracking-41957.html" rel="noopener noreferrer" target="_blank">Google Search rolling out google.com/goto tracking parameters</a>, July 2026. Early <code>/goto</code> sightings, before Google's confirmation.</li>
+<li><strong>ScrapingBee, Ilya Krukowski:</strong> <a href="https://www.scrapingbee.com/blog/google-goto-redirect-urls/" rel="noopener noreferrer" target="_blank">How to decode and handle Google's new /goto redirect URLs</a>, 7 September 2026. The useful testing here is the 324-token sample, browser differences, token portability and the GET vs HEAD behaviour.</li>
+<li><strong>MDN:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Response/type" rel="noopener noreferrer" target="_blank">Fetch API response types and <code>opaqueredirect</code></a>.</li>
+<li><strong>HTML Living Standard:</strong> <a href="https://html.spec.whatwg.org/multipage/links.html#ping" rel="noopener noreferrer" target="_blank">the <code>ping</code> attribute</a> used on the Google links that still expose their destinations directly.</li>
+<li><strong>Chrome for Developers:</strong> <a href="https://developer.chrome.com/docs/extensions/reference/api/webRequest" rel="noopener noreferrer" target="_blank"><code>chrome.webRequest</code></a> and redirect observation.</li>
+</ul>
+</div>
+
+<div class="related-tool">
+<div class="related-tool-label">Related tool</div>
+<h3 class="related-tool-title"><a href="/google-goto-url-resolver/">Google Goto URL Resolver for Chrome →</a></h3>
+<p class="related-tool-desc">Resolve <code>/goto</code> links on hover, make Copy link address work again, export the SERP.</p>
+</div>
+          <div class="author-card">
+  <div class="author-label">Written by</div>
+  <div class="author-inner">
+    <img class="author-photo" src="/mags-sikora/mags-sikora-portrait-bio.jpg" alt="Portrait of Mags Sikora" width="80" height="80" loading="lazy" decoding="async">
+    <div class="author-details">
+      <div class="author-name"><a href="/mags-sikora/">Mags Sikora</a></div>
+      <div class="author-role">Senior SEO Consultant, SEO Director</div>
+      <p class="author-bio">Senior SEO Consultant with 18+ years leading search programmes for enterprise and global businesses. Specialises in the parts of SEO that are hard to fake and harder to fix: technical architecture, structured data, and international implementations.</p>
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+      <div class="ct-toc">
+        <button class="ct-toc-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.nextElementSibling.classList.toggle('open')">
+          On this page <span class="ct-toc-arrow">▼</span>
+        </button>
+        <div class="ct-toc-label">On this page</div>
+        <ol class="ct-toc-list"></ol>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/cookie-consent.js"></script>
+<footer class="site">
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.toggleTheme = function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try { localStorage.setItem('mt-theme', next); localStorage.setItem('theme', next); } catch(e) {}
+  };
+</script>
+</body>
+</html>
