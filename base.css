@@ -236,8 +236,15 @@ nav.primary .subscribe {
 }
 nav.primary .subscribe:hover { background: var(--ink-1); color: var(--paper); }
 @media (max-width: 800px) {
-  nav.primary { gap: 18px; }
+  .site-inner { gap: 12px; }
+  nav.primary { gap: 10px; }
   nav.primary a:not(.subscribe) { display: none; }
+  /* Theme toggle leaves the bar on phones (it overflowed the viewport) and
+     lives in the hamburger overlay instead — see /theme-init.js */
+  header.site nav.primary .theme-toggle { display: none; }
+}
+@media (max-width: 420px) {
+  nav.primary .subscribe { padding: 8px 13px; font-size: 11px; letter-spacing: .06em; }
 }
 
 html[data-theme="dark"] header.site,
@@ -1149,6 +1156,33 @@ html.dark .nav-hamburger:hover { border-color: var(--paper); color: var(--paper)
 }
 .nav-overlay nav a:hover { color: var(--accent); }
 body.nav-locked { overflow: hidden; }
+/* Theme switch inside the overlay menu (phones only) */
+.nav-overlay-theme {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+.nav-overlay-theme button {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 11px 18px;
+  border: 1px solid var(--rule);
+  border-radius: 99px;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .08em;
+  cursor: pointer;
+}
+.nav-overlay-theme button svg { display: block; }
+.nav-overlay-theme .icon-moon, .nav-overlay-theme .icon-sun, .nav-overlay-theme .lbl-dark, .nav-overlay-theme .lbl-light { display: none; }
+html:not([data-theme="dark"]):not(.dark) .nav-overlay-theme .icon-moon,
+html:not([data-theme="dark"]):not(.dark) .nav-overlay-theme .lbl-dark { display: block; }
+html[data-theme="dark"] .nav-overlay-theme .icon-sun, html.dark .nav-overlay-theme .icon-sun,
+html[data-theme="dark"] .nav-overlay-theme .lbl-light, html.dark .nav-overlay-theme .lbl-light { display: block; }
+html[data-theme="dark"] .nav-overlay-theme, html.dark .nav-overlay-theme { border-color: rgba(245,241,234,.15); }
+html[data-theme="dark"] .nav-overlay-theme button,
+html.dark .nav-overlay-theme button { border-color: rgba(245,241,234,.25); color: var(--paper); }
 
 html[data-theme="dark"] .nav-overlay,
 html.dark .nav-overlay { background: #1a1916; }

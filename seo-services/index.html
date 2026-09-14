@@ -82,7 +82,7 @@
   @media (max-width: 800px) { .profile-grid { grid-template-columns: 1fr; gap: 40px; } }
   /* ── Sidebar ────────────────────────────────────────────────────────── */
   .profile-sidebar { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 22px; }
-  @media (max-width: 800px) { .profile-sidebar { position: static; top: auto; } }
+  @media (max-width: 800px) { .profile-sidebar { position: static; top: auto; order: 2; } .profile-bio { order: 1; } }
   .profile-photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 2px solid var(--rule); display: block; }
   @media (max-width: 800px) { .profile-photo { width: 140px; height: 140px; } }
   .profile-meta { display: flex; flex-direction: column; gap: 4px; }
@@ -105,7 +105,7 @@
   .about-card a:hover { color: var(--ink-1); }
   /* ── Bio body ────────────────────────────────────────────────────────── */
   .profile-bio { min-width: 0; }
-  .bio-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .bio-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); display: inline-flex; align-items: center; gap: 14px; margin: 0 0 22px; line-height: 1.4; }
   .bio-label::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
   .bio-lead { font-family: var(--font-body); font-size: var(--t-lead); line-height: 1.55; color: var(--ink-1); margin-bottom: 22px; }
   .bio-intro p { font-size: 15.5px; color: var(--ink-2); line-height: 1.75; margin-bottom: 18px; }
@@ -330,8 +330,8 @@
       <aside class="profile-sidebar">
         <img class="profile-photo" src="/mags-sikora/mags-sikora-seo-specialist-agentic-commerce.jpg" alt="Mags Sikora" width="180" height="180">
         <div class="profile-meta">
-          <h1 class="profile-name">Mags Sikora</h1>
-          <div class="profile-title">Senior-Level SEO Services</div>
+          <div class="profile-name">Mags Sikora</div>
+          <div class="profile-title">Senior SEO Strategist / Consultant</div>
           <div class="profile-company">Enterprise · Migrations · International · Due Diligence</div>
         </div>
         <nav class="profile-cta" aria-label="Contact options">
@@ -363,7 +363,7 @@
       </aside>
       <!-- ── Bio ── -->
       <div class="profile-bio">
-        <span class="bio-label">Services</span>
+        <h1 class="bio-label">Senior-level SEO Services</h1>
         <p class="bio-lead">Enterprise search gets complicated, in many ways. The org chart gets in the way. The migration timeline was optimistic from day one. The strategy that made sense in January doesn't survive first contact with a core update in March.</p>
         <div class="bio-intro">
           <p>I work with in-house teams and investors who need senior-level SEO thinking: whether that's shaping the strategy, pressure-testing the approach, or making sure the organic numbers tell the real story.</p>
