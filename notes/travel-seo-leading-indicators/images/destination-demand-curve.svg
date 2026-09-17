@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-labelledby="t d">
+  <title id="t">Where destination demand becomes visible, in order</title>
+  <desc id="d">A rising demand curve over time. Creator coverage, saves and shares, Reddit threads and Google Trends light up before keyword tools report the change.</desc>
+  <style>
+    text { font-family: 'IBM Plex Mono', Menlo, Monaco, monospace; fill: #1a1916; }
+    .h { font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
+    .sub { font-size: 17px; fill: #58534c; }
+    .lab { font-size: 18px; font-weight: 600; }
+    .small { font-size: 14px; fill: #8a847a; letter-spacing: .08em; }
+    .late { fill: #e09226; }
+    .axis { stroke: #d8d2c4; stroke-width: 2; }
+    .grid { stroke: #d8d2c4; stroke-width: 1; stroke-dasharray: 4 8; }
+    .curve { fill: none; stroke: #0E7490; stroke-width: 5; stroke-linecap: round; }
+    .fill { fill: #0E7490; fill-opacity: .07; }
+    .dot { fill: #f5f1ea; stroke: #0E7490; stroke-width: 4; }
+    .dot.late { stroke: #e09226; }
+    .tick { stroke: #0E7490; stroke-width: 2; stroke-dasharray: 3 6; }
+    .tick.late { stroke: #e09226; }
+  </style>
+  <rect width="1200" height="800" fill="#f5f1ea"/>
+  <text x="80" y="92" class="h">Where destination demand shows up first</text>
+  <text x="80" y="128" class="sub">The keyword data is not wrong. It is late.</text>
+
+  <!-- axes -->
+  <line x1="120" y1="640" x2="1120" y2="640" class="axis"/>
+  <line x1="120" y1="200" x2="120" y2="640" class="axis"/>
+  <text x="1120" y="676" class="small" text-anchor="end">TIME</text>
+  <text x="120" y="184" class="small">INTEREST</text>
+  <line x1="120" y1="420" x2="1120" y2="420" class="grid"/>
+  <line x1="120" y1="310" x2="1120" y2="310" class="grid"/>
+  <line x1="120" y1="530" x2="1120" y2="530" class="grid"/>
+
+  <!-- demand curve -->
+  <path class="fill" d="M120 630 C 330 622, 520 600, 680 520 C 830 445, 930 330, 1080 240 L 1080 640 L 120 640 Z"/>
+  <path class="curve" d="M120 630 C 330 622, 520 600, 680 520 C 830 445, 930 330, 1080 240"/>
+
+  <!-- signals along the curve -->
+  <g>
+    <line x1="260" y1="626" x2="260" y2="560" class="tick"/>
+    <circle cx="260" cy="626" r="9" class="dot"/>
+    <text x="260" y="516" class="lab" text-anchor="middle">Creator</text>
+    <text x="260" y="540" class="lab" text-anchor="middle">coverage</text>
+  </g>
+  <g>
+    <line x1="440" y1="607" x2="440" y2="480" class="tick"/>
+    <circle cx="440" cy="607" r="9" class="dot"/>
+    <text x="440" y="436" class="lab" text-anchor="middle">Saves &amp;</text>
+    <text x="440" y="460" class="lab" text-anchor="middle">shares</text>
+  </g>
+  <g>
+    <line x1="620" y1="551" x2="620" y2="400" class="tick"/>
+    <circle cx="620" cy="551" r="9" class="dot"/>
+    <text x="620" y="356" class="lab" text-anchor="middle">Reddit</text>
+    <text x="620" y="380" class="lab" text-anchor="middle">threads</text>
+  </g>
+  <g>
+    <line x1="800" y1="462" x2="800" y2="320" class="tick"/>
+    <circle cx="800" cy="462" r="9" class="dot"/>
+    <text x="800" y="276" class="lab" text-anchor="middle">Google</text>
+    <text x="800" y="300" class="lab" text-anchor="middle">Trends</text>
+  </g>
+  <g>
+    <line x1="1000" y1="298" x2="1000" y2="215" class="tick late"/>
+    <circle cx="1000" cy="298" r="9" class="dot late"/>
+    <text x="1000" y="195" class="lab late" text-anchor="middle">Keyword tools</text>
+    <text x="1000" y="171" class="small late" text-anchor="middle">EVERYONE ELSE SEES IT TOO</text>
+  </g>
+  <text x="80" y="752" class="small">magstags.com · TRAVEL SEO IS TOO DEPENDENT ON YESTERDAY'S DEMAND</text>
+</svg>
