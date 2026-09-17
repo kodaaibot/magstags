@@ -202,15 +202,15 @@ footer a:hover { color: var(--accent); opacity: 1; }
     /* ── Brand overrides applied at end of style block ── */
 
     /* Lead — Inter, ink-1, no italic, no border */
-    .post-lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-1); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
+    .post-lead { font-family: var(--font-body); font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; color: var(--accent-2); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
 
     /* Body strong — saffron marker stripe */
-    .post-body strong { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
+    .post-body strong.hl, .post-body mark { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
     .post-callout strong, .post-callout-warn strong { background: transparent; padding: 0; font-weight: 600; }
 
     /* Callouts — warm cream + accent left rule */
-    .post-callout { background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
-    .post-callout-warn { background: var(--paper-2); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); }
+    .post-callout { background: var(--paper-2); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 16px; line-height: 1.7; color: var(--ink-2); }
+    .post-callout-warn { background: var(--paper-2); border-left: 3px solid var(--accent-2); border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 32px 0; font-size: 16px; line-height: 1.7; color: var(--ink-2); }
 
     /* Compare grid — cream + accent/ink-4 left rules (no green/red) */
     .compare-col { padding: 22px; background: var(--paper-2); border: 1px solid var(--rule); border-left-width: 3px; border-radius: 0 4px 4px 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
@@ -224,7 +224,7 @@ footer a:hover { color: var(--accent); opacity: 1; }
     .post-table tbody td { padding: 18px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
     .post-table tbody tr:last-child td { border-bottom: none; }
     .post-table tbody tr:hover { background: rgba(224, 146, 38, 0.05); }
-    .post-table tbody td:first-child, .post-table .col-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-1); width: 20%; min-width: 130px; padding-top: 20px; white-space: normal; }
+    .post-table tbody td:first-child, .post-table .col-label { font-family: var(--font-mono); font-size: 13px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--ink-1); width: 34%; min-width: 150px; padding-top: 20px; white-space: normal; }
     @media (max-width: 720px) {
       .post-table-wrap { overflow-x: visible; }
       .post-table thead { display: none; }
@@ -253,8 +253,8 @@ footer a:hover { color: var(--accent); opacity: 1; }
 
     /* Sparkle ornaments between sections + before author card */
     .post-body h2:not(:first-of-type) { margin-top: 44px; }
-    .author-card { padding-top: 64px !important; position: relative; }
-    .author-card::before { content: ''; display: block; width: 16px; height: 16px; margin: 0 auto 32px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .7; }
+    .author-card { position: relative; }
+    .author-card::before { content: none; display: none; width: 16px; height: 16px; margin: 0 auto 32px; background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 L18 14 L26 16 L18 18 L16 26 L14 18 L6 16 L14 14 Z' fill='%23E09226'/></svg>") no-repeat center/contain; opacity: .7; }
 
     /* Related articles — 3-up card grid */
     .related-articles { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--rule); }

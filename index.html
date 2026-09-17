@@ -180,6 +180,7 @@
   .section-head p { font-size: var(--t-lead); line-height: 1.55; color: var(--ink-3); max-width: 580px; }
   /* ── Tool launcher: pick the problem, land on the tool ── */
   .launcher { padding: var(--section-y) 0; }
+  #research { border-top: 1px solid var(--rule); }
   .launcher-head { margin-bottom: clamp(24px, 3vw, 36px); }
   .launcher-head .eyebrow { display: inline-flex; align-items: center; gap: 14px; margin-bottom: 14px; }
   .launcher-head .eyebrow::before { content: ''; height: 1px; width: 32px; background: var(--accent); }
@@ -203,21 +204,20 @@
   .launcher-all:hover { color: var(--ink-1); }
   /* ── Featured research (full-width feature banner; Recent is a row below) ── */
   .research-grid { display: block; }
+  .research-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; max-width: none; }
+  .research-head .section-head-text { max-width: 800px; }
+  .research-head .section-head-text p { margin-bottom: 0; }
+  .research-head .research-more-all { padding-bottom: 6px; }
   .research-feature {
     display: flex; flex-direction: column;
-    background: var(--paper-2);
-    border: 1px solid var(--rule);
-    border-radius: 4px;
-    padding: clamp(36px, 4vw, 56px);
     position: relative;
   }
-  .research-feature-imglink { display: block; margin-bottom: 32px; }
+  .research-feature-imglink { display: block; margin-bottom: 24px; }
   .research-feature-img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); }
-  .research-feature .meta-row { display: flex; gap: 14px; align-items: center; margin-bottom: 32px; flex-wrap: wrap; }
+  .research-feature .meta-row { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; flex-wrap: wrap; }
   .research-feature .badge {
-    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: .14em; color: var(--accent);
-    padding: 5px 12px; border: 1px solid var(--accent); border-radius: 99px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .12em; color: var(--accent);
   }
   .research-feature .read-time { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: .08em; text-transform: uppercase; }
   .research-feature h3 {
@@ -227,53 +227,47 @@
   }
   .research-feature h3 a { color: inherit; }
   .research-feature h3 a:hover { color: var(--accent); }
-  .research-feature p { font-size: 16px; line-height: 1.7; color: var(--ink-3); margin-bottom: 32px; max-width: 540px; }
+  .research-feature p { font-size: 16px; line-height: 1.65; color: var(--ink-3); margin-bottom: 20px; max-width: 540px; }
   .research-feature .author-line {
     font-family: var(--font-mono); font-size: 11px; color: var(--ink-4);
-    display: flex; gap: 14px; align-items: center; padding-top: 24px;
-    border-top: 1px solid var(--rule); margin-top: auto;
+    display: flex; gap: 14px; align-items: center;
     letter-spacing: .06em; text-transform: uppercase;
   }
   /* Recent: a labelled row of note cards below the full-width feature */
-  .research-side { display: flex; flex-direction: column; margin-top: clamp(44px, 5vw, 72px); }
+  .research-side { display: flex; flex-direction: column; margin-top: clamp(32px, 4vw, 48px); padding-top: 24px; border-top: 1px solid var(--rule); }
   @media (min-width: 721px) {
-    .research-side { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+    .research-side { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px clamp(32px, 4vw, 64px); align-items: start; }
     .research-side-label { grid-column: 1 / -1; }
   }
-  .research-side-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-4); margin-bottom: 8px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
-  .research-side .research-item { position: relative; background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 22px 24px 24px; gap: 10px; transition: border-color .2s, transform .2s; }
-  .research-side .research-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .research-side-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-4); margin-bottom: 4px; }
+  .research-side .research-item { position: relative; padding: 8px 0 0; gap: 10px; border-bottom: none; }
   .research-side .research-item h4 { font-size: 17px; }
   .research-side .research-item h4 a::after { content: ''; position: absolute; inset: 0; }
   .research-side .research-item p { display: block; font-size: 14px; line-height: 1.6; color: var(--ink-3); margin: 0; }
   .research-item { display: flex; flex-direction: column; gap: 8px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
   .research-item:last-child { border-bottom: none; }
   .research-item .meta { display: flex; gap: 10px; align-items: center; }
-  .research-item .cat { font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
+  .research-item .cat { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
   .research-item .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-4); flex-shrink: 0; }
-  .research-item .date { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); letter-spacing: .04em; }
+  .research-item .date { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: .04em; }
   .research-item h4 { font-family: var(--font-display); font-weight: 500; font-size: 16px; line-height: 1.3; letter-spacing: -.01em; }
   .research-item h4 a { color: var(--ink-1); }
   .research-item h4 a:hover { color: var(--accent); }
   /* Desktop: full-width feature laid out horizontally — big image left, text right */
   @media (min-width: 961px) {
-    .research-feature { flex-direction: row; align-items: center; gap: clamp(40px, 4vw, 72px); }
-    .research-feature-imglink { flex: 0 0 56%; margin-bottom: 0; align-self: center; }
+    .research-feature { flex-direction: row; align-items: flex-start; gap: clamp(40px, 4vw, 64px); }
+    .research-feature-imglink { flex: 0 0 40%; margin-bottom: 0; }
     .research-feature-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
     .research-feature-body .meta-row { margin-bottom: 20px; }
-    .research-feature h3 { font-size: clamp(24px, 2.1vw, 32px); line-height: 1.15; max-width: none; margin-bottom: 18px; }
-    .research-feature p { font-size: 15.5px; line-height: 1.6; max-width: 52ch; margin-bottom: 24px; }
-    .research-feature .author-line { padding-top: 20px; margin-top: 4px; }
+    .research-feature h3 { font-size: clamp(22px, 2vw, 28px); line-height: 1.2; max-width: 26ch; margin-bottom: 14px; }
+    .research-feature p { font-size: 15.5px; line-height: 1.6; max-width: 56ch; margin-bottom: 20px; }
   }
   /* Mobile: image runs edge-to-edge inside the card instead of being boxed by padding */
   @media (max-width: 960px) {
-    .research-feature { padding: 0; overflow: hidden; }
-    .research-feature-imglink { margin-bottom: 0; }
-    .research-feature-img { border: 0; border-radius: 0; }
-    .research-feature-body { padding: clamp(28px, 6vw, 40px); }
+    .research-feature-imglink { margin-bottom: 24px; }
   }
   /* ── Browse line under Recent (hubs as plain text links) ── */
-  .research-browse { display: flex; align-items: baseline; gap: 12px 24px; flex-wrap: wrap; margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  .research-browse { display: flex; align-items: baseline; gap: 12px 24px; flex-wrap: wrap; margin-top: clamp(28px, 3vw, 40px); font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
   .research-browse-label { color: var(--ink-4); }
   .research-browse-links { display: flex; flex-wrap: wrap; gap: 8px; }
   .research-browse-links a { color: var(--ink-2); padding: 6px 12px; border: 1px solid var(--rule); border-radius: 99px; transition: border-color .15s, color .15s; }
@@ -298,7 +292,6 @@
   .extension-available::before { content: '●'; font-size: 9px; }
   .extension h2 { color: var(--ink-1); margin-bottom: 14px; font-size: clamp(26px, 3vw, 38px); }
   .extension-sub { font-size: clamp(17px, 1.6vw, 20px); font-family: var(--font-display); font-style: italic; color: var(--accent-2); line-height: 1.4; margin-bottom: 24px; max-width: 28ch; font-weight: 400; }
-  .extension-desc { font-size: 15px; line-height: 1.65; color: var(--ink-3); max-width: 520px; margin-bottom: 18px; }
   .extension-tagline { font-size: 13.5px; color: var(--ink-4); font-style: italic; margin-bottom: 32px; max-width: 520px; line-height: 1.6; }
   .extension-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
   .btn-install { display: inline-flex; align-items: center; gap: 10px; padding: 13px 24px; border-radius: 99px; background: var(--accent-2); color: var(--paper); font-family: var(--font-body); font-size: 14px; font-weight: 700; text-decoration: none; transition: background .15s, transform .1s; letter-spacing: -.005em; }
@@ -460,14 +453,15 @@
   html[data-theme="dark"] .launch-tools a, html[data-theme="dark"] .launcher-all { color: var(--accent-2); }
   html[data-theme="dark"] .launch-tools a:hover, html[data-theme="dark"] .launcher-all:hover { color: var(--paper); }
   /* Featured research in dark */
-  html[data-theme="dark"] .research-feature { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .research-feature .badge { color: var(--accent-2); border-color: var(--accent-2); }
+  html[data-theme="dark"] .research-feature .badge { color: var(--accent-2); }
   html[data-theme="dark"] .research-feature .read-time { color: rgba(245,241,234,.5); }
   html[data-theme="dark"] .research-feature h3 a { color: var(--paper); }
   html[data-theme="dark"] .research-feature h3 a:hover { color: var(--accent-2); }
   html[data-theme="dark"] .research-feature p { color: rgba(245,241,234,.72); }
-  html[data-theme="dark"] .research-feature .author-line { color: rgba(245,241,234,.5); border-top-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .research-side-label { color: rgba(245,241,234,.55); border-bottom-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-feature .author-line { color: rgba(245,241,234,.5); }
+  html[data-theme="dark"] .research-side { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] #research { border-top-color: rgba(245,241,234,.1); }
+  html[data-theme="dark"] .research-side-label { color: rgba(245,241,234,.55); }
   html[data-theme="dark"] .research-item { border-bottom-color: rgba(245,241,234,.1); }
   html[data-theme="dark"] .research-item .cat { color: var(--accent-2); }
   html[data-theme="dark"] .research-item .dot { background: rgba(245,241,234,.4); }
@@ -480,8 +474,6 @@
   html[data-theme="dark"] .research-browse-label, html[data-theme="dark"] .research-browse-links { color: rgba(245,241,234,.5); }
   html[data-theme="dark"] .research-browse-links a { color: var(--paper); border-color: rgba(245,241,234,.2); }
   html[data-theme="dark"] .research-browse-links a:hover { border-color: var(--accent-2); }
-  html[data-theme="dark"] .research-side .research-item { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); }
-  html[data-theme="dark"] .research-side .research-item:hover { border-color: var(--accent-2); }
   html[data-theme="dark"] .research-side .research-item p { color: rgba(245,241,234,.7); }
   html[data-theme="dark"] .research-browse-links a:hover { color: var(--accent-2); }
   html[data-theme="dark"] .founder-more { color: var(--accent-2); }
@@ -497,7 +489,6 @@
   html[data-theme="dark"] .extension { background: var(--ink-1); color: var(--paper); }
   html[data-theme="dark"] .extension .eyebrow { color: rgba(245,241,234,.6); }
   html[data-theme="dark"] .extension h2 { color: var(--paper); }
-  html[data-theme="dark"] .extension-desc { color: rgba(245,241,234,.78); }
   html[data-theme="dark"] .extension-tagline { color: rgba(245,241,234,.55); }
   html[data-theme="dark"] .btn-secondary-dark { border-color: rgba(245,241,234,.25); color: var(--paper); }
   html[data-theme="dark"] .btn-secondary-dark:hover { border-color: var(--paper); color: var(--paper); }
@@ -755,10 +746,13 @@
   <!-- ────────────────────────── 2. Notes ─────────────────────── -->
   <section id="research">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow eyebrow--accent">02 · Notes</span>
-        <h2>Practical SEO writing.</h2>
-        <p>No content for content's sake. Promise.</p>
+      <div class="section-head research-head">
+        <div class="section-head-text">
+          <span class="eyebrow eyebrow--accent">02 · Notes</span>
+          <h2>The bits the docs leave out.</h2>
+          <p>Tests, edge cases, implementation notes, and things I thought were worth writing down.</p>
+        </div>
+        <a class="research-more-all" href="/notes/">All notes →</a>
       </div>
       <div class="research-grid">
         <article class="research-feature">
@@ -773,7 +767,7 @@
             <h3><a href="/notes/google-shipping-return-settings/">Google Shipping and Return Policies: Where to Configure Them and What Takes Precedence</a></h3>
             <p>Google reads shipping and returns from five sources: product feed, API, Merchant Center or Search Console settings, product markup, and Organisation schema. The precedence order, and a decision tree for which to use.</p>
             <div class="author-line">
-              <span>21 July 2026</span>
+              <span>21 Jul 2026</span>
               <span>·</span>
               <span>Mags Sikora</span>
             </div>
@@ -781,6 +775,15 @@
         </article>
         <div class="research-side">
           <div class="research-side-label">Recent</div>
+          <article class="research-item">
+            <div class="meta">
+              <span class="cat">Search Strategy</span>
+              <span class="dot"></span>
+              <span class="date">17 Sep 2026</span>
+            </div>
+            <h4><a href="/notes/travel-seo-leading-indicators/">Travel SEO Is Too Dependent on Yesterday&#x27;s Demand</a></h4>
+            <p>Search volume describes demand that already exists. Why travel SEO needs leading indicators from TikTok, Reddit, YouTube and AI search to spot destinations earlier.</p>
+          </article>
           <article class="research-item">
             <div class="meta">
               <span class="cat">Technical SEO</span>
@@ -799,21 +802,10 @@
             <h4><a href="/notes/google-loyalty-layer/">Google's Loyalty Layer: From Search Relevance to Brand Preference</a></h4>
             <p>Preferred Sources, Search Profiles, Subscription Linking and Favourite Brands are one loyalty layer sitting on top of ranking. What it means for ecommerce brands, and what to deploy now.</p>
           </article>
-          <article class="research-item">
-            <div class="meta">
-              <span class="cat">Original Research</span>
-              <span class="dot"></span>
-              <span class="date">19 Apr 2026</span>
-            </div>
-            <h4><a href="/notes/google-image-thumbnails-organic-case-study/">Google Image Thumbnails for Organic Results: Case Study</a></h4>
-            <p>Analysis of 9,718 organic results across 293 fashion keywords. Mobile serves 92% more image thumbnails than desktop. Which intents, modifiers, and categories get visual treatment.</p>
-          </article>
         </div>
       </div>
       <div class="research-browse">
-        <span class="research-browse-label">Browse</span>
         <span class="research-browse-links"><a href="/schema-for-seo/">Structured data</a><a href="/ecommerce-seo/">Ecommerce</a><a href="/technical-seo/">Technical SEO</a><a href="/international-seo/">International</a><a href="/ai-search/">AI search</a><a href="/research/">Research</a></span>
-        <a class="research-more-all" href="/notes/">All notes →</a>
       </div>
     </div>
   </section>
@@ -829,7 +821,6 @@
           <span class="eyebrow">03 · Chrome extension</span>
           <h2>Schema Extractor.</h2>
           <p class="extension-sub">JSON-LD, Microdata, RDFa — one click on the toolbar.</p>
-          <p class="extension-desc">Extracts all structured data from any page — JSON-LD, Microdata, and RDFa — and shows it in a clean tabbed viewer. The toolbar badge tells you what's on a page before you click. No DevTools. No view-source.</p>
           <p class="extension-tagline">Rich results don't happen by accident. For SEOs who know valid ≠ correct.</p>
           <div class="extension-actions">
             <a class="btn-install" href="/schema-extractor-chrome-extension/">Read more</a>
@@ -875,7 +866,6 @@
           <span class="eyebrow">03 · Chrome extension</span>
           <h2>Google Goto URL Resolver</h2>
           <p class="extension-sub">Get the real URL back from google.com/goto.</p>
-          <p class="extension-desc">Google now wraps many result links in google.com/goto. The extension resolves the destination in your browser, shows the real URL, and exports the SERP as URLs, Markdown or CSV.</p>
           <p class="extension-tagline">For anyone who has pasted a Google redirect into a client deck and noticed too late.</p>
           <div class="extension-actions">
             <a class="btn-install" href="/google-goto-url-resolver/">Read more</a>
@@ -943,7 +933,7 @@
           </div>
           <div class="founder-credentials">
             <div>
-              <div class="credential-label">Currently</div>
+              <div class="credential-label">6+ and counting at</div>
               <div class="credential-value">Intrepid Digital</div>
             </div>
             <div>
