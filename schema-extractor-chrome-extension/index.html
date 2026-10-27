@@ -134,7 +134,7 @@
     .extension-available { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); padding: 4px 10px; border: 1px solid var(--accent-2); border-radius: 99px; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
     .extension-available::before { content: '●'; font-size: 9px; }
     .extension h1 { font-family: var(--font-display); font-weight: 400; color: var(--ink-1); margin-bottom: 14px; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -.01em; }
-    .extension-sub { font-size: clamp(17px, 1.6vw, 20px); font-family: var(--font-display); font-style: italic; color: var(--accent-2); line-height: 1.4; margin-bottom: 24px; max-width: 28ch; font-weight: 400; }
+    .extension-sub { font-size: clamp(17px, 1.6vw, 20px); font-family: var(--font-display); font-style: italic; color: var(--ink-3); line-height: 1.4; margin-bottom: 24px; max-width: 28ch; font-weight: 400; }
     .extension-desc { font-size: 15px; line-height: 1.65; color: var(--ink-3); max-width: 520px; margin-bottom: 18px; }
     .extension-tagline { font-size: 13.5px; color: var(--ink-4); font-style: italic; margin-bottom: 32px; max-width: 520px; line-height: 1.6; }
     .extension-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
@@ -238,7 +238,8 @@
     html[data-theme="dark"] .ext-popup-foot, html.dark .ext-popup-foot { color: rgba(245,241,234,.4); border-top-color: rgba(245,241,234,.08); }
     html[data-theme="dark"] .format-attr, html.dark .format-attr { background: rgba(245,241,234,.04); border-color: rgba(245,241,234,.1); color: rgba(245,241,234,.6); }
     @media (max-width: 600px) { .ct-wrap { padding-left: 16px; padding-right: 16px; } }
-  </style>
+      html[data-theme="dark"] .extension-sub, html.dark .extension-sub { color: rgba(245,241,234,.72); }
+</style>
 </head>
 <body>
 <header class="site">

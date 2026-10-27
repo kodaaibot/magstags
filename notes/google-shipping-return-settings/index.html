@@ -154,7 +154,7 @@
     /* ── Brand overrides applied at end of style block ── */
 
     /* Lead — Inter, ink-1, no italic, no border */
-    .post-lead { font-family: var(--font-body); font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; color: var(--accent-2); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
+    .post-lead { font-family: var(--font-body); font-size: clamp(18px, 1.7vw, 21px); line-height: 1.5; color: var(--ink-1); margin-bottom: 36px; border: none; padding-left: 0; font-style: normal; }
 
     /* Body strong — saffron marker stripe */
     .post-body strong.hl, .post-body mark { color: var(--ink-1); font-weight: 500; background: linear-gradient(transparent 55%, rgba(224, 146, 38, 0.4) 55%, rgba(224, 146, 38, 0.4) 92%, transparent 92%); padding: 0 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; text-decoration: none; }
@@ -266,6 +266,7 @@
     .post-figure { margin: 36px 0; }
     .post-figure img { width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 8px; }
     .post-figure figcaption { margin-top: 12px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.5; color: var(--ink-4); text-align: center; }
+    html[data-theme="dark"] .post-lead, html.dark .post-lead { color: #f5f1ea; }
 </style>
 <meta content="Google Shipping and Return Policies: Where to Configure Them and What Takes Precedence | MagsTags" property="og:title"/>
 <meta content="Google can read shipping and return policies from Merchant Center, Search Console, product-level structured data, and organisation-level structured data. Google publishes two slightly different precedence lists; here is how they fit together and which configuration to use." property="og:description"/>
@@ -301,19 +302,19 @@
 </head>
 <body>
 <header class="site">
-<div class="site-inner">
-<a class="wordmark" href="/">mags<em>tags</em></a>
-<nav aria-label="Primary" class="primary">
-<a href="/notes/">Notes</a>
-<a href="/#tools">Tools</a>
-<a href="/mags-sikora/">About me</a>
-<a class="subscribe" href="/seo-services/">Work with me</a>
-<button aria-label="Toggle light / dark theme" class="theme-toggle" onclick="toggleTheme()" type="button">
-<svg aria-hidden="true" class="icon-moon" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-<svg aria-hidden="true" class="icon-sun" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
-</button>
-</nav>
-</div>
+  <div class="site-inner">
+    <a href="/" class="wordmark">mags<em>tags</em></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/notes/">Notes</a>
+      <a href="/#tools">Tools</a>
+      <a href="/mags-sikora/">About me</a>
+      <a href="/seo-services/" class="subscribe">Work with me</a>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </nav>
+  </div>
 </header>
 <script>
   (function(){
@@ -555,22 +556,22 @@
 <script src="/cookie-consent.js"></script>
 <script src="/blog-auth.js"></script>
 <footer class="site">
-<div class="wrap-footer">
-<div class="footer-grid">
-<div class="footer-brand">
-<a class="wordmark" href="/">mags<em>tags</em></a>
-<p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
-</div>
-<div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
-<div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
-<div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
-<div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
-</div>
-<div class="footer-base">
-<span>© 2026 MagsTags · Magdalena Sikora</span>
-<span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
-</div>
-</div>
+  <div class="wrap-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="wordmark">mags<em>tags</em></a>
+        <p>Free SEO tools and practitioner-level writing by Mags Sikora. Schema markup, hreflang, Google Merchant Center, and technical SEO — written for people who already know the basics and want the parts that are hard to find anywhere else.</p>
+      </div>
+      <div class="footer-col"><h5>Research</h5><ul><li><a href="/notes/">All notes</a></li></ul></div>
+      <div class="footer-col"><h5>Guides</h5><ul><li><a href="/learn-seo/">Learn SEO</a></li><li><a href="/product-schema/">Product schema</a></li><li><a href="/merchant-listing-schema/">Merchant listing</a></li><li><a href="/product-variants-schema/">Product variants</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/ecommerce-schema-generator/">Schema generators</a></li><li><a href="/gsc-regex-generator/">GSC regex</a></li><li><a href="/hreflang-generator/">Hreflang</a></li><li><a href="/free-seo-tools/">All tools →</a></li></ul></div>
+      <div class="footer-col"><h5>Mags</h5><ul><li><a href="/mags-sikora/">About</a></li><li><a href="/seo-services/">Work with Mags</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 MagsTags · Magdalena Sikora</span>
+      <span><a href="/privacy-policy/">Privacy</a> · <a href="/cookie-policy/">Cookies</a> · <a href="/terms-of-service/">Terms</a> · <a href="/sitemap/">Sitemap</a></span>
+    </div>
+  </div>
 </footer>
 <script>
   window.toggleTheme = function() {

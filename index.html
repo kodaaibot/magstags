@@ -47,7 +47,7 @@
 <!-- Type stack: IBM Plex Mono (display + labels) + Inter (body) — dev/tech-leaning -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ══════════════════════════════════════════════════════════════════════
      Homepage · design direction ported from the Lovable preview (Oct 2026)
@@ -63,12 +63,12 @@
     --shadow-lg: 0 20px 50px -30px rgba(21,19,15,.35);
     --teal-surface: #0a5d75;
     /* base.css header/footer aliases, mapped onto this palette */
-    --ink-1: #15130f; --ink-2: #2d2a26; --ink-3: #5f5a51; --ink-4: #8a847a;
+    --ink-1: #1a1916; --ink-2: #2d2a26; --ink-3: #58534c; --ink-4: #8a847a;
     --paper: #f5f1ea; --paper-2: #ebe5d7; --rule: #d8d2c4; --accent-2: #e09226; --field: #fbf9f5;
     --font-display: 'IBM Plex Mono', 'Menlo', monospace;
     --font-mono: 'IBM Plex Mono', 'Menlo', monospace;
     --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-    --max: 1152px; --gutter: 24px;
+    --max: 1200px; --gutter: clamp(20px, 4vw, 88px);  /* same column as base.css header, footer and every interior page */
   }
   html[data-theme="dark"] {
     --bg: #14130f; --fg: #f1ece2; --card: #1c1a16; --secondary: #24221d;
@@ -89,6 +89,8 @@
   html[data-theme="dark"] .btn--ink:hover { background: var(--teal); color: var(--bg); }
   html[data-theme="dark"] .newsletter-inner, html[data-theme="dark"] .newsletter-inner h2 { color: #f5f1ea; }
   html[data-theme="dark"] .newsletter-status a { color: inherit; }
+  /* Shared chrome keeps the sitewide type and tokens; only the page body uses the new design's fonts */
+  header.site, footer.site, .nav-overlay, .skip-link { --font-body: 'Inter', system-ui, -apple-system, sans-serif; font-family: var(--font-body); line-height: 1.65; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   img, svg { display: block; max-width: 100%; }
   button { font: inherit; cursor: pointer; }
@@ -305,8 +307,8 @@
   .credential-value { margin-top: 4px; font-weight: 500; font-size: 16px; line-height: 1.4; }
   .founder-actions { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
   /* ── Newsletter ── */
-  .newsletter { padding: 0 var(--gutter) 96px; }
-  .newsletter-inner { max-width: var(--max); margin: 0 auto; display: grid; gap: 32px; align-items: center; padding: 32px; border-radius: var(--radius); background: var(--teal-surface); color: #f5f1ea; }
+  .newsletter { padding: 0 0 96px; }
+  .newsletter-inner { display: grid; gap: 32px; align-items: center; padding: 32px; border-radius: var(--radius); background: var(--teal-surface); color: #f5f1ea; }
   @media (min-width: 768px) { .newsletter-inner { grid-template-columns: 1fr 1fr; padding: 48px; } }
   .newsletter .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: inherit; opacity: .75; }
   .newsletter h2 { margin-top: 12px; font-size: 30px; color: inherit; }
@@ -646,6 +648,20 @@
             </div>
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
           </article>
+          <article class="research-item">
+            <div class="research-item-body">
+              <div class="meta"><span class="cat">Structured Data</span> <span class="date">· 18 May 2026</span></div>
+              <h4><a href="/notes/valid-schema-bad-data/">When your schema is valid but your data isn't</a></h4>
+            </div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </article>
+          <article class="research-item">
+            <div class="research-item-body">
+              <div class="meta"><span class="cat">Original Research</span> <span class="date">· 19 Apr 2026</span></div>
+              <h4><a href="/notes/google-image-thumbnails-organic-case-study/">Google image thumbnails for organic results: case study</a></h4>
+            </div>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </article>
         </div>
       </div>
       <div class="research-browse reveal">
@@ -721,6 +737,7 @@
   </section>
   <!-- ────────────────────────── 6. Newsletter ────────────────────────────── -->
   <section class="newsletter" id="newsletter">
+    <div class="wrap">
     <div class="newsletter-inner reveal">
       <div class="newsletter-text">
         <p class="eyebrow"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>05 · The newsletter</p>
@@ -741,6 +758,7 @@
         <p class="newsletter-status" role="status" aria-live="polite"></p>
         <p class="micro"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>No spam. No tracking. Unsubscribe whenever.</p>
       </div>
+    </div>
     </div>
   </section>
 </main>
